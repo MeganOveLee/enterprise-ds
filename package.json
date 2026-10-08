@@ -1,0 +1,19 @@
+{
+  "name": "enterprise-ds",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Enterprise DS v1.0 — 엔터프라이즈 백오피스용 CSS 디자인 시스템",
+  "license": "UNLICENSED",
+  "type": "module",
+  "scripts": {
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
+  "devDependencies": {
+    "@storybook/addon-a11y": "^10.0.0",
+    "@storybook/addon-docs": "^10.0.0",
+    "@storybook/html-vite": "^10.0.0",
+    "storybook": "^10.0.0",
+    "vite": "^7.0.0"
+  }
+}

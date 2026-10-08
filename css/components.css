@@ -1,0 +1,2943 @@
+@charset "UTF-8";
+/* ============================================================================
+ * Enterprise DS v1.0 — 공통 컴포넌트 (재사용)
+ *
+ * 모든 페이지가 공유하는 컴포넌트 라이브러리.
+ * 페이지 전용 CSS는 만들지 않음 — 새 페이지 만들 때 이 파일의 컴포넌트 재사용.
+ *
+ * 포함:
+ *   - main-menu      (좌측 사이드 메뉴 — 모든 페이지)
+ *   - gnb            (상단 헤더 — 모든 페이지)
+ *   - menu-toggle    (드롭다운 트리거 버튼)
+ *   - user-info      (사용자 정보 표시)
+ *   - theme-toggle-btn (다크 모드 토글)
+ *   - card           (모든 카드 — 대시보드/검색/결재 등 공유)
+ *   - card-list      (카드 안 리스트)
+ *   - tag            (작은 상태 라벨/뱃지)
+ *   - card-grid      (카드 그리드 컨테이너)
+ *   - page-greeting  (페이지 상단 인사·헤더)
+ *
+ * SVG 아이콘 위치: ../../portal/icon/
+ *   (제품 화면에서 이 파일 기준 상대경로)
+ *
+ * 작성일: 2026-06-02
+ * ============================================================================ */
+
+/* ============================================================
+ * 페이지 공통 layout — defaultLayout.jsp 5단 div 구조
+ *
+ *   main-menu (좌측, 별도)
+ *   main-layout
+ *     ├─ main-body
+ *     │   ├─ side-area (SUBMENU 있을 때만)
+ *     │   └─ main-nav-layout
+ *     │       └─ main-area
+ *     │           ├─ <header class="gnb">
+ *     │           ├─ <aside class="navbar"> (SUBMENU 있을 때만)
+ *     │           └─ main-content
+ *     └─ gnb-footer (항상 화면 하단)
+ *
+ * flex 체인을 끝까지 연결해서 main-content 가 남은 공간을 모두 차지,
+ * footer 는 자연스럽게 화면 하단에 고정.
+ * ============================================================ */
+
+/* 최상위 — column flex, 화면 전체 높이 */
+.main-layout {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    min-height: 0;
+    overflow: hidden;
+    background: var(--color-bg-subtle);
+}
+
+/* main-body: footer 위 모든 영역 (가로 방향 — 사이드 + 메인) */
+.main-body {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    min-height: 0;
+    overflow: hidden;
+}
+
+/* side-area: SUBMENU 있는 페이지의 사이드 패널 (메인 대시보드엔 없음) */
+.side-area {
+    display: flex;
+    flex-direction: row;
+    flex-shrink: 0;
+    background: var(--color-bg-subtle);
+}
+.side-area .sidebar {
+    width: var(--size-sidebar);
+    overflow-y: auto;
+    background: var(--color-bg-subtle);
+}
+.side-area .sidebar-toggle {
+    width: var(--size-sidebar-toggle);
+    cursor: ew-resize;
+    background: var(--color-bg-subtle);   /* 컨텐츠 영역(.main-layout)과 같은 바탕 — 흰 영역(LNB+패널)이 여기서 끝나 보이게 (세영 2026-07-16) */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.side-area .sidebar-toggle .toggle-sidebar {
+    width: 100%;
+}
+
+/* main-nav-layout: 사이드 제외 남은 영역 (세로 방향 — navbar + main-area) */
+.main-nav-layout {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+}
+
+/* main-area: navbar 아래 영역 (세로 — header + navbar + main-content) */
+.main-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+}
+
+/* navbar: SUBMENU 있는 페이지의 빵부스러기 (Home > 메뉴명) */
+.navbar {
+    flex-shrink: 0;
+    padding: var(--spacing-12) var(--spacing-24);
+    background: var(--color-bg-subtle);
+    color: var(--color-text-muted);
+    font-size: var(--body-sm);
+    border-bottom: 1px solid var(--color-border-base);
+}
+
+/* main-content: 실제 페이지 콘텐츠 영역 — 남은 공간 모두 채움 */
+.main-content {
+    flex: 1;
+    display: flex;                  /* searchLayout flex:1 이 main-content 의 남은 공간 차지하도록 */
+    flex-direction: column;
+    overflow-y: auto;
+    padding: var(--spacing-16) var(--spacing-24);  /* 검색·상세 페이지 패딩 절제 */
+    background: var(--color-bg-subtle);
+    min-height: 0;
+}
+
+/* 페이지 상단 — 타이틀 + 빵부스러기 (한 줄) */
+.page-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--spacing-16);
+    flex-wrap: wrap;
+    gap: var(--spacing-8);
+}
+.page-head .page-title-area {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-8);
+}
+.page-head h1 {
+    font-size: var(--heading-md);   /* 20px — 페이지 타이틀 적정 크기 */
+    font-weight: var(--font-weight-semibold);
+    margin: 0;
+    color: var(--color-text-base);
+    line-height: var(--line-height-tight);
+}
+.page-head .favorite-icon {
+    color: var(--color-text-muted);
+    cursor: pointer;
+}
+.page-head .favorite-icon:hover { color: var(--color-icon-favorite); }
+.page-head .breadcrumb {
+    font-size: var(--body-sm);
+    color: var(--color-text-muted);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-4);
+}
+.page-head .breadcrumb .crumb-current {
+    color: var(--color-text-base);
+    font-weight: var(--font-weight-medium);
+}
+
+/* ─── GNB 안 breadcrumb + 히스토리 네비 (페이지 타이틀 대체) ─── */
+.gnb .breadcrumb {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-8);
+    font-size: var(--body-md);
+    color: var(--color-text-muted);
+    font-weight: var(--font-weight-medium);
+}
+.gnb .breadcrumb .crumb-current {
+    color: var(--color-text-base);
+    font-weight: var(--font-weight-semibold);
+}
+
+/* 뒤로 / 앞으로 — 핀터레스트 SaaS 패턴 */
+.gnb .nav-history {
+    display: inline-flex;
+    gap: var(--spacing-4);
+    margin-right: var(--spacing-8);
+}
+.gnb .nav-history-btn {
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border: 1px solid var(--color-border-base);
+    background: var(--color-bg-base);
+    border-radius: var(--radius-sm);
+    color: var(--color-text-base);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.12s, border-color 0.12s;
+}
+.gnb .nav-history-btn:hover {
+    background: var(--color-bg-muted);
+}
+.gnb .nav-history-btn:active {
+    background: var(--color-bg-subtle);
+}
+.gnb .nav-history-btn svg {
+    width: 14px;
+    height: 14px;
+    stroke-width: 2;
+}
+
+/* Footer: 항상 main-layout 직속, main-body 형제 → 화면 하단 고정 */
+.gnb-footer {
+    flex-shrink: 0;
+    border-top: 1px solid var(--color-border-base);
+    padding: var(--spacing-12) var(--spacing-24);
+    background: var(--color-bg-base);
+    text-align: center;
+    color: var(--color-text-muted);
+    font-size: var(--body-sm);
+}
+
+/* ─── 좌측 LNB — 실제 구조는 .main-menu > nav > ul > li (개발자 마크업).
+ *   3.1 초안의 .lnb-* / .sub-menu-* 시안 CSS 는 JSP·JS 참조가 0 이라 삭제 (세영 2026-08-25) ─── */
+.main-menu {
+    width: 60px;
+    height: 100vh;
+    background: var(--color-bg-base);
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    color: var(--color-icon-muted);   /* v1.0: 원천 회색 직접 참조 → 시맨틱 (다크 추종) */
+    border-right: 1px solid var(--color-border-base);
+}
+.main-menu nav {
+    flex: 1;
+    padding:0;
+    overflow-y: auto;
+}
+.main-menu ul { list-style: none; margin: 0; padding: 0; }
+/* ─── 폴더 탭 상단 컨트롤 (사업구분 select + 폴더 검색 input) ── */
+/* 좌우 padding 은 .tree-section 으로 옮겼다 — 인풋과 트리 그리드 폭 일치 */
+/* ── 서브메뉴 ↔ 폴더 트리 영역 그룹 분리 (라이트/다크 공통) ── */
+.tree-section {
+    margin-top: 16px;
+    padding-top: 8px;   /* 위아래 패딩 균형 — tree-controls 8px 과 맞춤 (상단 과다 패딩 해소) */
+    border-top: 1px solid var(--color-border-base);
+}
+
+.tree-section {
+    padding-left: var(--spacing-8);
+    padding-right: var(--spacing-8);
+}
+.tree-controls {
+    padding: var(--spacing-8) 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-8);
+    border-bottom: 1px solid var(--color-border-base);
+    margin-bottom: var(--spacing-8);   /* 트리 그리드 상단 border 와 중첩 회피 */
+    flex-shrink: 0;
+}
+.tree-controls .tree-search-wrap {
+    width: 100%;
+    height: 32px;
+    border: 1px solid var(--color-border-input);
+    border-radius: var(--radius-md);   /* 입력칸 = 버튼과 같은 모서리 (DS-ADR-011) */
+    background: var(--color-bg-input);
+    font-family: var(--font-family-base);
+    font-size: var(--body-sm);
+    color: var(--color-text-base);
+    box-sizing: border-box;
+}
+.tree-controls .select { height: 32px; font-size: var(--body-sm); }   /* 트리 위 좁은 칸 — 검색칸(32)과 높이 맞춤. 모양은 .select (DS-ADR-010) */
+.tree-controls .tree-search-wrap {
+    display: flex;
+    align-items: center;
+    padding: 0 var(--spacing-8);
+    gap: var(--spacing-4);
+}
+.tree-controls .tree-search-wrap .icon-search {
+    font-size: 14px;
+    color: var(--color-text-muted);
+    flex-shrink: 0;
+}
+.tree-controls .tree-search-input {
+    flex: 1;
+    min-width: 0;
+    height: 100%;
+    border: none;
+    padding: 0;
+    background: transparent;
+    font-size: var(--body-sm);
+    color: var(--color-text-base);
+    outline: none;
+}
+.tree-controls .tree-search-wrap:focus-within {
+    border-color: var(--color-border-focus);
+    box-shadow: 0 0 0 3px var(--color-focus-ring);   /* 포커스 링 = 보더(브랜드 초록) + 옅은 브랜드 번짐 3px. overrides 404·537행과 동일 패턴 */
+}
+
+/* ============================================================
+ * 상단 GNB 헤더 (모든 페이지 공통)
+ * ============================================================ */
+.gnb {
+    height: 56px;
+    background: var(--color-bg-base);
+    border-bottom: 1px solid var(--color-border-base);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 var(--spacing-24);
+    flex-shrink: 0;
+}
+.gnb .logo-container {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-8);
+}
+.gnb .logo-mark {
+    width: 28px;
+    height: 28px;
+    background: var(--color-bg-inverse);
+    color: var(--color-text-inverse);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-family-accent);
+    font-weight: var(--font-weight-semibold);
+    font-size: 14px;
+}
+/* 브랜드 로고 이미지 (img·svg) — 고객사 로고 */
+.gnb .brand-logo {
+    height: 28px;
+    width: auto;
+    display: block;
+    flex-shrink: 0;
+}
+.gnb .logo-text {
+    font-family: var(--font-family-accent);
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--heading-md);
+    color: var(--color-text-base);
+}
+.gnb .logo-version {
+    font-size: var(--body-sm);
+    color: var(--color-text-muted);
+    margin-left: var(--spacing-4);
+}
+.gnb .header-actions { display: flex; align-items: center; gap: var(--spacing-16); height: 100%; font-size: var(--body-md); }  /* font-size=styles.css 459 이관(컷 시 14→16 방지) */
+.gnb .header-actions nav { height: 100%; }  /* styles.css 607 height:inherit 체인 이관 — 컷 시 항목 세로팽창(483px) 방지 (2026-08-15) */
+.gnb .header-actions nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-4);
+    height: 100%;
+}
+.gnb .header-actions nav li { display: flex; align-items: center; height: 100%; }
+
+/* ============================================================
+ * 헤더 + 공통 아이콘 (inline SVG)
+ * 마크업에 <svg> 직접 박고, color/currentColor 로 색 자동 적용
+ * ============================================================ */
+.gnb svg {
+    flex-shrink: 0;
+}
+.theme-toggle-btn svg,
+.logout-btn svg,
+.user-info svg {
+    width: 18px;
+    height: 18px;
+}
+.user-info svg { width: 20px; height: 20px; }
+
+/* ============================================================
+ * 테마 토글 버튼
+ * ============================================================ */
+.theme-toggle-btn {
+    background: transparent;
+    border: 1px solid var(--color-border-base);
+    border-radius: var(--radius-rounded);
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--color-text-muted);
+}
+.theme-toggle-btn:hover {
+    background: var(--color-bg-muted);
+    color: var(--color-text-base);
+}
+/* 라이트 모드 → 달 아이콘 표시, 다크 모드 → 해 아이콘 표시 */
+.theme-toggle-btn .icon-sun  { display: none; }
+.theme-toggle-btn .icon-moon { display: inline-block; }
+body.dark-mode .theme-toggle-btn .icon-sun  { display: inline-block; }
+body.dark-mode .theme-toggle-btn .icon-moon { display: none; }
+
+/* ============================================================
+ * 메뉴 카운트 토글 버튼 (드롭다운 트리거)
+ * ============================================================ */
+.menu-container { position: relative; }
+.menu-toggle {
+    background: transparent;
+    border: 1px solid transparent;
+    height: 32px;
+    line-height: 1;                 /* 폰트 fallback 시 글자 ↕ 튀는 거 방지 */
+    padding: 0;    /* hover 제거(세영 2026-08-16)로 좌우 padding(hover 박스용) 불필요 → 0. styles.css .menu-toggle(패딩0)과 동일 너비로 복귀 */
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-8);
+    cursor: pointer;
+    border-radius: var(--radius-md);
+    font-family: var(--font-family-base);
+    color: var(--color-text-base);
+    font-size: var(--body-md);
+    white-space: nowrap;            /* 폰트 폭 차이로 줄바꿈 방지 */
+}
+/* .menu-toggle hover 배경 제거 — 원래(styles.css) hover 배경 없었음, 우리가 추가한 것 되돌림 (세영 2026-08-16) */
+.menu-toggle .title {
+    margin: 0;
+    font-weight: var(--font-weight-medium);
+    line-height: 1;
+    white-space: nowrap;
+}
+.menu-toggle .count {
+    margin: 0;
+    background: var(--color-bg-inverse);
+    color: var(--color-text-inverse);
+    border-radius: var(--radius-rounded);
+    padding: 2px 8px;
+    font-size: 11px;
+    line-height: 1;
+    font-weight: var(--font-weight-semibold);
+    min-width: 22px;
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 18px;                   /* count 박스 크기 고정 → 폰트 fallback 안전 */
+    box-sizing: border-box;
+}
+
+/* ============================================================
+ * 사용자 정보 + 로그아웃
+ * ============================================================ */
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-8);
+    color: var(--color-text-base);
+    font-size: var(--body-md);
+    font-weight: var(--font-weight-medium);
+}
+.user-info .header-icon { color: var(--color-text-muted); }
+.logout-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: var(--spacing-8);
+    color: var(--color-text-muted);
+    display: flex;
+    align-items: center;
+    border-radius: var(--radius-md);
+}
+.logout-btn:hover {
+    background: var(--color-bg-muted);
+    color: var(--color-text-danger);
+}
+
+/* ============================================================
+ * 페이지 인사 영역 (page-greeting)
+ * 모든 페이지 상단의 큰 헤더 + 한 줄 설명에 재사용
+ * ============================================================ */
+.page-greeting { margin-bottom: var(--spacing-32); }
+.page-greeting h1 {
+    font-size: var(--heading-2xl);
+    font-weight: var(--font-weight-semibold);
+    margin: 0;
+    line-height: var(--line-height-tight);
+    color: var(--color-text-base);
+}
+.page-greeting .greet-user { color: var(--color-text-base); }
+.page-greeting p {
+    margin: var(--spacing-8) 0 0 0;
+    color: var(--color-text-muted);
+    font-size: var(--body-md);
+}
+
+/* ============================================================
+ * 카드 그리드 컨테이너 (재사용)
+ * 대시보드·검색 결과·결재 목록 등에서 공유
+ * ============================================================ */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(460px, 1fr));
+    gap: var(--spacing-24);
+}
+
+/* ============================================================
+ * 카드 (재사용)
+ * ============================================================ */
+.card {
+    background: var(--color-bg-base);
+    border: 1px solid var(--color-border-base);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-24);
+    box-shadow: var(--shadow-core);
+}
+.card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--spacing-16);
+}
+.card-title {
+    font-size: var(--heading-md);
+    font-weight: var(--font-weight-semibold);
+    margin: 0;
+    line-height: var(--line-height-tight);
+    color: var(--color-text-base);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-8);
+}
+.card-title-count {
+    background: var(--color-bg-info-subtle);
+    color: var(--color-text-base);
+    border-radius: var(--radius-rounded);
+    padding: 2px 10px;
+    font-size: var(--body-sm);
+    font-weight: var(--font-weight-semibold);
+}
+
+/* ============================================================
+ * 카드 리스트 (재사용)
+ * ============================================================ */
+.card-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.card-list li {
+    display: grid;
+    grid-template-columns: 90px 1fr 84px;
+    gap: var(--spacing-12);
+    align-items: center;
+    padding: var(--spacing-12) var(--spacing-4);
+    border-bottom: 1px solid var(--color-border-base);
+    cursor: pointer;
+    transition: background 0.1s;
+    margin: 0 calc(var(--spacing-4) * -1);
+    border-radius: var(--radius-sm);
+}
+.card-list li:hover { background: var(--color-bg-muted); }
+.card-list li:last-child { border-bottom: none; }
+
+.card-list .item-title {
+    font-size: var(--body-md);
+    color: var(--color-text-base);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.card-list .item-title.is-visited { color: var(--color-text-link-visited); }
+.card-list .item-date {
+    font-size: var(--body-sm);
+    color: var(--color-text-muted);
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
+
+/* ============================================================
+ * 검색 페이지 (searchLayout.jsp) — LNB 통합 패턴
+ *   기존 searchSubMenu/sidebar 는 LNB 안에 흡수됨.
+ *   product 영역만 사용 (좌측 SUBMENU 마크업 없음)
+ * ============================================================ */
+
+.searchLayout {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-height: 0;
+    background: transparent;
+    gap: var(--spacing-12);
+}
+
+/* 우측 메인 영역 (검색 + 결과) — 전체 폭 사용 */
+.product {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 0;
+    gap: var(--spacing-12);
+}
+
+/* 기존 클래스 호환 — searchSubMenu(search.js 좌측메뉴 주입구): 옛 좌측메뉴는 LNB가 흡수함 → 아래 규칙은 '트리 없는 것만' 숨겨 트리(조직도/부서/코드) 3화면은 살림(전부숨김+예외 아님).
+   ※ menu_title·sub_menu 는 개발자 서브메뉴 실물이라 숨기면 안 됨.
+      3.0 마크업 그대로 두고 CSS로 3.1 디자인 입히는 방식으로 전환 (세영 2026-07-15) */
+.searchSubMenu:not(:has(> :not(.hide) .grid_tree)),
+.searchSubMenu .others { display: none; }   /* 보이는 트리(.hide 안걸린 .grid_tree = 조직도/부서/코드 공통마커)만 남기고 나머지 숨김. 마커를 '보이는 트리'로 일반화 → 코드관리 isTree 토글(#codeTypeTree.hide)도 자동 존중. 예외 추가 아님 (세영 2026-08-14) */
+
+/* ============================================================
+ * .main-sub — 60px LNB 옆 펼침 패널 (1level → 2level/트리)
+ *   풀 높이. main-sub-brand 가 LNB 의 K 영역까지 absolute 로 침범 (-60px),
+ *   풀 로고 가로 340px 한 박스로 표시. main-menu 의 K 심볼은 동시에 hidden.
+ * ============================================================ */
+.main-sub {
+    width: 280px;
+    height: 100vh;
+    background: var(--color-bg-base);
+    border-right: 1px solid var(--color-border-base);
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: visible;        /* main-sub-brand 의 -60 침범 허용 */
+    position: relative;
+    transition: width 0.18s ease-out;
+    /* 구 padding-top:56px (main-sub-brand 로고 자리 예약) 제거 — 그 로고를 안 쓰기로 하면서
+     * overrides 가 padding-top:0 !important 로 다시 지우고 있었음(서로 상쇄만 하던 한 쌍).
+     * 패널 여백은 아래 「LNB 서브패널」 블록의 padding 이 단일 출처 (2026-08-23) */
+}
+.main-sub.is-closed { overflow: hidden; }
+.main-sub.is-closed { width: 0; border-right: none; }
+
+/* main-sub-brand — LNB 의 K 영역까지 침범해 한 박스(60+280) 풀 로고 */
+.main-sub-brand {
+    position: absolute;
+    top: 0;
+    left: -60px;
+    width: 340px;
+    height: 56px;
+    background: var(--color-bg-base);
+    border-bottom: 1px solid var(--color-border-base);
+    padding: 0 var(--spacing-16);
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    z-index: 5;
+}
+.main-sub-brand a { display: inline-flex; text-decoration: none; }
+.main-sub-brand .full-logo {
+    height: 33px;     /* LNB K(34px) 의 시각 크기와 동일하게 환산 */
+    width: auto;
+    display: block;
+}
+.main-sub.is-closed .main-sub-brand { display: none; }
+
+.main-sub-header {
+    height: 56px;
+    padding: 0 var(--spacing-16);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--color-border-base);
+    flex-shrink: 0;
+}
+.main-sub-header h3 {
+    margin: 0;
+    font-size: var(--body-md);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-base);
+}
+.main-sub-header .sub-close {
+    width: 28px; height: 28px; padding: 0;
+    border: none; background: transparent;
+    color: var(--color-text-muted); cursor: pointer;
+    border-radius: var(--radius-sm);
+    display: inline-flex; align-items: center; justify-content: center;
+}
+.main-sub-header .sub-close:hover { background: var(--color-bg-muted); color: var(--color-text-base); }
+.main-sub-header .sub-close svg { width: 14px; height: 14px; stroke-width: 2; }
+
+/* 탭 — 메뉴 / 폴더 등. 1level 마다 조건부 (탭 1개면 안 표시) */
+.main-sub-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--color-border-base);
+    flex-shrink: 0;
+}
+.main-sub-tabs .sub-tab {
+    flex: 1;
+    padding: var(--spacing-8) var(--spacing-12);
+    border: none;
+    background: transparent;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    font-family: var(--font-family-base);
+    font-size: var(--body-sm);
+    font-weight: var(--font-weight-medium);
+    border-bottom: 2px solid transparent;
+    transition: color 0.12s, border-color 0.12s;
+}
+.main-sub-tabs .sub-tab:hover { color: var(--color-text-base); }
+.main-sub-tabs .sub-tab.is-active {
+    color: var(--color-text-brand);
+    border-bottom-color: var(--color-border-brand);
+    font-weight: var(--font-weight-semibold);
+}
+.main-sub-tabs.is-single { display: none; }   /* 탭이 1개면 헤더 영역만 표시 */
+
+.main-sub-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--spacing-8);
+}
+
+/* ============================================================
+ * .ui-datepicker — 이전 프로젝트 패턴 (input + 좌측 달력 아이콘 + range "~")
+ *   .ui-datepicker-range
+ *     ├── .ui-datepicker (1번째)
+ *     │   ├── .ui-datepicker__icon (좌측 달력 아이콘 버튼)
+ *     │   └── .ui-datepicker__input (날짜 입력)
+ *     ├── .ui-datepicker-range__sep ("~")
+ *     └── .ui-datepicker (2번째)
+ * ============================================================ */
+.ui-datepicker {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    height: var(--size-input);
+    flex: 1;
+    min-width: 0;
+    border: 1px solid var(--color-border-input);
+    border-radius: var(--radius-md);   /* 입력칸 = 버튼과 같은 모서리 (DS-ADR-011) */
+    background: var(--color-bg-input);
+    overflow: hidden;
+    box-sizing: border-box;
+    transition: border-color 0.12s, box-shadow 0.12s;
+}
+.ui-datepicker:focus-within,
+.ui-datepicker.is-active {
+    border-color: var(--color-border-focus);
+    box-shadow: 0 0 0 3px var(--color-focus-ring);   /* 포커스 = 브랜드 초록(블루 토큰 교정). 메인 검색폼 달력과 통일 (세영 2026-08-06) */
+}
+.ui-datepicker__icon {
+    width: 28px;
+    height: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-right: 1px solid var(--color-border-base);
+    background: var(--color-bg-subtle);
+    color: var(--color-text-muted);
+    cursor: pointer;
+    flex-shrink: 0;
+    padding: 0;
+    border-radius: 0;
+}
+.ui-datepicker__icon svg { width: 14px; height: 14px; }
+.ui-datepicker__icon:hover {
+    background: var(--color-bg-interactive-secondary-hover);   /* 기본(bg-subtle)과 같은 값이라 hover 가 안 보였음 */
+    color: var(--color-text-base);
+}
+.ui-datepicker__icon:focus-visible {   /* 래퍼가 overflow:hidden 이라 안쪽으로 그린다 */
+    outline: 2px solid var(--color-border-focus);
+    outline-offset: -2px;
+}
+.ui-datepicker.is-active .ui-datepicker__icon {
+    background: var(--color-bg-selected);
+    color: var(--color-text-base);
+}
+.ui-datepicker__input {
+    flex: 1;
+    min-width: 0;
+    border: none !important;
+    outline: none !important;
+    padding: 0 var(--spacing-8);
+    background: transparent;
+   
+    color: var(--color-text-base);
+    height: 100%;
+    box-shadow: none !important;
+    cursor: text;   /* 직접 입력 허용 — 달력은 아이콘 · 클릭 · Alt+↓ (DS-ADR-016) */
+}
+.ui-datepicker__input::placeholder { color: var(--color-text-disabled); }
+
+.ui-datepicker-range {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-4);
+    width: 100%;
+}
+.ui-datepicker-range__sep {
+    color: var(--color-text-muted);
+    font-size: var(--body-md);
+    flex-shrink: 0;
+    padding: 0 var(--spacing-2);
+}
+
+/* ============================================================
+ * .ui-pagination — 그리드 하단 페이지네이션 (이전 프로젝트 패턴)
+ *   <nav class="ui-pagination">
+ *     <button class="ui-pagination__btn is-disabled">‹</button>
+ *     <button class="ui-pagination__btn is-active">1</button>
+ *     <button class="ui-pagination__btn">2</button>
+ *     ...
+ *     <button class="ui-pagination__btn">›</button>
+ *   </nav>
+ * ============================================================ */
+.ui-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-4);
+    padding: 0;
+    flex-shrink: 0;
+}
+.ui-pagination__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 28px;
+    height: 28px;
+    padding: 0 var(--spacing-4);
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--color-text-base);
+    font-size: var(--body-sm);
+    font-weight: var(--font-weight-medium);
+    cursor: pointer;
+    transition: background 0.12s, color 0.12s, border-color 0.12s;
+}
+.ui-pagination__btn:hover {
+    background: var(--color-bg-muted);
+}
+.ui-pagination__btn.is-active {
+    background: var(--color-bg-selected);
+    color: var(--color-text-base);
+    font-weight: var(--font-weight-semibold);
+}
+.ui-pagination__btn:disabled,
+.ui-pagination__btn.is-disabled {
+    color: var(--color-text-disabled);
+    cursor: default;
+    background: transparent;
+}
+.ui-pagination__btn:disabled:hover,
+.ui-pagination__btn.is-disabled:hover {
+    background: transparent;
+}
+.ui-pagination__btn svg {
+    width: 14px;
+    height: 14px;
+    stroke-width: 2;
+}
+.ui-pagination__ellipsis {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    height: 32px;
+    color: var(--color-text-muted);
+}
+
+/* ============================================================
+ * 폼 등록·수정 공통 — 필수 마크 / textarea / 파일 업로드 / 섹션
+ * ============================================================ */
+
+/* 필수 표시 (라벨 옆 빨간 별표) */
+.required {
+    color: var(--color-text-danger);
+    margin-left: var(--spacing-2);
+    font-weight: var(--font-weight-bold);
+}
+.required::before { content: "*"; }
+
+.field-error-msg {
+    display: block;
+    margin-top: var(--spacing-4);
+    color: var(--color-text-danger);
+    font-size: var(--body-sm);
+    font-weight: var(--font-weight-medium);
+}
+
+
+/* .ui-file-upload 컴포넌트 24개 규칙 삭제 — JSP·JS·Java 전수조사 결과 마크업 0곳.
+   실제 파일업로드는 .resumable(자체 JS) 위젯이 담당. (세영 2026-08-22) */
+
+/* ============================================================
+ * Popup (viewDoc.jsp 패턴) — .pop > .top + .tab + .contents
+ * ============================================================ */
+.pop {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-width: 600px;
+    height: 100vh;
+    overflow-y: auto;
+    background: var(--color-bg-base);
+}   /* width/min-width = 구 3.0 .pop 루트에서 이관(단일출처). height:100vh 가 구 max-height:100vh 대체 (세영 2026-08-11)
+     * overflow-y: 구 3.0 이관값이 hidden 이었으나, 내용이 창을 넘치면 스크롤되는 게 팝업의 기본 동작이라 auto 로.
+     * .product 있는 팝업은 .product(overrides 1239)가 먼저 스크롤하므로 여기엔 스크롤바가 안 생김.
+     * .product 없는 팝업(selectRole 등)만 이 규칙이 받아준다 — 화면별 예외 불필요 (세영 2026-08-23) */
+/* .pop 이 스크롤 컨테이너가 됐으므로 타이틀바는 sticky 로 고정. 배경은 overrides 408 이 이미 흰색 지정 */
+.pop > .top { position: sticky; top: 0; z-index: 20; }
+.pop .top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--spacing-12) var(--spacing-16);
+    background: var(--color-bg-base);   /* sticky 헤더라 배경 필수(없으면 본문이 뒤로 비쳐 지나감). overrides 중복 선언을 여기로 통합 (2026-08-23) */
+    border-bottom: 1px solid var(--color-border-base);
+    flex-shrink: 0;
+}
+.pop .top-title-area {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-8);
+}
+.pop .top-title-area .doc-type-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px; height: 28px;
+    border-radius: var(--radius-sm);
+    background: var(--color-bg-info-subtle);
+    color: var(--color-text-base);
+    flex-shrink: 0;
+}
+.pop .top-title-area .doc-type-badge svg { width: 16px; height: 16px; }
+.pop .top-title-area h3 {
+    margin: 0;
+    font-size: var(--heading-md);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-base);
+    line-height: var(--line-height-tight);
+}
+.pop .top-title-area .version {
+    margin-left: var(--spacing-4);
+    padding: 2px 6px;
+    background: var(--color-bg-muted);
+    color: var(--color-text-muted);
+    font-size: var(--body-sm);
+    border-radius: var(--radius-sm);
+    font-weight: var(--font-weight-medium);
+}
+.pop .top-btn-area {
+    display: flex;
+    gap: var(--spacing-4);
+}
+.pop-close {
+    width: 32px; height: 32px;
+    border: none; background: transparent;
+    color: var(--color-text-muted); cursor: pointer;
+    border-radius: var(--radius-sm);
+    display: inline-flex; align-items: center; justify-content: center;
+}
+.pop-close:hover { background: var(--color-bg-muted); color: var(--color-text-base); }
+.pop-close svg { width: 18px; height: 18px; }
+
+/* ── 등록/상세 팝업 — 레이어·패딩·타이포 위계 (검색 디자인 시스템 확장) ──────────
+ * (1) 페이지는 한 단 가라앉은 톤, 카드(.pro_table)는 떠보이게 → 레이어감
+ * (2) 본문 좌우 패딩 (헤더/버튼/폼이 가장자리에 붙던 문제)
+ * (3) 타이포: 문서등록(타이틀) > 기본정보(섹션) > 라벨(작게·하늘색) 단계 부여 */
+body.popup { background: var(--color-bg-base); }
+/* 1. 타이틀 헤더 — 흰 배경 + 아래 구분선. 위 .pop .top 블록이 단일 출처.
+ * 여기 있던 '브랜드 CI 그라데이션' 시절 잔재(흰 반투명 뱃지 / 흰 X 아이콘 / 흰 글씨)는
+ * 헤더가 흰색으로 바뀐 뒤로 '흰 바탕에 흰 요소'라 안 보이는 죽은 값이었고, .pop 과 .pop .top 의
+ * background·border-bottom 은 위 블록과 중복이라 함께 제거 (2026-08-23) */
+.pop .top-title-area h3 { color: var(--color-text-base); }
+.pop .product { padding: var(--spacing-16); gap: var(--spacing-12); background: var(--color-bg-base); }   /* 전체 흰색 (세영 2026-07-30) */
+/* 4. 결재선 Template 셀렉트 — 우리 인풋 디자인으로 통일 */
+.pop .seach_arm .rightbt .select { width: auto; min-width: 150px; }   /* 모양은 .select (DS-ADR-010) */
+.pop .seach_arm .rightbt > span { font-size: var(--body-sm); color: var(--color-text-muted); }
+.pop .top-title-area h3 { font-weight: var(--font-weight-bold); }   /* 크기는 위 규칙(--heading-md)이 정함 — 20px 고정값 중복 제거 (DS-ADR-012) */
+/* 타이틀 배지(문서 아이콘) — 흰 헤더 위 연한 박스 */
+.pop .top-title-area .doc-type-badge svg { stroke-width: 1.8; }
+/* 기본 정보 — 아이콘 + 타이틀 회색 섹션 바 (시안 패턴) */
+.pop .seach_arm {
+    background: var(--color-bg-subtle);
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 0 4px;
+}
+.pop .seach_arm .leftbt { gap: var(--spacing-8); }
+.pop .seach_arm .rightbt { display: flex; align-items: center; gap: var(--spacing-8); }
+.pop form .seach_arm { margin: var(--spacing-16) 0 var(--spacing-8); }   /* 결재선 섹션 — 폼 카드/그리드와 위아래 간격 */
+/* .pop .seach_arm .leftbt h4 크기/굵기 하이재킹 삭제 → 웹표준 h4(globals, bold 16px) 사용 (세영 2026-08-07) */
+.pop .seach_arm .leftbt .sec-icon { display: inline-flex; align-items: center; color: var(--color-text-muted); }
+.pop .seach_arm .leftbt .sec-icon svg { width: 17px; height: 17px; }
+/* 다크 — 섹션 바 톤 */
+body.dark-mode .pop .seach_arm { background: var(--color-bg-header); border-color: var(--color-border-subtle); }
+/* 다크 — 팝업 페이지/카드 톤 (검색화면 elevation 과 동일 스케일) */
+body.dark-mode.popup { background: var(--color-bg-subtle); }
+body.dark-mode .pop { background: var(--color-bg-subtle); }
+body.dark-mode .pop .pro_table { background: var(--color-bg-base); box-shadow: none; }
+
+/* Tab — 시안용 탭 컴포넌트 */
+.pop .tab {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--color-border-base);
+    padding: 0 var(--spacing-16);
+    flex-shrink: 0;
+}
+.pop .tab ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 0;
+}
+.pop .tab li {
+    padding: var(--spacing-12) var(--spacing-16);
+    cursor: pointer;
+    color: var(--color-text-muted);
+    font-size: var(--body-md);
+    font-weight: var(--font-weight-medium);
+    border-bottom: 2px solid transparent;
+    transition: color 0.12s, border-color 0.12s;
+}
+.pop .tab li:hover { color: var(--color-text-base); }
+.pop .tab li.is-active {
+    color: var(--color-text-brand);
+    font-weight: var(--font-weight-semibold);
+    border-bottom-color: var(--color-border-brand);   /* 브랜드 포인트 라인 */
+}
+.pop .tab .tab-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-4);
+}
+
+/* Contents — 탭 내용 */
+.pop .contents {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    overflow-y: auto;
+    padding: var(--spacing-16);
+    background: var(--color-bg-base);
+}   /* display:flex/column/min-height:0 = 구 3.0 .pop .contents 에서 이관(단일출처). 내부(approval tree/list 등)가 flex-컬럼 높이제약 받아 내부 스크롤 (세영 2026-08-11) */
+
+/* key/value 라벨 (4컬럼 grid) */
+.detail-dl {
+    margin: 0;
+    display: grid;
+    grid-template-columns: 90px 1fr 90px 1fr;
+    row-gap: var(--spacing-16);     /* 행 간격 — 가독성 위해 8 → 16 */
+    column-gap: var(--spacing-12);
+}
+.detail-dl dt {
+    color: var(--color-text-muted);
+    font-size: var(--body-sm);
+    font-weight: var(--font-weight-medium);
+    align-self: center;
+}
+.detail-dl dd {
+    margin: 0;
+    color: var(--color-text-base);
+    font-size: var(--body-md);
+    align-self: center;
+}
+.detail-dl dd.span-3 { grid-column: span 3; }
+
+/* 파일 다운로드 리스트 */
+.file-download-list {
+    list-style: none; margin: 0; padding: 0;
+    display: flex; flex-direction: column;
+    gap: var(--spacing-4);
+}
+.file-download-list li {
+    display: flex; align-items: center;
+    gap: var(--spacing-8);
+    padding: var(--spacing-8) var(--spacing-12);
+    border: 1px solid var(--color-border-base);
+    border-radius: var(--radius-sm);
+    background: var(--color-bg-base);
+    font-size: var(--body-sm);
+}
+.file-download-list .file-name { flex: 1; color: var(--color-text-base); }
+.file-download-list .file-size { color: var(--color-text-muted); font-variant-numeric: tabular-nums; }
+.file-download-list .file-dl {
+    width: 28px; height: 28px; padding: 0;
+    border: none; background: transparent;
+    color: var(--color-text-base); cursor: pointer;
+    border-radius: var(--radius-sm);
+    display: inline-flex; align-items: center; justify-content: center;
+}
+.file-download-list .file-dl:hover { background: var(--color-bg-info-subtle); }
+.file-download-list svg { width: 14px; height: 14px; }
+
+/* 검색/결과 헤더 (.seach_arm) — 원본 클래스명 그대로 (오타도 보존) */
+.seach_arm {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+    margin-top: var(--spacing-8);  /* 검색조건 카드와 시각적 분리 */
+}
+.seach_arm .leftbt {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-8);
+}
+.seach_arm .leftbt h4 {   /* 크기/굵기 하이재킹 삭제 → 웹표준 h4(globals). 색·마진·라인하이트만 유지 (세영 2026-08-07) */
+    color: var(--color-text-base);
+    margin: 0;
+    line-height: var(--line-height-tight);
+}
+.seach_arm .leftbt img,
+.seach_arm .leftbt svg {
+    width: 18px;
+    height: 18px;
+    color: var(--color-text-muted);
+}
+/* 아이콘 폰트(<i class="icon-*">)도 헤더 아이콘으로 통일 — leftbt(아이콘+h4) 구조 어디서든 재사용. img/svg와 같은 muted 톤 (세영 2026-08-04) */
+.seach_arm .leftbt i {
+    font-size: 16px;
+    color: var(--color-text-muted);
+}
+.seach_arm .leftbt #count,
+.seach_arm .leftbt #total {
+    color: var(--color-text-base);
+    font-weight: var(--font-weight-semibold);
+}
+.seach_arm .leftbt .select { width: auto; margin-left: var(--spacing-8); }   /* 모양은 .select (DS-ADR-010) */
+
+.seach_arm .rightbt {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-8);
+}
+
+/* 검색 폼 영역 */
+.pro_table {
+    background: var(--color-bg-base);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-16);
+    flex-shrink: 0;
+}
+
+/* ============================================================
+ * 등록/상세 폼 — 라벨 위 + 2열 그리드 (검색폼과 동일 톤)
+ *   .ff-field = 라벨(.search-label) 위 + 컨트롤(.td) 아래. .col-2 는 한 줄 전체 차지.
+ * ============================================================ */
+.form-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-16) var(--spacing-24);
+    align-items: start;
+    width: 100%;
+}
+.form-grid-2 .ff-field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.form-grid-2 .ff-field.col-2 { grid-column: 1 / -1; }
+.form-grid-2 .ff-field > .search-label { margin: 0; }
+.form-grid-2 .ff-field .td { width: 100%; display: block; padding: 0; }
+.form-grid-2 .ff-field .checkSelect { width: 100%; }
+.form-grid-2 .ff-field input[type="file"] { font-size: var(--body-sm); color: var(--color-text-muted); }
+/* 그룹 구분 — 얇은 라인 + 소제목 (표 없이 구조감) */
+.form-grid-2 .ff-divider {
+    grid-column: 1 / -1;
+    display: flex; align-items: center; gap: var(--spacing-8);
+    margin-top: var(--spacing-4);
+    font-size: 12px; font-weight: var(--font-weight-semibold);
+    color: var(--color-text-muted);
+    letter-spacing: 0.02em;
+}
+.form-grid-2 .ff-divider::after { content: ""; flex: 1; height: 1px; background: var(--color-border-base); }
+/* 필수 미입력 검증 — 빨간 보더 (알람 대신 시각 표시) */
+.checkSelect.is-error .selected-text { border-color: var(--color-border-danger); }   /* JS 위젯 — 일반 입력칸은 aria-invalid="true" (DS-ADR-010) */
+.resumable:not(.center).is-error .resumable-drop {
+    border-color: var(--color-border-danger) !important;
+    background: var(--color-bg-danger-subtle) !important;
+}
+/* === 인풋 상태 디자인 ===
+ * 입력 인풋(편집 가능) = 채움 #F2F4F7 + 실선 + hover/focus 반응 → '여기 입력'
+ * 읽기전용 고정값(.ff-readonly) = 점선 보더 + 흐린 글씨 + 비활성 톤 → '잠김(편집 불가)' */
+.form-grid-2 .ff-readonly {
+    display: flex; align-items: center;
+    width: 100%; min-height: var(--size-input); box-sizing: border-box;
+    background-color: var(--color-bg-readonly);
+    border: 1px solid var(--color-border-base);
+    border-radius: var(--radius-md);   /* 입력칸 = 버튼과 같은 모서리 (DS-ADR-011) */
+    padding: 0 10px;
+    color: var(--color-text-muted); font-size: var(--body-sm); word-break: break-all;
+    cursor: default;
+}
+.form-grid-2 .ff-readonly.ff-multiline { display: block; white-space: pre-wrap; min-height: 56px; padding: 8px 10px; line-height: 1.5; }
+/* 상세 첨부파일 — 파일 카드(아이콘+이름). ※ detailDoc 의 <style>은 탭 로더가 head로 떨궈 무시되므로 공용에 둠 */
+.pop .pro_table .ff-readonly a { color: var(--color-text-info); text-decoration: underline; }
+.pop .pro_table .ff-field .td.ff-files { padding: 4px 0; }
+.pop .pro_table .file-view-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.pop .pro_table .file-view-list .file-item { display: flex; align-items: center; gap: 8px; padding: 7px 10px; background: var(--color-bg-base); border: 1px solid var(--color-border-base); border-radius: var(--radius-sm); }
+.pop .pro_table .file-view-list .file-icon { width: 20px; height: 20px; flex-shrink: 0; background-repeat: no-repeat; background-position: center; background-size: contain; }
+.pop .pro_table .file-view-list .file-name { font-size: var(--body-sm); color: var(--color-text-base); text-decoration: none; }
+.pop .pro_table .file-view-list a.file-name:hover { text-decoration: underline; color: var(--color-text-info); }
+
+/* ── 첨부파일 업로더(.resumable) — 시안 드롭존 (2026-08-03 팝업→전역, 바 구조) ──────
+ *   동작(resumable.js 업로드/저장) 그대로. 구조:
+ *   .resumable > .resumable-bar(파일선택 좌/전체삭제 우) + .resumable-drop(드래그영역) + ul.fileList(파일카드)
+ *   파일선택·드롭존은 파일이 있어도 유지 → 계속 추가 가능. */
+.resumable:not(.center) {
+    display: flex; flex-direction: column; gap: var(--spacing-8);
+    width: 100%;
+    margin: 0;   /* 세로 마진 0 = 같은 폼표의 일반 인풋 행(td 높이 = 인풋 높이, 여백 0)과 맞춤.
+                  * 8px 씩 위아래로 밀려 첨부 행만 td 99px(위젯 83 + 16)이 되어 밑줄과 사이가 벌어졌음 (세영 2026-08-24) */
+    border: none; background: transparent; padding: 0;
+    text-align: left;
+}
+/* 상단 바 — 파일선택(좌) / 전체삭제(우), 상시 노출 */
+.resumable:not(.center) .resumable-bar {
+    display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-8);
+}
+.resumable:not(.center) .resumable-bar__right { display: flex; align-items: center; gap: var(--spacing-8); }
+/* 라벨 옵트인(.has-label): 바 좌측 라벨 = 이름(폼라벨 초록) 위 / (양식)링크(.text-link) 아래, 세로 스택. 오른쪽엔 파일선택 버튼 */
+.resumable:not(.center) .resumable-label { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: var(--spacing-4); font-size: var(--body-sm); }
+.resumable:not(.center) .resumable-label a { font-size: var(--body-sm); }
+.resumable:not(.center) .resumable-label__name { font-size: var(--body-sm); font-weight: var(--font-weight-semibold); color: var(--color-text-brand); }
+/* 파일선택=.btn .btn--neutral .btn--outline, 전체삭제=.btn .btn--error .btn--transparent (마크업에 3.1 버튼 직접).
+ * 전체삭제는 파일 있을 때만 노출 */
+.resumable:not(.center) [data-role="clear-all"] { display: none; }
+.resumable:not(.center):has(.fileList li) [data-role="clear-all"] { display: inline-flex; }
+/* 드래그 영역 — 점선 박스(클릭·드래그로 첨부). 파일 있어도 유지 */
+/* 메일플러그식 한 줄 가로 드롭존 (아이콘+문구 인라인, 컴팩트) */
+.resumable:not(.center) .resumable-drop {
+    display: flex; flex-direction: row; align-items: center; justify-content: center; gap: var(--spacing-8);
+    padding: var(--spacing-8) var(--spacing-16);
+    border: 1.5px dashed var(--color-border-strong); border-radius: var(--radius-md);
+    background: var(--color-bg-muted); color: var(--color-text-muted);
+    text-align: center; cursor: pointer;
+    transition: border-color .15s, background .15s;
+}
+.resumable:not(.center) .resumable-drop::before {
+    content: ""; flex: 0 0 auto; width: 18px; height: 18px;
+    background: no-repeat center / contain url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239CA3AF' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'><path d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4'/><polyline points='17 8 12 3 7 8'/><line x1='12' x2='12' y1='3' y2='15'/></svg>");
+}
+.resumable:not(.center) .resumable-drop:hover,
+.resumable:not(.center) .resumable-drop.is-dragover {
+    border-color: var(--color-border-focus); background: var(--color-bg-subtle); color: var(--color-text-base);
+}
+.resumable:not(.center) .resumable-drop .drop-cta { font-size: var(--body-sm); font-weight: var(--font-weight-medium); color: var(--color-text-muted); }
+/* 선택된 파일 카드 리스트 */
+.resumable:not(.center) .fileList { list-style: none; margin: 0; padding: 0; width: 100%; display: flex; flex-direction: column; gap: 6px; }
+.resumable:not(.center) .fileList .file-item {
+    display: flex; align-items: center; gap: 8px;
+    padding: 7px 10px;
+    background: var(--color-bg-base);
+    border: 1px solid var(--color-border-base);
+    border-radius: var(--radius-sm);
+    font-size: var(--body-sm);
+    text-align: left;
+}
+.resumable:not(.center) .fileList .file-item .file-icon { flex: 0 0 auto; width: 20px; height: 20px; display: inline-flex; align-items: center; justify-content: center; }
+.resumable:not(.center) .fileList .file-item .file-icon img { width: 20px; height: 20px; object-fit: contain; }
+.resumable:not(.center) .fileList .file-item .file-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--color-text-base); text-decoration: none; }
+/* 기존 파일 이름은 다운로드 링크(<a>) — 카드 톤 유지, hover 시에만 밑줄 */
+.resumable:not(.center) .fileList .file-item a.file-name:hover { text-decoration: underline; color: var(--color-text-base); }
+.resumable:not(.center) .fileList .file-item .file-size { flex: 0 0 auto; color: var(--color-text-muted); font-variant-numeric: tabular-nums; }
+.resumable:not(.center) .fileList .file-item progress { flex: 0 0 70px; height: 6px; }
+.resumable:not(.center) .fileList .file-item .remove-btn {
+    flex: 0 0 auto; margin-left: 2px; cursor: pointer;
+    width: 20px; height: 20px; padding: 0;
+    border: none; background: transparent; color: var(--color-text-muted);
+    display: inline-flex; align-items: center; justify-content: center; border-radius: var(--radius-sm);
+}
+.resumable:not(.center) .fileList .file-item .remove-btn:hover { background: var(--color-bg-muted); color: var(--color-text-danger); }
+.resumable:not(.center) .fileList .file-item .remove-btn svg { width: 14px; height: 14px; }
+/* 다크 */
+body.dark-mode .resumable:not(.center) .resumable-drop { background: var(--color-bg-header); border-color: var(--color-border-base); }
+body.dark-mode .resumable:not(.center) .fileList .file-item { background: var(--color-bg-muted); border-color: var(--color-border-base); }
+
+/* 검색 폼 테이블 (mainTable) — 4 라벨/입력 페어 × N row */
+.mainTable {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+.mainTable col.colDocHeader  { width: 100px; }
+.mainTable col.colDocTextArea { width: auto;  }
+.mainTable col.colDocBlank   { width: 1%;    }
+.mainTable th {
+    color: var(--color-text-info-bold);
+    font-size: var(--body-sm);
+    font-weight: var(--font-weight-semibold);
+    text-align: left;
+    padding: var(--spacing-4) var(--spacing-12);
+    border: 1px solid var(--color-border-base);
+    vertical-align: middle;
+    line-height: var(--line-height-tight);
+}
+.mainTable td {
+    padding: var(--spacing-4) var(--spacing-8);
+    border: 1px solid var(--color-border-base);
+    vertical-align: middle;
+}
+.mainTable .td {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-4);
+}
+.mainTable .td.over {
+    overflow: hidden;
+}
+
+
+/* GNB 결재/활동 카운트 뱃지 — 다크 전용 글자색 선언 삭제(세영 2026-08-25).
+ * 배경이 --color-bg-inverse 라 라이트=짙게/다크=밝게 자동으로 뒤집히고,
+ * 글자는 짝인 --color-text-inverse 가 같이 뒤집힘. 여기서 흰색으로 고정하면 다크에서 흰 글자+흰 배경이 됨. */
+
+/* 커스텀 체크박스 (.checkbox) — 라디오와 톤 통일, 사각형 + 체크마크 */
+.checkbox {
+    display: inline-flex;
+    align-items: flex-start;          /* 라벨이 두 줄이 되면 표식은 첫 줄에 (E-4 검수 #2) */
+    gap: var(--spacing-8);            /* 4 → 8, 라디오·스위치와 같게 (E-4 검수 #3) */
+    cursor: pointer;
+    user-select: none;
+    font-size: var(--body-md);
+    color: var(--color-text-base);
+    margin-right: var(--spacing-16);  /* 12 → 16, 라디오와 같게 */
+    word-break: keep-all;             /* 한글 낱말 중간에서 줄바꿈 안 함 (E-4 검수 #1) */
+}
+.radio .radio__mark { margin-top: calc((1lh - 16px) / 2); }   /* 표식을 첫 줄 가운데에 */
+.checkbox input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    margin: calc((1lh - 16px) / 2) 0 0;   /* 표식을 첫 줄 가운데에 */
+    border: 1.5px solid var(--color-border-input);
+    border-radius: var(--radius-sm);   /* 고정 3px → 토큰 (DS-ADR-011) */
+    background: var(--color-bg-base);
+    cursor: pointer;
+    position: relative;
+    flex-shrink: 0;
+    vertical-align: middle;
+    transition: background 0.12s, border-color 0.12s;
+}
+.checkbox input[type="checkbox"]:checked {
+    background: var(--color-bg-checked);
+    border-color: var(--color-bg-checked);
+}
+.checkbox input[type="checkbox"]:checked::after {
+    content: '';
+    position: absolute;
+    top: 1px;
+    left: 4px;
+    width: 4px;
+    height: 8px;
+    border: solid var(--color-icon-on-color);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+.checkbox input[type="checkbox"]:focus-visible {
+    outline: 2px solid var(--color-border-focus);
+    outline-offset: 2px;
+}
+/* 우리 디자인 체크박스 disabled 상태 추가 (세영 2026-08-15) */
+.checkbox input[type="checkbox"]:disabled {
+    background: var(--color-bg-subtle);
+    border-color: var(--color-border-base);
+    cursor: not-allowed;
+}
+/* Selection Controls (2026-10-06) — 조합 상태 · 부분 선택 · hover · 포커스 (D-1 CombinedState, 명세 5항) */
+.checkbox input[type="checkbox"]:hover:not(:disabled):not(:checked):not(:indeterminate) { border-color: var(--color-border-input-hover); }
+/* 부분 선택 — JS 로 el.indeterminate = true. 스크린리더는 네이티브가 '혼합(mixed)'으로 읽음 */
+.checkbox input[type="checkbox"]:indeterminate {
+    background: var(--color-bg-checked);
+    border-color: var(--color-bg-checked);
+}
+.checkbox input[type="checkbox"]:indeterminate::after {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 8px; height: 2px;
+    background: var(--color-icon-on-color);
+    transform: translate(-50%, -50%);
+}
+/* 선택됨 + 비활성 — 연회색 칸 + 회색 표식. 체크박스·라디오·스위치 같은 규칙 (DS-ADR-015, Figma와 같음).
+ * 비활성 규칙이 체크를 덮어 흰 체크가 사라지던 문제도 이걸로 해결 */
+.checkbox input[type="checkbox"]:disabled:checked,
+.checkbox input[type="checkbox"]:disabled:indeterminate {
+    background: var(--color-bg-disabled);
+    border-color: var(--color-bg-disabled);
+}
+.checkbox input[type="checkbox"]:disabled:checked::after { border-color: var(--color-icon-disabled); }
+.checkbox input[type="checkbox"]:disabled:indeterminate::after { background: var(--color-icon-disabled); }
+.checkbox:has(input:disabled) { cursor: not-allowed; color: var(--color-text-muted); }
+/* ═══ 그리드 행/헤더 선택 체크박스(.aui-label .aui-checkbox)를 우리 .checkbox 디자인과 통일 — 3상태: 기본(흰bg+보더) / 체크(브랜드bg+흰체크) / disabled(회색). 네이티브는 background 무시라 appearance:none 필수(순수 시각 — AUIGrid .checked 선택로직 무관). `.aui-label` 스코프=행+헤더 선택박스만(스위치토글 .aui-switch-toggle-label 제외 확인). styles.css .aui-checkbox(333)·input[type=checkbox](440) !important 이겨야 해 (0,2,0)+!important. 회색 회귀 아니라 상태 정의(세영 2026-08-15) ═══ */
+.aui-label .aui-checkbox {
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    width: 16px; height: 16px; margin: 0;
+    border: 1.5px solid var(--color-border-input) !important;
+    border-radius: var(--radius-sm) !important;   /* 고정 3px → 토큰 (DS-ADR-011) */
+    background: var(--color-bg-base) !important;
+    cursor: pointer;
+    position: relative;
+    vertical-align: middle;
+}
+.aui-label .aui-checkbox:checked {
+    background: var(--color-bg-checked) !important;
+    border-color: var(--color-bg-checked) !important;
+}
+.aui-label .aui-checkbox:checked::after {
+    content: '';
+    position: absolute;
+    top: 1px; left: 4px;
+    width: 4px; height: 8px;
+    border: solid var(--color-icon-on-color);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+.aui-label .aui-checkbox:disabled {
+    background: var(--color-bg-subtle) !important;
+    border-color: var(--color-border-base) !important;
+    cursor: not-allowed;
+}
+
+/* ═══ 커스텀 라디오 .radio — 단일 출처 (2026-07-20 통합)
+ *   3.0 radio.css(파란 #024FC0 + checkmark top/left:2px + padding-left:25px)를 여기서 전부 덮음.
+ *   components 가 radio.css 보다 나중 로드라 !important 불필요.
+ *   스코프 프리픽스 없음 = 검색폼·pro_table·팝업 어디서든 재사용 ═══ */
+.radio {
+    display: inline-flex;
+    align-items: flex-start;
+    word-break: keep-all;
+    gap: var(--spacing-8);
+    padding-left: 0;                 /* radio.css 25px 무효화 */
+    margin-right: var(--spacing-16);
+    cursor: pointer;
+    user-select: none;
+    font-size: var(--body-md);
+    color: var(--color-text-base);
+}
+.radio input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+.radio .radio__mark {
+    position: relative;
+    top: 0;                          /* radio.css top:2px 무효화 → 라벨과 세로 정중앙 */
+    left: 0;
+    width: 16px;
+    height: 16px;
+    border: 1.5px solid var(--color-border-input);
+    border-radius: 50%;
+    background: var(--color-bg-base);
+    flex-shrink: 0;
+}
+.radio input[type="radio"]:checked + .radio__mark {
+    background: var(--color-bg-checked);    /* 체크박스와 같은 토큰(brand-700 pressed) — 단일 출처 (세영 2026-08-25) */
+    border-color: var(--color-bg-checked);
+}
+.radio input[type="radio"]:checked + .radio__mark::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-icon-on-color);
+}
+/* hover · 포커스 — input 을 투명하게 숨기므로 포커스 링은 표식(.radio__mark)에 그린다. 없으면 키보드 위치가 안 보임 (2026-10-06) */
+.radio input[type="radio"]:hover:not(:disabled):not(:checked) + .radio__mark { border-color: var(--color-border-input-hover); }
+.radio input[type="radio"]:focus-visible + .radio__mark {
+    outline: 2px solid var(--color-border-focus);
+    outline-offset: 2px;
+}
+/* disabled — 비활성 라디오는 회색(초록 아님) + 인터랙션 없음 (세영 2026-07-29) */
+.radio:has(input:disabled) { cursor: not-allowed; color: var(--color-text-muted); }
+.radio input[type="radio"]:disabled + .radio__mark { border-color: var(--color-border-base); background: var(--color-bg-muted); }
+.radio input[type="radio"]:disabled:checked + .radio__mark { background: var(--color-bg-disabled); border-color: var(--color-bg-disabled); }   /* 선택됨+비활성 = 연회색 (DS-ADR-015) */
+.radio input[type="radio"]:disabled:checked + .radio__mark::after { background: var(--color-icon-disabled); }
+/* 다크모드 */
+body.dark-mode .radio .radio__mark { background: var(--color-bg-muted); }   /* 테두리 고정 #7A828C → border-input 토큰으로 (DS-ADR-013) */
+/* 다크 checked 덮어쓰기 2줄 삭제 — 토큰이 다크 값을 가짐. 남아 있으면 선택됨+비활성이 브랜드색으로 뜸 (2026-10-06) */
+
+/* ═══ 스위치 .switch (Selection Controls · 2026-10-06)
+ *   <label class="switch"><input type="checkbox" role="switch">자동 저장</label>
+ *   네이티브 checkbox + role="switch" — 스크린리더가 '켜짐/꺼짐'으로 읽고, Space 로 토글. 켜짐 = :checked (클래스 없음, D-1 OnStateNaming)
+ *   즉시 반영되는 설정에만 쓴다. 저장 버튼을 눌러야 반영되는 값은 체크박스
+ *   치수 = Figma Switch: 트랙 48×24 · 손잡이 16 · 안쪽 여백 4 ═══ */
+.switch {
+    display: inline-flex;
+    align-items: center;              /* 트랙(24)이 글줄보다 높아 가운데 정렬 — 스위치 라벨은 짧게 쓴다 */
+    word-break: keep-all;
+    margin-right: var(--spacing-16);
+    gap: var(--spacing-8);
+    cursor: pointer;
+    user-select: none;
+    font-size: var(--body-md);
+    color: var(--color-text-base);
+}
+.switch input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    position: relative;
+    flex-shrink: 0;
+    width: 48px;
+    height: 24px;
+    margin: 0;
+    border: 1px solid var(--color-border-input);   /* 꺼짐 트랙 경계 3:1 (DS-ADR-013) */
+    border-radius: var(--radius-rounded);
+    background: var(--color-bg-interactive-secondary);
+    cursor: pointer;
+    transition: background 0.12s, border-color 0.12s;
+}
+.switch input[type="checkbox"]::before {   /* 손잡이 */
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 3px;                              /* 4 − 테두리 1 */
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--color-border-input);  /* 꺼짐 손잡이 = 테두리와 같은 회색 — 흰 손잡이는 연한 트랙 위에서 안 보임 */
+    transform: translateY(-50%);
+    transition: transform 0.12s, background 0.12s;
+}
+.switch input[type="checkbox"]:hover:not(:disabled):not(:checked) { border-color: var(--color-border-input-hover); }
+.switch input[type="checkbox"]:checked {
+    background: var(--color-bg-checked);
+    border-color: var(--color-bg-checked);
+}
+.switch input[type="checkbox"]:checked::before {
+    background: var(--color-icon-on-color);
+    transform: translate(24px, -50%);       /* 48 − 16 − 4×2 */
+}
+.switch input[type="checkbox"]:focus-visible {
+    outline: 2px solid var(--color-border-focus);
+    outline-offset: 2px;
+}
+.switch input[type="checkbox"]:disabled {
+    background: var(--color-bg-disabled);
+    border-color: var(--color-border-disabled);
+    cursor: not-allowed;
+}
+.switch input[type="checkbox"]:disabled::before { background: var(--color-icon-disabled); }
+/* 켜짐+비활성 = 꺼짐+비활성과 같은 연회색, 손잡이 위치로만 구분 (DS-ADR-015) */
+.switch:has(input:disabled) { cursor: not-allowed; color: var(--color-text-muted); }
+@media (prefers-reduced-motion: reduce) {
+    .switch input[type="checkbox"],
+    .switch input[type="checkbox"]::before,
+    .input, .select, .textarea, .ui-datepicker, .checkbox input[type="checkbox"] { transition: none; }   /* E-4 검수 2026-10-06 */
+}
+
+/* 그리드 결과 영역
+ * 기본: flex 0 0 auto (등록 폼의 결재선 그리드 등 — 자연 height 인 inline style 따라감)
+ * 검색 페이지: .searchLayout .table_list 셀렉터로 flex: 1 부여 (아래) */
+.table_list {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+    box-sizing: border-box;
+    padding: 0;
+    background: var(--color-bg-base);
+    border: 1px solid var(--color-border-base);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+}
+/* 검색 페이지 (04/08/09) 의 그리드만 main-content 남은 공간 차지 */
+.searchLayout .table_list {
+    flex: 1;
+}
+.table_list .list {
+    width: 100%;           /* AUI Grid 컨테이너 — 부모 폭 100% 보장 */
+    height: 100%;
+    flex-grow: 1;
+    overflow-y: auto;
+    overflow-x: hidden;    /* AUI Grid 내부 hscrollbar (aui-hscrollbar) sub-pixel 초과 폭 차단 */
+    min-height: 0;         /* 페이지별 inline height 가 자유롭게 잡히도록 */
+    border-radius: 0 0 var(--radius-md) var(--radius-md);
+}
+/* 그리드 외곽선은 카드(.table_list)가 그린다 = 벤더 .aui-grid{border:1px #bdbdbd} 를 끔.
+ * 안 끄면 카드 보더 + 그리드 보더가 1px 간격으로 두 줄이 됨.
+ * 화면별로 흩어져 있던 같은 규칙 5개(appendGrid·approvalLineGrid·pop .contents·검색팝업·contents)를 여기로 통합 (세영 2026-08-24) */
+.table_list .aui-grid { border: none; border-radius: 0; }
+/* AUI Grid 내부 사이징 fix (max-width / 가로스크롤바 hide / content-panel-mask / body-panel)
+ * → AUIGrid_custom_style.css 로 이관 (시스템 컨벤션: 그리드 내부 룰은 custom 파일). */
+/* 검색 페이지에서만 .list 가 .table_list 의 남은 공간 차지 (그리드 화면 가득) */
+.searchLayout .table_list .list {
+    flex: 1;
+}
+
+/* 결과 영역 액션 버튼 그룹 */
+.button_group {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-4);
+}
+
+/* ============================================================
+ * 입력칸 — .input · .select · .textarea (DS-ADR-010)
+ * 피그마 Text Field · Select · Text Area 와 같은 이름. 모양은 여기 한 곳에서만 정한다.
+ * 상태: :hover · :focus(보더 + 3px 링) · [aria-invalid="true"](Error) · :disabled · [readonly]
+ *   Filled = 값이 있는 기본 상태(별도 규칙 없음) · Pressed 없음(입력칸은 누르면 곧 focus)
+ * 화면별 규칙(.mainTable · .form-grid-2 · 검색 영역 …)은 너비·높이·여백만 둔다.
+ * JS 위젯 안쪽 칸(.checkSelect · .ui-datepicker · 트리 검색)은 위젯이 자기 박스를 갖되 같은 토큰을 쓴다.
+ * ============================================================ */
+.input,
+.select,
+.textarea {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid var(--color-border-input);   /* 3:1 전용 토큰 (DS-ADR-013) */
+    border-radius: var(--radius-md);   /* 입력칸 = 버튼과 같은 모서리 (DS-ADR-011) */
+    background-color: var(--color-bg-input);   /* shorthand 금지 — .select 화살표(background-image) 보존 */
+    color: var(--color-text-base);
+    font-family: var(--font-family-base);
+    font-size: var(--body-md);
+    transition: border-color 0.12s, box-shadow 0.12s;
+}
+.input,
+.select {
+    height: var(--size-input);
+    padding: 0 var(--spacing-8);
+}
+.select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    padding-right: 32px;   /* 화살표 16 + 좌우 8 */
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23454A51' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right var(--spacing-8) center;
+    background-size: 16px 16px;
+    cursor: pointer;
+}
+body.dark-mode .select {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23E5E7EB' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+}
+.select::-ms-expand { display: none; }
+.textarea {
+    min-height: 80px;
+    padding: var(--spacing-8);
+    line-height: 1.5;
+    resize: vertical;
+}
+.input::placeholder,
+.textarea::placeholder { color: var(--color-text-muted); }
+
+/* hover = 회색 한 단계(은은), 브랜드색은 focus 만 (세영 2026-08-11 규칙) */
+.input:hover,
+.select:hover,
+.textarea:hover { border-color: var(--color-border-input-hover); }
+.input:focus,
+.select:focus,
+.textarea:focus {
+    outline: none;
+    border-color: var(--color-border-focus);
+    box-shadow: 0 0 0 3px var(--color-focus-ring);
+}
+/* Error — 검증 스크립트가 aria-invalid="true" 를 붙인다(스크린리더도 읽음). 메시지는 .field-error-msg */
+.input[aria-invalid="true"],
+.select[aria-invalid="true"],
+.textarea[aria-invalid="true"] { border-color: var(--color-border-danger); }
+.input:disabled,
+.select:disabled,
+.textarea:disabled {
+    background-color: var(--color-bg-disabled);
+    border-color: var(--color-border-disabled);
+    color: var(--color-text-disabled);
+    cursor: not-allowed;
+}
+/* readonly = 회색 박스 하나로 — 한 줄 · 여러 줄 · 상세 폼 .ff-readonly 가 같은 모양 (DS-ADR-017, 2026-10-08)
+ * 옛 방식(한 줄은 테두리·배경 없이 값처럼)은 같은 화면에 모양이 둘이라 폐기. 테두리는 연한 base → 편집 칸(border-input)과 구분
+ * hover · 클릭 강조 없음. 키보드 포커스만 링(값 복사하러 들어올 수 있음 — WCAG 2.4.7) */
+.input[readonly],
+.textarea[readonly] {
+    background-color: var(--color-bg-readonly);
+    border-color: var(--color-border-base);
+    color: var(--color-text-muted);
+    cursor: default;
+}
+.textarea[readonly] { resize: none; }
+.input[readonly]:hover,
+.input[readonly]:focus,
+.textarea[readonly]:hover,
+.textarea[readonly]:focus { border-color: var(--color-border-base); box-shadow: none; }
+.input[readonly]:focus-visible,
+.textarea[readonly]:focus-visible { box-shadow: 0 0 0 3px var(--color-focus-ring); }
+
+/* ============================================================
+ * 버튼 (P2 Button · 2026-10-04)
+ * .btn + 중요도 .btn--{primary|secondary|destructive} + 모양 .btn--{filled|outlined|transparent}
+ * 피그마 Button 의 Type × Style 과 같은 말. 색은 중요도로 정한다(CRUD 아님, DS-ADR-005)
+ *   primary     = 그 영역의 핵심 동작 1개(등록·저장·확인) — 브랜드
+ *   secondary   = 보조 동작(조회·검색·선택 / 취소·닫기·초기화) — 회색
+ *   destructive = 삭제 등 되돌릴 수 없는 동작 — 빨강
+ * 상태: :hover · :active(pressed) · :focus-visible · :disabled/[aria-disabled] · .is-loading
+ * 옛 이름(.btn_blue · _green · _gray · _red · _excel 등)은 v1.0에 없다 — 대응표는 DS-ADR-009
+ * ============================================================ */
+.btn {
+    /* 중요도별 값 — 아래 .btn--{중요도} 가 채움. 기본 = secondary */
+    --btn-solid:          var(--color-bg-interactive-secondary);
+    --btn-solid-hover:    var(--color-bg-interactive-secondary-hover);
+    --btn-solid-pressed:  var(--color-bg-interactive-secondary-pressed);
+    --btn-on-solid:       var(--color-text-interactive-secondary);
+    --btn-fg:             var(--color-text-interactive-secondary);
+    --btn-fg-hover:       var(--color-text-interactive-secondary-hover);
+    --btn-fg-pressed:     var(--color-text-interactive-secondary-pressed);
+    --btn-line:           var(--color-border-interactive-secondary);
+    --btn-line-hover:     var(--color-border-interactive-secondary-hover);
+    --btn-line-pressed:   var(--color-border-interactive-secondary-pressed);
+    --btn-tint-hover:     var(--color-bg-interactive-secondary-hover);
+    --btn-tint-pressed:   var(--color-bg-interactive-secondary-pressed);
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-4);
+    height: var(--size-btn);
+    padding: 0 var(--spacing-12);
+    border-radius: var(--radius-md);
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--btn-fg);
+    font-size: var(--body-sm);
+    font-weight: var(--font-weight-medium);
+    font-family: var(--font-family-base);
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+.btn img, .btn svg { width: 14px; height: 14px; flex-shrink: 0; }
+.btn svg { color: currentColor; }
+
+.btn--primary {
+    --btn-solid:         var(--color-bg-btn-primary);
+    --btn-solid-hover:   var(--color-bg-btn-primary-hover);
+    --btn-solid-pressed: var(--color-bg-interactive-primary-pressed);
+    --btn-on-solid:      var(--color-text-btn-primary);
+    --btn-fg:            var(--color-text-brand);
+    --btn-fg-hover:      var(--color-text-interactive-primary-hover);
+    --btn-fg-pressed:    var(--color-text-interactive-primary-pressed);
+    --btn-line:          var(--color-border-brand);
+    --btn-line-hover:    var(--color-border-interactive-primary-hover);
+    --btn-line-pressed:  var(--color-border-interactive-primary-pressed);
+}
+.btn--secondary { /* = .btn 기본값 */ }
+.btn--destructive {
+    --btn-solid:         var(--color-bg-interactive-danger);
+    --btn-solid-hover:   var(--color-bg-interactive-danger-hover);
+    --btn-solid-pressed: var(--color-bg-interactive-danger-pressed);
+    --btn-on-solid:      var(--color-text-on-color);
+    --btn-fg:            var(--color-text-danger);
+    --btn-fg-hover:      var(--color-text-danger-bold);
+    --btn-fg-pressed:    var(--color-text-danger-bold);
+    --btn-line:          var(--color-border-interactive-danger);
+    --btn-line-hover:    var(--color-border-interactive-danger-hover);
+    --btn-line-pressed:  var(--color-border-interactive-danger-pressed);
+    --btn-tint-hover:    var(--color-bg-danger-subtle);
+    --btn-tint-pressed:  var(--color-bg-danger-subtle);
+}
+
+/* 모양 */
+.btn--filled               { background: var(--btn-solid);         color: var(--btn-on-solid); }
+.btn--filled:hover         { background: var(--btn-solid-hover); }
+.btn--filled:active        { background: var(--btn-solid-pressed); }
+.btn--primary.btn--filled  { border-color: var(--color-border-btn-primary); }      /* 다크에서만 브랜드 보더 */
+.btn--primary.btn--filled:hover { border-color: var(--color-border-btn-primary-hover); }
+
+.btn--outlined             { background: var(--color-bg-base);     color: var(--btn-fg); border-color: var(--btn-line); }
+.btn--outlined:hover       { background: var(--btn-tint-hover);    color: var(--btn-fg-hover);   border-color: var(--btn-line-hover); }
+.btn--outlined:active      { background: var(--btn-tint-pressed);  color: var(--btn-fg-pressed); border-color: var(--btn-line-pressed); }
+
+.btn--transparent          { background: transparent;              color: var(--btn-fg); }
+.btn--transparent:hover    { background: var(--btn-tint-hover);    color: var(--btn-fg-hover); }
+.btn--transparent:active   { background: var(--btn-tint-pressed);  color: var(--btn-fg-pressed); }
+
+/* 포커스 — 떼어낸 아웃라인 (명세 0-1, E-4 검수 2026-10-06).
+ * 구 방식(보더 + 3px 번짐)은 브랜드·위험 채움 버튼에서 보더가 면과 같은 색(1.2:1), 번짐도 바탕과 1.7(다크 1.1)이라
+ * 포커스가 안 보였음 → 체크박스·라디오·스위치·달력과 같은 2px 오프셋 아웃라인 하나로 */
+.btn:focus-visible {
+    outline: 2px solid var(--color-border-focus);
+    outline-offset: 2px;
+}
+
+/* 비활성 · 로딩 */
+.btn:disabled, .btn[aria-disabled="true"],
+.btn:disabled:hover, .btn[aria-disabled="true"]:hover {
+    background: var(--color-bg-disabled);
+    color: var(--color-text-disabled);
+    border-color: transparent;
+    box-shadow: none;
+    cursor: not-allowed;
+}
+.btn--outlined:disabled, .btn--outlined[aria-disabled="true"] { border-color: var(--color-border-disabled); }
+.btn.is-loading { cursor: progress; pointer-events: none; }
+
+/* 유틸리티 — 엑셀 (브랜드와 무관한 Excel 초록, 예외 1개) */
+.btn--excel {
+    background: var(--color-bg-btn-excel);
+    color: var(--color-text-btn-excel);
+    border-color: var(--color-border-btn-excel);
+}
+.btn--excel:hover  { background: var(--color-bg-btn-excel-hover); border-color: var(--color-border-btn-excel-hover); }
+.btn--excel:active { background: var(--color-bg-btn-excel-active); }
+.btn--excel img    { width: 16px; height: 16px; }
+
+/* 아이콘만 있는 버튼 (.btn--icon) — 정사각형. 피그마 Icon Button 과 같은 역할. 접근성 이름은 aria-label 로
+ * <button class="btn btn--secondary btn--transparent btn--icon" aria-label="닫기"><svg …/></button>
+ * 켜고 끄는 버튼이면 aria-pressed 를 함께 (피그마 Toggle Icon Button) */
+.btn--icon { width: var(--size-btn); padding: 0; }
+.btn--icon svg, .btn--icon img { width: 16px; height: 16px; }
+.btn--icon[aria-pressed="true"] { background: var(--color-bg-selected); color: var(--color-text-brand); }
+.btn--icon[aria-pressed="true"]:hover  { background: var(--color-bg-interactive-selected-hover); }
+.btn--icon[aria-pressed="true"]:active { background: var(--color-bg-interactive-selected-pressed); }
+
+/* 펼침 토글 (.btn--expand) — 상세검색처럼 영역을 접고 펴는 버튼. secondary outlined 와 같이 쓴다
+ * <button class="btn btn--secondary btn--outlined btn--expand" aria-expanded="false">상세검색</button>
+ * 구 .btn_green.DetailedSearch (v3.1 overrides) 를 새 이름으로 */
+.btn--expand { position: relative; min-width: 132px; padding-right: 28px; }
+.btn--expand::after {
+    content: ""; position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+    width: 14px; height: 14px; background-color: currentColor; transition: transform .2s ease;
+    -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>") center/contain no-repeat;
+            mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>") center/contain no-repeat;
+}
+.btn--expand[aria-expanded="true"]::after { transform: translateY(-50%) rotate(180deg); }
+
+
+/* AUI Grid 라이트모드 헤더 브랜드(주색 회색 + zebra + 선택 포인트 빨강, 고객사 테마)
+ * → AUIGrid_custom_style.css 로 이관. 다크 그리드 룰도 같은 파일에서 관리. */
+
+
+/* =====================================================================
+ * datepicker - 자체 캘린더 컴포넌트
+ * calendar / month / year 디자인 반영.
+ * 동작: 월/연도 클릭 -> dropdown 오버레이 / Today -> 오늘로 이동
+ * 오늘 = stroke / 선택 = bg / outside-month = 옅은 회색
+ * ===================================================================== */
+.datepicker {
+    position: absolute;
+    z-index: 1000;
+    width: 250px;
+    background: var(--color-bg-base);
+    border-radius: var(--radius-md);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.08);
+    font-family: var(--font-family-base);
+    font-size: var(--body-sm);
+    color: var(--color-text-base);
+    padding: 12px;
+    display: none;
+}
+.datepicker.is-open { display: block; }
+
+/* Today 버튼을 헤더 위 별도 행으로 분리 (우측 정렬) */
+.datepicker__topbar {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 6px;
+}
+
+.datepicker__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+/* prev/next 화살표 — 네모 박스 + 드롭 그림자 (피그마 시안 반영) */
+.datepicker__nav {
+    background: var(--color-bg-base);
+    border: 1px solid var(--color-border-base);
+    width: 28px; height: 28px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-base);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04);
+}
+/* ── 달력 내부 호버 = 옅은 브랜드색(--color-bg-brand-subtle). 회색(neutral-50)은 흰 배경 위에서 거의 안 보였음.
+      구 --brand-100 직접 지정은 다크에서 안 뒤집혀 달력에 흰 조각으로 떴음 (세영 2026-08-23 / 2026-08-25) ── */
+.datepicker__nav:hover {
+    background: var(--color-bg-brand-subtle);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.12), 0 3px 6px rgba(0,0,0,0.06);
+}
+.datepicker__title-area {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    justify-content: center;
+}
+/* Month / Year 버튼 — 밑줄로 인터랙티브성 표시 (피그마 시안 반영) */
+.datepicker__month-btn, .datepicker__year-btn {
+    background: transparent;
+    border: none;
+    font-size: var(--body-md);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-base);
+    cursor: pointer;
+    padding: 4px 6px;
+    border-radius: var(--radius-sm);
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+}
+.datepicker__month-btn:hover, .datepicker__year-btn:hover { background: var(--color-bg-brand-subtle); }
+.datepicker__month-btn::after, .datepicker__year-btn::after {
+    content: "";
+    width: 0; height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 4px solid var(--color-text-base);
+    margin-left: 2px;
+}
+/* Today 버튼 = .btn .btn--secondary .btn--filled (모양은 버튼 체계, DS-ADR-016). 옛 전용 모양 삭제 */
+
+.datepicker__weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0;
+    margin-bottom: 4px;
+}
+/* 요일 라벨 — 피그마 시안 굵기 매칭 */
+.datepicker__weekday {
+    text-align: center;
+    font-size: var(--body-sm);
+    color: var(--color-text-muted);
+    padding: 8px 0;
+    font-weight: var(--font-weight-semibold);
+}
+
+.datepicker__grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+}
+.datepicker__day {
+    aspect-ratio: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-md);            /* 피그마 시안 — 네모 4px */
+    cursor: pointer;
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--color-text-base);
+    font-size: var(--body-sm);
+    font-weight: var(--font-weight-semibold);   /* 피그마 시안 굵기 매칭 */;
+}
+.datepicker__day:hover {
+    background: var(--color-bg-brand-subtle);
+    color: var(--color-text-on-brand-subtle);   /* 배경과 한 쌍 — 안 주면 글자가 --color-text-base(다크=거의 흰색) 그대로라 옅은 칩 위에서 안 보였음 (세영 2026-08-25) */
+}
+/* 오늘 보더 / 선택 배경 — 브랜드 500 (메인, 가독성 ↑) */
+.datepicker__day.is-today {
+    border-color: var(--color-border-brand);
+    color: var(--color-text-brand);
+    font-weight: var(--font-weight-semibold);
+}
+.datepicker__day.is-selected {
+    background: var(--color-bg-brand) !important;
+    color: var(--color-text-on-color) !important;
+    border-color: var(--color-border-brand);
+}
+.datepicker__day.is-outside {
+    color: var(--color-text-muted);   /* 누를 수 있는 날짜라 4.5:1 필요 — text-disabled 는 2.3(라이트)·1.8(다크)이었음 (E-4 검수 #1, DS-ADR-016) */
+}
+.datepicker__day.is-outside:hover { color: var(--color-text-on-brand-subtle); }   /* 이월/전월 날짜도 호버하면 읽히게 */
+/* ── Date Picker 접근성 · 상태 (DS-ADR-016) ── */
+.datepicker__week { display: contents; }   /* role="row" 묶음 — 7칸 그리드 배치는 그대로 */
+.datepicker__day.is-in-range {             /* 기간 칸 사이 날짜 */
+    background: var(--color-bg-brand-subtle);
+    color: var(--color-text-on-brand-subtle);
+}
+.datepicker__day.is-disabled,
+.datepicker__day.is-disabled:hover {       /* min / max 밖 — 고를 수 없음 */
+    background: transparent;
+    color: var(--color-text-disabled);
+    text-decoration: line-through;         /* 색만으로 구분하지 않음 */
+    cursor: not-allowed;
+}
+.datepicker__day:focus-visible,
+.datepicker__nav:focus-visible,
+.datepicker__month-btn:focus-visible,
+.datepicker__year-btn:focus-visible,
+.datepicker__dropdown-item:focus-visible {
+    outline: 2px solid var(--color-border-focus);
+    outline-offset: 2px;
+}
+.datepicker__dropdown-item:focus-visible { outline-offset: -2px; }   /* 스크롤 상자 안이라 안쪽으로 */
+.datepicker__day:focus-visible { position: relative; z-index: 1; }   /* 링이 칸 밖 2px 로 나가는데 뒤 칸(기간 색 등)이 덮어 안 보였음 → 앞으로 */
+
+/* 하단 Cancel/Apply(.datepicker__footer · __btn) 삭제 — 날짜를 누르면 바로 닫힘 (DS-ADR-016) */
+
+/* month / year dropdown 오버레이 */
+.datepicker__dropdown {
+    position: absolute;
+    background: var(--color-bg-base);
+    border: 1px solid var(--color-border-base);
+    border-radius: var(--radius-md);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+    z-index: 1001;
+    max-height: 240px;
+    overflow-y: auto;
+    padding: 4px;
+    display: none;
+}
+.datepicker__dropdown.is-open { display: block; }
+.datepicker__dropdown-item {
+    display: block;          /* div → button (키보드 선택). 버튼 기본 모양 지움 */
+    width: 100%;
+    border: none;
+    background: transparent;
+    font-family: var(--font-family-base);
+    padding: 8px 16px;
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+    font-size: var(--body-sm);
+    color: var(--color-text-base);
+    text-align: center;
+    min-width: 72px;
+}
+.datepicker__dropdown-item:hover { background: var(--color-bg-brand-subtle); }
+.datepicker__dropdown-item.is-selected {
+    background: var(--color-bg-brand);
+    color: var(--color-text-on-color);
+    font-weight: var(--font-weight-semibold);
+}
+
+/* =====================================================================
+ * detail-page (12 프로젝트 상세) 컴포넌트
+ *   - 페이지 헤더 (아이콘 + 타이틀 + 우측 액션)
+ *   - 섹션 (접기/펼치기 토글 + pro_table)
+ *   - 진행률 progress-bar
+ * ===================================================================== */
+.detail-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-12);
+    padding-bottom: var(--spacing-12);
+    margin-bottom: var(--spacing-12);
+    border-bottom: 1px solid var(--color-border-base);
+}
+.detail-header__title {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-8);
+    min-width: 0;
+}
+.detail-header__title h2 {
+    margin: 0;
+    font-size: var(--heading-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-base);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.detail-header__title .detail-icon {
+    width: 24px;
+    height: 24px;
+    color: var(--color-icon-base);   /* v1.0: --neutral-800 → 시맨틱 */
+    flex-shrink: 0;
+}
+.detail-header__title .detail-code {
+    color: var(--color-text-muted);
+    font-weight: var(--font-weight-medium);
+    margin-left: 4px;
+}
+.detail-header__actions {
+    display: flex;
+    gap: var(--spacing-4);
+    flex-shrink: 0;
+}
+
+/* 마이너스/플러스 토글 — 진한 회색 배경 (브랜드 보조색) + 흰 아이콘 */
+.section-toggle {
+    width: 22px;
+    height: 22px;
+    border: none;
+    background: var(--color-bg-inverse);   /* v1.0: --neutral-800 → inverse 짝 */
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-icon-inverse);
+    padding: 0;
+    margin-right: var(--spacing-4);
+}
+.section-toggle:hover { background: var(--color-bg-inverse-soft); }
+.section-toggle svg { width: 14px; height: 14px; }
+/* .seach_arm .leftbt svg { color: var(--color-text-muted) } 가 더 강한
+ * specificity 로 색을 muted 로 깔고 있어서 svg 의 currentColor 가 회색이 됨.
+ * → 토글 버튼 color 자체를 white !important 로 끌어올린 뒤 stroke 도 강제 */
+.section-toggle,
+.section-toggle svg { color: var(--color-icon-inverse) !important; }
+.section-toggle svg,
+.section-toggle svg * { stroke: var(--color-icon-inverse) !important; }
+.section-toggle[aria-expanded="false"] svg { transform: rotate(90deg); }
+
+/* 진행률 progress-bar — 두꺼운 그라데이션 bar + 중앙 % 라벨 (캡쳐 디자인 반영) */
+.progress-row {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-12);
+}
+.progress-bar {
+    flex: 1;
+    height: 17px;          /* 캡쳐 디자인 최종값. 구 28px 을 아래에서 !important 로 덮던 것을 여기에 직접 반영 (2026-08-23) */
+    background: var(--color-bg-subtle);   /* 구 #E5E7EB 하드코딩 → 쿨그레이 토큰 (세영 2026-08-25) */
+    border-radius: 9px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-bar__label {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--color-text-base);
+    font-size: var(--body-sm);
+    font-weight: var(--font-weight-semibold);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* 진행률 범례 — bar 아래 5 상태 */
+
+
+/* =====================================================================
+ * left-grid (12 프로젝트 상세 main-sub 산출물 트리)
+ *   - .left-actions    상단 3개 액션 박스
+ *   - .left-legend     완료/진행/지연/예정 범례
+ *   - .left-search     검색 인풋 + 버튼
+ *   - .output-row         AUI Grid 셀 안 (status dot + 라벨)
+ * ===================================================================== */
+.left-grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-8);
+}
+
+/* 상단 3개 액션 */
+.left-actions {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-4);
+}
+.left-action-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: var(--spacing-8) 4px;
+    border: 1px solid var(--color-border-base);
+    border-radius: var(--radius-sm);
+    background: var(--color-bg-base);
+    color: var(--color-text-base);
+    font-size: var(--body-sm);
+    font-weight: var(--font-weight-medium);
+    cursor: pointer;
+}
+.left-action-btn svg { width: 20px; height: 20px; color: var(--color-icon-base); }   /* v1.0: --neutral-800 → 시맨틱 */
+.left-action-btn:hover { background: var(--color-bg-muted); }
+
+/* 범례 */
+.left-legend {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--spacing-8);   /* 구 spacing-12 를 아래에서 !important 로 덮던 것 흡수 (2026-08-23) */
+    padding: var(--spacing-4) 0;
+}
+.legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: var(--body-sm);
+    color: var(--color-text-base);
+}
+.legend-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+/* 검색 */
+.left-search {
+    display: flex;
+    gap: var(--spacing-4);
+}
+.left-search .input { flex: 1; min-width: 0; height: 32px; font-size: var(--body-sm); }   /* 옆 버튼(32)과 높이 맞춤. 모양은 .input (DS-ADR-010) */
+.left-search-btn { height: 32px; padding: 0 var(--spacing-12); flex-shrink: 0; }
+
+/* ===== 12 프로젝트 상세 — 복구 일괄 ===== */
+/* 메인 콘텐츠 2:8 grid */
+.divide-detail-layout {
+    display: grid;
+    grid-template-columns: minmax(220px, 18%) 1fr;
+    gap: var(--spacing-12);
+    align-items: stretch;
+    height: 100%;
+}
+.left-panel {
+    background: var(--color-bg-base);
+    border: 1px solid var(--color-border-base);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-12);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-8);
+    min-height: 0;
+}
+.left-panel #leftGrid {
+    flex: 1 1 auto !important;
+    height: auto !important;
+    min-height: 0;
+}
+.right-panel { min-width: 0; }
+
+
+/* AUI Grid 트리 셀 안 dot prefix */
+.output-row { display: inline-flex; align-items: center; }
+.output-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* progress bar fill — 상태별 그라데이션 + width transition */
+.pbar-fill {
+    height: 100%;
+    background: linear-gradient(to right, var(--color-progress-progress-start), var(--color-progress-progress-end));
+    border-radius: 9px;    /* .progress-bar 와 같은 radius. 구 14px → 아래 !important 규칙 흡수 (2026-08-23) */
+    transition: width 1.6s ease-out;
+}
+.progress-bar--done    .pbar-fill { background: linear-gradient(to right, var(--color-progress-done-start), var(--color-progress-done-end)); }
+.progress-bar--progress .pbar-fill { background: linear-gradient(to right, var(--color-progress-progress-start), var(--color-progress-progress-end)); }
+.progress-bar--delay   .pbar-fill { background: linear-gradient(to right, var(--color-progress-delay-start), var(--color-progress-delay-end)); }
+.progress-bar--plan    .pbar-fill { background: linear-gradient(to right, var(--color-progress-plan-start), var(--color-progress-plan-end)); }
+.progress-bar--hold    .pbar-fill { background: linear-gradient(to right, var(--color-progress-hold-start), var(--color-progress-hold-end)); }
+
+/* 좌측 segmented status indicator — 5개 막대, 상태색 pulse 애니메이션 */
+.status-segments {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    flex-shrink: 0;
+}
+/* 애니메이션 = statusPulse(짙음↔흐림 wave) 단일. 색은 아래 modifier 가 담당.
+ * 구 statusCycle(5색 순환)은 뒤에서 !important 로 덮여 한 번도 보인 적 없어 @keyframes 째로 제거 (2026-08-23) */
+.status-segments__bar {
+    width: 4px;
+    height: 18px;
+    border-radius: 2px;
+    background: var(--color-bg-disabled);   /* 구 #D9D9D9 하드코딩 → 쿨그레이 토큰 (세영 2026-08-25) */
+    animation: statusPulse 1.6s ease-in-out infinite;
+}
+/* ⚠️ @keyframes statusPulse 의 정의는 overrides.css 한 곳(상태 SVG 배지와 공용).
+ * 여기에도 같은 이름으로 다른 값(0.25→1)을 두고 있었는데, @keyframes 는 같은 이름이면
+ * '나중에 로드된 것' 하나만 살아남으므로 계속 죽은 정의였음 → 제거. 값을 바꾸려면 overrides 쪽을 고칠 것 (2026-08-23) */
+/* 5개 막대에 stagger delay — wave 효과 */
+.status-segments__bar:nth-child(1) { animation-delay: 0s;    }
+.status-segments__bar:nth-child(2) { animation-delay: 0.12s; }
+.status-segments__bar:nth-child(3) { animation-delay: 0.24s; }
+.status-segments__bar:nth-child(4) { animation-delay: 0.36s; }
+.status-segments__bar:nth-child(5) { animation-delay: 0.48s; }
+
+/* status modifier 별 색 (배경 직접) */
+.status-segments--done    .status-segments__bar { background: var(--color-progress-done-end) !important; }
+.status-segments--progress .status-segments__bar { background: var(--color-progress-progress-end) !important; }
+.status-segments--delay   .status-segments__bar { background: var(--color-progress-delay-end) !important; }
+.status-segments--plan    .status-segments__bar { background: var(--color-progress-plan-end) !important; }
+.status-segments--hold    .status-segments__bar { background: var(--color-progress-hold-end) !important; }
+
+/* 산출물 트리 범례 — 키우기 + svg 아이콘 */
+.left-legend .legend-item {
+    font-size: var(--body-sm) !important;
+    gap: 6px !important;
+}
+.left-legend .legend-dot {
+    width: 18px !important;
+    height: 18px !important;
+    border-radius: 50% !important;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-icon-on-color);
+}
+.left-legend .legend-dot svg {
+    width: 10px;
+    height: 10px;
+    color: var(--color-icon-on-color);
+}
+.left-legend .legend-dot svg,
+.left-legend .legend-dot svg * {
+    stroke: var(--color-icon-on-color) !important;
+}
+
+/* ===== 진행현황 status-block — GIF 밑 텍스트 라벨 ===== */
+.status-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 4px;
+    flex-shrink: 0;
+}
+.status-text {
+    font-size: var(--body-sm);
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: -0.3px;
+    color: var(--color-progress-progress-end);  /* default = progress */
+}
+.status-block--done    .status-text { color: var(--color-progress-done-end); }
+.status-block--progress .status-text { color: var(--color-progress-progress-end); }
+.status-block--delay   .status-text { color: var(--color-progress-delay-end); }
+.status-block--plan    .status-text { color: var(--color-progress-plan-end); }
+.status-block--hold    .status-text { color: var(--color-progress-hold-end); }
+
+/* ===== status-block modifier — 텍스트 자동 + 세트 변경 ===== */
+/* 텍스트는 비워두고 modifier 별로 CSS content 자동 출력
+ * → modifier만 바꾸면 GIF 색 + 텍스트(완료/진행/지연/예정/보류) 세트로 변경 */
+.status-block--done    .status-text::before { content: "완료"; }
+.status-block--progress .status-text::before { content: "진행중"; }
+.status-block--delay   .status-text::before { content: "지연"; }
+.status-block--plan    .status-text::before { content: "예정"; }
+.status-block--hold    .status-text::before { content: "보류"; }
+
+
+/* ===== 첨부파일 아이콘 — file-icon.js 가 확장자 따라 자동 매핑 =====
+ * 사용: <span class="file-icon" data-file-icon></span> + .file-name
+ * 옛 inline SVG / img / badge 룰은 제거 (디자인 시스템 한 곳에서 통제) */
+.file-icon[data-file-icon] {
+    display: inline-block !important;
+    width: 18px !important;
+    height: 18px !important;
+    background-size: contain !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+    flex-shrink: 0;
+}
+
+/* .ui-file-upload 진행바·일시정지 규칙 3개 삭제 — 위 컴포넌트와 함께 미사용 확인.
+   실제 업로드 진행바는 .resumable 안의 네이티브 <progress> (업로드 스크립트 resumable.js). (세영 2026-08-22) */
+
+/* =====================================================================
+ * 다크모드 — Spline 톤 (0610 v2)
+ *   1. 순흑 베이스 (#0A0A0B 수준)
+ *   2. 모든 패널·카드 같은 색 + 보더 거의 transparent
+ *   3. 강조 = 흰색 한 톤 / 보조 = 회색 (계층은 명도만으로)
+ *   4. 컬러는 데이터/차트에만 — UI 자체는 무채색 (포인트 빨강은 고객사 브랜드라
+ *      페이지네이션 활성 1군데만 살짝 남김)
+ *   5. 라운드 일관 (--radius-md 기본, 카드 --radius-lg)
+ *   6. LNB 활성 = 왼쪽 thin 흰선 + 흰 텍스트 (배경 highlight 없음)
+ *   7. 여백 충분 (gap/padding 약간 늘림)
+ * ===================================================================== */
+
+/* ── 다크모드 면·글자 토큰은 tokens.css 의 body.dark-mode 한 곳이 단일 출처.
+ *   여기 있던 !important 재정의 7줄은 그쪽에서 --carbon-* 팔레트를 참조하도록 흡수 (값 동일, 세영 2026-08-25).
+ *   같은 토큰을 두 파일에서 정의하면 특이도·로드순서에 따라 어느 쪽이 이기는지 안 보임 — 실제로
+ *   tokens.css 의 zebra 값이 여기에 막혀 아무 효과가 없었고, 그 사이 그린 캐스트가 남아 있었음. */
+
+/* ── L1 페이지 베이스 — main-content / main-layout 만 (라이트의 회색 배경 자리) ── */
+body.dark-mode .main-content,
+body.dark-mode .main-layout {
+    background: var(--color-bg-subtle) !important;  /* L1 — 가장 어두움 */
+}
+/* ── L2 작업 공간 — GNB + LNB + 카드 모두 같은 톤 (라이트의 흰색 자리) ── */
+body.dark-mode .gnb,
+body.dark-mode .main-menu,
+body.dark-mode .main-sub,
+body.dark-mode .main-sub-brand,
+body.dark-mode .main-sub-header,
+body.dark-mode .main-sub-content {
+    background: var(--color-bg-base) !important;  /* L2 — 들린 톤 */
+}
+/* GNB 하단 구분선 — 라이트 모드와 같은 위치, 다크 무채색 */
+body.dark-mode .gnb {
+    border-bottom: 1px solid var(--color-border-subtle) !important;
+    box-shadow: none !important;
+}
+/* LNB 우측 구분선 (main-menu) + main-sub 우측 구분선 — 라이트 모드 동일 위치 */
+body.dark-mode .main-menu {
+    border-right: 1px solid var(--color-border-subtle) !important;
+}
+body.dark-mode .main-sub {
+    border-right: 1px solid var(--color-border-subtle) !important;
+}
+
+/* ── 검색조건 폼 박스 — 페이지보다 살짝만 밝은 어둠 (인풋이 도드라지게) ── */
+body.dark-mode .pro_table {
+    background: var(--color-bg-base) !important;   /* L1 카드 — 페이지(bg-subtle)보다 한 단 밝게 띄워 영역 위계 부여 */
+    border-color: var(--color-border-base) !important;   /* 검색조건 영역이 배경에 묻혀 안 보이던 문제 → 그리드 박스와 같은 톤 보더 */
+}
+/* 타이틀 바 (.seach_arm) + 큰 컨테이너 (.searchLayout) 만 평평,
+ * .table_list / .left-panel 은 L2 카드 톤으로 (원칙 회복) */
+body.dark-mode .seach_arm,
+body.dark-mode .searchLayout {
+    background: transparent !important;
+    border-color: transparent !important;
+}
+body.dark-mode .table_list,
+body.dark-mode .left-panel {
+    background: var(--color-bg-base) !important;  /* L2 카드 — GNB/LNB 와 동일 톤 */
+}
+/* 검색결과 박스(시안) — 프레임(보더+radius)은 그리드(.list)에만. 페이지네이션은 프레임 밖 + 배경 없음.
+ * .table_list 자체는 배경/보더 제거(페이지네이션 뒤 카드 배경이 비치던 것 차단).
+ * 안쪽 .list + .aui-grid 3겹 보더 → .list 하나만 남기고 .aui-grid 는 투명.
+ * detail/left 패널 깨짐 방지 위해 .searchLayout 로 한정. */
+body.dark-mode .searchLayout .table_list {
+    background: transparent !important;
+    border-color: transparent !important;
+}
+body.dark-mode .searchLayout .table_list .list {
+    background: var(--color-bg-base) !important;   /* L1 — 검색조건 카드와 동일 톤으로 통일 */
+    border: 1px solid var(--color-border-base) !important;
+    border-radius: var(--radius-md) !important;
+}
+body.dark-mode .searchLayout .table_list .aui-grid {
+    border-color: transparent !important;
+}
+body.dark-mode .searchLayout .ui-pagination {
+    background: transparent !important;
+}
+
+/* ── L3 팝업/드롭다운 — 색만 변경, 디자인은 라이트 그대로 ── */
+body.dark-mode .datepicker,
+body.dark-mode .pop-area,
+body.dark-mode .pop-popup,
+body.dark-mode .datepicker__dropdown {
+    background: var(--color-bg-muted) !important;
+    box-shadow: 0 16px 48px rgba(0,0,0,0.6), 0 4px 12px rgba(0,0,0,0.4) !important;
+}
+/* main-menu 우측 경계 — 다크에서 border-base 보다 한 단계 밝게 (LNB↔메인 구분) */
+body.dark-mode .main-menu {
+    border-right-color: var(--color-border-strong) !important;
+}
+/* AUI Grid 외곽 보더 — 래퍼 .table_list 만 (그리드 .aui-grid 보더는 AUIGrid_custom_style.css) */
+body.dark-mode .table_list {
+    border-color: var(--color-border-grid-outer) !important;
+}
+
+/* ── LNB Tree 영역 — 컨테이너 L2, 인풋/그리드는 L1 (패인 느낌) ── */
+body.dark-mode .tree-section {
+    background: var(--color-bg-base) !important;
+}
+body.dark-mode #docFolderTreeGrid,
+body.dark-mode #leftGrid {
+    background: var(--color-bg-subtle) !important;
+}
+
+/* tree-controls / tree-search-wrap / select / input 은 라이트 모드 디자인 그대로
+ * (보더 + chevron + radius + 배경 패턴 그대로, 색만 토큰 변수로 자동 다크 적용) */
+
+/* AUI Grid 다크모드 그리드(zebra / 셀·헤더 보더 / 헤더 배경 / 셀 input / 패널 배경)
+ * → AUIGrid_custom_style.css 로 이관 (그리드 내부 룰 일원화). */
+
+/* ── 페이지네이션 — 활성 = 흰배경 + 검은글씨 (Spline 톤) ── */
+body.dark-mode .ui-pagination__btn {
+    background: transparent !important;
+    color: var(--color-text-muted) !important;   /* v1.0: --neutral-400 → 시맨틱 (다크 subtle = neutral-400 동일) */
+    border-color: transparent !important;
+}
+body.dark-mode .ui-pagination__btn:hover {
+    background: var(--color-bg-base) !important;
+    color: var(--color-text-base) !important;
+}
+body.dark-mode .ui-pagination__btn.is-active,
+body.dark-mode .ui-pagination__btn.is-active:hover,
+body.dark-mode .ui-pagination__btn.is-active:focus {
+    background: var(--color-bg-inverse) !important;
+    color: var(--color-text-inverse) !important;
+    border-color: transparent !important;
+}
+
+/* 버튼 다크 — 토큰이 다크 값을 갖고 있어 별도 덮어쓰기 없음 (P2 Button · 2026-10-04). 옛 !important 덮어쓰기 묶음 삭제 */
+/* 산출물/태스크/고침 아이콘 — 라이트 주색 회색 → 다크 흰색 */
+body.dark-mode .left-action-btn svg {
+    color: var(--color-text-base) !important;
+}
+/* 진행률 progress-bar 다크 배경 — 라이트 #E5E7EB → 다크 subtle 톤 */
+body.dark-mode .progress-bar {
+    background: var(--color-bg-subtle) !important;
+}
+
+/* ============================================================================
+ * 이전 버전 호환 — 레거시 GNB 드롭다운 (.dropdown-content)
+ * 시안 04 헤더엔 드롭다운이 없어 components 본문에 미포함.
+ * 기존 결재/활동 드롭다운 기능 유지를 위한 최소 규칙 (.gnb 범위 스코프, 신규 토큰).
+ * 차주 components.css 재-export 시 이 블록도 함께 반영 요망.
+ * ============================================================================ */
+.gnb .menu-container { position: relative; }
+.gnb .dropdown-content {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 0.5rem;
+    display: none;
+    flex-direction: column;
+    gap: 0.125rem;
+    padding: 0.5rem 0.625rem;
+    background-color: var(--color-bg-base);
+    color: var(--color-text-base);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+    border-radius: 8px;
+    width: max-content;
+    z-index: 100;
+}
+.gnb .dropdown-content.show { display: flex; }
+/* ═══ GNB 헤더 잔여 이관 (styles.css 437~554 header-actions 블록) — 최종 리허설서 발견: menu-container 레이아웃 + 설정드롭다운(.dropdown-content-top) 기본 숨김·절대위치(없으면 컷 시 in-flow로 펼쳐져 menu-container 482 팽창) + 로고높이 (세영 2026-08-16) ═══ */
+.gnb .header-actions .menu-container { display: inline-block; padding: 0 0.375rem; }
+.gnb .header-actions nav ul li:last-child .menu-container { padding-right: 0; }   /* 마지막 토글(활동업무) 우측 패딩 제거 → 검색박스 우측 라인과 정렬 (세영 2026-08-16) */
+.gnb .header-actions .menu-container .menu-toggle { display: flex; align-items: center; }
+.gnb .dropdown-content-top { position: absolute; left: 50%; transform: translateX(-50%); display: none; flex-direction: column; min-width: 80px; margin-top: 0.25rem; z-index: 10; background-color: var(--color-bg-muted); box-shadow: 0 0 0.5rem rgba(0,0,0,0.25); border-radius: 0.375rem; width: max-content; }
+.gnb .dropdown-content-top.show { display: flex; }
+/* 결재/활동 드롭다운(workCount 변형, :has(.logoutBtn) 아님) = 배경+링크. 설정 드롭다운(logoutBtn)은 overrides:1079가 덮음 (styles.css 545/556/566 이관 2026-08-16) */
+.gnb .dropdown-content-top a { color: var(--color-text-base); display: block; text-decoration: none; transition: background-color 0.2s ease; }
+.gnb .dropdown-content-top a span { margin-left: 0.25rem; }
+.gnb .dropdown-content-top a:hover { text-decoration: underline; }
+.gnb .dropdown-content-top .workCount { padding: 0.5rem 0.75rem; }
+.gnb .header-actions nav ul li:nth-child(odd) .dropdown-content-top .count { color: var(--color-text-success) !important; }   /* styles.css 694 이관 — 드롭다운 항목 count만(토글 배지 .menu-toggle .count은 흰색 overrides:11 유지). li *{--def-text-color}(styles 475) 이기게 !important */
+.gnb .header-actions nav ul li:nth-child(even) .dropdown-content-top .count { color: var(--color-text-info) !important; }   /* styles.css 697 이관 */
+.gnb .logo-container { height: 100%; }
+.gnb .logo-container img { height: 100%; }
+.gnb .dropdown-content .arrow {
+    position: absolute;
+    top: -0.375rem;
+    left: 50%;
+    width: 0.75rem;
+    height: 0.75rem;
+    transform: translateX(-50%) rotate(45deg);
+    background-color: var(--color-bg-base);
+}
+.gnb .dropdown-content a {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem 0.375rem;
+    color: var(--color-text-base);
+    text-decoration: none;
+    white-space: nowrap;
+    border-radius: 4px;
+}
+.gnb .dropdown-content a:hover { background-color: var(--color-bg-subtle); }
+.gnb .dropdown-content a .count { margin-left: 0.25rem; opacity: 0.7; }
+
+/* ============================================================================
+ * 신규 컴포넌트 — checkSelect (다중선택 드롭다운) & onKeySearch (번호 자동완성)
+ * 디자인 토큰 기반으로 외관 재작성. JS 기능(.selected-text 표시 /
+ * .options 토글 / .option 체크박스 다중선택 / onKeySearch 자동완성)은 그대로 유지.
+ * ============================================================================ */
+
+/* ── checkSelect: 닫힘 상태 표시 박스 (시안 select 와 동일 룩) ──
+ * JS 위젯이라 자기 박스를 직접 가짐 — 값은 .select 와 같은 토큰 (DS-ADR-010) */
+.checkSelect { position: relative; width: 100%; }
+/* 드롭다운(.options)이 .td.over 의 overflow:hidden 에 잘리지 않게 해당 셀만 overflow 허용 */
+.mainTable .td.over:has(.checkSelect) { overflow: visible; }
+.checkSelect .selected-text {
+    width: 100%;
+    height: var(--size-input);
+    padding: 0 32px 0 var(--spacing-8);   /* .select 와 같은 화살표 자리 */
+    box-sizing: border-box;
+    border: 1px solid var(--color-border-input);
+    border-radius: var(--radius-md);   /* 입력칸 = 버튼과 같은 모서리 (DS-ADR-011) */
+    background-color: var(--color-bg-input);
+    color: var(--color-text-base);
+    font-size: var(--body-md);
+    line-height: var(--size-input);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23454A51' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");   /* .select 와 같은 화살표 */
+    background-repeat: no-repeat;
+    background-position: right var(--spacing-8) center;
+    background-size: 16px 16px;
+}
+.checkSelect .selected-text:hover { border-color: var(--color-border-input-hover); }
+body.dark-mode .checkSelect .selected-text {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23E5E7EB' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+}
+/* 열림 상태 */
+.checkSelect:has(.options.show) .selected-text {
+    outline: none;
+    border-color: var(--color-border-focus);
+    box-shadow: 0 0 0 3px var(--color-focus-ring);   /* 열림 = .select:focus 와 같은 보더 + 링 */
+}
+
+/* ── checkSelect: 펼침 드롭다운 카드 ── */
+.checkSelect .options {
+    position: absolute;
+    top: calc(var(--size-input) + 4px);
+    left: 0;
+    z-index: 100;
+    display: none;
+    flex-direction: column;
+    gap: 2px;
+    width: 100%;
+    max-height: 220px;
+    padding: var(--spacing-4);
+    box-sizing: border-box;
+    background-color: var(--color-bg-base);
+    border: none;
+    border-radius: var(--radius-sm);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    overflow-y: auto;
+}
+.checkSelect .options.show { display: flex; }
+/* 옵션 컨테이너가 남은 공간을 차지하며 스크롤 (검색창은 고정) */
+.checkSelect .options > div { width: 100%; flex: 1 1 auto; min-height: 0; overflow-y: auto; }
+
+/* 옵션 내 검색 인풋 — 시안 input 컴포넌트와 동일 룩
+ * flex-shrink:0 — 옵션이 많을 때 flex 컬럼이 검색창을 눌러 높이가 줄던 문제 방지 */
+.checkSelect .search-text {
+    width: 100%;
+    height: var(--size-input);
+    flex-shrink: 0;
+    margin-bottom: var(--spacing-4);
+    padding: 0 var(--spacing-8);
+    box-sizing: border-box;
+    border: 1px solid var(--color-border-base);
+    border-radius: var(--radius-md);   /* 입력칸 = 버튼과 같은 모서리 (DS-ADR-011) */
+    background-color: var(--color-bg-base);
+    color: var(--color-text-base);
+    font-size: var(--body-sm);
+    font-family: var(--font-family-base);
+}
+.checkSelect .search-text::placeholder { color: var(--color-text-muted); }
+/* 자동 포커스되는 검색창은 파란 포커스 없이 중립 — 박스만 파란 보더 */
+.checkSelect .search-text:focus {
+    outline: none;
+    border-color: var(--color-border-strong);
+}
+
+/* 옵션 행 (체크박스 + 라벨) */
+.checkSelect .option {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-8);
+    height: 28px;
+    flex-shrink: 0;
+    padding: 0 var(--spacing-8);
+    border-radius: var(--radius-sm);
+    font-size: var(--body-sm);
+    color: var(--color-text-base);
+    white-space: nowrap;
+    cursor: pointer;
+}
+.checkSelect .option span { display: inline-block; white-space: nowrap; }
+.checkSelect .option input[type="checkbox"] {
+    flex-shrink: 0;
+    width: 14px;
+    height: 14px;
+    margin: 0;
+    pointer-events: none;
+    accent-color: var(--color-bg-checked);   /* 전역 체크박스와 동일 */
+}
+/* 호버 = 옅은 회색(곧 토글할 항목), 체크됨 = 옅은 브랜드 초록(선택 유지). 다중선택 명확화.
+   2026-08-22 세영: 체크색·선택배경이 여기만 회색/하늘색으로 딴 체계였던 것 → 브랜드로 통일 */
+.checkSelect .option:hover { background-color: var(--color-bg-subtle); }
+.checkSelect .option:has(input[type="checkbox"]:checked) { background-color: var(--color-bg-brand-subtle); font-weight: var(--font-weight-semibold, 600); }
+.checkSelect .option:has(input[type="checkbox"]:checked):hover { background-color: var(--color-bg-brand-subtle); }
+
+/* ── onKeySearch: 번호 입력 + 보조(부분일치) 가로 정렬 ──
+ * div 래퍼에만 flex (input 요소엔 flex 금지). 자동완성 드롭다운은 .hide 로 토글. */
+div.onKeySearch,
+div.onKeySearch2 {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-4);
+    width: 100%;
+}
+input.onKeySearch,
+input.onKeySearch2 { display: block; flex: 1 1 auto; min-width: 0; }
+
+/* ── 폴더트리: main-sub(LNB) 높이만큼 채우기 ──
+ * 실제 그리드 id 는 동적(${renderTo}_grid_tree)이라 .tree-section .list 로 타겟. */
+.main-sub-content { display: flex; flex-direction: column; }
+.main-sub-content .tree-section { flex: 1 1 auto; display: flex; flex-direction: column; min-height: 0; }
+.main-sub-content .tree-section .list { flex: 1 1 auto; min-height: 240px; width: 100%; }
+
+/* ============================================================================
+ * 이전 버전 호환 — 일반 .hide 유틸 (styles.css 에서 포팅, components 본문 누락분)
+ * onKeySearch 자동완성 위젯 등 .hide 요소가 안 숨겨지던 문제 해결.
+ * 차주 components.css 재-export 시 이 블록도 함께 반영 요망.
+ * ============================================================================ */
+.hide { display: none !important; }
+
+/* ============================================================================
+ * 브라우저 autofill 배경(#E8F0FE 연한 파랑) 억제
+ * 자동완성 후보 필드가 디자인 시스템 흰 배경을 유지하도록. (Filled 디자인 아님)
+ * ============================================================================ */
+.input:-webkit-autofill,
+.input:-webkit-autofill:hover,
+.input:-webkit-autofill:focus,
+.input:-webkit-autofill:active,
+.checkSelect input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px var(--color-bg-input) inset;
+    -webkit-text-fill-color: var(--color-text-base);
+    caret-color: var(--color-text-base);
+    transition: background-color 9999s ease-in-out 0s;
+}
+
+/* ============================================================================
+ * 검색결과: 그리드(flex:1) 아래 페이지네이션 고정 배치
+ * (페이저를 .table_list 안 그리드 다음 형제로 둠)
+ * ============================================================================ */
+/* table_list 는 그리드+페이저를 담는 투명 컨테이너로, 흰 카드 스타일은 그리드(.list)로 이동
+ * → 페이저는 흰 카드 밖 회색 배경 위에 위치 (시안 일치) */
+.searchLayout .table_list { display: flex; flex-direction: column; min-height: 0; background: transparent; border: none; overflow: visible; }
+.searchLayout .table_list > .list {
+    flex: 1 1 auto;
+    min-height: 320px;
+    background: var(--color-bg-base);
+    border: 1px solid var(--color-border-base);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+}
+.searchLayout .table_list > .ui-pagination { flex-shrink: 0; margin-top: var(--spacing-8); background: transparent; }
+
+/* 검색결과 그리드 셀 폰트(13px) → AUIGrid_custom_style.css 로 이관. */
+
+/* ═══════════════════════════════════════════════════════════════════════════
+ * 로딩 · 스켈레톤 · 빈 상태 (2026-10-07, W3 2차) — D-1 축 조사 결정 반영
+ *   기다림을 보여주는 3종 세트. 같은 자리를 쓰도록 설계(스켈레톤 → 실제 내용 또는 빈 상태로 교체)
+ * ═══════════════════════════════════════════════════════════════════════════ */
+
+/* 화면에는 안 보이고 스크린리더만 읽는 글자 */
+.sr-only {
+    position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+    overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+/* ── 스피너 .spinner ────────────────────────────────────────────────────────
+ * 진행률을 모를 때(indeterminate). 시간 규칙(D-1 Loading ProgressNarration):
+ *   3초 미만 = 스피너만 · 3~10초 = 스피너 + 안내 문구 · 10초 초과 예상 = 진행률 + 취소(가능하면 백그라운드)
+ * 크기: --sm 16(버튼·셀 안) · 기본 24(영역) · --lg 40(페이지 · 팝업)
+ * 색: 기본 = 브랜드 · .spinner--neutral = 보조(회색 면 위)
+ * 접근성: 스피너 자체는 장식(aria-hidden). 알림은 감싸는 .loading 의 role="status" 글자가 맡는다
+ */
+.spinner {
+    --spinner-size: 24px;
+    --spinner-line: 3px;
+    display: inline-block;
+    flex: none;
+    width: var(--spinner-size);
+    height: var(--spinner-size);
+    border: var(--spinner-line) solid var(--color-bg-muted);
+    border-top-color: var(--color-icon-brand);
+    border-radius: 50%;
+    animation: ds-spin 0.8s linear infinite;
+}
+.spinner--sm { --spinner-size: 16px; --spinner-line: 2px; }
+.spinner--lg { --spinner-size: 40px; --spinner-line: 4px; }
+.spinner--neutral { border-top-color: var(--color-icon-muted); }
+@keyframes ds-spin { to { transform: rotate(360deg); } }
+
+/* ── 로딩 묶음 .loading ─────────────────────────────────────────────────────
+ * 구성 3단계(D-1 Loading Composition): 스피너만 / + 문구(.loading__text) / + 문구 + 취소(.loading__actions)
+ * 덮개 .loading--overlay: 영역(그리드 · 팝업 본문) 위를 덮어 조작을 막는다. 부모에 position:relative 필요
+ *   <div class="loading" role="status" aria-live="polite">
+ *     <span class="spinner" aria-hidden="true"></span>
+ *     <p class="loading__text">문서 목록을 불러오는 중입니다</p>
+ *   </div>
+ */
+.loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-12);
+    padding: var(--spacing-24);
+    color: var(--color-text-muted);
+    font-size: var(--body-sm);
+    text-align: center;
+}
+.loading__text { margin: 0; }
+.loading__sub  { margin: 0; color: var(--color-text-muted); font-size: var(--body-sm); }
+.loading__actions { display: flex; gap: var(--spacing-8); margin-top: var(--spacing-4); }
+.loading--inline { flex-direction: row; padding: 0; gap: var(--spacing-8); }
+.loading--overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    background: color-mix(in srgb, var(--color-bg-base) 80%, transparent);
+}
+
+/* ── 브랜드 로더 .brand-loader ──────────────────────────────────────────────
+ * 페이지 전체를 처음 불러올 때(화면 전환 덮개 · 로그인 직후)만. 영역 · 버튼 안은 언제나 스피너
+ * 로고 원본 이미지 두 장: 아래 = 회색으로 흐리게, 위 = 원본을 왼쪽부터 채움(마스크). 이미지 파일은 손대지 않음 (10/8)
+ * 브랜드 선택은 제품 설정: E3PS = 로고 로더 · 이퍼플(공개 시연) = 스피너 --lg. 고객사 화면은 기존 로딩 이미지 유지
+ *   <div class="loading loading--overlay" role="status" aria-live="polite">
+ *     <span class="brand-loader" aria-hidden="true">
+ *       <img class="brand-loader__base" src="logo.png" alt=""><img class="brand-loader__fill" src="logo.png" alt="">
+ *     </span>
+ *     <p class="loading__text">화면을 불러오는 중입니다</p>
+ *   </div>
+ */
+.brand-loader {
+    position: relative;
+    display: inline-block;
+    width: var(--brand-loader-width, 160px);
+    line-height: 0;
+}
+.brand-loader img { display: block; width: 100%; height: auto; }
+.brand-loader__base { filter: grayscale(1); opacity: .22; }
+.brand-loader__fill {
+    position: absolute;
+    inset: 0;
+    -webkit-mask-image: linear-gradient(90deg, #000 40%, transparent 60%);
+            mask-image: linear-gradient(90deg, #000 40%, transparent 60%);
+    -webkit-mask-size: 250% 100%;
+            mask-size: 250% 100%;
+    -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+    animation: ds-brand-fill 2.4s ease-in-out infinite;
+}
+@keyframes ds-brand-fill {
+    0%   { -webkit-mask-position: 100% 0; mask-position: 100% 0; opacity: 1; }
+    65%  { -webkit-mask-position: 0 0;    mask-position: 0 0;    opacity: 1; }
+    85%  { opacity: 1; }
+    100% { -webkit-mask-position: 0 0;    mask-position: 0 0;    opacity: 0; }
+}
+
+/* ── 스켈레톤 .skeleton-* ───────────────────────────────────────────────────
+ * 프리미티브 3종(D-1 Skeleton Granularity — 클래스 하나로 두고 화면마다 지어내는 방식 제외)
+ *   .skeleton-line  본문 한 줄. 여러 줄은 n개 나열, 마지막 줄은 60%
+ *   .skeleton-title 제목. 굵고 짧게(40%)
+ *   .skeleton-block 썸네일 · 차트 · 버튼 자리. width/height 는 쓰는 곳에서 지정
+ * 모션 = 반짝임(shimmer, 세영님 결정 10/7). 모션 줄이기 설정이면 멈춤
+ * 접근성: 묶음에 aria-busy="true" + 숨김 글자 "불러오는 중", 조각은 aria-hidden
+ */
+.skeleton-line,
+.skeleton-title,
+.skeleton-block {
+    display: block;
+    border-radius: var(--radius-sm);
+    background-color: var(--color-bg-muted);
+    background-image: linear-gradient(90deg,
+        transparent 0%,
+        color-mix(in srgb, var(--color-bg-base) 60%, transparent) 50%,
+        transparent 100%);
+    background-size: 200% 100%;
+    background-repeat: no-repeat;
+    animation: ds-shimmer 1.4s ease-in-out infinite;
+}
+.skeleton-line  { height: 12px; width: 100%; }
+.skeleton-line + .skeleton-line { margin-top: var(--spacing-8); }
+.skeleton-line:last-child:not(:first-child) { width: 60%; }
+.skeleton-title { height: 16px; width: 40%; margin-bottom: var(--spacing-12); }
+.skeleton-block { width: 100%; height: 80px; }
+@keyframes ds-shimmer {
+    from { background-position: 150% 0; }
+    to   { background-position: -50% 0; }
+}
+
+/* 조합 예시 — 그리드 행(목록) · 상세 폼(팝업) · 카드(대시보드). 화면 3개와 같은 자리 */
+.skeleton-grid-row {
+    display: grid;
+    grid-template-columns: 24px 2fr 1fr 1fr 1fr;
+    gap: var(--spacing-16);
+    align-items: center;
+    padding: var(--spacing-8) var(--spacing-12);
+    border-bottom: 1px solid var(--color-border-subtle);
+}
+.skeleton-grid-row .skeleton-block { height: 16px; }
+.skeleton-form {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: var(--spacing-12) var(--spacing-16);
+    align-items: center;
+}
+.skeleton-form .skeleton-block { height: var(--size-input); }
+.skeleton-card {
+    padding: var(--spacing-16);
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--radius-lg);
+    background: var(--color-bg-base);
+}
+
+/* ── 빈 상태 .empty ─────────────────────────────────────────────────────────
+ * 구성(D-1 Empty Composition): 픽토그램 + 제목 + 설명 + 주 액션 1개(+ 보조 링크). 아이콘+문구 단독은 쓰지 않음
+ * 놓이는 자리(D-1 Placement): 기본 = 영역 안 · .empty--card = 카드 안(여백 작게) · .empty--page = 페이지 전체
+ * 빈 이유가 액션을 정한다(D-1 Empty ErrorVariant):
+ *   아직 없음 → 만들기(primary) / 네트워크 오류 → 다시 시도 / 서버 오류 → 다시 시도 + 문의 + 오류 코드 / 일시적 오류 → 다시 시도 + 문의
+ *   오류는 .empty--error: 픽토그램을 위험 색으로, 밝은 느낌 없이. 서버 원문은 보이지 않고 코드만(.empty__code)
+ */
+.empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--spacing-8);
+    padding: var(--spacing-48) var(--spacing-24);
+    color: var(--color-text-muted);
+}
+.empty__icon {
+    width: 48px;
+    height: 48px;
+    margin-bottom: var(--spacing-8);
+    color: var(--color-icon-muted);
+}
+.empty__icon svg { width: 100%; height: 100%; }
+.empty__title { margin: 0; color: var(--color-text-base); font-size: var(--heading-xs); font-weight: 600; }
+.empty__desc  { margin: 0; max-width: 360px; font-size: var(--body-sm); word-break: keep-all; }
+.empty__code  { margin: 0; font-size: var(--body-sm); color: var(--color-text-muted); font-variant-numeric: tabular-nums; }
+.empty__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--spacing-8); margin-top: var(--spacing-8); }
+.empty--card { padding: var(--spacing-24) var(--spacing-16); }
+.empty--card .empty__icon { width: 32px; height: 32px; }
+.empty--page { min-height: 60vh; justify-content: center; }
+.empty--error .empty__icon { color: var(--color-icon-danger); }
+
+/* 빈 상태 일러스트 .empty-illo — 폴더 + 이유 배지(검색 · 네트워크 · 오류). 색은 전부 토큰 → 브랜드 · 다크 따라감 (10/8)
+ * 브랜드 선택은 제품 설정: E3PS = 일러스트(.empty__icon--illo) · 이퍼플(공개 시연) = 선 픽토그램. 카드 안(.empty--card)은 둘 다 픽토그램
+ * 배지 글리프는 currentColor → .empty__icon 색(icon-muted, 오류는 icon-danger)을 따른다 */
+.empty__icon--illo { width: 104px; height: auto; margin-bottom: var(--spacing-4); }
+.empty--page .empty__icon--illo { width: 128px; }
+.empty-illo {
+    --empty-illo-edge: color-mix(in srgb, var(--color-border-brand) 30%, var(--color-border-base));
+    --empty-illo-shadow: rgb(0 0 0 / .08);
+    display: block; width: 100%; height: auto; overflow: visible;
+}
+body.dark-mode .empty-illo { --empty-illo-shadow: rgb(0 0 0 / .2); }
+.empty-illo__shadow { fill: var(--empty-illo-shadow); }
+.empty-illo__paper  { fill: var(--color-border-base); }
+.empty-illo__line   { fill: none; stroke: var(--color-border-strong); stroke-width: 1.5; }
+.empty-illo__folder { fill: var(--color-bg-base); fill-opacity: .85; stroke: var(--empty-illo-edge); stroke-width: 1; }
+.empty-illo__tint   { fill: var(--color-bg-brand-subtle); fill-opacity: .8; }
+.empty-illo__badge  { fill: var(--color-bg-base); stroke: var(--empty-illo-edge); stroke-width: 1.5; }
+.empty-illo__glyph  { fill: none; stroke: currentColor; stroke-width: 4.2; stroke-linecap: round; stroke-linejoin: round; }
+
+@media (prefers-reduced-motion: reduce) {
+    .spinner { animation-duration: 2.4s; }   /* 완전히 멈추면 '멈춘 화면'으로 오해 — 느리게만 */
+    .skeleton-line, .skeleton-title, .skeleton-block { animation: none; }
+    .brand-loader__fill { animation-duration: 4.8s; }   /* 스피너와 같은 이유로 멈추지 않고 느리게만 */
+}

@@ -1,0 +1,8 @@
+/* globals.css 의 Pretendard 경로(../../portal/font)는 JSP 기준이라 여기서는 없다.
+ * globals.css 뒤에 같은 이름으로 다시 선언해 CDN 가변 글꼴로 덮는다. (Storybook 전용) */
+@font-face {
+  font-family: 'Pretendard';
+  font-weight: 45 920;
+  font-display: swap;
+  src: url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/woff2/PretendardVariable.woff2') format('woff2-variations');
+}

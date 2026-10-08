@@ -1,0 +1,114 @@
+@charset "UTF-8";
+/* Step4: Pretendard/Montserrat 폰트 등록 + 전역 폰트 적용만 (레이아웃/컴포넌트 제외) */
+@font-face {
+  font-family: 'Pretendard';
+  font-weight: 100;
+  font-display: swap;
+  src: url('../../portal/font/Pretendard/Pretendard-Thin.subset.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Pretendard';
+  font-weight: 200;
+  font-display: swap;
+  src: url('../../portal/font/Pretendard/Pretendard-ExtraLight.subset.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Pretendard';
+  font-weight: 300;
+  font-display: swap;
+  src: url('../../portal/font/Pretendard/Pretendard-Light.subset.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Pretendard';
+  font-weight: 400;
+  font-display: swap;
+  src: url('../../portal/font/Pretendard/Pretendard-Regular.subset.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Pretendard';
+  font-weight: 500;
+  font-display: swap;
+  src: url('../../portal/font/Pretendard/Pretendard-Medium.subset.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Pretendard';
+  font-weight: 600;
+  font-display: swap;
+  src: url('../../portal/font/Pretendard/Pretendard-SemiBold.subset.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Pretendard';
+  font-weight: 700;
+  font-display: swap;
+  src: url('../../portal/font/Pretendard/Pretendard-Bold.subset.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Pretendard';
+  font-weight: 800;
+  font-display: swap;
+  src: url('../../portal/font/Pretendard/Pretendard-ExtraBold.subset.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Pretendard';
+  font-weight: 900;
+  font-display: swap;
+  src: url('../../portal/font/Pretendard/Pretendard-Black.subset.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Montserrat Alternates';
+  font-weight: 600;
+  font-display: swap;
+  src: url('../../portal/font/Montserrat_Alternates/MontserratAlternates-SemiBold.ttf');
+}
+
+/* 3.1 전역: 폰트 + box-sizing (styles.css *{box-sizing:border-box}(36행) 이관 — 컷 시 border-box 유지, 없으면 전체 content-box 회귀=레이아웃 붕괴. 최종감사서 확정 2026-08-16) */
+* { font-family: var(--font-family-base); box-sizing: border-box; }
+
+/* ═══ h1~h6 = 웹표준 스케일 명시 정의(세영 지정: 32/24/19/16/12/10). styles.css(3.0) h1~h4 대체 + h5·h6 신규 → styles.css 삭제 후에도 유지. margin:0 = 기존 앱 레이아웃 보존(UA 여백 도입 방지). 크기 오버라이드 없이 h태그 = 이 스케일 (세영 2026-08-07) ═══ */
+h1 { font-size: var(--heading-2xl); font-weight: var(--font-weight-bold); margin: 0; line-height: var(--line-height-tight); }   /* 태그 기본값 = 크기 토큰 (DS-ADR-012) */
+h2 { font-size: var(--heading-xl); font-weight: var(--font-weight-bold); margin: 0; line-height: var(--line-height-tight); }   /* 태그 기본값 = 크기 토큰 (DS-ADR-012) */
+h3 { font-size: var(--heading-lg); font-weight: var(--font-weight-bold); margin: 0; line-height: var(--line-height-tight); }   /* 태그 기본값 = 크기 토큰 (DS-ADR-012) */
+h4 { font-size: var(--heading-md); font-weight: var(--font-weight-bold); margin: 0; line-height: var(--line-height-tight); }   /* 태그 기본값 = 크기 토큰 (DS-ADR-012) */
+h5 { font-size: var(--heading-sm); font-weight: var(--font-weight-bold); margin: 0; line-height: var(--line-height-tight); }   /* 태그 기본값 = 크기 토큰 (DS-ADR-012) */
+h6 { font-size: var(--heading-xs); font-weight: var(--font-weight-bold); margin: 0; line-height: var(--line-height-tight); }   /* 태그 기본값 = 크기 토큰 (DS-ADR-012) */
+
+
+/* ===== 상세검색 토글 (switchDetail) — 검색폼 상세행 펼침/접힘 ===== */
+.switchDetail {
+    transition: opacity 0.2s;
+}
+.switchDetail.hide { display: none; }
+
+/* ═══ 전역 폼인풋 베이스 = styles.css 끊기 이관 (input 950·input[type=text/date] 443·file 970·checkbox accent 973·select 472·checkSelect 456·multiSelect 470, 유효분 verbatim). 참조변수 --input-bg-color/--input-border-color/--fs-body-small=tokens.css 브리지, --checkbox-accent-bg-color=overrides:1318 brand-500. 스코프 컴포넌트(.mainTable/.form-grid-2/.checkboxDoc/.aui-label)가 특이도로 이 위를 덮음. ⚠️죽은/malformed 4개 제외: 440 checkbox background-color(네이티브 무시)·448 hover(var(--누락))·464 .checkSelect .options(var( 공백)·480 select option(var( 공백) (세영 2026-08-16) ═══ */
+input {
+    height: 20px;
+    text-align: left;
+    padding: 0px 5px 0px 5px;
+    margin: 0px;
+    border: 1px solid var(--color-border-base);
+    display: inline-block;
+    vertical-align: middle;
+    font-size: var(--body-md);
+    color: var(--color-text-base);
+    box-sizing: border-box;
+    border-radius: 4px;
+}
+/* 텍스트 계열 인풋 높이 = 토큰(--size-input 28px) 단일값.
+ * 위 base input{height:20px}은 3.0 잔재라 여기 목록에 없는 타입(password/number/email/tel/search)이
+ * 20px로 떨어졌었음 — 비밀번호 변경 팝업에서 발견. 타입을 빼먹으면 조용히 20px가 되니 목록으로 관리.
+ * 값도 1.875rem(30px) 하드코딩이었던 걸 토큰으로 교체 (세영 2026-08-24) */
+input[type="text"], input[type="date"],
+input[type="password"], input[type="number"],
+input[type="email"], input[type="tel"], input[type="search"] {
+    height: var(--size-input);
+    box-sizing: border-box;
+    background-color: var(--color-bg-input);   /* !important 제거 — .input[readonly]·:disabled 가 덮을 수 있게 (DS-ADR-010) */
+}
+input[type='file'] { height: 24px; }
+input[type="checkbox"] { accent-color: var(--color-bg-checked) !important; }
+select {
+    border: 1px solid var(--color-border-base);
+    background-color: var(--color-bg-input);
+}
+/* 제품 경로의 화살표 이미지 제거 — 화살표는 components.css .select · .checkSelect 가 그림 (DS-ADR-010) */
+.multiSelect { border: 1px solid var(--color-border-base); }

@@ -1,0 +1,72 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Foundation/State" />
+
+# 상태 (State)
+
+모든 누르는 요소는 같은 상태 이름을 씁니다. 피그마 변형 속성 `State`의 값과 CSS 선택자가 1:1로 대응합니다.
+
+## 기본 상태
+
+<table>
+  <thead><tr><th>State (피그마)</th><th>CSS</th><th>뜻</th></tr></thead>
+  <tbody>
+    <tr><td>Default</td><td>—</td><td>아무 일도 없는 상태</td></tr>
+    <tr><td>Hovered</td><td><code>:hover</code></td><td>마우스가 위에 있음</td></tr>
+    <tr><td>Pressed</td><td><code>:active</code></td><td>누르고 있는 순간</td></tr>
+    <tr><td>Focused</td><td><code>:focus-visible</code> (입력칸만 <code>:focus</code>)</td><td>키보드로 여기에 와 있음</td></tr>
+    <tr><td>Disabled</td><td><code>:disabled</code> · <code>[aria-disabled="true"]</code></td><td>못 누름. 진짜 비활성은 <code>disabled</code>(탭에서 빠짐), 잠시 못 누르면 <code>aria-disabled</code></td></tr>
+  </tbody>
+</table>
+## 추가 상태
+
+필요한 컴포넌트에만 둡니다. 새로 늘릴 때는 이 표에 사유를 적습니다.
+
+<table>
+  <thead><tr><th>값</th><th>쓰는 곳</th><th>CSS</th><th>사유</th></tr></thead>
+  <tbody>
+    <tr><td>Loading</td><td>버튼</td><td><code>.is-loading</code> + <code>aria-busy="true"</code></td><td>처리 중 중복 클릭을 막고 폭을 유지</td></tr>
+    <tr><td>Error</td><td>입력칸</td><td><code>[aria-invalid="true"]</code></td><td>스크린리더도 읽도록 클래스가 아니라 속성으로</td></tr>
+    <tr><td>Readonly</td><td>입력칸</td><td><code>[readonly]</code></td><td>값은 보이고 편집만 막음. 회색 박스(한 줄 · 여러 줄 · 상세 폼 같은 모양, DS-ADR-017). hover·클릭 강조 없음, 키보드 포커스만 링</td></tr>
+  </tbody>
+</table>
+입력칸에는 **Pressed가 없습니다** — 누르는 순간 바로 Focused가 되기 때문입니다.
+
+## 켜짐 · 선택
+
+켜짐 · 선택은 상태와 함께 일어나서(선택된 채로 hover) 상태 값에 섞지 않고 따로 둡니다.
+
+<table>
+  <thead><tr><th>축</th><th>값</th><th>쓰는 곳</th></tr></thead>
+  <tbody>
+    <tr><td>Checked</td><td>False · True · Indeterminate</td><td>체크박스 · 라디오 · 스위치 — <code>:checked</code> · <code>:indeterminate</code></td></tr>
+    <tr><td>Selected</td><td>False · True</td><td>페이지 번호 · 옵션 · 달력 날짜 · 토글 버튼 — <code>aria-selected</code> · <code>aria-current</code> · <code>aria-pressed</code></td></tr>
+  </tbody>
+</table>
+## 포커스
+
+방식은 두 가지뿐입니다.
+
+<table>
+  <thead><tr><th>대상</th><th>방식</th><th>이유</th></tr></thead>
+  <tbody>
+    <tr><td>입력칸 <code>.input</code> · <code>.select</code> · <code>.textarea</code></td><td>보더 <code>--color-border-focus</code> + 바깥 3px <code>--color-focus-ring</code></td><td>클릭해도 "지금 입력 중"을 보여줘야 함</td></tr>
+    <tr><td>그 밖의 누르는 요소</td><td><code>outline: 2px</code> + <code>outline-offset: 2px</code></td><td>브랜드색으로 채운 버튼 위에서도 링이 보이게 떼어 그림</td></tr>
+  </tbody>
+</table>
+## 토큰
+
+색 토큰은 상태마다 따로 있는 것과 공통 한 벌로 쓰는 것이 나뉩니다.
+
+<table>
+  <thead><tr><th>상태</th><th>토큰</th><th>왜 이렇게</th></tr></thead>
+  <tbody>
+    <tr><td>Default</td><td><code>--color-bg-interactive-secondary</code> (상태 접미사 없음)</td><td>기본값</td></tr>
+    <tr><td>Hovered</td><td><code>--color-bg-interactive-secondary-hover</code></td><td>중요도(primary · secondary · danger · selected)마다 색이 달라서 <strong>중요도별로</strong> 있음</td></tr>
+    <tr><td>Pressed</td><td><code>--color-bg-interactive-secondary-pressed</code></td><td>Hovered와 같은 이유로 중요도별</td></tr>
+    <tr><td>Focused</td><td><code>--color-border-focus</code> · <code>--color-focus-ring</code></td><td>모든 요소에 <strong>같은 포커스 링 하나</strong> — 중요도와 상관없어서 공통 한 벌</td></tr>
+    <tr><td>Disabled</td><td><code>--color-bg-disabled</code> · <code>--color-text-disabled</code> · <code>--color-border-disabled</code> · <code>--color-icon-disabled</code></td><td>못 누르는 건 어느 중요도든 <strong>똑같이 회색</strong> — 공통 한 벌</td></tr>
+  </tbody>
+</table>
+
+이름 규칙: <code>--color-</code> + 속성(bg · text · border · icon) + <code>-interactive-</code> + 중요도(primary · secondary · danger · selected) + 상태(hover · pressed)

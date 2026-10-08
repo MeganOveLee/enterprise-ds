@@ -1,0 +1,79 @@
+<!-- JSP와 같은 방식으로 일반 스크립트로 불러온다 -->
+<script src="ds-js/datepicker.js"></script>
+<style>
+  .sb-ds { background: var(--color-bg-base); color: var(--color-text-base); padding: 24px; min-height: 100%; box-sizing: border-box; }
+  /* 단독 스토리 화면은 캔버스 전체를 채움 (다크에서 아래쪽이 흰색으로 남지 않게). Docs 안 견본은 그대로 */
+  #storybook-root > .sb-ds { min-height: 100vh; }
+  .sb-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  .sb-grid { display: grid; gap: 12px 16px; align-items: center; }
+  .sb-h { font-size: 12px; color: var(--color-text-muted); }
+  /* 상태 · 조합 표 (Button · Input · Selection 「전체」 예시 공용) */
+  .sb-table { border-collapse: collapse; border: 1px solid var(--color-border-base); background: var(--color-bg-base); }
+  .sb-table th, .sb-table td { border: 1px solid var(--color-border-subtle); padding: 12px 16px; text-align: center; vertical-align: middle; }
+  .sb-table thead th { background: var(--color-bg-header); color: var(--color-text-muted); font-size: 12px; font-weight: 600; white-space: nowrap; }
+  .sb-table tbody th { text-align: left; font-size: 13px; font-weight: 500; white-space: nowrap; }
+  .sb-table .sb-wide { width: 200px; }
+  .sb-table--full { width: 100%; table-layout: fixed; }
+  .sb-table--full thead th:first-child, .sb-table--full tbody th { width: 180px; }
+  .sb-table code { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 12px; color: var(--color-text-brand); }
+  .sb-note { font-size: 12px; line-height: 1.6; color: var(--color-text-muted); }
+
+  /* ── 문서 페이지 (MDX) ─────────────────────────────────────────────
+   * 페이지 머리(.ds-head) → 섹션(.ds-sec) → 예시 카드(.ds-card: 머리 · 미리보기 · 코드 보기). 블록은 stories/_blocks.js
+   * 문서 틀은 브랜드 · 모드와 상관없이 밝은 회색 톤으로 고정하고, 카드 안 미리보기(.sb-ds)만 도구 막대를 따른다 */
+  .sbdocs-content { max-width: 1120px !important; }
+  .ds-page { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; line-height: 1.6; color: #1f2328; word-break: keep-all; }
+  .ds-page code { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 12px; color: #0550ae; }
+  .ds-head { padding: 8px 0 24px; border-bottom: 1px solid #e6e8eb; }
+  .ds-eyebrow { margin: 0 0 6px; font-size: 12px; font-weight: 600; letter-spacing: .04em; color: #6e7781; }
+  .ds-head h1 { margin: 0 0 8px; font-size: 32px; line-height: 1.25; font-weight: 700; color: #111418; }
+  .ds-lead { margin: 0; max-width: 760px; font-size: 15px; color: #57606a; }
+  .ds-sec { margin-top: 40px; }
+  .ds-sec > h2 { margin: 0 0 4px; font-size: 20px; line-height: 1.4; font-weight: 700; color: #111418; }
+  .ds-en { margin-left: 8px; font-size: .75em; font-weight: 500; color: #8c959f; }
+  .ds-sec__desc { margin: 0 0 16px; color: #57606a; }
+  .ds-card { margin: 0 0 16px; border: 1px solid #e1e4e8; border-radius: 6px; background: #fff; overflow: hidden; }
+  .ds-card__head { padding: 12px 16px; background: #f6f8fa; border-bottom: 1px solid #e1e4e8; }
+  .ds-card__title { margin: 0; font-size: 14px; line-height: 1.5; font-weight: 600; color: #111418; }
+  .ds-card__desc { margin: 2px 0 0; font-size: 12px; line-height: 1.6; color: #57606a; }
+  .ds-card__body > * { margin: 0 !important; }
+  .ds-card__extra { border-top: 1px solid #e1e4e8; padding: 4px 16px 12px; }
+  .ds-card__code { border-top: 1px solid #e1e4e8; background: #f6f8fa; }
+  .ds-card__code > summary { display: flex; align-items: center; gap: 8px; padding: 8px 16px; font-size: 12px; font-weight: 500; color: #424a53; cursor: pointer; list-style: none; user-select: none; }
+  .ds-card__code > summary::-webkit-details-marker { display: none; }
+  .ds-card__code > summary::before { content: ''; width: 5px; height: 5px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: rotate(-45deg); transition: transform .15s; }
+  .ds-card__code[open] > summary::before { transform: rotate(45deg); }
+  .ds-card__code .docblock-source { margin: 0 !important; border: 0 !important; border-top: 1px solid #e1e4e8 !important; border-radius: 0 !important; box-shadow: none !important; }
+  /* 개요 · 참고 표 */
+  .ds-table { width: 100%; border-collapse: separate; border-spacing: 0; border: 1px solid #e1e4e8; border-radius: 6px; overflow: hidden; font-size: 13px; background: #fff; }
+  .ds-table th { padding: 10px 16px; text-align: left; font-weight: 600; color: #424a53; background: #f6f8fa; border-bottom: 1px solid #e1e4e8; white-space: nowrap; }
+  .ds-table td { padding: 12px 16px; vertical-align: top; border-bottom: 1px solid #eef0f2; }
+  .ds-table tr:last-child td { border-bottom: 0; }
+  .ds-table td:first-child { white-space: nowrap; }
+  .ds-muted { display: block; margin-top: 2px; font-size: 12px; color: #8c959f; }
+  .ds-note { margin: 16px 0 0; padding: 12px 16px; border: 1px solid #cfe1fb; border-radius: 6px; background: #f2f7ff; font-size: 13px; }
+  .ds-page .docblock-source { margin: 0; }
+  .ds-props td:nth-child(2) code { font-size: 13px; }
+  .ds-props td:nth-child(2) { white-space: nowrap; }
+  .ds-after { margin-top: 12px; }
+  /* 소개 */
+  .ds-meta { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 0; padding: 0; list-style: none; }
+  .ds-meta li { padding: 2px 10px; border: 1px solid #d0d7de; border-radius: 999px; background: #fff; font-size: 12px; color: #424a53; }
+  .ds-cats { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; }
+  .ds-cat { padding: 16px; border: 1px solid #e1e4e8; border-radius: 6px; background: #fff; }
+  .ds-cat.is-soon { background: #f6f8fa; }
+  .ds-cat h3 { margin: 0; font-size: 16px; line-height: 1.4; font-weight: 700; color: #111418; }
+  .ds-cat h3 span { margin-left: 6px; font-size: 12px; font-weight: 500; color: #8c959f; }
+  .ds-cat p { margin: 6px 0 12px; font-size: 13px; color: #57606a; }
+  .ds-cat ul { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
+  .ds-cat a, .ds-cat li > span { display: inline-block; padding: 2px 8px; border: 1px solid #e1e4e8; border-radius: 4px; background: #f6f8fa; font-size: 12px; color: #0550ae; text-decoration: none; }
+  .ds-cat li > span { color: #8c959f; }
+  .ds-cat a:hover { border-color: #0550ae; }
+  .ds-dl { margin: 0; border: 1px solid #e1e4e8; border-radius: 6px; background: #fff; }
+  .ds-dl > div { display: grid; grid-template-columns: 140px 1fr; gap: 16px; padding: 12px 16px; border-top: 1px solid #eef0f2; }
+  .ds-dl > div:first-child { border-top: 0; }
+  .ds-dl dt { font-weight: 600; color: #111418; }
+  .ds-dl dd { margin: 0; color: #57606a; }
+  .ds-page a.ds-link { color: #0550ae; text-decoration: none; }
+  .ds-page a.ds-link:hover { text-decoration: underline; }
+</style>

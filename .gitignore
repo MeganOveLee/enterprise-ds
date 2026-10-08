@@ -1,0 +1,14 @@
+node_modules/
+storybook-static/
+*.log
+
+# 공개하지 않는 것 (고객사 원본 · 내부 도구 · 내부 문서)
+source-*/
+css/brands/*
+!css/brands/_template.css
+!css/brands/e3ps.css
+!css/brands/sample.css
+tools/
+README.internal.md
+*.png
+!assets/brand/*.png

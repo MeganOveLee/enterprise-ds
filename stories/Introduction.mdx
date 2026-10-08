@@ -1,0 +1,58 @@
+import { Meta, Unstyled, Source } from '@storybook/addon-docs/blocks';
+import { PageHead, Section } from './_blocks.js';
+
+<Meta title="소개" />
+
+export const LOAD = [
+  '<html class="theme-sample">   <!-- 브랜드 클래스. 없으면 E3PS -->',
+  '<link rel="stylesheet" href="css/tokens.css">',
+  '<link rel="stylesheet" href="css/brands/sample.css">',
+  '<link rel="stylesheet" href="css/globals.css">',
+  '<link rel="stylesheet" href="css/components.css">',
+  '<script src="js/datepicker.js"></script>   <!-- 날짜 선택을 쓸 때만 -->',
+  '',
+  '<button type="button" class="btn btn--primary btn--filled">저장</button>',
+].join('\n');
+
+<Unstyled>
+<div className="ds-page">
+<PageHead eyebrow="Enterprise DS · v1.0" title="Enterprise DS" lead="업무 화면을 위한 디자인 시스템입니다. 색 · 글자 · 간격 같은 기초 값(토큰), 버튼 · 입력칸 같은 컴포넌트, 그리고 쓰는 규칙을 한곳에 모았습니다.">
+<ul className="ds-meta"><li>HTML · CSS — 프레임워크 무관</li><li>브랜드 전환</li><li>라이트 · 다크</li><li>WCAG 2.1 AA 기준</li></ul>
+</PageHead>
+<Section title="구성" en="Categories" desc="왼쪽 메뉴는 아래 묶음으로 나뉩니다.">
+<div className="ds-cats">
+<div className="ds-cat"><h3>Foundation<span>기초</span></h3><p>모든 컴포넌트가 함께 쓰는 값과 규칙입니다. 여기 값이 바뀌면 전체 화면이 따라 바뀝니다.</p><ul><li><a href="./?path=/docs/foundation-color--docs" target="_top">Color</a></li><li><a href="./?path=/docs/foundation-typography--docs" target="_top">Typography</a></li><li><a href="./?path=/docs/foundation-spacing-·-radius--docs" target="_top">Spacing · Radius</a></li><li><a href="./?path=/docs/foundation-state--docs" target="_top">State</a></li></ul></div>
+<div className="ds-cat"><h3>Form<span>입력</span></h3><p>사용자가 값을 넣고, 고르고, 동작을 실행하는 요소입니다.</p><ul><li><a href="./?path=/docs/form-button--docs" target="_top">Button</a></li><li><a href="./?path=/docs/form-input--docs" target="_top">Input</a></li><li><a href="./?path=/docs/form-selection-controls--docs" target="_top">Selection Controls</a></li><li><a href="./?path=/docs/form-date-picker--docs" target="_top">Date Picker</a></li></ul></div>
+<div className="ds-cat"><h3>Feedback<span>피드백</span></h3><p>불러오는 중 · 비어 있음 같은 시스템 상태를 사용자에게 알리는 요소입니다.</p><ul><li><a href="./?path=/docs/feedback-loading--docs" target="_top">Loading</a></li><li><a href="./?path=/docs/feedback-skeleton--docs" target="_top">Skeleton</a></li><li><a href="./?path=/docs/feedback-empty--docs" target="_top">Empty</a></li></ul></div>
+<div className="ds-cat is-soon"><h3>Overlay · Data<span>준비 중</span></h3><p>화면 위에 띄우는 요소와 목록 데이터를 다루는 요소입니다.</p><ul><li><span>Popup</span></li><li><span>Grid</span></li></ul></div>
+</div>
+</Section>
+<Section title="테마 전환" en="Theme" desc="위쪽 도구 막대의 「브랜드」 「모드」를 바꾸면 모든 페이지의 미리보기가 함께 바뀝니다.">
+<table className="ds-table">
+<thead><tr><th>스위치</th><th>바뀌는 것</th><th>실제 화면에 적용하는 법</th></tr></thead>
+<tbody>
+<tr><td><b>브랜드</b><span className="ds-muted">E3PS · 이퍼플</span></td><td>브랜드 램프 11개와 이를 참조하는 색(주요 버튼 · 선택 · 포커스 등)이 모든 화면에서 바뀝니다. 이퍼플은 시연용 가상 브랜드입니다.</td><td><code>{'<html class="theme-sample">'}</code><span className="ds-muted">클래스가 없으면 E3PS</span></td></tr>
+<tr><td><b>모드</b><span className="ds-muted">라이트 · 다크</span></td><td>배경 · 글자 · 테두리 · 아이콘 색이 다크 값으로 바뀝니다. 토큰 이름은 그대로입니다.</td><td><code>{'<body class="dark-mode">'}</code></td></tr>
+</tbody>
+</table>
+</Section>
+<Section title="Playground 활용" en="Playground" desc="컴포넌트 페이지 맨 아래 Playground에서 값을 바꿔 보며 결과를 확인할 수 있습니다.">
+<dl className="ds-dl">
+<div><dt>값 바꿔 보기</dt><dd>글자 · 중요도 · 모양 · 상태를 바꾸면 미리보기와 「코드 보기」의 마크업이 함께 바뀝니다.</dd></div>
+<div><dt>링크 공유</dt><dd>도구 막대의 브랜드 · 모드 선택은 주소(URL)에 담깁니다. 주소를 복사해 보내면 같은 화면으로 열립니다.</dd></div>
+<div><dt>문의할 때</dt><dd>문제가 되는 조합의 「코드 보기」 마크업과 페이지 주소를 함께 보내 주세요.</dd></div>
+</dl>
+</Section>
+<Section title="시작하기" en="Getting started" desc="CSS 파일 네 개를 순서대로 불러오고, 마크업에 컴포넌트 클래스를 붙이면 됩니다.">
+<Source language="html" code={LOAD} />
+</Section>
+<Section title="참고 자료" en="Resources">
+<table className="ds-table">
+<tbody>
+<tr><td><b>저장소</b></td><td>소스 코드와 변경 내역</td><td><a className="ds-link" href="https://github.com/MeganOveLee/enterprise-ds" target="_blank" rel="noreferrer">github.com/MeganOveLee/enterprise-ds</a></td></tr>
+<tr><td><b>결정 기록 (ADR)</b></td><td>토큰 · 컴포넌트를 정할 때의 배경 · 선택지 · 근거</td><td><a className="ds-link" href="https://app.notion.com/p/3eda8196682d8126967fcc86f796fcb4" target="_blank" rel="noreferrer">Notion — 결정 기록 (ADR)</a></td></tr>
+</tbody>
+</table>
+</Section>
+</div>
+</Unstyled>
