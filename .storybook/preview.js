@@ -28,8 +28,8 @@ export default {
         items: [{ value: 'e3ps', title: 'E3PS' }, { value: 'sample', title: '이퍼플 (sample)' }] },
     },
     mode: {
-      description: '라이트 / 다크',
-      toolbar: { title: '모드', icon: 'mirror', dynamicTitle: true,
+      description: '화면 모드 (라이트 / 다크)',
+      toolbar: { title: '화면 모드', icon: 'mirror', dynamicTitle: true,
         items: [{ value: 'light', title: '라이트' }, { value: 'dark', title: '다크' }] },
     },
   },

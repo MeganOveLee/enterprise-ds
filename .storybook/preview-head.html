@@ -1,3 +1,4 @@
+<script>document.documentElement.lang = 'ko';</script>
 <!-- JSP와 같은 방식으로 일반 스크립트로 불러온다 -->
 <script src="ds-js/datepicker.js"></script>
 <style>
@@ -60,6 +61,12 @@
   .ds-meta { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 0; padding: 0; list-style: none; }
   .ds-meta li { padding: 2px 10px; border: 1px solid #d0d7de; border-radius: 999px; background: #fff; font-size: 12px; color: #424a53; }
   .ds-cats { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; }
+  .ds-layer { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 16px; align-items: start; }
+  .ds-layer__label { margin: 14px 0 0; font-size: 14px; font-weight: 700; color: #111418; }
+  .ds-layer__label span { display: block; font-size: 12px; font-weight: 500; color: #8c959f; }
+  .ds-cats--wide { grid-template-columns: minmax(0, 1fr); }
+  .ds-layer__arrow { margin: 10px 0 10px 128px; font-size: 12px; color: #57606a; }
+  @media (max-width: 720px) { .ds-layer { grid-template-columns: 1fr; gap: 4px; } .ds-layer__arrow { margin-left: 0; } }
   .ds-cat { padding: 16px; border: 1px solid #e1e4e8; border-radius: 6px; background: #fff; }
   .ds-cat.is-soon { background: #f6f8fa; }
   .ds-cat h3 { margin: 0; font-size: 16px; line-height: 1.4; font-weight: 700; color: #111418; }
