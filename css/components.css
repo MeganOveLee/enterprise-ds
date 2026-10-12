@@ -264,7 +264,7 @@
     width: 100%;
     height: 32px;
     border: 1px solid var(--color-border-input);
-    border-radius: var(--radius-md);   /* 입력칸 = 버튼과 같은 모서리 (DS-ADR-011) */
+    border-radius: var(--radius-sm);   /* 입력칸 = 2px, 이전 버전 기준 (DS-ADR-019 · 011 1항 대체) */
     background: var(--color-bg-input);
     font-family: var(--font-family-base);
     font-size: var(--body-sm);
@@ -727,7 +727,7 @@ body.dark-mode .theme-toggle-btn .icon-moon { display: none; }
     flex: 1;
     min-width: 0;
     border: 1px solid var(--color-border-input);
-    border-radius: var(--radius-md);   /* 입력칸 = 버튼과 같은 모서리 (DS-ADR-011) */
+    border-radius: var(--radius-sm);   /* 입력칸 = 2px, 대주 3.1 기준 (DS-ADR-019 · 011 1항 대체) */
     background: var(--color-bg-input);
     overflow: hidden;
     box-sizing: border-box;
@@ -1181,7 +1181,7 @@ body.dark-mode .pop .pro_table { background: var(--color-bg-base); box-shadow: n
     width: 100%; min-height: var(--size-input); box-sizing: border-box;
     background-color: var(--color-bg-readonly);
     border: 1px solid var(--color-border-base);
-    border-radius: var(--radius-md);   /* 입력칸 = 버튼과 같은 모서리 (DS-ADR-011) */
+    border-radius: var(--radius-sm);   /* 입력칸 = 2px, 대주 3.1 기준 (DS-ADR-019 · 011 1항 대체) */
     padding: 0 10px;
     color: var(--color-text-muted); font-size: var(--body-sm); word-break: break-all;
     cursor: default;
@@ -1608,7 +1608,7 @@ body.dark-mode .radio .radio__mark { background: var(--color-bg-muted); }   /* �
     width: 100%;
     box-sizing: border-box;
     border: 1px solid var(--color-border-input);   /* 3:1 전용 토큰 (DS-ADR-013) */
-    border-radius: var(--radius-md);   /* 입력칸 = 버튼과 같은 모서리 (DS-ADR-011) */
+    border-radius: var(--radius-sm);   /* 입력칸 = 2px, 대주 3.1 기준 (DS-ADR-019 · 011 1항 대체) */
     background-color: var(--color-bg-input);   /* shorthand 금지 — .select 화살표(background-image) 보존 */
     color: var(--color-text-base);
     font-family: var(--font-family-base);
@@ -2568,7 +2568,7 @@ body.dark-mode .progress-bar {
     padding: 0 32px 0 var(--spacing-8);   /* .select 와 같은 화살표 자리 */
     box-sizing: border-box;
     border: 1px solid var(--color-border-input);
-    border-radius: var(--radius-md);   /* 입력칸 = 버튼과 같은 모서리 (DS-ADR-011) */
+    border-radius: var(--radius-sm);   /* 입력칸 = 2px, 대주 3.1 기준 (DS-ADR-019 · 011 1항 대체) */
     background-color: var(--color-bg-input);
     color: var(--color-text-base);
     font-size: var(--body-md);
@@ -2626,7 +2626,7 @@ body.dark-mode .checkSelect .selected-text {
     padding: 0 var(--spacing-8);
     box-sizing: border-box;
     border: 1px solid var(--color-border-base);
-    border-radius: var(--radius-md);   /* 입력칸 = 버튼과 같은 모서리 (DS-ADR-011) */
+    border-radius: var(--radius-sm);   /* 입력칸 = 2px, 대주 3.1 기준 (DS-ADR-019 · 011 1항 대체) */
     background-color: var(--color-bg-base);
     color: var(--color-text-base);
     font-size: var(--body-sm);
