@@ -74,8 +74,17 @@ const field = (label, control, { req = false, span = 0, id = '' } = {}) =>
 
 // ── 아이콘 메뉴 + 두 번째 메뉴 패널 ──
 const LNB = [['work', '업무관리'], ['doc', '문서관리', true], ['drawing', '도면관리'], ['part', '부품관리'], ['project', '프로젝트'], ['change', '설계변경']];
+// 가상 제품 로고 — 브랜드 타일 위에 부품(육면체)과 그 둘레를 도는 수명 주기 궤도, 궤도 끝에 브랜드 포인트색 점.
+// 브랜드를 바꾸면 타일 · 점 색이 따라감 (로고 = 브랜드 자산이라 모서리는 고정)
+const LOGO =
+  '<svg class="scr-logo" width="34" height="34" viewBox="0 0 34 34" role="img" aria-label="Enterprise PLM">' +
+  '<rect width="34" height="34" rx="8" style="fill:var(--color-bg-brand)"/>' +
+  '<path d="M4.4 21.6A12.5 12.5 0 1 1 27.6 21.6" fill="none" stroke-width="1.6" stroke-linecap="round" style="stroke:var(--color-icon-on-color);opacity:.55"/>' +
+  '<g fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="stroke:var(--color-icon-on-color)">' +
+  '<path d="M16 10.2l6 3.45v6.9L16 24l-6-3.45v-6.9z"/><path d="M10 13.65l6 3.45 6-3.45M16 17.1V24"/></g>' +
+  '<circle cx="27.6" cy="21.6" r="2.9" stroke-width="1.6" style="fill:var(--accent-500);stroke:var(--color-bg-brand)"/></svg>';
 const lnb = () =>
-  '<aside class="main-menu"><div class="scr-lnb__logo"><span class="scr-lnb__mark">P</span></div>' +
+  '<aside class="main-menu"><div class="scr-lnb__logo">' + LOGO + '</div>' +
   '<nav aria-label="주 메뉴"><ul class="scr-lnb">' +
   LNB.map(([ic, t, on]) => '<li><a href="#"' + (on ? ' class="is-active" aria-current="page"' : '') + '>' + svg(I[ic]) + t + '</a></li>').join('') +
   '</ul></nav><ul class="scr-lnb scr-lnb--bottom"><li><a href="#">' + svg(I.admin) + '관리자</a></li></ul></aside>';
@@ -155,14 +164,44 @@ const listScreen = () =>
   '</div></div></div></div></div>';
 
 // ── 등록 창 — 제품에서는 새 창(.pop). 여기서는 목록 위에 띄운 창 ──
-const section = (icon, title, open = true) =>
-  '<div class="seach_arm"><div class="leftbt"><button type="button" class="section-toggle" aria-expanded="' + open + '" aria-label="' + title + ' 접기">' + svg(I.minus, 14) + '</button>' +
-  '<h4>' + title + '</h4></div></div>';
+// 섹션 머리 — 네모 테두리 안 빼기(펼침) / 더하기(접힘) + 제목. 바탕색 없음 (제품 등록 창과 같은 모양)
+const SQ = { minus: '<rect x="3.5" y="3.5" width="17" height="17" rx="3"/><path d="M8 12h8"/>', plus: '<rect x="3.5" y="3.5" width="17" height="17" rx="3"/><path d="M8 12h8M12 8v8"/>' };
+const section = (title, open = true, right = '') =>
+  '<div class="seach_arm scr-sec"><div class="leftbt"><button type="button" class="scr-sec-toggle" aria-expanded="' + open + '" aria-label="' + title + (open ? ' 접기' : ' 펼치기') + '">' +
+  svg(open ? SQ.minus : SQ.plus, 18) + '</button><h4>' + title + '</h4></div>' + (right ? '<div class="rightbt">' + right + '</div>' : '') + '</div>';
+
+// 첨부 — 파일 형식 아이콘(형식별 색 + 확장자 띠)
+const FT = { pdf: ['danger', 'PDF'], xlsx: ['success', 'XLS'], docx: ['info', 'DOC'], dwg: ['base', 'DWG'], zip: ['warning', 'ZIP'] };
+const fileIcon = (ext) => {
+  const [tone, label] = FT[ext] || ['muted', 'FILE'];
+  return '<span class="file-icon scr-ft scr-ft--' + tone + '"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">' +
+    '<path d="M4.5 1.5h7.5l4 4v12.2a.8.8 0 0 1-.8.8H4.5a.8.8 0 0 1-.8-.8V2.3a.8.8 0 0 1 .8-.8z" stroke-width="1.2" style="fill:var(--color-bg-base);stroke:currentColor"/>' +
+    '<path d="M12 1.5v4h4" fill="none" stroke-width="1.2" style="stroke:currentColor"/>' +
+    '<rect x="1.5" y="9.6" width="13.6" height="6.4" rx="1.2" style="fill:currentColor"/>' +
+    '<text x="8.3" y="14.5" text-anchor="middle" font-size="5" font-weight="700" font-family="Arial, sans-serif" style="fill:var(--color-text-on-color)">' + label + '</text></svg></span>';
+};
+const FILES = [
+  ['BRK-20417_조립사양_B2.pdf', 'pdf', '1.8 MB'],
+  ['체결토크_시험결과.xlsx', 'xlsx', '96 KB'],
+  ['BRK-20417_캘리퍼.dwg', 'dwg', '3.2 / 5.0 MB', 64],
+  ['설계검토_회의록.docx', 'docx', '42 KB'],
+];
+const uploader = () =>
+  '<div class="resumable"><div class="resumable-bar">' +
+  '<div class="resumable-label"><span class="resumable-label__name">' + FILES.length + '개 · 올리는 중 1개</span><a href="#" class="scr-link">(양식) 사양서 양식.docx</a></div>' +
+  '<div class="resumable-bar__right">' + btn('파일 선택', 'btn--secondary btn--outlined') + '<button type="button" class="btn btn--destructive btn--transparent" data-role="clear-all">전체 삭제</button></div></div>' +
+  '<div class="resumable-drop" role="button" tabindex="0"><span class="drop-cta">파일을 여기로 끌어다 놓거나 눌러서 고르세요 · 한 파일 100 MB까지</span></div>' +
+  '<ul class="fileList">' + FILES.map(([n, ext, size, pct]) =>
+    '<li class="file-item">' + fileIcon(ext) +
+    (pct === undefined ? '<a href="#" class="file-name">' + n + '</a>' : '<span class="file-name">' + n + '</span><progress max="100" value="' + pct + '" aria-label="' + n + ' 올리는 중">' + pct + '%</progress>') +
+    '<span class="file-size">' + (pct === undefined ? size : pct + '% · ' + size) + '</span>' +
+    '<button type="button" class="remove-btn" aria-label="' + n + (pct === undefined ? ' 빼기' : ' 올리기 취소') + '">' + svg(I.close, 14) + '</button></li>').join('') +
+  '</ul></div>';
 const registerPop = () =>
   '<div class="pop"><div class="top"><div class="top-title-area"><span class="doc-type-badge">' + svg(I.doc, 16) + '</span><h3>문서 등록</h3></div>' +
   '<div class="top-btn-area">' + btn('임시 저장', 'btn--secondary btn--outlined') + btn('등록', 'btn--primary btn--filled') +
   '<button type="button" class="pop-close" aria-label="닫기">' + svg(I.close, 14) + '</button></div></div>' +
-  '<div class="contents">' + section(I.doc, '기본 정보') +
+  '<div class="contents">' + section('기본 정보', true, '<span class="scr-total"><span class="required" aria-hidden="true"></span> 필수</span>') +
   '<div class="pro_table"><div class="form-grid-2">' +
   field('문서 분류', '<div class="ff-readonly">/제품 문서/설계 문서/사양서</div>', { req: true }) +
   field('문서 번호', '<div class="ff-readonly">저장하면 자동으로 매겨집니다</div>') +
@@ -174,11 +213,7 @@ const registerPop = () =>
   '<div class="ff-field col-2"><label class="search-label" for="scr-desc">설명</label><div class="td">' +
   '<textarea class="textarea" id="scr-desc" rows="3" placeholder="문서의 목적 · 변경 내용을 적어 주세요"></textarea></div></div>' +
   '</div></div>' +
-  section(I.clip, '첨부 파일') +
-  '<ul class="file-download-list">' +
-  [['BRK-20417_조립사양_B2.pdf', '1.8 MB'], ['체결토크_시험결과.xlsx', '96 KB']].map(([n, s]) =>
-    '<li>' + svg(I.file, 14) + '<span class="file-name">' + n + '</span><span class="file-size">' + s + '</span>' +
-    '<button type="button" class="file-dl" aria-label="' + n + ' 내려받기">' + svg(I.dl, 14) + '</button></li>').join('') + '</ul>' +
+  section('첨부 파일') + uploader() +
   '</div></div>';
 
 // 실제 크기로 그린 화면을 칸 너비에 맞게 줄여 보여 준다 (1보다 크게 키우지 않음)
