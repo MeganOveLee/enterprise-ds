@@ -1,6 +1,7 @@
 // Screens — DS 클래스와 토큰만으로 짠 PLM 업무 화면 (실제 크기 1440 × 900, 가상 데이터)
 // 문서 화면은 Screens.mdx. 도구 막대의 브랜드 · 화면 모드를 그대로 따른다.
-// 구조는 실제 제품 화면과 같다: 아이콘 메뉴 + 두 번째 메뉴 패널(메뉴 · 폴더 트리) + 상단 바 + 라벨 위 검색 폼 + 목록
+// 구조는 실제 제품 화면과 같다: 홈 = 아이콘 메뉴 + 상단 바 + 카드 대시보드
+// 업무 화면 = 아이콘 메뉴 + 두 번째 메뉴 패널(메뉴 · 폴더 트리) + 상단 바 + 라벨 위 검색 폼 + 목록
 // 마크업은 문자열 이어 붙이기 — 스토리북 색인기가 여러 줄 HTML 템플릿을 MDX로 잘못 읽는 일을 피함
 import './_screens.css';
 
@@ -37,6 +38,10 @@ const I = {
   cal: '<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>',
   star: '<path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.6 6.6 19.5l1.2-6-4.5-4.2 6.1-.7z"/>',
   dl: '<path d="M12 4v11M7 10l5 5 5-5M5 20h14"/>',
+  inbox: '<path d="M3 13l3-8h12l3 8v6H3z"/><path d="M3 13h5l1.5 2.5h5L16 13h5"/>',
+  task: '<rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 12l3 3 5-6"/>',
+  clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+  plus: '<path d="M12 5v14M5 12h14"/>',
 };
 
 // ── 데이터 (가상) ──
@@ -73,7 +78,7 @@ const field = (label, control, { req = false, span = 0, id = '' } = {}) =>
   '<div class="td">' + control + '</div></div>';
 
 // ── 아이콘 메뉴 + 두 번째 메뉴 패널 ──
-const LNB = [['work', '업무관리'], ['doc', '문서관리', true], ['drawing', '도면관리'], ['part', '부품관리'], ['project', '프로젝트'], ['change', '설계변경']];
+const LNB = [['work', '업무관리'], ['doc', '문서관리'], ['drawing', '도면관리'], ['part', '부품관리'], ['project', '프로젝트'], ['change', '설계변경']];
 // 가상 제품 로고 — 브랜드 타일 위에 부품(육면체)과 그 둘레를 도는 수명 주기 궤도, 궤도 끝에 브랜드 포인트색 점.
 // 브랜드를 바꾸면 타일 · 점 색이 따라감. 로고 = 브랜드 자산이라 모서리는 고정이고, 점은 브랜드 파일의 포인트색(--accent-500)을 그대로 씀 — 화면 코드에서 원색을 쓰는 유일한 곳
 const LOGO =
@@ -83,10 +88,11 @@ const LOGO =
   '<g fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="stroke:var(--color-icon-on-color)">' +
   '<path d="M16 10.2l6 3.45v6.9L16 24l-6-3.45v-6.9z"/><path d="M10 13.65l6 3.45 6-3.45M16 17.1V24"/></g>' +
   '<circle cx="27.6" cy="21.6" r="2.9" stroke-width="1.6" style="fill:var(--accent-500);stroke:var(--color-bg-brand)"/></svg>';
-const lnb = () =>
-  '<aside class="main-menu"><div class="scr-lnb__logo">' + LOGO + '</div>' +
+// active = 지금 메뉴 이름. 홈(대시보드)은 로고가 홈이라 켜진 메뉴 없음
+const lnb = (active = '문서관리') =>
+  '<aside class="main-menu"><div class="scr-lnb__logo"><a href="#" aria-label="홈">' + LOGO + '</a></div>' +
   '<nav aria-label="주 메뉴"><ul class="scr-lnb">' +
-  LNB.map(([ic, t, on]) => '<li><a href="#"' + (on ? ' class="is-active" aria-current="page"' : '') + '>' + svg(I[ic]) + t + '</a></li>').join('') +
+  LNB.map(([ic, t]) => '<li><a href="#"' + (t === active ? ' class="is-active" aria-current="page"' : '') + '>' + svg(I[ic]) + t + '</a></li>').join('') +
   '</ul></nav><ul class="scr-lnb scr-lnb--bottom"><li><a href="#">' + svg(I.admin) + '관리자</a></li></ul></aside>';
 
 const TREE = [[0, '제품 문서', true], [1, '설계 문서', true, true], [2, '사양서'], [2, '시험 성적서'], [2, '회의록'], [1, '품질 문서'], [1, '양식']];
@@ -103,11 +109,11 @@ const sub = () =>
   '</ul></div></div></aside>';
 
 // ── 상단 바 ──
-const gnb = () =>
+const gnb = (crumbs = ['Home', '문서 관리', '문서 검색']) =>
   '<header class="gnb"><div style="display:flex;align-items:center">' +
   '<div class="nav-history"><button type="button" class="nav-history-btn" aria-label="뒤로">' + svg(I.prev, 14) + '</button>' +
   '<button type="button" class="nav-history-btn" aria-label="앞으로">' + svg(I.next, 14) + '</button></div>' +
-  '<div class="breadcrumb"><span>Home</span><span aria-hidden="true">›</span><span>문서 관리</span><span aria-hidden="true">›</span><span class="crumb-current">문서 검색</span></div></div>' +
+  '<div class="breadcrumb">' + crumbs.map((c, i) => i < crumbs.length - 1 ? '<span>' + c + '</span><span aria-hidden="true">›</span>' : '<span class="crumb-current">' + c + '</span>').join('') + '</div></div>' +
   '<div class="header-actions">' +
   '<button type="button" class="theme-toggle-btn" aria-label="화면 모드 바꾸기"><span class="icon-moon">' + svg(I.moon, 16) + '</span><span class="icon-sun">' + svg(I.sun, 16) + '</span></button>' +
   '<span class="scr-gnb-icon" aria-label="내 정보">' + svg(I.user, 20) + '</span>' +
@@ -216,6 +222,67 @@ const registerPop = () =>
   section('첨부 파일') + uploader() +
   '</div></div>';
 
+// ── 홈 대시보드 — 두 번째 메뉴 패널 없음. 위 = 프로필 카드 + 숫자 카드 3, 아래 = .card-grid 3열 × 2줄 ──
+const more = (t = '전체 보기') => '<a href="#" class="scr-more">' + t + svg(I.next, 12) + '</a>';
+const cardHead = (title, count, right = '') =>
+  '<div class="card-header"><h2 class="card-title">' + title + (count !== undefined ? '<span class="card-title-count">' + count + '</span>' : '') + '</h2>' + right + '</div>';
+const tile = (icon, tone) => '<span class="scr-tile scr-tile--' + tone + '">' + svg(I[icon], 20) + '</span>';
+const STATS = [
+  ['inbox', 'brand', '결재 대기', 2, '건'],
+  ['doc', 'info', '작업 중인 내 문서', 4, '건'],
+  ['clock', 'warning', '이번 주 마감 태스크', 3, '건'],
+];
+const profile = () =>
+  '<section class="card scr-profile" aria-label="내 정보"><div><p class="scr-profile__date">2026년 10월 13일 화요일</p>' +
+  '<h1 class="scr-profile__hello">김도윤 님, 좋은 오후예요</h1><p class="scr-profile__meta">설계1팀 · 선임연구원</p></div>' +
+  '<span class="scr-profile__avatar" aria-hidden="true">김</span></section>';
+const stat = ([icon, tone, label, n, unit]) =>
+  '<section class="card scr-stat"><div class="scr-stat__body">' + tile(icon, tone) +
+  '<div><p class="scr-stat__label">' + label + '</p><p class="scr-stat__num">' + n + '<span>' + unit + '</span></p></div></div>' +
+  more('자세히 보기') + '</section>';
+
+// 내 업무 구성 — 도넛. 차트 색 토큰이 DS에 아직 없어서 아이콘 신호색을 빌려 씀
+const MIX = [['문서', 12, '--color-icon-brand'], ['도면', 8, '--color-icon-success'], ['부품', 5, '--color-icon-warning'], ['설계 변경', 3, '--color-icon-muted']];
+const donut = () => {
+  const total = MIX.reduce((a, m) => a + m[1], 0);
+  let at = 0;
+  const arcs = MIX.map(([, n, tok]) => {
+    const p = n / total * 100;
+    const a = '<circle cx="21" cy="21" r="15.915" fill="none" stroke-width="5" stroke-dasharray="' + (p - 0.8).toFixed(2) + ' ' + (100 - p + 0.8).toFixed(2) + '" stroke-dashoffset="' + (25 - at).toFixed(2) + '" style="stroke:var(' + tok + ')"/>';
+    at += p; return a;
+  }).join('');
+  return '<div class="scr-donut"><svg viewBox="0 0 42 42" width="148" height="148" role="img" aria-label="내 업무 ' + total + '건 — ' + MIX.map((m) => m[0] + ' ' + m[1]).join(', ') + '">' +
+    '<circle cx="21" cy="21" r="15.915" fill="none" stroke-width="5" style="stroke:var(--color-bg-muted)"/>' + arcs + '</svg>' +
+    '<div class="scr-donut__center"><b>' + total + '</b><span>전체</span></div></div>' +
+    '<ul class="scr-legend">' + MIX.map(([t, n, tok]) => '<li><i style="background:var(' + tok + ')"></i>' + t + '<b>' + n + '</b><span>' + Math.round(n / total * 100) + '%</span></li>').join('') + '</ul>';
+};
+const APPROVALS = [['검토', '결재 대기', '하우징 재질 변경 검토 보고서', '10-13'], ['검토', '결재 대기', '모터 마운트 진동 시험 계획서', '10-12'], ['승인', '승인', '브래킷 체결 토크 시험 성적서', '10-09'], ['반려', '반려', '실링 고무 경도 측정 결과', '10-08'], ['승인', '승인', '방열판 핀 간격 해석 자료', '10-07']];
+const TASKS = [['danger', '1일 지남', '캘리퍼 조립 사양 검토 — BRK-20417', '10-12'], ['warning', 'D-1', '하우징 재질 변경 승인 요청', '10-14'], ['info', 'D-3', '방열판 핀 간격 해석 보완', '10-16'], ['neutral', 'D-7', '양산 이관 체크리스트 작성', '10-20'], ['neutral', 'D-9', '센서 브래킷 형상 재검토', '10-22']];
+const RECENT = [['pdf', 'DOC-2610-0013 브레이크 캘리퍼 조립 사양서', '10-13'], ['dwg', 'DWG-BRK-20417 캘리퍼 조립도', '10-13'], ['xlsx', '체결 토크 시험 결과 집계', '10-12'], ['docx', '설계 검토 회의록 10월 2주', '10-10'], ['pdf', 'DOC-2610-0010 브래킷 체결 토크 시험 성적서', '10-09']];
+const SHORTCUTS = [['doc', '문서 등록'], ['drawing', '도면 등록'], ['part', '부품 검색'], ['change', '설계 변경 요청'], ['project', '프로젝트 현황'], ['inbox', '결재함']];
+const li = (lead, title, date) => '<li>' + lead + '<span class="item-title">' + title + '</span><span class="item-date">' + date + '</span></li>';
+const homeBody = () =>
+  '<div class="scr-home"><div class="scr-home__top">' + profile() + STATS.map(stat).join('') + '</div>' +
+  '<div class="card-grid scr-home__grid">' +
+  '<section class="card">' + cardHead('내 업무 구성') + '<div class="scr-mix">' + donut() + '</div></section>' +
+  '<section class="card">' + cardHead('결재 업무', 2, more('최근 5건 · 전체 보기')) + '<ul class="card-list">' +
+    APPROVALS.map(([k, label, t, d]) => li('<span class="scr-chip scr-chip--' + STATUS[k][0] + '">' + label + '</span>', t, d)).join('') + '</ul></section>' +
+  '<section class="card">' + cardHead('활동 업무', 0) +
+    '<div class="empty empty--card" role="status"><span class="empty__icon">' + svg(I.inbox, 32) + '</span>' +
+    '<p class="empty__title">진행 중인 활동 업무가 없어요</p><p class="empty__desc">배정된 활동이 생기면 여기에 보여요.</p></div></section>' +
+  '<section class="card">' + cardHead('나의 태스크', TASKS.length, more()) + '<ul class="card-list">' +
+    TASKS.map(([tone, label, t, d]) => li('<span class="scr-chip scr-chip--' + tone + '">' + label + '</span>', t, d)).join('') + '</ul></section>' +
+  '<section class="card">' + cardHead('최근 작업 중인 데이터', undefined, more()) + '<ul class="card-list scr-recent">' +
+    RECENT.map(([ext, t, d]) => li(fileIcon(ext), t, d)).join('') + '</ul></section>' +
+  '<section class="card">' + cardHead('바로가기', undefined, '<a href="#" class="scr-more">' + svg(I.plus, 12) + '편집</a>') +
+    '<ul class="scr-shortcuts">' + SHORTCUTS.map(([ic, t]) => '<li><a href="#">' + tile(ic, 'brand') + '<span>' + t + '</span>' + svg(I.next, 14) + '</a></li>').join('') + '</ul></section>' +
+  '</div></div>';
+const homeScreen = () =>
+  '<div style="display:flex;height:100%">' + lnb('') +
+  '<div class="main-layout"><div class="main-body"><div class="main-nav-layout"><div class="main-area">' + gnb(['Home']) +
+  '<div class="main-content">' + homeBody() + '</div>' +
+  '</div></div></div></div></div>';
+
 // 실제 크기로 그린 화면을 칸 너비에 맞게 줄여 보여 준다 (1보다 크게 키우지 않음)
 const frame = (inner) => {
   const el = document.createElement('div');
@@ -233,6 +300,11 @@ export default {
   title: 'Screens/PLM 화면',
   tags: ['!dev', '!autodocs'],   // 메뉴에는 문서 한 장만, 문서는 Screens.mdx
   parameters: { layout: 'fullscreen' },
+};
+
+export const 홈 = {
+  parameters: src(homeBody()),
+  render: () => frame(homeScreen()),
 };
 
 export const 문서_검색 = {

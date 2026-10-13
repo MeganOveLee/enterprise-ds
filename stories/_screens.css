@@ -228,3 +228,76 @@
 .scr .fileList progress::-webkit-progress-value { background: var(--color-bg-brand); border-radius: var(--radius-rounded); }
 .scr .fileList progress::-moz-progress-bar { background: var(--color-bg-brand); border-radius: var(--radius-rounded); }
 .scr .resumable-label .scr-link { text-decoration: underline; color: var(--color-text-info); }
+
+/* 홈 대시보드 — 카드 · 카드 목록 · 빈 상태는 DS 그대로(.card · .card-grid · .card-list · .empty--card).
+ * 여기에는 DS에 아직 없는 자리만: 프로필 카드 · 숫자 카드 · 도넛 · 바로가기, 그리고 3열 배치 */
+.scr-home { display: grid; grid-template-rows: auto 1fr; gap: var(--spacing-16); height: 100%; }
+.scr .main-content:has(.scr-home) { padding: var(--spacing-24); }
+.scr-home__top { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: var(--spacing-16); }
+.scr .card-grid.scr-home__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: 1fr 1fr; gap: var(--spacing-16); min-height: 0; }   /* DS .card-grid 는 칸 최소 460 → 1440 화면에서 2열. 홈은 3열 */
+.scr-home__grid .card { min-width: 0; min-height: 0; overflow: hidden; display: flex; flex-direction: column; }
+.scr .card-title { font-size: var(--heading-sm); }
+.scr-more { display: inline-flex; align-items: center; gap: 2px; font-size: var(--body-sm); color: var(--color-text-muted); text-decoration: none; white-space: nowrap; }
+.scr-more:hover { color: var(--color-text-brand); }
+
+/* 프로필 카드 — 브랜드 딥 패널(--color-bg-panel, 토큰 주석의 '홈 프로필 카드' 자리) */
+.scr-profile {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-16);
+  background: var(--color-bg-panel); border-color: var(--color-bg-panel); color: var(--color-text-on-panel);
+}
+.scr-profile p, .scr-profile h1 { margin: 0; }
+.scr-profile__date { font-size: var(--body-sm); color: var(--color-text-on-panel-2); }
+.scr-profile__hello { margin-top: var(--spacing-4) !important; font-size: var(--heading-lg); font-weight: var(--font-weight-semibold); line-height: var(--line-height-tight); color: var(--color-text-on-panel); }
+.scr-profile__meta { margin-top: var(--spacing-8) !important; font-size: var(--body-md); color: var(--color-text-on-panel-2); }
+.scr-profile__avatar {
+  width: 56px; height: 56px; flex-shrink: 0; border-radius: var(--radius-rounded);
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--color-bg-panel-2); color: var(--color-text-on-panel); font-size: var(--heading-md); font-weight: var(--font-weight-semibold);
+}
+
+/* 숫자 카드 + 아이콘 타일 */
+.scr-stat { display: flex; flex-direction: column; justify-content: space-between; gap: var(--spacing-12); padding: var(--spacing-16) var(--spacing-24); }
+.scr-stat__body { display: flex; align-items: center; gap: var(--spacing-12); }
+.scr-stat p { margin: 0; }
+.scr-stat__label { font-size: var(--body-sm); color: var(--color-text-muted); }
+.scr-stat__num { font-size: var(--heading-xl); font-weight: var(--font-weight-bold); line-height: var(--line-height-tight); color: var(--color-text-base); font-variant-numeric: tabular-nums; }
+.scr-stat__num span { margin-left: 2px; font-size: var(--body-md); font-weight: var(--font-weight-medium); color: var(--color-text-muted); }
+.scr-stat .scr-more { padding-top: var(--spacing-8); border-top: 1px solid var(--color-border-base); justify-content: space-between; }
+.scr-tile { width: 40px; height: 40px; flex-shrink: 0; border-radius: var(--radius-md); display: inline-flex; align-items: center; justify-content: center; }
+.scr-tile--brand   { background: var(--color-bg-brand-subtle);   color: var(--color-icon-brand); }
+.scr-tile--info    { background: var(--color-bg-info-subtle);    color: var(--color-icon-info); }
+.scr-tile--warning { background: var(--color-bg-warning-subtle); color: var(--color-icon-warning); }
+.scr-tile--success { background: var(--color-bg-success-subtle); color: var(--color-icon-success); }
+
+/* 카드 목록 — 칩 칸은 DS 그대로 90px. 최근 데이터는 앞 칸이 파일 아이콘이라 좁게 */
+.scr .card-list li { padding-top: 10px; padding-bottom: 10px; }
+.scr .card-list .scr-chip { justify-self: start; }
+.scr .card-list.scr-recent li { grid-template-columns: 20px 1fr 84px; }
+.scr .card-list .file-icon { display: inline-flex; }
+.scr-home__grid .empty--card { flex: 1; justify-content: center; padding-top: 0; padding-bottom: 0; }
+
+/* 도넛 + 범례 */
+.scr-mix { flex: 1; display: flex; align-items: center; justify-content: center; gap: var(--spacing-32); }
+.scr-donut { position: relative; width: 148px; height: 148px; flex-shrink: 0; }
+.scr-donut svg { display: block; }
+.scr-donut__center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.scr-donut__center b { font-size: var(--heading-xl); font-weight: var(--font-weight-bold); line-height: 1; color: var(--color-text-base); }
+.scr-donut__center span { margin-top: var(--spacing-4); font-size: var(--body-sm); color: var(--color-text-muted); }
+.scr-legend { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--spacing-12); min-width: 150px; font-size: var(--body-md); color: var(--color-text-base); }
+.scr-legend li { display: grid; grid-template-columns: 10px 1fr auto 40px; align-items: center; gap: var(--spacing-8); }
+.scr-legend i { width: 10px; height: 10px; border-radius: var(--radius-sm); }
+.scr-legend b { font-weight: var(--font-weight-semibold); font-variant-numeric: tabular-nums; }
+.scr-legend span { text-align: right; font-size: var(--body-sm); color: var(--color-text-muted); font-variant-numeric: tabular-nums; }
+
+/* 바로가기 — 2열 타일 */
+.scr-shortcuts { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-8); }
+.scr-shortcuts a {
+  display: flex; align-items: center; gap: var(--spacing-12); height: 60px; padding: 0 var(--spacing-12);
+  border: 1px solid var(--color-border-base); border-radius: var(--radius-item);
+  color: var(--color-text-base); font-size: var(--body-md); font-weight: var(--font-weight-medium); text-decoration: none;
+}
+.scr-shortcuts a > svg:last-child { margin-left: auto; color: var(--color-icon-muted); }
+.scr-shortcuts a > span:not(.scr-tile) { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.scr-shortcuts a:hover { background: var(--color-bg-muted); }
+.scr-shortcuts .scr-tile { width: 34px; height: 34px; }
+.scr-shortcuts .scr-tile svg { width: 18px; height: 18px; }
