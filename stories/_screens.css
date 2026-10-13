@@ -1,0 +1,162 @@
+/* Screens — 화면 예시 전용 보조 규칙 (stories/Screens.stories.js)
+ * 화면은 DS 클래스(components.css)로 짜고, 여기에는 DS에 아직 컴포넌트가 없는 자리만 둔다.
+ * 값은 전부 DS 토큰 — 고정 색 · 고정 모서리 없음. 브랜드 · 화면 모드를 그대로 따른다.
+ *   .scr-frame  실제 크기(1440 × 900)로 그린 화면을 칸 너비에 맞게 줄여 보여 주는 틀
+ *   .scr-lnb    왼쪽 메뉴 항목 — 제품에서는 개발 마크업이 그리는 자리, 값은 LNB 토큰
+ *   .scr-grid   목록 표 — 제품에서는 상용 그리드 라이브러리가 그리는 자리, 값은 그리드 토큰
+ *   .scr-chip   상태 칩 — Figma Status chip과 같은 값 (CSS 컴포넌트는 아직 없음) */
+
+.scr-frame {
+  position: relative;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  overflow: hidden;
+  background: var(--color-bg-subtle);
+}
+.scr {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: 0 0;
+  overflow: hidden;
+  font-family: var(--font-family-base);
+  color: var(--color-text-base);
+  font-size: var(--body-md);
+}
+.scr .main-layout { height: 100%; }   /* 제품은 100vh — 틀 안에서는 틀 높이 */
+.scr .main-menu { height: 100%; }
+
+/* 왼쪽 메뉴 */
+.scr-lnb__logo {
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid var(--color-border-base);
+  flex-shrink: 0;
+}
+.scr-lnb__mark {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);   /* 로고 마크 = 브랜드 자산, 형태 역할 없음 (DS-ADR-020) */
+  background: var(--color-bg-brand);
+  color: var(--color-text-on-color);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--body-md);
+}
+.scr-lnb { padding: var(--spacing-8) 0; }
+.scr-lnb a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  margin: 2px 6px;
+  padding: var(--spacing-8) 0;
+  border-radius: var(--radius-item);
+  color: var(--color-icon-muted);
+  font-size: 11px;
+  line-height: 1.2;
+  text-decoration: none;
+}
+.scr-lnb a:hover { background: var(--color-bg-lnb-hover); color: var(--color-text-base); }
+.scr-lnb a.is-active { background: var(--color-bg-lnb-active); color: var(--color-text-lnb-active); font-weight: var(--font-weight-semibold); }
+.scr-lnb svg { width: 20px; height: 20px; }
+
+/* GNB 오른쪽 */
+.scr .gnb .header-actions { gap: var(--spacing-12); }
+.scr-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-rounded);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-bg-brand-subtle);
+  color: var(--color-text-on-brand-subtle);
+  font-size: var(--body-sm);
+  font-weight: var(--font-weight-semibold);
+}
+.scr-total { font-size: var(--body-sm); color: var(--color-text-muted); }
+.scr-total b { color: var(--color-text-brand); font-weight: var(--font-weight-semibold); }
+.scr .seach_arm .leftbt svg { width: 16px; height: 16px; color: var(--color-icon-muted); }
+.scr .mainTable .td .checkbox { margin-left: var(--spacing-8); white-space: nowrap; }
+
+/* 목록 표 */
+.scr-grid {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-size: var(--body-sm);
+  color: var(--color-text-base);
+}
+.scr-grid th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  height: 36px;
+  padding: 0 var(--spacing-12);
+  background: var(--color-bg-grid-header);
+  color: var(--color-text-on-color);
+  font-weight: var(--font-weight-semibold);
+  text-align: left;
+  white-space: nowrap;
+  border-bottom: 1px solid var(--color-border-grid-header-bottom);
+}
+.scr-grid td {
+  height: 36px;
+  padding: 0 var(--spacing-12);
+  border-bottom: 1px solid var(--color-border-grid-cell);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.scr-grid tbody tr:nth-child(even) td { background: var(--color-bg-row-alt); }
+.scr-grid tbody tr:hover td { background: var(--color-bg-grid-row-hover); }
+.scr-grid tbody tr.is-selected td { background: var(--color-bg-grid-row-selected); }
+.scr-grid .is-center { text-align: center; }
+.scr-grid .is-num { color: var(--color-text-brand); font-weight: var(--font-weight-medium); font-variant-numeric: tabular-nums; }
+.scr-grid .is-date { color: var(--color-text-muted); font-variant-numeric: tabular-nums; }
+.scr-grid .checkbox { margin: 0; gap: 0; }
+
+/* 상태 칩 */
+.scr-chip {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 var(--spacing-8);
+  border-radius: var(--radius-chip);
+  font-size: var(--body-sm);
+  font-weight: var(--font-weight-medium);
+  white-space: nowrap;
+}
+.scr-chip--neutral { background: var(--color-bg-muted); color: var(--color-text-muted); }
+.scr-chip--info { background: var(--color-bg-info-subtle); color: var(--color-text-info-bold); }
+.scr-chip--success { background: var(--color-bg-success-subtle); color: var(--color-text-success-bold); }
+.scr-chip--warning { background: var(--color-bg-warning-subtle); color: var(--color-text-warning-bold); }
+.scr-chip--danger { background: var(--color-bg-danger-subtle); color: var(--color-text-danger-bold); }
+
+/* 상세 팝업 — 제품에서는 새 창. 여기서는 목록 화면 위에 띄운 창으로 */
+.scr-dim { position: absolute; inset: 0; z-index: 5; background: color-mix(in srgb, var(--neutral-950) 45%, transparent); }
+.scr-window {
+  position: absolute;
+  z-index: 6;   /* 목록 표 머리(sticky)보다 위 */
+  top: 56px;
+  left: 50%;
+  width: 1040px;
+  height: 788px;
+  transform: translateX(-50%);
+  border: 1px solid var(--color-border-base);
+  border-radius: var(--radius-panel);
+  overflow: hidden;
+  box-shadow: var(--shadow-core), 0 16px 48px color-mix(in srgb, var(--neutral-950) 30%, transparent);
+}
+.scr-window .pop { height: 100%; min-width: 0; }
+.scr-window .contents { gap: var(--spacing-12); }
+.scr-window .pro_table { border: 1px solid var(--color-border-base); }
+.scr-window .detail-dl { grid-template-columns: 96px 1fr 96px 1fr; }
+.scr-window .textarea[readonly] { min-height: 64px; }
+.scr-window .scr-grid th { position: static; }
