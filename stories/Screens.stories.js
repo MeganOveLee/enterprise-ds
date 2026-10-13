@@ -75,7 +75,7 @@ const field = (label, control, { req = false, span = 0, id = '' } = {}) =>
 // ── 아이콘 메뉴 + 두 번째 메뉴 패널 ──
 const LNB = [['work', '업무관리'], ['doc', '문서관리', true], ['drawing', '도면관리'], ['part', '부품관리'], ['project', '프로젝트'], ['change', '설계변경']];
 // 가상 제품 로고 — 브랜드 타일 위에 부품(육면체)과 그 둘레를 도는 수명 주기 궤도, 궤도 끝에 브랜드 포인트색 점.
-// 브랜드를 바꾸면 타일 · 점 색이 따라감 (로고 = 브랜드 자산이라 모서리는 고정)
+// 브랜드를 바꾸면 타일 · 점 색이 따라감. 로고 = 브랜드 자산이라 모서리는 고정이고, 점은 브랜드 파일의 포인트색(--accent-500)을 그대로 씀 — 화면 코드에서 원색을 쓰는 유일한 곳
 const LOGO =
   '<svg class="scr-logo" width="34" height="34" viewBox="0 0 34 34" role="img" aria-label="Enterprise PLM">' +
   '<rect width="34" height="34" rx="8" style="fill:var(--color-bg-brand)"/>' +

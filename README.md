@@ -3,6 +3,8 @@
 전담 프론트엔드가 없는 엔터프라이즈 백오피스 화면을, 1인 퍼블리셔가 표준화하고 인계 가능한 상태로 유지하기 위한 CSS 디자인 시스템입니다.
 
 - **Storybook**: https://meganovelee.github.io/enterprise-ds/
+- **화면 예시**: [Screens › PLM 화면](https://meganovelee.github.io/enterprise-ds/?path=/docs/screens-plm-%ED%99%94%EB%A9%B4--docs) — 이 디자인 시스템의 클래스와 토큰만으로 구성한 실제 크기 업무 화면(문서 검색 · 문서 등록)과 같은 화면의 브랜드 3개 비교
+- **결정 기록(ADR)**: [Notion — 결정 기록](https://app.notion.com/p/3eda8196682d8126967fcc86f796fcb4) — 토큰 · 컴포넌트를 정할 때의 배경 · 선택지 · 근거
 - 스타일은 CSS가 소유합니다 — 토큰(`--color-*` …) → 컴포넌트 클래스(`.btn`, `.input` …). JSP 같은 서버 렌더링 화면에도 그대로 씁니다.
 - 브랜드는 `<html class="theme-*">`, 다크 모드는 `<body class="dark-mode">` 하나로 바뀝니다.
 

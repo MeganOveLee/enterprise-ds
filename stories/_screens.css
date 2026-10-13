@@ -171,7 +171,7 @@
 .scr-chip--danger { background: var(--color-bg-danger-subtle); color: var(--color-text-danger-bold); }
 
 /* 상세 팝업 — 제품에서는 새 창. 여기서는 목록 화면 위에 띄운 창으로 */
-.scr-dim { position: absolute; inset: 0; z-index: 5; background: color-mix(in srgb, var(--neutral-950) 45%, transparent); }
+.scr-dim { position: absolute; inset: 0; z-index: 5; background: color-mix(in srgb, var(--color-bg-subtle) 72%, transparent); }   /* 덮개 = .loading--overlay 와 같은 방식(시맨틱 바탕을 반투명으로) */
 .scr-window {
   position: absolute;
   z-index: 6;   /* 목록 표 머리(sticky)보다 위 */
@@ -183,7 +183,8 @@
   border: 1px solid var(--color-border-base);
   border-radius: var(--radius-panel);
   overflow: hidden;
-  box-shadow: var(--shadow-core), 0 16px 48px color-mix(in srgb, var(--neutral-950) 30%, transparent);
+  box-shadow: var(--shadow-core);
+  border-color: var(--color-border-strong);
 }
 .scr-window .pop { height: 100%; min-width: 0; }
 .scr-window .contents { gap: var(--spacing-12); }
