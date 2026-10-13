@@ -82,6 +82,7 @@
    *   전환: <html class="theme-{브랜드}">. 클래스가 없으면 brands/e3ps.css(기본 브랜드).
    *   html 에 거는 이유: 아래 Layer 4 시맨틱이 :root(=html) 에서 계산되므로 body 클래스로는 안 바뀜.
    *   국가별 오버라이드가 필요해지면 brands/{브랜드}.{국가}.css 를 이 순서 바로 뒤에 (현재 없음).
+   *   브랜드 파일이 여는 것 = 색 11개(필수) + 형태 12개(선택 — Layer 3 모서리 역할 9 · 높이 3, DS-ADR-020).
    * ────────────────────────────────────────────────────────── */
 
   /* --- Red (danger 신호) ----------------------------------------------------- */
@@ -140,10 +141,24 @@
 
   /* 실사용 단계만 유지. 미사용 단계(radius-xl·2xl, border-width 3종, spacing-1·40·64)는 삭제 —
      색 램프와 달리 치수 스케일은 팔레트 교체와 무관해 세트로 둘 이유가 없음 (세영 2026-08-22) */
+  --radius-none: 0;     /* 직각 — 브랜드 파일이 역할 값을 단계로 가리킬 때 (DS-ADR-020) */
   --radius-sm: 2px;
   --radius-md: 4px;
   --radius-lg: 8px;
   --radius-rounded: 99999px;
+
+  /* 모서리 역할 (DS-ADR-020) — 컴포넌트는 위 단계가 아니라 이 이름을 쓴다.
+     위 단계(sm · md · lg · rounded)는 값 사전 = 스태틱. 브랜드 파일은 단계를 덮지 않고 이 역할만 덮는다(플렉시블).
+     원형(50%) · 알약(rounded) · 로고 마크 · 진행 막대 · 상태 막대 · 팝업 제목 문서 유형 칸은 역할이 없다 = 모든 브랜드 같음. */
+  --radius-btn:      var(--radius-md);   /* 모든 버튼 — 크기와 상관없이 하나: 표준 · 아이콘(닫기 · 페이지 번호 · 달력 화살표 · 파일 받기) · 작은 버튼 · 달력 날짜 · 타일 */
+  --radius-input:    var(--radius-sm);   /* 입력칸 계열 — .input · .select · .textarea · 날짜 · 다중 선택 · 트리 검색 · 읽기 전용 (DS-ADR-019) */
+  --radius-checkbox: var(--radius-sm);   /* 체크박스 표식 (라디오는 원형이라 제외) */
+  --radius-chip:     var(--radius-rounded);   /* 칩 = Figma Chip · Status chip — 버전 표시 등. Badge(점 · 숫자)는 도형이라 역할 없음 (DS-ADR-020) */
+  --radius-item:     var(--radius-sm);   /* 목록 · 메뉴 안의 행 — 카드 목록 · 파일 행 · 드롭다운 항목 · 섹션 바 */
+  --radius-card:     var(--radius-lg);   /* 카드 · 스켈레톤 카드 */
+  --radius-panel:    var(--radius-md);   /* 화면 안 영역 박스 — 그리드 목록 · 검색 폼 · 왼쪽 패널 · 첨부 영역 */
+  --radius-popover:  var(--radius-md);   /* 떠 있는 층 — 달력 · 드롭다운 · 다중 선택 펼침 · GNB 메뉴 */
+  --radius-skeleton: var(--radius-sm);   /* 스켈레톤 조각(줄 · 제목 · 블록) */
 
   --spacing-0:  0;
   --spacing-2:  2px;
@@ -155,8 +170,10 @@
   --spacing-32: 32px;
   --spacing-48: 48px;
 
+  /* 높이 역할 — 브랜드 파일이 덮을 수 있음(플렉시블, DS-ADR-020). size = 높이, 정사각 아이콘 버튼만 가로도 같은 값.
+     input · btn 은 같은 줄에 놓이므로 같은 값. 앱 틀(GNB 막대 안 버튼)은 이 토큰을 쓰지 않고 높이 고정 */
   --size-input:    28px;   /* 인풋 높이 */
-  --size-btn:      28px;   /* 버튼 기본 (인풋 매칭). 옛 md(32px)는 실사용 없어 삭제 2026-08-06 세영 */
+  --size-btn:      28px;   /* 버튼 기본 (인풋 매칭) · 아이콘 버튼 가로세로. 옛 md(32px)는 실사용 없어 삭제 2026-08-06 세영 */
   --size-sidebar-toggle: 0.4375rem;                                     /* LNB 오른쪽 리사이즈 손잡이 폭 */
   --size-sidebar:        calc(13.875rem - var(--size-sidebar-toggle));  /* LNB 폭 = 사이드 영역 222px − 손잡이.
                             구 Layer 5 --sidebar-width/-toggle-width 를 치수 층으로 올림 — 이름만 있고 아무도 안 쓰고
