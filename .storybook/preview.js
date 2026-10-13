@@ -1,7 +1,8 @@
 /* 불러오는 순서는 README와 같다: tokens → brands → globals → components */
 import '../css/tokens.css';
 import '../css/brands/e3ps.css';
-import '../css/brands/sample.css';
+import '../css/brands/fashion.css';
+import '../css/brands/precision.css';
 import '../css/globals.css';
 import '../css/components.css';
 import './fonts.css';
@@ -9,7 +10,8 @@ import './fonts.css';
 /** 브랜드 = <html class="theme-*">, 다크 = <body class="dark-mode"> — 실제 화면과 같은 스위치 */
 const withTheme = (Story, ctx) => {
   const { brand, mode } = ctx.globals;
-  document.documentElement.classList.toggle('theme-sample', brand === 'sample');
+  document.documentElement.classList.toggle('theme-fashion', brand === 'fashion');
+  document.documentElement.classList.toggle('theme-precision', brand === 'precision');
   document.body.classList.toggle('dark-mode', mode === 'dark');
   const out = Story();
   const wrap = document.createElement('div');
@@ -25,7 +27,7 @@ export default {
     brand: {
       description: '브랜드',
       toolbar: { title: '브랜드', icon: 'paintbrush', dynamicTitle: true,
-        items: [{ value: 'e3ps', title: 'E3PS' }, { value: 'sample', title: '이퍼플 (sample)' }] },
+        items: [{ value: 'e3ps', title: 'E3PS' }, { value: 'fashion', title: 'Fashion · 패션 리테일' }, { value: 'precision', title: 'Precision · 정밀기계' }] },
     },
     mode: {
       description: '화면 모드 (라이트 / 다크)',

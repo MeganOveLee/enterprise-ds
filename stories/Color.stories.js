@@ -12,8 +12,8 @@ export default {
 // ── 원색 램프 (Primitive) ──
 export const Brand = {
   parameters: css([
-    '/* 브랜드 파일 css/brands/{브랜드}.css 가 바꾸는 값은 이 11개뿐 */',
-    ':root.theme-sample {',
+    '/* 브랜드 파일 css/brands/{브랜드}.css 가 바꾸는 색은 이 11개 (형태 12개는 Foundation › Spacing · Radius) */',
+    ':root.theme-fashion {',
     '  --brand-50: #F3F0FE;  /* … */  --brand-500: #6D4ADB;  /* … */  --brand-900: #261754;',
     '  --accent-500: #F2A93B;',
     '}',

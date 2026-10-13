@@ -1,0 +1,37 @@
+@charset "UTF-8";
+/* ============================================================================
+ * 브랜드 — Fashion · 패션 리테일 (가상 산업 브랜드 · 바이올렛)  ← 공개용 데모 브랜드
+ * 사용자: MD · 디자이너 (옛 이름 「이퍼플」 · sample.css, 10/13 산업 이름으로 바꿈)
+ *
+ * 선택자: :root.theme-fashion  →  <html class="theme-fashion">
+ * 멀티 브랜드가 "브랜드 파일 하나 + html 클래스 하나"로 바뀌는 것을 보여주는 가상 브랜드.
+ * 이 파일이 여는 토큰 = 색 11개 + 모서리 역할 9개 (DS-ADR-003 · 020). 높이는 기본값(28 · 28 · 26).
+ * 형태: 둥근 모서리 — 버튼 · 칩 알약, 입력칸 · 카드 · 영역 · 떠 있는 층 8, 체크박스 · 행 · 스켈레톤 4 (10/13 적용 후 피드백).
+ *   반대쪽 끝은 precision.css(직각 · 높이 32). 가로선만 그리드는 DS-ADR-021 예정.
+ * 대비 (2026-10-06 계산): 500/흰 5.75 · 600/흰 7.51 · 800/흰 11.74 · 다크 300 글자 5.62
+ * ============================================================================ */
+
+:root.theme-fashion {
+  --brand-50:   #F3F0FE;
+  --brand-100:  #E4DCFD;
+  --brand-200:  #C9B9FA;
+  --brand-300:  #A68CF5;
+  --brand-400:  #8B6CEE;
+  --brand-500:  #6D4ADB;
+  --brand-600:  #5A38C4;
+  --brand-700:  #47299F;
+  --brand-800:  #3B2585;
+  --brand-900:  #261754;
+  --accent-500: #F2A93B;
+
+  /* --- 형태 (모서리 역할 → 단계, DS-ADR-020) ------------------------------- */
+  --radius-btn:      var(--radius-rounded);
+  --radius-input:    var(--radius-lg);
+  --radius-checkbox: var(--radius-md);
+  --radius-chip:     var(--radius-rounded);
+  --radius-item:     var(--radius-md);
+  --radius-card:     var(--radius-lg);
+  --radius-panel:    var(--radius-lg);
+  --radius-popover:  var(--radius-lg);
+  --radius-skeleton: var(--radius-md);
+}

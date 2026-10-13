@@ -11,7 +11,7 @@
 | 경로 | 내용 |
 |---|---|
 | `css/tokens.css` | 공통 토큰 (원천 램프 → 시맨틱 → 다크) |
-| `css/brands/` | 브랜드 값 파일. 브랜드가 여는 토큰은 `--brand-50~900` + `--accent-500` 11개뿐 · `_template.css` = 새 브랜드 양식 · `sample.css` = 시연용 가상 브랜드 |
+| `css/brands/` | 브랜드 값 파일. 브랜드가 여는 토큰은 색 11개(`--brand-50~900` · `--accent-500`) + 형태 12개(모서리 역할 9 · 높이 3) · `_template.css` = 새 브랜드 양식 · `fashion.css` · `precision.css` = 시연용 가상 산업 브랜드(Fashion · 패션 리테일 = 색 + 둥근 모서리 / Precision · 정밀기계 = 색 + 직각 · 높이 32) |
 | `css/globals.css` · `components.css` | 전역 · 컴포넌트. 브랜드를 모릅니다 |
 | `js/datepicker.js` | 날짜 선택 (WAI-ARIA APG Date Picker Dialog 패턴) |
 | `stories/` · `.storybook/` | Storybook (HTML 프레임워크) |
@@ -19,9 +19,9 @@
 ## 불러오는 순서
 
 ```html
-<html class="theme-sample">   <!-- 클래스 없으면 기본 브랜드 -->
+<html class="theme-fashion">   <!-- 클래스 없으면 기본 브랜드 -->
 <link rel="stylesheet" href="css/tokens.css">
-<link rel="stylesheet" href="css/brands/sample.css">
+<link rel="stylesheet" href="css/brands/fashion.css">
 <link rel="stylesheet" href="css/globals.css">
 <link rel="stylesheet" href="css/components.css">
 <script src="js/datepicker.js"></script>

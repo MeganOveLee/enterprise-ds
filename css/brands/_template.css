@@ -4,7 +4,8 @@
  *
  * 1. 이 파일을 brands/{브랜드}.css 로 복사 (소문자·하이픈, 예: acme.css)
  * 2. 아래 선택자의 {브랜드} 를 파일 이름과 같게
- * 3. 11줄 값을 채움 — 이 파일이 여는 토큰은 이 11개뿐 (DS-ADR-003).
+ * 3. 색 11줄 값을 채움 (필수). 형태 12줄은 기본값과 다를 때만 주석을 풀어 채움 (선택, DS-ADR-020).
+ *    이 파일이 여는 토큰은 색 11 + 형태 12 뿐 (DS-ADR-003 · 020).
  *    더 열어야 하면(예: 보조 브랜드색) 파일에 추가하지 말고 ADR 로 먼저 결정한다 (DS-ADR-006 후보)
  * 4. 시스템 램프와 같은 값이면 hex 를 복사하지 말고 var(--blue-N) 처럼 참조 (복사하면 램프를 고쳐도 안 따라옴)
  * 5. JSP: tokens.css 바로 다음에 이 파일 링크 1개 + <html class="theme-{브랜드}">
@@ -18,6 +19,20 @@
  *   900 GNB 드롭다운 딥 패널
  *   accent-500  브랜드 반대편 포인트색. 짙은 브랜드 면 위 '글자'로 쓰지 말 것 (아이콘·테두리·작은 점만)
  * 확인: 다크(body.dark-mode)는 tokens.css 가 이 값들로 알아서 계산 — 브랜드 파일에 다크 값을 따로 두지 않음
+ *
+ * 형태 (선택) — 컴포넌트는 역할 이름만 쓰므로, 역할 값을 바꾸면 해당 컴포넌트가 모두 바뀐다
+ *   --radius-btn      모든 버튼(표준 · 아이콘 · 작은 버튼)  기본 4 (md)
+ *   --radius-input    입력칸 계열                           기본 2 (sm)
+ *   --radius-checkbox 체크박스 표식                         기본 2 (sm)
+ *   --radius-chip     칩(Chip · Status chip · 버전 표시)    기본 알약 (rounded)
+ *   --radius-item     목록 · 메뉴 안의 행                   기본 2 (sm)
+ *   --radius-card     카드                                  기본 8 (lg)
+ *   --radius-panel    화면 안 영역 박스(그리드 · 검색 폼)   기본 4 (md)
+ *   --radius-popover  떠 있는 층(달력 · 드롭다운)           기본 4 (md)
+ *   --radius-skeleton 스켈레톤 조각                         기본 2 (sm)
+ *   --size-input / --size-btn  컨트롤 높이 — 같은 줄에 놓이므로 같은 값      기본 28px
+ *   --size-btn-sm              작은 버튼 높이 (Figma Small Button)          기본 26px
+ *   값은 단계 토큰(var(--radius-none · sm · md · lg))으로. 원형 · 알약 · 로고 마크는 열지 않음(스태틱)
  * ============================================================================ */
 
 :root.theme-{브랜드} {
@@ -32,4 +47,18 @@
   --brand-800:  #______;
   --brand-900:  #______;
   --accent-500: #______;
+
+  /* 형태 (선택 — 기본값과 다를 때만 주석 해제) */
+  /* --radius-btn:      var(--radius-md); */
+  /* --radius-input:    var(--radius-sm); */
+  /* --radius-checkbox: var(--radius-sm); */
+  /* --radius-chip:     var(--radius-rounded); */
+  /* --radius-item:     var(--radius-sm); */
+  /* --radius-card:     var(--radius-lg); */
+  /* --radius-panel:    var(--radius-md); */
+  /* --radius-popover:  var(--radius-md); */
+  /* --radius-skeleton: var(--radius-sm); */
+  /* --size-input:      28px; */
+  /* --size-btn:        28px; */
+  /* --size-btn-sm:     26px; */
 }

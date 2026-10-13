@@ -1,4 +1,4 @@
-// 브랜드 로더 로고 — 브랜드(제품)에 로고 로더가 있으면 로고, 없으면 스피너 --lg (이퍼플)
+// 브랜드 로더 로고 — 브랜드(제품)에 로고 로더가 있으면 로고, 없으면 스피너 --lg (Fashion · Precision)
 const LOGO = { e3ps: new URL('../assets/brand/e3ps-logo.png', import.meta.url).href };
 const brandLoader = (src) =>
   `<span class="brand-loader" aria-hidden="true"><img class="brand-loader__base" src="${src}" alt=""><img class="brand-loader__fill" src="${src}" alt=""></span>`;
@@ -38,7 +38,7 @@ export const 구성_3단계 = {
 
 export const 영역_오버레이 = {
   name: '영역 오버레이 (Overlay)',
-  render: () => `<div style="position:relative;max-width:480px;border:1px solid var(--color-border-base);border-radius:var(--radius-lg)">
+  render: () => `<div style="position:relative;max-width:480px;border:1px solid var(--color-border-base);border-radius:var(--radius-card)">
     <div style="padding:16px">
       <div class="skeleton-title" style="animation:none"></div>
       <p style="margin:0">오버레이가 이 영역을 덮어 조작을 막아요. 부모에 position: relative가 필요해요.</p>
@@ -51,12 +51,12 @@ export const 영역_오버레이 = {
 export const 페이지_로딩 = {
   render: (_, { globals }) => {
     const logo = LOGO[globals.brand];
-    return `<div style="position:relative;height:240px;max-width:640px;border:1px solid var(--color-border-base);border-radius:var(--radius-lg);overflow:hidden">
+    return `<div style="position:relative;height:240px;max-width:640px;border:1px solid var(--color-border-base);border-radius:var(--radius-card);overflow:hidden">
       <div class="loading loading--overlay" role="status" aria-live="polite">${logo ? brandLoader(logo) : spin('lg')}<p class="loading__text">화면을 불러오는 중입니다</p></div>
     </div>`;
   },
   parameters: { docs: { description: { story:
-    '페이지 전체를 처음 불러올 때만 — 브랜드에 로고 로더가 있으면 로고가 왼쪽부터 채워지고(E3PS), 없으면 스피너 `--lg`(이퍼플). ' +
+    '페이지 전체를 처음 불러올 때만 — 브랜드에 로고 로더가 있으면 로고가 왼쪽부터 채워지고(E3PS), 없으면 스피너 `--lg`(Fashion · Precision). ' +
     '영역 · 버튼 안은 언제나 스피너. 로고 이미지는 원본 그대로 두 장 겹쳐 쓰고(아래 회색 · 위 원본), 모션 줄이기 설정이면 느리게.' } } },
 };
 

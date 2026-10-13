@@ -8,8 +8,8 @@ const I = {
 };
 // 픽토그램 → 일러스트 배지 종류 (빈 이유가 같으면 같은 그림)
 const ILLO = { inbox: 'empty', search: 'search', wifi: 'network', alert: 'error' };
-// 브랜드 선택은 제품 설정 — E3PS = 일러스트, 이퍼플(공개 시연) = 선 픽토그램
-const useIllo = (globals) => globals.brand !== 'sample';
+// 브랜드 선택은 제품 설정 — E3PS = 일러스트, Fashion(공개 시연) = 선 픽토그램
+const useIllo = (globals) => (globals.brand || 'e3ps') === 'e3ps';   // 일러스트는 E3PS 브랜드 자산 (DS-ADR-018). 다른 브랜드는 픽토그램
 
 const btn = (t, k = 'secondary', s = 'outlined') => `<button type="button" class="btn btn--${k} btn--${s}">${t}</button>`;
 const empty = ({ icon, title, desc, actions = '', code = '', mod = '', illo = false }) =>
@@ -20,7 +20,7 @@ const empty = ({ icon, title, desc, actions = '', code = '', mod = '', illo = fa
     ${code ? `<p class="empty__code">오류 코드 ${code}</p>` : ''}
     ${actions ? `<div class="empty__actions">${actions}</div>` : ''}
   </div>`;
-const frame = (inner, w = '520px') => `<div style="max-width:${w};border:1px solid var(--color-border-base);border-radius:var(--radius-lg)">${inner}</div>`;
+const frame = (inner, w = '520px') => `<div style="max-width:${w};border:1px solid var(--color-border-base);border-radius:var(--radius-card)">${inner}</div>`;
 
 export default {
   title: 'Feedback/Empty',
@@ -30,7 +30,7 @@ export default {
       '빈 상태 = 그림 + 제목 + 설명 + 주 액션 1개. **빈 이유가 액션을 정해요** — 아직 없으면 만들기, 검색 결과가 없으면 조건 바꾸기, ' +
       '네트워크 오류는 다시 시도, 서버 오류는 다시 시도 + 문의 + 오류 코드(서버 원문은 보이지 않음). ' +
       '놓이는 자리: 기본(영역) · `.empty--card`(카드 안) · `.empty--page`(페이지 전체). ' +
-      '**그림은 브랜드(제품) 설정** — E3PS는 폴더 일러스트에 빈 이유 배지(`.empty__icon--illo`), 이퍼플은 선 픽토그램. 카드 안은 둘 다 픽토그램. 위쪽 도구 막대 「브랜드」로 바꿔 보세요.' } },
+      '**그림은 브랜드(제품) 설정** — E3PS는 폴더 일러스트에 빈 이유 배지(`.empty__icon--illo`), Fashion · Precision은 선 픽토그램. 카드 안은 둘 다 픽토그램. 위쪽 도구 막대 「브랜드」로 바꿔 보세요.' } },
   },
 };
 
@@ -43,7 +43,7 @@ export const 카드_안 = { render: () => frame(empty({ mod: 'empty--card', icon
 const REASONS = [['inbox', '아직 없음', ''], ['search', '검색 결과 없음', ''], ['wifi', '네트워크 오류', 'empty--error'], ['alert', '서버 오류', 'empty--error']];
 const cellStyle = 'display:flex;flex-direction:column;align-items:center;gap:8px;font-size:var(--body-sm);color:var(--color-text-muted)';
 export const 그림_두_가지 = {
-  parameters: { docs: { description: { story: '같은 네 가지 빈 이유를 두 그림으로 — 위 = 일러스트(E3PS), 아래 = 선 픽토그램(이퍼플 · 카드 안). 도구 막대와 상관없이 둘 다 보여요.' } } },
+  parameters: { docs: { description: { story: '같은 네 가지 빈 이유를 두 그림으로 — 위 = 일러스트(E3PS), 아래 = 선 픽토그램(Fashion · Precision · 카드 안). 도구 막대와 상관없이 둘 다 보여요.' } } },
   render: () => `<div class="sb-table-wrap" style="display:grid;grid-template-columns:repeat(4,auto);gap:24px 40px;justify-content:start;align-items:end">
     ${REASONS.map(([k, label, mod]) => `<div class="${mod}" style="${cellStyle}"><span class="empty__icon empty__icon--illo" style="margin:0">${emptyIllo(ILLO[k])}</span>${label}</div>`).join('')}
     ${REASONS.map(([k, label, mod]) => `<div class="${mod}" style="${cellStyle}"><span class="empty__icon" style="margin:0">${I[k]}</span>${label}</div>`).join('')}
