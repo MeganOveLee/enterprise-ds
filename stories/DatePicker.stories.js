@@ -1,12 +1,15 @@
 // Form/Date Picker — 문서 화면은 DatePicker.mdx. 여기 스토리는 MDX 카드 안에 들어가는 예시 · 전체 상태 · Playground
 import { matrix } from './_matrix.js';
+import { enablePseudo } from './_pseudo.js';
 
 const ICON = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>';
 const dp = (label, value = '', extra = '', cls = '') =>
   `<div class="ui-datepicker${cls}"><button type="button" class="ui-datepicker__icon">${ICON}</button>` +
   `<input class="ui-datepicker__input" aria-label="${label}" placeholder="YYYY-MM-DD" value="${value}"${extra}></div>`;
-const range = (a, b, cls = '') =>
-  '<div class="ui-datepicker-range">' + dp('시작일', a, '', cls) + '<span class="ui-datepicker-range__sep">~</span>' + dp('종료일', b) + '</div>';
+// 기간 — x1 · c1 = 시작일 칸 속성 · 상자 클래스, x2 = 종료일 칸 속성
+const range = (a, b, { x1 = '', c1 = '', x2 = '' } = {}) =>
+  '<div class="ui-datepicker-range">' + dp('시작일', a, x1, c1) + '<span class="ui-datepicker-range__sep">~</span>' + dp('종료일', b, x2) + '</div>';
+const ST = { default: '', error: ' aria-invalid="true"', disabled: ' disabled', readonly: ' readonly' };
 
 export default {
   title: 'Form/Date Picker',
@@ -29,21 +32,31 @@ export const 고를_수_있는_범위 = {
   render: () => `<div style="max-width:200px">${dp('희망일', '2026-10-15', ' min="2026-10-10" max="2026-10-25"')}</div>`,
 };
 
-// ── 전체 상태 ── (Focused = 달력이 열렸거나 칸에 포커스가 있을 때와 같은 모습)
+// ── 전체 상태 ── (Hovered · Focused = 문서용 정지 화면, _pseudo.js. 오류 · 비활성 · 읽기 전용 = 입력칸과 같은 규칙, 2026-10-13)
 export const 전체_상태 = {
   parameters: {
     controls: { disable: true },
     docs: { source: { language: 'html', code: [
-      '<!-- Focused 는 칸에 포커스가 있거나 달력이 열렸을 때 CSS가 표시한다 (클래스 불필요) -->',
-      dp('납기일'),
-      range('2026-10-06', '2026-10-20'),
+      '<!-- Hovered · Focused 는 마우스 · 키보드에 따라 CSS가 표시한다 (클래스 불필요) -->',
+      '<!-- 오류 · 비활성 · 읽기 전용은 날짜 칸(input)에 속성을 붙이면 감싸는 상자가 모양을 바꾼다 -->',
+      dp('납기일', '2026-10-06', ST.error),
+      dp('납기일', '2026-10-06', ST.disabled),
+      dp('납기일', '2026-10-06', ST.readonly),
     ].join('\n') } },
   },
-  render: () => matrix(['하나', '기간'], [
-    ['빈 칸', [dp('납기일'), range('', '')]],
-    ['값 있음', [dp('납기일', '2026-10-06'), range('2026-10-06', '2026-10-20')]],
-    ['Focused', [dp('납기일', '2026-10-06', '', ' is-active'), range('2026-10-06', '2026-10-20', ' is-active')]],
-  ], { full: true }),
+  render: () => {
+    enablePseudo();
+    const v1 = '2026-10-06', v2 = '2026-10-20';
+    return matrix(['하나', '기간'], [
+      ['빈 칸', [dp('납기일'), range('', '')]],
+      ['값 있음', [dp('납기일', v1), range(v1, v2)]],
+      ['Hovered', [dp('납기일', v1, '', ' ps-hover'), range(v1, v2, { c1: ' ps-hover' })]],
+      ['Focused', [dp('납기일', v1, '', ' ps-focus-within'), range(v1, v2, { c1: ' ps-focus-within' })]],
+      ['error', [dp('납기일', v1, ST.error), range(v1, v2, { x2: ST.error })]],
+      ['disabled', [dp('납기일', v1, ST.disabled), range(v1, v2, { x1: ST.disabled, x2: ST.disabled })]],
+      ['readonly', [dp('납기일', v1, ST.readonly), range(v1, v2, { x1: ST.readonly, x2: ST.readonly })]],
+    ], { full: true });
+  },
 };
 
 // ── Playground ──
@@ -53,8 +66,9 @@ export const Playground = {
     value: { control: 'text', description: '값 — YYYY-MM-DD' },
     min: { control: 'text', description: '고를 수 있는 첫날 — `min`' },
     max: { control: 'text', description: '고를 수 있는 마지막 날 — `max`' },
+    state: { control: 'inline-radio', options: ['default', 'error', 'disabled', 'readonly'], description: '상태 — 날짜 칸(input)에 `aria-invalid="true"` · `disabled` · `readonly`' },
   },
-  args: { label: '납기일', value: '2026-10-15', min: '2026-10-10', max: '2026-10-25' },
+  args: { label: '납기일', value: '2026-10-15', min: '2026-10-10', max: '2026-10-25', state: 'default' },
   render: (a) => '<div style="max-width:200px">' +
-    dp(a.label, a.value, (a.min ? ' min="' + a.min + '"' : '') + (a.max ? ' max="' + a.max + '"' : '')) + '</div>',
+    dp(a.label, a.value, (a.min ? ' min="' + a.min + '"' : '') + (a.max ? ' max="' + a.max + '"' : '') + (ST[a.state] || '')) + '</div>',
 };

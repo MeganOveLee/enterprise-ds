@@ -1,14 +1,19 @@
 // Form/Input — 문서 화면은 Input.mdx. 여기 스토리는 MDX 카드 안에 들어가는 예시 표 · 전체 상태 · Playground
 import { matrix } from './_matrix.js';
+import { enablePseudo } from './_pseudo.js';
 
-const field = ({ kind, state, value, placeholder }) => {
+// cls = 문서용 정지 상태 클래스(ps-hover · ps-focus, _pseudo.js)
+const field = ({ kind, state, value, placeholder, cls = '' }) => {
+  const c = cls ? ' ' + cls : '';
   const a = ` aria-label="${placeholder || '입력'}"` +
     (state === 'error' ? ' aria-invalid="true"' : '') +
     (state === 'disabled' ? ' disabled' : '') +
-    (state === 'readonly' && kind !== 'select' ? ' readonly' : '');
-  if (kind === 'select') return `<select class="select"${a}><option>${value || '선택'}</option><option>설계 변경</option></select>`;
-  if (kind === 'textarea') return `<textarea class="textarea"${a} rows="2" placeholder="${placeholder}">${value}</textarea>`;
-  return `<input class="input"${a} placeholder="${placeholder}" value="${value}">`;
+    (state === 'readonly' ? ' readonly' : '');
+  // 네이티브 select는 readonly가 안 됨 → 값만 보여 줄 때는 readonly input (DS-ADR-017, 2026-10-13)
+  if (kind === 'select' && state === 'readonly') return `<input class="input${c}"${a} value="${value || '설계 변경'}">`;
+  if (kind === 'select') return `<select class="select${c}"${a}><option>${value || '선택'}</option><option>설계 변경</option></select>`;
+  if (kind === 'textarea') return `<textarea class="textarea${c}"${a} rows="2" placeholder="${placeholder}">${value}</textarea>`;
+  return `<input class="input${c}"${a} placeholder="${placeholder}" value="${value}">`;
 };
 
 const note = (t) => '<span class="sb-note">' + t + '</span>';
@@ -21,7 +26,7 @@ export default {
   render: (args) => `<div style="max-width:280px">${field(args)}</div>`,
   argTypes: {
     kind: { control: 'inline-radio', options: ['input', 'select', 'textarea'], description: '종류 — `.input` · `.select` · `.textarea`' },
-    state: { control: 'inline-radio', options: ['default', 'error', 'disabled', 'readonly'], description: '상태 — 오류 = `aria-invalid="true"`' },
+    state: { control: 'inline-radio', options: ['default', 'error', 'disabled', 'readonly'], description: '상태 — 오류 = `aria-invalid="true"`. select에서 readonly를 고르면 readonly input으로 그림(select는 readonly가 안 됨)' },
     value: { control: 'text', description: '값' },
     placeholder: { control: 'text', description: '빈 칸 안내 글자' },
   },
@@ -64,18 +69,24 @@ export const Locked = {
 export const 전체_상태 = {
   parameters: html([
     '<!-- Hovered · Focused 는 마우스 · 키보드에 따라 CSS가 표시한다 (클래스 불필요) -->',
+    '<!-- select는 readonly가 안 된다 — 값만 보여 줄 때는 readonly input -->',
     field({ kind: 'input', state: 'error', value: 'BRK-20417', placeholder: '부품 번호 입력' }) + '   <!-- 오류 -->',
     field({ kind: 'input', state: 'disabled', value: 'BRK-20417', placeholder: '부품 번호 입력' }),
     field({ kind: 'input', state: 'readonly', value: 'BRK-20417', placeholder: '부품 번호 입력' }),
   ]),
   render: () => {
-    const st = [['기본', 'default', ''], ['값 있음', 'default', 'v'], ['error', 'error', 'v'], ['disabled', 'disabled', 'v'], ['readonly', 'readonly', 'v']];
+    enablePseudo();
+    const st = [['기본', 'default', ''], ['값 있음', 'default', 'v'], ['Hovered', 'default', 'v', 'ps-hover'], ['Focused', 'default', 'v', 'ps-focus'],
+      ['error', 'error', 'v'], ['disabled', 'disabled', 'v'], ['readonly', 'readonly', 'v']];
     const val = { input: 'BRK-20417', select: '설계 변경', textarea: '홀 위치 2mm 이동' };
     const ph = { input: '부품 번호 입력', select: '', textarea: '변경 사유' };
     const kinds = ['input', 'select', 'textarea'];
-    const rows = st.map(([name, state, v]) =>
-      [name, kinds.map((k) => field({ kind: k, state, value: v ? val[k] : '', placeholder: ph[k] || name }))]);
-    return matrix(kinds.map((k) => '.' + k), rows, { wide: true });
+    const na = '<span class="sb-h">—</span>';
+    const rows = st.map(([name, state, v, cls]) =>
+      [name, kinds.map((k) => (k === 'select' && state === 'readonly' ? na
+        : field({ kind: k, state, value: v ? val[k] : '', placeholder: ph[k] || name, cls })))]);
+    return matrix(kinds.map((k) => '.' + k), rows, { wide: true }) +
+      '<p class="sb-note" style="margin:8px 0 0">select의 readonly 칸은 비워 둡니다 — 네이티브 select는 readonly가 되지 않습니다. 값만 보여 줄 때는 readonly input을 씁니다.</p>';
   },
 };
 
