@@ -1,3 +1,4 @@
+// Feedback/Loading — 문서 화면은 Loading.mdx. 여기 스토리는 MDX 카드 안에 들어가는 예시 · Playground
 // 브랜드 로더 로고 — 브랜드(제품)에 로고 로더가 있으면 로고, 없으면 스피너 --lg (Fashion · Precision)
 const LOGO = { e3ps: new URL('../assets/brand/e3ps-logo.png', import.meta.url).href };
 const brandLoader = (src) =>
@@ -8,13 +9,8 @@ const spin = (size = '', tone = '') =>
 
 export default {
   title: 'Feedback/Loading',
-  tags: ['!dev'],   // 개별 예시는 메뉴에서 숨기고 Docs 페이지 안 섹션으로만 (MDX 문서는 그대로 보이게 파일마다 지정)
-  parameters: {
-    docs: { description: { component:
-      '진행률을 모를 때 쓰는 스피너와, 스피너 · 문구 · 취소를 묶은 `.loading`. ' +
-      '**시간 규칙** — 3초 미만은 스피너만 · 3~10초는 안내 문구 · 10초가 넘을 것 같으면 진행률 + 취소(가능하면 백그라운드). ' +
-      '알림은 `role="status"`가 맡고 스피너는 장식(`aria-hidden`). 모션 줄이기 설정이면 느리게 돌아요.' } },
-  },
+  tags: ['!dev', '!autodocs'],   // 메뉴에는 문서 한 장만, 문서는 Loading.mdx
+  parameters: { docs: { source: { language: 'html' } } },
 };
 
 export const 스피너_크기 = {
@@ -65,4 +61,19 @@ export const 버튼_안 = {
     <button type="button" class="btn btn--primary btn--filled is-loading" aria-busy="true">${spin('sm', 'neutral')}저장 중</button>
     <span class="loading loading--inline" role="status">${spin('sm')}<span class="loading__text">확인 중</span></span>
   </div>`,
+};
+
+// ── Playground ──
+export const Playground = {
+  argTypes: {
+    size: { control: 'inline-radio', options: ['sm', '기본', 'lg'], description: '스피너 크기 — `.spinner--sm` 16 · 기본 24 · `.spinner--lg` 40' },
+    tone: { control: 'inline-radio', options: ['브랜드', 'neutral'], description: '색 — 기본 브랜드 · `.spinner--neutral` 회색' },
+    text: { control: 'text', description: '안내 문구 `.loading__text` (비우면 스피너만 + 숨김 글자)' },
+    cancel: { control: 'boolean', description: '취소 버튼 `.loading__actions` — 10초가 넘을 것 같을 때' },
+  },
+  args: { size: '기본', tone: '브랜드', text: '문서 목록을 불러오는 중입니다', cancel: false },
+  render: (a) => '<div class="loading" role="status" aria-live="polite">' +
+    spin(a.size === '기본' ? '' : a.size, a.tone === 'neutral' ? 'neutral' : '') +
+    (a.text ? '<p class="loading__text">' + a.text + '</p>' : '<span class="sr-only">불러오는 중</span>') +
+    (a.cancel ? '<div class="loading__actions"><button type="button" class="btn btn--secondary btn--outlined">취소</button></div>' : '') + '</div>',
 };

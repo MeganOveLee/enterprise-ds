@@ -1,0 +1,28 @@
+import { Meta, Unstyled } from '@storybook/addon-docs/blocks';
+import { PageHead, Section, Card } from './_blocks.js';
+import * as S from './Skeleton.stories.js';
+
+<Meta of={S} />
+
+<Unstyled>
+<div className="ds-page">
+<PageHead eyebrow="Feedback" title="Skeleton" lead="내용이 오기 전에 자리 모양을 먼저 보여 주는 골격입니다. 조각 세 가지를 조합해 실제 화면과 같은 배치로 그립니다." />
+<Section title="구성" en="Spec">
+<table className="ds-table ds-props">
+<thead><tr><th>구분</th><th>클래스 · 속성</th><th>설명</th></tr></thead>
+<tbody>
+<tr><td><b>조각</b></td><td><code>.skeleton-line</code> · <code>.skeleton-title</code> · <code>.skeleton-block</code><span className="ds-muted">글자 줄 · 제목 · 덩어리</span></td><td>클래스 하나로 화면마다 모양을 지어내지 않고, 조각을 조합합니다. 너비 · 높이만 바꿉니다.</td></tr>
+<tr><td><b>배치</b></td><td><code>.skeleton-grid-row</code> · <code>.skeleton-form</code> · <code>.skeleton-card</code></td><td>목록 행 · 라벨 | 입력칸 · 카드. 실제 그리드 · 폼과 같은 비율이라 내용이 와도 자리가 흔들리지 않습니다.</td></tr>
+<tr><td><b>접근성</b></td><td><code>aria-busy="true"</code> · <code>aria-hidden</code></td><td>묶음에 aria-busy와 숨김 글자 「불러오는 중」, 조각은 aria-hidden으로 읽지 않습니다.</td></tr>
+<tr><td><b>모션</b></td><td><span className="ds-muted">반짝임</span></td><td>왼쪽에서 오른쪽으로 반짝입니다. 모션 줄이기 설정이면 멈춥니다. 모서리는 <code>--radius-skeleton</code>(브랜드가 바꿀 수 있음).</td></tr>
+</tbody>
+</table>
+</Section>
+<Section title="예시" en="Examples">
+<Card of={S.조각} title="조각" en="Segment" desc="제목 + 글자 줄 3개 + 덩어리." />
+<Card of={S.그리드_행} title="목록 행" en="Grid row" desc="목록 화면 — 실제 그리드와 같은 열 비율로." />
+<Card of={S.상세_폼} title="상세 폼" en="Form" desc="등록 · 상세 팝업 — 라벨 | 입력칸." />
+<Card of={S.카드} title="카드" en="Card" desc="대시보드 — 제목 · 숫자 · 차트 자리." />
+</Section>
+</div>
+</Unstyled>

@@ -1,3 +1,4 @@
+// Feedback/Empty — 문서 화면은 Empty.mdx. 여기 스토리는 MDX 카드 안에 들어가는 예시 · Playground
 import { emptyIllo } from './_illustrations.js';
 
 const I = {
@@ -24,14 +25,8 @@ const frame = (inner, w = '520px') => `<div style="max-width:${w};border:1px sol
 
 export default {
   title: 'Feedback/Empty',
-  tags: ['!dev'],   // 개별 예시는 메뉴에서 숨기고 Docs 페이지 안 섹션으로만 (MDX 문서는 그대로 보이게 파일마다 지정)
-  parameters: {
-    docs: { description: { component:
-      '빈 상태 = 그림 + 제목 + 설명 + 주 액션 1개. **빈 이유가 액션을 정해요** — 아직 없으면 만들기, 검색 결과가 없으면 조건 바꾸기, ' +
-      '네트워크 오류는 다시 시도, 서버 오류는 다시 시도 + 문의 + 오류 코드(서버 원문은 보이지 않음). ' +
-      '놓이는 자리: 기본(영역) · `.empty--card`(카드 안) · `.empty--page`(페이지 전체). ' +
-      '**그림은 브랜드(제품) 설정** — E3PS는 폴더 일러스트에 빈 이유 배지(`.empty__icon--illo`), Fashion · Precision은 선 픽토그램. 카드 안은 둘 다 픽토그램. 위쪽 도구 막대 「브랜드」로 바꿔 보세요.' } },
-  },
+  tags: ['!dev', '!autodocs'],   // 메뉴에는 문서 한 장만, 문서는 Empty.mdx
+  parameters: { docs: { source: { language: 'html' } } },
 };
 
 export const 아직_없음 = { render: (_, { globals }) => frame(empty({ illo: useIllo(globals), icon: 'inbox', title: '등록된 설계 변경 요청이 없어요', desc: '새 요청을 등록하면 이 목록에 쌓여요.', actions: btn('요청 등록', 'primary', 'filled') })) };
@@ -48,4 +43,27 @@ export const 그림_두_가지 = {
     ${REASONS.map(([k, label, mod]) => `<div class="${mod}" style="${cellStyle}"><span class="empty__icon empty__icon--illo" style="margin:0">${emptyIllo(ILLO[k])}</span>${label}</div>`).join('')}
     ${REASONS.map(([k, label, mod]) => `<div class="${mod}" style="${cellStyle}"><span class="empty__icon" style="margin:0">${I[k]}</span>${label}</div>`).join('')}
   </div>`,
+};
+
+// ── Playground ──
+const PG = {
+  '아직 없음': ['inbox', '', '등록된 설계 변경 요청이 없어요', '새 요청을 등록하면 이 목록에 쌓여요.', '', btn('요청 등록', 'primary', 'filled')],
+  '검색 결과 없음': ['search', '', '조건에 맞는 문서가 없어요', '기간을 넓히거나 구분을 \'전체\'로 바꿔 보세요.', '', btn('조건 초기화')],
+  '네트워크 오류': ['wifi', 'empty--error', '네트워크에 연결되지 않았어요', '연결을 확인한 뒤 다시 시도해 주세요.', '', btn('다시 시도')],
+  '서버 오류': ['alert', 'empty--error', '목록을 불러오지 못했어요', '잠시 후 다시 시도해 주세요.', 'E-5021', btn('다시 시도') + btn('문의하기', 'secondary', 'transparent')],
+};
+export const Playground = {
+  argTypes: {
+    reason: { control: 'inline-radio', options: Object.keys(PG), description: '빈 이유 — 그림 · 액션이 따라 바뀜' },
+    place: { control: 'inline-radio', options: ['영역', '카드 안', '페이지'], description: '놓이는 자리 — 기본 · `.empty--card` · `.empty--page`' },
+    title: { control: 'text', description: '제목 (비우면 빈 이유의 기본 문구)' },
+  },
+  args: { reason: '아직 없음', place: '영역', title: '' },
+  render: (a, { globals }) => {
+    const [icon, mod, t, desc, code, actions] = PG[a.reason];
+    const place = { '영역': '', '카드 안': 'empty--card', '페이지': 'empty--page' }[a.place];
+    const card = place === 'empty--card';
+    return frame(empty({ illo: !card && useIllo(globals), icon, title: a.title || t, desc, code, actions: card ? '' : actions,
+      mod: [mod, place].filter(Boolean).join(' ') }), card ? '280px' : '520px');
+  },
 };
