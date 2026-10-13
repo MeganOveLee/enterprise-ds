@@ -1,5 +1,6 @@
 import { Meta, Unstyled, Source } from '@storybook/addon-docs/blocks';
-import { PageHead, Section } from './_blocks.js';
+import { PageHead, Section, Card } from './_blocks.js';
+import * as P from './IntroPreview.stories.js';
 import githubIcon from '../assets/links/github.svg';
 import figmaIcon from '../assets/links/figma.svg';
 import notionIcon from '../assets/links/notion.svg';
@@ -23,6 +24,9 @@ export const LOAD = [
 <PageHead eyebrow="Enterprise DS · v1.0" title="Enterprise DS" lead="업무 화면을 위한 디자인 시스템입니다. 색 · 글자 · 간격 같은 기본 값(토큰), 버튼 · 입력칸 같은 컴포넌트, 그리고 쓰는 규칙을 한곳에 모았습니다.">
 <ul className="ds-meta"><li>별도 프레임워크 없음</li><li>멀티 브랜드</li><li>다크 모드</li><li>웹 접근성 AA</li></ul>
 </PageHead>
+<Section title="미리보기" en="Preview" desc="위쪽 도구 막대에서 「브랜드」 「화면 모드」를 바꾸면 이 영역이 바뀝니다. 같은 마크업에 토큰 값만 달라져 색 · 모서리 · 높이가 함께 바뀝니다.">
+<Card of={P.Sample} />
+</Section>
 <Section title="구성" en="Categories" desc="기본 요소에서 토큰을 정하고, 컴포넌트는 그 토큰으로 만듭니다. 왼쪽 메뉴도 같은 순서입니다.">
 <div className="ds-layer">
 <p className="ds-layer__label">기본 요소<span>Foundation</span></p>
