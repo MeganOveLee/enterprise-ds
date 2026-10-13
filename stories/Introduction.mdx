@@ -24,9 +24,18 @@ export const LOAD = [
 <PageHead eyebrow="Enterprise DS · v1.0" title="Enterprise DS" lead="업무 화면을 위한 디자인 시스템입니다. 색 · 글자 · 간격 같은 기본 값(토큰), 버튼 · 입력칸 같은 컴포넌트, 그리고 쓰는 규칙을 한곳에 모았습니다.">
 <ul className="ds-meta"><li>별도 프레임워크 없음</li><li>멀티 브랜드</li><li>다크 모드</li><li>웹 접근성 AA</li></ul>
 </PageHead>
+<nav className="ds-hero" aria-label="바로 보기">
+<a className="ds-hero__main" href="https://www.figma.com/design/99ff5JQYQPCdY3xRBWHHlO/?node-id=8111-5" target="_blank" rel="noreferrer"><img src={figmaIcon} alt="" width="40" height="40" /><span className="ds-hero__text"><b>Figma에서 보기</b><span>컴포넌트 UI Kit — 첫 페이지가 한 장 요약입니다. 변형 · 라이트 · 다크 · 브랜드 3개가 변수로 연결되어 있습니다.</span></span><span className="ds-hero__go" aria-hidden="true">열기 ↗</span></a>
+<div className="ds-hero__subs">
+<a href="https://www.figma.com/design/Mf4XTC6dNUOH0anjOMcRPi" target="_blank" rel="noreferrer"><img src={figmaIcon} alt="" width="20" height="20" /><b>Figma Foundation ↗</b><span>토큰(변수) · 글자 스타일 원본</span></a>
+<a href="./?path=/docs/screens-plm-화면--docs" target="_top"><span className="ds-hero__dot" aria-hidden="true"></span><b>화면 예시</b><span>이 디자인 시스템으로 만든 PLM 화면 5장</span></a>
+<a href="https://app.notion.com/p/3eda8196682d8126967fcc86f796fcb4" target="_blank" rel="noreferrer"><img className="ds-res-icon--light" src={notionIcon} alt="" width="20" height="20" /><b>결정 기록 (ADR) ↗</b><span>토큰 · 컴포넌트를 정한 배경과 근거 20건</span></a>
+</div>
+<p className="ds-hero__note">Figma = 설계 원본, 이 스토리북 = 같은 값을 실제 CSS로 그린 견본입니다. 위쪽 도구 막대의 「Figma에서 보기」는 어느 페이지에서나 보입니다.</p>
+</nav>
 <Section title="미리보기" en="Preview" desc="위쪽 도구 막대에서 「브랜드」 「화면 모드」를 바꾸면 이 영역이 바뀝니다. 같은 마크업에 토큰 값만 달라져 색 · 모서리 · 높이가 함께 바뀝니다.">
 <Card of={P.Sample} />
-<p className="ds-sec__desc ds-after">실제 크기 업무 화면(목록 검색 · 상세)은 <a className="ds-link" href="./?path=/docs/screens-plm-화면--docs" target="_top">Screens › PLM 화면</a>에서 볼 수 있습니다.</p>
+<p className="ds-sec__desc ds-after">실제 크기 업무 화면(로그인 · 홈 · 문서 검색 · 문서 등록 · 프로젝트 상세)은 <a className="ds-link" href="./?path=/docs/screens-plm-화면--docs" target="_top">Screens › PLM 화면</a>에서 볼 수 있습니다.</p>
 </Section>
 <Section title="구성" en="Categories" desc="기본 요소에서 토큰을 정하고, 컴포넌트는 그 토큰으로 만듭니다. 왼쪽 메뉴도 같은 순서입니다.">
 <div className="ds-layer">

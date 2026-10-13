@@ -104,6 +104,24 @@
   .intro-demo__search .input { width: 200px; }
   .intro-demo__search .select { width: 140px; }
   .intro-demo__no { font-size: var(--body-sm); color: var(--color-text-muted); font-variant-numeric: tabular-nums; }
+  /* 소개 맨 위 「바로 보기」 — 포트폴리오로 보는 사람이 Figma 원본부터 열게 (10/13) */
+  .ds-hero { margin: 24px 0 8px; }
+  .ds-page a.ds-hero__main { display: flex; align-items: center; gap: 16px; padding: 18px 20px; border-radius: 10px; background: #161616; color: #fff; text-decoration: none; }
+  .ds-page a.ds-hero__main:hover { background: #2c2c2c; }
+  .ds-hero__main img { flex-shrink: 0; border-radius: 8px; }
+  .ds-hero__text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+  .ds-hero__text b { font-size: 18px; line-height: 1.4; }
+  .ds-hero__text span { font-size: 13px; color: #c9ced6; }
+  .ds-hero__go { flex-shrink: 0; padding: 6px 12px; border-radius: 6px; background: #fff; color: #161616; font-size: 13px; font-weight: 700; }
+  .ds-hero__subs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 12px; }
+  .ds-page .ds-hero__subs a { display: grid; grid-template-columns: 20px 1fr; align-items: center; column-gap: 8px; row-gap: 2px; padding: 12px 14px; border: 1px solid #d0d7de; border-radius: 8px; background: #fff; color: #1f2328; text-decoration: none; }
+  .ds-page .ds-hero__subs a:hover { border-color: #0550ae; }
+  .ds-hero__subs img, .ds-hero__dot { border-radius: 4px; }
+  .ds-hero__dot { width: 20px; height: 20px; background: linear-gradient(135deg, #0064e0, #6d4ae0 55%, #007380); }
+  .ds-hero__subs b { font-size: 14px; }
+  .ds-hero__subs span:not(.ds-hero__dot) { grid-column: 2; font-size: 12px; color: #57606a; }
+  .ds-hero__note { margin: 10px 0 0; font-size: 12px; color: #57606a; }
+  @media (max-width: 720px) { .ds-hero__subs { grid-template-columns: 1fr; } .ds-hero__go { display: none; } }
   .ds-page a.ds-link { color: #0550ae; text-decoration: none; }
   .ds-page a.ds-link:hover { text-decoration: underline; }
 </style>
