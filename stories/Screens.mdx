@@ -7,7 +7,7 @@ import * as S from './Screens.stories.js';
 <Unstyled>
 <div className="ds-page">
 <PageHead eyebrow="Screens" title="PLM 화면" lead="이 디자인 시스템의 클래스와 토큰만으로 구성한 PLM 업무 화면입니다. 위쪽 도구 막대에서 브랜드 · 화면 모드를 바꾸면 같은 마크업의 화면 전체가 함께 바뀝니다.">
-<ul className="ds-meta"><li>실제 크기 1440 × 900</li><li>가상 데이터</li><li>브랜드 3 × 라이트 · 다크</li></ul>
+<ul className="ds-meta"><li>화면 4장</li><li>실제 크기 1440 × 900</li><li>가상 데이터</li><li>브랜드 3 × 라이트 · 다크</li></ul>
 </PageHead>
 <Section title="홈" en="Dashboard" desc="로그인하면 처음 보는 화면입니다. 두 번째 메뉴 패널 없이 카드만 둡니다. 위 = 내 정보 · 숫자 카드 3개, 아래 = 3열 카드 두 줄(업무 구성 · 결재 · 활동 / 태스크 · 최근 데이터 · 바로가기). 상단 바의 결재업무 2 · 활동업무 0과 카드의 숫자가 같습니다.">
 <Card of={S.홈} />
@@ -20,6 +20,10 @@ import * as S from './Screens.stories.js';
 <Section title="문서 등록" en="Register" desc="새 문서를 등록하는 창입니다. 제품에서는 새 창으로 열리고, 여기서는 목록 위에 띄웠습니다. 필수 칸(*) · 오류 · 읽기 전용 칸을 함께 보여 줍니다.">
 <Card of={S.문서_등록} />
 <p className="ds-sec__desc ds-after">크게 보기 — <a className="ds-link" href="./iframe.html?id=screens-plm-화면--문서-등록&viewMode=story&globals=brand:e3ps" target="_blank" rel="noreferrer">E3PS</a> · <a className="ds-link" href="./iframe.html?id=screens-plm-화면--문서-등록&viewMode=story&globals=brand:fashion" target="_blank" rel="noreferrer">Fashion</a> · <a className="ds-link" href="./iframe.html?id=screens-plm-화면--문서-등록&viewMode=story&globals=brand:precision" target="_blank" rel="noreferrer">Precision</a> · <a className="ds-link" href="./iframe.html?id=screens-plm-화면--문서-등록&viewMode=story&globals=mode:dark" target="_blank" rel="noreferrer">다크</a></p>
+</Section>
+<Section title="프로젝트 상세" en="Detail" desc="프로젝트 하나를 여는 화면입니다. 왼쪽 = 산출물 구조(단계 · 태스크 트리, 상태 점), 오른쪽 = 상세 머리 · 접는 섹션(기본 정보 · 진행 현황 · 태스크 · 산출물 문서). 진행 상태 5가지(완료 · 진행 · 지연 · 예정 · 보류)가 점 · 막대 · 칩에 같은 색으로 나옵니다.">
+<Card of={S.프로젝트_상세} />
+<p className="ds-sec__desc ds-after">크게 보기 — <a className="ds-link" href="./iframe.html?id=screens-plm-화면--프로젝트-상세&viewMode=story&globals=brand:e3ps" target="_blank" rel="noreferrer">E3PS</a> · <a className="ds-link" href="./iframe.html?id=screens-plm-화면--프로젝트-상세&viewMode=story&globals=brand:fashion" target="_blank" rel="noreferrer">Fashion</a> · <a className="ds-link" href="./iframe.html?id=screens-plm-화면--프로젝트-상세&viewMode=story&globals=brand:precision" target="_blank" rel="noreferrer">Precision</a> · <a className="ds-link" href="./iframe.html?id=screens-plm-화면--프로젝트-상세&viewMode=story&globals=mode:dark" target="_blank" rel="noreferrer">다크</a></p>
 </Section>
 <Section title="브랜드 비교" en="Brands" desc="같은 문서 검색 화면을 브랜드 3개로 차례로 둡니다. 마크업은 하나이고, 브랜드 파일이 바꾸는 색 11개 · 형태 12개(모서리 역할 9 · 높이 3)만 다릅니다.">
 <figure style={{margin: "0 0 24px"}}><figcaption className="ds-sec__desc" style={{margin: "0 0 8px"}}><b>E3PS</b> — 기본 브랜드 — 파랑 · 버튼 4 · 입력칸 2 · 카드 8 · 칸 높이 28</figcaption><iframe src="./iframe.html?id=screens-plm-화면--문서-검색&viewMode=story&globals=brand:e3ps" title="E3PS 문서 검색" loading="lazy" style={{display: "block", width: "100%", aspectRatio: "1440 / 950", border: "1px solid #e1e4e8", borderRadius: 6, background: "#fff"}} /></figure>
@@ -41,6 +45,10 @@ import * as S from './Screens.stories.js';
 <tr><td><b>결과 목록</b></td><td><code>.table_list</code><span className="ds-muted">--color-bg-grid-header · -row-hover · -row-selected · --color-bg-row-alt</span></td><td>제품에서는 그리드 라이브러리가 그리는 자리라, 여기서는 같은 그리드 토큰을 쓰는 표로 그렸습니다. 선택한 행은 브랜드 바탕입니다.</td></tr>
 <tr><td><b>상태 칩</b></td><td><code>--radius-chip</code><span className="ds-muted">-subtle 바탕 + -bold 글자</span></td><td>작업 중 · 검토 중 · 승인 · 반려. 값은 Figma Status chip과 같습니다.</td></tr>
 <tr><td><b>쪽 이동</b></td><td><code>.ui-pagination</code></td><td>목록 아래에 붙습니다.</td></tr>
+<tr><td><b>상세 틀</b></td><td><code>.divide-detail-layout</code> · <code>.left-panel</code> · <code>.right-panel</code></td><td>왼쪽 패널(최소 220 · 18%)과 오른쪽 상세 두 칸입니다.</td></tr>
+<tr><td><b>산출물 패널</b></td><td><code>.left-actions</code> · <code>.left-legend</code> · <code>.left-search</code> · <code>.output-row</code></td><td>바로가기 3칸 · 상태 범례 · 검색 · 트리. 제품에서는 트리를 그리드 라이브러리가 그리고, 여기서는 같은 값의 목록으로 그렸습니다.</td></tr>
+<tr><td><b>상세 머리 · 섹션</b></td><td><code>.detail-header</code> · <code>.section-toggle</code><span className="ds-muted">--color-bg-inverse · aria-expanded</span></td><td>제목 · 번호 · 상태 칩 · 버튼. 섹션 토글은 채운 네모(펼침 = 빼기, 접힘 = 더하기)이고 모서리는 버튼 역할 토큰을 따릅니다.</td></tr>
+<tr><td><b>진행률</b></td><td><code>.progress-bar</code> · <code>.status-block</code> · <code>.status-segments</code><span className="ds-muted">상태 이름 붙임(--done · --progress · --delay · --plan · --hold) · --color-progress-상태</span></td><td>상태 5가지의 그라데이션 막대 · 상태 막대 묶음. 상태 색은 브랜드가 바꾸지 않는 고정 값입니다.</td></tr>
 <tr><td><b>등록 창</b></td><td><code>.pop</code> · <code>.section-toggle</code> · <code>.form-grid-2</code> · <code>.ff-readonly</code> · <code>.field-error-msg</code></td><td>제목 줄 · 접는 섹션 · 라벨 위 2열 폼. 필수 표시(*) · 오류 칸 · 읽기 전용 회색 칸 · 첨부 목록.</td></tr>
 </tbody>
 </table>

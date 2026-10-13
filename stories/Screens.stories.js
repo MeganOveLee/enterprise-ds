@@ -2,6 +2,7 @@
 // 문서 화면은 Screens.mdx. 도구 막대의 브랜드 · 화면 모드를 그대로 따른다.
 // 구조는 실제 제품 화면과 같다: 홈 = 아이콘 메뉴 + 상단 바 + 카드 대시보드
 // 업무 화면 = 아이콘 메뉴 + 두 번째 메뉴 패널(메뉴 · 폴더 트리) + 상단 바 + 라벨 위 검색 폼 + 목록
+// 프로젝트 상세 = 아이콘 메뉴 + 상단 바 + 왼쪽 산출물 구조 패널 + 오른쪽 상세(섹션 · 진행률)
 // 마크업은 문자열 이어 붙이기 — 스토리북 색인기가 여러 줄 HTML 템플릿을 MDX로 잘못 읽는 일을 피함
 import './_screens.css';
 
@@ -283,6 +284,87 @@ const homeScreen = () =>
   '<div class="main-content">' + homeBody() + '</div>' +
   '</div></div></div></div></div>';
 
+// ── 프로젝트 상세 — 왼쪽 산출물 구조(WBS) 패널 + 오른쪽 상세. DS detail-page 컴포넌트를 그대로 씀 ──
+// .divide-detail-layout > .left-panel(.left-actions · .left-legend · .left-search) + .right-panel(.detail-header · .section-toggle · .progress-bar)
+const PS = {   // 진행 상태 — 글자 · 진행률 막대 · 상태 칩 · 범례 기호
+  done: ['완료', 'success', '<path d="M5 12l4 4 10-10"/>'],
+  progress: ['진행', 'info', '<path d="M9 6l6 6-6 6"/>'],
+  delay: ['지연', 'danger', '<path d="M12 6v7M12 17.5v.5"/>'],
+  plan: ['예정', 'neutral', '<path d="M12 7v5l3 2"/>'],
+  hold: ['보류', 'warning', '<path d="M9 7v10M15 7v10"/>'],
+};
+const pchip = (k) => '<span class="scr-chip scr-chip--' + PS[k][1] + '">' + PS[k][0] + '</span>';
+const pbar = (k, pct, label = true) => '<div class="progress-bar progress-bar--' + k + '" role="progressbar" aria-valuenow="' + pct + '" aria-valuemin="0" aria-valuemax="100">' +
+  '<div class="pbar-fill" style="width:' + pct + '%"></div>' + (label ? '<span class="progress-bar__label">' + pct + '%</span>' : '') + '</div>';
+const WBS = [
+  [0, '브레이크 캘리퍼 경량화', 'delay', 'open'],
+  [1, '1. 기획', 'done', 'open'], [2, '1.1 요구사항 정의서', 'done'], [2, '1.2 개발 계획서', 'done'],
+  [1, '2. 설계', 'progress', 'open'], [2, '2.1 하우징 3D 모델', 'done'], [2, '2.2 조립 도면', 'progress', '', true], [2, '2.3 설계 검토(DR)', 'delay'],
+  [1, '3. 시작품', 'delay', 'open'], [2, '3.1 시작품 발주', 'delay'], [2, '3.2 시작품 조립', 'plan'],
+  [1, '4. 검증', 'plan', 'closed'], [1, '5. 양산 이관', 'hold', 'closed'],
+];
+const leftPanel = () =>
+  '<aside class="left-panel" aria-label="산출물 구조">' +
+  '<div class="left-actions">' + [['doc', '산출물'], ['task', '태스크'], ['change', '이슈']].map(([ic, t]) =>
+    '<button type="button" class="left-action-btn">' + svg(I[ic]) + t + '</button>').join('') + '</div>' +
+  '<div class="left-legend">' + ['done', 'progress', 'delay', 'plan'].map((k) =>
+    '<span class="legend-item"><span class="legend-dot" style="background:var(--color-progress-' + k + '-end)">' + svg(PS[k][2], 10) + '</span>' + PS[k][0] + '</span>').join('') + '</div>' +
+  '<div class="left-search"><input class="input" aria-label="태스크 검색" placeholder="태스크 검색">' +
+  '<button type="button" class="btn btn--secondary btn--outlined left-search-btn">검색</button></div>' +
+  '<ul class="scr-tree scr-wbs" role="tree" aria-label="산출물 구조">' +
+  WBS.map(([lv, t, k, open, on]) => '<li role="treeitem"' + (open ? ' aria-expanded="' + (open === 'open') + '"' : '') + (on ? ' aria-selected="true" class="is-selected"' : '') +
+    ' style="padding-left:' + (4 + lv * 14) + 'px"><span class="scr-tree__caret">' + (open ? svg(open === 'open' ? I.down : I.next, 12) : '') + '</span>' +
+    '<span class="output-row"><span class="scr-dot" style="background:var(--color-progress-' + k + '-end)" title="' + PS[k][0] + '"></span><span class="output-label">' + t + '</span></span></li>').join('') +
+  '</ul></aside>';
+
+// 섹션 머리 — DS .section-toggle(채운 네모, 상세 화면용). 펼침 = 빼기, 접힘 = 더하기
+const dsec = (title, open = true, right = '') =>
+  '<div class="seach_arm"><div class="leftbt"><button type="button" class="section-toggle" aria-expanded="' + open + '" aria-label="' + title + (open ? ' 접기' : ' 펼치기') + '">' +
+  svg(open ? I.minus : I.plus, 14) + '</button><h4>' + title + '</h4></div>' + (right ? '<div class="rightbt">' + right + '</div>' : '') + '</div>';
+const ro = (label, value, span = 0) => field(label, '<div class="ff-readonly">' + value + '</div>', { span });
+const PHASES = [['기획', 'done', 100, '07-01 ~ 07-31'], ['설계', 'progress', 72, '08-01 ~ 10-24'], ['시작품', 'delay', 25, '09-22 ~ 11-07'], ['검증', 'plan', 0, '11-10 ~ 12-05'], ['양산 이관', 'hold', 0, '12-08 ~ 12-18']];
+const TASK_ROWS = [
+  ['조립 도면 작성', '설계', '김도윤', '2026-10-17', '', 70, 'progress'],
+  ['설계 검토(DR) 자료 준비', '설계', '이서연', '2026-10-10', '', 40, 'delay'],
+  ['하우징 3D 모델', '설계', '박지훈', '2026-09-26', '2026-09-25', 100, 'done'],
+  ['시작품 발주', '시작품', '최하은', '2026-10-08', '', 20, 'delay'],
+  ['제동 성능 시험 계획', '검증', '정우진', '2026-11-06', '', 0, 'plan'],
+];
+const detailBody = () =>
+  '<div class="divide-detail-layout">' + leftPanel() +
+  '<div class="right-panel scr-detail">' +
+  '<div class="detail-header"><div class="detail-header__title"><span class="detail-icon">' + svg(I.project, 24) + '</span>' +
+  '<h2>브레이크 캘리퍼 경량화 개발</h2><span class="detail-code">PJT-2026-014</span>' + pchip('delay') + '</div>' +
+  '<div class="detail-header__actions">' + btn('수정', 'btn--secondary btn--outlined') + btn('태스크 추가', 'btn--secondary btn--outlined', I.plus) + btn('결재 요청', 'btn--primary btn--filled') + '</div></div>' +
+  dsec('기본 정보') +
+  '<div class="pro_table"><div class="form-grid-2 scr-cols-4">' +
+  ro('프로젝트 번호', 'PJT-2026-014') + ro('제품군', '제동 부품') + ro('PM', '김도윤 · 설계1팀') + ro('개발 단계', '설계 검증 (DV)') +
+  ro('계획 기간', '2026-07-01 ~ 2026-12-18', 2) + ro('실적 시작일', '2026-07-03') + ro('관리 등급', 'A · 중점 관리') +
+  '</div></div>' +
+  dsec('진행 현황', true, '<span class="scr-total">기준 2026-10-13</span>') +
+  '<div class="pro_table scr-progress"><div class="scr-progress__top">' +
+  '<div class="status-block status-block--delay"><div class="status-segments status-segments--delay">' + '<span class="status-segments__bar"></span>'.repeat(5) + '</div><span class="status-text"></span></div>' +
+  '<div class="scr-progress__main"><div class="scr-progress__meta"><b>전체 진행률</b><span>계획 64% · 실적 58% · <em>6%p 늦음</em></span></div>' +
+  '<div class="progress-row">' + pbar('delay', 58) + '</div></div>' +
+  '<dl class="scr-kv"><div><dt>남은 기간</dt><dd>66일</dd></div><div><dt>지연 태스크</dt><dd class="is-danger">2건</dd></div><div><dt>완료 태스크</dt><dd>9 / 21</dd></div></dl></div>' +
+  '<ul class="scr-phases">' + PHASES.map(([n, k, pct, d]) =>
+    '<li><span class="scr-phases__name">' + n + '</span>' + pbar(k, pct) + '<span class="scr-phases__date">' + d + '</span>' + pchip(k) + '</li>').join('') + '</ul></div>' +
+  dsec('태스크', true, '<span class="scr-total">전체 <b>21</b> · 지연 <b>2</b></span>') +
+  '<div class="table_list scr-tasks"><div class="list"><table class="scr-grid"><colgroup>' +
+  '<col style="width:48px"><col><col style="width:80px"><col style="width:84px"><col style="width:104px"><col style="width:104px"><col style="width:150px"><col style="width:84px"></colgroup>' +
+  '<thead><tr><th>No.</th><th>태스크</th><th>단계</th><th>담당자</th><th>계획 종료</th><th>실적 종료</th><th>진행률</th><th>상태</th></tr></thead><tbody>' +
+  TASK_ROWS.map((r, i) => '<tr' + (i === 0 ? ' class="is-selected"' : '') + '><td class="is-center is-date">' + (i + 1) + '</td><td><a href="#" class="scr-link">' + r[0] + '</a></td>' +
+    '<td class="is-center">' + r[1] + '</td><td class="is-center">' + r[2] + '</td><td class="is-center is-date">' + r[3] + '</td><td class="is-center is-date">' + (r[4] || '—') + '</td>' +
+    '<td>' + pbar(r[6], r[5]) + '</td><td class="is-center">' + pchip(r[6]) + '</td></tr>').join('') +
+  '</tbody></table></div></div>' +
+  dsec('산출물 문서', false, '<span class="scr-total">14건</span>') +
+  '</div></div>';
+const detailScreen = () =>
+  '<div style="display:flex;height:100%">' + lnb('프로젝트') +
+  '<div class="main-layout"><div class="main-body"><div class="main-nav-layout"><div class="main-area">' + gnb(['Home', '프로젝트', '프로젝트 상세']) +
+  '<div class="main-content">' + detailBody() + '</div>' +
+  '</div></div></div></div></div>';
+
 // 실제 크기로 그린 화면을 칸 너비에 맞게 줄여 보여 준다 (1보다 크게 키우지 않음)
 const frame = (inner) => {
   const el = document.createElement('div');
@@ -315,4 +397,9 @@ export const 문서_검색 = {
 export const 문서_등록 = {
   parameters: src(registerPop()),
   render: () => frame(listScreen() + '<div class="scr-dim"></div><div class="scr-window">' + registerPop() + '</div>'),
+};
+
+export const 프로젝트_상세 = {
+  parameters: src(detailBody()),
+  render: () => frame(detailScreen()),
 };
