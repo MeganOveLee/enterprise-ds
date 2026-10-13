@@ -1,30 +1,29 @@
+// Form/Selection Controls — 문서 화면은 Selection.mdx. 여기 스토리는 MDX 카드 안에 들어가는 예시 · 전체 상태 · Playground
 import { matrix } from './_matrix.js';
 
 const ck = (t, o = '') => `<label class="checkbox"><input type="checkbox"${o}>${t}</label>`;
 const rd = (n, t, o = '') => `<label class="radio"><input type="radio" name="${n}"${o}><span class="radio__mark"></span>${t}</label>`;
 const sw = (t, o = '') => `<label class="switch"><input type="checkbox" role="switch"${o}>${t}</label>`;
 const opt = ({ checked, disabled }) => (checked ? ' checked' : '') + (disabled ? ' disabled' : '');
+const html = (lines) => ({ controls: { disable: true }, docs: { source: { language: 'html', code: lines.join('\n') } } });
 
 export default {
   title: 'Form/Selection Controls',
-  tags: ['!dev'],   // 개별 예시는 메뉴에서 숨기고 Docs 페이지 안 섹션으로만 (MDX 문서는 그대로 보이게 파일마다 지정)
+  tags: ['!dev', '!autodocs'],   // 메뉴에는 문서 한 장만, 문서는 Selection.mdx
   argTypes: {
-    label: { control: 'text' },
-    checked: { control: 'boolean' },
-    disabled: { control: 'boolean' },
+    label: { control: 'text', description: '글자' },
+    checked: { control: 'boolean', description: '선택됨 — `checked`' },
+    disabled: { control: 'boolean', description: '비활성 — `disabled`' },
   },
   args: { label: '결재 포함', checked: false, disabled: false },
-  parameters: {
-    docs: { description: { component:
-      '`.checkbox` · `.radio` · `.switch` — 네이티브 input을 그대로 써서 키보드 · 스크린리더가 기본으로 동작합니다. ' +
-      '선택됨 + 비활성은 연회색. 스위치는 `role="switch"`. (DS-ADR-015)' } },
-  },
+  parameters: { docs: { source: { language: 'html' } } },
 };
 
+// ── 예시 ──
 export const Checkbox = { render: (a) => ck(a.label, opt(a)) };
 
 export const 부분_선택 = {
-  parameters: { controls: { disable: true }, docs: { description: { story: '`indeterminate`는 HTML 속성이 아니라 스크립트로 켭니다.' } } },
+  parameters: html([ck('전체 선택'), '<!-- 부분 선택은 속성이 없어 스크립트로 켠다: input.indeterminate = true -->']),
   render: () => {
     const el = document.createElement('div');
     el.innerHTML = ck('전체 선택');
@@ -40,8 +39,14 @@ export const Radio = {
 
 export const Switch = { args: { label: '자동 저장' }, render: (a) => sw(a.label, opt(a)) };
 
+// ── 전체 상태 ──
 export const 전체_상태 = {
-  parameters: { controls: { disable: true } },
+  parameters: html([
+    '<!-- Hovered · Focused 는 마우스 · 키보드에 따라 CSS가 표시한다 (클래스 불필요) -->',
+    ck('결재 포함', ' checked disabled'),
+    rd('d', '보류', ' checked disabled'),
+    sw('자동 저장', ' checked disabled'),
+  ]),
   render: () => {
     const na = '<span class="sb-h">—</span>';
     const rows = [
@@ -50,8 +55,17 @@ export const 전체_상태 = {
       ['switch', [sw('자동 저장'), sw('자동 저장', ' checked'), na, sw('자동 저장', ' disabled'), sw('자동 저장', ' disabled checked')]],
     ];
     const el = document.createElement('div');
-    el.innerHTML = matrix(['꺼짐', '켜짐', '부분 선택', 'disabled', '켜짐+disabled'], rows);
+    el.innerHTML = matrix(['꺼짐', '켜짐', '부분 선택', 'disabled', '켜짐+disabled'], rows, { full: true });
     el.querySelectorAll('[data-ind]').forEach((i) => { i.indeterminate = true; });
     return el;
   },
+};
+
+// ── Playground ──
+export const Playground = {
+  argTypes: { kind: { control: 'inline-radio', options: ['checkbox', 'radio', 'switch'], description: '종류 — `.checkbox` · `.radio` · `.switch`' } },
+  args: { kind: 'checkbox' },
+  render: (a) => (a.kind === 'radio'
+    ? '<div role="radiogroup" aria-label="처리 구분">' + rd('pg', a.label, opt(a)) + '</div>'
+    : (a.kind === 'switch' ? sw : ck)(a.label, opt(a))),
 };
