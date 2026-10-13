@@ -1763,6 +1763,8 @@ body.dark-mode .select {
     --btn-line:          var(--color-border-brand);
     --btn-line-hover:    var(--color-border-interactive-primary-hover);
     --btn-line-pressed:  var(--color-border-interactive-primary-pressed);
+    --btn-tint-hover:    var(--color-bg-brand-subtle);                     /* outlined · transparent 마우스 올림 = 옅은 브랜드 (구: 회색, Button 제안 ⑫) */
+    --btn-tint-pressed:  var(--color-bg-interactive-primary-tint-pressed); /* 누름 = 한 단계 진한 브랜드 */
 }
 .btn--secondary { /* = .btn 기본값 */ }
 .btn--destructive {

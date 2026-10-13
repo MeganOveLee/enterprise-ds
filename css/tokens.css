@@ -334,6 +334,7 @@
   /* 선택됨 위 hover·pressed (페이지네이션 현재 페이지, 토글 버튼 켜짐) — 브랜드 역할 (DS-ADR-005) */
   --color-bg-interactive-selected-hover:      var(--brand-100);
   --color-bg-interactive-selected-pressed:    var(--brand-200);
+  --color-bg-interactive-primary-tint-pressed: var(--brand-100);   /* primary outlined · transparent 누름 — 옅은 브랜드 한 단계 진하게 (Button 제안 ⑫) */
 
   /* 버튼 — Excel (.btn_excel) */
   --color-bg-btn-excel:         #1E7E34;
@@ -555,6 +556,7 @@ body.dark-mode {
   --color-border-interactive-danger-pressed:  var(--red-200);
   --color-bg-interactive-selected-hover:      var(--neutral-600);   /* 다크 bg-selected(700)보다 한 단계 밝게 */
   --color-bg-interactive-selected-pressed:    var(--neutral-500);
+  --color-bg-interactive-primary-tint-pressed: color-mix(in srgb, var(--brand-500) 45%, transparent);   /* 다크 = hover(bg-brand-subtle 30%)보다 진한 브랜드. selected-hover(회색)를 쓰면 누를 때 회색이 됨 (Button 제안 ⑫) */
 
   /* 버튼 — Excel (.btn_excel) Soft Green + 컬러 보더 */
   --color-bg-btn-excel:         rgba(34, 197, 94, 0.20);
