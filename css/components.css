@@ -2360,13 +2360,14 @@ body.dark-mode .select {
     font-size: var(--body-sm);
     font-weight: var(--font-weight-semibold);
     letter-spacing: -0.3px;
-    color: var(--color-progress-progress-end);  /* default = progress */
+    color: var(--color-text-info-bold);  /* default = progress */
 }
-.status-block--done    .status-text { color: var(--color-progress-done-end); }
-.status-block--progress .status-text { color: var(--color-progress-progress-end); }
-.status-block--delay   .status-text { color: var(--color-progress-delay-end); }
-.status-block--plan    .status-text { color: var(--color-progress-plan-end); }
-.status-block--hold    .status-text { color: var(--color-progress-hold-end); }
+/* 상태 글자 = 신호 글자 토큰(-bold) (제안 B). 진행 색(--color-progress-*)은 막대 · 점 전용 — 글자로 쓰면 라이트 완료 2.54 · 보류 2.15, 다크 예정 1.18로 AA 미달 */
+.status-block--done    .status-text { color: var(--color-text-success-bold); }
+.status-block--progress .status-text { color: var(--color-text-info-bold); }
+.status-block--delay   .status-text { color: var(--color-text-danger-bold); }
+.status-block--plan    .status-text { color: var(--color-text-muted); }
+.status-block--hold    .status-text { color: var(--color-text-warning-bold); }
 
 /* ===== status-block modifier — 텍스트 자동 + 세트 변경 ===== */
 /* 텍스트는 비워두고 modifier 별로 CSS content 자동 출력
