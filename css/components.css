@@ -1850,6 +1850,11 @@ body.dark-mode .select {
             mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>") center/contain no-repeat;
 }
 .btn--expand[aria-expanded="true"]::after { transform: translateY(-50%) rotate(180deg); }
+/* 펼친 상태 = 켜짐 표현 (Button 제안 ⑬) — 옅은 브랜드 면 + 그 위 글자 짝 + 브랜드 테두리. 구: 접힘과 같은 모양, 화살표만 돎.
+ * 마우스 올림 · 누름은 ⑫와 같은 옅은 브랜드 단계. bg-selected 계열(다크 = 회색)을 쓰면 다크에서 글자 대비 2.6 · 1.8로 떨어짐 */
+.btn--expand[aria-expanded="true"]        { background: var(--color-bg-brand-subtle); color: var(--color-text-on-brand-subtle); border-color: var(--color-border-brand); }
+.btn--expand[aria-expanded="true"]:hover  { background: var(--color-bg-interactive-primary-tint-pressed); color: var(--color-text-interactive-primary-hover);   border-color: var(--color-border-interactive-primary-hover); }
+.btn--expand[aria-expanded="true"]:active { background: var(--color-bg-interactive-primary-tint-pressed); color: var(--color-text-interactive-primary-pressed); border-color: var(--color-border-interactive-primary-pressed); }
 
 
 /* AUI Grid 라이트모드 헤더 브랜드(주색 회색 + zebra + 선택 포인트 빨강, 고객사 테마)
