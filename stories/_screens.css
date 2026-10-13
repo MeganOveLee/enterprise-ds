@@ -2,7 +2,8 @@
  * 화면은 DS 클래스(components.css)로 짜고, 여기에는 DS에 아직 컴포넌트가 없는 자리만 둔다.
  * 값은 전부 DS 토큰 — 고정 색 · 고정 모서리 없음. 브랜드 · 화면 모드를 그대로 따른다.
  *   .scr-frame  실제 크기(1440 × 900)로 그린 화면을 칸 너비에 맞게 줄여 보여 주는 틀
- *   .scr-lnb    왼쪽 메뉴 항목 — 제품에서는 개발 마크업이 그리는 자리, 값은 LNB 토큰
+ *   .scr-lnb · .scr-submenu · .scr-tree  메뉴 항목 · 폴더 트리 — 제품에서는 개발 마크업 · 트리 위젯이 그리는 자리, 값은 LNB 토큰
+ *   .scr-search  라벨 위 검색 폼 6열 — 제품에서는 고객사 덮어쓰기 파일이 .mainTable 을 이 모양으로 바꿈. 공개 DS에는 .form-grid-2(2열)만 있음
  *   .scr-grid   목록 표 — 제품에서는 상용 그리드 라이브러리가 그리는 자리, 값은 그리드 토큰
  *   .scr-chip   상태 칩 — Figma Status chip과 같은 값 (CSS 컴포넌트는 아직 없음) */
 
@@ -25,7 +26,8 @@
   font-size: var(--body-md);
 }
 .scr .main-layout { height: 100%; }   /* 제품은 100vh — 틀 안에서는 틀 높이 */
-.scr .main-menu { height: 100%; }
+.scr .main-menu,
+.scr .main-sub { height: 100%; }
 
 /* 왼쪽 메뉴 */
 .scr-lnb__logo {
@@ -83,7 +85,44 @@
 .scr-total { font-size: var(--body-sm); color: var(--color-text-muted); }
 .scr-total b { color: var(--color-text-brand); font-weight: var(--font-weight-semibold); }
 .scr .seach_arm .leftbt svg { width: 16px; height: 16px; color: var(--color-icon-muted); }
-.scr .mainTable .td .checkbox { margin-left: var(--spacing-8); white-space: nowrap; }
+
+/* 아이콘 메뉴 아래쪽 · 두 번째 메뉴 패널 · 폴더 트리 */
+.scr-lnb--bottom { padding: var(--spacing-8) 0; border-top: 1px solid var(--color-border-base); }
+.scr-submenu { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
+.scr-submenu a {
+  display: block;
+  padding: var(--spacing-8) var(--spacing-12);
+  border-radius: var(--radius-item);
+  color: var(--color-text-base);
+  font-size: var(--body-md);
+  text-decoration: none;
+}
+.scr-submenu a:hover { background: var(--color-bg-lnb-hover); }
+.scr-submenu a.is-active { background: var(--color-bg-lnb-active); color: var(--color-text-lnb-active); font-weight: var(--font-weight-semibold); }
+.scr .tree-search-wrap svg { color: var(--color-text-muted); flex-shrink: 0; }
+.scr-tree { list-style: none; margin: 0; padding: 0; font-size: var(--body-sm); }
+.scr-tree li {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4);
+  height: 30px;
+  padding-right: var(--spacing-8);
+  border-radius: var(--radius-item);
+  color: var(--color-text-base);
+}
+.scr-tree li:hover { background: var(--color-bg-muted); }
+.scr-tree li.is-selected { background: var(--color-bg-brand-subtle); font-weight: var(--font-weight-semibold); }
+.scr-tree__caret { width: 12px; display: inline-flex; color: var(--color-icon-muted); }
+.scr-tree__folder { display: inline-flex; color: var(--color-icon-warning); }
+.scr-gnb-icon { display: inline-flex; color: var(--color-icon-muted); }
+
+/* 라벨 위 검색 폼 — 라벨 · 칸 짝은 .form-grid-2 .ff-field 그대로, 열 수만 6 */
+.scr .search-label { display: block; font-size: var(--body-sm); font-weight: var(--font-weight-medium); color: var(--color-text-label); }
+.scr .form-grid-2.scr-search { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: var(--spacing-12) var(--spacing-16); }
+.scr .scr-span-2 { grid-column: span 2; }
+.scr-radio-row { display: flex; align-items: center; gap: var(--spacing-16); height: var(--size-input); }
+.scr-radio-row .radio { white-space: nowrap; }
+.scr .ui-datepicker-range { width: 100%; }
 
 /* 목록 표 */
 .scr-grid {
@@ -102,7 +141,7 @@
   background: var(--color-bg-grid-header);
   color: var(--color-text-on-color);
   font-weight: var(--font-weight-semibold);
-  text-align: left;
+  text-align: center;
   white-space: nowrap;
   border-bottom: 1px solid var(--color-border-grid-header-bottom);
 }
@@ -121,6 +160,9 @@
 .scr-grid .is-num { color: var(--color-text-brand); font-weight: var(--font-weight-medium); font-variant-numeric: tabular-nums; }
 .scr-grid .is-date { color: var(--color-text-muted); font-variant-numeric: tabular-nums; }
 .scr-grid .checkbox { margin: 0; gap: 0; }
+.scr-link { color: var(--color-text-base); text-decoration: underline; text-underline-offset: 2px; }
+.scr-link:hover { color: var(--color-text-brand); }
+.scr-file svg { vertical-align: middle; color: var(--color-icon-muted); }
 
 /* 상태 칩 */
 .scr-chip {
@@ -157,6 +199,4 @@
 .scr-window .pop { height: 100%; min-width: 0; }
 .scr-window .contents { gap: var(--spacing-12); }
 .scr-window .pro_table { border: 1px solid var(--color-border-base); }
-.scr-window .detail-dl { grid-template-columns: 96px 1fr 96px 1fr; }
-.scr-window .textarea[readonly] { min-height: 64px; }
 .scr-window .scr-grid th { position: static; }
