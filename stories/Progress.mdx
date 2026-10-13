@@ -1,0 +1,50 @@
+import { Meta, Unstyled, Controls } from '@storybook/addon-docs/blocks';
+import { PageHead, Section, Card } from './_blocks.js';
+import * as S from './Progress.stories.js';
+
+<Meta of={S} />
+
+<Unstyled>
+<div className="ds-page">
+<PageHead eyebrow="Feedback" title="Progress" lead="프로젝트 · 태스크가 얼마나 진행됐는지 보여 주는 막대와 상태 표시입니다. 상태는 다섯 가지 — 완료 · 진행 · 지연 · 예정 · 보류 — 이고, 상태마다 막대 색과 글자가 함께 바뀝니다." />
+<Section title="구성" en="Spec">
+<table className="ds-table ds-props">
+<thead><tr><th>구분</th><th>클래스 · 속성</th><th>설명</th></tr></thead>
+<tbody>
+<tr><td><b>진행률 막대</b></td><td><code>.progress-bar</code> › <code>.pbar-fill</code></td><td>높이 17 알약. 바탕은 bg-subtle, 채움 너비(<code>style="width:58%"</code>)가 진행률입니다. 값이 바뀌면 채움이 1.6초에 걸쳐 늘어납니다.</td></tr>
+<tr><td><b>상태</b></td><td><code>{'.progress-bar--{상태}'}</code><span className="ds-muted">done · progress · delay · plan · hold</span></td><td>채움을 상태 색 그라데이션으로(<code>--color-progress-done-start</code> → <code>-end</code> 짝). 다크에서 예정만 값이 따로 있습니다.</td></tr>
+<tr><td><b>% 글자</b></td><td><code>.progress-bar__label</code></td><td>막대 가운데 12px. 빼도 됩니다(좁은 표 안).</td></tr>
+<tr><td><b>상태 표시</b></td><td><code>{'.status-block--{상태}'}</code> › <code>.status-segments</code> + <code>.status-text</code></td><td>막대 5개 + 상태 글자. 글자(완료 · 진행중 · 지연 · 예정 · 보류)는 CSS가 넣어서 마크업은 비워 둡니다. 글자 색은 신호 글자 토큰(-bold · muted)이라 진행 색보다 진합니다.</td></tr>
+<tr><td><b>한 줄 배치</b></td><td><code>.progress-row</code></td><td>상태 표시와 막대를 간격 12로 나란히.</td></tr>
+<tr><td><b>범례</b></td><td><code>.legend-item</code> › <code>.legend-dot</code></td><td>점 색은 화면이 상태 색 끝값으로 지정합니다(상태 클래스 없음). 산출물 패널 안(<code>.left-legend</code>)에서는 16px 원 + 기호.</td></tr>
+<tr><td><b>접근성</b></td><td><code>role="progressbar"</code> · <code>aria-valuenow</code> · <code>aria-label</code></td><td>막대마다 무엇의 진행률인지 이름을 붙입니다(「설계 진행률」). 상태 표시의 막대 5개는 꾸밈이라 <code>aria-hidden="true"</code>.</td></tr>
+</tbody>
+</table>
+<p className="ds-sec__desc ds-after">Figma UI Kit의 Progress bar와 짝입니다. 첨부 파일을 올리는 중 막대는 이 컴포넌트가 아니라 업로더 안의 기본 <code>{'<progress>'}</code>입니다.</p>
+</Section>
+<Section title="예시" en="Examples">
+<Card of={S.진행률_막대} title="진행률 막대" en="Bar" desc="가장 단순한 모양 — 막대 하나와 가운데 %." />
+<Card of={S.상태_표시와_함께} title="상태 표시와 함께" en="With status" desc="프로젝트 상세의 진행 현황 줄. 상태 표시가 막대 왼쪽에 붙습니다." />
+<Card of={S.단계별_목록} title="단계별 목록" en="Phases" desc="단계마다 막대 하나. 이름은 화면이 붙입니다." />
+<Card of={S.범례} title="범례" en="Legend" desc="산출물 트리 위 범례. 점 안 기호로 색 없이도 구분됩니다." />
+</Section>
+<Section title="전체 상태" en="States" desc="상태 다섯 가지를 한 줄씩. 진행 색은 브랜드 색이 아니라서 브랜드를 바꿔도 같고, 다크에서는 예정만 밝은 회색으로 바뀝니다.">
+<Card of={S.전체_상태} title="상태 5가지" />
+</Section>
+<Section title="알려진 점" en="Known issues">
+<table className="ds-table ds-props">
+<thead><tr><th>무엇</th><th>지금</th><th>영향</th></tr></thead>
+<tbody>
+<tr><td><b>% 글자 대비</b></td><td>글자색이 기본 글자색(text-base) 하나</td><td>진행률이 50%를 넘으면 글자가 채움 색 위에 올라갑니다. 58% 기준 대비 — 라이트: 진행 3.8 · 지연 4.0 · 예정 1.2, 다크: 완료 2.0 · 진행 3.9 · 지연 3.8 · 예정 2.1 · 보류 1.7(12px 글자는 4.5 필요). 그라데이션 위 글자라 자동 검사(axe)는 판정하지 못합니다.</td></tr>
+<tr><td><b>상태 표시 움직임</b></td><td>막대 5개가 물결처럼 깜박이도록 지정(<code>statusPulse</code>)</td><td>애니메이션 정의가 이전 버전 덮어쓰기 파일에만 있어 DS만 불러오면 움직이지 않습니다. 이 움직임과 채움 늘어남(1.6초)에는 모션 줄이기 설정 규칙도 아직 없습니다.</td></tr>
+<tr><td><b>진행 색 값</b></td><td>상태 색 10개가 고정 hex</td><td>원색 램프를 참조하지 않아 램프를 바꿔도 따라가지 않습니다(다크 예정 두 개만 원색 참조).</td></tr>
+</tbody>
+</table>
+</Section>
+<Section title="Playground" desc="아래 표에서 값을 바꾸면 미리보기와 「코드 보기」가 함께 바뀝니다.">
+<Card of={S.Playground}>
+<Controls of={S.Playground} />
+</Card>
+</Section>
+</div>
+</Unstyled>
