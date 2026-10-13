@@ -340,3 +340,35 @@
 .scr-tasks .scr-grid th { position: static; }
 .scr-tasks .progress-bar { height: 14px; }
 .scr-tasks .progress-bar__label { font-size: 10px; }
+
+/* 로그인 — 왼쪽 브랜드 딥 패널(--color-bg-panel) + 오른쪽 폼. 칸 · 체크박스 · 버튼은 DS 그대로.
+ * 높이 44(칸 · 버튼)는 로그인 전용 — DS에 큰 크기(--size-input-lg 같은)가 아직 없어 여기서 덮어씀 */
+.scr-login { display: grid; grid-template-columns: 600px 1fr; height: 100%; padding: var(--spacing-24); box-sizing: border-box; background: var(--color-bg-base); }
+.scr-login__panel {
+  position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between;
+  padding: 48px 44px; border-radius: var(--radius-card); color: var(--color-text-on-panel);
+  background: radial-gradient(circle at 78% 42%, color-mix(in srgb, var(--color-bg-panel-2) 55%, transparent), transparent 62%), var(--color-bg-panel);
+}
+.scr-login__art { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.scr-login__panel > :not(svg) { position: relative; }
+.scr-login__panel p, .scr-login__panel h2 { margin: 0; }
+.scr-login__brand { display: flex; align-items: center; gap: var(--spacing-12); font-size: var(--heading-sm); font-weight: var(--font-weight-bold); }
+.scr-login__eyebrow { font-size: var(--body-sm); font-weight: var(--font-weight-semibold); letter-spacing: .24em; color: var(--color-text-on-panel-2); }
+.scr-login__hero h2 { margin: var(--spacing-12) 0 var(--spacing-16); font-size: var(--heading-2xl); font-weight: var(--font-weight-bold); line-height: var(--line-height-tight); color: var(--color-text-on-panel); }
+.scr-login__hero p:last-child { max-width: 340px; font-size: var(--body-md); color: var(--color-text-on-panel-2); }
+.scr-login__contact { display: flex; flex-direction: column; gap: 6px; font-size: var(--body-sm); font-weight: var(--font-weight-semibold); }
+.scr-login__contact .scr-login__eyebrow { margin-bottom: var(--spacing-8); }
+.scr-login__main { display: flex; align-items: center; justify-content: center; }
+.scr-login__box { width: 360px; }
+.scr-login__logo { display: flex; align-items: center; gap: var(--spacing-12); margin-bottom: var(--spacing-24); }
+.scr-login__logo .scr-logo { width: 40px; height: 40px; }
+.scr-login__logo b { font-size: var(--heading-md); color: var(--color-text-base); }
+.scr-login__box h1 { margin: 0; font-size: var(--heading-2xl); font-weight: var(--font-weight-bold); line-height: var(--line-height-tight); color: var(--color-text-base); }
+.scr-login__lead { margin: var(--spacing-8) 0 var(--spacing-32); font-size: var(--body-md); color: var(--color-text-muted); }
+.scr-login__form { display: flex; flex-direction: column; gap: var(--spacing-16); }
+.scr-login__field { display: flex; flex-direction: column; gap: 6px; }
+.scr-login__field label { font-size: var(--body-sm); font-weight: var(--font-weight-medium); color: var(--color-text-base); }
+.scr .scr-login__input { height: 44px; padding: 0 var(--spacing-12); font-size: var(--body-md); }
+.scr-login__form .checkbox { align-self: flex-start; }
+.scr .scr-login__submit { width: 100%; height: 44px; margin-top: var(--spacing-8); font-size: var(--body-md); font-weight: var(--font-weight-semibold); }
+.scr-login__copy { margin: var(--spacing-32) 0 0; text-align: center; font-size: var(--body-sm); color: var(--color-text-muted); }

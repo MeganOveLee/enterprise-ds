@@ -1,6 +1,6 @@
 // Screens — DS 클래스와 토큰만으로 짠 PLM 업무 화면 (실제 크기 1440 × 900, 가상 데이터)
 // 문서 화면은 Screens.mdx. 도구 막대의 브랜드 · 화면 모드를 그대로 따른다.
-// 구조는 실제 제품 화면과 같다: 홈 = 아이콘 메뉴 + 상단 바 + 카드 대시보드
+// 구조는 실제 제품 화면과 같다: 로그인 = 브랜드 패널 + 폼 / 홈 = 아이콘 메뉴 + 상단 바 + 카드 대시보드
 // 업무 화면 = 아이콘 메뉴 + 두 번째 메뉴 패널(메뉴 · 폴더 트리) + 상단 바 + 라벨 위 검색 폼 + 목록
 // 프로젝트 상세 = 아이콘 메뉴 + 상단 바 + 왼쪽 산출물 구조 패널 + 오른쪽 상세(섹션 · 진행률)
 // 마크업은 문자열 이어 붙이기 — 스토리북 색인기가 여러 줄 HTML 템플릿을 MDX로 잘못 읽는 일을 피함
@@ -365,6 +365,43 @@ const detailScreen = () =>
   '<div class="main-content">' + detailBody() + '</div>' +
   '</div></div></div></div></div>';
 
+// ── 로그인 — 왼쪽 브랜드 패널(딥 패널 + 분자 그림) + 오른쪽 로그인 폼. 메뉴 · 상단 바 없음 ──
+// 그림은 직접 그린 SVG — 색은 패널 위 글자 토큰을 옅게 써서 브랜드 · 모드를 따라감. 사진 · 고객사 로고 · 연락처는 쓰지 않음
+const ORB = (cx, cy, r) =>
+  '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="url(#scr-orb)" stroke-width="1.5" style="stroke:var(--color-text-on-panel);stroke-opacity:.22"/>' +
+  '<ellipse cx="' + (cx - r * 0.35) + '" cy="' + (cy - r * 0.4) + '" rx="' + (r * 0.28) + '" ry="' + (r * 0.16) + '" transform="rotate(-30 ' + (cx - r * 0.35) + ' ' + (cy - r * 0.4) + ')" style="fill:var(--color-text-on-panel);fill-opacity:.18"/>';
+const BOND = (x1, y1, x2, y2) =>
+  '<line x1="' + x1 + '" y1="' + y1 + '" x2="' + x2 + '" y2="' + y2 + '" stroke-width="14" stroke-linecap="round" style="stroke:var(--color-text-on-panel);stroke-opacity:.08"/>' +
+  '<line x1="' + x1 + '" y1="' + y1 + '" x2="' + x2 + '" y2="' + y2 + '" stroke-width="3" stroke-linecap="round" style="stroke:var(--color-text-on-panel);stroke-opacity:.2"/>';
+const MOLECULE =
+  '<svg class="scr-login__art" viewBox="0 0 600 852" preserveAspectRatio="xMaxYMid slice" aria-hidden="true">' +
+  '<defs><radialGradient id="scr-orb" cx="38%" cy="32%" r="72%">' +
+  '<stop offset="0" style="stop-color:var(--color-text-on-panel);stop-opacity:.16"/>' +
+  '<stop offset=".7" style="stop-color:var(--color-text-on-panel);stop-opacity:.03"/>' +
+  '<stop offset="1" style="stop-color:var(--color-text-on-panel);stop-opacity:.12"/></radialGradient></defs>' +
+  [[60, 120, 3], [300, 40, 2], [520, 120, 4], [140, 300, 2], [560, 700, 3], [300, 790, 2]].map(([x, y, r]) =>
+    '<circle cx="' + x + '" cy="' + y + '" r="' + r * 6 + '" style="fill:var(--color-text-on-panel);fill-opacity:.04"/>').join('') +
+  BOND(420, 300, 540, 440) + BOND(540, 440, 640, 360) + BOND(540, 440, 420, 610) + BOND(420, 300, 360, 180) +
+  ORB(360, 180, 30) + ORB(420, 300, 54) + ORB(640, 360, 70) + ORB(540, 440, 96) + ORB(420, 610, 72) + ORB(40, 650, 66) +
+  '</svg>';
+const loginScreen = () =>
+  '<div class="scr-login">' +
+  '<section class="scr-login__panel" aria-label="서비스 소개">' + MOLECULE +
+  '<div class="scr-login__brand">' + LOGO + '<span>Enterprise PLM</span></div>' +
+  '<div class="scr-login__hero"><p class="scr-login__eyebrow">PLM SYSTEM</p><h2>Product Lifecycle<br>Management</h2>' +
+  '<p>제품 개발의 전 과정을 하나로 잇는 통합 PLM 플랫폼.</p></div>' +
+  '<div class="scr-login__contact"><p class="scr-login__eyebrow">SERVICE CONTACT</p><p>기술 지원 · help@example.com</p><p>CAD 지원 · cad@example.com</p></div>' +
+  '</section>' +
+  '<main class="scr-login__main"><div class="scr-login__box">' +
+  '<div class="scr-login__logo">' + LOGO + '<b>Enterprise PLM</b></div>' +
+  '<h1>환영합니다</h1><p class="scr-login__lead">로그인 후 PLM 시스템을 이용해 주세요.</p>' +
+  '<div class="scr-login__form">' +
+  '<div class="scr-login__field"><label for="scr-login-id">아이디</label><input class="input scr-login__input" id="scr-login-id" autocomplete="username" placeholder="사번 또는 ID 입력"></div>' +
+  '<div class="scr-login__field"><label for="scr-login-pw">비밀번호</label><input class="input scr-login__input" id="scr-login-pw" type="password" autocomplete="current-password" placeholder="비밀번호 입력"></div>' +
+  '<label class="checkbox"><input type="checkbox">아이디 저장</label>' +
+  '<button type="button" class="btn btn--primary btn--filled scr-login__submit">로그인</button>' +   // 예시 화면 — 제출 없음
+  '</div><p class="scr-login__copy">© 2026 Enterprise PLM · 가상 화면</p></div></main></div>';
+
 // 실제 크기로 그린 화면을 칸 너비에 맞게 줄여 보여 준다 (1보다 크게 키우지 않음)
 const frame = (inner) => {
   const el = document.createElement('div');
@@ -382,6 +419,11 @@ export default {
   title: 'Screens/PLM 화면',
   tags: ['!dev', '!autodocs'],   // 메뉴에는 문서 한 장만, 문서는 Screens.mdx
   parameters: { layout: 'fullscreen' },
+};
+
+export const 로그인 = {
+  parameters: src(loginScreen()),
+  render: () => frame(loginScreen()),
 };
 
 export const 홈 = {
