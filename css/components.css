@@ -785,7 +785,7 @@ body.dark-mode .theme-toggle-btn .icon-moon { display: none; }
     box-shadow: none !important;
     cursor: text;   /* 직접 입력 허용 — 달력은 아이콘 · 클릭 · Alt+↓ (DS-ADR-016) */
 }
-.ui-datepicker__input::placeholder { color: var(--color-text-disabled); }
+.ui-datepicker__input::placeholder { color: var(--color-text-muted); }   /* 입력칸(.input)과 같음. 구 text-disabled = 대비 2.3 (DS-ADR-016 · 10/13) */
 
 /* 상태 — 입력칸(.input)과 같은 규칙을 칸을 감싸는 상자에 건다. 새 토큰 없음 (DS-ADR-016 · 017, 2026-10-13)
  * 오류 = 칸에 aria-invalid="true" · 비활성 = disabled · 읽기 전용 = readonly. 비활성 · 읽기 전용이면 datepicker.js가 달력을 열지 않고 아이콘 버튼에 disabled */
