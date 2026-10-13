@@ -21,6 +21,9 @@ const iconBtn = ({ shape = 'outlined', label = '닫기', glyph = X, extra = '', 
 const expandBtn = ({ open = false, extra = '', disabled = false } = {}) =>
   '<button type="button" class="btn btn--secondary btn--outlined btn--expand' + (extra ? ' ' + extra : '') + '" aria-expanded="' + open + '"' +
   (disabled ? ' disabled' : '') + '>상세검색</button>';
+const CHEV = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
+const iconExpand = ({ open = false, extra = '', disabled = false } = {}) =>
+  iconBtn({ shape: 'transparent', label: '왼쪽 메뉴', glyph: CHEV, extra, attrs: ' aria-expanded="' + open + '"', disabled });
 const toggleBtn = ({ on = false, extra = '', disabled = false } = {}) =>
   iconBtn({ shape: 'transparent', label: '즐겨찾기', glyph: STAR, extra, attrs: ' aria-pressed="' + on + '"', disabled });
 
@@ -90,12 +93,13 @@ export const Type = {
   ], { full: true }),
 };
 
-const TOGGLE = [toggleBtn({ on: false }), toggleBtn({ on: true }), expandBtn({ open: false }), expandBtn({ open: true })];
+const TOGGLE = [toggleBtn({ on: false }), toggleBtn({ on: true }), expandBtn({ open: false }), expandBtn({ open: true }), iconExpand({ open: false }), iconExpand({ open: true })];
 export const Toggle = {
   parameters: html(TOGGLE),
   render: () => matrix([code('false') + note('<br>꺼짐 · 접힘'), code('true') + note('<br>켜짐 · 펼침')], [
     ['켜고 끄기 ' + code('aria-pressed'), [TOGGLE[0], TOGGLE[1]]],
     ['접고 펴기 ' + code('aria-expanded'), [TOGGLE[2], TOGGLE[3]]],
+    ['아이콘만 접고 펴기 ' + code('aria-expanded'), [TOGGLE[4], TOGGLE[5]]],
   ], { full: true }),
 };
 
@@ -149,6 +153,7 @@ export const IconStates = {
       ['켜고 끄기 · 켜짐', set((o) => toggleBtn({ on: true, ...o }))],
       ['접고 펴기 · 접힘', set((o) => expandBtn({ open: false, ...o }))],
       ['접고 펴기 · 펼침', set((o) => expandBtn({ open: true, ...o }))],
+      ['아이콘 접고 펴기 · 펼침', set((o) => iconExpand({ open: true, ...o }))],
     ], { full: true });
   },
 };
