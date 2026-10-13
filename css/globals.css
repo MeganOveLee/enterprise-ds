@@ -91,8 +91,11 @@ input {
     font-size: var(--body-md);
     color: var(--color-text-base);
     box-sizing: border-box;
-    border-radius: 4px;
+    border-radius: var(--radius-input);   /* 구 4px → 입력칸 역할(2). 클래스 없는 옛 입력칸도 .input 과 같은 모서리 (DS-ADR-019 · 020) */
 }
+/* 버튼형 input(button · submit · reset)은 입력칸이 아니라 버튼 — 모서리만 버튼 역할로 (DS-ADR-020).
+ * :where() 라 특이도는 input 과 같음 → .btn 등 클래스 규칙이 그대로 이김. 높이 · 여백은 위 규칙 그대로 */
+input:where([type="button"], [type="submit"], [type="reset"]) { border-radius: var(--radius-btn); }
 /* 텍스트 계열 인풋 높이 = 토큰(--size-input 28px) 단일값.
  * 위 base input{height:20px}은 3.0 잔재라 여기 목록에 없는 타입(password/number/email/tel/search)이
  * 20px로 떨어졌었음 — 비밀번호 변경 팝업에서 발견. 타입을 빼먹으면 조용히 20px가 되니 목록으로 관리.

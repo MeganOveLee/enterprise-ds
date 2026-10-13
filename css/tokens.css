@@ -174,6 +174,7 @@
      input · btn 은 같은 줄에 놓이므로 같은 값. 앱 틀(GNB 막대 안 버튼)은 이 토큰을 쓰지 않고 높이 고정 */
   --size-input:    28px;   /* 인풋 높이 */
   --size-btn:      28px;   /* 버튼 기본 (인풋 매칭) · 아이콘 버튼 가로세로. 옛 md(32px)는 실사용 없어 삭제 2026-08-06 세영 */
+  --size-btn-sm:   26px;   /* 작은 버튼 = Figma 「Small Button」 — 섹션 접기 · 첨부 삭제. 최소 누름 영역 24 이상 (DS-ADR-020) */
   --size-sidebar-toggle: 0.4375rem;                                     /* LNB 오른쪽 리사이즈 손잡이 폭 */
   --size-sidebar:        calc(13.875rem - var(--size-sidebar-toggle));  /* LNB 폭 = 사이드 영역 222px − 손잡이.
                             구 Layer 5 --sidebar-width/-toggle-width 를 치수 층으로 올림 — 이름만 있고 아무도 안 쓰고
@@ -291,7 +292,7 @@
   /* LNB hover / active */
   --color-bg-lnb-hover:         var(--brand-50);
   --color-bg-lnb-active:        var(--brand-100);
-  --color-text-lnb-active:      var(--brand-500);       /* 활성 메뉴 글자. 다크는 흰색 — 아이콘(흰 마스크)과 톤을 맞춰야 함 (세영 2026-08-25) */
+  --color-text-lnb-active:      var(--brand-600);       /* 활성 메뉴 글자 — 600(바탕 100 위 E3PS 4.92 · Fashion 5.70 · Precision 5.74, 500은 E3PS 4.08 미달, 10/13). 다크는 흰색 — 아이콘(흰 마스크)과 톤을 맞춰야 함 (세영 2026-08-25) */
 
   /* 버튼 — 등록 Create primary (.btn_blue)
    * primary = 그 영역의 마무리 동작 1개 = 브랜드색. 동작 종류(CRUD)로 색을 정하지 않는다 (DS-ADR-005).

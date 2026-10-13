@@ -189,7 +189,7 @@
     padding: 0;
     border: 1px solid var(--color-border-base);
     background: var(--color-bg-base);
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-btn);
     color: var(--color-text-base);
     cursor: pointer;
     display: inline-flex;
@@ -262,7 +262,7 @@
 }
 .tree-controls .tree-search-wrap {
     width: 100%;
-    height: 32px;
+    height: var(--size-input);   /* 같은 줄 입력칸 = 표준 높이 (구 32, DS-ADR-020) */
     border: 1px solid var(--color-border-input);
     border-radius: var(--radius-input);   /* 입력칸 = 2px, 이전 버전 기준 (DS-ADR-019 · 011 1항 대체) */
     background: var(--color-bg-input);
@@ -271,7 +271,7 @@
     color: var(--color-text-base);
     box-sizing: border-box;
 }
-.tree-controls .select { height: 32px; font-size: var(--body-sm); }   /* 트리 위 좁은 칸 — 검색칸(32)과 높이 맞춤. 모양은 .select (DS-ADR-010) */
+.tree-controls .select { font-size: var(--body-sm); }   /* 높이는 .select 기본(--size-input) = 폴더 검색칸과 같음 (구 32, DS-ADR-020). 모양은 .select (DS-ADR-010) */
 .tree-controls .tree-search-wrap {
     display: flex;
     align-items: center;
@@ -671,7 +671,7 @@ body.dark-mode .theme-toggle-btn .icon-moon { display: none; }
     width: var(--size-btn); height: var(--size-btn); padding: 0;   /* 높이 = 표준 아이콘 버튼 (DS-ADR-020) */
     border: none; background: transparent;
     color: var(--color-text-muted); cursor: pointer;
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-btn);
     display: inline-flex; align-items: center; justify-content: center;
 }
 .main-sub-header .sub-close:hover { background: var(--color-bg-muted); color: var(--color-text-base); }
@@ -820,7 +820,7 @@ body.dark-mode .theme-toggle-btn .icon-moon { display: none; }
     height: var(--size-btn);
     padding: 0 var(--spacing-4);
     border: 1px solid transparent;
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-btn);
     background: transparent;
     color: var(--color-text-base);
     font-size: var(--body-sm);
@@ -855,8 +855,8 @@ body.dark-mode .theme-toggle-btn .icon-moon { display: none; }
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-width: 32px;
-    height: 32px;
+    min-width: var(--size-btn);   /* 페이지 번호와 같은 높이 (구 32, DS-ADR-020) */
+    height: var(--size-btn);
     color: var(--color-text-muted);
 }
 
@@ -939,7 +939,7 @@ body.dark-mode .theme-toggle-btn .icon-moon { display: none; }
     background: var(--color-bg-muted);
     color: var(--color-text-muted);
     font-size: var(--body-sm);
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-chip);   /* Status chip Neutral (DS-ADR-020) */
     font-weight: var(--font-weight-medium);
 }
 .pop .top-btn-area {
@@ -947,14 +947,14 @@ body.dark-mode .theme-toggle-btn .icon-moon { display: none; }
     gap: var(--spacing-4);
 }
 .pop-close {
-    width: 32px; height: 32px;
+    width: var(--size-btn); height: var(--size-btn);   /* LNB 서브 닫기와 같은 규격 (구 32, DS-ADR-020) */
     border: none; background: transparent;
     color: var(--color-text-muted); cursor: pointer;
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-btn);
     display: inline-flex; align-items: center; justify-content: center;
 }
 .pop-close:hover { background: var(--color-bg-muted); color: var(--color-text-base); }
-.pop-close svg { width: 18px; height: 18px; }
+.pop-close svg { width: 14px; height: 14px; }   /* 버튼 안 아이콘 14 (구 18) */
 
 /* ── 등록/상세 팝업 — 레이어·패딩·타이포 위계 (검색 디자인 시스템 확장) ──────────
  * (1) 페이지는 한 단 가라앉은 톤, 카드(.pro_table)는 떠보이게 → 레이어감
@@ -1084,7 +1084,7 @@ body.dark-mode .pop .pro_table { background: var(--color-bg-base); box-shadow: n
     width: var(--size-btn); height: var(--size-btn); padding: 0;   /* 높이 = 표준 아이콘 버튼 (DS-ADR-020) */
     border: none; background: transparent;
     color: var(--color-text-base); cursor: pointer;
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-btn);
     display: inline-flex; align-items: center; justify-content: center;
 }
 .file-download-list .file-dl:hover { background: var(--color-bg-info-subtle); }
@@ -1260,9 +1260,9 @@ body.dark-mode .pop .pro_table { background: var(--color-bg-base); box-shadow: n
 .resumable:not(.center) .fileList .file-item progress { flex: 0 0 70px; height: 6px; }
 .resumable:not(.center) .fileList .file-item .remove-btn {
     flex: 0 0 auto; margin-left: 2px; cursor: pointer;
-    width: 20px; height: 20px; padding: 0;
+    width: var(--size-btn-sm); height: var(--size-btn-sm); padding: 0;   /* 작은 버튼 (구 20 — 최소 누름 영역 24 미달, DS-ADR-020) */
     border: none; background: transparent; color: var(--color-text-muted);
-    display: inline-flex; align-items: center; justify-content: center; border-radius: var(--radius-sm);
+    display: inline-flex; align-items: center; justify-content: center; border-radius: var(--radius-btn);
 }
 .resumable:not(.center) .fileList .file-item .remove-btn:hover { background: var(--color-bg-muted); color: var(--color-text-danger); }
 .resumable:not(.center) .fileList .file-item .remove-btn svg { width: 14px; height: 14px; }
@@ -1808,6 +1808,9 @@ body.dark-mode .select {
  * <button class="btn btn--secondary btn--transparent btn--icon" aria-label="닫기"><svg …/></button>
  * 켜고 끄는 버튼이면 aria-pressed 를 함께 (피그마 Toggle Icon Button) */
 .btn--icon { width: var(--size-btn); padding: 0; }
+/* 작은 버튼 = Figma 「Small Button」 (DS-ADR-020). 모서리는 일반 버튼과 같음 */
+.btn--sm { height: var(--size-btn-sm); }
+.btn--icon.btn--sm { width: var(--size-btn-sm); }
 .btn--icon svg, .btn--icon img { width: 16px; height: 16px; }
 .btn--icon[aria-pressed="true"] { background: var(--color-bg-selected); color: var(--color-text-brand); }
 .btn--icon[aria-pressed="true"]:hover  { background: var(--color-bg-interactive-selected-hover); }
@@ -1869,7 +1872,7 @@ body.dark-mode .select {
     background: var(--color-bg-base);
     border: 1px solid var(--color-border-base);
     width: var(--size-btn); height: var(--size-btn);   /* 높이 = 표준 아이콘 버튼 (DS-ADR-020) */
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-btn);
     cursor: pointer;
     display: inline-flex;
     align-items: center;
@@ -1899,7 +1902,7 @@ body.dark-mode .select {
     color: var(--color-text-base);
     cursor: pointer;
     padding: 4px 6px;
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-btn);
     display: inline-flex;
     align-items: center;
     gap: 4px;
@@ -2080,11 +2083,11 @@ body.dark-mode .select {
 
 /* 마이너스/플러스 토글 — 진한 회색 배경 (브랜드 보조색) + 흰 아이콘 */
 .section-toggle {
-    width: 22px;
-    height: 22px;
+    width: var(--size-btn-sm);   /* 작은 버튼 (구 22 — 최소 누름 영역 24 미달, DS-ADR-020) */
+    height: var(--size-btn-sm);
     border: none;
     background: var(--color-bg-inverse);   /* v1.0: --neutral-800 → inverse 짝 */
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-btn);
     cursor: pointer;
     display: inline-flex;
     align-items: center;
@@ -2114,7 +2117,7 @@ body.dark-mode .select {
     flex: 1;
     height: 17px;          /* 캡쳐 디자인 최종값. 구 28px 을 아래에서 !important 로 덮던 것을 여기에 직접 반영 (2026-08-23) */
     background: var(--color-bg-subtle);   /* 구 #E5E7EB 하드코딩 → 쿨그레이 토큰 (세영 2026-08-25) */
-    border-radius: 9px;
+    border-radius: var(--radius-rounded);
     overflow: hidden;
     position: relative;
 }
@@ -2160,7 +2163,7 @@ body.dark-mode .select {
     gap: 4px;
     padding: var(--spacing-8) 4px;
     border: 1px solid var(--color-border-base);
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-btn);
     background: var(--color-bg-base);
     color: var(--color-text-base);
     font-size: var(--body-sm);
@@ -2197,8 +2200,8 @@ body.dark-mode .select {
     display: flex;
     gap: var(--spacing-4);
 }
-.left-search .input { flex: 1; min-width: 0; height: 32px; font-size: var(--body-sm); }   /* 옆 버튼(32)과 높이 맞춤. 모양은 .input (DS-ADR-010) */
-.left-search-btn { height: 32px; padding: 0 var(--spacing-12); flex-shrink: 0; }
+.left-search .input { flex: 1; min-width: 0; font-size: var(--body-sm); }   /* 높이는 .input 기본(--size-input) = 옆 버튼(--size-btn)과 같음 (구 32, DS-ADR-020). 모양은 .input (DS-ADR-010) */
+.left-search-btn { height: var(--size-btn); padding: 0 var(--spacing-12); flex-shrink: 0; }   /* 옆 입력칸과 같은 표준 높이 (구 32, DS-ADR-020) */
 
 /* ===== 12 프로젝트 상세 — 복구 일괄 ===== */
 /* 메인 콘텐츠 2:8 grid */
@@ -2235,7 +2238,7 @@ body.dark-mode .select {
 .pbar-fill {
     height: 100%;
     background: linear-gradient(to right, var(--color-progress-progress-start), var(--color-progress-progress-end));
-    border-radius: 9px;    /* .progress-bar 와 같은 radius. 구 14px → 아래 !important 규칙 흡수 (2026-08-23) */
+    border-radius: var(--radius-rounded);    /* .progress-bar 와 같은 알약 모양. 구 9px(높이 17의 절반 이상 = 이미 알약) → 토큰 (DS-ADR-020). 구 14px → 아래 !important 규칙 흡수 (2026-08-23) */
     transition: width 1.6s ease-out;
 }
 .progress-bar--done    .pbar-fill { background: linear-gradient(to right, var(--color-progress-done-start), var(--color-progress-done-end)); }
@@ -2509,7 +2512,7 @@ body.dark-mode .progress-bar {
     background-color: var(--color-bg-base);
     color: var(--color-text-base);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
-    border-radius: 8px;
+    border-radius: var(--radius-popover);
     width: max-content;
     z-index: 100;
 }
@@ -2518,7 +2521,7 @@ body.dark-mode .progress-bar {
 .gnb .header-actions .menu-container { display: inline-block; padding: 0 0.375rem; }
 .gnb .header-actions nav ul li:last-child .menu-container { padding-right: 0; }   /* 마지막 토글(활동업무) 우측 패딩 제거 → 검색박스 우측 라인과 정렬 (세영 2026-08-16) */
 .gnb .header-actions .menu-container .menu-toggle { display: flex; align-items: center; }
-.gnb .dropdown-content-top { position: absolute; left: 50%; transform: translateX(-50%); display: none; flex-direction: column; min-width: 80px; margin-top: 0.25rem; z-index: 10; background-color: var(--color-bg-muted); box-shadow: 0 0 0.5rem rgba(0,0,0,0.25); border-radius: 0.375rem; width: max-content; }
+.gnb .dropdown-content-top { position: absolute; left: 50%; transform: translateX(-50%); display: none; flex-direction: column; min-width: 80px; margin-top: 0.25rem; z-index: 10; background-color: var(--color-bg-muted); box-shadow: 0 0 0.5rem rgba(0,0,0,0.25); border-radius: var(--radius-popover); width: max-content; }
 .gnb .dropdown-content-top.show { display: flex; }
 /* 결재/활동 드롭다운(workCount 변형, :has(.logoutBtn) 아님) = 배경+링크. 설정 드롭다운(logoutBtn)은 overrides:1079가 덮음 (styles.css 545/556/566 이관 2026-08-16) */
 .gnb .dropdown-content-top a { color: var(--color-text-base); display: block; text-decoration: none; transition: background-color 0.2s ease; }
@@ -2546,7 +2549,7 @@ body.dark-mode .progress-bar {
     color: var(--color-text-base);
     text-decoration: none;
     white-space: nowrap;
-    border-radius: 4px;
+    border-radius: var(--radius-item);
 }
 .gnb .dropdown-content a:hover { background-color: var(--color-bg-subtle); }
 .gnb .dropdown-content a .count { margin-left: 0.25rem; opacity: 0.7; }
@@ -2608,7 +2611,7 @@ body.dark-mode .checkSelect .selected-text {
     box-sizing: border-box;
     background-color: var(--color-bg-base);
     border: none;
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-popover);
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
     overflow-y: auto;
 }
@@ -2877,7 +2880,7 @@ input.onKeySearch2 { display: block; flex: 1 1 auto; min-width: 0; }
     gap: var(--spacing-12) var(--spacing-16);
     align-items: center;
 }
-.skeleton-form .skeleton-block { height: var(--size-input); }
+.skeleton-form .skeleton-block { height: var(--size-input); border-radius: var(--radius-input); }   /* 입력칸을 흉내 내는 조각 = 입력칸 모양 (DS-ADR-020) */
 .skeleton-card {
     padding: var(--spacing-16);
     border: 1px solid var(--color-border-subtle);
