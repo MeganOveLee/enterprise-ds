@@ -72,7 +72,7 @@
   font-weight: var(--font-weight-semibold);
 }
 .scr-total { font-size: var(--body-sm); color: var(--color-text-muted); }
-.scr-total b { color: var(--color-text-brand); font-weight: var(--font-weight-semibold); }
+.scr-total b { color: var(--color-text-base); font-weight: var(--font-weight-bold); }   /* 브랜드 글자는 회색 바탕(subtle) 위에서 4.46 — AA 미달이라 기본 글자 + 굵게 */
 .scr .seach_arm .leftbt svg { width: 16px; height: 16px; color: var(--color-icon-muted); }
 
 /* 아이콘 메뉴 아래쪽 · 두 번째 메뉴 패널 · 폴더 트리 */
@@ -103,7 +103,9 @@
 .scr-tree li.is-selected { background: var(--color-bg-brand-subtle); font-weight: var(--font-weight-semibold); }
 .scr-tree__caret { width: 12px; display: inline-flex; color: var(--color-icon-muted); }
 .scr-tree__folder { display: inline-flex; color: var(--color-icon-warning); }
-.scr-gnb-icon { display: inline-flex; color: var(--color-icon-muted); }
+.scr-gnb-icon { display: inline-flex; padding: 0; border: 0; background: transparent; color: var(--color-icon-muted); cursor: pointer; border-radius: var(--radius-rounded); }
+.scr-gnb-icon:hover { color: var(--color-text-base); }
+.scr-gnb-icon:focus-visible { outline: 2px solid var(--color-border-focus); outline-offset: 2px; }
 
 /* 라벨 위 검색 폼 — 라벨 · 칸 짝은 .form-grid-2 .ff-field 그대로, 열 수만 6 */
 .scr .search-label { display: block; font-size: var(--body-sm); font-weight: var(--font-weight-medium); color: var(--color-text-label); }

@@ -122,6 +122,8 @@
   .ds-hero__subs span:not(.ds-hero__dot) { grid-column: 2; font-size: 12px; color: #57606a; }
   .ds-hero__note { margin: 10px 0 0; font-size: 12px; color: #57606a; }
   @media (max-width: 720px) { .ds-hero__subs { grid-template-columns: 1fr; } .ds-hero__go { display: none; } }
+  /* 좁은 화면(휴대폰) — 표가 페이지 밖으로 밀어 가로 스크롤이 생기던 것 → 표 안에서만 가로로 밀리게, 칸 패딩도 줄임 (10/13) */
+  @media (max-width: 720px) { .ds-page .ds-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; } .ds-table th, .ds-table td { padding: 8px 10px; } }
   .ds-page a.ds-link { color: #0550ae; text-decoration: none; }
   .ds-page a.ds-link:hover { text-decoration: underline; }
 </style>

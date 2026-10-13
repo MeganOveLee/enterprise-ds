@@ -117,7 +117,7 @@ const gnb = (crumbs = ['Home', '문서 관리', '문서 검색']) =>
   '<div class="breadcrumb">' + crumbs.map((c, i) => i < crumbs.length - 1 ? '<span>' + c + '</span><span aria-hidden="true">›</span>' : '<span class="crumb-current">' + c + '</span>').join('') + '</div></div>' +
   '<div class="header-actions">' +
   '<button type="button" class="theme-toggle-btn" aria-label="화면 모드 바꾸기"><span class="icon-moon">' + svg(I.moon, 16) + '</span><span class="icon-sun">' + svg(I.sun, 16) + '</span></button>' +
-  '<span class="scr-gnb-icon" aria-label="내 정보">' + svg(I.user, 20) + '</span>' +
+  '<button type="button" class="scr-gnb-icon" aria-label="내 정보">' + svg(I.user, 20) + '</button>' +
   '<div class="menu-container"><button type="button" class="menu-toggle"><span class="title">결재업무</span><span class="count">2</span></button></div>' +
   '<div class="menu-container"><button type="button" class="menu-toggle"><span class="title">활동업무</span><span class="count">0</span></button></div>' +
   '</div></header>';
@@ -294,7 +294,7 @@ const PS = {   // 진행 상태 — 글자 · 진행률 막대 · 상태 칩 · 
   hold: ['보류', 'warning', '<path d="M9 7v10M15 7v10"/>'],
 };
 const pchip = (k) => '<span class="scr-chip scr-chip--' + PS[k][1] + '">' + PS[k][0] + '</span>';
-const pbar = (k, pct, label = true) => '<div class="progress-bar progress-bar--' + k + '" role="progressbar" aria-valuenow="' + pct + '" aria-valuemin="0" aria-valuemax="100">' +
+const pbar = (k, pct, name, label = true) => '<div class="progress-bar progress-bar--' + k + '" role="progressbar" aria-label="' + name + ' 진행률" aria-valuenow="' + pct + '" aria-valuemin="0" aria-valuemax="100">' +
   '<div class="pbar-fill" style="width:' + pct + '%"></div>' + (label ? '<span class="progress-bar__label">' + pct + '%</span>' : '') + '</div>';
 const WBS = [
   [0, '브레이크 캘리퍼 경량화', 'delay', 'open'],
@@ -345,17 +345,17 @@ const detailBody = () =>
   '<div class="pro_table scr-progress"><div class="scr-progress__top">' +
   '<div class="status-block status-block--delay"><div class="status-segments status-segments--delay">' + '<span class="status-segments__bar"></span>'.repeat(5) + '</div><span class="status-text"></span></div>' +
   '<div class="scr-progress__main"><div class="scr-progress__meta"><b>전체 진행률</b><span>계획 64% · 실적 58% · <em>6%p 늦음</em></span></div>' +
-  '<div class="progress-row">' + pbar('delay', 58) + '</div></div>' +
+  '<div class="progress-row">' + pbar('delay', 58, '전체') + '</div></div>' +
   '<dl class="scr-kv"><div><dt>남은 기간</dt><dd>66일</dd></div><div><dt>지연 태스크</dt><dd class="is-danger">2건</dd></div><div><dt>완료 태스크</dt><dd>9 / 21</dd></div></dl></div>' +
   '<ul class="scr-phases">' + PHASES.map(([n, k, pct, d]) =>
-    '<li><span class="scr-phases__name">' + n + '</span>' + pbar(k, pct) + '<span class="scr-phases__date">' + d + '</span>' + pchip(k) + '</li>').join('') + '</ul></div>' +
+    '<li><span class="scr-phases__name">' + n + '</span>' + pbar(k, pct, n) + '<span class="scr-phases__date">' + d + '</span>' + pchip(k) + '</li>').join('') + '</ul></div>' +
   dsec('태스크', true, '<span class="scr-total">전체 <b>21</b> · 지연 <b>2</b></span>') +
   '<div class="table_list scr-tasks"><div class="list"><table class="scr-grid"><colgroup>' +
   '<col style="width:48px"><col><col style="width:80px"><col style="width:84px"><col style="width:104px"><col style="width:104px"><col style="width:150px"><col style="width:84px"></colgroup>' +
   '<thead><tr><th>No.</th><th>태스크</th><th>단계</th><th>담당자</th><th>계획 종료</th><th>실적 종료</th><th>진행률</th><th>상태</th></tr></thead><tbody>' +
   TASK_ROWS.map((r, i) => '<tr' + (i === 0 ? ' class="is-selected"' : '') + '><td class="is-center is-date">' + (i + 1) + '</td><td><a href="#" class="scr-link">' + r[0] + '</a></td>' +
     '<td class="is-center">' + r[1] + '</td><td class="is-center">' + r[2] + '</td><td class="is-center is-date">' + r[3] + '</td><td class="is-center is-date">' + (r[4] || '—') + '</td>' +
-    '<td>' + pbar(r[6], r[5]) + '</td><td class="is-center">' + pchip(r[6]) + '</td></tr>').join('') +
+    '<td>' + pbar(r[6], r[5], r[0]) + '</td><td class="is-center">' + pchip(r[6]) + '</td></tr>').join('') +
   '</tbody></table></div></div>' +
   dsec('산출물 문서', false, '<span class="scr-total">14건</span>') +
   '</div></div>';
