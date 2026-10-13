@@ -97,6 +97,13 @@
   .ds-dl > div:first-child { border-top: 0; }
   .ds-dl dt { font-weight: 600; color: #111418; }
   .ds-dl dd { margin: 0; color: #57606a; }
+  /* 소개 미리보기 (stories/IntroPreview.stories.js) — 카드 안은 브랜드 · 모드를 따르므로 토큰만 쓴다 */
+  .intro-demo__now { margin: 0 0 12px; font-size: var(--body-sm); color: var(--color-text-muted); }
+  .intro-demo__now b { color: var(--color-text-brand); font-weight: var(--font-weight-semibold); }
+  .intro-demo__search { display: flex; flex-wrap: wrap; align-items: center; gap: var(--spacing-8); margin-bottom: var(--spacing-8); }
+  .intro-demo__search .input { width: 200px; }
+  .intro-demo__search .select { width: 140px; }
+  .intro-demo__no { font-size: var(--body-sm); color: var(--color-text-muted); font-variant-numeric: tabular-nums; }
   .ds-page a.ds-link { color: #0550ae; text-decoration: none; }
   .ds-page a.ds-link:hover { text-decoration: underline; }
 </style>
