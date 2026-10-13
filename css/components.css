@@ -1641,6 +1641,12 @@ body.dark-mode .radio .radio__mark { background: var(--color-bg-muted); }   /* �
     height: var(--size-input);
     padding: 0 var(--spacing-8);
 }
+/* 큰 칸 (제안 E) — 로그인처럼 칸이 몇 개뿐인 단독 폼 전용. 업무 화면 안(검색 · 상세 · 그리드)에서는 쓰지 않음 */
+.input.input--lg,
+.select.select--lg {   /* 클래스 두 개 — globals 의 input[type="password"] 같은 타입 규칙(0,1,1)보다 세게 */
+    height: var(--size-input-lg);
+    padding: 0 var(--spacing-12);
+}
 .select {
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -1833,6 +1839,8 @@ body.dark-mode .select {
 .btn--icon { width: var(--size-btn); padding: 0; }
 /* 작은 버튼 = Figma 「Small Button」 (DS-ADR-020). 모서리는 일반 버튼과 같음 */
 .btn--sm { height: var(--size-btn-sm); }
+/* 큰 버튼 (제안 E) — 큰 칸(.input--lg)과 짝. 단독 폼의 주 동작 하나에만 */
+.btn--lg { height: var(--size-btn-lg); padding: 0 var(--spacing-16); font-size: var(--body-md); font-weight: var(--font-weight-semibold); }
 .btn--icon.btn--sm { width: var(--size-btn-sm); }
 .btn--icon svg, .btn--icon img { width: 16px; height: 16px; }
 /* 켜짐 = ⑬ 펼침과 같은 옅은 브랜드 단계 (Button 제안 ⑯). 구: bg-selected 계열 — 다크에서 회색이라 마우스 올림 · 누름 아이콘 대비 2.6 · 1.8(3:1 미달) */

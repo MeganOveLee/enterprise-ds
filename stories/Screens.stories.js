@@ -396,10 +396,10 @@ const loginScreen = () =>
   '<div class="scr-login__logo">' + LOGO + '<b>Enterprise PLM</b></div>' +
   '<h1>환영합니다</h1><p class="scr-login__lead">로그인 후 PLM 시스템을 이용해 주세요.</p>' +
   '<div class="scr-login__form">' +
-  '<div class="scr-login__field"><label for="scr-login-id">아이디</label><input class="input scr-login__input" id="scr-login-id" autocomplete="username" placeholder="사번 또는 ID 입력"></div>' +
-  '<div class="scr-login__field"><label for="scr-login-pw">비밀번호</label><input class="input scr-login__input" id="scr-login-pw" type="password" autocomplete="current-password" placeholder="비밀번호 입력"></div>' +
+  '<div class="scr-login__field"><label for="scr-login-id">아이디</label><input class="input input--lg" id="scr-login-id" autocomplete="username" placeholder="사번 또는 ID 입력"></div>' +
+  '<div class="scr-login__field"><label for="scr-login-pw">비밀번호</label><input class="input input--lg" id="scr-login-pw" type="password" autocomplete="current-password" placeholder="비밀번호 입력"></div>' +
   '<label class="checkbox"><input type="checkbox">아이디 저장</label>' +
-  '<button type="button" class="btn btn--primary btn--filled scr-login__submit">로그인</button>' +   // 예시 화면 — 제출 없음
+  '<button type="button" class="btn btn--primary btn--filled btn--lg scr-login__submit">로그인</button>' +   // 예시 화면 — 제출 없음
   '</div><p class="scr-login__copy">© 2026 Enterprise PLM · 가상 화면</p></div></main></div>';
 
 // 실제 크기로 그린 화면을 칸 너비에 맞게 줄여 보여 준다 (1보다 크게 키우지 않음)

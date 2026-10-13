@@ -174,6 +174,8 @@
      input · btn 은 같은 줄에 놓이므로 같은 값. 앱 틀(GNB 막대 안 버튼)은 이 토큰을 쓰지 않고 높이 고정 */
   --size-input:    28px;   /* 인풋 높이 */
   --size-btn:      28px;   /* 버튼 기본 (인풋 매칭) · 아이콘 버튼 가로세로. 옛 md(32px)는 실사용 없어 삭제 2026-08-06 세영 */
+  --size-input-lg: 44px;   /* 큰 칸 — 로그인처럼 칸이 몇 개뿐인 단독 폼 (제안 E). 브랜드가 바꾸지 않음(스태틱) */
+  --size-btn-lg:   44px;   /* 큰 버튼 — 큰 칸과 같은 높이의 주 동작 */
   --size-btn-sm:   26px;   /* 작은 버튼 = Figma 「Small Button」 — 섹션 접기 · 첨부 삭제. 최소 누름 영역 24 이상 (DS-ADR-020) */
   --size-sidebar-toggle: 0.4375rem;                                     /* LNB 오른쪽 리사이즈 손잡이 폭 */
   --size-sidebar:        calc(13.875rem - var(--size-sidebar-toggle));  /* LNB 폭 = 사이드 영역 222px − 손잡이.
