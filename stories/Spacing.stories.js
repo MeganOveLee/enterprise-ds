@@ -1,17 +1,14 @@
+// Foundation/Spacing · Radius — 문서 화면은 Spacing.mdx. 여기 스토리는 MDX 카드 안에 들어가는 단계 표
 import { mount } from './_foundation.js';
 
 export default {
   title: 'Foundation/Spacing · Radius',
-  tags: ['!dev'],
-  parameters: {
-    docs: { description: { component:
-      '간격 · 모서리 · 그림자 · 높이 단계입니다. 실제로 쓰는 단계만 둡니다. ' +
-      '모서리와 높이는 컴포넌트가 역할 이름(--radius-btn · --size-input …)으로 쓰고, 브랜드가 이 역할 값을 바꿀 수 있습니다. ' +
-      '도구 막대에서 Fashion을 고르면 둥근 모서리, Precision을 고르면 직각 · 높이 32로 역할 값이 바뀝니다.' } },
-  },
+  tags: ['!dev', '!autodocs'],   // 메뉴에는 문서 한 장만, 문서는 Spacing.mdx
 };
+const css = (lines) => ({ docs: { source: { language: 'css', code: lines.join('\n') } } });
 
 export const 간격 = {
+  parameters: css(['.card { padding: var(--spacing-16); }', '.form-grid-2 { gap: var(--spacing-16) var(--spacing-24); }']),
   render: () => mount([
     [2, '아이콘과 글자 사이 아주 좁게'],
     [4, '붙어 있는 요소 사이'],
@@ -29,6 +26,7 @@ export const 간격 = {
 };
 
 export const 모서리 = {
+  parameters: css(['/* 컴포넌트는 역할 이름을 쓴다 — 값은 단계를 가리키고, 브랜드 파일이 바꿀 수 있다 */', '.btn   { border-radius: var(--radius-btn); }    /* 기본 = var(--radius-md) */', '.input { border-radius: var(--radius-input); }  /* 기본 = var(--radius-sm) */', ':root.theme-precision { --radius-btn: var(--radius-none); --radius-input: var(--radius-none); }']),
   render: () => mount(`
     <p class="fd-lead">단계 — 값 사전입니다. 모든 브랜드가 같은 값을 씁니다.</p>
     <div class="fd-boxes">${[
@@ -63,6 +61,7 @@ export const 모서리 = {
 };
 
 export const 그림자 = {
+  parameters: css(['.card { box-shadow: var(--shadow-core); }']),
   render: () => mount(`<div style="padding:16px;background:var(--color-bg-subtle);border-radius:var(--radius-lg)">
     <div class="fd-card" style="box-shadow:var(--shadow-core)"><code>--shadow-core</code></div>
   </div>
@@ -70,6 +69,7 @@ export const 그림자 = {
 };
 
 export const 높이 = {
+  parameters: css(['.input, .select { height: var(--size-input); }', '.btn { height: var(--size-btn); }', '.btn--sm { height: var(--size-btn-sm); }', ':root.theme-precision { --size-input: 32px; --size-btn: 32px; --size-btn-sm: 28px; }']),
   render: () => mount([
     ['size-input', '입력칸 · 셀렉트 · 날짜 선택 — 브랜드가 바꿀 수 있음'],
     ['size-btn', '버튼 (입력칸과 같은 줄에 맞춤) · 아이콘 버튼은 가로세로 — 브랜드가 바꿀 수 있음'],

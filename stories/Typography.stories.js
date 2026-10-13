@@ -1,3 +1,4 @@
+// Foundation/Typography — 문서 화면은 Typography.mdx. 여기 스토리는 MDX 카드 안에 들어가는 단계 표
 import { mount } from './_foundation.js';
 
 const SAMPLE = '설계 변경 요청서 ECR-2026-0142';
@@ -14,15 +15,12 @@ const rows = (items) => mount(items.map(([token, use, style]) => `
 
 export default {
   title: 'Foundation/Typography',
-  tags: ['!dev'],
-  parameters: {
-    docs: { description: { component:
-      '글꼴은 **Pretendard** 하나입니다. 업무 화면이라 본문 기본은 14px이고, 제목은 6단계입니다. ' +
-      'h1~h6 태그를 쓰면 같은 단계 크기가 자동으로 붙습니다. 제목 줄 간격은 1.2(`--line-height-tight`)입니다.' } },
-  },
+  tags: ['!dev', '!autodocs'],   // 메뉴에는 문서 한 장만, 문서는 Typography.mdx
 };
+const css = (lines) => ({ docs: { source: { language: 'css', code: lines.join('\n') } } });
 
 export const 제목 = {
+  parameters: css(['/* h1~h6 는 globals.css 가 같은 단계를 기본값으로 붙인다 */', 'h4 { font-size: var(--heading-md); font-weight: var(--font-weight-bold); line-height: var(--line-height-tight); }']),
   render: () => rows([
     ['heading-2xl', 'h1 · 홈 인사말', 'font-size:var(--heading-2xl);font-weight:var(--font-weight-bold);line-height:var(--line-height-tight)'],
     ['heading-xl',  'h2', 'font-size:var(--heading-xl);font-weight:var(--font-weight-bold);line-height:var(--line-height-tight)'],
@@ -34,6 +32,7 @@ export const 제목 = {
 };
 
 export const 본문 = {
+  parameters: css(['body { font-family: var(--font-family-base); font-size: var(--body-md); }', '.field-error-msg { font-size: var(--body-sm); }']),
   render: () => rows([
     ['body-lg', '강조 본문 · 큰 안내', 'font-size:var(--body-lg)'],
     ['body-md', '기본 본문 · 입력칸 · 그리드 셀', 'font-size:var(--body-md)'],
@@ -42,6 +41,7 @@ export const 본문 = {
 };
 
 export const 굵기 = {
+  parameters: css(['.pop .tab li { font-weight: var(--font-weight-medium); }', '.card-title { font-weight: var(--font-weight-semibold); }']),
   render: () => mount([
     ['regular', 400, '본문'],
     ['medium', 500, '버튼 · 탭'],
