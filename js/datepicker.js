@@ -67,6 +67,7 @@
             this.icon.setAttribute('aria-expanded', 'false');
             this.icon.tabIndex = 0;   /* 키보드로 달력을 여는 입구 */
         }
+        if (this.icon && (input.disabled || input.readOnly)) this.icon.disabled = true;   /* 비활성 · 읽기 전용 칸 = 아이콘도 못 누름 · Tab에서 빠짐 (2026-10-13) */
         this.bindTrigger();
     }
 
@@ -90,6 +91,7 @@
     };
 
     Datepicker.prototype.open = function(moveFocus) {
+        if (this.input.disabled || this.input.readOnly) return;   /* 비활성 · 읽기 전용 칸은 달력을 열지 않음 (2026-10-13) */
         if (this.popup) { if (moveFocus) this.focusGrid(); return; }
         var initial = parseDate(this.input.value);
         if (initial) {

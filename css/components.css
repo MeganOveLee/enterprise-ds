@@ -733,6 +733,8 @@ body.dark-mode .theme-toggle-btn .icon-moon { display: none; }
     box-sizing: border-box;
     transition: border-color 0.12s, box-shadow 0.12s;
 }
+/* hover = 입력칸(.input)과 같은 회색 한 단계. 포커스 규칙이 뒤에 있어 포커스가 이긴다 (2026-10-13) */
+.ui-datepicker:hover { border-color: var(--color-border-input-hover); }
 .ui-datepicker:focus-within,
 .ui-datepicker.is-active {
     border-color: var(--color-border-focus);
@@ -780,6 +782,25 @@ body.dark-mode .theme-toggle-btn .icon-moon { display: none; }
     cursor: text;   /* 직접 입력 허용 — 달력은 아이콘 · 클릭 · Alt+↓ (DS-ADR-016) */
 }
 .ui-datepicker__input::placeholder { color: var(--color-text-disabled); }
+
+/* 상태 — 입력칸(.input)과 같은 규칙을 칸을 감싸는 상자에 건다. 새 토큰 없음 (DS-ADR-016 · 017, 2026-10-13)
+ * 오류 = 칸에 aria-invalid="true" · 비활성 = disabled · 읽기 전용 = readonly. 비활성 · 읽기 전용이면 datepicker.js가 달력을 열지 않고 아이콘 버튼에 disabled */
+.ui-datepicker:has(.ui-datepicker__input[aria-invalid="true"]) { border-color: var(--color-border-danger); }
+.ui-datepicker:has(.ui-datepicker__input:disabled) {
+    background-color: var(--color-bg-disabled);
+    border-color: var(--color-border-disabled);
+    cursor: not-allowed;
+}
+.ui-datepicker:has(.ui-datepicker__input:disabled) .ui-datepicker__input { color: var(--color-text-disabled); cursor: not-allowed; }
+.ui-datepicker:has(.ui-datepicker__input[readonly]) {   /* 회색 박스 · 연한 테두리, hover · 클릭 강조 없음 (DS-ADR-017) */
+    background-color: var(--color-bg-readonly);
+    border-color: var(--color-border-base);
+    box-shadow: none;
+}
+.ui-datepicker:has(.ui-datepicker__input[readonly]) .ui-datepicker__input { color: var(--color-text-muted); cursor: default; }
+.ui-datepicker:has(.ui-datepicker__input[readonly]:focus-visible) { box-shadow: 0 0 0 3px var(--color-focus-ring); }   /* 키보드 포커스만 링 */
+.ui-datepicker__icon:disabled { background: transparent; color: var(--color-icon-disabled); cursor: not-allowed; }
+.ui-datepicker:has(.ui-datepicker__input[readonly]) .ui-datepicker__icon:disabled { cursor: default; }
 
 .ui-datepicker-range {
     display: inline-flex;
