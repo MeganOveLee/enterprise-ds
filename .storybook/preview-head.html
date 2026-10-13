@@ -1,4 +1,17 @@
 <script>document.documentElement.lang = 'ko';</script>
+<!-- 배포 직후: 열려 있던(캐시된) 화면이 새 배포에서 지워진 조각(chunk)을 부르다 실패하면 한 번만 새로고침.
+     30초 안에 또 실패하면 멈춤(무한 새로고침 방지). 저장소를 못 쓰는 창(비공개 모드 등)에서는 새로고침하지 않음 -->
+<script>
+  window.addEventListener('vite:preloadError', function (e) {
+    var KEY = 'ds-preload-reload', now = Date.now();
+    try {
+      if (now - Number(sessionStorage.getItem(KEY) || 0) < 30000) return;
+      sessionStorage.setItem(KEY, String(now));
+    } catch (_) { return; }
+    e.preventDefault();
+    location.reload();
+  });
+</script>
 <!-- JSP와 같은 방식으로 일반 스크립트로 불러온다 -->
 <script src="ds-js/datepicker.js"></script>
 <style>
