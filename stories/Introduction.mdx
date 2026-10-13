@@ -1,5 +1,8 @@
 import { Meta, Unstyled, Source } from '@storybook/addon-docs/blocks';
 import { PageHead, Section } from './_blocks.js';
+import githubIcon from '../assets/links/github.svg';
+import figmaIcon from '../assets/links/figma.svg';
+import notionIcon from '../assets/links/notion.svg';
 
 <Meta title="소개" />
 
@@ -59,9 +62,9 @@ export const LOAD = [
 <Section title="참고 자료" en="Resources">
 <table className="ds-table">
 <tbody>
-<tr><td><b>저장소</b></td><td>소스 코드와 변경 내역</td><td><a className="ds-link" href="https://github.com/MeganOveLee/enterprise-ds" target="_blank" rel="noreferrer">github.com/MeganOveLee/enterprise-ds</a></td></tr>
-<tr><td><b>Figma</b></td><td>컴포넌트(UI Kit)와 토큰(Foundation) 원본. 첫 페이지가 한 장 요약입니다</td><td><a className="ds-link" href="https://www.figma.com/design/99ff5JQYQPCdY3xRBWHHlO/?node-id=8111-5" target="_blank" rel="noreferrer">UI Kit 요약</a> · <a className="ds-link" href="https://www.figma.com/design/Mf4XTC6dNUOH0anjOMcRPi" target="_blank" rel="noreferrer">Foundation</a></td></tr>
-<tr><td><b>결정 기록 (ADR)</b></td><td>토큰 · 컴포넌트를 정할 때의 배경 · 선택지 · 근거 (20건)</td><td><a className="ds-link" href="https://app.notion.com/p/3eda8196682d8126967fcc86f796fcb4" target="_blank" rel="noreferrer">Notion — 결정 기록 (ADR)</a></td></tr>
+<tr><td><img className="ds-res-icon" src={githubIcon} alt="" width="20" height="20" /><b>저장소</b></td><td>소스 코드와 변경 내역</td><td><a className="ds-link" href="https://github.com/MeganOveLee/enterprise-ds" target="_blank" rel="noreferrer">github.com/MeganOveLee/enterprise-ds</a></td></tr>
+<tr><td><img className="ds-res-icon" src={figmaIcon} alt="" width="20" height="20" /><b>Figma</b></td><td>컴포넌트(UI Kit)와 토큰(Foundation) 원본. 첫 페이지가 한 장 요약입니다</td><td><a className="ds-link" href="https://www.figma.com/design/99ff5JQYQPCdY3xRBWHHlO/?node-id=8111-5" target="_blank" rel="noreferrer">UI Kit 요약</a> · <a className="ds-link" href="https://www.figma.com/design/Mf4XTC6dNUOH0anjOMcRPi" target="_blank" rel="noreferrer">Foundation</a></td></tr>
+<tr><td><img className="ds-res-icon ds-res-icon--light" src={notionIcon} alt="" width="20" height="20" /><b>결정 기록 (ADR)</b></td><td>토큰 · 컴포넌트를 정할 때의 배경 · 선택지 · 근거 (20건)</td><td><a className="ds-link" href="https://app.notion.com/p/3eda8196682d8126967fcc86f796fcb4" target="_blank" rel="noreferrer">Notion — 결정 기록 (ADR)</a></td></tr>
 </tbody>
 </table>
 </Section>
