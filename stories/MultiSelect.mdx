@@ -1,0 +1,38 @@
+import { Meta, Unstyled, Controls } from '@storybook/addon-docs/blocks';
+import { PageHead, Section, Card } from './_blocks.js';
+import * as S from './MultiSelect.stories.js';
+
+<Meta of={S} />
+
+<Unstyled>
+<div className="ds-page">
+<PageHead eyebrow="Form" title="Multi Select" lead="목록에서 값을 여러 개 고르는 드롭다운입니다. 검색 조건처럼 「작업 중 또는 검토 중」을 한 칸에서 고를 때 씁니다. 하나만 고를 때는 Input의 .select를 씁니다." />
+<Section title="구성" en="Spec">
+<table className="ds-table ds-props">
+<thead><tr><th>구분</th><th>클래스 · 속성</th><th>설명</th></tr></thead>
+<tbody>
+<tr><td><b>틀</b></td><td><code>.checkSelect</code><span className="ds-muted">위젯 스크립트가 여닫기 · 표시 글자를 맡음</span></td><td>표시 상자와 펼침 목록을 감쌉니다. 너비는 칸을 따라 100%입니다.</td></tr>
+<tr><td><b>표시 상자</b></td><td><code>.selected-text</code></td><td>고른 값을 쉼표로 이어 보여 줍니다. 생김새(높이 · 테두리 · 모서리 · 화살표)는 <a className="ds-link" href="./?path=/docs/form-input--docs" target="_top">Input</a>의 <code>.select</code>와 같은 토큰입니다. 펼친 동안은 포커스 테두리 + 링.</td></tr>
+<tr><td><b>펼침 목록</b></td><td><code>.options</code> · <code>.show</code><span className="ds-muted">Option group</span></td><td>떠 있는 층(<code>--radius-popover</code>). 높이는 220까지, 넘으면 목록만 스크롤합니다.</td></tr>
+<tr><td><b>검색</b></td><td><code>.search-text</code><span className="ds-muted">선택</span></td><td>옵션이 많을 때 목록 위에 둡니다. 검색 칸은 스크롤해도 위에 남습니다.</td></tr>
+<tr><td><b>옵션</b></td><td><code>.option</code> = label + 체크박스 + 글자<span className="ds-muted">Option · 높이 28</span></td><td>행을 누르면 체크박스가 바뀝니다. 고른 항목은 옅은 브랜드 바탕(<code>--color-bg-brand-subtle</code>) + 굵은 글자, 마우스를 올린 항목은 회색 바탕입니다.</td></tr>
+<tr><td><b>키보드</b></td><td><span className="ds-muted">표시 상자 Enter · Space / 목록 Tab · Space / Esc</span></td><td>표시 상자에서 Enter · Space로 열고, Tab으로 옵션을 옮겨 Space로 고릅니다. Esc는 닫고 표시 상자로 돌아갑니다.</td></tr>
+</tbody>
+</table>
+<p className="ds-sec__desc ds-after">Figma UI Kit의 「Option」(행) · 「Option group」(펼침 목록)과 같은 짝입니다.</p>
+</Section>
+<Section title="예시" en="Examples">
+<Card of={S.기본} title="기본" en="Basic" desc="표시 상자를 눌러 열어 보세요. 고른 값이 상자에 이어 붙습니다. 아무것도 고르지 않으면 「전체」입니다." />
+<Card of={S.펼친_모습} title="펼친 모습" en="Open" desc="검색 칸 + 옵션 목록. 고른 항목은 옅은 브랜드 바탕입니다." />
+<Card of={S.검색_없이} title="검색 없이" en="Without search" desc="옵션이 몇 개뿐이면 검색 칸을 빼고 씁니다." />
+</Section>
+<Section title="전체 상태" en="States" desc="Hovered는 마우스 상태를 정지 화면으로 보여 준 것입니다.">
+<Card of={S.전체_상태} title="표시 상자 · 옵션 행" />
+</Section>
+<Section title="Playground" desc="아래 표에서 값을 바꾸면 미리보기와 「코드 보기」가 함께 바뀝니다. 미리보기에서 직접 열고 골라 볼 수도 있습니다.">
+<Card of={S.Playground}>
+<Controls of={S.Playground} />
+</Card>
+</Section>
+</div>
+</Unstyled>
