@@ -877,7 +877,7 @@ body.dark-mode .theme-toggle-btn .icon-moon { display: none; }
     stroke-width: 2;
 }
 /* 포커스 = 버튼과 같은 2px 오프셋 아웃라인 (State 표준 · 명세 0-1). 구: 규칙 없음 → 브라우저 기본 (10/13)
- * 페이지 번호 · 앱 틀 버튼(뒤로 · 앞으로 · 화면 모드 · 로그아웃 · 업무 개수 · 패널 닫기 · 패널 탭) · 산출물 바로가기 */
+ * 페이지 번호 · 앱 틀 버튼(뒤로 · 앞으로 · 화면 모드 · 로그아웃 · 업무 개수 · 패널 닫기 · 패널 탭) · 팝업 탭 · 산출물 바로가기 */
 .ui-pagination__btn:focus-visible,
 .gnb .nav-history-btn:focus-visible,
 .theme-toggle-btn:focus-visible,
@@ -885,6 +885,7 @@ body.dark-mode .theme-toggle-btn .icon-moon { display: none; }
 .menu-toggle:focus-visible,
 .main-sub-header .sub-close:focus-visible,
 .main-sub-tabs .sub-tab:focus-visible,
+.pop .tab li:focus-visible,
 .left-action-btn:focus-visible {
     outline: 2px solid var(--color-border-focus);
     outline-offset: 2px;
