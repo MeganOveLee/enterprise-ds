@@ -3,7 +3,7 @@
  * 값은 전부 DS 토큰 — 고정 색 · 고정 모서리 없음. 브랜드 · 화면 모드를 그대로 따른다.
  *   .scr-frame  실제 크기(1440 × 900)로 그린 화면을 칸 너비에 맞게 줄여 보여 주는 틀
  *   .scr-lnb · .scr-submenu · .scr-tree  메뉴 항목 · 폴더 트리 — 제품에서는 개발 마크업 · 트리 위젯이 그리는 자리, 값은 LNB 토큰
- *   .scr-search  라벨 위 검색 폼 6열 — 제품에서는 고객사 덮어쓰기 파일이 .mainTable 을 이 모양으로 바꿈. 공개 DS에는 .form-grid-2(2열)만 있음
+ *   검색 조건 6열 · 상세 값 4열 = DS .form-grid--6 · --4 (.form-grid-2 확장)
  *   .scr-grid   목록 표 — 제품에서는 상용 그리드 라이브러리가 그리는 자리, 값은 그리드 토큰
  *   .scr-chip   상태 칩 — Figma Status chip과 같은 값 (CSS 컴포넌트는 아직 없음) */
 
@@ -109,8 +109,6 @@
 
 /* 라벨 위 검색 폼 — 라벨 · 칸 짝은 .form-grid-2 .ff-field 그대로, 열 수만 6 */
 .scr .search-label { display: block; font-size: var(--body-sm); font-weight: var(--font-weight-medium); color: var(--color-text-label); }
-.scr .form-grid-2.scr-search { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: var(--spacing-12) var(--spacing-16); }
-.scr .scr-span-2 { grid-column: span 2; }
 .scr-radio-row { display: flex; align-items: center; gap: var(--spacing-16); height: var(--size-input); }
 .scr-radio-row .radio { white-space: nowrap; }
 .scr .ui-datepicker-range { width: 100%; }
@@ -318,7 +316,6 @@
 .scr-detail .seach_arm { margin-top: var(--spacing-4); }
 .scr-detail .seach_arm h4 { font-size: var(--heading-sm); }
 .scr-detail .pro_table { border: 1px solid var(--color-border-base); }
-.scr .form-grid-2.scr-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--spacing-12) var(--spacing-16); }
 .scr .form-grid-2.scr-cols-4 .ff-readonly { color: var(--color-text-base); }
 
 /* 진행 현황 — 상태 블록 + 전체 막대 + 숫자 3개, 아래에 단계별 막대 */

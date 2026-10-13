@@ -74,7 +74,7 @@ const btn = (t, cls, icon = '') => '<button type="button" class="btn ' + cls + '
 const sel = (label, opts) => '<select class="select" aria-label="' + label + '">' + opts.map((o) => '<option>' + o + '</option>').join('') + '</select>';
 // 라벨 위 · 칸 아래 — 검색 폼 · 등록 폼이 같은 짝 (.ff-field > .search-label + .td)
 const field = (label, control, { req = false, span = 0, id = '' } = {}) =>
-  '<div class="ff-field' + (span ? ' scr-span-' + span : '') + '">' +
+  '<div class="ff-field' + (span ? ' span-' + span : '') + '">' +
   '<label class="search-label"' + (id ? ' for="' + id + '"' : '') + '>' + label + (req ? '<span class="required" aria-hidden="true"></span>' : '') + '</label>' +
   '<div class="td">' + control + '</div></div>';
 
@@ -126,7 +126,7 @@ const gnb = (crumbs = ['Home', '문서 관리', '문서 검색']) =>
 const searchForm = () =>
   '<div class="seach_arm"><div class="leftbt">' + svg(I.filter, 16) + '<h4>검색 조건</h4></div>' +
   '<div class="rightbt">' + btn('검색', 'btn--secondary btn--filled', I.search) + btn('검색 조건 초기화', 'btn--secondary btn--transparent', I.reset) + '</div></div>' +
-  '<div class="pro_table"><div class="form-grid-2 scr-search">' +
+  '<div class="pro_table"><div class="form-grid-2 form-grid--6">' +
   field('문서 분류', '<input class="input" aria-label="문서 분류" value="/제품 문서/설계 문서" readonly>') +
   field('문서 번호', '<input class="input" aria-label="문서 번호">') +
   field('문서 명', '<input class="input" aria-label="문서 명">') +
@@ -337,7 +337,7 @@ const detailBody = () =>
   '<h2>브레이크 캘리퍼 경량화 개발</h2><span class="detail-code">PJT-2026-014</span>' + pchip('delay') + '</div>' +
   '<div class="detail-header__actions">' + btn('수정', 'btn--secondary btn--outlined') + btn('태스크 추가', 'btn--secondary btn--outlined', I.plus) + btn('결재 요청', 'btn--primary btn--filled') + '</div></div>' +
   dsec('기본 정보') +
-  '<div class="pro_table"><div class="form-grid-2 scr-cols-4">' +
+  '<div class="pro_table"><div class="form-grid-2 form-grid--4 scr-cols-4">' +
   ro('프로젝트 번호', 'PJT-2026-014') + ro('제품군', '제동 부품') + ro('PM', '김도윤 · 설계1팀') + ro('개발 단계', '설계 검증 (DV)') +
   ro('계획 기간', '2026-07-01 ~ 2026-12-18', 2) + ro('실적 시작일', '2026-07-03') + ro('관리 등급', 'A · 중점 관리') +
   '</div></div>' +

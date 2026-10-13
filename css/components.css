@@ -1178,6 +1178,12 @@ body.dark-mode .pop .pro_table { background: var(--color-bg-base); box-shadow: n
 }
 .form-grid-2 .ff-field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
 .form-grid-2 .ff-field.col-2 { grid-column: 1 / -1; }
+/* 여러 열 (제안 H) — 검색 조건(6열) · 상세 값(4열)처럼 라벨 위 · 칸 아래 짝을 한 줄에 더 많이. 칸 하나가 두 칸을 차지하면 .span-2
+ * 이전 버전은 고객사 덮어쓰기 파일이 .mainTable(표)을 이 모양으로 바꾸던 자리 */
+.form-grid-2.form-grid--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--spacing-12) var(--spacing-16); }
+.form-grid-2.form-grid--6 { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: var(--spacing-12) var(--spacing-16); }
+.form-grid-2 .ff-field.span-2 { grid-column: span 2; }
+@media (max-width: 1199px) { .form-grid-2.form-grid--6 { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 .form-grid-2 .ff-field > .search-label { margin: 0; }
 .form-grid-2 .ff-field .td { width: 100%; display: block; padding: 0; }
 .form-grid-2 .ff-field .checkSelect { width: 100%; }
