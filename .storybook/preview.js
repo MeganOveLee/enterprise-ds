@@ -40,7 +40,7 @@ export default {
   parameters: {
     layout: 'fullscreen',
     // 왼쪽 메뉴 순서 — 카테고리 > 컴포넌트 (컴포넌트 하나 = 한 페이지)
-    options: { storySort: { order: ['소개', 'Screens', 'Foundation', ['Color', 'Typography', 'Spacing · Radius', 'State'], 'Form', 'Feedback'] } },
+    options: { storySort: { order: ['소개', 'Screens', 'Foundation', ['Color', 'Typography', 'Spacing · Radius', 'State'], 'Form', 'Navigation', 'Feedback'] } },
     controls: { expanded: true },
     a11y: { test: 'todo' },
   },

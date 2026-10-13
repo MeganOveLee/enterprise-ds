@@ -1,0 +1,44 @@
+import { Meta, Unstyled, Controls } from '@storybook/addon-docs/blocks';
+import { PageHead, Section, Card } from './_blocks.js';
+import * as S from './AppShell.stories.js';
+
+<Meta of={S} />
+
+<Unstyled>
+<div className="ds-page">
+<PageHead eyebrow="Navigation" title="App Shell" lead="모든 업무 화면이 함께 쓰는 틀입니다. 상단 바(GNB) · 페이지 머리 · 보조 메뉴 패널 · 바닥으로 나뉩니다. 전체 배치는 Screens › PLM 화면에서 볼 수 있습니다." />
+<Section title="구성" en="Spec">
+<table className="ds-table ds-props">
+<thead><tr><th>구분</th><th>클래스 · 속성</th><th>설명</th></tr></thead>
+<tbody>
+<tr><td><b>상단 바</b></td><td><code>.gnb</code><span className="ds-muted">높이 56 · 고정</span></td><td>왼쪽 = 뒤로 · 앞으로 + 위치, 오른쪽 = <code>.header-actions</code>. 앱 틀이라 높이는 브랜드를 따라가지 않습니다(DS-ADR-020 예외).</td></tr>
+<tr><td><b>뒤로 · 앞으로</b></td><td><code>.nav-history</code> · <code>.nav-history-btn</code></td><td>28 × 28 테두리 버튼 두 개. 글자가 없어 <code>aria-label</code>로 이름을 붙입니다.</td></tr>
+<tr><td><b>위치</b></td><td><code>.breadcrumb</code> · <code>.crumb-current</code><span className="ds-muted">aria-current="page"</span></td><td>「›」로 이은 경로. 마지막이 지금 화면이고 굵게 보입니다. 상단 바 안 · 페이지 머리 안에서 글자 크기만 다릅니다.</td></tr>
+<tr><td><b>오른쪽 동작</b></td><td><code>.theme-toggle-btn</code> · <code>.user-info</code> · <code>.logout-btn</code></td><td>화면 모드(라이트에서는 달, 다크에서는 해 아이콘) · 사용자 · 로그아웃.</td></tr>
+<tr><td><b>업무 개수</b></td><td><code>.menu-container</code> · <code>.menu-toggle</code> · <code>.title</code> · <code>.count</code></td><td>결재업무 · 활동업무 같은 대기 개수. 개수는 반전 바탕의 알약(Figma Badge 자리)이고, 누르면 목록이 펼쳐집니다(<code>aria-expanded</code>).</td></tr>
+<tr><td><b>로고형 상단 바</b></td><td><code>.logo-container</code> · <code>.logo-mark</code> · <code>.logo-text</code> · <code>.logo-version</code><span className="ds-muted">로고 이미지는 .brand-logo</span></td><td>왼쪽 아이콘 메뉴가 없는 화면용. 로고 마크는 브랜드 자산이라 모서리 역할을 따르지 않습니다.</td></tr>
+<tr><td><b>페이지 머리</b></td><td><code>.page-head</code> · <code>.page-title-area</code> · <code>.favorite-icon</code></td><td>제목 + 즐겨찾기 + 위치를 한 줄에. 상단 바에 위치가 없는 화면에서 씁니다.</td></tr>
+<tr><td><b>보조 메뉴 패널</b></td><td><code>.main-sub</code> · <code>.main-sub-header</code> · <code>.main-sub-tabs</code> · <code>.main-sub-content</code> · <code>.tree-controls</code></td><td>아이콘 메뉴 옆에 펼치는 280 패널. 머리(제목 + 닫기) · 탭(메뉴 · 폴더, 하나면 숨김 <code>.is-single</code>) · 내용(폴더 트리 위 선택 · 검색). 닫으면 <code>.is-closed</code>.</td></tr>
+<tr><td><b>바닥</b></td><td><code>.gnb-footer</code></td><td>화면 맨 아래 한 줄.</td></tr>
+</tbody>
+</table>
+<p className="ds-sec__desc ds-after">아이콘 메뉴(<code>.main-menu</code>)는 틀만 DS에 있고, 메뉴 항목은 개발 마크업이라 클래스가 없습니다. 항목 모양은 <a className="ds-link" href="./?path=/docs/screens-plm-화면--docs" target="_top">Screens › PLM 화면</a>에서 볼 수 있습니다.</p>
+</Section>
+<Section title="예시" en="Examples">
+<Card of={S.상단_바} title="상단 바" en="GNB" desc="아이콘 메뉴가 있는 업무 화면. 위치가 페이지 제목을 대신합니다." />
+<Card of={S.상단_바_로고} title="로고형 상단 바" en="GNB with logo" desc="아이콘 메뉴가 없는 화면." />
+<Card of={S.개수_배지} title="업무 개수" en="Count badge" desc="0 · 한 자리 · 두 자리 · 99+. 상자 높이가 18로 고정이라 글꼴이 늦게 와도 흔들리지 않습니다." />
+<Card of={S.페이지_머리} title="페이지 머리" en="Page head" desc="제목 · 즐겨찾기 · 위치." />
+<Card of={S.보조_메뉴_패널} title="보조 메뉴 패널" en="Sub panel" desc="머리 · 탭 · 폴더 트리 위 선택과 검색. 트리는 그리드 위젯이 그리는 자리입니다." />
+<Card of={S.바닥} title="바닥" en="Footer" />
+</Section>
+<Section title="전체 상태" en="States" desc="Hovered · Pressed · Focused는 마우스 · 키보드 상태를 정지 화면으로 보여 준 것입니다.">
+<Card of={S.전체_상태} title="앱 틀 버튼" />
+</Section>
+<Section title="Playground" desc="아래 표에서 값을 바꾸면 미리보기와 「코드 보기」가 함께 바뀝니다.">
+<Card of={S.Playground}>
+<Controls of={S.Playground} />
+</Card>
+</Section>
+</div>
+</Unstyled>
