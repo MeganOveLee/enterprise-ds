@@ -501,6 +501,10 @@ body.dark-mode .theme-toggle-btn .icon-moon { display: none; }
     grid-template-columns: repeat(auto-fill, minmax(460px, 1fr));
     gap: var(--spacing-24);
 }
+/* 3열 고정 (제안 F) — 대시보드처럼 카드 수가 정해진 화면. 기본(.card-grid, 칸 최소 460)은 1440 화면에서 2열이라 따로 둠.
+ * 좁아지면 2열. 기존 .card-grid 를 쓰는 화면은 바뀌지 않음 */
+.card-grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 1199px) { .card-grid--3 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
 /* ============================================================
  * 카드 (재사용)

@@ -264,7 +264,7 @@ const SHORTCUTS = [['doc', '문서 등록'], ['drawing', '도면 등록'], ['par
 const li = (lead, title, date) => '<li>' + lead + '<span class="item-title">' + title + '</span><span class="item-date">' + date + '</span></li>';
 const homeBody = () =>
   '<div class="scr-home"><div class="scr-home__top">' + profile() + STATS.map(stat).join('') + '</div>' +
-  '<div class="card-grid scr-home__grid">' +
+  '<div class="card-grid card-grid--3 scr-home__grid">' +
   '<section class="card">' + cardHead('내 업무 구성') + '<div class="scr-mix">' + donut() + '</div></section>' +
   '<section class="card">' + cardHead('결재 업무', 2, more('최근 5건 · 전체 보기')) + '<ul class="card-list">' +
     APPROVALS.map(([k, label, t, d]) => li('<span class="scr-chip scr-chip--' + STATUS[k][0] + '">' + label + '</span>', t, d)).join('') + '</ul></section>' +

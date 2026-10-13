@@ -236,7 +236,7 @@
 .scr-home { display: grid; grid-template-rows: auto 1fr; gap: var(--spacing-16); height: 100%; }
 .scr .main-content:has(.scr-home) { padding: var(--spacing-24); }
 .scr-home__top { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: var(--spacing-16); }
-.scr .card-grid.scr-home__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: 1fr 1fr; gap: var(--spacing-16); min-height: 0; }   /* DS .card-grid 는 칸 최소 460 → 1440 화면에서 2열. 홈은 3열 */
+.scr .card-grid.scr-home__grid { grid-template-rows: 1fr 1fr; gap: var(--spacing-16); min-height: 0; }   /* 3열 = DS .card-grid--3 */
 .scr-home__grid .card { min-width: 0; min-height: 0; overflow: hidden; display: flex; flex-direction: column; }
 .scr .card-title { font-size: var(--heading-sm); }
 .scr-more { display: inline-flex; align-items: center; gap: 2px; font-size: var(--body-sm); color: var(--color-text-muted); text-decoration: none; white-space: nowrap; }
