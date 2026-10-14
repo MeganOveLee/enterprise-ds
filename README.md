@@ -49,3 +49,5 @@ npm run storybook
 
 © 2026 이세영 (MeganOveLee). All rights reserved.
 이 저장소의 코드와 문서는 포트폴리오 열람용으로 공개되어 있습니다. 별도 허락 없이 복제·수정·배포·상업적 이용을 할 수 없습니다.
+
+출처 — 글꼴 Pretendard(SIL Open Font License 1.1, 이 저장소에는 글꼴 파일이 들어 있지 않음) · GitHub · Figma · Notion 로고는 각 회사의 상표이며 참고 자료 링크 표시에만 씁니다.
