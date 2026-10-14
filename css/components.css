@@ -1555,7 +1555,7 @@ body.dark-mode .resumable:not(.center) .fileList .file-item { background: var(--
 .radio input[type="radio"]:disabled:checked + .radio__mark { background: var(--color-bg-disabled); border-color: var(--color-bg-disabled); }   /* 선택됨+비활성 = 연회색 (DS-ADR-015) */
 .radio input[type="radio"]:disabled:checked + .radio__mark::after { background: var(--color-icon-disabled); }
 /* 다크모드 */
-body.dark-mode .radio .radio__mark { background: var(--color-bg-muted); }   /* 테두리 고정 #7A828C → border-input 토큰으로 (DS-ADR-013) */
+/* 다크 라디오 바탕 덮어쓰기(bg-muted) 삭제 — 체크박스와 같은 bg-base, 테두리는 border-input(DS-ADR-013) 그대로 (10/14) */
 /* 다크 checked 덮어쓰기 2줄 삭제 — 토큰이 다크 값을 가짐. 남아 있으면 선택됨+비활성이 브랜드색으로 뜸 (2026-10-06) */
 
 /* ═══ 스위치 .switch (Selection Controls · 2026-10-06)
