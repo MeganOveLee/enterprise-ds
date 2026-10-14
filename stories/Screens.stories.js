@@ -124,8 +124,8 @@ const gnb = (crumbs = ['Home', '문서 관리', '문서 검색']) =>
   '</div></header>';
 
 // ── 검색 조건 · 결과 ──
-// 검색 조건 — 대표 조건 2줄 + [상세 검색] 펼침 (10/14 DS 제안 — 납품 화면은 고객 요청으로 조건 전체 노출)
-// 1줄 문서 분류 · 문서 번호 · 문서 명 / 2줄 작업현황 · 등록일(기간 2칸). 펼치면 버전 · 등록자 · 수정자 · 수정일
+// 검색 조건 — 대표 조건 1줄 + [상세 검색] 펼침 (10/14 DS 제안 — 납품 화면은 고객 요청으로 조건 전체 노출)
+// 1줄 = 문서 분류 · 문서 번호 · 문서 명 · 작업현황 · 등록일(기간 2칸) — 6열 칸 폭에 5항목. 펼치면 버전 · 등록자 · 수정자 · 수정일
 // 접혀 있을 때 숨은 조건에 값이 있으면 버튼에 개수(이 화면은 등록자 · 수정일에 값 → 2)
 let searchUid = 0;
 const searchForm = ({ open = false } = {}) => {
@@ -138,7 +138,7 @@ const searchForm = ({ open = false } = {}) => {
   field('문서 분류', '<input class="input" aria-label="문서 분류" value="/제품 문서/설계 문서" readonly>') +
   field('문서 번호', '<input class="input" aria-label="문서 번호">') +
   field('문서 명', '<input class="input" aria-label="문서 명">') +
-  field('작업현황', sel('작업현황', ['전체', '작업 중', '검토 중', '승인', '반려']), { cls: 'row-start' }) +
+  field('작업현황', sel('작업현황', ['전체', '작업 중', '검토 중', '승인', '반려'])) +
   field('등록일', range('등록일', '2026-09-01', ''), { span: 2 }) +
   '</div><div class="search-detail" id="' + id + '"' + (open ? '' : ' hidden') + '><div class="form-grid-2 form-grid--6"><div class="search-divider">상세 검색</div>' +
   field('버전', '<div class="scr-radio-row" role="radiogroup" aria-label="버전">' +

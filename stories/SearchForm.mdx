@@ -7,8 +7,8 @@ import * as S from './SearchForm.stories.js';
 <Unstyled>
 <div className="ds-page">
 <PageHead eyebrow="조합" title="SearchForm" lead="목록 화면 위의 검색 조건 영역입니다. 제목줄(검색 · 상세 검색 펼치기 · 초기화)과 라벨 위 · 칸 아래 짝의 조건 칸으로 이뤄집니다. 이 카드는 상세 검색 펼침입니다." />
-<Section title="상세 검색 펼침" en="Detailed search" desc="자주 쓰는 대표 조건만 두 줄로 보이고, 나머지는 [상세 검색 펼치기]로 펼칩니다. 버튼을 눌러 보세요.">
-<Card of={S.상세_검색_펼침} title="접힌 모습" en="Collapsed" desc="대표 조건 두 줄과 [상세 검색 펼치기]." />
+<Section title="상세 검색 펼침" en="Detailed search" desc="자주 쓰는 대표 조건만 한 줄로 보이고, 나머지는 [상세 검색 펼치기]로 펼칩니다. 버튼을 눌러 보세요.">
+<Card of={S.상세_검색_펼침} title="접힌 모습" en="Collapsed" desc="대표 조건 한 줄과 [상세 검색 펼치기]." />
 <Card of={S.펼친_모습} title="펼친 모습" en="Expanded" desc="대표 조건 아래 「상세 검색」 글자 + 회색 선 다음에 나머지 조건. 버튼 문구가 「상세 검색 접기」로, 화살표가 위로 바뀝니다." />
 </Section>
 <Section title="구성" en="Spec">
@@ -16,7 +16,7 @@ import * as S from './SearchForm.stories.js';
 <thead><tr><th>구분</th><th>클래스 · 속성</th><th>설명</th></tr></thead>
 <tbody>
 <tr><td><b>버튼</b></td><td><code>.btn--expand</code> · <code>.t-open</code> · <code>.t-close</code> · <code>aria-expanded</code> · <code>aria-controls</code></td><td>제목줄 오른쪽 [검색](primary) 다음 자리(이전 버전과 같은 순서). 흰 바탕 · 회색 테두리 · 최소 폭 150, 펼치면 문구가 「상세 검색 접기」로 바뀌고 화살표가 뒤집힙니다. 모양은 <a className="ds-link" href="./?path=/docs/form-button--docs" target="_top">Button</a> 「접고 펴기」.</td></tr>
-<tr><td><b>대표 조건</b></td><td><code>.form-grid-2.form-grid--6</code> · <code>.row-start</code> · <code>.span-2</code></td><td>칸 폭은 6열(이전 버전과 같은 폭), 두 줄로 나눔 — 둘째 줄 첫 칸에 <code>.row-start</code>. 기간 · 라디오 묶음은 두 칸.</td></tr>
+<tr><td><b>대표 조건</b></td><td><code>.form-grid-2.form-grid--6</code> · <code>.span-2</code></td><td>칸 폭은 6열(이전 버전과 같은 폭), 한 줄 — 문서 분류 · 문서 번호 · 문서 명 · 작업현황 · 등록일(기간). 기간 · 라디오 묶음은 두 칸.</td></tr>
 <tr><td><b>상세 조건</b></td><td><code>.search-detail</code> · <code>.search-divider</code> · <code>hidden</code></td><td>대표 조건 아래 「상세 검색」 글자 + 회색 1px 선(<code>--color-border-base</code>) 다음에 나머지 조건, 줄 간격은 대표 조건과 같음. 접히면 <code>hidden</code>.</td></tr>
 </tbody>
 </table>
@@ -25,7 +25,7 @@ import * as S from './SearchForm.stories.js';
 <table className="ds-table ds-props">
 <thead><tr><th></th><th>고객 요청 — 납품 화면</th><th>DS 제안 — 이 카드</th></tr></thead>
 <tbody>
-<tr><td><b>보이는 조건</b></td><td>조건 전체를 항상 펼침(상세 검색 버튼은 주석 처리)</td><td>대표 조건 두 줄 + [상세 검색] 펼침</td></tr>
+<tr><td><b>보이는 조건</b></td><td>조건 전체를 항상 펼침(상세 검색 버튼은 주석 처리)</td><td>대표 조건 한 줄 + [상세 검색] 펼침</td></tr>
 <tr><td><b>화면</b></td><td>검색 조건이 화면 위쪽을 크게 차지해 결과 목록이 밀림</td><td>결과 목록이 위로 올라옴</td></tr>
 </tbody>
 </table>

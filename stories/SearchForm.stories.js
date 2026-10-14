@@ -1,5 +1,5 @@
 // 조합/SearchForm — 문서 화면은 SearchForm.mdx. 검색 조건 영역 = 제목줄(.seach_arm) + 조건 칸(.pro_table > .form-grid-2)
-// 이번 카드: 상세 검색 펼침 — 대표 조건 두 줄만 보이고 나머지는 [상세 검색 펼치기](.btn--expand)로 펼침. 동작은 ./_search.js (Screens 문서 검색과 같음)
+// 이번 카드: 상세 검색 펼침 — 대표 조건 한 줄만 보이고 나머지는 [상세 검색 펼치기](.btn--expand)로 펼침. 동작은 ./_search.js (Screens 문서 검색과 같음)
 import { wireSearchDetail, EXPAND_LABEL } from './_search.js';
 
 const ico = (d) => '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + d + '</svg>';
@@ -27,7 +27,7 @@ const searchForm = ({ open = false } = {}) => {
     '</div></div>' +
     '<div class="pro_table"><div class="form-grid-2 form-grid--6">' +
       field('문서 분류', input('문서 분류', '/제품 문서/설계 문서', true)) + field('문서 번호', input('문서 번호')) + field('문서 명', input('문서 명')) +
-      field('작업현황', select('작업현황', ['전체', '작업 중', '검토 중', '승인', '반려']), 0, 'row-start') + field('등록일', range('등록일', '2026-09-01'), 2) +
+      field('작업현황', select('작업현황', ['전체', '작업 중', '검토 중', '승인', '반려'])) + field('등록일', range('등록일', '2026-09-01'), 2) +
     '</div><div class="search-detail" id="' + id + '"' + (open ? '' : ' hidden') + '><div class="form-grid-2 form-grid--6"><div class="search-divider">상세 검색</div>' +
       field('버전', '<div role="radiogroup" aria-label="버전" style="display:flex;gap:16px;align-items:center;min-height:var(--size-input)">' +
         '<label class="radio"><input type="radio" name="' + id + '-v" checked><span class="radio__mark"></span>최신 버전</label>' +
