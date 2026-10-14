@@ -150,7 +150,7 @@
 .scr-grid .is-num { color: var(--color-text-brand); font-weight: var(--font-weight-medium); font-variant-numeric: tabular-nums; }
 .scr-grid .is-date { color: var(--color-text-muted); font-variant-numeric: tabular-nums; }
 .scr-grid .checkbox { margin: 0; gap: 0; }
-.scr-link { color: var(--color-text-base); text-decoration: underline; text-underline-offset: 2px; }
+.scr-link { color: var(--color-text-base); text-decoration: underline; text-underline-offset: 2px; }   /* 본문 링크(첨부 양식) — 그리드 링크는 DS .grid-custom-rows-link · .grid-link */
 .scr-link:hover { color: var(--color-text-brand); }
 .scr-file svg { vertical-align: middle; color: var(--color-icon-muted); }
 

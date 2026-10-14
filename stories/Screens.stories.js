@@ -162,7 +162,7 @@ const grid = () =>
   '<thead><tr><th>No.</th><th>' + ck('전체 선택') + '</th><th>문서 번호</th><th>문서 명</th><th>파일</th><th>버전</th><th>작업현황</th><th>등록자</th><th>등록일</th><th>수정자</th><th>수정일</th></tr></thead><tbody>' +
   ROWS.map((r, i) => '<tr' + (i === 1 ? ' class="is-selected"' : '') + '>' +
     '<td class="is-center is-date">' + (i + 1) + '</td><td class="is-center">' + ck(r[0] + ' 선택', i === 1 ? ' checked' : '') + '</td>' +
-    '<td class="is-center"><a href="#" class="scr-link">' + r[0] + '</a></td><td>' + r[1] + '</td>' +
+    '<td class="is-center"><a href="#" class="grid-custom-rows-link">' + r[0] + '</a></td><td>' + r[1] + '</td>' +
     '<td class="is-center scr-file">' + svg(I.file, 16) + '</td><td class="is-center">' + r[2] + '</td><td class="is-center">' + chip(r[3]) + '</td>' +
     '<td class="is-center">' + r[4] + '</td><td class="is-center is-date">' + r[5] + '</td><td class="is-center">' + r[6] + '</td><td class="is-center is-date">' + r[7] + '</td></tr>').join('') +
   '</tbody></table></div>' +
@@ -361,7 +361,7 @@ const detailBody = () =>
   '<div class="table_list scr-tasks"><div class="list"><table class="scr-grid"><colgroup>' +
   '<col style="width:48px"><col><col style="width:80px"><col style="width:84px"><col style="width:104px"><col style="width:104px"><col style="width:150px"><col style="width:84px"></colgroup>' +
   '<thead><tr><th>No.</th><th>태스크</th><th>단계</th><th>담당자</th><th>계획 종료</th><th>실적 종료</th><th>진행률</th><th>상태</th></tr></thead><tbody>' +
-  TASK_ROWS.map((r, i) => '<tr' + (i === 0 ? ' class="is-selected"' : '') + '><td class="is-center is-date">' + (i + 1) + '</td><td><a href="#" class="scr-link">' + r[0] + '</a></td>' +
+  TASK_ROWS.map((r, i) => '<tr' + (i === 0 ? ' class="is-selected"' : '') + '><td class="is-center is-date">' + (i + 1) + '</td><td><a href="#" class="grid-link">' + r[0] + '</a></td>' +
     '<td class="is-center">' + r[1] + '</td><td class="is-center">' + r[2] + '</td><td class="is-center is-date">' + r[3] + '</td><td class="is-center is-date">' + (r[4] || '—') + '</td>' +
     '<td>' + pbar(r[6], r[5], r[0]) + '</td><td class="is-center">' + pchip(r[6]) + '</td></tr>').join('') +
   '</tbody></table></div></div>' +
