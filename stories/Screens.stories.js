@@ -334,7 +334,8 @@ const dsec = (title, open = true, right = '') =>
   '<div class="seach_arm"><div class="leftbt"><button type="button" class="section-toggle" aria-expanded="' + open + '" aria-label="' + title + (open ? ' 접기' : ' 펼치기') + '">' +
   svg(open ? I.minus : I.plus, 16) + '</button><h4>' + title + '</h4></div>' + (right ? '<div class="rightbt">' + right + '</div>' : '') + '</div>';
 const ro = (label, value, span = 0) => field(label, '<div class="ff-readonly">' + value + '</div>', { span });
-const PHASES = [['기획', 'done', 100, '07-01 ~ 07-31'], ['설계', 'progress', 72, '08-01 ~ 10-24'], ['시작품', 'delay', 25, '09-22 ~ 11-07'], ['검증', 'plan', 0, '11-10 ~ 12-05'], ['양산 이관', 'hold', 0, '12-08 ~ 12-18']];
+// 단계 — 이름 · 상태 · 실적 % · 기간 · 계획 %(기준일 10-13). 계획 0이면 표식 없음
+const PHASES = [['기획', 'done', 100, '07-01 ~ 07-31', 100], ['설계', 'progress', 72, '08-01 ~ 10-24', 87], ['시작품', 'delay', 25, '09-22 ~ 11-07', 46], ['검증', 'plan', 0, '11-10 ~ 12-05', 0], ['양산 이관', 'hold', 0, '12-08 ~ 12-18', 0]];
 const TASK_ROWS = [
   ['조립 도면 작성', '설계', '김도윤', '2026-10-17', '', 70, 'progress'],
   ['설계 검토(DR) 자료 준비', '설계', '이서연', '2026-10-10', '', 40, 'delay'],
@@ -359,8 +360,8 @@ const detailBody = () =>
   '<div class="scr-progress__main"><div class="scr-progress__meta"><b>전체 진행률</b><span><span class="progress-plan-key" aria-hidden="true"></span>계획 64% · 실적 58% · <em>6%p 늦음</em></span></div>' +
   '<div class="progress-row">' + pbar('delay', 58, '전체', true, 64) + '</div></div>' +
   '<dl class="scr-kv"><div><dt>남은 기간</dt><dd>66일</dd></div><div><dt>지연 태스크</dt><dd class="is-danger">2건</dd></div><div><dt>완료 태스크</dt><dd>9 / 21</dd></div></dl></div>' +
-  '<ul class="scr-phases">' + PHASES.map(([n, k, pct, d]) =>
-    '<li><span class="scr-phases__name">' + n + '</span>' + pbar(k, pct, n) + '<span class="scr-phases__date">' + d + '</span>' + pchip(k) + '</li>').join('') + '</ul></div>' +
+  '<ul class="scr-phases">' + PHASES.map(([n, k, pct, d, plan]) =>
+    '<li><span class="scr-phases__name">' + n + '</span>' + pbar(k, pct, n, true, plan > 0 ? plan : undefined) + '<span class="scr-phases__date">' + d + '</span>' + pchip(k) + '</li>').join('') + '</ul></div>' +
   dsec('태스크', true, '<span class="scr-total">전체 <b>21</b> · 지연 <b>2</b></span>') +
   '<div class="table_list scr-tasks"><div class="list"><table class="scr-grid"><colgroup>' +
   '<col style="width:48px"><col><col style="width:80px"><col style="width:84px"><col style="width:104px"><col style="width:104px"><col style="width:150px"><col style="width:84px"></colgroup>' +
