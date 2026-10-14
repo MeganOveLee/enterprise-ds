@@ -2497,15 +2497,18 @@ body.dark-mode .select {
     background: var(--color-bg-disabled);   /* 구 #D9D9D9 하드코딩 → 쿨그레이 토큰 (세영 2026-08-25) */
     animation: statusPulse 1.6s ease-in-out infinite;
 }
-/* ⚠️ @keyframes statusPulse 의 정의는 overrides.css 한 곳(상태 SVG 배지와 공용).
- * 여기에도 같은 이름으로 다른 값(0.25→1)을 두고 있었는데, @keyframes 는 같은 이름이면
- * '나중에 로드된 것' 하나만 살아남으므로 계속 죽은 정의였음 → 제거. 값을 바꾸려면 overrides 쪽을 고칠 것 (2026-08-23) */
+/* @keyframes statusPulse — 이전 버전 값 그대로 (2026-10-15 세영 결정: DS만 불러와도 움직이게).
+ * 이전 버전에는 같은 이름이 두 곳: components(0.25↔1) · overrides(1↔.35). 화면은 components 다음
+ * overrides 를 불러 overrides 쪽만 살아 있었으므로 그 값을 옮김. 상태 SVG 배지(1.4초)는 DS에 없는 이미지라 안 옮김. */
+@keyframes statusPulse { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
 /* 5개 막대에 stagger delay — wave 효과 */
 .status-segments__bar:nth-child(1) { animation-delay: 0s;    }
 .status-segments__bar:nth-child(2) { animation-delay: 0.12s; }
 .status-segments__bar:nth-child(3) { animation-delay: 0.24s; }
 .status-segments__bar:nth-child(4) { animation-delay: 0.36s; }
 .status-segments__bar:nth-child(5) { animation-delay: 0.48s; }
+/* 모션 줄이기 = 멈춤(꾸밈 막대 · 상태는 옆 글자가 알려 줌). 멈추면 진한 쪽(opacity 1)으로 보임 */
+@media (prefers-reduced-motion: reduce) { .status-segments__bar { animation: none; } }
 
 /* status modifier 별 색 (배경 직접) */
 .status-segments--done    .status-segments__bar { background: var(--color-progress-done-end) !important; }
