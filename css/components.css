@@ -719,7 +719,7 @@ body.dark-mode .theme-toggle-btn .icon-moon { display: none; }
     font-family: var(--font-family-base);
     font-size: var(--body-sm);
     font-weight: var(--font-weight-medium);
-    border-bottom: 2px solid transparent;
+    border-bottom: 3px solid transparent;   /* 선택 밑줄 3 (10/14 결정 — 이전 버전 2) */
     transition: color 0.12s, border-color 0.12s;
 }
 .main-sub-tabs .sub-tab:hover { color: var(--color-text-base); }
@@ -915,11 +915,12 @@ body.dark-mode .theme-toggle-btn .icon-moon { display: none; }
     border-color: var(--color-border-focus);
     box-shadow: 0 0 0 3px var(--color-focus-ring);
 }
-/* 탭은 아래 보더가 선택 표시(브랜드 밑줄)라 보더 색은 두고 번짐만 */
+/* 탭 키보드 포커스 = 탭 칸에 옅은 브랜드 바탕(상태 레이어 방식), 선 · 번짐 없음 — 아래 보더가 선택 표시라 겹치지 않게 (10/14 결정).
+ * 마우스 올림은 글자색만 바뀌어 포커스와 구분됨 */
 .main-sub-tabs .sub-tab:focus-visible,
 .pop .tab li:focus-visible {
-    outline: 2px solid transparent;
-    box-shadow: 0 0 0 3px var(--color-focus-ring);
+    outline: 2px solid transparent;   /* 강제 색 모드용 */
+    background: var(--color-bg-brand-subtle);
 }
 .ui-pagination__ellipsis {
     display: inline-flex;
@@ -1083,7 +1084,7 @@ body.dark-mode .pop .pro_table { background: var(--color-bg-base); box-shadow: n
     color: var(--color-text-muted);
     font-size: var(--body-md);
     font-weight: var(--font-weight-medium);
-    border-bottom: 2px solid transparent;
+    border-bottom: 3px solid transparent;   /* 선택 밑줄 3 (10/14 결정 — 이전 버전 2) */
     transition: color 0.12s, border-color 0.12s;
 }
 .pop .tab li:hover { color: var(--color-text-base); }
