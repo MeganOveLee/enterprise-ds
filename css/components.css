@@ -1439,6 +1439,9 @@ body.dark-mode .resumable:not(.center) .fileList .file-item { background: var(--
     border-color: var(--color-border-focus);
     box-shadow: 0 0 0 3px var(--color-focus-ring);
 }
+/* 켜진 체크 포커스 = 테두리 bg-base(라이트 흰 · 다크 면색) — 브랜드 테두리가 브랜드 면과 같아지는 것 피함 (10/14 결정 ①) */
+.checkbox input[type="checkbox"]:checked:focus-visible,
+.checkSelect .option input[type="checkbox"]:checked:focus-visible { border-color: var(--color-bg-base); }
 /* 우리 디자인 체크박스 disabled 상태 추가 (세영 2026-08-15)
  * 꺼짐+비활성 = 연회색 칸(bg-disabled) + 같은 색 테두리(border-disabled) — 라디오 · 스위치 · 버튼 비활성과 같은 규칙 (10/14, DS-ADR-015 보완). 구: bg-subtle + border-base */
 .checkbox input[type="checkbox"]:disabled,
@@ -1565,6 +1568,7 @@ body.dark-mode .resumable:not(.center) .fileList .file-item { background: var(--
     border-color: var(--color-border-focus);
     box-shadow: 0 0 0 3px var(--color-focus-ring);
 }
+.radio input[type="radio"]:checked:focus-visible + .radio__mark { border-color: var(--color-bg-base); }   /* 켜진 라디오 = 흰 테두리 (10/14 결정 ①) */
 /* disabled — 비활성 라디오는 회색(초록 아님) + 인터랙션 없음 (세영 2026-07-29) */
 .radio:has(input:disabled) { cursor: not-allowed; color: var(--color-text-muted); }
 .radio input[type="radio"]:disabled + .radio__mark { border-color: var(--color-border-disabled); background: var(--color-bg-disabled); }   /* 꺼짐+비활성 = 체크박스 · 스위치와 같은 연회색 (10/14, DS-ADR-015 보완). 구: bg-muted + border-base */
@@ -1630,6 +1634,7 @@ body.dark-mode .resumable:not(.center) .fileList .file-item { background: var(--
     border-color: var(--color-border-focus);
     box-shadow: 0 0 0 3px var(--color-focus-ring);
 }
+.switch input[type="checkbox"]:checked:focus-visible { border-color: var(--color-bg-base); }   /* 켜진 스위치 = 흰 테두리 (10/14 결정 ①) */
 .switch input[type="checkbox"]:disabled {
     background: var(--color-bg-disabled);
     border-color: var(--color-border-disabled);
@@ -1885,6 +1890,11 @@ body.dark-mode .select {
     border-color: var(--color-border-focus);
     box-shadow: 0 0 0 3px var(--color-focus-ring);
 }
+/* 포커스 흰 테두리 (10/14 결정 ①) — 테두리가 면과 같은 색이 되는 채운 브랜드 · 위험 버튼만 테두리를 버튼 글자색으로.
+ * 라이트는 bg-base 와 같은 흰색. 다크 채운 브랜드 버튼은 면이 브랜드 틴트라 bg-base(다크 면색)로는 면과 갈라지지 않아 글자색(흰)을 씀 — 대비 표는 변경 이력.
+ * 번짐(focus-ring)은 그대로. 켜진 체크 · 라디오 · 스위치는 각 부품 포커스 규칙 아래 */
+.btn--primary.btn--filled:focus-visible,
+.btn--destructive.btn--filled:focus-visible { border-color: var(--btn-on-solid); }
 
 /* 비활성 · 로딩 */
 .btn:disabled, .btn[aria-disabled="true"],
