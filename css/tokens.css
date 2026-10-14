@@ -155,7 +155,7 @@
   --radius-input:    var(--radius-sm);   /* 입력칸 계열 — .input · .select · .textarea · 날짜 · 다중 선택 · 트리 검색 · 읽기 전용 (DS-ADR-019) */
   --radius-checkbox: var(--radius-sm);   /* 체크박스 표식 (라디오는 원형이라 제외) */
   --radius-chip:     var(--radius-rounded);   /* 칩 = Figma Chip · Status chip — 버전 표시 등. Badge(점 · 숫자)는 도형이라 역할 없음 (DS-ADR-020) */
-  --radius-item:     var(--radius-sm);   /* 목록 · 메뉴 안의 행 — 카드 목록 · 파일 행 · 드롭다운 항목 · 섹션 바 */
+  --radius-item:     var(--radius-sm);   /* 목록 · 메뉴 안의 행 — 카드 목록 · 파일 행 · 드롭다운 항목 */
   --radius-card:     var(--radius-lg);   /* 카드 · 스켈레톤 카드 */
   --radius-panel:    var(--radius-md);   /* 화면 안 영역 박스 — 그리드 목록 · 검색 폼 · 왼쪽 패널 · 첨부 영역 */
   --radius-popover:  var(--radius-md);   /* 떠 있는 층 — 달력 · 드롭다운 · 다중 선택 펼침 · GNB 메뉴 */

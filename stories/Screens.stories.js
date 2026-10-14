@@ -171,10 +171,10 @@ const listScreen = () =>
   '</div></div></div></div></div>';
 
 // ── 등록 창 — 제품에서는 새 창(.pop). 여기서는 목록 위에 띄운 창 ──
-// 섹션 머리 — DS .pop .seach_arm(회색 섹션 바) + .section-toggle. 펼침 = 빼기, 접힘 = 더하기
+// 섹션 머리 — DS .pop .seach_arm(바탕 없는 제목줄) + .section-toggle. 펼침 = 빼기, 접힘 = 더하기
 const section = (title, open = true, right = '') =>
   '<div class="seach_arm scr-sec"><div class="leftbt"><button type="button" class="section-toggle" aria-expanded="' + open + '" aria-label="' + title + (open ? ' 접기' : ' 펼치기') + '">' +
-  svg(open ? I.minus : I.plus, 14) + '</button><h4>' + title + '</h4></div>' + (right ? '<div class="rightbt">' + right + '</div>' : '') + '</div>';
+  svg(open ? I.minus : I.plus, 16) + '</button><h4>' + title + '</h4></div>' + (right ? '<div class="rightbt">' + right + '</div>' : '') + '</div>';
 
 // 첨부 — 파일 형식 아이콘(형식별 색 + 확장자 띠)
 const FT = { pdf: ['danger', 'PDF'], xlsx: ['success', 'XLS'], docx: ['info', 'DOC'], dwg: ['base', 'DWG'], zip: ['warning', 'ZIP'] };
@@ -319,7 +319,7 @@ const leftPanel = () =>
 // 섹션 머리 — DS .seach_arm + .section-toggle (등록 창과 같은 토글). 펼침 = 빼기, 접힘 = 더하기
 const dsec = (title, open = true, right = '') =>
   '<div class="seach_arm"><div class="leftbt"><button type="button" class="section-toggle" aria-expanded="' + open + '" aria-label="' + title + (open ? ' 접기' : ' 펼치기') + '">' +
-  svg(open ? I.minus : I.plus, 14) + '</button><h4>' + title + '</h4></div>' + (right ? '<div class="rightbt">' + right + '</div>' : '') + '</div>';
+  svg(open ? I.minus : I.plus, 16) + '</button><h4>' + title + '</h4></div>' + (right ? '<div class="rightbt">' + right + '</div>' : '') + '</div>';
 const ro = (label, value, span = 0) => field(label, '<div class="ff-readonly">' + value + '</div>', { span });
 const PHASES = [['기획', 'done', 100, '07-01 ~ 07-31'], ['설계', 'progress', 72, '08-01 ~ 10-24'], ['시작품', 'delay', 25, '09-22 ~ 11-07'], ['검증', 'plan', 0, '11-10 ~ 12-05'], ['양산 이관', 'hold', 0, '12-08 ~ 12-18']];
 const TASK_ROWS = [

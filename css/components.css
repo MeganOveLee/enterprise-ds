@@ -1043,12 +1043,12 @@ body.popup { background: var(--color-bg-base); }
 .pop .top-title-area h3 { font-weight: var(--font-weight-bold); }   /* 크기는 위 규칙(--heading-md)이 정함 — 20px 고정값 중복 제거 (DS-ADR-012) */
 /* 타이틀 배지(문서 아이콘) — 흰 헤더 위 연한 박스 */
 .pop .top-title-area .doc-type-badge svg { stroke-width: 1.8; }
-/* 기본 정보 — 아이콘 + 타이틀 회색 섹션 바 (시안 패턴) */
+/* 섹션 머리 — 접기 토글 + 제목만, 바탕 없음(놓인 면 색을 그대로 따름). 이전 버전 등록 창 모양 (10/14).
+ * 구: 회색 섹션 바(bg-subtle · 모서리 · 안쪽 여백 4, 다크 bg-header) */
 .pop .seach_arm {
-    background: var(--color-bg-subtle);
+    background: transparent;
     border: none;
-    border-radius: var(--radius-item);
-    padding: 0 4px;
+    padding: 0;
 }
 .pop .seach_arm .leftbt { gap: var(--spacing-8); }
 .pop .seach_arm .rightbt { display: flex; align-items: center; gap: var(--spacing-8); }
@@ -1056,8 +1056,6 @@ body.popup { background: var(--color-bg-base); }
 /* .pop .seach_arm .leftbt h4 크기/굵기 하이재킹 삭제 → 웹표준 h4(globals, bold 16px) 사용 (세영 2026-08-07) */
 .pop .seach_arm .leftbt .sec-icon { display: inline-flex; align-items: center; color: var(--color-text-muted); }
 .pop .seach_arm .leftbt .sec-icon svg { width: 17px; height: 17px; }
-/* 다크 — 섹션 바 톤 */
-body.dark-mode .pop .seach_arm { background: var(--color-bg-header); border-color: var(--color-border-subtle); }
 /* 다크 — 팝업 페이지/카드 톤 (검색화면 elevation 과 동일 스케일) */
 body.dark-mode.popup { background: var(--color-bg-subtle); }
 body.dark-mode .pop { background: var(--color-bg-subtle); }
@@ -2202,31 +2200,39 @@ body.dark-mode .select {
     flex-shrink: 0;
 }
 
-/* 마이너스/플러스 토글 — 진한 회색 배경 (브랜드 보조색) + 흰 아이콘 */
+/* 섹션 접기 토글 — 이전 버전 등록 창 모양(제품 전체가 이 모양, 10/14). 펼침 = 빼기, 접힘 = 더하기, 상태는 aria-expanded.
+ * 보이는 네모 16 = 바탕 bg-base · 테두리 border-input(비텍스트 3:1, DS-ADR-013) · 모서리 버튼 역할 · 아이콘 icon-muted.
+ * 누름 영역 24 = 네모 둘레 투명 여유 4(최소 누름 영역 24, DS-ADR-020). 여유 영역은 음수 여백으로 흐름에서 빼서 네모가 내용 왼쪽 선에 맞음.
+ * 구: 진한 채운 네모(bg-inverse · 흰 아이콘) */
 .section-toggle {
-    width: var(--size-btn-sm);   /* 작은 버튼 (구 22 — 최소 누름 영역 24 미달, DS-ADR-020) */
-    height: var(--size-btn-sm);
+    position: relative;
+    width: calc(16px + var(--spacing-4) * 2);
+    height: calc(16px + var(--spacing-4) * 2);
+    margin: 0 calc(var(--spacing-4) * -1);
+    padding: 0;
     border: none;
-    background: var(--color-bg-inverse);   /* v1.0: --neutral-800 → inverse 짝 */
-    border-radius: var(--radius-btn);
-    cursor: pointer;
+    background: transparent;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    color: var(--color-icon-inverse);
-    padding: 0;
-    margin-right: var(--spacing-4);
+    flex-shrink: 0;
+    color: var(--color-icon-muted);
+    cursor: pointer;
 }
-.section-toggle:hover { background: var(--color-bg-inverse-soft); }
-.section-toggle svg { width: 14px; height: 14px; }
-/* .seach_arm .leftbt svg { color: var(--color-text-muted) } 가 더 강한
- * specificity 로 색을 muted 로 깔고 있어서 svg 의 currentColor 가 회색이 됨.
- * → 토글 버튼 color 자체를 white !important 로 끌어올린 뒤 stroke 도 강제 */
-.section-toggle,
-.section-toggle svg { color: var(--color-icon-inverse) !important; }
+.section-toggle::before {   /* 보이는 네모 */
+    content: '';
+    position: absolute;
+    inset: var(--spacing-4);
+    background: var(--color-bg-base);
+    border: 1px solid var(--color-border-input);
+    border-radius: var(--radius-btn);
+}
+.section-toggle:hover::before { border-color: var(--color-border-input-hover); }   /* 체크박스 hover 와 같은 규칙 */
+.section-toggle:focus-visible { outline: 2px solid transparent; outline-offset: -4px; }   /* 강제 색 모드용 */
+.section-toggle:focus-visible::before { border-color: var(--color-border-focus); box-shadow: 0 0 0 3px var(--color-focus-ring); }   /* 글로우는 네모 둘레 */
+/* .seach_arm .leftbt svg(18 · text-muted)보다 세게 — 아이콘은 네모와 같은 16 칸 */
 .section-toggle svg,
-.section-toggle svg * { stroke: var(--color-icon-inverse) !important; }
-.section-toggle[aria-expanded="false"] svg { transform: rotate(90deg); }
+.seach_arm .leftbt .section-toggle svg { position: relative; width: 16px; height: 16px; color: inherit; }
 
 /* 진행률 progress-bar — 두꺼운 그라데이션 bar + 중앙 % 라벨 (캡쳐 디자인 반영) */
 .progress-row {
