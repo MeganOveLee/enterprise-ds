@@ -171,11 +171,10 @@ const listScreen = () =>
   '</div></div></div></div></div>';
 
 // ── 등록 창 — 제품에서는 새 창(.pop). 여기서는 목록 위에 띄운 창 ──
-// 섹션 머리 — 네모 테두리 안 빼기(펼침) / 더하기(접힘) + 제목. 바탕색 없음 (제품 등록 창과 같은 모양)
-const SQ = { minus: '<rect x="3.5" y="3.5" width="17" height="17" rx="3"/><path d="M8 12h8"/>', plus: '<rect x="3.5" y="3.5" width="17" height="17" rx="3"/><path d="M8 12h8M12 8v8"/>' };
+// 섹션 머리 — DS .pop .seach_arm(회색 섹션 바) + .section-toggle. 펼침 = 빼기, 접힘 = 더하기
 const section = (title, open = true, right = '') =>
-  '<div class="seach_arm scr-sec"><div class="leftbt"><button type="button" class="scr-sec-toggle" aria-expanded="' + open + '" aria-label="' + title + (open ? ' 접기' : ' 펼치기') + '">' +
-  svg(open ? SQ.minus : SQ.plus, 18) + '</button><h4>' + title + '</h4></div>' + (right ? '<div class="rightbt">' + right + '</div>' : '') + '</div>';
+  '<div class="seach_arm scr-sec"><div class="leftbt"><button type="button" class="section-toggle" aria-expanded="' + open + '" aria-label="' + title + (open ? ' 접기' : ' 펼치기') + '">' +
+  svg(open ? I.minus : I.plus, 14) + '</button><h4>' + title + '</h4></div>' + (right ? '<div class="rightbt">' + right + '</div>' : '') + '</div>';
 
 // 첨부 — 파일 형식 아이콘(형식별 색 + 확장자 띠)
 const FT = { pdf: ['danger', 'PDF'], xlsx: ['success', 'XLS'], docx: ['info', 'DOC'], dwg: ['base', 'DWG'], zip: ['warning', 'ZIP'] };
@@ -317,7 +316,7 @@ const leftPanel = () =>
     '<span class="output-row"><span class="scr-dot" style="background:var(--color-progress-' + k + '-end)" title="' + PS[k][0] + '"></span><span class="output-label">' + t + '</span></span></li>').join('') +
   '</ul></aside>';
 
-// 섹션 머리 — DS .section-toggle(채운 네모, 상세 화면용). 펼침 = 빼기, 접힘 = 더하기
+// 섹션 머리 — DS .seach_arm + .section-toggle (등록 창과 같은 토글). 펼침 = 빼기, 접힘 = 더하기
 const dsec = (title, open = true, right = '') =>
   '<div class="seach_arm"><div class="leftbt"><button type="button" class="section-toggle" aria-expanded="' + open + '" aria-label="' + title + (open ? ' 접기' : ' 펼치기') + '">' +
   svg(open ? I.minus : I.plus, 14) + '</button><h4>' + title + '</h4></div>' + (right ? '<div class="rightbt">' + right + '</div>' : '') + '</div>';
