@@ -105,20 +105,26 @@
   .intro-demo__search .select { width: 140px; }
   .intro-demo__no { font-size: var(--body-sm); color: var(--color-text-muted); font-variant-numeric: tabular-nums; }
   /* 소개 맨 위 「바로 보기」 — 포트폴리오로 보는 사람이 Figma 원본부터 열게 (10/13) */
-  /* 문서 안 도구 막대(Toolbar 블록) — 화면 맨 위 도구 막대와 같은 버튼 */
-  .ds-tb { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; margin: 0 0 12px; padding: 8px 12px; border: 1px solid #e1e4e8; border-radius: 6px; background: #fff; font-size: 12px; }
-  .ds-tb--compact { display: inline-flex; margin: 0 4px; padding: 2px 6px; gap: 4px 10px; vertical-align: middle; }
+  /* 문서 안 도구 막대(Toolbar 블록) — 화면 맨 위 Storybook 도구 막대에서 잰 값 그대로 (10/15 08:17) */
+  .ds-tbrow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin: 0 0 12px; }
+  .ds-tb { display: inline-flex; align-items: center; gap: 6px; height: 40px; padding: 0 8px; border-radius: 4px; background: #fff; box-shadow: inset 0 0 0 1px rgba(38, 74, 115, .15); font-family: "Nunito Sans", -apple-system, ".SFNSText-Regular", "San Francisco", BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 12px; line-height: 1; vertical-align: middle; }
+  .ds-tb--compact { height: 34px; padding: 0 3px; margin: 0 2px; }
   .ds-tb__figma { display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 0 10px 0 6px; border-radius: 6px; background: #161616; color: #fff !important; font-weight: 600; text-decoration: none !important; white-space: nowrap; }
-  .ds-tb__figma img { display: block; border-radius: 3px; }
-  .ds-tb__group { display: inline-flex; align-items: center; gap: 4px; }
-  .ds-tb__label { margin-right: 2px; color: #57606a; }
-  .ds-tb__btn { height: 26px; padding: 0 10px; border: 1px solid #d0d7de; border-radius: 6px; background: #fff; color: #424a53; font: inherit; cursor: pointer; }
-  .ds-tb--compact .ds-tb__btn { height: 22px; padding: 0 8px; }
-  .ds-tb__btn:hover { background: #f3f4f6; }
-  .ds-tb__btn[aria-pressed="true"] { border-color: #0969da; background: #ddf4ff; color: #0550ae; font-weight: 600; }
-  .ds-tb__btn:focus-visible, .ds-tb__figma:focus-visible { outline: 2px solid #0969da; outline-offset: 2px; }
-  .ds-tb__hint { color: #6e7781; }
+  .ds-tb__figma img { display: block; border-radius: 4px; }
+  .ds-tb__sep { width: 1px; height: 20px; margin: 0 6px; background: rgba(38, 74, 115, .15); }
+  .ds-tbsel { position: relative; display: inline-flex; }
+  .ds-tbsel__btn { display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 0 7px; border: 0; border-radius: 4px; background: rgba(0, 109, 235, .07); color: rgb(0, 85, 184); font: inherit; font-weight: 700; white-space: nowrap; cursor: pointer; }
+  .ds-tbsel__btn:hover { background: rgba(0, 109, 235, .14); }
+  .ds-tbsel__btn svg { flex: none; }
+  .ds-tbsel__list { position: absolute; z-index: 30; top: calc(100% + 8px); left: 0; display: block; min-width: 180px; padding: 4px; border-radius: 6px; background: rgba(255, 255, 255, .95); filter: drop-shadow(0 5px 5px rgba(0, 0, 0, .05)) drop-shadow(0 1px 3px rgba(0, 0, 0, .1)); outline: none; }
+  .ds-tbsel__opt { display: flex; align-items: center; height: 32px; padding: 0 9px; border-radius: 4px; color: rgb(46, 51, 56); font-weight: 400; line-height: 16px; white-space: nowrap; cursor: pointer; }
+  .ds-tbsel__opt[aria-selected="true"] { color: rgb(0, 85, 184); font-weight: 700; }
+  .ds-tbsel__opt.is-active { background: rgba(0, 0, 0, .05); }
+  .ds-tbsel__btn:focus-visible, .ds-tb__figma:focus-visible, .ds-tbsel__list:focus-visible { outline: 2px solid rgb(0, 109, 235); outline-offset: 2px; }
+  .ds-tb__note { font-size: 12px; color: #57606a; }
+  .ds-byline { margin: 10px 0 0; font-size: 13px; color: #424a53; }
   .ds-hero { margin: 24px 0 8px; }
+  .ds-hero__mains { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
   .ds-page a.ds-hero__main { display: flex; align-items: center; gap: 16px; padding: 18px 20px; border-radius: 10px; background: #161616; color: #fff; text-decoration: none; }
   .ds-page a.ds-hero__main:hover { background: #2c2c2c; }
   .ds-hero__main img { flex-shrink: 0; border-radius: 8px; }
@@ -126,7 +132,12 @@
   .ds-hero__text b { font-size: 18px; line-height: 1.4; }
   .ds-hero__text span { font-size: 13px; color: #c9ced6; }
   .ds-hero__go { flex-shrink: 0; padding: 6px 12px; border-radius: 6px; background: #fff; color: #161616; font-size: 13px; font-weight: 700; }
-  .ds-hero__subs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 12px; }
+  .ds-page a.ds-hero__main--light { background: #fff; color: #1f2328; box-shadow: inset 0 0 0 1px #d0d7de; }
+  .ds-page a.ds-hero__main--light:hover { background: #f6f8fa; box-shadow: inset 0 0 0 1px #0550ae; }
+  .ds-hero__main--light .ds-hero__text span { color: #57606a; }
+  .ds-hero__main--light .ds-hero__go { background: #161616; color: #fff; }
+  .ds-hero__dot--lg { flex-shrink: 0; width: 40px !important; height: 40px !important; border-radius: 8px !important; }
+  .ds-hero__subs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 12px; }
   .ds-page .ds-hero__subs a { display: grid; grid-template-columns: 20px 1fr; align-items: center; column-gap: 8px; row-gap: 2px; padding: 12px 14px; border: 1px solid #d0d7de; border-radius: 8px; background: #fff; color: #1f2328; text-decoration: none; }
   .ds-page .ds-hero__subs a:hover { border-color: #0550ae; }
   .ds-hero__subs img, .ds-hero__dot { border-radius: 4px; }
@@ -134,7 +145,7 @@
   .ds-hero__subs b { font-size: 14px; }
   .ds-hero__subs span:not(.ds-hero__dot) { grid-column: 2; font-size: 12px; color: #57606a; }
   .ds-hero__note { margin: 10px 0 0; font-size: 12px; color: #57606a; }
-  @media (max-width: 720px) { .ds-hero__subs { grid-template-columns: 1fr; } .ds-hero__go { display: none; } }
+  @media (max-width: 720px) { .ds-hero__mains, .ds-hero__subs { grid-template-columns: 1fr; } .ds-hero__go { display: none; } }
   /* 좁은 화면(휴대폰) — 표가 페이지 밖으로 밀어 가로 스크롤이 생기던 것 → 표 안에서만 가로로 밀리게, 칸 패딩도 줄임 (10/13) */
   @media (max-width: 720px) { .ds-page .ds-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; } .ds-table th, .ds-table td { padding: 8px 10px; } }
   .ds-page a.ds-link { color: #0550ae; text-decoration: none; }
