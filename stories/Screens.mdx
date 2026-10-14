@@ -1,12 +1,13 @@
 import { Meta, Unstyled } from '@storybook/addon-docs/blocks';
-import { PageHead, Section, Card } from './_blocks.js';
+import { PageHead, Section, Card, Toolbar } from './_blocks.js';
 import * as S from './Screens.stories.js';
 
 <Meta of={S} />
 
 <Unstyled>
 <div className="ds-page">
-<PageHead eyebrow="Screens" title="PLM 화면" lead="이 디자인 시스템의 클래스와 토큰만으로 구성한 PLM 업무 화면입니다. 위쪽 도구 막대에서 브랜드 · 화면 모드를 바꾸면 같은 마크업의 화면 전체가 함께 바뀝니다.">
+<PageHead eyebrow="Screens" title="PLM 화면" lead="이 디자인 시스템의 클래스와 토큰만으로 구성한 PLM 업무 화면입니다. 아래 버튼으로 브랜드 · 화면 모드를 바꾸면 같은 마크업의 화면 전체가 함께 바뀝니다.">
+<Toolbar compact />
 <ul className="ds-meta"><li>화면 5장</li><li>실제 크기 1440 × 900</li><li>가상 데이터</li><li>브랜드 3 × 라이트 · 다크</li></ul>
 </PageHead>
 <Section title="로그인" en="Sign in" desc="처음 보는 화면입니다. 왼쪽 = 브랜드 딥 패널(서비스 소개 · 문의처), 오른쪽 = 로그인 폼. 패널 색과 그림은 브랜드 · 화면 모드를 따릅니다.">
@@ -52,7 +53,7 @@ import * as S from './Screens.stories.js';
 <tr><td><b>등록 창</b></td><td><code>.pop</code> · <code>.form-grid-2</code> · <code>.ff-readonly</code> · <code>.field-error-msg</code> · <code>.resumable</code></td><td>제목 줄 · 접는 섹션 · 라벨 위 2열 폼. 필수 표시(*) · 오류 칸 · 읽기 전용 회색 칸 · 첨부(끌어다 놓기 · 형식 아이콘 · 올리는 중 막대). 섹션 머리는 바탕 없는 제목줄(<code>.pop .seach_arm</code>) + 상세 화면과 같은 <code>.section-toggle</code>입니다.</td></tr>
 </tbody>
 </table>
-<p className="ds-note">데이터는 모두 가상입니다. 도구 막대에서 브랜드를 바꾸면 마크업은 그대로 두고, 브랜드 파일의 색 · 형태 값만으로 이 화면이 다시 그려집니다.</p>
+<p className="ds-note">데이터는 모두 가상입니다. 브랜드를 바꾸면 마크업은 그대로 두고, 브랜드 파일의 색 · 형태 값만으로 이 화면이 다시 그려집니다.</p>
 </Section>
 </div>
 </Unstyled>

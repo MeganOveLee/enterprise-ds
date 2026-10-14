@@ -105,6 +105,19 @@
   .intro-demo__search .select { width: 140px; }
   .intro-demo__no { font-size: var(--body-sm); color: var(--color-text-muted); font-variant-numeric: tabular-nums; }
   /* 소개 맨 위 「바로 보기」 — 포트폴리오로 보는 사람이 Figma 원본부터 열게 (10/13) */
+  /* 문서 안 도구 막대(Toolbar 블록) — 화면 맨 위 도구 막대와 같은 버튼 */
+  .ds-tb { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; margin: 0 0 12px; padding: 8px 12px; border: 1px solid #e1e4e8; border-radius: 6px; background: #fff; font-size: 12px; }
+  .ds-tb--compact { display: inline-flex; margin: 0 4px; padding: 2px 6px; gap: 4px 10px; vertical-align: middle; }
+  .ds-tb__figma { display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 0 10px 0 6px; border-radius: 6px; background: #161616; color: #fff !important; font-weight: 600; text-decoration: none !important; white-space: nowrap; }
+  .ds-tb__figma img { display: block; border-radius: 3px; }
+  .ds-tb__group { display: inline-flex; align-items: center; gap: 4px; }
+  .ds-tb__label { margin-right: 2px; color: #57606a; }
+  .ds-tb__btn { height: 26px; padding: 0 10px; border: 1px solid #d0d7de; border-radius: 6px; background: #fff; color: #424a53; font: inherit; cursor: pointer; }
+  .ds-tb--compact .ds-tb__btn { height: 22px; padding: 0 8px; }
+  .ds-tb__btn:hover { background: #f3f4f6; }
+  .ds-tb__btn[aria-pressed="true"] { border-color: #0969da; background: #ddf4ff; color: #0550ae; font-weight: 600; }
+  .ds-tb__btn:focus-visible, .ds-tb__figma:focus-visible { outline: 2px solid #0969da; outline-offset: 2px; }
+  .ds-tb__hint { color: #6e7781; }
   .ds-hero { margin: 24px 0 8px; }
   .ds-page a.ds-hero__main { display: flex; align-items: center; gap: 16px; padding: 18px 20px; border-radius: 10px; background: #161616; color: #fff; text-decoration: none; }
   .ds-page a.ds-hero__main:hover { background: #2c2c2c; }

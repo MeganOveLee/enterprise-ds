@@ -1,5 +1,5 @@
 import { Meta, Unstyled, Controls } from '@storybook/addon-docs/blocks';
-import { PageHead, Section, Card } from './_blocks.js';
+import { PageHead, Section, Card, Toolbar } from './_blocks.js';
 import * as S from './Empty.stories.js';
 
 <Meta of={S} />
@@ -19,14 +19,15 @@ import * as S from './Empty.stories.js';
 </tbody>
 </table>
 </Section>
-<Section title="예시" en="Examples" desc="위쪽 도구 막대에서 「브랜드」를 바꾸면 그림이 바뀝니다.">
+<Section title="예시" en="Examples" desc="브랜드를 바꾸면 그림이 바뀝니다.">
+<Toolbar compact />
 <Card of={S.아직_없음} title="아직 없음" en="No data" desc="처음 쓰는 목록. 주 액션은 만들기입니다." />
 <Card of={S.검색_결과_없음} title="검색 결과 없음" en="No results" desc="조건을 넓히도록 안내하고, 조건 초기화를 둡니다." />
 <Card of={S.네트워크_오류} title="네트워크 오류" en="Offline" desc="연결을 확인하라고 알리고 다시 시도를 둡니다." />
 <Card of={S.서버_오류} title="서버 오류" en="Error" desc="다시 시도와 문의를 두고, 관리자에게 알릴 오류 코드를 보여 줍니다." />
 <Card of={S.카드_안} title="카드 안" en="In card" desc="대시보드 카드처럼 좁은 자리. 그림을 작게, 액션 없이." />
 </Section>
-<Section title="전체 상태" en="States" desc="네 가지 빈 이유를 두 가지 그림으로 모았습니다. 도구 막대와 상관없이 둘 다 보입니다.">
+<Section title="전체 상태" en="States" desc="네 가지 빈 이유를 두 가지 그림으로 모았습니다. 브랜드와 상관없이 둘 다 보입니다.">
 <Card of={S.그림_두_가지} title="그림 두 가지" desc="위 = 일러스트(E3PS), 아래 = 선 픽토그램(Fashion · Precision · 카드 안)" />
 </Section>
 <Section title="Playground" desc="아래 표에서 값을 바꾸면 미리보기와 「코드 보기」가 함께 바뀝니다.">
