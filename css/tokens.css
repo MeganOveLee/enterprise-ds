@@ -271,7 +271,7 @@
   --color-icon-brand:        var(--brand-500);
 
   /* 포커스 링 · 색 면 위 전경 · 즐겨찾기 (DS-ADR-004, 2026-10-02)
-   * focus-ring  — 포커스 보더(--color-border-focus) 바깥 3px 번짐. 브랜드 22%. 다크도 같은 식(브랜드값이 다크에서 안 바뀜)
+   * focus-ring  — 포커스 보더(--color-border-focus) 바깥 3px 번짐. 라이트 = 브랜드 500 22%, 다크 = 400 35%(아래 다크 블록, 10/14 결정 — 22%는 다크 바탕 위 1.2:1로 거의 안 보임)
    * on-color    — 채색 면(브랜드·체크·상태 점) 위 글자/아이콘. 두 모드 모두 흰색이라 다크 재정의 없음
    *               (inverse 와 다름: inverse 는 다크에서 뒤집힘)
    * favorite    — 즐겨찾기 별. 경고(warning)와 의미가 달라 따로 둠 */
@@ -500,6 +500,7 @@ body.dark-mode {
   --color-border-input-hover: var(--neutral-400);   /* 다크는 밝아지는 쪽이 강조 */
   --color-border-brand:   var(--brand-400);  /* 다크모드 브랜드 보더 */
   --color-border-focus:   var(--brand-400);
+  --color-focus-ring:     color-mix(in srgb, var(--brand-400) 35%, transparent);   /* 다크 번짐 — 바탕 위 1.5~1.7:1(22%는 1.2). 표시는 테두리가 맡고 번짐은 보조 (10/14 15:03 결정) */
   --color-border-danger:  var(--red-500);
   --color-border-info:    var(--blue-400);
   --color-border-success: var(--green-500);
