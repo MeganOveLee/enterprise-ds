@@ -2594,23 +2594,7 @@ body.dark-mode #leftGrid {
 /* AUI Grid 다크모드 그리드(zebra / 셀·헤더 보더 / 헤더 배경 / 셀 input / 패널 배경)
  * → AUIGrid_custom_style.css 로 이관 (그리드 내부 룰 일원화). */
 
-/* ── 페이지네이션 — 활성 = 흰배경 + 검은글씨 (Spline 톤) ── */
-body.dark-mode .ui-pagination__btn {
-    background: transparent !important;
-    color: var(--color-text-muted) !important;   /* v1.0: --neutral-400 → 시맨틱 (다크 subtle = neutral-400 동일) */
-    border-color: transparent !important;
-}
-body.dark-mode .ui-pagination__btn:hover {
-    background: var(--color-bg-base) !important;
-    color: var(--color-text-base) !important;
-}
-body.dark-mode .ui-pagination__btn.is-active,
-body.dark-mode .ui-pagination__btn.is-active:hover,
-body.dark-mode .ui-pagination__btn.is-active:focus {
-    background: var(--color-bg-inverse) !important;
-    color: var(--color-text-inverse) !important;
-    border-color: transparent !important;
-}
+/* 페이지 번호 다크 — 토큰이 다크 값을 가짐. 옛 !important 덮어쓰기 3개(활성 = 흰 칩) 삭제 (10/14, 버튼과 같은 원칙) */
 
 /* 버튼 다크 — 토큰이 다크 값을 갖고 있어 별도 덮어쓰기 없음 (P2 Button · 2026-10-04). 옛 !important 덮어쓰기 묶음 삭제 */
 /* 산출물/태스크/고침 아이콘 — 라이트 주색 회색 → 다크 흰색 */
