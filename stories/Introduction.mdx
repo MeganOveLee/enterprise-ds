@@ -41,23 +41,23 @@ export const LOAD = [
 <Card of={P.Sample} />
 <p className="ds-sec__desc ds-after">실제 크기 업무 화면(로그인 · 홈 · 문서 검색 · 문서 등록 · 프로젝트 상세)은 <a className="ds-link" href="./?path=/docs/screens-plm-화면--docs" target="_top">Screens › PLM 화면</a>에서 볼 수 있습니다.</p>
 </Section>
-<Section title="구성" en="Categories" desc="기본 요소에서 토큰을 정하고, 컴포넌트는 그 토큰으로 만듭니다. 왼쪽 메뉴도 같은 순서입니다.">
-<div className="ds-layer">
-<p className="ds-layer__label">기본 요소<span>Foundation</span></p>
-<div className="ds-cats ds-cats--wide">
-<div className="ds-cat"><h3>Foundation<span>기본 요소</span></h3><p>모든 컴포넌트가 함께 쓰는 기본 값(색 · 글자 · 간격 · 모서리)을 토큰으로 정해 둔 곳입니다. 토큰 값 하나를 바꾸면 그 토큰을 쓰는 모든 컴포넌트의 생김새가 함께 바뀝니다.</p><ul><li><a href="./?path=/docs/foundation-color--docs" target="_top">Color</a></li><li><a href="./?path=/docs/foundation-typography--docs" target="_top">Typography</a></li><li><a href="./?path=/docs/foundation-spacing-·-radius--docs" target="_top">Spacing · Radius</a></li><li><a href="./?path=/docs/foundation-state--docs" target="_top">State</a></li></ul></div>
-</div>
-</div>
-<p className="ds-layer__arrow">↓ 컴포넌트는 기본 요소의 토큰을 가져다 씁니다</p>
+<Section title="구성" en="Categories" desc="왼쪽 메뉴와 같은 순서입니다. 화면에서 바로 쓰는 조합 · 컴포넌트가 위, 그 바탕이 되는 기본 요소(토큰)가 맨 아래입니다.">
 <div className="ds-layer">
 <p className="ds-layer__label">컴포넌트<span>Components</span></p>
 <div className="ds-cats">
+<div className="ds-cat"><h3>Patterns<span>조합</span></h3><p>단품을 엮은 업무 화면 조각입니다. 화면에서 그대로 꺼내 씁니다.</p><ul><li><a href="./?path=/docs/patterns-searchform--docs" target="_top">SearchForm</a></li></ul></div>
 <div className="ds-cat"><h3>Form<span>입력</span></h3><p>사용자가 값을 넣고, 고르고, 동작을 실행하는 요소입니다.</p><ul><li><a href="./?path=/docs/form-button--docs" target="_top">Button</a></li><li><a href="./?path=/docs/form-input--docs" target="_top">Input</a></li><li><a href="./?path=/docs/form-selection-controls--docs" target="_top">Selection Controls</a></li><li><a href="./?path=/docs/form-date-picker--docs" target="_top">Date Picker</a></li><li><a href="./?path=/docs/form-multi-select--docs" target="_top">Multi Select</a></li></ul></div>
 <div className="ds-cat"><h3>Navigation<span>이동</span></h3><p>화면 사이 · 쪽 사이를 옮겨 다니는 요소와 모든 화면이 함께 쓰는 틀입니다.</p><ul><li><a href="./?path=/docs/navigation-app-shell--docs" target="_top">App Shell</a></li><li><a href="./?path=/docs/navigation-pagination--docs" target="_top">Pagination</a></li><li><a href="./?path=/docs/navigation-tabs--docs" target="_top">Tabs</a></li></ul></div>
 <div className="ds-cat"><h3>Overlay<span>띄우기</span></h3><p>지금 화면 위에 따로 띄우는 요소입니다. 제품은 상세 · 등록 화면을 새 창으로 엽니다.</p><ul><li><a href="./?path=/docs/overlay-modal--docs" target="_top">Modal</a></li></ul></div>
 <div className="ds-cat"><h3>Data Display<span>데이터 표시</span></h3><p>목록 · 묶음 데이터를 보여 주는 요소입니다.</p><ul><li><a href="./?path=/docs/data-display-card--docs" target="_top">Card</a></li><li><span>Grid · 준비 중</span></li></ul></div>
 <div className="ds-cat"><h3>Feedback<span>피드백</span></h3><p>불러오는 중 · 비어 있음 · 진행률 같은 상태를 사용자에게 알리는 요소입니다.</p><ul><li><a href="./?path=/docs/feedback-loading--docs" target="_top">Loading</a></li><li><a href="./?path=/docs/feedback-skeleton--docs" target="_top">Skeleton</a></li><li><a href="./?path=/docs/feedback-empty--docs" target="_top">Empty</a></li><li><a href="./?path=/docs/feedback-progress--docs" target="_top">Progress</a></li></ul></div>
-<div className="ds-cat"><h3>조합<span>Components</span></h3><p>단품을 엮은 업무 화면 조각입니다. 화면에서 그대로 꺼내 씁니다.</p><ul><li><a href="./?path=/docs/조합-searchform--docs" target="_top">SearchForm</a></li></ul></div>
+</div>
+</div>
+<p className="ds-layer__arrow">↑ 위의 컴포넌트는 모두 아래 기본 요소의 토큰을 가져다 씁니다</p>
+<div className="ds-layer">
+<p className="ds-layer__label">기본 요소<span>Foundation</span></p>
+<div className="ds-cats ds-cats--wide">
+<div className="ds-cat"><h3>Foundation<span>기본 요소</span></h3><p>모든 컴포넌트가 함께 쓰는 기본 값(색 · 글자 · 간격 · 모서리)을 토큰으로 정해 둔 곳입니다. 토큰 값 하나를 바꾸면 그 토큰을 쓰는 모든 컴포넌트의 생김새가 함께 바뀝니다.</p><ul><li><a href="./?path=/docs/foundation-color--docs" target="_top">Color</a></li><li><a href="./?path=/docs/foundation-typography--docs" target="_top">Typography</a></li><li><a href="./?path=/docs/foundation-spacing-·-radius--docs" target="_top">Spacing · Radius</a></li><li><a href="./?path=/docs/foundation-state--docs" target="_top">State</a></li></ul></div>
 </div>
 </div>
 </Section>

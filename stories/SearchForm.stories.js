@@ -1,4 +1,4 @@
-// 조합/SearchForm — 문서 화면은 SearchForm.mdx. 검색 조건 영역 = 제목줄(.seach_arm) + 조건 칸(.pro_table > .form-grid-2)
+// Patterns(조합)/SearchForm — 문서 화면은 SearchForm.mdx. 검색 조건 영역 = 제목줄(.seach_arm) + 조건 칸(.pro_table > .form-grid-2)
 // 이번 카드: 상세 검색 펼침 — 대표 조건 한 줄만 보이고 나머지는 [상세 검색 펼치기](.btn--expand)로 펼침. 동작은 ./_search.js (Screens 문서 검색과 같음)
 import { wireSearchDetail, EXPAND_LABEL } from './_search.js';
 
@@ -39,7 +39,7 @@ const searchForm = ({ open = false } = {}) => {
 const mount = (html) => { const el = document.createElement('div'); el.innerHTML = html; return wireSearchDetail(el); };
 
 export default {
-  title: '조합/SearchForm',
+  title: 'Patterns/SearchForm',
   tags: ['!dev', '!autodocs'],   // 메뉴에는 문서 한 장만, 문서는 SearchForm.mdx
   parameters: { controls: { disable: true }, docs: { source: { language: 'html' } } },
 };
