@@ -922,6 +922,8 @@ body.dark-mode .theme-toggle-btn .icon-moon { display: none; }
     outline: 2px solid transparent;   /* 강제 색 모드용 */
     background: var(--color-bg-brand-subtle);
 }
+.main-sub-tabs .sub-tab.is-active:focus-visible,
+.pop .tab li.is-active:focus-visible { color: var(--color-text-on-brand-subtle); }   /* 선택 글자는 옅은 브랜드 바탕과 한 쌍 — 다크 text-brand 는 이 바탕 위 4.29:1(E3PS · Fashion), on-brand-subtle 6.49:1 이상. 라이트는 같은 값 */
 .ui-pagination__ellipsis {
     display: inline-flex;
     align-items: center;
