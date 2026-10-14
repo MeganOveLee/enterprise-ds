@@ -1954,7 +1954,7 @@ body.dark-mode .select {
     width: 250px;
     background: var(--color-bg-base);
     border-radius: var(--radius-popover);
-    box-shadow: 0 12px 32px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.08);
+    box-shadow: var(--shadow-popover);   /* 떠 있는 층 (10/14 그림자 역할). 구 0 12px 32px 12% + 0 2px 8px 8% */
     font-family: var(--font-family-base);
     font-size: var(--body-sm);
     color: var(--color-text-base);
@@ -1987,13 +1987,12 @@ body.dark-mode .select {
     align-items: center;
     justify-content: center;
     color: var(--color-text-base);
-    box-shadow: 0 1px 2px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04);
+    box-shadow: var(--shadow-core);   /* 구 0 1px 2px 8% + 0 2px 4px 4% */
 }
 /* ── 달력 내부 호버 = 옅은 브랜드색(--color-bg-brand-subtle). 회색(neutral-50)은 흰 배경 위에서 거의 안 보였음.
       구 --brand-100 직접 지정은 다크에서 안 뒤집혀 달력에 흰 조각으로 떴음 (세영 2026-08-23 / 2026-08-25) ── */
 .datepicker__nav:hover {
-    background: var(--color-bg-brand-subtle);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.12), 0 3px 6px rgba(0,0,0,0.06);
+    background: var(--color-bg-brand-subtle);   /* hover = 바탕만 (그림자 단계는 그대로, 10/14) */
 }
 .datepicker__title-area {
     display: flex;
@@ -2115,7 +2114,7 @@ body.dark-mode .select {
     background: var(--color-bg-base);
     border: 1px solid var(--color-border-base);
     border-radius: var(--radius-popover);
-    box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+    box-shadow: var(--shadow-popover);   /* 구 0 8px 16px 12% */
     z-index: 1001;
     max-height: 240px;
     overflow-y: auto;
@@ -2555,9 +2554,10 @@ body.dark-mode .pop-area,
 body.dark-mode .pop-popup,
 body.dark-mode .datepicker__dropdown,
 body.dark-mode .checkSelect .options {   /* 다중 선택 펼침 목록도 같은 떠 있는 층 — 빠져 있어 다크에서 카드 바탕과 구분이 안 됐음 (10/13) */
-    background: var(--color-bg-muted) !important;
-    box-shadow: 0 16px 48px rgba(0,0,0,0.6), 0 4px 12px rgba(0,0,0,0.4) !important;
+    background: var(--color-bg-muted) !important;   /* 그림자는 토큰 다크 값이 맡음 (10/14) */
 }
+body.dark-mode .pop-area,
+body.dark-mode .pop-popup { box-shadow: var(--shadow-modal) !important; }   /* 덮개 층 — 구 다크 묶음 값과 같음 */
 /* main-menu 우측 경계 — 다크에서 border-base 보다 한 단계 밝게 (LNB↔메인 구분) */
 body.dark-mode .main-menu {
     border-right-color: var(--color-border-strong) !important;
@@ -2629,7 +2629,7 @@ body.dark-mode .progress-bar {
     padding: 0.5rem 0.625rem;
     background-color: var(--color-bg-base);
     color: var(--color-text-base);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+    box-shadow: var(--shadow-popover);   /* 구 0 2px 8px 18% */
     border-radius: var(--radius-popover);
     width: max-content;
     z-index: 100;
@@ -2639,7 +2639,7 @@ body.dark-mode .progress-bar {
 .gnb .header-actions .menu-container { display: inline-block; padding: 0 0.375rem; }
 .gnb .header-actions nav ul li:last-child .menu-container { padding-right: 0; }   /* 마지막 토글(활동업무) 우측 패딩 제거 → 검색박스 우측 라인과 정렬 (세영 2026-08-16) */
 .gnb .header-actions .menu-container .menu-toggle { display: flex; align-items: center; }
-.gnb .dropdown-content-top { position: absolute; left: 50%; transform: translateX(-50%); display: none; flex-direction: column; min-width: 80px; margin-top: 0.25rem; z-index: 10; background-color: var(--color-bg-muted); box-shadow: 0 0 0.5rem rgba(0,0,0,0.25); border-radius: var(--radius-popover); width: max-content; }
+.gnb .dropdown-content-top { position: absolute; left: 50%; transform: translateX(-50%); display: none; flex-direction: column; min-width: 80px; margin-top: 0.25rem; z-index: 10; background-color: var(--color-bg-muted); box-shadow: var(--shadow-popover); border-radius: var(--radius-popover); width: max-content; }
 .gnb .dropdown-content-top.show { display: flex; }
 /* 결재/활동 드롭다운(workCount 변형, :has(.logoutBtn) 아님) = 배경+링크. 설정 드롭다운(logoutBtn)은 overrides:1079가 덮음 (styles.css 545/556/566 이관 2026-08-16) */
 .gnb .dropdown-content-top a { color: var(--color-text-base); display: block; text-decoration: none; transition: background-color 0.2s ease; }
@@ -2731,7 +2731,7 @@ body.dark-mode .checkSelect .selected-text {
     background-color: var(--color-bg-base);
     border: none;
     border-radius: var(--radius-popover);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    box-shadow: var(--shadow-popover);   /* 값 그대로(기준 값) */
     overflow-y: auto;
 }
 .checkSelect .options.show { display: flex; }

@@ -61,11 +61,12 @@ export const 모서리 = {
 };
 
 export const 그림자 = {
-  parameters: css(['.card { box-shadow: var(--shadow-core); }']),
-  render: () => mount(`<div style="padding:16px;background:var(--color-bg-subtle);border-radius:var(--radius-lg)">
-    <div class="fd-card" style="box-shadow:var(--shadow-core)"><code>--shadow-core</code></div>
+  parameters: css(['.card { box-shadow: var(--shadow-core); }', '.datepicker { box-shadow: var(--shadow-popover); }', '.pop-area { box-shadow: var(--shadow-modal); }']),
+  render: () => mount(`<div style="display:flex;gap:16px;flex-wrap:wrap;padding:16px;background:var(--color-bg-subtle);border-radius:var(--radius-lg)">
+    ${[['core', '카드 · 달력 화살표'], ['popover', '드롭다운 · 달력 · 다중 선택 목록'], ['modal', '인페이지 팝업']].map(([n, use]) => `
+    <div class="fd-card" style="flex:1 1 180px;box-shadow:var(--shadow-${n})"><code>--shadow-${n}</code><div class="fd-use">${use}</div></div>`).join('')}
   </div>
-  <p class="fd-use" style="margin:8px 0 0">그림자는 한 단계뿐입니다. 면 구분은 주로 배경색 차이와 테두리로 합니다.</p>`),
+  <p class="fd-use" style="margin:8px 0 0">그림자는 역할 3단계입니다(카드 · 떠 있는 층 · 덮개 층). 면 구분은 주로 배경색 차이와 테두리로 하고, 그림자는 바닥에서 뜬 정도만 나타냅니다.</p>`),
 };
 
 export const 높이 = {

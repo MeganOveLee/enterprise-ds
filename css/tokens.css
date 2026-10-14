@@ -102,6 +102,7 @@
 
   /* --- Transparent (shadow / overlay 용) ------------------------------------- */
   --transparent-12: rgba(0, 0, 0, 0.12);
+  --transparent-08: rgba(0, 0, 0, 0.08);
 
 
   /* ==========================================================================
@@ -374,8 +375,13 @@
   --color-progress-hold-start:     #FBBF24;
   --color-progress-hold-end:       #F59E0B;
 
-  /* Shadow */
-  --shadow-core: 0 1px 2px  var(--transparent-12);
+  /* Shadow — 역할 3단계 (10/14 제안 A안: 값은 이전 버전 화면에서 쓰던 것을 모음). 모서리 역할(--radius-popover)과 같은 이름
+   * core    = 카드 · 달력 화살표처럼 바닥에서 살짝 뜬 면
+   * popover = 떠 있는 층 — 드롭다운 · 달력 · 다중 선택 목록 · GNB 드롭다운 (구 rgba 직접 값 6곳)
+   * modal   = 덮개 층 — 인페이지 팝업 */
+  --shadow-core:    0 1px 2px  var(--transparent-12);
+  --shadow-popover: 0 4px 16px var(--transparent-12);
+  --shadow-modal:   0 12px 32px var(--transparent-12), 0 2px 8px var(--transparent-08);
 }
 
 
@@ -579,6 +585,8 @@ body.dark-mode {
   --color-border-grid-cell:          var(--neutral-750);
   --color-border-grid-header-bottom: var(--neutral-950);
 
-  /* Shadow — 다크에선 더 진하게 */
-  --shadow-core: 0 1px 2px  rgba(0, 0, 0, 0.4);
+  /* Shadow — 다크에선 더 진하게 (modal = 구 다크 떠 있는 층 묶음 값) */
+  --shadow-core:    0 1px 2px  rgba(0, 0, 0, 0.4);
+  --shadow-popover: 0 4px 16px rgba(0, 0, 0, 0.5);
+  --shadow-modal:   0 16px 48px rgba(0, 0, 0, 0.6), 0 4px 12px rgba(0, 0, 0, 0.4);
 }
