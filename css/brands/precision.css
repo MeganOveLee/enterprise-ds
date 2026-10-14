@@ -11,8 +11,8 @@
  *   accent 는 반대편 쪽 베리(색상 326°) — 신호색과 색상이 겹치지 않게(warning 74° · danger 24° 떨어짐, 분홍이라 빨강과 구분) (2-3 · 2-4).
  *
  * 이 파일이 여는 토큰 (DS-ADR-003 · 020)
- *   색 11개(필수)   --brand-50~900 · --accent-500
- *   형태 12개(선택) --radius-{btn · input · checkbox · chip · item · card · panel · popover · skeleton}
+ *   색(필수)   --brand-50~900 · --accent-500   (목록은 _template.css)
+ *   형태(선택) --radius-{btn · input · checkbox · chip · item · card · panel · popover · skeleton}
  *                   --size-input · --size-btn · --size-btn-sm
  *   그 밖(단계 --radius-sm/md/lg, 간격, 글자, 신호색)은 덮지 않는다 — 스태틱.
  *
