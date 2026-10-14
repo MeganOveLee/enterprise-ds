@@ -13,19 +13,21 @@ import * as S from './Progress.stories.js';
 <tbody>
 <tr><td><b>진행률 막대</b></td><td><code>.progress-bar</code> › <code>.pbar-fill</code></td><td>높이 17 알약. 바탕은 bg-subtle, 채움 너비(<code>style="width:58%"</code>)가 진행률입니다. 값이 바뀌면 채움이 1.6초에 걸쳐 늘어납니다.</td></tr>
 <tr><td><b>상태</b></td><td><code>{'.progress-bar--{상태}'}</code><span className="ds-muted">done · progress · delay · plan · hold</span></td><td>채움을 상태 색 그라데이션으로(<code>--color-progress-done-start</code> → <code>-end</code> 짝). 다크에서 예정만 값이 따로 있습니다.</td></tr>
-<tr><td><b>% 글자</b></td><td><code>.progress-bar__label</code></td><td>막대 가운데 12px. 빼도 됩니다(좁은 표 안).</td></tr>
+<tr><td><b>% 글자</b></td><td><code>.progress-bar__label</code></td><td>막대 밖 오른쪽 12px. 막대는 글자 자리만큼 줄어듭니다. 빼도 됩니다(좁은 표 안).</td></tr>
+<tr><td><b>계획 표식</b></td><td><code>.progress-bar__plan</code><span className="ds-muted">style="--plan:64%"</span></td><td>막대 위 계획 위치를 가리키는 작은 삼각(icon-muted). 실적은 채움, 계획은 표식이라 늦음이 막대에서 바로 보입니다. 숫자 앞 범례는 같은 모양의 <code>.progress-plan-key</code>. 이전 버전에는 「진행/적정(%)」 숫자만 있었고, 표식은 DS 제안입니다.</td></tr>
 <tr><td><b>상태 표시</b></td><td><code>{'.status-block--{상태}'}</code> › <code>.status-segments</code> + <code>.status-text</code></td><td>막대 5개 + 상태 글자. 글자(완료 · 진행중 · 지연 · 예정 · 보류)는 CSS가 넣어서 마크업은 비워 둡니다. 글자 색은 신호 글자 토큰(-bold · muted)이라 진행 색보다 진합니다.</td></tr>
 <tr><td><b>한 줄 배치</b></td><td><code>.progress-row</code></td><td>상태 표시와 막대를 간격 12로 나란히.</td></tr>
 <tr><td><b>범례</b></td><td><code>.legend-item</code> › <code>.legend-dot</code></td><td>점 색은 화면이 상태 색 끝값으로 지정합니다(상태 클래스 없음). 산출물 패널 안(<code>.left-legend</code>)에서는 16px 원 + 기호.</td></tr>
-<tr><td><b>접근성</b></td><td><code>role="progressbar"</code> · <code>aria-valuenow</code> · <code>aria-label</code></td><td>막대마다 무엇의 진행률인지 이름을 붙입니다(「설계 진행률」). 상태 표시의 막대 5개는 꾸밈이라 <code>aria-hidden="true"</code>.</td></tr>
+<tr><td><b>접근성</b></td><td><code>role="progressbar"</code> · <code>aria-valuenow</code> · <code>aria-label</code></td><td>막대마다 무엇의 진행률인지 이름을 붙입니다(「설계 진행률」). 계획 표식이 있으면 <code>aria-valuetext="진행률 58%, 계획 64%, 6%p 늦음"</code>으로 계획과 차이까지 읽히게 하고, 표식은 <code>aria-hidden="true"</code>. 상태 표시의 막대 5개는 꾸밈이라 <code>aria-hidden="true"</code>.</td></tr>
 </tbody>
 </table>
 <p className="ds-sec__desc ds-after">Figma UI Kit의 Progress bar와 짝입니다. 첨부 파일을 올리는 중 막대는 이 컴포넌트가 아니라 업로더 안의 기본 <code>{'<progress>'}</code>입니다.</p>
 </Section>
 <Section title="예시" en="Examples">
-<Card of={S.진행률_막대} title="진행률 막대" en="Bar" desc="가장 단순한 모양 — 막대 하나와 가운데 %." />
+<Card of={S.진행률_막대} title="진행률 막대" en="Bar" desc="가장 단순한 모양 — 막대 하나와 오른쪽 %." />
 <Card of={S.상태_표시와_함께} title="상태 표시와 함께" en="With status" desc="프로젝트 상세의 진행 현황 줄. 상태 표시가 막대 왼쪽에 붙습니다." />
 <Card of={S.단계별_목록} title="단계별 목록" en="Phases" desc="단계마다 막대 하나. 이름은 화면이 붙입니다." />
+<Card of={S.계획_표식} title="계획 표식" en="Plan marker" desc="실적 = 채움, 계획 = 막대 위 작은 삼각. 숫자는 제목 바로 옆에 한 줄로." />
 <Card of={S.범례} title="범례" en="Legend" desc="산출물 트리 위 범례. 점 안 기호로 색 없이도 구분됩니다." />
 </Section>
 <Section title="전체 상태" en="States" desc="상태 다섯 가지를 한 줄씩. 진행 색은 브랜드 색이 아니라서 브랜드를 바꿔도 같고, 다크에서는 예정만 밝은 회색으로 바뀝니다.">

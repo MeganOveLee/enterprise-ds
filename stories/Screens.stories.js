@@ -302,8 +302,12 @@ const PS = {   // 진행 상태 — 글자 · 진행률 막대 · 상태 칩 · 
   hold: ['보류', 'warning', '<path d="M9 7v10M15 7v10"/>'],
 };
 const pchip = (k) => '<span class="scr-chip scr-chip--' + PS[k][1] + '">' + PS[k][0] + '</span>';
-const pbar = (k, pct, name, label = true) => '<div class="progress-bar progress-bar--' + k + '" role="progressbar" aria-label="' + name + ' 진행률" aria-valuenow="' + pct + '" aria-valuemin="0" aria-valuemax="100">' +
-  '<div class="pbar-fill" style="width:' + pct + '%"></div>' + (label ? '<span class="progress-bar__label">' + pct + '%</span>' : '') + '</div>';
+// 계획 표식이 있을 때 화면 읽기 문구 — 「진행률 58%, 계획 64%, 6%p 늦음」
+const planText = (pct, plan) => '진행률 ' + pct + '%, 계획 ' + plan + '%, ' + (plan > pct ? (plan - pct) + '%p 늦음' : plan < pct ? (pct - plan) + '%p 빠름' : '계획대로');
+const pbar = (k, pct, name, label = true, plan) => '<div class="progress-bar progress-bar--' + k + '" role="progressbar" aria-label="' + name + ' 진행률" aria-valuenow="' + pct + '" aria-valuemin="0" aria-valuemax="100"' +
+  (plan === undefined ? '' : ' aria-valuetext="' + planText(pct, plan) + '"') + '>' +
+  '<div class="pbar-fill" style="width:' + pct + '%"></div>' + (label ? '<span class="progress-bar__label">' + pct + '%</span>' : '') +
+  (plan === undefined ? '' : '<span class="progress-bar__plan" style="--plan:' + plan + '%" aria-hidden="true"></span>') + '</div>';
 const WBS = [
   [0, '브레이크 캘리퍼 경량화', 'delay', 'open'],
   [1, '1. 기획', 'done', 'open'], [2, '1.1 요구사항 정의서', 'done'], [2, '1.2 개발 계획서', 'done'],
@@ -352,8 +356,8 @@ const detailBody = () =>
   dsec('진행 현황', true, '<span class="scr-total">기준 2026-10-13</span>') +
   '<div class="pro_table scr-progress"><div class="scr-progress__top">' +
   '<div class="status-block status-block--delay"><div class="status-segments status-segments--delay">' + '<span class="status-segments__bar"></span>'.repeat(5) + '</div><span class="status-text"></span></div>' +
-  '<div class="scr-progress__main"><div class="scr-progress__meta"><b>전체 진행률</b><span>계획 64% · 실적 58% · <em>6%p 늦음</em></span></div>' +
-  '<div class="progress-row">' + pbar('delay', 58, '전체') + '</div></div>' +
+  '<div class="scr-progress__main"><div class="scr-progress__meta"><b>전체 진행률</b><span><span class="progress-plan-key" aria-hidden="true"></span>계획 64% · 실적 58% · <em>6%p 늦음</em></span></div>' +
+  '<div class="progress-row">' + pbar('delay', 58, '전체', true, 64) + '</div></div>' +
   '<dl class="scr-kv"><div><dt>남은 기간</dt><dd>66일</dd></div><div><dt>지연 태스크</dt><dd class="is-danger">2건</dd></div><div><dt>완료 태스크</dt><dd>9 / 21</dd></div></dl></div>' +
   '<ul class="scr-phases">' + PHASES.map(([n, k, pct, d]) =>
     '<li><span class="scr-phases__name">' + n + '</span>' + pbar(k, pct, n) + '<span class="scr-phases__date">' + d + '</span>' + pchip(k) + '</li>').join('') + '</ul></div>' +

@@ -2346,6 +2346,26 @@ body.dark-mode .select {
     margin-right: calc(var(--spacing-8) + 4ch);
     overflow: visible;
 }
+/* 계획 표식 — 막대 위 계획 위치를 가리키는 작은 아래 삼각. 실적 = 채움, 계획 = 표식 (10/14 결정 · 이전 버전에 없는 DS 제안).
+ * 위치 = style="--plan:64%". 표식은 정보라 막대의 aria-valuetext에 「계획 64%」를 같이 적고, 표식 자체는 aria-hidden.
+ * .progress-plan-key = 같은 모양의 범례(글자 앞 「▼ 계획」) */
+.progress-bar__plan,
+.progress-plan-key {
+    width: 10px; height: 6px;
+    background: var(--color-icon-muted);
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    pointer-events: none;
+}
+.progress-bar__plan {
+    position: absolute;
+    bottom: calc(100% + 2px); left: var(--plan, 0%);
+    transform: translateX(-50%);
+}
+.progress-plan-key { display: inline-block; margin-right: var(--spacing-4); vertical-align: 0.15em; }
+.progress-bar:has(> .progress-bar__plan) { overflow: visible; margin-top: var(--spacing-8); }
+@media (forced-colors: active) {
+    .progress-bar__plan, .progress-plan-key { forced-color-adjust: none; background: CanvasText; }
+}
 
 /* 진행률 범례 — bar 아래 5 상태 */
 

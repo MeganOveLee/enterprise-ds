@@ -13,9 +13,13 @@ const ST = {   // 상태 — 이름 · 범례 기호
 };
 const KEYS = Object.keys(ST);
 
-const bar = (k = 'progress', pct = 58, name = '전체', label = true) =>
-  '<div class="progress-bar progress-bar--' + k + '" role="progressbar" aria-label="' + name + ' 진행률" aria-valuenow="' + pct + '" aria-valuemin="0" aria-valuemax="100">' +
-  '<div class="pbar-fill" style="width:' + pct + '%"></div>' + (label ? '<span class="progress-bar__label">' + pct + '%</span>' : '') + '</div>';
+// 계획 표식이 있을 때 화면 읽기 문구 — 「진행률 58%, 계획 64%, 6%p 늦음」
+const planText = (pct, plan) => '진행률 ' + pct + '%, 계획 ' + plan + '%, ' + (plan > pct ? (plan - pct) + '%p 늦음' : plan < pct ? (pct - plan) + '%p 빠름' : '계획대로');
+const bar = (k = 'progress', pct = 58, name = '전체', label = true, plan) =>
+  '<div class="progress-bar progress-bar--' + k + '" role="progressbar" aria-label="' + name + ' 진행률" aria-valuenow="' + pct + '" aria-valuemin="0" aria-valuemax="100"' +
+  (plan === undefined ? '' : ' aria-valuetext="' + planText(pct, plan) + '"') + '>' +
+  '<div class="pbar-fill" style="width:' + pct + '%"></div>' + (label ? '<span class="progress-bar__label">' + pct + '%</span>' : '') +
+  (plan === undefined ? '' : '<span class="progress-bar__plan" style="--plan:' + plan + '%" aria-hidden="true"></span>') + '</div>';
 const status = (k = 'progress') =>
   '<div class="status-block status-block--' + k + '"><div class="status-segments status-segments--' + k + '" aria-hidden="true">' +
   '<span class="status-segments__bar"></span>'.repeat(5) + '</div><span class="status-text"></span></div>';
@@ -45,6 +49,12 @@ const phases = () => '<div style="display:grid;gap:10px">' + PHASES.map(([n, k, 
 export const 단계별_목록 = {
   parameters: { docs: { source: { code: bar('done', 100, '설계') + '\n' + bar('progress', 64, '시제품 제작') + '\n<!-- … -->' } } },
   render: () => box(phases()),
+};
+const planHead = '<div style="display:flex;align-items:baseline;gap:12px;font-size:var(--body-sm);color:var(--color-text-muted);margin-bottom:6px">' +
+  '<b style="font-size:var(--body-md);color:var(--color-text-base)">전체 진행률</b><span><span class="progress-plan-key" aria-hidden="true"></span>계획 64% · 실적 58% · <b style="color:var(--color-text-danger)">6%p 늦음</b></span></div>';
+export const 계획_표식 = {
+  parameters: { docs: { source: { code: bar('delay', 58, '전체', true, 64) } } },
+  render: () => box(planHead + bar('delay', 58, '전체', true, 64)),
 };
 export const 범례 = {
   parameters: { docs: { source: { code: legend() } } },
