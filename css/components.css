@@ -2212,13 +2212,19 @@ body.dark-mode .select {
 
 .progress-bar__label {
     position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
+    top: 50%; left: calc(100% + var(--spacing-8));   /* 막대 밖 오른쪽 (10/13 22:56 결정) — 구 가운데는 채움 5색 위 글자 대비 1.2~4.0 */
+    transform: translateY(-50%);
     color: var(--color-text-base);
     font-size: var(--body-sm);
     font-weight: var(--font-weight-semibold);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
     pointer-events: none;
     z-index: 1;
+}
+.progress-bar:has(> .progress-bar__label) {   /* 라벨 자리(100% 기준 4글자)만큼 막대를 줄이고, 라벨이 잘리지 않게 */
+    margin-right: calc(var(--spacing-8) + 4ch);
+    overflow: visible;
 }
 
 /* 진행률 범례 — bar 아래 5 상태 */
