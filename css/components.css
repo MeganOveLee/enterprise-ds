@@ -2348,7 +2348,7 @@ body.dark-mode .select {
 }
 /* 계획 표식 — 막대 위 계획 위치를 가리키는 작은 아래 삼각. 실적 = 채움, 계획 = 표식 (10/14 결정 · 이전 버전에 없는 DS 제안).
  * 위치 = style="--plan:64%". 표식은 정보라 막대의 aria-valuetext에 「계획 64%」를 같이 적고, 표식 자체는 aria-hidden.
- * .progress-plan-key = 같은 모양의 범례(글자 앞 「▼ 계획」) */
+ * .progress-plan-key = 같은 모양의 범례 — 영역 머리에 한 번 「▼ 계획」(전체 · 단계 줄 막대 공용, 20:40 결정) */
 .progress-bar__plan,
 .progress-plan-key {
     width: 10px; height: 6px;

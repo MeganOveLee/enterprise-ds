@@ -51,7 +51,7 @@ export const 단계별_목록 = {
   render: () => box(phases()),
 };
 const planHead = '<div style="display:flex;align-items:baseline;gap:12px;font-size:var(--body-sm);color:var(--color-text-muted);margin-bottom:6px">' +
-  '<b style="font-size:var(--body-md);color:var(--color-text-base)">전체 진행률</b><span><span class="progress-plan-key" aria-hidden="true"></span>계획 64% · 실적 58% · <b style="color:var(--color-text-danger)">6%p 늦음</b></span></div>';
+  '<b style="font-size:var(--body-md);color:var(--color-text-base)">전체 진행률</b><span>계획 64% · 실적 58% · <b style="color:var(--color-text-danger)">6%p 늦음</b></span><span style="margin-left:auto"><span class="progress-plan-key" aria-hidden="true"></span>계획</span></div>';
 export const 계획_표식 = {
   parameters: { docs: { source: { code: bar('delay', 58, '전체', true, 64) } } },
   render: () => box(planHead + bar('delay', 58, '전체', true, 64)),

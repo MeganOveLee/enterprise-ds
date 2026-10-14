@@ -354,10 +354,10 @@ const detailBody = () =>
   ro('프로젝트 번호', 'PJT-2026-014') + ro('제품군', '제동 부품') + ro('PM', '김도윤 · 설계1팀') + ro('개발 단계', '설계 검증 (DV)') +
   ro('계획 기간', '2026-07-01 ~ 2026-12-18', 2) + ro('실적 시작일', '2026-07-03') + ro('관리 등급', 'A · 중점 관리') +
   '</div></div>' +
-  dsec('진행 현황', true, '<span class="scr-total">기준 2026-10-13</span>') +
+  dsec('진행 현황', true, '<span class="scr-total"><span class="progress-plan-key" aria-hidden="true"></span>계획 · 기준 2026-10-13</span>') +
   '<div class="pro_table scr-progress"><div class="scr-progress__top">' +
   '<div class="status-block status-block--delay"><div class="status-segments status-segments--delay">' + '<span class="status-segments__bar"></span>'.repeat(5) + '</div><span class="status-text"></span></div>' +
-  '<div class="scr-progress__main"><div class="scr-progress__meta"><b>전체 진행률</b><span><span class="progress-plan-key" aria-hidden="true"></span>계획 64% · 실적 58% · <em>6%p 늦음</em></span></div>' +
+  '<div class="scr-progress__main"><div class="scr-progress__meta"><b>전체 진행률</b><span>계획 64% · 실적 58% · <em>6%p 늦음</em></span></div>' +
   '<div class="progress-row">' + pbar('delay', 58, '전체', true, 64) + '</div></div>' +
   '<dl class="scr-kv"><div><dt>남은 기간</dt><dd>66일</dd></div><div><dt>지연 태스크</dt><dd class="is-danger">2건</dd></div><div><dt>완료 태스크</dt><dd>9 / 21</dd></div></dl></div>' +
   '<ul class="scr-phases">' + PHASES.map(([n, k, pct, d, plan]) =>
