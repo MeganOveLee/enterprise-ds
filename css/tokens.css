@@ -233,7 +233,7 @@
   --color-text-muted:          var(--neutral-600);   /* 보조 글자 단일 단계. 구 text-subtle(600)과 합침 — 구 muted(700)는 subtle과 한 단계 차이라 구분 안 됨 (DS-ADR-008, 2026-10-03) */
   --color-text-disabled:       var(--neutral-400);
   --color-text-inverse:        var(--white);
-  --color-text-label:          var(--brand-800);     /* 폼 라벨(th·detail-label) 단일 출처.
+  --color-text-label:          var(--brand-500);     /* 폼 라벨(th·detail-label) 단일 출처. 이전 버전 검색 라벨 = 브랜드 500 · semibold (10/14, 구 brand-800).
                                                         중립으로 바꿔보려면 이 한 줄만 var(--color-text-muted) 로 (세영 2026-08-25) */
   --color-text-brand:          var(--brand-500);     /* 이름값 일치. 쓰던 자리(강조 텍스트 8곳)는 --color-text-base 로 이동 (세영 2026-08-22) */
   --color-text-link-visited:   var(--neutral-500);

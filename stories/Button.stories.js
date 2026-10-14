@@ -20,7 +20,7 @@ const iconBtn = ({ shape = 'outlined', label = '닫기', glyph = X, extra = '', 
 // 펼침 버튼
 const expandBtn = ({ open = false, extra = '', disabled = false } = {}) =>
   '<button type="button" class="btn btn--secondary btn--outlined btn--expand' + (extra ? ' ' + extra : '') + '" aria-expanded="' + open + '"' +
-  (disabled ? ' disabled' : '') + '>상세검색</button>';
+  (disabled ? ' disabled' : '') + '><span class="t-open">상세 검색 펼치기</span><span class="t-close">상세 검색 접기</span></button>';
 const CHEV = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
 const iconExpand = ({ open = false, extra = '', disabled = false } = {}) =>
   iconBtn({ shape: 'transparent', label: '왼쪽 메뉴', glyph: CHEV, extra, attrs: ' aria-expanded="' + open + '"', disabled });

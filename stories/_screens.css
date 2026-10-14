@@ -110,7 +110,6 @@
 .scr-gnb-icon:focus-visible { outline: 2px solid transparent; box-shadow: 0 0 0 3px var(--color-focus-ring); }   /* DS 버튼과 같은 글로우(보더 없는 아이콘이라 번짐만) */
 
 /* 라벨 위 검색 폼 — 라벨 · 칸 짝은 .form-grid-2 .ff-field 그대로, 열 수만 6 */
-.scr .search-label { display: block; font-size: var(--body-sm); font-weight: var(--font-weight-medium); color: var(--color-text-label); }
 .scr-radio-row { display: flex; align-items: center; gap: var(--spacing-16); height: var(--size-input); }
 .scr-radio-row .radio { white-space: nowrap; }
 .scr .ui-datepicker-range { width: 100%; }

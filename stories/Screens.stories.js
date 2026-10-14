@@ -5,6 +5,7 @@
 // 프로젝트 상세 = 아이콘 메뉴 + 상단 바 + 왼쪽 산출물 구조 패널 + 오른쪽 상세(섹션 · 진행률)
 // 마크업은 문자열 이어 붙이기 — 스토리북 색인기가 여러 줄 HTML 템플릿을 MDX로 잘못 읽는 일을 피함
 import './_screens.css';
+import { wireSearchDetail, EXPAND_LABEL } from './_search.js';
 
 const W = 1440;
 const H = 900;
@@ -71,10 +72,10 @@ const dp = (label, value = '', extra = '') =>
 const range = (label, a = '', b = '') =>
   '<div class="ui-datepicker-range">' + dp(label + ' 시작', a) + '<span class="ui-datepicker-range__sep">~</span>' + dp(label + ' 끝', b) + '</div>';
 const btn = (t, cls, icon = '') => '<button type="button" class="btn ' + cls + '">' + (icon ? svg(icon, 14) : '') + t + '</button>';
-const sel = (label, opts) => '<select class="select" aria-label="' + label + '">' + opts.map((o) => '<option>' + o + '</option>').join('') + '</select>';
+const sel = (label, opts, pick) => '<select class="select" aria-label="' + label + '">' + opts.map((o) => '<option' + (o === pick ? ' selected' : '') + '>' + o + '</option>').join('') + '</select>';
 // 라벨 위 · 칸 아래 — 검색 폼 · 등록 폼이 같은 짝 (.ff-field > .search-label + .td)
-const field = (label, control, { req = false, span = 0, id = '' } = {}) =>
-  '<div class="ff-field' + (span ? ' span-' + span : '') + '">' +
+const field = (label, control, { req = false, span = 0, id = '', cls = '' } = {}) =>
+  '<div class="ff-field' + (span ? ' span-' + span : '') + (cls ? ' ' + cls : '') + '">' +
   '<label class="search-label"' + (id ? ' for="' + id + '"' : '') + '>' + label + (req ? '<span class="required" aria-hidden="true"></span>' : '') + '</label>' +
   '<div class="td">' + control + '</div></div>';
 
@@ -123,23 +124,31 @@ const gnb = (crumbs = ['Home', '문서 관리', '문서 검색']) =>
   '</div></header>';
 
 // ── 검색 조건 · 결과 ──
-const searchForm = () =>
-  '<div class="seach_arm"><div class="leftbt">' + svg(I.filter, 16) + '<h4>검색 조건</h4></div>' +
-  '<div class="rightbt">' + btn('검색', 'btn--secondary btn--filled', I.search) + btn('검색 조건 초기화', 'btn--secondary btn--transparent', I.reset) + '</div></div>' +
+// 검색 조건 — 대표 조건 2줄 + [상세 검색] 펼침 (10/14 DS 제안 — 납품 화면은 고객 요청으로 조건 전체 노출)
+// 1줄 문서 분류 · 문서 번호 · 문서 명 / 2줄 작업현황 · 등록일(기간 2칸). 펼치면 버전 · 등록자 · 수정자 · 수정일
+// 접혀 있을 때 숨은 조건에 값이 있으면 버튼에 개수(이 화면은 등록자 · 수정일에 값 → 2)
+let searchUid = 0;
+const searchForm = ({ open = false } = {}) => {
+  const id = 'scr-search-detail-' + (++searchUid);
+  return '<div class="seach_arm"><div class="leftbt">' + svg(I.filter, 16) + '<h4>검색 조건</h4></div>' +
+  '<div class="rightbt">' + btn('검색', 'btn--primary btn--filled', I.search) +
+  '<button type="button" class="btn btn--secondary btn--outlined btn--expand" aria-expanded="' + open + '" aria-controls="' + id + '">' + EXPAND_LABEL + '</button>' +
+  btn('검색 조건 초기화', 'btn--secondary btn--transparent', I.reset) + '</div></div>' +
   '<div class="pro_table"><div class="form-grid-2 form-grid--6">' +
   field('문서 분류', '<input class="input" aria-label="문서 분류" value="/제품 문서/설계 문서" readonly>') +
   field('문서 번호', '<input class="input" aria-label="문서 번호">') +
   field('문서 명', '<input class="input" aria-label="문서 명">') +
-  field('작업현황', sel('작업현황', ['전체', '작업 중', '검토 중', '승인', '반려'])) +
+  field('작업현황', sel('작업현황', ['전체', '작업 중', '검토 중', '승인', '반려']), { cls: 'row-start' }) +
+  field('등록일', range('등록일', '2026-09-01', ''), { span: 2 }) +
+  '</div><div class="search-detail" id="' + id + '"' + (open ? '' : ' hidden') + '><div class="form-grid-2 form-grid--6"><div class="search-divider">상세 검색</div>' +
   field('버전', '<div class="scr-radio-row" role="radiogroup" aria-label="버전">' +
-    '<label class="radio"><input type="radio" name="scr-ver" checked><span class="radio__mark"></span>최신 버전</label>' +
-    '<label class="radio"><input type="radio" name="scr-ver"><span class="radio__mark"></span>모든 버전</label></div>') +
-  '<div class="ff-field"></div>' +
+    '<label class="radio"><input type="radio" name="' + id + '-ver" checked><span class="radio__mark"></span>최신 버전</label>' +
+    '<label class="radio"><input type="radio" name="' + id + '-ver"><span class="radio__mark"></span>모든 버전</label></div>', { span: 2 }) +
   field('등록자', sel('등록자', ['', '김도윤', '이서연'])) +
   field('수정자', sel('수정자', ['', '김도윤', '이서연'])) +
-  field('등록일', range('등록일', '2026-09-01', ''), { span: 2 }) +
-  field('수정일', range('수정일'), { span: 2 }) +
-  '</div></div>';
+  field('수정일', range('수정일', '', ''), { span: 2 }) +
+  '</div></div></div>';
+};
 
 const grid = () =>
   '<div class="seach_arm"><div class="leftbt">' + svg(I.list, 16) + '<h4>검색 결과 (' + ROWS.length + '/128)</h4>' +
@@ -432,12 +441,12 @@ export const 홈 = {
 
 export const 문서_검색 = {
   parameters: src(listScreen()),
-  render: () => frame(listScreen()),
+  render: () => wireSearchDetail(frame(listScreen())),
 };
 
 export const 문서_등록 = {
   parameters: src(registerPop()),
-  render: () => frame(listScreen() + '<div class="scr-dim"></div><div class="scr-window">' + registerPop() + '</div>'),
+  render: () => wireSearchDetail(frame(listScreen() + '<div class="scr-dim"></div><div class="scr-window">' + registerPop() + '</div>')),
 };
 
 export const 프로젝트_상세 = {

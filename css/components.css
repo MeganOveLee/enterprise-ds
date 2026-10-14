@@ -1207,6 +1207,9 @@ body.dark-mode .pop .pro_table { background: var(--color-bg-base); box-shadow: n
     padding: var(--spacing-16);
     flex-shrink: 0;
 }
+/* 검색 조건 카드 = 회색 페이지 위 흰 카드 + 1px 테두리(이전 버전 값). 상세 · 팝업 검색폼은 테두리 없음 */
+.product .pro_table { border: 1px solid var(--color-border-base); }
+.pop .product .pro_table { border: none; }
 
 /* ============================================================
  * 등록/상세 폼 — 라벨 위 + 2열 그리드 (검색폼과 동일 톤)
@@ -1227,7 +1230,7 @@ body.dark-mode .pop .pro_table { background: var(--color-bg-base); box-shadow: n
 .form-grid-2.form-grid--6 { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: var(--spacing-12) var(--spacing-16); }
 .form-grid-2 .ff-field.span-2 { grid-column: span 2; }
 @media (max-width: 1199px) { .form-grid-2.form-grid--6 { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-.form-grid-2 .ff-field > .search-label { margin: 0; }
+.form-grid-2 .ff-field > .search-label { margin: 0; display: block; font-size: var(--body-sm); font-weight: var(--font-weight-semibold); color: var(--color-text-label); }   /* 라벨 = 작은 브랜드색 굵은 글자(이전 버전 검색 라벨 값). 구: Screens 에만 있던 값(medium)을 DS 로 (10/14) */
 .form-grid-2 .ff-field .td { width: 100%; display: block; padding: 0; }
 .form-grid-2 .ff-field .checkSelect { width: 100%; }
 .form-grid-2 .ff-field input[type="file"] { font-size: var(--body-sm); color: var(--color-text-muted); }
@@ -1393,6 +1396,7 @@ body.dark-mode .resumable:not(.center) .fileList .file-item { background: var(--
     color: var(--color-text-base);
     margin-right: var(--spacing-16);  /* 12 → 16, 라디오와 같게 */
     word-break: keep-all;             /* 한글 낱말 중간에서 줄바꿈 안 함 (E-4 검수 #1) */
+    white-space: nowrap;              /* 라벨은 한 줄 — 칸이 좁으면 칸을 넓힌다(이전 버전 화면, 10/14) */
 }
 .radio .radio__mark { margin-top: calc((1lh - 16px) / 2); }   /* 표식을 첫 줄 가운데에 */
 .checkbox input[type="checkbox"],
@@ -1513,6 +1517,7 @@ body.dark-mode .resumable:not(.center) .fileList .file-item { background: var(--
     display: inline-flex;
     align-items: flex-start;
     word-break: keep-all;
+    white-space: nowrap;             /* 라벨은 한 줄 — 칸이 좁으면 칸을 넓힌다(이전 버전 화면, 10/14) */
     gap: var(--spacing-8);
     padding-left: 0;                 /* radio.css 25px 무효화 */
     margin-right: var(--spacing-16);
@@ -1922,10 +1927,15 @@ body.dark-mode .select {
 .btn--icon[aria-expanded="true"] svg { transform: rotate(180deg); }
 @media (prefers-reduced-motion: reduce) { .btn--icon[aria-expanded] svg, .btn--expand::after { transition: none; } }
 
-/* 펼침 토글 (.btn--expand) — 상세검색처럼 영역을 접고 펴는 버튼. secondary outlined 와 같이 쓴다
- * <button class="btn btn--secondary btn--outlined btn--expand" aria-expanded="false">상세검색</button>
- * 구 .btn_green.DetailedSearch (v3.1 overrides) 를 새 이름으로 */
-.btn--expand { position: relative; min-width: 132px; padding-right: 28px; }
+/* 펼침 토글 (.btn--expand) — 상세 검색처럼 영역을 접고 펴는 버튼. secondary outlined 와 같이 쓴다
+ * <button class="btn btn--secondary btn--outlined btn--expand" aria-expanded="false"><span class="t-open">상세 검색 펼치기</span><span class="t-close">상세 검색 접기</span></button>
+ * 이전 버전 상세 검색 버튼 값 그대로: 흰 바탕 · 회색 테두리 · 글자 text-muted · 최소 폭 150 · 글자 왼쪽 / 화살표 오른쪽 10(14) · 펼치면 화살표 반 바퀴.
+ * 이전 버전은 포커스 표시를 껐지만 DS 는 다른 버튼과 같은 글로우(WCAG 2.4.7).
+ * 문구는 둘 다 넣고 aria-expanded 로 하나만 보인다(이전 버전 .t-open / .t-close 와 같은 방식) */
+.btn--expand { position: relative; min-width: 150px; justify-content: space-between; padding-right: 28px; --btn-fg: var(--color-text-muted); }
+.btn--expand .t-close,
+.btn--expand[aria-expanded="true"] .t-open { display: none; }
+.btn--expand[aria-expanded="true"] .t-close { display: inline; }
 .btn--expand::after {
     content: ""; position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
     width: 14px; height: 14px; background-color: currentColor; transition: transform .2s ease;
@@ -1933,19 +1943,31 @@ body.dark-mode .select {
             mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>") center/contain no-repeat;
 }
 .btn--expand[aria-expanded="true"]::after { transform: translateY(-50%) rotate(180deg); }
-/* 펼친 상태 = 켜짐 표현 (Button 제안 ⑬) — 옅은 브랜드 면 + 그 위 글자 짝 + 브랜드 테두리. 구: 접힘과 같은 모양, 화살표만 돎.
- * 마우스 올림 · 누름은 ⑫와 같은 옅은 브랜드 단계. bg-selected 계열(다크 = 회색)을 쓰면 다크에서 글자 대비 2.6 · 1.8로 떨어짐 */
-.btn--expand[aria-expanded="true"]        { background: var(--color-bg-brand-subtle); color: var(--color-text-on-brand-subtle); border-color: var(--color-border-brand); }
-.btn--expand[aria-expanded="true"]:hover  { background: var(--color-bg-interactive-primary-tint-pressed); color: var(--color-text-interactive-primary-hover);   border-color: var(--color-border-interactive-primary-hover); }
-.btn--expand[aria-expanded="true"]:active { background: var(--color-bg-interactive-primary-tint-pressed); color: var(--color-text-interactive-primary-pressed); border-color: var(--color-border-interactive-primary-pressed); }
+/* 상세 검색 펼침 (10/14) — 이전 버전 상세 검색(숨는 조건 줄 + [상세 검색 펼치기] 버튼)을 DS 이름으로. 기본 줄 구성은 DS 결정(대표 조건 2줄)
+ *   <button class="btn btn--secondary btn--outlined btn--expand" aria-expanded="false" aria-controls="ID">
+ *     <span class="t-open">상세 검색 펼치기</span><span class="t-close">상세 검색 접기</span></button>
+ *   <div class="search-detail" id="ID" hidden><div class="form-grid-2 …"><div class="search-divider">상세 검색</div> …나머지 조건… </div></div>
+ * 버튼 자리 = 검색 조건 제목줄 오른쪽 [검색] [상세 검색 펼치기] [검색 조건 초기화] — 이전 버전 순서.
+ * 구분선 = .search-divider(회색 작은 글자 「상세 검색」 + border-base 1px) — 이전 버전 화면과 같은 「글자 + 선」 */
+.search-detail { margin-top: var(--spacing-12); }   /* 위 줄 간격과 같게 — 펼치면 대표 조건과 한 묶음으로 이어짐 */
+.search-detail[hidden] { display: none; }
+/* 「상세 검색」 구분 — 회색 작은 글자 + 오른쪽으로 이어지는 1px 선(이전 버전 값). .ff-divider(굵은 소제목)와 굵기 · 자간이 달라 따로 */
+.search-divider {
+    grid-column: 1 / -1;
+    display: flex; align-items: center; gap: var(--spacing-8);
+    width: 100%;
+    font-size: var(--body-sm); font-weight: var(--font-weight-regular);
+    color: var(--color-text-muted);
+}
+.search-divider::after { content: ""; flex: 1; height: 1px; background: var(--color-border-base); }
+/* 칸 줄 바꿈 — 열 수는 그대로 두고 이 칸부터 새 줄(대표 조건 2줄처럼 줄 구성을 정할 때) */
+.form-grid-2 .ff-field.row-start { grid-column-start: 1; }
+/* 펼친 상태 = 접힘과 같은 흰 고스트, 화살표와 문구만 바뀜 — 이전 버전 화면 그대로 (10/14). 구: 옅은 브랜드 면 + 브랜드 테두리(Button 제안 ⑬) */
 
-/* 켜짐 · 펼침 + 비활성 = 회색 (Button 제안 ⑮, DS-ADR-015 선택 컨트롤과 같은 규칙). 구: 켜짐 규칙이 더 구체적이라 브랜드색이 남았음.
+/* 켜짐 + 비활성 = 회색 (Button 제안 ⑮, DS-ADR-015 선택 컨트롤과 같은 규칙). 구: 켜짐 규칙이 더 구체적이라 브랜드색이 남았음.
  * 버튼 블록 맨 끝에 둠 — 같은 구체성의 켜짐 :hover · :active 보다 뒤에 있어야 비활성이 이김 */
 .btn--icon[aria-pressed="true"]:is(:disabled, [aria-disabled="true"]) {
     background: var(--color-bg-disabled); color: var(--color-text-disabled); border-color: transparent;
-}
-.btn--expand[aria-expanded="true"]:is(:disabled, [aria-disabled="true"]) {
-    background: var(--color-bg-disabled); color: var(--color-text-disabled); border-color: var(--color-border-disabled);
 }
 
 /* AUI Grid 라이트모드 헤더 브랜드(주색 회색 + zebra + 선택 포인트 빨강, 고객사 테마)
