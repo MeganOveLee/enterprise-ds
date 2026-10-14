@@ -261,7 +261,7 @@ const APPROVALS = [['검토', '결재 대기', '하우징 재질 변경 검토 �
 const TASKS = [['danger', '1일 지남', '캘리퍼 조립 사양 검토 — BRK-20417', '10-12'], ['warning', 'D-1', '하우징 재질 변경 승인 요청', '10-14'], ['info', 'D-3', '방열판 핀 간격 해석 보완', '10-16'], ['neutral', 'D-7', '양산 이관 체크리스트 작성', '10-20'], ['neutral', 'D-9', '센서 브래킷 형상 재검토', '10-22']];
 const RECENT = [['pdf', 'DOC-2610-0013 브레이크 캘리퍼 조립 사양서', '10-13'], ['dwg', 'DWG-BRK-20417 캘리퍼 조립도', '10-13'], ['xlsx', '체결 토크 시험 결과 집계', '10-12'], ['docx', '설계 검토 회의록 10월 2주', '10-10'], ['pdf', 'DOC-2610-0010 브래킷 체결 토크 시험 성적서', '10-09']];
 const SHORTCUTS = [['doc', '문서 등록'], ['drawing', '도면 등록'], ['part', '부품 검색'], ['change', '설계 변경 요청'], ['project', '프로젝트 현황'], ['inbox', '결재함']];
-const li = (lead, title, date) => '<li>' + lead + '<span class="item-title">' + title + '</span><span class="item-date">' + date + '</span></li>';
+const li = (lead, title, date) => '<li><a href="#">' + lead + '<span class="item-title">' + title + '</span><span class="item-date">' + date + '</span></a></li>';
 const homeBody = () =>
   '<div class="scr-home"><div class="scr-home__top">' + profile() + STATS.map(stat).join('') + '</div>' +
   '<div class="card-grid card-grid--3 scr-home__grid">' +

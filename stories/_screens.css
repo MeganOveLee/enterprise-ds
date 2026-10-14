@@ -273,9 +273,9 @@
 .scr-tile--success { background: var(--color-bg-success-subtle); color: var(--color-icon-success); }
 
 /* 카드 목록 — 칩 칸은 DS 그대로 90px. 최근 데이터는 앞 칸이 파일 아이콘이라 좁게 */
-.scr .card-list li { padding-top: 10px; padding-bottom: 10px; }
+.scr .card-list li > a { padding-top: 10px; padding-bottom: 10px; }   /* 줄 = 링크(10/14) — 격자 · 여백은 a 가 가짐 */
 .scr .card-list .scr-chip { justify-self: start; }
-.scr .card-list.scr-recent li { grid-template-columns: 20px 1fr 84px; }
+.scr .card-list.scr-recent li > a { grid-template-columns: 20px 1fr 84px; }
 .scr .card-list .file-icon { display: inline-flex; }
 .scr-home__grid .empty--card { flex: 1; justify-content: center; padding-top: 0; padding-bottom: 0; }
 

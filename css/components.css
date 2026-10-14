@@ -564,6 +564,27 @@ body.dark-mode .theme-toggle-btn .icon-moon { display: none; }
 }
 .card-list li:hover { background: var(--color-bg-muted); }
 .card-list li:last-child { border-bottom: none; }
+/* 줄 전체 링크 (10/13 22:56 결정) — <li><a href>유형 · 제목 · 날짜</a></li>. 키보드로 닿고(Tab) 포커스 링이 보임, 글자는 링크색 없이 그대로.
+ * li 의 격자 · 여백 · hover 를 a 가 이어받는다. a 없는 옛 마크업(li 에 직접 click)은 위 규칙 그대로 */
+.card-list li:has(> a) { display: block; padding: 0; cursor: auto; }
+.card-list li:has(> a):hover { background: none; }
+.card-list li > a {
+    display: grid;
+    grid-template-columns: 90px 1fr 84px;
+    gap: var(--spacing-12);
+    align-items: center;
+    padding: var(--spacing-12) var(--spacing-4);
+    border-radius: var(--radius-item);
+    color: inherit;
+    text-decoration: none;
+    transition: background 0.1s;
+}
+.card-list li > a:hover { background: var(--color-bg-muted); }
+.card-list li > a:focus-visible {   /* 줄끼리 붙은 목록 = 글로우를 안쪽으로(보더 1px + 번짐 3px) — 달력 연도 · 월 목록과 같은 규칙 */
+    outline: 2px solid transparent;   /* 강제 색 모드에서만 보임 */
+    outline-offset: -2px;
+    box-shadow: inset 0 0 0 1px var(--color-border-focus), inset 0 0 0 4px var(--color-focus-ring);
+}
 
 .card-list .item-title {
     font-size: var(--body-md);

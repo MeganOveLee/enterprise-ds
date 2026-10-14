@@ -21,7 +21,7 @@ const more = () => '<button type="button" class="btn btn--secondary btn--transpa
 const head = (title, count, right = '') =>
   '<div class="card-header"><h3 class="card-title">' + title + (count !== '' && count !== undefined ? '<span class="card-title-count">' + count + '</span>' : '') + '</h3>' + right + '</div>';
 const row = ([lead, title, date], x = '', visited = false) =>
-  '<li' + (x.trim() ? ' class="' + x.trim() + '"' : '') + '><span>' + lead + '</span><span class="item-title' + (visited ? ' is-visited' : '') + '">' + title + '</span><span class="item-date">' + date + '</span></li>';
+  '<li><a href="#"' + (x.trim() ? ' class="' + x.trim() + '"' : '') + '><span>' + lead + '</span><span class="item-title' + (visited ? ' is-visited' : '') + '">' + title + '</span><span class="item-date">' + date + '</span></a></li>';
 const list = (n = 5, visited = -1) => '<ul class="card-list">' + ROWS.slice(0, n).map((r, i) => row(r, '', i === visited)).join('') + '</ul>';
 const empty = (t = '진행 중인 활동 업무가 없어요', d = '배정된 활동이 생기면 여기에 보여요.') =>
   '<div class="empty empty--card" role="status"><span class="empty__icon">' + svg(INBOX, 32) + '</span><p class="empty__title">' + t + '</p><p class="empty__desc">' + d + '</p></div>';
@@ -53,13 +53,14 @@ export const 카드_그리드 = {
 
 // ── 전체 상태 — 목록 한 줄 ──
 export const 전체_상태 = {
-  parameters: { controls: { disable: true }, docs: { source: { language: 'html', code: '<!-- 읽은 항목 = .item-title.is-visited · Hovered 는 CSS가 표시 -->' } } },
+  parameters: { controls: { disable: true }, docs: { source: { language: 'html', code: '<!-- 줄 = <li><a href> · 읽은 항목 = .item-title.is-visited · Hovered · Focused 는 CSS가 표시 -->' } } },
   render: () => {
     enablePseudo();
     const one = (x, visited) => '<ul class="card-list" style="width:420px;margin:0 4px">' + row(ROWS[0], x, visited) + '</ul>';
-    return matrix(['목록 한 줄 (.card-list li)'], [
+    return matrix(['목록 한 줄 (.card-list li > a)'], [
       ['Default', [one('', false)]],
       ['Hovered', [one(' ps-hover', false)]],
+      ['Focused', [one(' ps-focus-visible', false)]],
       ['읽음', [one('', true)]],
     ]);
   },

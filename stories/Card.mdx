@@ -14,20 +14,20 @@ import * as S from './Card.stories.js';
 <tr><td><b>카드</b></td><td><code>.card</code></td><td>바탕 bg-base · 테두리 · 모서리 <code>--radius-card</code> · 여백 24 · 그림자 <code>--shadow-core</code>. 모서리는 브랜드를 따릅니다(E3PS · Fashion 8, Precision 0).</td></tr>
 <tr><td><b>머리</b></td><td><code>.card-header</code> › <code>.card-title</code></td><td>제목은 화면의 제목 단계에 맞는 h 태그로(<code>h2</code> · <code>h3</code>). 오른쪽에 「전체 보기」 같은 버튼을 둡니다.</td></tr>
 <tr><td><b>개수</b></td><td><code>.card-title-count</code></td><td>제목 옆 알약. 0도 그대로 보여 줍니다(상단 바 업무 개수와 같은 숫자).</td></tr>
-<tr><td><b>목록</b></td><td><code>.card-list</code> › <code>li</code></td><td>세 칸 — 앞(90) · 제목(<code>.item-title</code>, 길면 말줄임) · 날짜(<code>.item-date</code>, 숫자 폭 고정). 앞 칸은 화면이 채웁니다.</td></tr>
+<tr><td><b>목록</b></td><td><code>.card-list</code> › <code>li</code> › <code>a</code></td><td>줄 전체가 링크(<code>&lt;li&gt;&lt;a href&gt;</code>) — Tab으로 닿고 포커스는 안쪽 이중 링, 글자는 링크색 없이 그대로. 세 칸 — 앞(90) · 제목(<code>.item-title</code>, 길면 말줄임) · 날짜(<code>.item-date</code>, 숫자 폭 고정). 앞 칸은 화면이 채웁니다.</td></tr>
 <tr><td><b>읽음</b></td><td><code>.item-title.is-visited</code></td><td>이미 연 항목의 제목을 방문한 링크 색으로.</td></tr>
 <tr><td><b>비어 있음</b></td><td><code>.empty.empty--card</code></td><td>카드 안 빈 상태(여백 작게). 그림 · 문구 규칙은 <a className="ds-link" href="./?path=/docs/feedback-empty--docs" target="_top">Empty</a> 문서.</td></tr>
 <tr><td><b>여러 장</b></td><td><code>.card-grid</code> · <code>.card-grid--3</code></td><td>기본은 칸 최소 460으로 자동 배치(1440 화면 = 2열). 대시보드처럼 장 수가 정해진 화면은 <code>--3</code>(3열, 1200 미만 2열).</td></tr>
 </tbody>
 </table>
-<p className="ds-sec__desc ds-after">Figma UI Kit의 Basic card와 짝입니다. 목록 한 줄은 마우스를 올리면 바탕이 바뀌는 「누르는 줄」 모양이지만, 줄(<code>li</code>) 자체는 키보드로 닿지 않습니다 — 화면에서 누를 수 있게 하려면 제목을 링크로 두는 규칙이 필요하고, DS에는 아직 링크 모양이 없습니다. 목록 앞 칸의 상태 칩도 DS에 아직 없습니다(Screens 홈 화면은 화면 보조 칩).</p>
+<p className="ds-sec__desc ds-after">Figma UI Kit의 Basic card와 짝입니다. 목록 한 줄은 줄 전체가 링크라 마우스 · 키보드 모두 같은 자리를 누릅니다(10/13 결정). 목록 앞 칸의 상태 칩은 DS에 아직 없습니다(Screens 홈 화면은 화면 보조 칩).</p>
 </Section>
 <Section title="예시" en="Examples">
 <Card of={S.목록_카드} title="목록 카드" en="List" desc="머리(제목 · 개수 · 전체 보기) + 최근 5건." />
 <Card of={S.빈_카드} title="빈 카드" en="Empty" desc="보여 줄 것이 없으면 목록 대신 빈 상태." />
 <Card of={S.카드_그리드} title="카드 그리드 3열" en="Grid" desc="대시보드 한 줄. 좁은 화면에서는 2열로 줄어듭니다." />
 </Section>
-<Section title="전체 상태" en="States" desc="Hovered는 마우스 상태를 정지 화면으로 보여 준 것입니다. 줄은 키보드 포커스를 받지 않아 Focused 칸이 없습니다.">
+<Section title="전체 상태" en="States" desc="Hovered · Focused는 마우스 · 키보드 상태를 정지 화면으로 보여 준 것입니다. 포커스는 줄끼리 붙어 있어 안쪽 이중 링입니다.">
 <Card of={S.전체_상태} title="목록 한 줄" />
 </Section>
 <Section title="Playground" desc="아래 표에서 값을 바꾸면 미리보기와 「코드 보기」가 함께 바뀝니다.">

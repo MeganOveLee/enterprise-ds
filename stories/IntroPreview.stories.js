@@ -34,7 +34,7 @@ export const Sample = {
       <button type="button" class="btn btn--secondary btn--filled">조회</button>
     </div>
     <ul class="card-list">
-${ROWS.map(([no, title, date]) => `      <li><span class="intro-demo__no">${no}</span><span class="item-title">${title}</span><span class="item-date">${date}</span></li>`).join('\n')}
+${ROWS.map(([no, title, date]) => `      <li><a href="#"><span class="intro-demo__no">${no}</span><span class="item-title">${title}</span><span class="item-date">${date}</span></a></li>`).join('\n')}
     </ul>
   </section>
 </div>`,
