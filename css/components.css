@@ -1432,10 +1432,11 @@ body.dark-mode .resumable:not(.center) .fileList .file-item { background: var(--
     border-color: var(--color-border-focus);
     box-shadow: 0 0 0 3px var(--color-focus-ring);
 }
-/* 우리 디자인 체크박스 disabled 상태 추가 (세영 2026-08-15) */
+/* 우리 디자인 체크박스 disabled 상태 추가 (세영 2026-08-15)
+ * 꺼짐+비활성 = 연회색 칸(bg-disabled) + 같은 색 테두리(border-disabled) — 라디오 · 스위치 · 버튼 비활성과 같은 규칙 (10/14, DS-ADR-015 보완). 구: bg-subtle + border-base */
 .checkbox input[type="checkbox"]:disabled {
-    background: var(--color-bg-subtle);
-    border-color: var(--color-border-base);
+    background: var(--color-bg-disabled);
+    border-color: var(--color-border-disabled);
     cursor: not-allowed;
 }
 /* Selection Controls (2026-10-06) — 조합 상태 · 부분 선택 · hover · 포커스 (D-1 CombinedState, 명세 5항) */
@@ -1489,8 +1490,8 @@ body.dark-mode .resumable:not(.center) .fileList .file-item { background: var(--
     transform: rotate(45deg);
 }
 .aui-label .aui-checkbox:disabled {
-    background: var(--color-bg-subtle) !important;
-    border-color: var(--color-border-base) !important;
+    background: var(--color-bg-disabled) !important;   /* .checkbox 비활성과 같게 (10/14, DS-ADR-015 보완) */
+    border-color: var(--color-border-disabled) !important;
     cursor: not-allowed;
 }
 
@@ -1550,7 +1551,7 @@ body.dark-mode .resumable:not(.center) .fileList .file-item { background: var(--
 }
 /* disabled — 비활성 라디오는 회색(초록 아님) + 인터랙션 없음 (세영 2026-07-29) */
 .radio:has(input:disabled) { cursor: not-allowed; color: var(--color-text-muted); }
-.radio input[type="radio"]:disabled + .radio__mark { border-color: var(--color-border-base); background: var(--color-bg-muted); }
+.radio input[type="radio"]:disabled + .radio__mark { border-color: var(--color-border-disabled); background: var(--color-bg-disabled); }   /* 꺼짐+비활성 = 체크박스 · 스위치와 같은 연회색 (10/14, DS-ADR-015 보완). 구: bg-muted + border-base */
 .radio input[type="radio"]:disabled:checked + .radio__mark { background: var(--color-bg-disabled); border-color: var(--color-bg-disabled); }   /* 선택됨+비활성 = 연회색 (DS-ADR-015) */
 .radio input[type="radio"]:disabled:checked + .radio__mark::after { background: var(--color-icon-disabled); }
 /* 다크모드 */
