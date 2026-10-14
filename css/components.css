@@ -61,17 +61,20 @@
     overflow: hidden;
 }
 
-/* side-area: SUBMENU 있는 페이지의 사이드 패널 (메인 대시보드엔 없음) */
+/* side-area: SUBMENU 있는 페이지의 사이드 패널 (메인 대시보드엔 없음)
+ * 패널 = 흰 바탕(bg-base), 오른쪽 손잡이(.sidebar-toggle) = 내용과 같은 bg-subtle, 위쪽 막대(.gnb) = 바탕 없음 →
+ * 손잡이가 막대 · 내용과 한 면으로 이어져 틈이 안 보임. 이전 버전 화면과 같음(덮어쓰기 파일의 side-area · gnb 규칙, 10/14 결정).
+ * 구: 패널 bg-subtle · 막대 bg-base(반대) — 다크에서 손잡이 7px가 어두운 틈으로 보였음 */
 .side-area {
     display: flex;
     flex-direction: row;
     flex-shrink: 0;
-    background: var(--color-bg-subtle);
+    background: var(--color-bg-base);
 }
 .side-area .sidebar {
     width: var(--size-sidebar);
     overflow-y: auto;
-    background: var(--color-bg-subtle);
+    background: var(--color-bg-base);
 }
 .side-area .sidebar-toggle {
     width: var(--size-sidebar-toggle);
@@ -305,7 +308,7 @@
  * ============================================================ */
 .gnb {
     height: 56px;
-    background: var(--color-bg-base);
+    background: transparent;   /* 놓인 면(내용 영역 bg-subtle)을 그대로 — 이전 버전 화면과 같음, 아래 선으로만 나눔 (10/14 결정, 구 bg-base) */
     border-bottom: 1px solid var(--color-border-base);
     display: flex;
     align-items: center;
@@ -2586,8 +2589,7 @@ body.dark-mode .main-content,
 body.dark-mode .main-layout {
     background: var(--color-bg-subtle) !important;  /* L1 — 가장 어두움 */
 }
-/* ── L2 작업 공간 — GNB + LNB + 카드 모두 같은 톤 (라이트의 흰색 자리) ── */
-body.dark-mode .gnb,
+/* ── L2 작업 공간 — LNB + 카드 모두 같은 톤 (라이트의 흰색 자리). GNB는 라이트처럼 바탕 없음(10/14 결정, 구: 여기서 bg-base) ── */
 body.dark-mode .main-menu,
 body.dark-mode .main-sub,
 body.dark-mode .main-sub-brand,
