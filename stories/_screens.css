@@ -295,10 +295,9 @@
 .scr-wbs li { height: 28px; gap: 2px; }
 .scr .output-row { gap: var(--spacing-8); min-width: 0; }
 .scr-dot { width: 8px; height: 8px; border-radius: var(--radius-rounded); flex-shrink: 0; }   /* 제품은 그리드 셀 안 점 — 값은 진행 상태 토큰 */
-.scr-detail { display: flex; flex-direction: column; gap: var(--spacing-8); min-height: 0; overflow-y: auto; padding: var(--spacing-4); }   /* 사방 4 — 스크롤 상자 가장자리 버튼의 포커스 번짐(3)이 잘리지 않게 (구: 오른쪽만 4) */
+.scr-detail { display: flex; flex-direction: column; gap: 0; min-height: 0; overflow-y: auto; padding: var(--spacing-4); }   /* 사방 4 — 스크롤 상자 가장자리 버튼의 포커스 번짐(3)이 잘리지 않게 (구: 오른쪽만 4). 틈 0 — 섹션 머리 · 내용이 한 상자로 붙도록(섹션 사이는 DS 카드 위 여백 12) */
 .scr-detail .detail-header { margin-bottom: 0; }
 .scr-detail .detail-header__title .scr-chip { margin-left: var(--spacing-4); }
-.scr-detail .seach_arm { margin-top: var(--spacing-4); }
 .scr .form-grid-2.scr-cols-4 .ff-readonly { color: var(--color-text-base); }
 
 /* 진행 현황 — 상태 블록 + 전체 막대 + 숫자 3개, 아래에 단계별 막대 */
