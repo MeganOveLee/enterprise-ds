@@ -27,7 +27,7 @@ export default {
     brand: {
       description: '브랜드',
       toolbar: { title: '브랜드', icon: 'paintbrush', dynamicTitle: true,
-        items: [{ value: 'e3ps', title: 'E3PS' }, { value: 'fashion', title: 'Fashion · 패션 리테일' }, { value: 'precision', title: 'Precision · 정밀기계' }] },
+        items: [{ value: 'e3ps', title: 'E3PS' }, { value: 'fashion', title: 'Fashion · 패션 리테일' }, { value: 'precision', title: 'Precision · 자동차 부품' }] },
     },
     mode: {
       description: '화면 모드 (라이트 / 다크)',

@@ -1,7 +1,7 @@
 // 소개 페이지 「미리보기」 — 실제 컴포넌트 클래스로 그린 작은 업무 화면.
 // 도구 막대의 브랜드 · 화면 모드를 그대로 따른다(문서 틀은 고정, 이 영역만 바뀜).
 // 메뉴에는 안 보이고 소개.mdx 안에서만 쓴다
-const BRAND = { e3ps: 'E3PS · 기본 브랜드', fashion: 'Fashion · 패션 리테일', precision: 'Precision · 정밀기계' };
+const BRAND = { e3ps: 'E3PS · 기본 브랜드', fashion: 'Fashion · 패션 리테일', precision: 'Precision · 자동차 부품' };
 const MODE = { light: '라이트', dark: '다크' };
 const ROWS = [
   ['ECR-0142', '브레이크 캘리퍼 홀 위치 2mm 이동', '10-13'],
