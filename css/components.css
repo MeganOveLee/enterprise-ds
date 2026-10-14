@@ -151,6 +151,7 @@
     cursor: pointer;
 }
 .page-head .favorite-icon:hover { color: var(--color-icon-favorite); }
+.page-head .favorite-icon:focus-visible { outline: 2px solid transparent; box-shadow: 0 0 0 3px var(--color-focus-ring); border-radius: var(--radius-btn); }   /* 글로우(보더 없는 아이콘이라 번짐만) */
 .page-head .breadcrumb {
     font-size: var(--body-sm);
     color: var(--color-text-muted);
@@ -764,9 +765,10 @@ body.dark-mode .theme-toggle-btn .icon-moon { display: none; }
     background: var(--color-bg-interactive-secondary-hover);   /* 기본(bg-subtle)과 같은 값이라 hover 가 안 보였음 */
     color: var(--color-text-base);
 }
-.ui-datepicker__icon:focus-visible {   /* 래퍼가 overflow:hidden 이라 안쪽으로 그린다 */
-    outline: 2px solid var(--color-border-focus);
+.ui-datepicker__icon:focus-visible {   /* 래퍼가 overflow:hidden 이라 글로우를 안쪽으로(보더 1px + 번짐 3px) */
+    outline: 2px solid transparent;
     outline-offset: -2px;
+    box-shadow: inset 0 0 0 1px var(--color-border-focus), inset 0 0 0 4px var(--color-focus-ring);
 }
 .ui-datepicker.is-active .ui-datepicker__icon {
     background: var(--color-bg-selected);
@@ -876,21 +878,27 @@ body.dark-mode .theme-toggle-btn .icon-moon { display: none; }
     height: 14px;
     stroke-width: 2;
 }
-/* 포커스 = 버튼과 같은 2px 오프셋 아웃라인 (State 표준 · 명세 0-1). 구: 규칙 없음 → 브라우저 기본 (10/13)
- * 페이지 번호 · 앱 틀 버튼(뒤로 · 앞으로 · 화면 모드 · 로그아웃 · 업무 개수 · 패널 닫기 · 패널 탭) · 팝업 탭 · 팝업 닫기 · 첨부 내려받기 · 산출물 바로가기 */
+/* 포커스 = 입력칸과 같은 글로우(보더 --color-border-focus + 바깥 3px --color-focus-ring) — 이전 버전 포커스 그대로 (10/14).
+ * 페이지 번호 · 앱 틀 버튼(뒤로 · 앞으로 · 화면 모드 · 로그아웃 · 업무 개수 · 패널 닫기) · 팝업 닫기 · 첨부 내려받기 · 산출물 바로가기.
+ * 보더가 없는 요소(팝업 닫기 · 첨부 내려받기)는 번짐만 보인다 */
 .ui-pagination__btn:focus-visible,
 .gnb .nav-history-btn:focus-visible,
 .theme-toggle-btn:focus-visible,
 .logout-btn:focus-visible,
 .menu-toggle:focus-visible,
 .main-sub-header .sub-close:focus-visible,
-.main-sub-tabs .sub-tab:focus-visible,
-.pop .tab li:focus-visible,
 .pop-close:focus-visible,
 .file-download-list .file-dl:focus-visible,
 .left-action-btn:focus-visible {
-    outline: 2px solid var(--color-border-focus);
-    outline-offset: 2px;
+    outline: 2px solid transparent;   /* 강제 색 모드(고대비)에서만 보임 — box-shadow 가 꺼지는 환경 대비 */
+    border-color: var(--color-border-focus);
+    box-shadow: 0 0 0 3px var(--color-focus-ring);
+}
+/* 탭은 아래 보더가 선택 표시(브랜드 밑줄)라 보더 색은 두고 번짐만 */
+.main-sub-tabs .sub-tab:focus-visible,
+.pop .tab li:focus-visible {
+    outline: 2px solid transparent;
+    box-shadow: 0 0 0 3px var(--color-focus-ring);
 }
 .ui-pagination__ellipsis {
     display: inline-flex;
@@ -1399,8 +1407,9 @@ body.dark-mode .resumable:not(.center) .fileList .file-item { background: var(--
     transform: rotate(45deg);
 }
 .checkbox input[type="checkbox"]:focus-visible {
-    outline: 2px solid var(--color-border-focus);
-    outline-offset: 2px;
+    outline: 2px solid transparent;   /* 강제 색 모드(고대비)에서만 보임 — box-shadow 가 꺼지는 환경 대비 */
+    border-color: var(--color-border-focus);
+    box-shadow: 0 0 0 3px var(--color-focus-ring);
 }
 /* 우리 디자인 체크박스 disabled 상태 추가 (세영 2026-08-15) */
 .checkbox input[type="checkbox"]:disabled {
@@ -1514,8 +1523,9 @@ body.dark-mode .resumable:not(.center) .fileList .file-item { background: var(--
 /* hover · 포커스 — input 을 투명하게 숨기므로 포커스 링은 표식(.radio__mark)에 그린다. 없으면 키보드 위치가 안 보임 (2026-10-06) */
 .radio input[type="radio"]:hover:not(:disabled):not(:checked) + .radio__mark { border-color: var(--color-border-input-hover); }
 .radio input[type="radio"]:focus-visible + .radio__mark {
-    outline: 2px solid var(--color-border-focus);
-    outline-offset: 2px;
+    outline: 2px solid transparent;   /* 강제 색 모드(고대비)에서만 보임 — box-shadow 가 꺼지는 환경 대비 */
+    border-color: var(--color-border-focus);
+    box-shadow: 0 0 0 3px var(--color-focus-ring);
 }
 /* disabled — 비활성 라디오는 회색(초록 아님) + 인터랙션 없음 (세영 2026-07-29) */
 .radio:has(input:disabled) { cursor: not-allowed; color: var(--color-text-muted); }
@@ -1578,8 +1588,9 @@ body.dark-mode .radio .radio__mark { background: var(--color-bg-muted); }   /* �
     transform: translate(24px, -50%);       /* 48 − 16 − 4×2 */
 }
 .switch input[type="checkbox"]:focus-visible {
-    outline: 2px solid var(--color-border-focus);
-    outline-offset: 2px;
+    outline: 2px solid transparent;   /* 강제 색 모드(고대비)에서만 보임 — box-shadow 가 꺼지는 환경 대비 */
+    border-color: var(--color-border-focus);
+    box-shadow: 0 0 0 3px var(--color-focus-ring);
 }
 .switch input[type="checkbox"]:disabled {
     background: var(--color-bg-disabled);
@@ -1829,12 +1840,12 @@ body.dark-mode .select {
 .btn--transparent:hover    { background: var(--btn-tint-hover);    color: var(--btn-fg-hover); }
 .btn--transparent:active   { background: var(--btn-tint-pressed);  color: var(--btn-fg-pressed); }
 
-/* 포커스 — 떼어낸 아웃라인 (명세 0-1, E-4 검수 2026-10-06).
- * 구 방식(보더 + 3px 번짐)은 브랜드·위험 채움 버튼에서 보더가 면과 같은 색(1.2:1), 번짐도 바탕과 1.7(다크 1.1)이라
- * 포커스가 안 보였음 → 체크박스·라디오·스위치·달력과 같은 2px 오프셋 아웃라인 하나로 */
+/* 포커스 — 입력칸과 같은 글로우(보더 + 바깥 3px 번짐). 이전 버전 포커스 그대로 (10/14 결정, 10/6 E-4 개정).
+ * E-4(10/6)는 떼어낸 2px 아웃라인이었음 — 채움 버튼에서 보더가 면과 같은 색이 되는 점은 변경 이력의 대비 표 참고 */
 .btn:focus-visible {
-    outline: 2px solid var(--color-border-focus);
-    outline-offset: 2px;
+    outline: 2px solid transparent;   /* 강제 색 모드(고대비)에서만 보임 — box-shadow 가 꺼지는 환경 대비 */
+    border-color: var(--color-border-focus);
+    box-shadow: 0 0 0 3px var(--color-focus-ring);
 }
 
 /* 비활성 · 로딩 */
@@ -2065,13 +2076,14 @@ body.dark-mode .select {
 .datepicker__day:focus-visible,
 .datepicker__nav:focus-visible,
 .datepicker__month-btn:focus-visible,
-.datepicker__year-btn:focus-visible,
-.datepicker__dropdown-item:focus-visible {
-    outline: 2px solid var(--color-border-focus);
-    outline-offset: 2px;
+.datepicker__year-btn:focus-visible {
+    outline: 2px solid transparent;   /* 강제 색 모드(고대비)에서만 보임 — box-shadow 가 꺼지는 환경 대비 */
+    border-color: var(--color-border-focus);
+    box-shadow: 0 0 0 3px var(--color-focus-ring);
 }
-.datepicker__dropdown-item:focus-visible { outline-offset: -2px; }   /* 스크롤 상자 안이라 안쪽으로 */
-.datepicker__day:focus-visible { position: relative; z-index: 1; }   /* 링이 칸 밖 2px 로 나가는데 뒤 칸(기간 색 등)이 덮어 안 보였음 → 앞으로 */
+/* 스크롤 상자 안이라 글로우를 안쪽으로(보더 1px + 번짐 3px) — 바깥 번짐은 상자에 잘림 */
+.datepicker__dropdown-item:focus-visible { outline: 2px solid transparent; outline-offset: -2px; box-shadow: inset 0 0 0 1px var(--color-border-focus), inset 0 0 0 4px var(--color-focus-ring); }
+.datepicker__day:focus-visible { position: relative; z-index: 1; }   /* 번짐이 칸 밖 3px 로 나가는데 뒤 칸(기간 색 등)이 덮어 안 보였음 → 앞으로 */
 
 /* 하단 Cancel/Apply(.datepicker__footer · __btn) 삭제 — 날짜를 누르면 바로 닫힘 (DS-ADR-016) */
 
@@ -2667,7 +2679,8 @@ body.dark-mode .progress-bar {
 body.dark-mode .checkSelect .selected-text {
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23E5E7EB' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
 }
-/* 열림 상태 */
+/* 열림 상태 · 키보드 포커스 = .select:focus 와 같은 보더 + 링 */
+.checkSelect .selected-text:focus-visible,
 .checkSelect:has(.options.show) .selected-text {
     outline: none;
     border-color: var(--color-border-focus);

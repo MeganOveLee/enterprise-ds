@@ -51,7 +51,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
   <thead><tr><th>대상</th><th>방식</th><th>이유</th></tr></thead>
   <tbody>
     <tr><td>입력칸 <code>.input</code> · <code>.select</code> · <code>.textarea</code></td><td>보더 <code>--color-border-focus</code> + 바깥 3px <code>--color-focus-ring</code></td><td>클릭해도 "지금 입력 중"을 보여줘야 함</td></tr>
-    <tr><td>그 밖의 누르는 요소</td><td><code>outline: 2px</code> + <code>outline-offset: 2px</code></td><td>브랜드색으로 채운 버튼 위에서도 링이 보이게 떼어 그림</td></tr>
+    <tr><td>그 밖의 누르는 요소</td><td>입력칸과 같은 글로우 — 보더 <code>--color-border-focus</code> + 바깥 3px <code>--color-focus-ring</code>. 탭은 번짐만(아래 보더 = 선택 표시)</td><td>이전 버전 포커스 그대로. 스크롤 상자 · <code>overflow:hidden</code> 안(달력 연도 · 월 목록, 날짜 칸 아이콘)은 같은 글로우를 안쪽으로</td></tr>
   </tbody>
 </table>
 ## 토큰
