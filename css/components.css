@@ -1397,7 +1397,8 @@ body.dark-mode .resumable:not(.center) .fileList .file-item { background: var(--
     word-break: keep-all;             /* 한글 낱말 중간에서 줄바꿈 안 함 (E-4 검수 #1) */
 }
 .radio .radio__mark { margin-top: calc((1lh - 16px) / 2); }   /* 표식을 첫 줄 가운데에 */
-.checkbox input[type="checkbox"] {
+.checkbox input[type="checkbox"],
+.checkSelect .option input[type="checkbox"] {
     appearance: none;
     -webkit-appearance: none;
     width: 16px;
@@ -1412,11 +1413,13 @@ body.dark-mode .resumable:not(.center) .fileList .file-item { background: var(--
     vertical-align: middle;
     transition: background 0.12s, border-color 0.12s;
 }
-.checkbox input[type="checkbox"]:checked {
+.checkbox input[type="checkbox"]:checked,
+.checkSelect .option input[type="checkbox"]:checked {
     background: var(--color-bg-checked);
     border-color: var(--color-bg-checked);
 }
-.checkbox input[type="checkbox"]:checked::after {
+.checkbox input[type="checkbox"]:checked::after,
+.checkSelect .option input[type="checkbox"]:checked::after {
     content: '';
     position: absolute;
     top: 1px;
@@ -1427,26 +1430,31 @@ body.dark-mode .resumable:not(.center) .fileList .file-item { background: var(--
     border-width: 0 2px 2px 0;
     transform: rotate(45deg);
 }
-.checkbox input[type="checkbox"]:focus-visible {
+.checkbox input[type="checkbox"]:focus-visible,
+.checkSelect .option input[type="checkbox"]:focus-visible {
     outline: 2px solid transparent;   /* 강제 색 모드(고대비)에서만 보임 — box-shadow 가 꺼지는 환경 대비 */
     border-color: var(--color-border-focus);
     box-shadow: 0 0 0 3px var(--color-focus-ring);
 }
 /* 우리 디자인 체크박스 disabled 상태 추가 (세영 2026-08-15)
  * 꺼짐+비활성 = 연회색 칸(bg-disabled) + 같은 색 테두리(border-disabled) — 라디오 · 스위치 · 버튼 비활성과 같은 규칙 (10/14, DS-ADR-015 보완). 구: bg-subtle + border-base */
-.checkbox input[type="checkbox"]:disabled {
+.checkbox input[type="checkbox"]:disabled,
+.checkSelect .option input[type="checkbox"]:disabled {
     background: var(--color-bg-disabled);
     border-color: var(--color-border-disabled);
     cursor: not-allowed;
 }
 /* Selection Controls (2026-10-06) — 조합 상태 · 부분 선택 · hover · 포커스 (D-1 CombinedState, 명세 5항) */
-.checkbox input[type="checkbox"]:hover:not(:disabled):not(:checked):not(:indeterminate) { border-color: var(--color-border-input-hover); }
+.checkbox input[type="checkbox"]:hover:not(:disabled):not(:checked):not(:indeterminate),
+.checkSelect .option input[type="checkbox"]:hover:not(:disabled):not(:checked):not(:indeterminate) { border-color: var(--color-border-input-hover); }
 /* 부분 선택 — JS 로 el.indeterminate = true. 스크린리더는 네이티브가 '혼합(mixed)'으로 읽음 */
-.checkbox input[type="checkbox"]:indeterminate {
+.checkbox input[type="checkbox"]:indeterminate,
+.checkSelect .option input[type="checkbox"]:indeterminate {
     background: var(--color-bg-checked);
     border-color: var(--color-bg-checked);
 }
-.checkbox input[type="checkbox"]:indeterminate::after {
+.checkbox input[type="checkbox"]:indeterminate::after,
+.checkSelect .option input[type="checkbox"]:indeterminate::after {
     content: '';
     position: absolute;
     top: 50%; left: 50%;
@@ -1457,12 +1465,16 @@ body.dark-mode .resumable:not(.center) .fileList .file-item { background: var(--
 /* 선택됨 + 비활성 — 연회색 칸 + 회색 표식. 체크박스·라디오·스위치 같은 규칙 (DS-ADR-015, Figma와 같음).
  * 비활성 규칙이 체크를 덮어 흰 체크가 사라지던 문제도 이걸로 해결 */
 .checkbox input[type="checkbox"]:disabled:checked,
-.checkbox input[type="checkbox"]:disabled:indeterminate {
+.checkSelect .option input[type="checkbox"]:disabled:checked,
+.checkbox input[type="checkbox"]:disabled:indeterminate,
+.checkSelect .option input[type="checkbox"]:disabled:indeterminate {
     background: var(--color-bg-disabled);
     border-color: var(--color-bg-disabled);
 }
-.checkbox input[type="checkbox"]:disabled:checked::after { border-color: var(--color-icon-disabled); }
-.checkbox input[type="checkbox"]:disabled:indeterminate::after { background: var(--color-icon-disabled); }
+.checkbox input[type="checkbox"]:disabled:checked::after,
+.checkSelect .option input[type="checkbox"]:disabled:checked::after { border-color: var(--color-icon-disabled); }
+.checkbox input[type="checkbox"]:disabled:indeterminate::after,
+.checkSelect .option input[type="checkbox"]:disabled:indeterminate::after { background: var(--color-icon-disabled); }
 .checkbox:has(input:disabled) { cursor: not-allowed; color: var(--color-text-muted); }
 /* ═══ 그리드 행/헤더 선택 체크박스(.aui-label .aui-checkbox)를 우리 .checkbox 디자인과 통일 — 3상태: 기본(흰bg+보더) / 체크(브랜드bg+흰체크) / disabled(회색). 네이티브는 background 무시라 appearance:none 필수(순수 시각 — AUIGrid .checked 선택로직 무관). `.aui-label` 스코프=행+헤더 선택박스만(스위치토글 .aui-switch-toggle-label 제외 확인). styles.css .aui-checkbox(333)·input[type=checkbox](440) !important 이겨야 해 (0,2,0)+!important. 회색 회귀 아니라 상태 정의(세영 2026-08-15) ═══ */
 .aui-label .aui-checkbox {
@@ -2776,18 +2788,15 @@ body.dark-mode .checkSelect .selected-text {
     cursor: pointer;
 }
 .checkSelect .option span { display: inline-block; white-space: nowrap; }
-.checkSelect .option input[type="checkbox"] {
+.checkSelect .option input[type="checkbox"] {   /* 모양은 위 .checkbox 체크와 한 벌(16 · 다크 · 포커스 링). 구: 네이티브 14 + accent-color (10/14 결정 8) */
     flex-shrink: 0;
-    width: 14px;
-    height: 14px;
-    margin: 0;
-    pointer-events: none;
-    accent-color: var(--color-bg-checked);   /* 전역 체크박스와 동일 */
+    margin: 0;   /* 줄 가운데 맞춤은 flex 가 함 */
+    pointer-events: none;   /* 누름은 줄(label) 전체가 받음 */
 }
 /* 호버 = 옅은 회색(곧 토글할 항목), 체크됨 = 옅은 브랜드 초록(선택 유지). 다중선택 명확화.
    2026-08-22 세영: 체크색·선택배경이 여기만 회색/하늘색으로 딴 체계였던 것 → 브랜드로 통일 */
-.checkSelect .option:hover { background-color: var(--color-bg-subtle); }
-.checkSelect .option:has(input[type="checkbox"]:checked) { background-color: var(--color-bg-brand-subtle); font-weight: var(--font-weight-semibold, 600); }
+.checkSelect .option:hover { background-color: var(--color-bg-interactive-secondary-hover); }   /* 구 bg-subtle — 다크에서 펼침 판보다 어두워 꺼져 보였음 (10/14, Figma Option과 같은 토큰) */
+.checkSelect .option:has(input[type="checkbox"]:checked) { background-color: var(--color-bg-brand-subtle); font-weight: var(--font-weight-semibold, 600); }   /* 이전 버전 화면 그대로 — 선택 = 옅은 브랜드 바탕 (10/14 확인) */
 .checkSelect .option:has(input[type="checkbox"]:checked):hover { background-color: var(--color-bg-brand-subtle); }
 
 /* ── onKeySearch: 번호 입력 + 보조(부분일치) 가로 정렬 ──
