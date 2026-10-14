@@ -25,7 +25,7 @@ const status = (k = 'progress') =>
   '<span class="status-segments__bar"></span>'.repeat(5) + '</div><span class="status-text"></span></div>';
 const row = (k, pct, name, label) => '<div class="progress-row">' + status(k) + bar(k, pct, name, label) + '</div>';
 const legend = (keys = ['done', 'progress', 'delay', 'plan']) =>
-  '<div class="left-legend">' + keys.map((k) => '<span class="legend-item"><span class="legend-dot" style="background:var(--color-progress-' + k + '-end)">' + svg(ST[k][1], 10) + '</span>' + ST[k][0] + '</span>').join('') + '</div>';
+  '<div class="left-legend">' + keys.map((k) => '<span class="legend-item"><span class="legend-dot" style="background:var(--color-progress-' + k + '-end)">' + svg(ST[k][1], 12) + '</span>' + ST[k][0] + '</span>').join('') + '</div>';
 const box = (h, w = '560px') => '<div style="max-width:' + w + '">' + h + '</div>';
 
 export default {
@@ -68,7 +68,7 @@ export const 전체_상태 = {
     KEYS.map((k, i) => [ST[k][0] + ' <code>' + k + '</code>', [
       status(k),
       '<div style="width:240px">' + bar(k, [100, 64, 32, 8, 45][i], ST[k][0]) + '</div>',
-      '<div class="left-legend" style="padding:0"><span class="legend-item"><span class="legend-dot" style="background:var(--color-progress-' + k + '-end)">' + svg(ST[k][1], 10) + '</span>' + ST[k][0] + '</span></div>',
+      '<div class="left-legend" style="padding:0"><span class="legend-item"><span class="legend-dot" style="background:var(--color-progress-' + k + '-end)">' + svg(ST[k][1], 12) + '</span>' + ST[k][0] + '</span></div>',
     ]])),
 };
 

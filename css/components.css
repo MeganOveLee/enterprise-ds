@@ -2529,8 +2529,9 @@ body.dark-mode .select {
     color: var(--color-icon-on-color);
 }
 .left-legend .legend-dot svg {
-    width: 10px;
-    height: 10px;
+    width: 12px;    /* 10 → 12 · 선 1.8 → 2.6(실제 1.3px): 점 16 안 기호가 가늘어 안 보이던 것 (10/14 34-A) */
+    height: 12px;
+    stroke-width: 2.6;
     color: var(--color-icon-on-color);
 }
 .left-legend .legend-dot svg,

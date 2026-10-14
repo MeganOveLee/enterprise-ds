@@ -320,7 +320,7 @@ const leftPanel = () =>
   '<div class="left-actions">' + [['doc', '산출물'], ['task', '태스크'], ['change', '이슈']].map(([ic, t]) =>
     '<button type="button" class="left-action-btn">' + svg(I[ic]) + t + '</button>').join('') + '</div>' +
   '<div class="left-legend">' + ['done', 'progress', 'delay', 'plan'].map((k) =>
-    '<span class="legend-item"><span class="legend-dot" style="background:var(--color-progress-' + k + '-end)">' + svg(PS[k][2], 10) + '</span>' + PS[k][0] + '</span>').join('') + '</div>' +
+    '<span class="legend-item"><span class="legend-dot" style="background:var(--color-progress-' + k + '-end)">' + svg(PS[k][2], 12) + '</span>' + PS[k][0] + '</span>').join('') + '</div>' +
   '<div class="left-search"><input class="input" aria-label="태스크 검색" placeholder="태스크 검색">' +
   '<button type="button" class="btn btn--secondary btn--outlined left-search-btn">검색</button></div>' +
   '<ul class="scr-tree scr-wbs" role="tree" aria-label="산출물 구조">' +
