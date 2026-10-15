@@ -1,5 +1,5 @@
 @charset "UTF-8";
-/* ============================================================================
+/* =====================================================================
  * Enterprise DS v1.0 — 공통 컴포넌트 (재사용)
  *
  * 모든 페이지가 공유하는 컴포넌트 라이브러리.
@@ -3411,6 +3411,165 @@ body.dark-mode .empty-illo { --empty-illo-shadow: rgb(0 0 0 / .2); }
 .status-chip--danger,
 .status-chip--error   { --chip-bg: var(--color-bg-danger-subtle);  --chip-fg: var(--color-text-danger-bold); }
 @media (forced-colors: active) { .status-chip { border: 1px solid CanvasText; } }
+=======
+/* ═════════════════════════════════════════════════════════════════════════
+ * 알림 — Alert(화면 안 줄) · Toast(잠깐 뜨는 알림) · Tooltip(짧은 설명) (TD-45 45-1, 10/14 제안 승인)
+ *   자리 나누기(10/14 결정): 입력 확인 → 칸 아래 오류 문구 + 화면 안 Alert / 저장 완료 같은 짧은 결과 → Toast /
+ *   되돌릴 수 없는 동작 확인 → 확인 창(Overlay) / 아이콘 버튼 설명 → Tooltip
+ *   이전 버전은 알림을 브라우저 기본 창(alert · confirm)으로만 띄워 화면 값이 없음 → 값은 DS 토큰 단계에서 고름
+ * ═════════════════════════════════════════════════════════════════════════ */
+
+/* ── Alert .alert ──────────────────────────────────────────────────────────
+ * 기본 = 옅은 바탕 + 테두리(Figma Alert Style=Outlined). .alert--plain = 테두리 없음(Transparent)
+ * 상태 = 아이콘 색 · 바탕 · 테두리만 바뀜. 글자는 늘 기본 글자색(대비 유지)
+ * 접근성: 안내 = role="status", 입력 오류처럼 바로 알려야 하는 것 = role="alert". 닫기는 아이콘 버튼 + aria-label */
+.alert {
+    --alert-bg: var(--color-bg-info-subtle);
+    --alert-bd: var(--color-border-info);
+    --alert-ic: var(--color-icon-info);
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-8);
+    padding: var(--spacing-8) var(--spacing-12);
+    background: var(--alert-bg);
+    border: 1px solid var(--alert-bd);
+    border-radius: var(--radius-panel);
+    color: var(--color-text-base);
+    font-size: var(--body-md);
+    line-height: 1.5;
+    text-align: start;   /* 가운데 정렬된 자리(표 칸 등)에 놓여도 글은 왼쪽부터 */
+}
+.alert__icon { flex: none; width: 16px; height: 16px; margin-top: 3px; color: var(--alert-ic); }   /* 위 3 = 첫 줄(14 × 1.5) 가운데 */
+.alert__icon svg { display: block; width: 100%; height: 100%; }
+.alert__body { flex: 1; min-width: 0; }
+.alert__title { display: block; font-weight: var(--font-weight-semibold); }
+.alert__desc { display: block; font-size: var(--body-sm); }   /* 글자색 = 본문색(제목과는 굵기로 구분). muted 는 다크 경고 바탕 위 3.9:1 이라 안 씀 */
+.alert__close { flex: none; margin: -4px -6px -4px 0; }   /* 아이콘 버튼(.btn--icon.btn--sm)이 줄 높이를 키우지 않게 */
+.alert--success { --alert-bg: var(--color-bg-success-subtle); --alert-bd: var(--color-border-success); --alert-ic: var(--color-icon-success); }
+.alert--warning { --alert-bg: var(--color-bg-warning-subtle); --alert-bd: var(--color-border-warning); --alert-ic: var(--color-icon-warning); }
+.alert--danger  { --alert-bg: var(--color-bg-danger-subtle);  --alert-bd: var(--color-border-danger);  --alert-ic: var(--color-icon-danger); }
+.alert--brand   { --alert-bg: var(--color-bg-brand-subtle);   --alert-bd: var(--color-border-brand);   --alert-ic: var(--color-icon-brand); }
+.alert--neutral { --alert-bg: var(--color-bg-subtle);         --alert-bd: var(--color-border-base);    --alert-ic: var(--color-icon-muted); }
+.alert--plain { border-color: transparent; }
+
+/* ── Toast .toast ──────────────────────────────────────────────────────────
+ * 화면 오른쪽 아래(.toast-region)에 쌓임. 바탕은 어두운 색 하나, 상태는 아이콘 색으로만
+ * 사라지는 시간(4초) · 쌓는 개수는 화면 스크립트 몫. 되돌리기 같은 동작이 있으면 사라지지 않게
+ * 접근성: .toast-region 에 role="status"(오류는 그 토스트에 role="alert"). 동작 버튼 · 닫기는 키보드로 닿음 */
+.toast-region {
+    position: fixed;
+    right: var(--spacing-24);
+    bottom: var(--spacing-24);
+    z-index: 1100;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: var(--spacing-8);
+    pointer-events: none;   /* 빈 자리는 아래 화면을 그대로 누를 수 있게 */
+}
+.toast {
+    --toast-ic: var(--color-icon-inverse);
+    pointer-events: auto;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-8);
+    min-width: 240px;
+    max-width: 360px;
+    padding: var(--spacing-8) var(--spacing-8) var(--spacing-8) var(--spacing-12);
+    background: var(--color-bg-inverse);
+    color: var(--color-text-inverse);
+    border-radius: var(--radius-popover);
+    box-shadow: var(--shadow-popover);
+    font-size: var(--body-md);
+    line-height: 1.5;
+    text-align: start;
+}
+.toast__icon { flex: none; width: 16px; height: 16px; color: var(--toast-ic); }
+.toast__icon svg { display: block; width: 100%; height: 100%; }
+.toast__msg { flex: 1; min-width: 0; }
+.toast__action {
+    flex: none;
+    padding: 2px var(--spacing-4);
+    border: 0;
+    border-radius: var(--radius-btn);
+    background: none;
+    color: inherit;
+    font: inherit;
+    font-weight: var(--font-weight-semibold);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    cursor: pointer;
+}
+.toast__action:focus-visible { outline: 2px solid currentColor; outline-offset: 1px; }
+/* 닫기 = 보조 · 투명 아이콘 버튼을 어두운 바탕용으로 — 글자색은 바탕 위 글자, 올림 · 누름 바탕은 그 글자색을 옅게 */
+.toast .btn--icon {
+    --btn-fg: var(--color-text-inverse);
+    --btn-fg-hover: var(--color-text-inverse);
+    --btn-fg-pressed: var(--color-text-inverse);
+    --btn-tint-hover: color-mix(in srgb, var(--color-text-inverse) 14%, transparent);
+    --btn-tint-pressed: color-mix(in srgb, var(--color-text-inverse) 22%, transparent);
+    flex: none;
+}
+.toast--success { --toast-ic: var(--color-icon-on-inverse-success); }   /* 반전 바탕 위 상태 아이콘 토큰 — 라이트 · 다크 모두 3:1 이상 */
+.toast--danger  { --toast-ic: var(--color-icon-on-inverse-danger); }
+.toast--warning { --toast-ic: var(--color-icon-on-inverse-warning); }
+
+/* ── Tooltip .tooltip ──────────────────────────────────────────────────────
+ * 아이콘 버튼처럼 글자 없는 컨트롤의 짧은 설명. 어두운 바탕(bg-inverse) · 글자 12 medium · 화살표 6 (Figma Tooltip과 같은 까만 툴팁)
+ * 감싸는 .has-tooltip 에 마우스가 오거나 키보드 포커스가 오면 보임. 기본 = 위, .tooltip--bottom = 아래
+ * 접근성: 툴팁에 role="tooltip" + id, 컨트롤에 aria-describedby. 아이콘 버튼 이름은 aria-label 이 따로 맡음
+ *   마우스를 툴팁 위로 옮겨도 사라지지 않음(아래 다리) · Esc 로 닫기는 화면 스크립트(.is-hidden) — WCAG 1.4.13
+ *   이전 버전 도움말 툴팁(초록 바탕 · 옆 화살표)은 3.0 시절 값이라 쓰지 않음(10/15 세영 결정) */
+.has-tooltip { position: relative; display: inline-flex; }
+.tooltip {
+    position: absolute;
+    z-index: 1200;
+    left: 50%;
+    bottom: calc(100% + 8px);
+    transform: translateX(-50%);
+    width: max-content;
+    max-width: 240px;
+    padding: var(--spacing-4) var(--spacing-8);
+    background: var(--color-bg-inverse);
+    color: var(--color-text-inverse);
+    border-radius: var(--radius-popover);
+    font-size: var(--body-sm);
+    font-weight: var(--font-weight-medium);
+    line-height: 1.5;
+    text-align: start;
+    white-space: normal;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .12s;
+}
+.tooltip::after {   /* 화살표 6 */
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 100%;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-top-color: var(--color-bg-inverse);
+}
+.tooltip::before {   /* 다리 — 컨트롤과 툴팁 사이 8 을 덮어, 마우스를 툴팁으로 옮겨도 닫히지 않게 */
+    content: "";
+    position: absolute;
+    left: 0; right: 0;
+    top: 100%;
+    height: 8px;
+}
+.tooltip--bottom { bottom: auto; top: calc(100% + 8px); }
+.tooltip--bottom::after { top: auto; bottom: 100%; border-top-color: transparent; border-bottom-color: var(--color-bg-inverse); }
+.tooltip--bottom::before { top: auto; bottom: 100%; }
+.has-tooltip:hover > .tooltip,
+.has-tooltip:focus-within > .tooltip,
+.tooltip.is-open { opacity: 1; visibility: visible; pointer-events: auto; }
+.has-tooltip > .tooltip.is-hidden { opacity: 0; visibility: hidden; }   /* Esc 로 닫은 뒤 — 화면 스크립트가 붙이고, 마우스 · 포커스가 떠나면 뗌 */
+
+@media (forced-colors: active) {
+    .alert, .toast, .tooltip { border: 1px solid CanvasText; }
+}
 
 @media (prefers-reduced-motion: reduce) {
     .spinner { animation-duration: 2.4s; }   /* 완전히 멈추면 '멈춘 화면'으로 오해 — 느리게만 */

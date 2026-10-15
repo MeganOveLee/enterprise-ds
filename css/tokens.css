@@ -285,6 +285,11 @@
   --color-icon-info:         var(--blue-700);
   --color-icon-success:      var(--green-700);
   --color-icon-warning:      var(--yellow-700);
+  /* 반전 바탕(bg-inverse, 토스트 · 툴팁) 위 상태 아이콘 — 라이트는 바탕이 어두워 밝은 단계, 다크는 바탕이 밝아 진한 단계.
+     대비(아이콘 기준 3:1): 라이트 성공 5.80 · 경고 8.54 · 위험 4.05 / 다크 성공 5.67 · 경고 3.48 · 위험 5.50 (TD-45 45-1, 10/15 세영 결정) */
+  --color-icon-on-inverse-success: var(--green-400);
+  --color-icon-on-inverse-warning: var(--yellow-400);
+  --color-icon-on-inverse-danger:  var(--red-400);
 
   /* AUI Grid */
   --color-bg-grid-header:       var(--neutral-800);      /* 헤더 */
@@ -520,6 +525,9 @@ body.dark-mode {
   --color-icon-info:         var(--blue-400);
   --color-icon-success:      var(--green-400);
   --color-icon-warning:      var(--yellow-400);
+  --color-icon-on-inverse-success: var(--green-700);
+  --color-icon-on-inverse-warning: var(--yellow-700);
+  --color-icon-on-inverse-danger:  var(--red-700);
 
   /* AUI Grid */
   --color-bg-grid-header:       var(--neutral-850);

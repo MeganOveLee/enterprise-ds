@@ -1,0 +1,38 @@
+import { Meta, Unstyled, Controls } from '@storybook/addon-docs/blocks';
+import { PageHead, Section, Card } from './_blocks.js';
+import * as S from './Toast.stories.js';
+
+<Meta of={S} />
+
+<Unstyled>
+<div className="ds-page">
+<PageHead eyebrow="Feedback" title="Toast" lead="저장 · 복사처럼 방금 한 일의 결과를 화면 오른쪽 아래에 잠깐 보여 줍니다." />
+<Section title="구성" en="Spec">
+<table className="ds-table ds-props">
+<thead><tr><th>구분</th><th>클래스 · 속성</th><th>설명</th></tr></thead>
+<tbody>
+<tr><td><b>영역</b></td><td><code>.toast-region</code> · <code>role="status"</code></td><td>화면 오른쪽 아래(24 · 24)에 고정되고, 새 토스트는 아래에 쌓입니다. 토스트가 없는 빈 자리는 아래 화면을 그대로 누를 수 있습니다.</td></tr>
+<tr><td><b>구조</b></td><td><code>.toast</code><span className="ds-muted">__icon · __msg · __action · 닫기</span></td><td>어두운 바탕 하나에 아이콘 → 문구 → 동작 버튼 → 닫기 순서입니다. 폭은 240 ~ 360이고, 글이 길면 줄을 바꿉니다.</td></tr>
+<tr><td><b>상태</b></td><td><code>.toast--success</code> · <code>--warning</code> · <code>--danger</code><span className="ds-muted">기본 = 정보</span></td><td>아이콘 색만 바뀝니다. 바탕 · 글자는 같습니다. 아이콘 색은 어두운 바탕 전용 상태 토큰(<code>--color-icon-on-inverse-*</code>)이라 라이트 · 다크 모두 잘 보입니다.</td></tr>
+<tr><td><b>동작</b></td><td><code>.toast__action</code></td><td>「보기」 「다시 시도」처럼 한 개만 둡니다. 밑줄 글자 버튼이라 키보드로 닿습니다.</td></tr>
+<tr><td><b>사라짐</b></td><td><span className="ds-muted">화면 스크립트</span></td><td>보통 4초 뒤 닫힙니다. 동작 버튼이 있거나 위험 알림이면 사용자가 닫을 때까지 남깁니다 — 읽기 전에 닫히면 할 일을 놓칩니다.</td></tr>
+<tr><td><b>읽어 주기</b></td><td><code>role="status"</code> · 위험은 <code>role="alert"</code></td><td>영역의 <code>status</code>가 새 토스트를 읽어 줍니다. 저장 실패 같은 위험 알림만 그 토스트에 <code>alert</code>를 붙여 바로 읽게 합니다.</td></tr>
+</tbody>
+</table>
+<p className="ds-sec__desc ds-after">Figma UI Kit의 Toast와 짝입니다. 이전 버전은 결과를 브라우저 기본 창(확인 버튼을 눌러야 닫힘)으로 띄웠습니다. 화면에 남겨 둘 결과는 <a className="ds-link" href="./?path=/docs/feedback-alert--docs" target="_top">Alert</a>를 씁니다.</p>
+</Section>
+<Section title="예시" en="Examples" desc="회색 틀 = 화면. 제품에서는 브라우저 창 오른쪽 아래에 뜹니다.">
+<Card of={S.저장_완료} title="저장 완료" en="Saved" desc="가장 흔한 쓰임. 문구만 짧게." />
+<Card of={S.동작이_있는_알림} title="동작이 있는 알림" en="With action" desc="결과를 바로 열어 보거나, 실패한 일을 다시 할 수 있게." />
+<Card of={S.쌓임} title="쌓임" en="Stack" desc="여러 개가 뜨면 먼저 뜬 것이 위, 새것이 아래에 놓입니다." />
+</Section>
+<Section title="전체 상태" en="States" desc="상태 네 가지를 구성별로 모았습니다.">
+<Card of={S.전체_상태} title="상태 × 구성" />
+</Section>
+<Section title="Playground" desc="아래 표에서 값을 바꾸면 미리보기와 「코드 보기」가 함께 바뀝니다.">
+<Card of={S.Playground}>
+<Controls of={S.Playground} />
+</Card>
+</Section>
+</div>
+</Unstyled>
