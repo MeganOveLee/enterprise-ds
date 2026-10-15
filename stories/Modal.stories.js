@@ -14,29 +14,41 @@ const I = {
 };
 const btn = (t, cls) => '<button type="button" class="btn ' + cls + '">' + t + '</button>';
 
-// ── 조각 ──
-const top = ({ title = '문서 상세', version = 'A.2', buttons = '' } = {}) =>
+// ── 조각 ── (상세 창 = 이전 버전 문서 상세 팝업 캡쳐 「08_문서 상세 팝업」과 같은 배치)
+const top = ({ title = '문서 - DOC-2610-0013, 브레이크 캘리퍼 조립 사양서, A.2', version = '', buttons = '' } = {}) =>
   '<div class="top"><div class="top-title-area"><span class="doc-type-badge">' + svg(I.doc, 16) + '</span><h3>' + title + '</h3>' +
   (version ? '<span class="version">' + version + '</span>' : '') + '</div>' +
   '<div class="top-btn-area">' + buttons + '<button type="button" class="pop-close" aria-label="닫기">' + svg(I.close, 14) + '</button></div></div>';
-const TABS = ['기본 정보', '첨부 파일', '결재 이력'];
-const tabs = (list = TABS) =>
+const TABS = ['세부 내용', '관련 객체', '이력'];
+// 탭 줄 — 오른쪽 버튼(.tab-actions)은 이전 버전처럼 탭 줄에
+const tabs = (list = TABS, actions = '') =>
   '<div class="tab"><ul role="tablist" aria-label="문서 상세">' +
-  list.map((t, i) => '<li role="tab" tabindex="' + (i ? -1 : 0) + '" aria-selected="' + !i + '"' + (i ? '' : ' class="is-active"') + '>' + t + '</li>').join('') + '</ul></div>';
-const DL = [['문서 번호', 'DOC-2610-0013'], ['버전', 'A.2'], ['문서 명', '브레이크 캘리퍼 조립 사양서', 3], ['작업현황', '검토 중'], ['담당자', '김도윤 · 설계1팀'], ['등록일', '2026-10-06'], ['수정일', '2026-10-13']];
-const FILES = [['캘리퍼 조립 사양서_A.2.pdf', '2.4 MB'], ['체결 토크 시험 결과.xlsx', '318 KB'], ['조립도_BRK-20417.dwg', '5.1 MB']];
-const fileItem = ([n, size], x = '') => '<li>' + svg(I.file, 14) + '<span class="file-name">' + n + '</span><span class="file-size">' + size + '</span>' +
-  '<button type="button" class="file-dl' + x + '" aria-label="' + n + ' 내려받기">' + svg(I.down, 14) + '</button></li>';
-const files = (list = FILES) => '<ul class="file-download-list">' + list.map((f) => fileItem(f)).join('') + '</ul>';
-// 값 보기 — 라벨 · 값 두 쌍이 한 줄, 첨부 목록도 한 줄 전체(dd.span-3)로
-const dl = () => '<div class="pro_table"><dl class="detail-dl">' +
-  DL.map(([k, v, span]) => '<dt>' + k + '</dt><dd' + (span ? ' class="span-3"' : '') + '>' + v + '</dd>').join('') +
-  '<dt>첨부 파일</dt><dd class="span-3">' + files() + '</dd></dl></div>';
+  list.map((t, i) => '<li role="tab" tabindex="' + (i ? -1 : 0) + '" aria-selected="' + !i + '"' + (i ? '' : ' class="is-active"') + '>' + t + '</li>').join('') + '</ul>' +
+  (actions ? '<div class="tab-actions">' + actions + '</div>' : '') + '</div>';
+const VIEW_ACTIONS = btn('결재 요청', 'btn--primary btn--filled') + btn('수정', 'btn--primary btn--filled') + btn('삭제', 'btn--destructive btn--outlined');
+// 줄 = 칸 한두 개. 칸 하나면 줄 전체 폭
+const ROWS = [
+  [['문서 명', '브레이크 캘리퍼 조립 사양서']],
+  [['문서 번호', 'DOC-2610-0013'], ['문서 분류', '/제품 문서/설계 문서']],
+  [['작업 현황', '작업중'], ['버전', 'A.2']],
+  [['등록자', '김도윤'], ['등록일', '2026-10-06 09:12:40']],
+  [['수정자', '김도윤'], ['수정일', '2026-10-13 16:43:24']],
+  [['설명', '조립 순서와 체결 토크 기준을 정리한 사양서']],
+];
+const MAIN_FILE = ['캘리퍼 조립 사양서_A.2.pdf'];
+const SUB_FILES = ['체결 토크 시험 결과.xlsx', '조립도_BRK-20417.dwg'];
+const files = (list) => '<ul class="file-download-list">' + list.map((n) =>
+  '<li><span class="file-icon">' + svg(I.file, 18) + '</span><a class="file-name" href="#" download>' + n + '</a></li>').join('') + '</ul>';
+const row = (cells) => '<dl class="detail-dl__row">' + cells.map(([k, v]) => '<div><dt>' + k + '</dt><dd>' + v + '</dd></div>').join('') + '</dl>';
+// 값 보기 — 섹션 머리 + 옅은 회색 카드 안에 줄
+const dl = () => '<div class="seach_arm"><div class="leftbt"><h4>기본 정보</h4></div></div>' +
+  '<div class="pro_table"><div class="detail-dl">' + ROWS.map(row).join('') +
+  row([['주 첨부 파일', files(MAIN_FILE)]]) + row([['부 첨부 파일', files(SUB_FILES)]]) + '</div></div>';
 
-// 상세 창 — 제목 줄 + 탭 + 내용(.contents) = 값 보기 · 첨부 목록
+// 상세 창 — 제목 줄(닫기만) + 탭 줄(탭 · 오른쪽 버튼) + 내용(.contents) = 섹션 머리 · 값 보기 카드
 const viewPop = ({ title, version, withTabs = true } = {}) =>
-  top({ title, version, buttons: btn('수정', 'btn--secondary btn--outlined') + btn('개정', 'btn--secondary btn--outlined') }) +
-  (withTabs ? tabs() : '') +
+  top({ title, version }) +
+  (withTabs ? tabs(TABS, VIEW_ACTIONS) : '') +
   '<div class="contents">' + dl() + '</div>';
 
 // 등록 창 — 탭 없음. 제목 줄 버튼 = 임시 저장 · 등록, 내용(.product) = 라벨 위 폼 (Input 문서와 같은 칸)
@@ -68,25 +80,24 @@ export default {
 // ── 예시 ──
 export const 상세_창 = {
   parameters: { docs: { source: { code: '<div class="pop">\n  ' + viewPop() + '\n</div>' } } },
-  render: () => win(viewPop()),
+  render: () => win(viewPop(), 560),
 };
 export const 등록_창 = {
   parameters: { docs: { source: { code: '<div class="pop">\n  ' + registerPop() + '\n</div>' } } },
   render: () => win(registerPop(), 400),
 };
 
-// ── 전체 상태 — 창 안의 아이콘 버튼 두 개 ──
+// ── 전체 상태 — 창 안의 아이콘 버튼(닫기) · 첨부 이름 링크 ──
 export const 전체_상태 = {
-  parameters: { controls: { disable: true }, docs: { source: { language: 'html', code: '<!-- 닫기 · 내려받기 = 아이콘 버튼. aria-label 로 이름을 붙임 · Hovered · Focused 는 CSS가 표시 -->' } } },
+  parameters: { controls: { disable: true }, docs: { source: { language: 'html', code: '<!-- 닫기 = 아이콘 버튼(aria-label) · 첨부 = 이름 링크(누르면 내려받음). Hovered · Focused 는 CSS가 표시 -->' } } },
   render: () => {
     enablePseudo();
     const close = (x) => '<button type="button" class="pop-close' + x + '" aria-label="닫기">' + svg(I.close, 14) + '</button>';
-    const dlBtn = (x) => '<ul class="file-download-list" style="width:72px"><li style="justify-content:center;border:0;background:transparent;padding:0">' +
-      '<button type="button" class="file-dl' + x + '" aria-label="내려받기">' + svg(I.down, 14) + '</button></li></ul>';
-    return matrix(['닫기', '내려받기'], [
-      ['Default', [close(''), dlBtn('')]],
-      ['Hovered', [close(' ps-hover'), dlBtn(' ps-hover')]],
-      ['Focused', [close(' ps-focus-visible'), dlBtn(' ps-focus-visible')]],
+    const chip = (x) => '<ul class="file-download-list" style="width:260px"><li><span class="file-icon">' + svg(I.file, 18) + '</span><a class="file-name' + x + '" href="#" download>사양서_A.2.pdf</a></li></ul>';
+    return matrix(['닫기', '첨부 파일'], [
+      ['Default', [close(''), chip('')]],
+      ['Hovered', [close(' ps-hover'), chip(' ps-hover')]],
+      ['Focused', [close(' ps-focus-visible'), chip(' ps-focus-visible')]],
     ]);
   },
 };
@@ -94,13 +105,13 @@ export const 전체_상태 = {
 // ── Playground ──
 export const Playground = {
   argTypes: {
-    kind: { control: 'inline-radio', options: ['상세', '등록'], description: '창 종류 — 제목 줄 버튼과 내용이 바뀜' },
+    kind: { control: 'inline-radio', options: ['상세', '등록'], description: '창 종류 — 상세 = 버튼이 탭 줄 오른쪽, 등록 = 버튼이 제목 줄' },
     title: { control: 'text', description: '창 제목 — `.top-title-area h3`' },
-    version: { control: 'text', description: '버전 칩 — `.version` (비우면 없음, 상세 창만)' },
+    version: { control: 'text', description: '버전 칩 — `.version` (비우면 없음). 이전 버전 상세 창은 제목에 버전을 적고 칩은 없음' },
     withTabs: { control: 'boolean', description: '탭 줄 — `.tab` (상세 창만)' },
     height: { control: { type: 'range', min: 280, max: 640, step: 20 }, description: '틀 높이 — 내용이 넘치면 창 안에서 스크롤, 제목 줄은 위에 붙어 있음' },
   },
-  args: { kind: '상세', title: '문서 상세', version: 'A.2', withTabs: true, height: 440 },
+  args: { kind: '상세', title: '문서 - DOC-2610-0013, 브레이크 캘리퍼 조립 사양서, A.2', version: '', withTabs: true, height: 520 },
   parameters: { docs: { source: { transform: (_, { args }) => '<div class="pop">\n  ' + (args.kind === '등록' ? registerPop(args) : viewPop(args)) + '\n</div>' } } },
   render: (a) => win(a.kind === '등록' ? registerPop(a) : viewPop(a), a.height),
 };

@@ -923,7 +923,6 @@ body.dark-mode .theme-toggle-btn .icon-moon { display: none; }
 .menu-toggle:focus-visible,
 .main-sub-header .sub-close:focus-visible,
 .pop-close:focus-visible,
-.file-download-list .file-dl:focus-visible,
 .left-action-btn:focus-visible {
     outline: 2px solid transparent;   /* 강제 색 모드(고대비)에서만 보임 — box-shadow 가 꺼지는 환경 대비 */
     border-color: var(--color-border-focus);
@@ -1083,7 +1082,8 @@ body.dark-mode .pop .pro_table { background: var(--color-bg-base); box-shadow: n
     align-items: stretch;
     justify-content: space-between;
     border-bottom: 1px solid var(--color-border-base);
-    padding: 0 var(--spacing-16);
+    padding: 0 var(--spacing-32);   /* 이전 버전 탭 줄 좌우 30 · 높이 50 (캡쳐 「08_문서 상세 팝업」, 간격 토큰 중 가까운 32). 구: 16 */
+    min-height: 50px;
     flex-shrink: 0;
 }
 .pop .tab ul {
@@ -1094,6 +1094,8 @@ body.dark-mode .pop .pro_table { background: var(--color-bg-base); box-shadow: n
     gap: 0;
 }
 .pop .tab li {
+    display: inline-flex;   /* 탭 줄 높이(50)만큼 늘어난 칸 안에서 글자는 가운데 — 이전 버전 값 */
+    align-items: center;
     padding: 10px 14px;   /* 이전 버전 팝업 탭 안쪽 10 · 14 (TD-45 45-3 규칙대로, 간격 토큰에 10 · 14 없음). 구: 12 · 16 */
     cursor: pointer;
     color: var(--color-text-muted);
@@ -1108,10 +1110,10 @@ body.dark-mode .pop .pro_table { background: var(--color-bg-base); box-shadow: n
     font-weight: var(--font-weight-semibold);
     border-bottom-color: var(--color-border-brand);   /* 브랜드 포인트 라인 */
 }
-.pop .tab .tab-actions {
+.pop .tab .tab-actions {   /* 탭 줄 오른쪽 버튼 — 이전 버전 .tabbutton 자리(수정 · 결재 요청 · 삭제 등) */
     display: flex;
     align-items: center;
-    gap: var(--spacing-4);
+    gap: var(--spacing-8);   /* 이전 버전 8. 구: 4 */
 }
 
 /* Contents — 탭 내용 */
@@ -1125,59 +1127,84 @@ body.dark-mode .pop .pro_table { background: var(--color-bg-base); box-shadow: n
     background: var(--color-bg-base);
 }   /* display:flex/column/min-height:0 = 구 3.0 .pop .contents 에서 이관(단일출처). 내부(approval tree/list 등)가 flex-컬럼 높이제약 받아 내부 스크롤 (세영 2026-08-11) */
 
-/* key/value 라벨 (4컬럼 grid)
- * 줄 사이 1px 구분선 = 이전 버전 팝업 상세(줄마다 위아래 8 + 아래 선, 마지막 줄은 선 없음 — TD-45 45-3 규칙대로).
- * 선이 칸 사이에서 끊기지 않게 칸 간격(column-gap 12)을 값 칸 좌우 여백 12로 옮김. 줄 간격 16 = 위아래 8 + 8 (구: row-gap 16, 선 없음) */
-.detail-dl {
-    margin: 0;
+/* 상세 값 보기 .detail-dl — 이전 버전 팝업 상세(세부 내용 탭)와 같은 모양 (TD-45, 10/15 캡쳐 「08_문서 상세 팝업」 · 덮어쓰기 551 ~ 565줄)
+ *   줄(.detail-dl__row = dl) 하나에 칸 한두 개. 칸 = 라벨(dt) 위 · 값(dd) 아래. 칸이 하나뿐인 줄은 줄 전체 폭
+ *   줄마다 위아래 8 + 아래 1px 선, 마지막으로 보이는 줄은 선 없음. 칸 사이 24
+ *   라벨 = 12 · 반굵게 · 라벨색(--color-text-label), 값 = 12 · 기본 글자색
+ *   구(10/15 오전): 라벨 왼쪽 · 값 오른쪽 4칸 — 이전 버전 화면과 비교 없이 만든 모양 */
+.detail-dl { display: flex; flex-direction: column; }
+.detail-dl__row {
     display: grid;
-    grid-template-columns: 90px 1fr 90px 1fr;
-}
-.detail-dl dt {
+    grid-template-columns: 1fr 1fr;
+    column-gap: var(--spacing-24);
+    margin: 0;
     padding: var(--spacing-8) 0;
-    align-content: center;   /* 칸은 줄 높이만큼 늘고(선이 같은 높이에) 글자는 가운데 — 블록 안 가운데 정렬 */
-    color: var(--color-text-muted);
+    border-bottom: 1px solid var(--color-border-base);
+}
+.detail-dl__row:not(:has(> div + div)) { grid-template-columns: 1fr; }   /* 칸 하나 = 줄 전체 (이전 버전: th 하나인 줄) */
+.detail-dl__row[hidden] { display: none; }
+.detail-dl__row:not(:has(~ .detail-dl__row:not([hidden]))) { border-bottom: none; }   /* 마지막으로 「보이는」 줄 — 숨긴 줄이 뒤에 있어도 */
+.detail-dl__row > div { min-width: 0; }
+.detail-dl dt {
+    padding: 0 0 var(--spacing-4);
     font-size: var(--body-sm);
-    font-weight: var(--font-weight-medium);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-label);
+    letter-spacing: .01em;
 }
 .detail-dl dd {
     margin: 0;
-    padding: var(--spacing-8) var(--spacing-12);
-    align-content: center;
+    font-size: var(--body-sm);
     color: var(--color-text-base);
-    font-size: var(--body-md);
+    word-break: break-word;
 }
-.detail-dl dd.span-3 { grid-column: span 3; padding-right: 0; }   /* 줄 끝까지 가는 값(첨부 목록)은 오른쪽 끝을 선 끝에 맞춤 */
-/* 첫 줄 = 앞 4칸(두 쌍). 첫 값이 줄 끝까지(span-3)면 앞 2칸 → 그 뒤 칸부터 위에 선 */
-.detail-dl > :nth-child(n+5),
-.detail-dl > dd.span-3:nth-child(2) ~ * { border-top: 1px solid var(--color-border-base); }
+.detail-dl dd:empty::before { content: "\00a0"; }   /* 값이 없어도 줄 높이 유지 */
+/* 상세 내용 카드 — 이전 버전 팝업 상세 = 옅은 회색 바탕 + 1px 테두리 + 모서리, 안쪽 8 · 16, 섹션 머리와 12 (덮어쓰기 594 ~ 596줄) */
+.pop .contents .pro_table {
+    margin-top: var(--spacing-12);
+    padding: var(--spacing-8) var(--spacing-16);
+    background: var(--color-bg-muted);
+    border: 1px solid var(--color-border-base);
+    border-radius: var(--radius-panel);
+}
+body.dark-mode .pop .contents .pro_table { background: var(--color-bg-muted); }   /* 다크 팝업 카드 규칙(bg-base)보다 세게 — 내용 바탕(bg-base) 위 한 단계 */
 
-/* 파일 다운로드 리스트 */
+/* 첨부 파일 목록 .file-download-list — 이전 버전 첨부 칩(.fileAttachLineItem, 덮어쓰기 579 ~ 587줄)
+ *   한 줄 전체 칩: 파일 아이콘 + 파일 이름(반굵게, 누르면 내려받음). 마우스를 올리면 이름에 밑줄 + 오른쪽 내려받기 표시
+ *   구(10/15 오전): 흰 칩 + 크기 + 내려받기 버튼 — 이전 버전에 없던 모양 */
 .file-download-list {
     list-style: none; margin: 0; padding: 0;
     display: flex; flex-direction: column;
-    gap: var(--spacing-4);
+    gap: 6px;   /* 이전 버전 칩 간격 6 (간격 토큰에 6 없음) */
 }
 .file-download-list li {
     display: flex; align-items: center;
     gap: var(--spacing-8);
-    padding: var(--spacing-8) var(--spacing-12);
+    padding: 9px var(--spacing-12);   /* 이전 버전 9 · 12 — 칩 높이 = 아이콘 18 + 위아래 9 + 테두리 */
     border: 1px solid var(--color-border-base);
     border-radius: var(--radius-item);
-    background: var(--color-bg-base);
+    background: var(--color-bg-muted);
     font-size: var(--body-sm);
+    color: var(--color-text-base);
 }
-.file-download-list .file-name { flex: 1; color: var(--color-text-base); }
-.file-download-list .file-size { color: var(--color-text-muted); font-variant-numeric: tabular-nums; }
-.file-download-list .file-dl {
-    width: var(--size-btn); height: var(--size-btn); padding: 0;   /* 높이 = 표준 아이콘 버튼 (DS-ADR-020) */
-    border: none; background: transparent;
-    color: var(--color-text-base); cursor: pointer;
-    border-radius: var(--radius-btn);
-    display: inline-flex; align-items: center; justify-content: center;
+.file-download-list .file-icon { flex: none; width: 18px; height: 18px; color: var(--color-icon-muted); }
+.file-download-list .file-icon svg { display: block; width: 100%; height: 100%; }
+.file-download-list .file-name { color: var(--color-text-base); font-weight: var(--font-weight-semibold); text-decoration: none; }
+.file-download-list a.file-name:hover { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.file-download-list a.file-name:focus-visible { outline: 2px solid var(--color-border-focus); outline-offset: 2px; border-radius: 2px; }
+.file-download-list li:has(a.file-name)::after {   /* 내려받기 표시 — 평소 숨김, 이름에 마우스 · 키보드가 오면 보임(장식, 이름이 곧 내려받기 링크) */
+    content: "";
+    flex: none;
+    width: 18px; height: 18px;
+    margin-left: auto;
+    background-color: var(--color-icon-muted);
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M12 8v7M8.5 11.5 12 15l3.5-3.5'/%3E%3C/svg%3E") center / contain no-repeat;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M12 8v7M8.5 11.5 12 15l3.5-3.5'/%3E%3C/svg%3E") center / contain no-repeat;
+    opacity: 0;
+    transition: opacity .12s ease;
 }
-.file-download-list .file-dl:hover { background: var(--color-bg-info-subtle); }
-.file-download-list svg { width: 14px; height: 14px; }
+.file-download-list li:has(a.file-name:is(:hover, :focus-visible))::after { opacity: 1; }
+@media (forced-colors: active) { .file-download-list li:has(a.file-name)::after { background-color: CanvasText; } }
 
 /* 검색/결과 헤더 (.seach_arm) — 원본 클래스명 그대로 (오타도 보존) */
 .seach_arm {
