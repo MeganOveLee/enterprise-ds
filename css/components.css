@@ -124,7 +124,7 @@
     display: flex;                  /* searchLayout flex:1 이 main-content 의 남은 공간 차지하도록 */
     flex-direction: column;
     overflow-y: auto;
-    padding: var(--spacing-16) var(--spacing-24);  /* 검색·상세 페이지 패딩 절제 */
+    padding: 0 var(--spacing-24);  /* 위아래 0 — 이전 버전 본문 영역(검색 제목 줄은 자기 위 여백 8로 GNB 와 떨어짐). 구: 16 24 (TD-45 45-3 규칙대로) */
     background: var(--color-bg-subtle);
     min-height: 0;
 }
@@ -1225,7 +1225,7 @@ body.dark-mode .pop .pro_table { background: var(--color-bg-base); box-shadow: n
     flex-shrink: 0;
 }
 /* 검색 조건 카드 = 회색 페이지 위 흰 카드 + 1px 테두리(이전 버전 값). 상세 · 팝업 검색폼은 테두리 없음 */
-.product .pro_table { border: 1px solid var(--color-border-base); }
+.product .pro_table { border: 1px solid var(--color-border-base); padding: var(--spacing-16) var(--spacing-32); }   /* 안쪽 여백 = 이전 버전 실제 값(위 15 · 왼쪽 표 10 + 라벨 들여쓰기 20)에 가까운 토큰 16 · 32 (TD-45 45-3 규칙대로). 구: 16 사방 */
 .pop .product .pro_table { border: none; }
 
 /* ============================================================
@@ -1244,7 +1244,8 @@ body.dark-mode .pop .pro_table { background: var(--color-bg-base); box-shadow: n
 /* 여러 열 (제안 H) — 검색 조건(6열) · 상세 값(4열)처럼 라벨 위 · 칸 아래 짝을 한 줄에 더 많이. 칸 하나가 두 칸을 차지하면 .span-2
  * 이전 버전은 고객사 덮어쓰기 파일이 .mainTable(표)을 이 모양으로 바꾸던 자리 */
 .form-grid-2.form-grid--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--spacing-12) var(--spacing-16); }
-.form-grid-2.form-grid--6 { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: var(--spacing-12) var(--spacing-16); }
+.form-grid-2.form-grid--6 { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: var(--spacing-12) var(--spacing-24); }   /* 열 간격 24 = 이전 버전 검색 폼(TD-45 45-3 규칙대로). 구: 16 */
+.form-grid-2.form-grid--6 .ff-field { gap: var(--spacing-8); }   /* 검색 라벨 ↔ 칸 8 = 이전 버전(라벨 아래 칸 위 여백 8). 등록 폼(.form-grid-2)은 6 그대로 */
 .form-grid-2 .ff-field.span-2 { grid-column: span 2; }
 @media (max-width: 1199px) { .form-grid-2.form-grid--6 { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 .form-grid-2 .ff-field > .search-label { margin: 0; display: block; font-size: var(--body-sm); font-weight: var(--font-weight-semibold); color: var(--color-text-label); }   /* 라벨 = 작은 브랜드색 굵은 글자(이전 버전 검색 라벨 값). 구: Screens 에만 있던 값(medium)을 DS 로 (10/14) */
