@@ -1833,7 +1833,7 @@ body.dark-mode .select {
     --btn-line:           var(--color-border-interactive-secondary);
     --btn-line-hover:     var(--color-border-interactive-secondary-hover);
     --btn-line-pressed:   var(--color-border-interactive-secondary-pressed);
-    --btn-tint-hover:     var(--color-bg-interactive-secondary-hover);
+    --btn-tint-hover:     var(--color-bg-muted);   /* 테두리 · 투명 보조 버튼 올림 = 이전 버전 bg-muted(neutral-50) (TD-45 45-3 규칙대로). 구: secondary-hover(200). 채운 보조 버튼 올림은 그대로 */
     --btn-tint-pressed:   var(--color-bg-interactive-secondary-pressed);
 
     display: inline-flex;

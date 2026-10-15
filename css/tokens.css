@@ -318,7 +318,7 @@
   --color-bg-interactive-secondary:           var(--neutral-100);
   --color-bg-interactive-secondary-hover:     var(--neutral-200);
   --color-bg-interactive-secondary-pressed:   var(--neutral-300);
-  --color-text-interactive-secondary:         var(--neutral-700);
+  --color-text-interactive-secondary:         var(--neutral-600);   /* 보조 버튼 글자 = 이전 버전 neutral-600 (TD-45 45-3 규칙대로, 흰 바탕 AA). 구: 700 */
   --color-text-interactive-secondary-hover:   var(--neutral-800);
   --color-text-interactive-secondary-pressed: var(--neutral-900);
   --color-icon-interactive-secondary:         var(--neutral-700);
