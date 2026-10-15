@@ -97,5 +97,5 @@ export const Toolbar = ({ compact = false, figmaIcon }) => {
       figmaIcon ? h('img', { src: figmaIcon, alt: '', width: 18, height: 18 }) : null, 'Figma에서 보기 ↗'),
     compact ? null : h('span', { className: 'ds-tb__sep', 'aria-hidden': true }),
     TOOLS.map((t) => h(ToolSelect, { key: t.key, tool: t, value: g[t.key], onPick: set })));
-  return compact ? bar : h('div', { className: 'ds-tbrow' }, bar, h('span', { className: 'ds-tb__note' }, '맨 위 막대와 같은 버튼이에요'));
+  return compact ? bar : h('div', { className: 'ds-tbrow' }, bar);
 };
