@@ -85,6 +85,7 @@ export const 전체_상태 = {
       ['Default', [cell(box({ picked: [] })), opt('작업 중', false)]],
       ['Hovered', [cell(box({ picked: [], extraBox: ' ps-hover' })), opt('작업 중', false, ' ps-hover')]],
       ['고른 값 있음 · 고른 항목', [cell(box({ picked: ['작업 중', '검토 중'] })), opt('작업 중', true)]],
+      ['Focused', ['—', '<div class="checkSelect" style="width:200px;text-align:left"><div class="options show" style="position:static;box-shadow:none"><div><label class="option"><input type="checkbox" class="ps-focus-visible"><span>작업 중</span></label></div></div></div>']],
       ['펼침', [cell('<div class="checkSelect"><div class="selected-text" role="button" tabindex="0" aria-haspopup="true" aria-expanded="true" aria-label="작업현황: 작업 중">작업 중</div><div class="options show" style="display:none"></div></div>'), '—']],
     ]) + '<p class="sb-note" style="margin:8px 0 0">비활성 모양은 아직 없습니다(입력칸의 disabled 규칙을 위젯에 맞춰 붙일지 결정 필요).</p>';
   },
