@@ -1006,16 +1006,16 @@ body.dark-mode .theme-toggle-btn .icon-moon { display: none; }
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 28px; height: 28px;
-    border-radius: var(--radius-sm);   /* 스태틱 — 28 아이콘 타일이라 브랜드와 상관없이 2 (DS-ADR-020) */
-    background: var(--color-bg-info-subtle);
-    color: var(--color-text-base);
+    width: 30px; height: 30px;   /* 이전 버전 제목 아이콘 배지 30 · 옅은 브랜드 바탕 · 브랜드 아이콘 18 (TD-45 45-3 규칙대로). 구: 28 · 정보색 바탕 · 기본 글자색 16 */
+    border-radius: var(--radius-sm);   /* 스태틱 — 아이콘 타일이라 브랜드와 상관없이 2 (DS-ADR-020, 이전 버전은 radius-lg) */
+    background: var(--color-bg-brand-subtle);
+    color: var(--color-icon-brand);
     flex-shrink: 0;
 }
-.pop .top-title-area .doc-type-badge svg { width: 16px; height: 16px; }
+.pop .top-title-area .doc-type-badge svg { width: 18px; height: 18px; }
 .pop .top-title-area h3 {
     margin: 0;
-    font-size: var(--heading-md);
+    font-size: var(--heading-sm);   /* 창 제목 16 · semibold — 이전 버전 값(TD-45 45-3 규칙대로). 구: --heading-md 20 · bold */
     font-weight: var(--font-weight-semibold);
     color: var(--color-text-base);
     line-height: var(--line-height-tight);
@@ -1057,7 +1057,6 @@ body.popup { background: var(--color-bg-base); }
 /* 4. 결재선 Template 셀렉트 — 우리 인풋 디자인으로 통일 */
 .pop .seach_arm .rightbt .select { width: auto; min-width: 150px; }   /* 모양은 .select (DS-ADR-010) */
 .pop .seach_arm .rightbt > span { font-size: var(--body-sm); color: var(--color-text-muted); }
-.pop .top-title-area h3 { font-weight: var(--font-weight-bold); }   /* 크기는 위 규칙(--heading-md)이 정함 — 20px 고정값 중복 제거 (DS-ADR-012) */
 /* 타이틀 배지(문서 아이콘) — 흰 헤더 위 연한 박스 */
 .pop .top-title-area .doc-type-badge svg { stroke-width: 1.8; }
 /* 섹션 머리 — 접기 토글 + 제목만, 바탕 없음(놓인 면 색을 그대로 따름). 이전 버전 등록 창 모양 (10/14).

@@ -12,7 +12,7 @@ import * as S from './Modal.stories.js';
 <thead><tr><th>구분</th><th>클래스 · 속성</th><th>설명</th></tr></thead>
 <tbody>
 <tr><td><b>창 틀</b></td><td><code>.pop</code><span className="ds-muted">높이 100vh · 최소 폭 600</span></td><td>창 한 장을 채웁니다. 내용이 창보다 길면 창 안에서 스크롤합니다. 다크에서 창 바탕은 bg-subtle, 제목 줄 · 내용은 bg-base라 바탕이 없는 탭 줄만 한 단계 어둡게 보입니다.</td></tr>
-<tr><td><b>제목 줄</b></td><td><code>.top</code> › <code>.top-title-area</code> · <code>.top-btn-area</code></td><td>왼쪽에 문서 아이콘(<code>.doc-type-badge</code>) · 제목(<code>h3</code>) · 버전 칩(<code>.version</code>), 오른쪽에 버튼과 닫기. 스크롤해도 창 위에 붙어 있습니다(sticky).</td></tr>
+<tr><td><b>제목 줄</b></td><td><code>.top</code> › <code>.top-title-area</code> · <code>.top-btn-area</code></td><td>왼쪽에 문서 아이콘(<code>.doc-type-badge</code>) · 제목(<code>h3</code>) · 버전 칩(<code>.version</code>), 오른쪽에 버튼과 닫기. 문서 아이콘은 옅은 브랜드 바탕의 30px 배지, 제목은 16px 반굵게입니다. 스크롤해도 창 위에 붙어 있습니다(sticky).</td></tr>
 <tr><td><b>닫기</b></td><td><code>.pop-close</code> · <code>aria-label="닫기"</code></td><td>아이콘만 있는 버튼이라 이름을 꼭 붙입니다. 높이 = 표준 버튼(<code>--size-btn</code>).</td></tr>
 <tr><td><b>탭</b></td><td><code>.tab</code><span className="ds-muted">.pop 안에서만</span></td><td>제목 줄 아래 탭 줄. 모양 · 키보드는 <a className="ds-link" href="./?path=/docs/navigation-tabs--docs" target="_top">Tabs</a> 문서.</td></tr>
 <tr><td><b>내용</b></td><td><code>.contents</code> · <code>.product</code></td><td>탭이 있는 창은 탭 아래 <code>.contents</code>, 탭이 없는 창(등록)은 <code>.product</code>. 둘 다 여백 16이고 내용이 넘치면 그 안에서 스크롤합니다. <code>.product</code>는 묶음 사이 간격 12.</td></tr>
