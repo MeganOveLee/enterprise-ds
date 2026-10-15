@@ -1125,27 +1125,32 @@ body.dark-mode .pop .pro_table { background: var(--color-bg-base); box-shadow: n
     background: var(--color-bg-base);
 }   /* display:flex/column/min-height:0 = 구 3.0 .pop .contents 에서 이관(단일출처). 내부(approval tree/list 등)가 flex-컬럼 높이제약 받아 내부 스크롤 (세영 2026-08-11) */
 
-/* key/value 라벨 (4컬럼 grid) */
+/* key/value 라벨 (4컬럼 grid)
+ * 줄 사이 1px 구분선 = 이전 버전 팝업 상세(줄마다 위아래 8 + 아래 선, 마지막 줄은 선 없음 — TD-45 45-3 규칙대로).
+ * 선이 칸 사이에서 끊기지 않게 칸 간격(column-gap 12)을 값 칸 좌우 여백 12로 옮김. 줄 간격 16 = 위아래 8 + 8 (구: row-gap 16, 선 없음) */
 .detail-dl {
     margin: 0;
     display: grid;
     grid-template-columns: 90px 1fr 90px 1fr;
-    row-gap: var(--spacing-16);     /* 행 간격 — 가독성 위해 8 → 16 */
-    column-gap: var(--spacing-12);
 }
 .detail-dl dt {
+    padding: var(--spacing-8) 0;
+    align-content: center;   /* 칸은 줄 높이만큼 늘고(선이 같은 높이에) 글자는 가운데 — 블록 안 가운데 정렬 */
     color: var(--color-text-muted);
     font-size: var(--body-sm);
     font-weight: var(--font-weight-medium);
-    align-self: center;
 }
 .detail-dl dd {
     margin: 0;
+    padding: var(--spacing-8) var(--spacing-12);
+    align-content: center;
     color: var(--color-text-base);
     font-size: var(--body-md);
-    align-self: center;
 }
-.detail-dl dd.span-3 { grid-column: span 3; }
+.detail-dl dd.span-3 { grid-column: span 3; padding-right: 0; }   /* 줄 끝까지 가는 값(첨부 목록)은 오른쪽 끝을 선 끝에 맞춤 */
+/* 첫 줄 = 앞 4칸(두 쌍). 첫 값이 줄 끝까지(span-3)면 앞 2칸 → 그 뒤 칸부터 위에 선 */
+.detail-dl > :nth-child(n+5),
+.detail-dl > dd.span-3:nth-child(2) ~ * { border-top: 1px solid var(--color-border-base); }
 
 /* 파일 다운로드 리스트 */
 .file-download-list {
