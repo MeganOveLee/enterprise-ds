@@ -12,9 +12,9 @@ import * as S from './Pagination.stories.js';
 <thead><tr><th>구분</th><th>클래스 · 속성</th><th>설명</th></tr></thead>
 <tbody>
 <tr><td><b>틀</b></td><td><code>{'<nav class="ui-pagination">'}</code><span className="ds-muted">aria-label="쪽 이동"</span></td><td>번호 · 화살표를 가운데 정렬로 한 줄에 둡니다. 화면에 목록이 둘이면 이름을 다르게 붙입니다.</td></tr>
-<tr><td><b>번호 · 화살표</b></td><td><code>.ui-pagination__btn</code><span className="ds-muted">button · 높이 --size-btn</span></td><td>번호 칸과 이전 · 다음 화살표가 같은 버튼입니다. 화살표는 글자가 없어 <code>aria-label</code>로 이름을 붙입니다. 모서리는 버튼 역할(<code>--radius-btn</code>)이라 브랜드를 따릅니다.</td></tr>
-<tr><td><b>지금 쪽</b></td><td><code>.is-active</code> · <code>aria-current="page"</code></td><td>선택 바탕(<code>--color-bg-selected</code>) + 굵은 글자. 스크린 리더가 「지금 쪽」으로 읽도록 속성을 함께 붙입니다.</td></tr>
-<tr><td><b>끝에 닿음</b></td><td><code>disabled</code><span className="ds-muted">버튼이 아닐 때 .is-disabled</span></td><td>첫 쪽의 이전 · 마지막 쪽의 다음. 누를 수 없고 포커스도 가지 않습니다.</td></tr>
+<tr><td><b>번호 · 화살표</b></td><td><code>.ui-pagination__btn</code><span className="ds-muted">button · 높이 --size-btn</span></td><td>번호 칸과 이전 · 다음 화살표가 같은 버튼입니다. 흰 칸에 1px 테두리이고, 화살표 칸은 <code>.ui-pagination__btn--nav</code>를 더해 회색 칸입니다. 화살표는 글자가 없어 <code>aria-label</code>로 이름을 붙입니다. 모서리는 버튼 역할(<code>--radius-btn</code>)이라 브랜드를 따릅니다.</td></tr>
+<tr><td><b>지금 쪽</b></td><td><code>.is-active</code> · <code>aria-current="page"</code></td><td>채운 브랜드 버튼과 같은 색(<code>--color-bg-btn-primary</code>)에 흰 굵은 글자입니다. 스크린 리더가 「지금 쪽」으로 읽도록 속성을 함께 붙입니다.</td></tr>
+<tr><td><b>끝에 닿음</b></td><td><code>disabled</code><span className="ds-muted">버튼이 아닐 때 .is-disabled</span></td><td>첫 쪽의 이전 · 마지막 쪽의 다음. 회색 칸에 흐린 화살표이고, 누를 수 없고 포커스도 가지 않습니다.</td></tr>
 <tr><td><b>줄임표</b></td><td><code>.ui-pagination__ellipsis</code><span className="ds-muted">aria-hidden="true"</span></td><td>7쪽이 넘으면 처음 · 끝 · 지금 쪽 앞뒤만 남기고 사이를 줄입니다. 버튼이 아닌 글자입니다.</td></tr>
 </tbody>
 </table>

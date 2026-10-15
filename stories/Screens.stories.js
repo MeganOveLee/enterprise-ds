@@ -167,11 +167,11 @@ const grid = () =>
     '<td class="is-center">' + r[4] + '</td><td class="is-center is-date">' + r[5] + '</td><td class="is-center">' + r[6] + '</td><td class="is-center is-date">' + r[7] + '</td></tr>').join('') +
   '</tbody></table></div>' +
   '<nav class="ui-pagination" aria-label="쪽 이동">' +
-  '<button type="button" class="ui-pagination__btn is-disabled" aria-label="이전 쪽">' + svg(I.prev, 14) + '</button>' +
+  '<button type="button" class="ui-pagination__btn ui-pagination__btn--nav is-disabled" aria-label="이전 쪽">' + svg(I.prev, 14) + '</button>' +
   '<button type="button" class="ui-pagination__btn is-active" aria-current="page">1</button>' +
   [2, 3, 4, 5].map((n) => '<button type="button" class="ui-pagination__btn">' + n + '</button>').join('') +
   '<span class="ui-pagination__ellipsis">…</span><button type="button" class="ui-pagination__btn">7</button>' +
-  '<button type="button" class="ui-pagination__btn" aria-label="다음 쪽">' + svg(I.next, 14) + '</button></nav></div>';
+  '<button type="button" class="ui-pagination__btn ui-pagination__btn--nav" aria-label="다음 쪽">' + svg(I.next, 14) + '</button></nav></div>';
 
 const listScreen = () =>
   '<div style="display:flex;height:100%">' + lnb() + sub() +

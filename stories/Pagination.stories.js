@@ -16,7 +16,7 @@ const pages = (total, cur) => {
 const num = (n, cur, extra = '') =>
   '<button type="button" class="ui-pagination__btn' + (n === cur ? ' is-active' : '') + extra + '"' + (n === cur ? ' aria-current="page"' : '') + ' aria-label="' + n + ' 쪽">' + n + '</button>';
 const arrow = (dir, disabled, extra = '') =>
-  '<button type="button" class="ui-pagination__btn' + extra + '" aria-label="' + (dir === 'prev' ? '이전 쪽' : '다음 쪽') + '"' + (disabled ? ' disabled' : '') + '>' + (dir === 'prev' ? PREV : NEXT) + '</button>';
+  '<button type="button" class="ui-pagination__btn ui-pagination__btn--nav' + extra + '" aria-label="' + (dir === 'prev' ? '이전 쪽' : '다음 쪽') + '"' + (disabled ? ' disabled' : '') + '>' + (dir === 'prev' ? PREV : NEXT) + '</button>';
 const ELLIPSIS = '<span class="ui-pagination__ellipsis" aria-hidden="true">…</span>';
 const pager = (total, cur) =>
   '<nav class="ui-pagination" aria-label="쪽 이동">' + arrow('prev', cur === 1) +
