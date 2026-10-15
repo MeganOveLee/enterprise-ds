@@ -3245,6 +3245,36 @@ body.dark-mode .empty-illo { --empty-illo-shadow: rgb(0 0 0 / .2); }
 .empty-illo__badge  { fill: var(--color-bg-base); stroke: var(--empty-illo-edge); stroke-width: 1.5; }
 .empty-illo__glyph  { fill: none; stroke: currentColor; stroke-width: 4.2; stroke-linecap: round; stroke-linejoin: round; }
 
+/* ── 상태 칩 .status-chip ─────────────────────────────────────────────────
+ * 작업 현황 · 진행 상태를 글자 + 색으로 보여 주는 알약. 이전 버전 값 그대로(덮어쓰기 1072 ~ 1079줄, TD-45 45-3 남은 넷)
+ *   높이 20 · 안쪽 0 8(이전 9) · 글자 12 반굵게 · 앞에 6 점(글자색) · 옅은 바탕 + 진한 글자
+ *   색 = 상태 토큰(bg-*-subtle + text-*-bold). 이전 버전은 고정 색 · 성공 = 브랜드색 → DS 는 성공 토큰
+ *   상태 이름: --neutral · --info · --success · --warning · --danger (이전 버전 --error 도 받음) */
+.status-chip {
+    --chip-bg: var(--color-bg-muted);
+    --chip-fg: var(--color-text-muted);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-4);
+    height: 20px;
+    padding: 0 var(--spacing-8);
+    border-radius: var(--radius-chip);
+    background: var(--chip-bg);
+    color: var(--chip-fg);
+    font-size: var(--body-sm);
+    font-weight: var(--font-weight-semibold);
+    line-height: 1;
+    white-space: nowrap;
+    vertical-align: middle;
+}
+.status-chip::before { content: ""; flex: none; width: 6px; height: 6px; border-radius: var(--radius-rounded); background: currentColor; }
+.status-chip--info    { --chip-bg: var(--color-bg-info-subtle);    --chip-fg: var(--color-text-info-bold); }
+.status-chip--success { --chip-bg: var(--color-bg-success-subtle); --chip-fg: var(--color-text-success-bold); }
+.status-chip--warning { --chip-bg: var(--color-bg-warning-subtle); --chip-fg: var(--color-text-warning-bold); }
+.status-chip--danger,
+.status-chip--error   { --chip-bg: var(--color-bg-danger-subtle);  --chip-fg: var(--color-text-danger-bold); }
+@media (forced-colors: active) { .status-chip { border: 1px solid CanvasText; } }
+
 @media (prefers-reduced-motion: reduce) {
     .spinner { animation-duration: 2.4s; }   /* 완전히 멈추면 '멈춘 화면'으로 오해 — 느리게만 */
     .skeleton-line, .skeleton-title, .skeleton-block { animation: none; }

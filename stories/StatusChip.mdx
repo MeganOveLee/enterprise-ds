@@ -1,0 +1,33 @@
+import { Meta, Unstyled, Controls } from '@storybook/addon-docs/blocks';
+import { PageHead, Section, Card } from './_blocks.js';
+import * as S from './StatusChip.stories.js';
+
+<Meta of={S} />
+
+<Unstyled>
+<div className="ds-page">
+<PageHead eyebrow="Data Display" title="Status Chip" lead="작업 현황 · 진행 상태를 짧은 글자와 색으로 보여 주는 알약입니다." />
+<Section title="구성" en="Spec">
+<table className="ds-table ds-props">
+<thead><tr><th>구분</th><th>클래스 · 속성</th><th>설명</th></tr></thead>
+<tbody>
+<tr><td><b>모양</b></td><td><code>.status-chip</code><span className="ds-muted">높이 20 · 알약</span></td><td>앞에 작은 점(6)이 있고 글자는 12px 반굵게입니다. 옅은 바탕에 진한 글자라 표 안에서도 눈에 띄지만 무겁지 않습니다. 모서리는 브랜드의 칩 모서리(<code>--radius-chip</code>)를 따릅니다.</td></tr>
+<tr><td><b>상태</b></td><td><code>--neutral</code> · <code>--info</code> · <code>--success</code> · <code>--warning</code> · <code>--danger</code><span className="ds-muted">기본 = 중립</span></td><td>색만으로 뜻을 전하지 않도록 글자를 늘 함께 씁니다. 이전 버전 이름 <code>--error</code>도 위험과 같은 색입니다.</td></tr>
+</tbody>
+</table>
+<p className="ds-sec__desc ds-after">이전 버전 상태 칩과 같은 크기 · 모양이고, 색은 고정 색 대신 DS 상태 토큰(<code>{'bg-*-subtle'}</code> · <code>{'text-*-bold'}</code>)입니다. Figma UI Kit의 Status chip과 짝입니다.</p>
+</Section>
+<Section title="예시" en="Examples">
+<Card of={S.작업_현황} title="작업 현황" en="Workflow" desc="문서 · 도면의 결재 단계." />
+<Card of={S.진행_상태} title="진행 상태" en="Progress" desc="프로젝트 · 태스크 진행." />
+</Section>
+<Section title="전체 상태" en="States">
+<Card of={S.전체_상태} title="상태 다섯 가지" />
+</Section>
+<Section title="Playground" desc="아래 표에서 값을 바꾸면 미리보기와 「코드 보기」가 함께 바뀝니다.">
+<Card of={S.Playground}>
+<Controls of={S.Playground} />
+</Card>
+</Section>
+</div>
+</Unstyled>

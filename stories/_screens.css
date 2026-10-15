@@ -155,22 +155,6 @@
 .scr-file svg { vertical-align: middle; color: var(--color-icon-muted); }
 
 /* 상태 칩 */
-.scr-chip {
-  display: inline-flex;
-  align-items: center;
-  height: 22px;
-  padding: 0 var(--spacing-8);
-  border-radius: var(--radius-chip);
-  font-size: var(--body-sm);
-  font-weight: var(--font-weight-medium);
-  white-space: nowrap;
-}
-.scr-chip--neutral { background: var(--color-bg-muted); color: var(--color-text-muted); }
-.scr-chip--info { background: var(--color-bg-info-subtle); color: var(--color-text-info-bold); }
-.scr-chip--success { background: var(--color-bg-success-subtle); color: var(--color-text-success-bold); }
-.scr-chip--warning { background: var(--color-bg-warning-subtle); color: var(--color-text-warning-bold); }
-.scr-chip--danger { background: var(--color-bg-danger-subtle); color: var(--color-text-danger-bold); }
-
 /* 상세 팝업 — 제품에서는 새 창. 여기서는 목록 화면 위에 띄운 창으로 */
 .scr-dim { position: absolute; inset: 0; z-index: 5; background: color-mix(in srgb, var(--color-bg-subtle) 72%, transparent); }   /* 덮개 = .loading--overlay 와 같은 방식(시맨틱 바탕을 반투명으로) */
 .scr-window {
@@ -256,7 +240,7 @@
 
 /* 카드 목록 — 칩 칸은 DS 그대로 90px. 최근 데이터는 앞 칸이 파일 아이콘이라 좁게 */
 .scr .card-list li > a { padding-top: 10px; padding-bottom: 10px; }   /* 줄 = 링크(10/14) — 격자 · 여백은 a 가 가짐 */
-.scr .card-list .scr-chip { justify-self: start; }
+.scr .card-list .status-chip { justify-self: start; }
 .scr .card-list.scr-recent li > a { grid-template-columns: 20px 1fr 84px; }
 .scr .card-list .file-icon { display: inline-flex; }
 .scr-home__grid .empty--card { flex: 1; justify-content: center; padding-top: 0; padding-bottom: 0; }
@@ -297,7 +281,7 @@
 .scr-dot { width: 8px; height: 8px; border-radius: var(--radius-rounded); flex-shrink: 0; }   /* 제품은 그리드 셀 안 점 — 값은 진행 상태 토큰 */
 .scr-detail { display: flex; flex-direction: column; gap: 0; min-height: 0; overflow-y: auto; padding: var(--spacing-4); }   /* 사방 4 — 스크롤 상자 가장자리 버튼의 포커스 번짐(3)이 잘리지 않게 (구: 오른쪽만 4). 틈 0 — 섹션 머리 · 내용이 한 상자로 붙도록(섹션 사이는 DS 카드 위 여백 12) */
 .scr-detail .detail-header { margin-bottom: 0; }
-.scr-detail .detail-header__title .scr-chip { margin-left: var(--spacing-4); }
+.scr-detail .detail-header__title .status-chip { margin-left: var(--spacing-4); }
 .scr .form-grid-2.scr-cols-4 .ff-readonly { color: var(--color-text-base); }
 
 /* 진행 현황 — 상태 블록 + 전체 막대 + 숫자 3개, 아래에 단계별 막대 */
@@ -316,7 +300,7 @@
 .scr-phases li { display: grid; grid-template-columns: 64px 1fr 96px 52px; align-items: center; gap: var(--spacing-12); font-size: var(--body-sm); }
 .scr-phases__name { font-weight: var(--font-weight-medium); color: var(--color-text-base); }
 .scr-phases__date { color: var(--color-text-muted); font-variant-numeric: tabular-nums; text-align: right; }
-.scr-phases .scr-chip { justify-self: start; }
+.scr-phases .status-chip { justify-self: start; }
 .scr-tasks { flex: 0 0 auto; border: 1px solid var(--color-border-base); border-radius: var(--radius-panel); overflow: hidden; }
 .scr-tasks .scr-grid th { position: static; }
 .scr-tasks .progress-bar { height: 14px; }

@@ -64,7 +64,7 @@ const ROWS = [
   ['DOC-2609-0001', '설계 검토 회의록 양식', 'A.1', '승인', '정우진', '2026-09-15', '정우진', '2026-09-15'],
 ];
 
-const chip = (k) => '<span class="scr-chip scr-chip--' + STATUS[k][0] + '">' + STATUS[k][1] + '</span>';
+const chip = (k) => '<span class="status-chip status-chip--' + STATUS[k][0] + '">' + STATUS[k][1] + '</span>';
 const ck = (label, extra = '') => '<label class="checkbox"><input type="checkbox" aria-label="' + label + '"' + extra + '></label>';
 const dp = (label, value = '', extra = '') =>
   '<div class="ui-datepicker"><button type="button" class="ui-datepicker__icon">' + svg(I.cal, 14) + '</button>' +
@@ -275,12 +275,12 @@ const homeBody = () =>
   '<div class="card-grid card-grid--3 scr-home__grid">' +
   '<section class="card">' + cardHead('내 업무 구성') + '<div class="scr-mix">' + donut() + '</div></section>' +
   '<section class="card">' + cardHead('결재 업무', 2, more('최근 5건 · 전체 보기')) + '<ul class="card-list">' +
-    APPROVALS.map(([k, label, t, d]) => li('<span class="scr-chip scr-chip--' + STATUS[k][0] + '">' + label + '</span>', t, d)).join('') + '</ul></section>' +
+    APPROVALS.map(([k, label, t, d]) => li('<span class="status-chip status-chip--' + STATUS[k][0] + '">' + label + '</span>', t, d)).join('') + '</ul></section>' +
   '<section class="card">' + cardHead('활동 업무', 0) +
     '<div class="empty empty--card" role="status"><span class="empty__icon">' + svg(I.inbox, 32) + '</span>' +
     '<p class="empty__title">진행 중인 활동 업무가 없어요</p><p class="empty__desc">배정된 활동이 생기면 여기에 보여요.</p></div></section>' +
   '<section class="card">' + cardHead('나의 태스크', TASKS.length, more()) + '<ul class="card-list">' +
-    TASKS.map(([tone, label, t, d]) => li('<span class="scr-chip scr-chip--' + tone + '">' + label + '</span>', t, d)).join('') + '</ul></section>' +
+    TASKS.map(([tone, label, t, d]) => li('<span class="status-chip status-chip--' + tone + '">' + label + '</span>', t, d)).join('') + '</ul></section>' +
   '<section class="card">' + cardHead('최근 작업 중인 데이터', undefined, more()) + '<ul class="card-list scr-recent">' +
     RECENT.map(([ext, t, d]) => li(fileIcon(ext), t, d)).join('') + '</ul></section>' +
   '<section class="card">' + cardHead('바로가기', undefined, '<a href="#" class="scr-more">' + svg(I.plus, 12) + '편집</a>') +
@@ -301,7 +301,7 @@ const PS = {   // 진행 상태 — 글자 · 진행률 막대 · 상태 칩 · 
   plan: ['예정', 'neutral', '<path d="M12 7v5l3 2"/>'],
   hold: ['보류', 'warning', '<path d="M9 7v10M15 7v10"/>'],
 };
-const pchip = (k) => '<span class="scr-chip scr-chip--' + PS[k][1] + '">' + PS[k][0] + '</span>';
+const pchip = (k) => '<span class="status-chip status-chip--' + PS[k][1] + '">' + PS[k][0] + '</span>';
 // 계획 표식이 있을 때 화면 읽기 문구 — 「진행률 58%, 계획 64%, 6%p 늦음」
 const planText = (pct, plan) => '진행률 ' + pct + '%, 계획 ' + plan + '%, ' + (plan > pct ? (plan - pct) + '%p 늦음' : plan < pct ? (pct - plan) + '%p 빠름' : '계획대로');
 const pbar = (k, pct, name, label = true, plan) => '<div class="progress-bar progress-bar--' + k + '" role="progressbar" aria-label="' + name + ' 진행률" aria-valuenow="' + pct + '" aria-valuemin="0" aria-valuemax="100"' +
