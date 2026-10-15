@@ -9,13 +9,13 @@ import * as S from './Spacing.stories.js';
 <PageHead eyebrow="Foundation" title="Spacing · Radius" lead="간격 · 모서리 · 그림자 · 높이 단계입니다. 실제로 쓰는 단계만 둡니다. 모서리와 높이는 컴포넌트가 역할 이름으로 쓰고, 브랜드가 그 역할 값을 바꿀 수 있습니다." />
 <Section title="개요" en="Overview">
 <table className="ds-table">
-<thead><tr><th>구분</th><th>설명</th><th>사용처</th><th>기본값</th></tr></thead>
+<thead><tr><th>구분</th><th>설명</th><th>사용처</th><th>기본값</th><th>브랜드가 바꾸는 값</th></tr></thead>
 <tbody>
-<tr><td><b>간격</b><span className="ds-muted">Spacing</span></td><td>8단계 <code>--spacing-2</code> ~ <code>--spacing-48</code></td><td>요소 사이 · 카드 안 여백 · 섹션 사이</td><td>2 · 4 · 8 · 12 · 16 · 24 · 32 · 48px</td></tr>
-<tr><td><b>모서리 단계</b><span className="ds-muted">Radius — 스태틱</span></td><td>값 사전 <code>--radius-none</code> · <code>-sm</code> · <code>-md</code> · <code>-lg</code> · <code>-rounded</code>. 모든 브랜드가 같음</td><td>역할 토큰이 가리키는 값</td><td>0 · 2 · 4 · 8px · 알약</td></tr>
-<tr><td><b>모서리 역할</b><span className="ds-muted">Radius role — 플렉시블</span></td><td>9개 <code>--radius-btn</code> · <code>-input</code> · <code>-card</code> …. 컴포넌트는 이 이름만 씀</td><td>버튼 · 입력칸 · 체크박스 · 칩 · 행 · 카드 · 영역 · 떠 있는 층 · 스켈레톤</td><td>E3PS 단계 그대로<span className="ds-muted">Fashion 둥글게 · Precision 직각</span></td></tr>
-<tr><td><b>높이</b><span className="ds-muted">Size — 플렉시블</span></td><td>3개 <code>--size-input</code> · <code>--size-btn</code> · <code>--size-btn-sm</code></td><td>입력칸 · 버튼 · 작은 버튼</td><td>28 · 28 · 26px<span className="ds-muted">Precision 32 · 32 · 28</span></td></tr>
-<tr><td><b>그림자</b><span className="ds-muted">Shadow</span></td><td>역할 3단계 <code>--shadow-core</code> · <code>--shadow-popover</code> · <code>--shadow-modal</code>. 면 구분은 주로 배경색 차이와 테두리</td><td>카드 · 떠 있는 층(드롭다운 · 달력 · 목록) · 덮개 층(팝업)</td><td>1px · 4px · 12px 아래</td></tr>
+<tr><td><b>간격</b><span className="ds-muted">Spacing</span></td><td><code>--spacing-2</code> ~ <code>--spacing-48</code></td><td>요소 사이 · 카드 안 여백 · 섹션 사이</td><td>2 · 4 · 8 · 12 · 16 · 24 · 32 · 48px</td><td>—</td></tr>
+<tr><td><b>모서리 단계</b><span className="ds-muted">Radius — 스태틱</span></td><td>값 사전 <code>--radius-none</code> · <code>-sm</code> · <code>-md</code> · <code>-lg</code> · <code>-rounded</code>. 모든 브랜드가 같음</td><td>역할 토큰이 가리키는 값</td><td>0 · 2 · 4 · 8px · 알약</td><td>—</td></tr>
+<tr><td><b>모서리 역할</b><span className="ds-muted">Radius role — 플렉시블</span></td><td><code>--radius-btn</code> · <code>-input</code> · <code>-card</code> …. 컴포넌트는 이 이름만 씀</td><td>버튼 · 입력칸 · 체크박스 · 칩 · 행 · 카드 · 영역 · 떠 있는 층 · 스켈레톤</td><td>버튼 4 · 입력칸 2 · 체크박스 2 · 칩 알약 · 행 2 · 카드 8 · 영역 4 · 떠 있는 층 4 · 스켈레톤 2px</td><td><b>Fashion</b> 버튼 · 칩 알약 · 입력칸 · 카드 · 영역 · 떠 있는 층 8 · 체크박스 · 행 · 스켈레톤 4px<br /><b>Precision</b> 모두 0</td></tr>
+<tr><td><b>높이</b><span className="ds-muted">Size — 플렉시블</span></td><td><code>--size-input</code> · <code>--size-btn</code> · <code>--size-btn-sm</code></td><td>입력칸 · 버튼 · 작은 버튼</td><td>입력칸 28 · 버튼 28 · 작은 버튼 26px</td><td><b>Precision</b> 입력칸 32 · 버튼 32 · 작은 버튼 28px</td></tr>
+<tr><td><b>그림자</b><span className="ds-muted">Shadow</span></td><td><code>--shadow-core</code> · <code>--shadow-popover</code> · <code>--shadow-modal</code>. 면 구분은 주로 배경색 차이와 테두리</td><td>카드 · 떠 있는 층(드롭다운 · 달력 · 목록) · 덮개 층(팝업)</td><td>1px · 4px · 12px 아래</td><td>—</td></tr>
 </tbody>
 </table>
 <p className="ds-note"><b>브랜드</b>를 바꾸면 모서리 역할과 높이의 「지금 값」이 바뀝니다. 브랜드 파일이 바꾸는 것은 브랜드 색과 아래 표의 형태(모서리 역할 · 높이)뿐입니다(DS-ADR-020).</p>
@@ -23,7 +23,7 @@ import * as S from './Spacing.stories.js';
 <Section title="단계" en="Scale">
 <Card of={S.간격} title="간격" en="Spacing" desc="막대 길이 = 실제 값" />
 <Card of={S.모서리} title="모서리" en="Radius" desc="위 = 단계(스태틱), 아래 = 역할(플렉시블) — 역할의 「지금 값」은 선택한 브랜드 값" />
-<Card of={S.그림자} title="그림자" en="Shadow" desc="역할 3단계 — 카드 · 떠 있는 층 · 덮개 층" />
+<Card of={S.그림자} title="그림자" en="Shadow" desc="역할 — 카드 · 떠 있는 층 · 덮개 층" />
 <Card of={S.높이} title="높이" en="Size" desc="입력칸 · 버튼 · 작은 버튼 — 같은 줄에 놓이는 입력칸과 버튼은 높이가 같습니다" />
 </Section>
 </div>
