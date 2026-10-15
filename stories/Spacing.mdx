@@ -1,5 +1,5 @@
 import { Meta, Unstyled } from '@storybook/addon-docs/blocks';
-import { PageHead, Section, Card, Toolbar } from './_blocks.js';
+import { PageHead, Section, Card } from './_blocks.js';
 import * as S from './Spacing.stories.js';
 
 <Meta of={S} />
@@ -18,7 +18,7 @@ import * as S from './Spacing.stories.js';
 <tr><td><b>그림자</b><span className="ds-muted">Shadow</span></td><td>역할 3단계 <code>--shadow-core</code> · <code>--shadow-popover</code> · <code>--shadow-modal</code>. 면 구분은 주로 배경색 차이와 테두리</td><td>카드 · 떠 있는 층(드롭다운 · 달력 · 목록) · 덮개 층(팝업)</td><td>1px · 4px · 12px 아래</td></tr>
 </tbody>
 </table>
-<p className="ds-note"><Toolbar compact /> <b>브랜드</b>를 바꾸면 모서리 역할과 높이의 「지금 값」이 바뀝니다. 브랜드 파일이 바꾸는 것은 브랜드 색과 아래 표의 형태(모서리 역할 · 높이)뿐입니다(DS-ADR-020).</p>
+<p className="ds-note"><b>브랜드</b>를 바꾸면 모서리 역할과 높이의 「지금 값」이 바뀝니다. 브랜드 파일이 바꾸는 것은 브랜드 색과 아래 표의 형태(모서리 역할 · 높이)뿐입니다(DS-ADR-020).</p>
 </Section>
 <Section title="단계" en="Scale">
 <Card of={S.간격} title="간격" en="Spacing" desc="막대 길이 = 실제 값" />

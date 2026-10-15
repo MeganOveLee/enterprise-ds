@@ -1,14 +1,13 @@
 import { Meta, Unstyled } from '@storybook/addon-docs/blocks';
-import { PageHead, Section, Card, Toolbar } from './_blocks.js';
+import { PageHead, Section, Card } from './_blocks.js';
 import * as S from './Screens.stories.js';
 
 <Meta of={S} />
 
 <Unstyled>
 <div className="ds-page">
-<PageHead eyebrow="Screens" title="PLM 화면" lead="이 디자인 시스템의 클래스와 토큰만으로 구성한 PLM 업무 화면입니다. 아래 버튼으로 브랜드 · 화면 모드를 바꾸면 같은 마크업의 화면 전체가 함께 바뀝니다.">
-<Toolbar compact />
-<ul className="ds-meta"><li>실제 크기 1440 × 900</li><li>가상 데이터</li><li>브랜드 3 × 라이트 · 다크</li></ul>
+<PageHead eyebrow="Screens" title="PLM 화면" lead="이 디자인 시스템의 클래스와 토큰만으로 구성한 PLM 업무 화면입니다. 브랜드 · 화면 모드를 바꾸면 같은 마크업의 화면 전체가 함께 바뀝니다.">
+<ul className="ds-meta"><li>실제 크기 1440 × 900</li><li>가상 데이터</li><li>브랜드 × 라이트 · 다크</li></ul>
 </PageHead>
 <Section title="로그인" en="Sign in" desc="처음 보는 화면입니다. 왼쪽 = 브랜드 딥 패널(서비스 소개 · 문의처), 오른쪽 = 로그인 폼. 패널 색과 그림은 브랜드 · 화면 모드를 따릅니다.">
 <Card of={S.로그인} />

@@ -1,5 +1,5 @@
 import { Meta, Unstyled, Controls } from '@storybook/addon-docs/blocks';
-import { PageHead, Section, Card, Toolbar } from './_blocks.js';
+import { PageHead, Section, Card } from './_blocks.js';
 import * as S from './Empty.stories.js';
 
 <Meta of={S} />
@@ -20,7 +20,6 @@ import * as S from './Empty.stories.js';
 </table>
 </Section>
 <Section title="예시" en="Examples" desc="브랜드를 바꾸면 그림이 바뀝니다.">
-<Toolbar compact />
 <Card of={S.아직_없음} title="아직 없음" en="No data" desc="처음 쓰는 목록. 주 액션은 만들기입니다." />
 <Card of={S.검색_결과_없음} title="검색 결과 없음" en="No results" desc="조건을 넓히도록 안내하고, 조건 초기화를 둡니다." />
 <Card of={S.네트워크_오류} title="네트워크 오류" en="Offline" desc="연결을 확인하라고 알리고 다시 시도를 둡니다." />

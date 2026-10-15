@@ -31,7 +31,7 @@ export const Card = ({ of, title, en, desc, code = true, children }) =>
 // 문서 안 도구 막대 — 화면 맨 위 Storybook 도구 막대와 같은 모양 · 같은 아이콘 · 같은 글자 · 같은 열림 목록(10/15 08:17 피드백).
 // 값 = 실제 막대에서 잰 것(버튼 28 · 안쪽 0 7 · 모서리 4 · 바탕 rgba(0,109,235,.07) · 글자 12 굵게 rgb(0,85,184) · 아이콘 14,
 // 목록 180 · 안쪽 4 · 줄 32 · 모서리 6). 고르면 실제 막대 · 주소(URL)도 같이 바뀐다(updateGlobals)
-// compact = Figma 버튼 · 설명 없이 브랜드 · 화면 모드 버튼만(다른 문서의 안내 문장 안)
+// 소개 한 곳에만 둔다 — 처음 온 사람에게 「여기를 눌러 보라」고 알리는 용도(10/15 08:37). 다른 문서는 맨 위 막대로 충분
 const FIGMA_URL = 'https://www.figma.com/design/99ff5JQYQPCdY3xRBWHHlO/?node-id=8111-5';
 const ICON = {   // Storybook 아이콘 paintbrush · mirror(.storybook/preview.js 도구 막대 icon 과 같음)
   brand: 'M11.854.146a.5.5 0 00-.708 0L2.983 8.31a2.24 2.24 0 00-1.074.6C.677 10.14.24 11.902.085 12.997 0 13.6 0 14 0 14s.4 0 1.002-.085c1.095-.155 2.857-.592 4.089-1.824a2.24 2.24 0 00.6-1.074l8.163-8.163a.5.5 0 000-.708l-2-2zM5.6 9.692l.942-.942L5.25 7.457l-.942.943A2.242 2.242 0 015.6 9.692zm1.649-1.65L12.793 2.5 11.5 1.207 5.957 6.75 7.25 8.043zM4.384 9.617a1.25 1.25 0 010 1.768c-.767.766-1.832 1.185-2.78 1.403-.17.04-.335.072-.49.098.027-.154.06-.318.099-.49.219-.947.637-2.012 1.403-2.779a1.25 1.25 0 011.768 0z',
@@ -83,7 +83,7 @@ const ToolSelect = ({ tool, value, onPick }) => {
       tool.items.map(([v, t], i) => h('span', { key: v, id: id + '-' + i, role: 'option', 'aria-selected': i === cur, className: 'ds-tbsel__opt' + (i === active ? ' is-active' : ''),
         onMouseEnter: () => setActive(i), onClick: () => pick(i) }, t))) : null);
 };
-export const Toolbar = ({ compact = false, figmaIcon }) => {
+export const Toolbar = ({ figmaIcon }) => {
   const [g, setG] = React.useState(readGlobals);
   React.useEffect(() => {
     const ch = addons.getChannel();
@@ -92,10 +92,10 @@ export const Toolbar = ({ compact = false, figmaIcon }) => {
     return () => ch.off('globalsUpdated', on);
   }, []);
   const set = (key, value) => { addons.getChannel().emit('updateGlobals', { globals: { [key]: value } }); setG((o) => ({ ...o, [key]: value })); };
-  const bar = h('span', { className: 'ds-tb' + (compact ? ' ds-tb--compact' : '') },
-    compact ? null : h('a', { className: 'ds-tb__figma', href: FIGMA_URL, target: '_blank', rel: 'noreferrer' },
+  const bar = h('span', { className: 'ds-tb' },
+    h('a', { className: 'ds-tb__figma', href: FIGMA_URL, target: '_blank', rel: 'noreferrer' },
       figmaIcon ? h('img', { src: figmaIcon, alt: '', width: 18, height: 18 }) : null, 'Figma에서 보기 ↗'),
-    compact ? null : h('span', { className: 'ds-tb__sep', 'aria-hidden': true }),
+    h('span', { className: 'ds-tb__sep', 'aria-hidden': true }),
     TOOLS.map((t) => h(ToolSelect, { key: t.key, tool: t, value: g[t.key], onPick: set })));
-  return compact ? bar : h('div', { className: 'ds-tbrow' }, bar);
+  return h('div', { className: 'ds-tbrow' }, bar);
 };
