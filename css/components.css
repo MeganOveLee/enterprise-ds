@@ -1885,7 +1885,7 @@ body.dark-mode .select {
     --btn-solid-hover:   var(--color-bg-interactive-danger-hover);
     --btn-solid-pressed: var(--color-bg-interactive-danger-pressed);
     --btn-on-solid:      var(--color-text-on-color);
-    --btn-fg:            var(--color-text-danger);
+    --btn-fg:            var(--color-text-interactive-danger);   /* 구: text-danger(600) */
     --btn-fg-hover:      var(--color-text-danger-bold);
     --btn-fg-pressed:    var(--color-text-danger-bold);
     --btn-line:          var(--color-border-interactive-danger);

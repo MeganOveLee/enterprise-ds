@@ -329,12 +329,14 @@
   --color-border-interactive-secondary-hover:   var(--neutral-400);
   --color-border-interactive-secondary-pressed: var(--neutral-500);
   /* destructive = 삭제 등 되돌릴 수 없는 동작 */
-  --color-bg-interactive-danger:              var(--red-600);
-  --color-bg-interactive-danger-hover:        var(--red-700);
-  --color-bg-interactive-danger-pressed:      var(--red-800);
-  --color-border-interactive-danger:          var(--red-600);
-  --color-border-interactive-danger-hover:    var(--red-700);
-  --color-border-interactive-danger-pressed:  var(--red-800);
+  /* 이전 버전 위험 버튼 = 채움 · 테두리 · 글자 모두 red-700(흰 바탕 6.0:1). 올림 · 누름은 한 단계씩 진하게 (TD-45 45-3 규칙대로). 구: 600 · 700 · 800 */
+  --color-bg-interactive-danger:              var(--red-700);
+  --color-bg-interactive-danger-hover:        var(--red-800);
+  --color-bg-interactive-danger-pressed:      var(--red-900);
+  --color-border-interactive-danger:          var(--red-700);
+  --color-border-interactive-danger-hover:    var(--red-800);
+  --color-border-interactive-danger-pressed:  var(--red-900);
+  --color-text-interactive-danger:            var(--red-700);   /* 테두리 · 투명 위험 버튼 글자 (10/15 세영 결정 — 새 토큰). 올림 · 누름 글자는 text-danger-bold */
   /* 선택됨 위 hover·pressed (페이지네이션 현재 페이지, 토글 버튼 켜짐) — 브랜드 역할 (DS-ADR-005) */
   --color-bg-interactive-selected-hover:      var(--brand-100);
   --color-bg-interactive-selected-pressed:    var(--brand-200);
@@ -568,6 +570,7 @@ body.dark-mode {
   --color-border-interactive-danger:          var(--red-400);
   --color-border-interactive-danger-hover:    var(--red-300);
   --color-border-interactive-danger-pressed:  var(--red-200);
+  --color-text-interactive-danger:            var(--red-300);   /* 다크 = text-danger 와 같은 단계(카드 위 5.91, DS-ADR-014) */
   --color-bg-interactive-selected-hover:      var(--neutral-600);   /* 다크 bg-selected(700)보다 한 단계 밝게 */
   --color-bg-interactive-selected-pressed:    var(--neutral-500);
   --color-bg-interactive-primary-tint-pressed: color-mix(in srgb, var(--brand-500) 45%, transparent);   /* 다크 = hover(bg-brand-subtle 30%)보다 진한 브랜드. selected-hover(회색)를 쓰면 누를 때 회색이 됨 (Button 제안 ⑫) */
