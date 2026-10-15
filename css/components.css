@@ -806,7 +806,7 @@ body.dark-mode .theme-toggle-btn .icon-moon { display: none; }
     outline: none !important;
     padding: 0 var(--spacing-8);
     background: transparent;
-   
+    font-size: var(--body-sm);   /* 입력칸(.input)과 같은 12 — 이전 버전 검색 · 등록 폼 날짜 칸 (TD-45 45-3 A). 구: globals input 14 상속 */
     color: var(--color-text-base);
     height: 100%;
     box-shadow: none !important;
@@ -1726,12 +1726,14 @@ body.dark-mode .resumable:not(.center) .fileList .file-item { background: var(--
 .select {
     height: var(--size-input);
     padding: 0 var(--spacing-8);
+    font-size: var(--body-sm);   /* 입력칸 · 셀렉트 글자 12 — 이전 버전 검색 · 등록 폼 값(TD-45 45-3 A). 여러 줄 칸(.textarea)은 위 14 그대로 */
 }
 /* 큰 칸 (제안 E) — 로그인처럼 칸이 몇 개뿐인 단독 폼 전용. 업무 화면 안(검색 · 상세 · 그리드)에서는 쓰지 않음 */
 .input.input--lg,
 .select.select--lg {   /* 클래스 두 개 — globals 의 input[type="password"] 같은 타입 규칙(0,1,1)보다 세게 */
     height: var(--size-input-lg);
     padding: 0 var(--spacing-12);
+    font-size: var(--body-md);   /* 단독 폼의 큰 칸은 14 그대로 — 업무 화면 칸(12)과 다름 */
 }
 .select {
     -webkit-appearance: none;
@@ -2799,7 +2801,7 @@ body.dark-mode .progress-bar {
     border-radius: var(--radius-input);   /* 입력칸 = 2px, 이전 버전 기준 (DS-ADR-019) · 역할 토큰 (DS-ADR-020) */
     background-color: var(--color-bg-input);
     color: var(--color-text-base);
-    font-size: var(--body-md);
+    font-size: var(--body-sm);   /* 셀렉트(.select)와 같은 12 — 이전 버전 라벨 위 폼의 다중 선택 칸 (TD-45 45-3 A) */
     line-height: var(--size-input);
     white-space: nowrap;
     overflow: hidden;
