@@ -6,7 +6,7 @@ import * as S from './Selection.stories.js';
 
 <Unstyled>
 <div className="ds-page">
-<PageHead eyebrow="Form" title="Selection Controls" lead="여러 개 중에서 고르거나 켜고 끄는 요소입니다. 체크박스 · 라디오 · 스위치 세 가지가 있습니다." />
+<PageHead eyebrow="Form" title="Selection Controls" lead="여러 개 중에서 고르거나 켜고 끄는 요소입니다. 체크박스 · 라디오 · 스위치가 있습니다." />
 <Section title="구성" en="Spec">
 <table className="ds-table ds-props">
 <thead><tr><th>구분</th><th>클래스 · 속성</th><th>설명</th></tr></thead>
@@ -14,7 +14,7 @@ import * as S from './Selection.stories.js';
 <tr><td><b>종류</b></td><td><code>.checkbox</code> · <code>.radio</code> · <code>.switch</code><span className="ds-muted">여러 개 고르기 · 하나만 고르기 · 켜고 끄기</span></td><td><code>label</code>에 클래스를 붙이고 안에 기본 <code>input</code>을 넣습니다. 기본 input을 그대로 써서 키보드 · 스크린리더가 따로 손대지 않아도 동작합니다.</td></tr>
 <tr><td><b>라디오</b></td><td><code>.radio__mark</code> · <code>role="radiogroup"</code><span className="ds-muted">표식 · 묶음</span></td><td>input 다음에 표식 <code>span</code>을 둡니다. 같은 질문의 라디오는 같은 <code>name</code>으로 묶고, 묶음에 이름(<code>aria-label</code>)을 붙입니다.</td></tr>
 <tr><td><b>스위치</b></td><td><code>role="switch"</code><span className="ds-muted">checkbox input에</span></td><td>누르는 즉시 적용되는 설정에 씁니다. 저장 버튼을 눌러야 적용되는 값은 체크박스로 둡니다.</td></tr>
-<tr><td><b>상태</b></td><td><code>checked</code> · <code>disabled</code> · <code>indeterminate</code><span className="ds-muted">선택됨 · 비활성 · 부분 선택</span></td><td>부분 선택은 HTML 속성이 없어 스크립트로 켭니다. 선택됨 + 비활성은 세 가지 모두 같은 연회색입니다.</td></tr>
+<tr><td><b>상태</b></td><td><code>checked</code> · <code>disabled</code> · <code>indeterminate</code><span className="ds-muted">선택됨 · 비활성 · 부분 선택</span></td><td>부분 선택은 HTML 속성이 없어 스크립트로 켭니다. 선택됨 + 비활성은 모두 같은 연회색입니다.</td></tr>
 </tbody>
 </table>
 <p className="ds-sec__desc ds-after">모서리 토큰(<code>--radius-checkbox</code>)은 <a className="ds-link" href="./?path=/docs/foundation-spacing-·-radius--docs" target="_top">Foundation › Spacing · Radius</a>에 있습니다.</p>
@@ -26,7 +26,7 @@ import * as S from './Selection.stories.js';
 <Card of={S.Switch} title="스위치" en="Switch" desc="켜고 끄는 설정입니다. 누르면 바로 적용됩니다." />
 </Section>
 <Section title="전체 상태" en="States" desc="상태별 모습을 모았습니다. Hovered · Focused는 마우스 · 키보드 상태를 정지 화면으로 보여 준 것입니다.">
-<Card of={S.전체_상태} title="선택 컨트롤 3종" desc="행 = 상태, 열 = 종류. 라디오 · 스위치에는 부분 선택이 없습니다." />
+<Card of={S.전체_상태} title="선택 컨트롤 종류별" desc="행 = 상태, 열 = 종류. 라디오 · 스위치에는 부분 선택이 없습니다." />
 </Section>
 <Section title="Playground" desc="아래 표에서 값을 바꾸면 미리보기와 「코드 보기」가 함께 바뀝니다.">
 <Card of={S.Playground}>

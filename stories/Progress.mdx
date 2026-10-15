@@ -6,7 +6,7 @@ import * as S from './Progress.stories.js';
 
 <Unstyled>
 <div className="ds-page">
-<PageHead eyebrow="Feedback" title="Progress" lead="프로젝트 · 태스크가 얼마나 진행됐는지 보여 주는 막대와 상태 표시입니다. 상태는 다섯 가지 — 완료 · 진행 · 지연 · 예정 · 보류 — 이고, 상태마다 막대 색과 글자가 함께 바뀝니다." />
+<PageHead eyebrow="Feedback" title="Progress" lead="프로젝트 · 태스크가 얼마나 진행됐는지 보여 주는 막대와 상태 표시입니다. 상태는 완료 · 진행 · 지연 · 예정 · 보류이고, 상태마다 막대 색과 글자가 함께 바뀝니다." />
 <Section title="구성" en="Spec">
 <table className="ds-table ds-props">
 <thead><tr><th>구분</th><th>클래스 · 속성</th><th>설명</th></tr></thead>
@@ -30,15 +30,15 @@ import * as S from './Progress.stories.js';
 <Card of={S.계획_표식} title="계획 표식" en="Plan marker" desc="실적 = 채움, 계획 = 막대 위 작은 삼각. 숫자는 제목 바로 옆에 한 줄로." />
 <Card of={S.범례} title="범례" en="Legend" desc="산출물 트리 위 범례. 점 안 기호로 색 없이도 구분됩니다." />
 </Section>
-<Section title="전체 상태" en="States" desc="상태 다섯 가지를 한 줄씩. 진행 색은 브랜드 색이 아니라서 브랜드를 바꿔도 같고, 다크에서는 예정만 밝은 회색으로 바뀝니다.">
-<Card of={S.전체_상태} title="상태 5가지" />
+<Section title="전체 상태" en="States" desc="상태마다 한 줄씩. 진행 색은 브랜드 색이 아니라서 브랜드를 바꿔도 같고, 다크에서는 예정만 밝은 회색으로 바뀝니다.">
+<Card of={S.전체_상태} title="상태별" />
 </Section>
 <Section title="알려진 점" en="Known issues">
 <table className="ds-table ds-props">
 <thead><tr><th>무엇</th><th>지금</th><th>영향</th></tr></thead>
 <tbody>
 <tr><td><b>채움 늘어남</b></td><td>값이 바뀌면 채움이 1.6초에 걸쳐 늘어남</td><td>모션 줄이기 설정 규칙이 아직 없습니다.</td></tr>
-<tr><td><b>진행 색 값</b></td><td>상태 색 10개가 고정 hex</td><td>원색 램프를 참조하지 않아 램프를 바꿔도 따라가지 않습니다(다크 예정 두 개만 원색 참조).</td></tr>
+<tr><td><b>진행 색 값</b></td><td>상태 색이 고정 hex</td><td>원색 램프를 참조하지 않아 램프를 바꿔도 따라가지 않습니다(다크 예정만 원색 참조).</td></tr>
 </tbody>
 </table>
 </Section>

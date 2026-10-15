@@ -19,12 +19,12 @@ import * as S from './Color.stories.js';
 </Section>
 <Section title="원색 램프" en="Primitive" desc="의미 토큰이 가리키는 실제 색입니다. 이름의 숫자는 밝기 단계이고 50이 가장 밝습니다.">
 <Card of={S.Brand} title="브랜드" en="Brand" desc="브랜드 스위치로 바뀌는 유일한 색. 500 = 메인 · 700~900 = 깊은 면과 라벨 글자 · 포인트(accent) = 작은 강조" />
-<Card of={S.Neutral} title="중립" en="Neutral" desc="배경 · 글자 · 테두리의 바탕이 되는 회색 13단계. 다크 모드는 새 색을 만들지 않고 이 단계를 뒤집어 씁니다" />
+<Card of={S.Neutral} title="중립" en="Neutral" desc="배경 · 글자 · 테두리의 바탕이 되는 회색 단계. 다크 모드는 새 색을 만들지 않고 이 단계를 뒤집어 씁니다" />
 <Card of={S.Status} title="상태" en="Status" desc="위험 · 성공 · 주의 · 안내 신호. 브랜드와 상관없이 고정입니다" />
 </Section>
 <Section title="의미 토큰" en="Semantic" desc="쓰임을 이름으로 가진 색입니다. 값은 지금 선택한 브랜드 · 모드에서 읽은 실제 값이고, 「복사」로 var(…) 표기를 복사할 수 있습니다.">
 <Card of={S.Background} title="배경" en="Background" desc="면의 색 — --color-bg-*" />
-<Card of={S.Text} title="글자" en="Text" desc="글자 색 — --color-text-*. 본문 · 보조 · 비활성 세 단계에 상태색과 라벨이 더해집니다" />
+<Card of={S.Text} title="글자" en="Text" desc="글자 색 — --color-text-*. 본문 · 보조 · 비활성 단계에 상태색과 라벨이 더해집니다" />
 <Card of={S.Border} title="테두리" en="Border" desc="선 색 — --color-border-*. 입력칸 테두리는 대비 3:1을 위해 구분선과 따로 둡니다" />
 <Card of={S.Icon} title="아이콘" en="Icon" desc="아이콘 색 — --color-icon-*" />
 </Section>

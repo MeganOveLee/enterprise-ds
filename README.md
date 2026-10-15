@@ -6,7 +6,7 @@
 
 - **Figma**: [UI Kit](https://www.figma.com/design/99ff5JQYQPCdY3xRBWHHlO/?node-id=8111-5) — 컴포넌트 원본, 첫 페이지가 한 장 요약 · [Foundation](https://www.figma.com/design/Mf4XTC6dNUOH0anjOMcRPi) — 토큰(변수) · 글자 스타일 원본
 - **Storybook**: https://meganovelee.github.io/enterprise-ds/ — 같은 값을 실제 CSS로 그린 견본
-- **화면 예시**: [Screens › PLM 화면](https://meganovelee.github.io/enterprise-ds/?path=/docs/screens-plm-%ED%99%94%EB%A9%B4--docs) — 이 디자인 시스템의 클래스와 토큰만으로 구성한 실제 크기 업무 화면 5장(로그인 · 홈 · 문서 검색 · 문서 등록 · 프로젝트 상세)과 같은 화면의 브랜드 3개 비교
+- **화면 예시**: [Screens › PLM 화면](https://meganovelee.github.io/enterprise-ds/?path=/docs/screens-plm-%ED%99%94%EB%A9%B4--docs) — 이 디자인 시스템의 클래스와 토큰만으로 구성한 실제 크기 업무 화면(로그인 · 홈 · 문서 검색 · 문서 등록 · 프로젝트 상세)과 같은 화면의 브랜드 비교
 - **결정 기록(ADR)**: [Notion — 결정 기록](https://app.notion.com/p/3eda8196682d8126967fcc86f796fcb4) — 토큰 · 컴포넌트를 정할 때의 배경 · 선택지 · 근거
 - 스타일은 CSS가 소유합니다 — 토큰(`--color-*` …) → 컴포넌트 클래스(`.btn`, `.input` …). JSP 같은 서버 렌더링 화면에도 그대로 씁니다.
 - 브랜드는 `<html class="theme-*">`, 다크 모드는 `<body class="dark-mode">` 하나로 바뀝니다.
