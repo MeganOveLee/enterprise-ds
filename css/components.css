@@ -1094,7 +1094,7 @@ body.dark-mode .pop .pro_table { background: var(--color-bg-base); box-shadow: n
     gap: 0;
 }
 .pop .tab li {
-    padding: var(--spacing-12) var(--spacing-16);
+    padding: 10px 14px;   /* 이전 버전 팝업 탭 안쪽 10 · 14 (TD-45 45-3 규칙대로, 간격 토큰에 10 · 14 없음). 구: 12 · 16 */
     cursor: pointer;
     color: var(--color-text-muted);
     font-size: var(--body-md);
@@ -1102,7 +1102,7 @@ body.dark-mode .pop .pro_table { background: var(--color-bg-base); box-shadow: n
     border-bottom: 3px solid transparent;   /* 선택 밑줄 3 (10/14 결정 — 이전 버전 2) */
     transition: color 0.12s, border-color 0.12s;
 }
-.pop .tab li:hover { color: var(--color-text-base); }
+.pop .tab li:hover { color: var(--color-text-brand); }   /* 이전 버전 — 올리면 브랜드 글자. 구: 기본 글자색 */
 .pop .tab li.is-active {
     color: var(--color-text-brand);
     font-weight: var(--font-weight-semibold);

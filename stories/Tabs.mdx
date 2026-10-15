@@ -11,7 +11,7 @@ import * as S from './Tabs.stories.js';
 <table className="ds-table ds-props">
 <thead><tr><th>구분</th><th>클래스 · 속성</th><th>설명</th></tr></thead>
 <tbody>
-<tr><td><b>팝업 탭</b></td><td><code>.pop .tab</code> › <code>ul</code> › <code>li</code><span className="ds-muted">.pop 안에서만</span></td><td>상세 · 등록 창의 제목 줄 아래. 오른쪽에 <code>.tab-actions</code>(수정 · 개정 같은 버튼)를 함께 둡니다. 선택된 탭은 브랜드 글자 + 아래 3px 브랜드 선. 키보드 포커스는 칸에 옅은 브랜드 바탕.</td></tr>
+<tr><td><b>팝업 탭</b></td><td><code>.pop .tab</code> › <code>ul</code> › <code>li</code><span className="ds-muted">.pop 안에서만</span></td><td>상세 · 등록 창의 제목 줄 아래. 오른쪽에 <code>.tab-actions</code>(수정 · 개정 같은 버튼)를 함께 둡니다. 선택된 탭은 브랜드 글자와 아래 3px 브랜드 선이고, 마우스를 올린 탭은 글자만 브랜드색이 됩니다. 키보드 포커스는 칸에 옅은 브랜드 바탕입니다.</td></tr>
 <tr><td><b>패널 탭</b></td><td><code>.main-sub-tabs</code> › <code>.sub-tab</code><span className="ds-muted">button</span></td><td>보조 메뉴 패널의 메뉴 · 폴더 전환. 칸을 똑같이 나눠 씁니다. 탭이 하나뿐이면 <code>.is-single</code>로 줄 전체를 숨깁니다.</td></tr>
 <tr><td><b>선택됨</b></td><td><code>.is-active</code> · <code>aria-selected="true"</code></td><td>모양은 클래스가, 스크린 리더 안내는 속성이 맡습니다. 둘을 함께 바꿉니다.</td></tr>
 <tr><td><b>접근성</b></td><td><code>role="tablist"</code> · <code>role="tab"</code> · <code>tabindex</code></td><td>목록에 tablist, 탭마다 tab. 선택된 탭만 <code>tabindex="0"</code>, 나머지는 <code>-1</code>. 이전 버전 팝업 탭은 <code>li</code>라 이 속성을 더해야 키보드로 닿습니다.</td></tr>
