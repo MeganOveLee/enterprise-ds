@@ -2942,23 +2942,23 @@ body.dark-mode .progress-bar {
 .gnb .header-actions nav ul li:nth-child(odd) .dropdown-content-top .count { color: var(--color-text-success) !important; }   /* styles.css 694 이관 — 드롭다운 항목 count만(토글 배지 .menu-toggle .count은 흰색 overrides:11 유지). li *{--def-text-color}(styles 475) 이기게 !important */
 .gnb .header-actions nav ul li:nth-child(even) .dropdown-content-top .count { color: var(--color-text-info) !important; }   /* styles.css 697 이관 */
 
-/* ═══ GNB 사용자 메뉴 — .dropdown-content-top:has(.logoutBtn) (TD-45 45-3 남은 넷, 10/15 시안 승인 그림 85) ═══
+/* ═══ GNB 사용자 메뉴 — .dropdown-content-top:has(.logoutBtn) (TD-45 45-3 남은 넷) ═══
  * 이전 버전 개발 마크업 그대로: 머리(.section.user-info › .user-avatar · .user-meta) · 줄(.section-title) · 로그아웃(.logoutBtn › .logout-btn).
- * 값 = 이전 버전 덮어쓰기 31 · 37 · 40절(폭 258 · 줄 안쪽 8 16 · 아이콘 18 · 스위치 34 × 18 · 로그아웃 줄 안쪽 12 16).
- * 고정 색 → 토큰: 패널 = --color-bg-panel, 머리 · 로그아웃 줄 = 패널을 28% 어둡게, 글자 = --color-text-on-panel · -2,
- *   강조(언어 · 내려받기 · 화면 모드 · 로그아웃 · 아바타 테두리) = --user-menu-accent(기본 --accent-500 — 이전 버전 금색 자리).
+ * 값 = 이전 버전 덮어쓰기 31 · 37 · 40절(10/14 코드): 폭 258 · 줄 안쪽 8 16 · 아이콘 18 · 스위치 34 × 18(노브 14) · 로그아웃 줄 안쪽 12 16.
+ * 색 = 패널 토큰만: 몸통 --color-bg-panel-2(brand-700), 머리 · 로그아웃 줄 --color-bg-panel(brand-900), 글자 · 테두리 --color-text-on-panel · -2.
+ *   패널 위 글자에 포인트색을 쓰지 않음 — 고채도 포인트색이 진한 브랜드 면 위에서 떨려 보임(이전 버전 8/25 결정).
+ *   10/15 오후: 처음 시안(그림 85)은 8/19 코드 사본의 금색 자리를 --accent-500 으로 옮겼는데, 10/14 코드 · 실제 화면(캡쳐 12)에는 금색이 없어 고침.
  * 줄 아이콘 = 제품이 줄마다 --row-icon 에 그림 경로를 넣음(DS에는 경로 없음 — 아이콘 메뉴 --lnb-icon 과 같은 방식).
  * 사이트맵 · 비밀번호 변경처럼 줄 안 링크(a)는 줄 전체를 누르는 자리로 넓힘(이전 버전 40절). */
 .dropdown-content-top:has(.logoutBtn) {
-    --user-menu-accent: var(--accent-500);
-    --user-menu-deep: color-mix(in srgb, var(--color-bg-panel) 72%, black);
-    --user-menu-line: color-mix(in srgb, var(--color-text-on-panel) 8%, transparent);
-    --user-menu-hover: color-mix(in srgb, var(--color-text-on-panel) 7%, transparent);
+    --user-menu-line: color-mix(in srgb, var(--color-text-on-panel) 6%, transparent);
+    --user-menu-hover: color-mix(in srgb, var(--color-text-on-panel) 5%, transparent);
+    --user-menu-tint: color-mix(in srgb, var(--color-text-on-panel) 14%, transparent);
     flex-direction: column;
     width: 258px;
     min-width: 258px;
     padding: 0;
-    background: var(--color-bg-panel);
+    background: var(--color-bg-panel-2);
     color: var(--color-text-on-panel);
     border: none;
     border-radius: var(--radius-popover);
@@ -2974,7 +2974,7 @@ body.dark-mode .progress-bar {
     align-items: center;
     gap: var(--spacing-12);
     padding: var(--spacing-12) var(--spacing-16);
-    background: var(--user-menu-deep);
+    background: var(--color-bg-panel);
     color: var(--color-text-on-panel);
 }
 .dropdown-content-top:has(.logoutBtn) .user-avatar {
@@ -2984,16 +2984,14 @@ body.dark-mode .progress-bar {
     justify-content: center;
     width: 34px;
     height: 34px;
-    box-sizing: border-box;
     border-radius: var(--radius-rounded);
-    background: var(--color-bg-panel-2);
-    border: 1.5px solid var(--user-menu-accent);
+    background: color-mix(in srgb, var(--color-text-on-panel) 20%, transparent);
     color: var(--color-text-on-panel);
 }
 .dropdown-content-top:has(.logoutBtn) .user-avatar > :is(img, svg) { width: 18px; height: 18px; }
 .dropdown-content-top:has(.logoutBtn) .user-avatar > img { filter: brightness(0) invert(1); opacity: .9; }   /* 제품 그림 파일(검은 선) → 흰 선 */
 .dropdown-content-top:has(.logoutBtn) .user-meta { display: flex; flex-direction: column; align-items: flex-start; min-width: 0; line-height: 1.35; }
-.dropdown-content-top:has(.logoutBtn) .user-meta > :not(.user-org) { color: var(--color-text-on-panel); font-size: var(--body-md); font-weight: var(--font-weight-medium); }
+.dropdown-content-top:has(.logoutBtn) .user-meta > :not(.user-org) { color: var(--color-text-on-color); font-size: var(--body-md); font-weight: var(--font-weight-medium); }
 .dropdown-content-top:has(.logoutBtn) .user-org { color: var(--color-text-on-panel-2); font-size: var(--body-sm); }
 
 /* 줄 — [아이콘 18 + 이름] ……… [오른쪽 조작] */
@@ -3024,7 +3022,7 @@ body.dark-mode .progress-bar {
 }
 .dropdown-content-top:has(.logoutBtn) .section-title > :last-child { margin-left: auto; }
 
-/* 줄 링크(사이트맵 · 비밀번호 변경) = 줄 전체 + 오른쪽 꺾쇠. 제품 마크업의 작은 그림은 숨김 */
+/* 줄 링크(사이트맵 · 비밀번호 변경) = 줄 전체 + 오른쪽 꺾쇠 6 · 선 2(흰색). 제품 마크업의 작은 그림은 숨김 */
 .dropdown-content-top:has(.logoutBtn) .section-title > a {
     position: absolute;
     inset: 0;
@@ -3032,7 +3030,7 @@ body.dark-mode .progress-bar {
     align-items: center;
     justify-content: flex-end;
     padding-right: var(--spacing-16);
-    color: var(--color-text-on-panel);
+    color: var(--color-text-on-color);
     text-decoration: none;
 }
 .dropdown-content-top:has(.logoutBtn) .section-title > a > img { display: none; }
@@ -3041,25 +3039,25 @@ body.dark-mode .progress-bar {
     width: 6px;
     height: 6px;
     margin-right: 3px;
-    border-top: 1.5px solid currentColor;
-    border-right: 1.5px solid currentColor;
+    border-top: 2px solid currentColor;
+    border-right: 2px solid currentColor;
     transform: rotate(45deg);
 }
 
-/* 줄 안 글자 버튼(내려받기 등) = 강조색 테두리 작은 버튼 */
+/* 줄 안 글자 버튼(내려받기 등) = 패널 글자색 테두리 작은 버튼 */
 .dropdown-content-top:has(.logoutBtn) .section-title > button {
     flex: none;
     min-height: 0;
     padding: 4px var(--spacing-12);
     background: transparent;
-    color: var(--user-menu-accent);
-    border: 1px solid color-mix(in srgb, var(--user-menu-accent) 55%, transparent);
+    color: var(--color-text-on-panel);
+    border: 1px solid color-mix(in srgb, var(--color-text-on-panel) 42%, transparent);
     border-radius: var(--radius-btn);
     font-size: var(--body-sm);
     line-height: 1.4;
+    white-space: nowrap;
     cursor: pointer;
 }
-.dropdown-content-top:has(.logoutBtn) .section-title > button:hover { border-color: var(--user-menu-accent); }   /* 바탕을 칠하면 줄 올림 바탕과 겹쳐 Precision 글자 4.1 → 테두리만 진하게 */
 
 /* 메뉴 색상 = 지금 브랜드색 칩 16 */
 .dropdown-content-top:has(.logoutBtn) .section-title > .menu-color-toggle {
@@ -3067,13 +3065,13 @@ body.dark-mode .progress-bar {
     height: 16px;
     padding: 0;
     background: var(--color-bg-brand);
-    border: 1px solid color-mix(in srgb, var(--color-text-on-panel) 75%, transparent);
-    border-radius: var(--radius-sm);
+    border: 1px solid color-mix(in srgb, var(--color-text-on-color) 75%, transparent);
+    border-radius: var(--radius-md);
 }
-.dropdown-content-top:has(.logoutBtn) .section-title > .menu-color-toggle:hover { background: var(--color-bg-brand); }
 .dropdown-content-top:has(.logoutBtn) .menu-color-toggle > svg { display: none; }
 
-/* 화면 모드 = 스위치 34 × 18(노브 12). 켬 = aria-checked="true" 또는 다크 모드 */
+/* 화면 모드 = 스위치 34 × 18 · 노브 14(늘 패널 글자색), 꺼짐 = 반투명 트랙 / 켬 = 브랜드 트랙(이전 버전 37절).
+ * 켬 = aria-checked="true" 또는 다크 모드(이전 버전 마크업 #theme-toggle-button) */
 .dropdown-content-top:has(.logoutBtn) .section-title > #theme-toggle-button,
 .dropdown-content-top:has(.logoutBtn) .section-title > [role="switch"] {
     position: relative;
@@ -3081,49 +3079,55 @@ body.dark-mode .progress-bar {
     height: 18px;
     padding: 0;
     font-size: 0;
-    background: var(--user-menu-deep);
-    border: 1.5px solid var(--user-menu-accent);
+    background: color-mix(in srgb, var(--color-text-on-panel) 22%, transparent);
+    border: none;
     border-radius: var(--radius-rounded);
+    transition: background .2s;
 }
+.dropdown-content-top:has(.logoutBtn) .section-title > [role="switch"][aria-checked="true"],
+body.dark-mode .dropdown-content-top:has(.logoutBtn) .section-title > #theme-toggle-button { background: var(--color-bg-brand); }
 .dropdown-content-top:has(.logoutBtn) #theme-toggle-button > *,
 .dropdown-content-top:has(.logoutBtn) .section-title > [role="switch"] > * { display: none; }
-.dropdown-content-top:has(.logoutBtn) .section-title > #theme-toggle-button::before,
-.dropdown-content-top:has(.logoutBtn) .section-title > [role="switch"]::before {
+.dropdown-content-top:has(.logoutBtn) .section-title > #theme-toggle-button::after,
+.dropdown-content-top:has(.logoutBtn) .section-title > [role="switch"]::after {
     content: "";
     position: absolute;
     top: 50%;
     left: 2px;
-    width: 12px;
-    height: 12px;
+    width: 14px;
+    height: 14px;
     border-radius: var(--radius-rounded);
-    background: var(--user-menu-accent);
+    background: var(--color-text-on-panel);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .35);
     transform: translateY(-50%);
-    transition: transform .15s ease;
+    transition: transform .2s;
 }
-.dropdown-content-top:has(.logoutBtn) .section-title > [aria-checked="true"]::before,
-body.dark-mode .dropdown-content-top:has(.logoutBtn) .section-title > #theme-toggle-button::before { transform: translate(15px, -50%); }
+.dropdown-content-top:has(.logoutBtn) .section-title > [aria-checked="true"]::after,
+body.dark-mode .dropdown-content-top:has(.logoutBtn) .section-title > #theme-toggle-button::after { transform: translate(16px, -50%); }
 
-/* 언어 = 지금 언어 + 꺾쇠(강조색 테두리), 펼친 목록은 머리와 같은 어두운 면 */
+/* 언어 = 지금 언어 + 꺾쇠(패널 글자색 테두리), 펼친 목록은 머리와 같은 진한 면 */
 .dropdown-content-top:has(.logoutBtn) .section-title > .custom-select { position: relative; width: auto !important; border: none; }   /* 제품 마크업 style="width: 40%" 를 이김 */
 .dropdown-content-top:has(.logoutBtn) .custom-select > .selected {
     display: inline-flex;
     align-items: center;
     gap: 5px;
     padding: 3px 9px;
-    color: var(--user-menu-accent);
-    border: 1px solid color-mix(in srgb, var(--user-menu-accent) 45%, transparent);
+    color: var(--color-text-on-panel);
+    border: 1px solid color-mix(in srgb, var(--color-text-on-panel) 38%, transparent);
     border-radius: var(--radius-btn);
     font-size: var(--body-md);
     font-weight: var(--font-weight-medium);
     white-space: nowrap;
     cursor: pointer;
+    transition: background .2s, border-color .2s;
 }
+.dropdown-content-top:has(.logoutBtn) .custom-select > .selected:hover { background: var(--user-menu-tint); border-color: var(--color-text-on-panel); }
 .dropdown-content-top:has(.logoutBtn) .custom-select > .selected::after {
     content: "";
     width: 5px;
     height: 5px;
-    border-right: 1.5px solid currentColor;
-    border-bottom: 1.5px solid currentColor;
+    border-right: 1.5px solid var(--color-text-on-panel-2);
+    border-bottom: 1.5px solid var(--color-text-on-panel-2);
     transform: translateY(-2px) rotate(45deg);
 }
 .dropdown-content-top:has(.logoutBtn) .custom-select > .options {
@@ -3137,7 +3141,7 @@ body.dark-mode .dropdown-content-top:has(.logoutBtn) .section-title > #theme-tog
     margin: 0;
     padding: var(--spacing-4) 0;
     list-style: none;
-    background: var(--user-menu-deep);
+    background: var(--color-bg-panel);
     border: 1px solid color-mix(in srgb, var(--color-text-on-panel) 12%, transparent);
     border-radius: var(--radius-popover);
     box-shadow: var(--shadow-popover);
@@ -3147,32 +3151,38 @@ body.dark-mode .dropdown-content-top:has(.logoutBtn) .section-title > #theme-tog
 .dropdown-content-top:has(.logoutBtn) .custom-select > .options > li:hover,
 .dropdown-content-top:has(.logoutBtn) .custom-select > .options > li.active { background: color-mix(in srgb, var(--color-text-on-panel) 8%, transparent); }
 
-/* 로그아웃 줄 — 머리와 같은 어두운 면, 줄 전체 폭 강조색 테두리 버튼 */
-.dropdown-content-top:has(.logoutBtn) .logoutBtn { padding: var(--spacing-12) var(--spacing-16); background: var(--user-menu-deep); }
+/* 로그아웃 줄 — 머리와 같은 진한 면, 줄 전체 폭 패널 글자색 테두리 버튼 */
+.dropdown-content-top:has(.logoutBtn) .logoutBtn { padding: var(--spacing-12) var(--spacing-16); background: var(--color-bg-panel); }
 .dropdown-content-top:has(.logoutBtn) .logout-btn {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: var(--spacing-8);
     width: 100%;
+    margin: 0;
     padding: 11px 0;
     background: transparent;
-    color: var(--user-menu-accent);
-    border: 1px solid var(--user-menu-accent);
+    color: var(--color-text-on-panel);
+    border: 1px solid color-mix(in srgb, var(--color-text-on-panel) 42%, transparent);
     border-radius: var(--radius-btn);
     font-size: var(--body-md);
+    transition: background .2s;
 }
-.dropdown-content-top:has(.logoutBtn) .logout-btn:hover { background: color-mix(in srgb, var(--user-menu-accent) 12%, transparent); color: var(--user-menu-accent); }
+.dropdown-content-top:has(.logoutBtn) .logout-btn:hover { background: var(--user-menu-tint); color: var(--color-text-on-panel); }
 .dropdown-content-top:has(.logoutBtn) .logout-btn > svg { width: 17px; height: 17px; }
 
 /* 포커스 — 진한 패널 위라 브랜드 링 대신 패널 글자색 2px. 줄 링크는 안쪽, 나머지는 바깥 */
 .dropdown-content-top:has(.logoutBtn) .section-title > a:focus-visible { outline: 2px solid transparent; outline-offset: -2px; box-shadow: inset 0 0 0 2px var(--color-text-on-panel); }
 .dropdown-content-top:has(.logoutBtn) .section-title > button:focus-visible,
 .dropdown-content-top:has(.logoutBtn) .custom-select > .selected:focus-visible,
-.dropdown-content-top:has(.logoutBtn) .logout-btn:focus-visible { outline: 2px solid transparent; box-shadow: 0 0 0 2px var(--user-menu-deep), 0 0 0 4px var(--color-text-on-panel); }
+.dropdown-content-top:has(.logoutBtn) .logout-btn:focus-visible { outline: 2px solid transparent; border-color: var(--color-text-on-panel); box-shadow: 0 0 0 2px var(--color-bg-panel), 0 0 0 4px var(--color-text-on-panel); }
 @media (prefers-reduced-motion: reduce) {
-    .dropdown-content-top:has(.logoutBtn) .section-title > #theme-toggle-button::before,
-    .dropdown-content-top:has(.logoutBtn) .section-title > [role="switch"]::before { transition: none; }
+    .dropdown-content-top:has(.logoutBtn) .section-title > #theme-toggle-button,
+    .dropdown-content-top:has(.logoutBtn) .section-title > [role="switch"],
+    .dropdown-content-top:has(.logoutBtn) .section-title > #theme-toggle-button::after,
+    .dropdown-content-top:has(.logoutBtn) .section-title > [role="switch"]::after,
+    .dropdown-content-top:has(.logoutBtn) .custom-select > .selected,
+    .dropdown-content-top:has(.logoutBtn) .logout-btn { transition: none; }
 }
 @media (forced-colors: active) { .dropdown-content-top:has(.logoutBtn) { border: 1px solid CanvasText; } }
 .gnb .logo-container { height: 100%; }
