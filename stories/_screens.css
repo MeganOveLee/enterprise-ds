@@ -126,7 +126,7 @@
   position: sticky;
   top: 0;
   z-index: 1;
-  height: 40px;
+  height: 34px;   /* 이전 버전 그리드 머리 34 — 그리드 공통 스크립트의 머리 높이 상수 (TD-45 45-2) */
   padding: 0 var(--spacing-12);
   background: var(--color-bg-grid-header);
   color: var(--color-text-on-color);
@@ -136,7 +136,7 @@
   border-bottom: 1px solid var(--color-border-grid-header-bottom);
 }
 .scr-grid td {
-  height: 40px;
+  height: 30px;   /* 읽기 그리드 줄 30 — 같은 상수. 편집 그리드(일괄 등록)는 40, Screens 에는 편집 그리드 없음 */
   padding: 0 var(--spacing-12);
   border-bottom: 1px solid var(--color-border-grid-cell);
   white-space: nowrap;
