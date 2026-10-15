@@ -48,6 +48,7 @@
     flex-direction: column;
     height: 100vh;
     min-height: 0;
+    min-width: 1024px;   /* 화면 최소 폭 — 이전 버전과 같음. 창이 더 좁으면 화면 전체가 가로로 스크롤 (10/15 세영 결정) */
     overflow: hidden;
     background: var(--color-bg-subtle);
 }
