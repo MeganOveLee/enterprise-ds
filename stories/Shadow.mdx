@@ -1,0 +1,23 @@
+import { Meta, Unstyled } from '@storybook/addon-docs/blocks';
+import { PageHead, Section, Card } from './_blocks.js';
+import * as S from './Shadow.stories.js';
+
+<Meta of={S} />
+
+<Unstyled>
+<div className="ds-page">
+<PageHead eyebrow="Foundation" title="Shadow" lead="바닥에서 뜬 정도를 카드 · 떠 있는 층 · 덮개 층 역할로 나눈 그림자입니다." />
+<Section title="개요" en="Overview">
+<table className="ds-table">
+<thead><tr><th>구분</th><th>설명</th><th>사용처</th><th>기본값</th></tr></thead>
+<tbody>
+<tr><td><b>그림자</b><span className="ds-muted">Shadow</span></td><td><code>--shadow-core</code> · <code>--shadow-popover</code> · <code>--shadow-modal</code>. 면 구분은 주로 배경색 차이와 테두리</td><td>카드 · 떠 있는 층(드롭다운 · 달력 · 목록) · 덮개 층(팝업)</td><td>1px · 4px · 12px 아래</td></tr>
+</tbody>
+</table>
+<p className="ds-sec__desc ds-after">브랜드 파일은 그림자를 바꾸지 않습니다. 다크 모드는 같은 역할을 더 진한 값으로 씁니다.</p>
+</Section>
+<Section title="역할" en="Roles">
+<Card of={S.그림자} title="그림자" en="Shadow" desc="역할 — 카드 · 떠 있는 층 · 덮개 층" />
+</Section>
+</div>
+</Unstyled>
