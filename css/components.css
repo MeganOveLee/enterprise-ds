@@ -1422,6 +1422,8 @@ body.dark-mode .resumable:not(.center) .fileList .file-item { background: var(--
     white-space: nowrap;              /* 라벨은 한 줄 — 칸이 좁으면 칸을 넓힌다(이전 버전 화면, 10/14) */
 }
 .radio .radio__mark { margin-top: calc((1lh - 16px) / 2); }   /* 표식을 첫 줄 가운데에 */
+/* 폼 안 라디오 · 체크 라벨 = 12 — 이전 버전 「검색폼 폰트 12 통일」 묶음(입력칸 · 셀렉트와 같은 규칙, TD-45 45-3 규칙대로). 폼 밖(로그인 등)은 14 그대로 */
+:is(.form-grid-2, .mainTable) :is(.radio, .checkbox) { font-size: var(--body-sm); }
 .checkbox input[type="checkbox"],
 .checkSelect .option input[type="checkbox"] {
     appearance: none;
