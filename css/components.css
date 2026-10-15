@@ -1744,7 +1744,7 @@ body.dark-mode .resumable:not(.center) .fileList .file-item { background: var(--
 .select {
     height: var(--size-input);
     padding: 0 var(--spacing-8);
-    font-size: var(--body-sm);   /* 입력칸 · 셀렉트 글자 12 — 이전 버전 검색 · 등록 폼 값(TD-45 45-3 A). 여러 줄 칸(.textarea)은 위 14 그대로 */
+    font-size: var(--body-sm);   /* 입력칸 · 셀렉트 글자 12 — 이전 버전 검색 · 등록 폼 값(TD-45 45-3 A). 여러 줄 칸은 아래 .textarea */
 }
 /* 큰 칸 (제안 E) — 로그인처럼 칸이 몇 개뿐인 단독 폼 전용. 업무 화면 안(검색 · 상세 · 그리드)에서는 쓰지 않음 */
 .input.input--lg,
@@ -1771,6 +1771,7 @@ body.dark-mode .select {
 .textarea {
     min-height: 80px;
     padding: var(--spacing-8);
+    font-size: var(--body-sm);   /* 여러 줄 칸 12 = 이전 버전 라벨 위 폼 값(표 모양 폼만 14). DS 폼은 라벨 위 폼이라 12 (TD-45 45-3 규칙대로). 구: 14 */
     line-height: 1.5;
     resize: vertical;
 }
