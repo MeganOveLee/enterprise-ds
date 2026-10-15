@@ -38,13 +38,16 @@
   .sbdocs-content { max-width: 1120px !important; }
   .ds-page { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; line-height: 1.6; color: #1f2328; word-break: keep-all; }
   .ds-page code { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 12px; color: #0550ae; }
+  body.dark-mode .ds-page .sb-ds code { color: var(--color-text-brand); }   /* 다크 미리보기 안 코드 글자 = 토큰 색. 문서 틀 색(#0550ae)이 어두운 바탕에서 대비 2.0이던 것. 라이트는 그대로 */
+  /* Controls 표 입력칸 = 문서 틀처럼 밝게 고정. DS globals 의 input 바탕(다크 = 어두움)이 스토리북 입력칸에도 닿아 다크에서 글자가 안 보이던 것 */
+  .docblock-argstable input[type="number"], .docblock-argstable input[type="text"], .docblock-argstable textarea { background-color: #f6f9fc; color: #2e3338; }
   .ds-head { padding: 8px 0 24px; border-bottom: 1px solid #e6e8eb; }
   .ds-eyebrow { margin: 0 0 6px; font-size: 12px; font-weight: 600; letter-spacing: .04em; color: #6e7781; }
   .ds-head h1 { margin: 0 0 8px; font-size: 32px; line-height: 1.25; font-weight: 700; color: #111418; }
   .ds-lead { margin: 0; max-width: 760px; font-size: 15px; color: #57606a; }
   .ds-sec { margin-top: 40px; }
   .ds-sec > h2 { margin: 0 0 4px; font-size: 20px; line-height: 1.4; font-weight: 700; color: #111418; }
-  .ds-en { margin-left: 8px; font-size: .75em; font-weight: 500; color: #8c959f; }
+  .ds-en { margin-left: 8px; font-size: .75em; font-weight: 500; color: #656d76; }
   .ds-sec__desc { margin: 0 0 16px; color: #57606a; }
   .ds-card { margin: 0 0 16px; border: 1px solid #e1e4e8; border-radius: 6px; background: #fff; overflow: hidden; }
   .ds-card__head { padding: 12px 16px; background: #f6f8fa; border-bottom: 1px solid #e1e4e8; }
@@ -67,7 +70,7 @@
   /* 참고 자료 링크 아이콘 (GitHub · Figma · Notion 공식 아이콘 파일, assets/links/) */
   .ds-res-icon { width: 20px; height: 20px; margin-right: 8px; vertical-align: -5px; border-radius: 4px; }
   .ds-res-icon--light { box-shadow: 0 0 0 1px #d0d7de; }   /* 흰 바탕 아이콘(Notion)이 표 바탕에 묻히지 않게 */
-  .ds-muted { display: block; margin-top: 2px; font-size: 12px; color: #8c959f; }
+  .ds-muted { display: block; margin-top: 2px; font-size: 12px; color: #656d76; }
   .ds-note { margin: 16px 0 0; padding: 12px 16px; border: 1px solid #cfe1fb; border-radius: 6px; background: #f2f7ff; font-size: 13px; }
   .ds-page .docblock-source { margin: 0; }
   .ds-props td:nth-child(2) code { font-size: 13px; }
@@ -79,18 +82,18 @@
   .ds-cats { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; }
   .ds-layer { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 16px; align-items: start; }
   .ds-layer__label { margin: 14px 0 0; font-size: 14px; font-weight: 700; color: #111418; }
-  .ds-layer__label span { display: block; font-size: 12px; font-weight: 500; color: #8c959f; }
+  .ds-layer__label span { display: block; font-size: 12px; font-weight: 500; color: #656d76; }
   .ds-cats--wide { grid-template-columns: minmax(0, 1fr); }
   .ds-layer__arrow { margin: 10px 0 10px 128px; font-size: 12px; color: #57606a; }
   @media (max-width: 720px) { .ds-layer { grid-template-columns: 1fr; gap: 4px; } .ds-layer__arrow { margin-left: 0; } }
   .ds-cat { padding: 16px; border: 1px solid #e1e4e8; border-radius: 6px; background: #fff; }
   .ds-cat.is-soon { background: #f6f8fa; }
   .ds-cat h3 { margin: 0; font-size: 16px; line-height: 1.4; font-weight: 700; color: #111418; }
-  .ds-cat h3 span { margin-left: 6px; font-size: 12px; font-weight: 500; color: #8c959f; }
+  .ds-cat h3 span { margin-left: 6px; font-size: 12px; font-weight: 500; color: #656d76; }
   .ds-cat p { margin: 6px 0 12px; font-size: 13px; color: #57606a; }
   .ds-cat ul { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
   .ds-cat a, .ds-cat li > span { display: inline-block; padding: 2px 8px; border: 1px solid #e1e4e8; border-radius: 4px; background: #f6f8fa; font-size: 12px; color: #0550ae; text-decoration: none; }
-  .ds-cat li > span { color: #8c959f; }
+  .ds-cat li > span { color: #656d76; }
   .ds-cat a:hover { border-color: #0550ae; }
   .ds-dl { margin: 0; border: 1px solid #e1e4e8; border-radius: 6px; background: #fff; }
   .ds-dl > div { display: grid; grid-template-columns: 140px 1fr; gap: 16px; padding: 12px 16px; border-top: 1px solid #eef0f2; }
@@ -148,6 +151,10 @@
   @media (max-width: 720px) { .ds-hero__mains, .ds-hero__subs { grid-template-columns: 1fr; } .ds-hero__go { display: none; } }
   /* 좁은 화면(휴대폰) — 표가 페이지 밖으로 밀어 가로 스크롤이 생기던 것 → 표 안에서만 가로로 밀리게, 칸 패딩도 줄임 (10/13) */
   @media (max-width: 720px) { .ds-page .ds-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; } .ds-table th, .ds-table td { padding: 8px 10px; } }
-  .ds-page a.ds-link { color: #0550ae; text-decoration: none; }
-  .ds-page a.ds-link:hover { text-decoration: underline; }
+  /* 글 속 링크 = 색 + 밑줄(색만으로 구분하지 않음 — WCAG 1.4.1). 문서 틀 회색 #656d76 = 흰 바탕 5.2 · 회색 머리 #f6f8fa 4.9 (10/15 세영 승인) */
+  .ds-page a.ds-link { color: #0550ae; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  .ds-page a.ds-link:hover { text-decoration-thickness: 2px; }
+  /* Controls 표 켜기/끄기 스위치의 꺼진 쪽 글자(스토리북 기본 50% 투명 = 대비 2.8) */
+  .docblock-argstable label > input[role="switch"]:checked + span,
+  .docblock-argstable label > input[role="switch"]:not(:checked) + span + span { color: #5c636a; }
 </style>
