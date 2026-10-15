@@ -226,7 +226,7 @@
 }
 
 /* ─── 좌측 LNB — 실제 구조는 .main-menu > nav > ul > li (개발자 마크업).
- *   3.1 초안의 .lnb-* / .sub-menu-* 시안 CSS 는 JSP·JS 참조가 0 이라 삭제 (세영 2026-08-25) ─── */
+ *   이전 버전 초안의 .lnb-* / .sub-menu-* 시안 CSS 는 JSP·JS 참조가 0 이라 삭제 (세영 2026-08-25) ─── */
 .main-menu {
     width: 60px;
     height: 100vh;
@@ -689,7 +689,7 @@ body.dark-mode .theme-toggle-btn .icon-moon { display: none; }
 
 /* 기존 클래스 호환 — searchSubMenu(search.js 좌측메뉴 주입구): 옛 좌측메뉴는 LNB가 흡수함 → 아래 규칙은 '트리 없는 것만' 숨겨 트리(조직도/부서/코드) 3화면은 살림(전부숨김+예외 아님).
    ※ menu_title·sub_menu 는 개발자 서브메뉴 실물이라 숨기면 안 됨.
-      3.0 마크업 그대로 두고 CSS로 3.1 디자인 입히는 방식으로 전환 (세영 2026-07-15) */
+      그 전 버전 마크업 그대로 두고 CSS로 이전 버전 디자인 입히는 방식으로 전환 (세영 2026-07-15) */
 .searchSubMenu:not(:has(> :not(.hide) .grid_tree)),
 .searchSubMenu .others { display: none; }   /* 보이는 트리(.hide 안걸린 .grid_tree = 조직도/부서/코드 공통마커)만 남기고 나머지 숨김. 마커를 '보이는 트리'로 일반화 → 코드관리 isTree 토글(#codeTypeTree.hide)도 자동 존중. 예외 추가 아님 (세영 2026-08-14) */
 
@@ -1118,8 +1118,8 @@ body.dark-mode .theme-toggle-btn .icon-moon { display: none; }
     height: 100vh;
     overflow-y: auto;
     background: var(--color-bg-base);
-}   /* width/min-width = 구 3.0 .pop 루트에서 이관(단일출처). height:100vh 가 구 max-height:100vh 대체 (세영 2026-08-11)
-     * overflow-y: 구 3.0 이관값이 hidden 이었으나, 내용이 창을 넘치면 스크롤되는 게 팝업의 기본 동작이라 auto 로.
+}   /* width/min-width = 그 전 버전 .pop 루트에서 이관(단일출처). height:100vh 가 구 max-height:100vh 대체 (세영 2026-08-11)
+     * overflow-y: 그 전 버전 이관값이 hidden 이었으나, 내용이 창을 넘치면 스크롤되는 게 팝업의 기본 동작이라 auto 로.
      * .product 있는 팝업은 .product(overrides 1239)가 먼저 스크롤하므로 여기엔 스크롤바가 안 생김.
      * .product 없는 팝업(selectRole 등)만 이 규칙이 받아준다 — 화면별 예외 불필요 (세영 2026-08-23) */
 /* .pop 이 스크롤 컨테이너가 됐으므로 타이틀바는 sticky 로 고정. 배경은 overrides 408 이 이미 흰색 지정 */
@@ -1262,7 +1262,7 @@ body.dark-mode .pop .pro_table { background: var(--color-bg-base); box-shadow: n
     overflow-y: auto;
     padding: var(--spacing-16);
     background: var(--color-bg-base);
-}   /* display:flex/column/min-height:0 = 구 3.0 .pop .contents 에서 이관(단일출처). 내부(approval tree/list 등)가 flex-컬럼 높이제약 받아 내부 스크롤 (세영 2026-08-11) */
+}   /* display:flex/column/min-height:0 = 그 전 버전 .pop .contents 에서 이관(단일출처). 내부(approval tree/list 등)가 flex-컬럼 높이제약 받아 내부 스크롤 (세영 2026-08-11) */
 
 /* 상세 값 보기 .detail-dl — 이전 버전 팝업 상세(세부 내용 탭)와 같은 모양 (TD-45, 10/15 캡쳐 「08_문서 상세 팝업」 · 덮어쓰기 551 ~ 565줄)
  *   줄(.detail-dl__row = dl) 하나에 칸 한두 개. 칸 = 라벨(dt) 위 · 값(dd) 아래. 칸이 하나뿐인 줄은 줄 전체 폭
@@ -1482,7 +1482,7 @@ body.dark-mode .pop .contents .pro_table:not(:has(.form-grid-2)) { background: v
 .resumable:not(.center) .resumable-label { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: var(--spacing-4); font-size: var(--body-sm); }
 .resumable:not(.center) .resumable-label a { font-size: var(--body-sm); }
 .resumable:not(.center) .resumable-label__name { font-size: var(--body-sm); font-weight: var(--font-weight-semibold); color: var(--color-text-brand); }
-/* 파일선택=.btn .btn--neutral .btn--outline, 전체삭제=.btn .btn--error .btn--transparent (마크업에 3.1 버튼 직접).
+/* 파일선택=.btn .btn--neutral .btn--outline, 전체삭제=.btn .btn--error .btn--transparent (마크업에 이전 버전 버튼 직접).
  * 전체삭제는 파일 있을 때만 노출 */
 .resumable:not(.center) [data-role="clear-all"] { display: none; }
 .resumable:not(.center):has(.fileList li) [data-role="clear-all"] { display: inline-flex; }
@@ -1703,7 +1703,7 @@ body.dark-mode .resumable:not(.center) .fileList .file-item { background: var(--
 }
 
 /* ═══ 커스텀 라디오 .radio — 단일 출처 (2026-07-20 통합)
- *   3.0 radio.css(파란 #024FC0 + checkmark top/left:2px + padding-left:25px)를 여기서 전부 덮음.
+ *   그 전 버전 radio.css(파란 #024FC0 + checkmark top/left:2px + padding-left:25px)를 여기서 전부 덮음.
  *   components 가 radio.css 보다 나중 로드라 !important 불필요.
  *   스코프 프리픽스 없음 = 검색폼·pro_table·팝업 어디서든 재사용 ═══ */
 .radio {
@@ -3760,7 +3760,7 @@ body.dark-mode .empty-illo { --empty-illo-shadow: rgb(0 0 0 / .2); }
  * 감싸는 .has-tooltip 에 마우스가 오거나 키보드 포커스가 오면 보임. 기본 = 위, .tooltip--bottom = 아래
  * 접근성: 툴팁에 role="tooltip" + id, 컨트롤에 aria-describedby. 아이콘 버튼 이름은 aria-label 이 따로 맡음
  *   마우스를 툴팁 위로 옮겨도 사라지지 않음(아래 다리) · Esc 로 닫기는 화면 스크립트(.is-hidden) — WCAG 1.4.13
- *   이전 버전 도움말 툴팁(초록 바탕 · 옆 화살표)은 3.0 시절 값이라 쓰지 않음(10/15 세영 결정) */
+ *   이전 버전 도움말 툴팁(초록 바탕 · 옆 화살표)은 그 전 버전 값이라 쓰지 않음(10/15 세영 결정) */
 .has-tooltip { position: relative; display: inline-flex; }
 .tooltip {
     position: absolute;

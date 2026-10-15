@@ -61,11 +61,11 @@
   src: url('../../portal/font/Montserrat_Alternates/MontserratAlternates-SemiBold.ttf');
 }
 
-/* 3.1 전역: 폰트 + box-sizing (styles.css *{box-sizing:border-box}(36행) 이관 — 컷 시 border-box 유지, 없으면 전체 content-box 회귀=레이아웃 붕괴. 최종감사서 확정 2026-08-16) */
+/* 이전 버전 전역: 폰트 + box-sizing (styles.css *{box-sizing:border-box}(36행) 이관 — 컷 시 border-box 유지, 없으면 전체 content-box 회귀=레이아웃 붕괴. 최종감사서 확정 2026-08-16) */
 * { font-family: var(--font-family-base); box-sizing: border-box; }
 body { line-height: var(--line-height-base); }   /* 글줄 간격 1.6 = 이전 버전 body 값. 문서 화면(.ds-page 1.6)과 단독 화면 · 제품이 같아짐 (TD-45 45-3 D) */
 
-/* ═══ h1~h6 = 웹표준 스케일 명시 정의(세영 지정: 32/24/19/16/12/10). styles.css(3.0) h1~h4 대체 + h5·h6 신규 → styles.css 삭제 후에도 유지. margin:0 = 기존 앱 레이아웃 보존(UA 여백 도입 방지). 크기 오버라이드 없이 h태그 = 이 스케일 (세영 2026-08-07) ═══ */
+/* ═══ h1~h6 = 웹표준 스케일 명시 정의(세영 지정: 32/24/19/16/12/10). styles.css(그 전 버전) h1~h4 대체 + h5·h6 신규 → styles.css 삭제 후에도 유지. margin:0 = 기존 앱 레이아웃 보존(UA 여백 도입 방지). 크기 오버라이드 없이 h태그 = 이 스케일 (세영 2026-08-07) ═══ */
 h1 { font-size: var(--heading-2xl); font-weight: var(--font-weight-bold); margin: 0; line-height: var(--line-height-tight); }   /* 태그 기본값 = 크기 토큰 (DS-ADR-012) */
 h2 { font-size: var(--heading-xl); font-weight: var(--font-weight-bold); margin: 0; line-height: var(--line-height-tight); }   /* 태그 기본값 = 크기 토큰 (DS-ADR-012) */
 h3 { font-size: var(--heading-lg); font-weight: var(--font-weight-bold); margin: 0; line-height: var(--line-height-tight); }   /* 태그 기본값 = 크기 토큰 (DS-ADR-012) */
@@ -98,7 +98,7 @@ input {
  * :where() 라 특이도는 input 과 같음 → .btn 등 클래스 규칙이 그대로 이김. 높이 · 여백은 위 규칙 그대로 */
 input:where([type="button"], [type="submit"], [type="reset"]) { border-radius: var(--radius-btn); }
 /* 텍스트 계열 인풋 높이 = 토큰(--size-input 28px) 단일값.
- * 위 base input{height:20px}은 3.0 잔재라 여기 목록에 없는 타입(password/number/email/tel/search)이
+ * 위 base input{height:20px}은 그 전 버전 잔재라 여기 목록에 없는 타입(password/number/email/tel/search)이
  * 20px로 떨어졌었음 — 비밀번호 변경 팝업에서 발견. 타입을 빼먹으면 조용히 20px가 되니 목록으로 관리.
  * 값도 1.875rem(30px) 하드코딩이었던 걸 토큰으로 교체 (세영 2026-08-24) */
 input[type="text"], input[type="date"],

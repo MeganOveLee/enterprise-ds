@@ -44,7 +44,7 @@
    * border-subtle 이 바탕과 대비 1.01 로 사라지는 문제가 있었음 → 한 벌로 합침.
    *
    *   온도는 이름이 아니라 값이 정한다. 브랜드가 쿨(그린·블루)이면 아래 쿨 값, 웜이면 웜 값으로 이 13줄만 교체.
-   *   채도 상한 0.010(OKLCH) — 3.1 때 "글자에 색기 = 지저분"의 원인은 채도(Open Color 0.015)였음.
+   *   채도 상한 0.010(OKLCH) — 이전 버전 때 "글자에 색기 = 지저분"의 원인은 채도(Open Color 0.015)였음.
    *   750 · 850 · 950 = 다크 면 위계용 중간 단계 (carbon 이 하던 일).
    *
    *   단계  L(OKLCH)  쿨(255°)   웜(75°)
@@ -411,13 +411,13 @@
 
 body {
 
-  /* 벤더 CSS(우리가 못 고치는 파일)가 참조하는 이름 2개 — component/quill/quill.snow.css 전용.
+  /* 벤더 CSS(우리가 못 고치는 파일)가 참조하는 이름 2개 — quill.snow.css 전용.
      quill 교체 전까지 유지. 우리 CSS에서는 쓰지 말 것. */
   --def-text-color:    var(--color-text-base);
   --grid-border-color: var(--color-border-base);
 
-  /* AUIGrid 테마(component/AUIGrid/AUIGrid_custom_style.css)가 참조하는 이름 4개.
-     그리드 벤더 클래스와 물려 있어 이름 유지, 값만 3.1 시멘틱 참조. */
+  /* AUIGrid 테마(AUIGrid_custom_style.css)가 참조하는 이름 4개.
+     그리드 벤더 클래스와 물려 있어 이름 유지, 값만 이전 버전 시멘틱 참조. */
   /* AUIGrid 셀 하이라이트 배경. 벤더가 헤더·필터·선택셀에 칠하는 자기 배경을 끄는 용도라 기본 transparent.
      다크는 AUIGrid_custom_style.css 에서 #2E2E38, BOM편집기만 overrides 에서 연파랑으로 켬.
      이름이 '헤더색2'라 역할과 안 맞지만 벤더 테마 25곳이 참조해 유지 (세영 2026-08-23) */
