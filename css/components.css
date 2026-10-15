@@ -1188,7 +1188,8 @@ body.dark-mode .pop .pro_table { background: var(--color-bg-base); box-shadow: n
     align-items: center;
     gap: var(--spacing-8);
 }
-.seach_arm .leftbt h4 {   /* 크기/굵기 하이재킹 삭제 → 웹표준 h4(globals). 색·마진·라인하이트만 유지 (세영 2026-08-07) */
+.seach_arm .leftbt h4 {   /* 굵기는 h4(globals) 그대로. 색·마진·라인하이트 유지 (세영 2026-08-07) */
+    font-size: var(--heading-sm);   /* 섹션 제목 16 — 이전 버전 h4 크기. h4 기본값(20, DS-ADR-012)은 그대로 두고 섹션 제목에서만 (TD-45 45-3) */
     color: var(--color-text-base);
     margin: 0;
     line-height: var(--line-height-tight);
