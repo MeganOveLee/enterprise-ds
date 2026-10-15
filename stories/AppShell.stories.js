@@ -92,6 +92,55 @@ const subPanel = () =>
   '<div class="main-sub-content">' + subMenu() + '</div></aside>';
 export const 보조_메뉴 = { parameters: { docs: { source: { code: subMenu() } } }, render: () => '<div style="display:flex">' + subPanel() + '</div>' };
 
+// ── 사용자 메뉴 (이전 버전 개발 마크업) — 상단 바 사용자 아이콘을 누르면 펼침 ──
+const UM = {
+  map: '<path d="M3 6l6-3 6 3 6-3v15l-6 3-6-3-6 3z"/><path d="M9 3v15M15 6v15"/>',
+  palette: '<circle cx="12" cy="12" r="9"/><circle cx="8" cy="10" r="1.2"/><circle cx="12" cy="7.5" r="1.2"/><circle cx="16" cy="10" r="1.2"/><path d="M12 21a2 2 0 0 1 0-4h1.5a2.5 2.5 0 0 0 0-5"/>',
+  key: '<circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M17 6l3 3"/>',
+  globe: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>',
+  moon: '<path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/>',
+  download: '<path d="M12 4v11M7 10l5 5 5-5M5 20h14"/>',
+};
+// 줄 아이콘 = mask 그림 — 제품은 줄마다 그림 파일 경로를 --row-icon 에 넣음
+const umRow = (ic, label, ctrl, x = '') => '<div class="section-title' + x + '" style="--row-icon:' + railIcon(UM[ic]) + '">' + label + ctrl + '</div>';
+const umLang = (x = '') => '<div class="custom-select"><div class="selected' + x + '" role="button" tabindex="0" aria-haspopup="listbox" aria-expanded="false" aria-label="언어 설정: 한국어">한국어</div>' +
+  '<ul class="options" role="listbox" aria-label="언어"><li role="option" aria-selected="true" class="active">한국어</li><li role="option" aria-selected="false">영어</li></ul></div>';
+const umSwitch = (on = false, x = '') => '<button type="button" class="' + x.trim() + '" role="switch" aria-checked="' + on + '" aria-label="화면 모드"></button>';
+const umDownload = (x = '') => '<button type="button" class="' + x.trim() + '" aria-label="뷰어 다운로드">다운로드</button>';
+const umLogout = (x = '') => '<button type="button" class="logout-btn' + x + '">' + svg(I.logout, 17) + '로그아웃</button>';
+const userMenu = ({ name = '김도윤', org = '설계1팀' } = {}) =>
+  '<div class="dropdown-content-top">' +
+  '<div class="section user-info"><div class="user-avatar">' + svg(I.user, 18) + '</div><div class="user-meta"><span>' + name + '</span><span class="user-org">' + org + '</span></div></div>' +
+  '<div class="section">' +
+  umRow('map', '사이트맵', '<a href="#" aria-label="사이트맵"></a>') +
+  umRow('palette', '메뉴 색상 변경', '<button type="button" class="menu-color-toggle" aria-label="메뉴 색상 변경"></button>') +
+  umRow('key', '비밀번호 변경', '<a href="#" aria-label="비밀번호 변경"></a>') +
+  umRow('globe', '언어 설정', umLang()) +
+  umRow('moon', '화면 모드', umSwitch()) +
+  umRow('download', '뷰어 다운로드', umDownload()) +
+  '</div><div class="section"><div class="logoutBtn">' + umLogout() + '</div></div></div>';
+export const 사용자_메뉴 = { parameters: { docs: { source: { code: userMenu() } } }, render: () => '<div style="padding:8px">' + userMenu() + '</div>' };
+
+export const 사용자_메뉴_상태 = {
+  parameters: { controls: { disable: true }, docs: { source: { language: 'html', code: '<!-- Hovered · Focused 는 마우스 · 키보드에 따라 CSS가 표시. 화면 모드 켬 = aria-checked="true" (이전 버전 마크업 #theme-toggle-button 은 다크 모드일 때) -->' } } },
+  render: () => {
+    enablePseudo();
+    // 줄 하나만 잘라 보여 줌 — 규칙이 「로그아웃 버튼이 든 펼침」에만 걸리므로 빈 로그아웃 자리를 숨겨 둠
+    const box = (h) => '<div class="dropdown-content-top" style="border-radius:0;box-shadow:none"><div class="section">' + h + '</div><div class="logoutBtn" hidden></div></div>';
+    const foot = (h) => '<div class="dropdown-content-top" style="border-radius:0;box-shadow:none"><div class="section"><div class="logoutBtn">' + h + '</div></div></div>';
+    const link = (x) => box(umRow('map', '사이트맵', '<a href="#" class="' + x.trim() + '" aria-label="사이트맵"></a>', x.includes('hover') ? ' ps-hover' : ''));
+    const dl = (x) => box(umRow('download', '뷰어 다운로드', umDownload(x)));
+    const lang = (x) => box(umRow('globe', '언어 설정', umLang(x)));
+    const sw = (on, x = '') => box(umRow('moon', '화면 모드', umSwitch(on, x)));
+    return matrix(['줄 링크', '내려받기', '언어', '화면 모드', '로그아웃'], [
+      ['Default', [link(''), dl(''), lang(''), sw(false), foot(umLogout())]],
+      ['Hovered', [link(' ps-hover'), dl(' ps-hover'), '—', '—', foot(umLogout(' ps-hover'))]],
+      ['Focused', [link(' ps-focus-visible'), dl(' ps-focus-visible'), lang(' ps-focus-visible'), sw(false, ' ps-focus-visible'), foot(umLogout(' ps-focus-visible'))]],
+      ['켬', ['—', '—', '—', sw(true), '—']],
+    ]);
+  },
+};
+
 // 아이콘 메뉴 · 보조 메뉴 상태 — Hovered · Focused 는 정지 화면 클래스(.ps-*)
 export const 메뉴_상태 = {
   parameters: { controls: { disable: true }, docs: { source: { language: 'html', code: '<!-- 지금 화면 = a 에 aria-current="page"(이전 버전 .active · .in 도 받음). Hovered · Focused 는 마우스 · 키보드에 따라 CSS가 표시 -->' } } },
