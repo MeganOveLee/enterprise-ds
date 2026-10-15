@@ -2,10 +2,10 @@
  * 화면은 DS 클래스(components.css)로 짜고, 여기에는 DS에 아직 컴포넌트가 없는 자리만 둔다.
  * 값은 전부 DS 토큰 — 고정 색 · 고정 모서리 없음. 브랜드 · 화면 모드를 그대로 따른다.
  *   .scr-frame  실제 크기(1440 × 900)로 그린 화면을 칸 너비에 맞게 줄여 보여 주는 틀
- *   .scr-lnb · .scr-submenu · .scr-tree  메뉴 항목 · 폴더 트리 — 제품에서는 개발 마크업 · 트리 위젯이 그리는 자리, 값은 LNB 토큰
+ *   .scr-tree  폴더 트리 — 제품에서는 트리 위젯이 그리는 자리, 값은 LNB 토큰. 메뉴 항목은 DS(.main-menu 항목 · .ui-submenu)
  *   검색 조건 6열 · 상세 값 4열 = DS .form-grid--6 · --4 (.form-grid-2 확장)
  *   .scr-grid   목록 표 — 제품에서는 상용 그리드 라이브러리가 그리는 자리, 값은 그리드 토큰
- *   .scr-chip   상태 칩 — Figma Status chip과 같은 값 (CSS 컴포넌트는 아직 없음) */
+ *   상태 칩은 DS .status-chip */
 
 .scr-frame {
   position: relative;
@@ -29,34 +29,6 @@
 .scr .main-menu,
 .scr .main-sub { height: 100%; }
 
-/* 왼쪽 메뉴 */
-.scr-lnb__logo {
-  height: 56px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-bottom: 1px solid var(--color-border-base);
-  flex-shrink: 0;
-}
-.scr-logo { display: block; }   /* 로고 = 브랜드 자산, 모서리는 고정 (DS-ADR-020) */
-.scr-lnb { padding: var(--spacing-8) 0; }
-.scr-lnb a {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-  margin: 2px 6px;
-  padding: var(--spacing-8) 0;
-  border-radius: var(--radius-item);
-  color: var(--color-icon-muted);
-  font-size: 11px;
-  line-height: 1.2;
-  text-decoration: none;
-}
-.scr-lnb a:hover { background: var(--color-bg-lnb-hover); color: var(--color-text-base); }
-.scr-lnb a.is-active { background: var(--color-bg-lnb-active); color: var(--color-text-lnb-active); font-weight: var(--font-weight-semibold); }
-.scr-lnb svg { width: 20px; height: 20px; }
-
 /* GNB 오른쪽 */
 .scr .gnb .header-actions { gap: var(--spacing-12); }
 .scr-avatar {
@@ -75,21 +47,6 @@
 .scr-total b { color: var(--color-text-base); font-weight: var(--font-weight-bold); }   /* 브랜드 글자는 회색 바탕(subtle) 위에서 4.46 — AA 미달이라 기본 글자 + 굵게 */
 
 /* 아이콘 메뉴 아래쪽 · 두 번째 메뉴 패널 · 폴더 트리 */
-.scr-lnb--bottom { padding: var(--spacing-8) 0; border-top: 1px solid var(--color-border-base); }
-.scr-submenu { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
-.scr-submenu a {
-  display: block;
-  padding: var(--spacing-8) var(--spacing-12);
-  border-radius: var(--radius-item);
-  color: var(--color-text-base);
-  font-size: var(--body-md);
-  text-decoration: none;
-}
-.scr-submenu a:hover { background: var(--color-bg-lnb-hover); }
-.scr-submenu a.is-active { background: var(--color-bg-lnb-active); color: var(--color-text-lnb-active); font-weight: var(--font-weight-semibold); }
-/* 세로로 붙은 메뉴 줄 = DS 달력 연도 · 월 목록과 같은 안쪽 글로우(보더 1px + 번짐 3px) */
-.scr-lnb a:focus-visible,
-.scr-submenu a:focus-visible { outline: 2px solid transparent; outline-offset: -2px; box-shadow: inset 0 0 0 1px var(--color-border-focus), inset 0 0 0 4px var(--color-focus-ring); }
 .scr .tree-search-wrap svg { color: var(--color-text-muted); flex-shrink: 0; }
 .scr-tree { list-style: none; margin: 0; padding: 0; font-size: var(--body-sm); }
 .scr-tree li {

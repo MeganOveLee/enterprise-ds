@@ -91,17 +91,19 @@ const LOGO =
   '<path d="M16 10.2l6 3.45v6.9L16 24l-6-3.45v-6.9z"/><path d="M10 13.65l6 3.45 6-3.45M16 17.1V24"/></g>' +
   '<circle cx="27.6" cy="21.6" r="2.9" stroke-width="1.6" style="fill:var(--accent-500);stroke:var(--color-bg-brand)"/></svg>';
 // active = 지금 메뉴 이름. 홈(대시보드)은 로고가 홈이라 켜진 메뉴 없음
+// 아이콘 메뉴 = 이전 버전 개발 마크업 그대로(li › .menu_icon_box › .menu_icon › a + span). 아이콘은 mask 그림(--lnb-icon) 한 장을 글자색으로 칠함
+// 링크 이름은 a 의 aria-label, 화면에 보이는 이름(span)은 읽기에서 뺌(두 번 읽지 않게)
+const lnbIcon = (d) => "url('data:image/svg+xml," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' + d + '</svg>') + "')";
+const lnbItem = ([ic, t], active) => '<li><div class="menu_icon_box"><div class="menu_icon" style="--lnb-icon:' + lnbIcon(I[ic]) + '"><a href="#" aria-label="' + t + '"' + (t === active ? ' aria-current="page"' : '') + '></a></div></div><span aria-hidden="true">' + t + '</span></li>';
 const lnb = (active = '문서관리') =>
-  '<aside class="main-menu"><div class="scr-lnb__logo"><a href="#" aria-label="홈">' + LOGO + '</a></div>' +
-  '<nav aria-label="주 메뉴"><ul class="scr-lnb">' +
-  LNB.map(([ic, t]) => '<li><a href="#"' + (t === active ? ' class="is-active" aria-current="page"' : '') + '>' + svg(I[ic]) + t + '</a></li>').join('') +
-  '</ul></nav><ul class="scr-lnb scr-lnb--bottom"><li><a href="#">' + svg(I.admin) + '관리자</a></li></ul></aside>';
+  '<aside class="main-menu"><a class="lnb-logo" href="#" aria-label="홈">' + LOGO + '</a>' +
+  '<nav aria-label="주 메뉴"><ul>' + LNB.map((x) => lnbItem(x, active)).join('') + '</ul><ul>' + lnbItem(['admin', '관리자'], active) + '</ul></nav></aside>';
 
 const TREE = [[0, '제품 문서', true], [1, '설계 문서', true, true], [2, '사양서'], [2, '시험 성적서'], [2, '회의록'], [1, '품질 문서'], [1, '양식']];
 const sub = () =>
   '<aside class="main-sub"><div class="main-sub-header"><h3>문서 관리</h3>' +
   '<button type="button" class="sub-close" aria-label="메뉴 닫기">' + svg(I.close, 14) + '</button></div>' +
-  '<div class="main-sub-content"><ul class="scr-submenu"><li><a href="#" class="is-active" aria-current="page">문서 검색</a></li><li><a href="#">문서 등록</a></li></ul>' +
+  '<div class="main-sub-content"><div class="ui-submenu"><ul><li class="ui-submenu-flat"><a href="#" aria-current="page">문서 검색</a></li><li class="ui-submenu-flat"><a href="#">문서 등록</a></li></ul></div>' +
   '<div class="tree-section"><div class="tree-controls">' + sel('제품군', ['전체 제품군', '제동 부품', '전장 부품']) +
   '<div class="tree-search-wrap">' + svg(I.search, 14) + '<input class="tree-search-input" aria-label="폴더 검색" placeholder="폴더 검색"></div></div>' +
   '<ul class="scr-tree" role="tree" aria-label="문서 폴더">' +

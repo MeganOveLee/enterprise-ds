@@ -19,10 +19,12 @@ import * as S from './AppShell.stories.js';
 <tr><td><b>로고형 상단 바</b></td><td><code>.logo-container</code> · <code>.logo-mark</code> · <code>.logo-text</code> · <code>.logo-version</code><span className="ds-muted">로고 이미지는 .brand-logo</span></td><td>왼쪽 아이콘 메뉴가 없는 화면용. 로고 마크는 브랜드 자산이라 모서리 역할을 따르지 않습니다.</td></tr>
 <tr><td><b>페이지 머리</b></td><td><code>.page-head</code> · <code>.page-title-area</code> · <code>.favorite-icon</code></td><td>제목 + 즐겨찾기 + 위치를 한 줄에. 상단 바에 위치가 없는 화면에서 씁니다.</td></tr>
 <tr><td><b>보조 메뉴 패널</b></td><td><code>.main-sub</code> · <code>.main-sub-header</code> · <code>.main-sub-tabs</code> · <code>.main-sub-content</code> · <code>.tree-controls</code></td><td>아이콘 메뉴 옆에 펼치는 280 패널. 머리(제목 + 닫기) · 탭(메뉴 · 폴더, 하나면 숨김 <code>.is-single</code>) · 내용(폴더 트리 위 선택 · 검색). 닫으면 <code>.is-closed</code>.</td></tr>
+<tr><td><b>아이콘 메뉴</b></td><td><code>.main-menu</code> › <code>.lnb-logo</code> · <code>nav</code> › <code>ul</code> › <code>li</code> › <code>.menu_icon_box</code> › <code>.menu_icon</code> › <code>a</code> + <code>span</code></td><td>왼쪽 60 세로 메뉴. 항목 = 아이콘 24 위 · 이름 11px 아래, 줄 전체를 눌러 이동합니다. 마우스를 올리면 옅은 브랜드 바탕과 브랜드색 이름, 지금 화면은 한 단계 진한 바탕 · 브랜드색 · 반굵게 · 왼쪽 3px 선입니다. 아이콘은 그림 한 장(<code>--lnb-icon</code>)을 글자색으로 칠해 상태에 따라 색이 바뀝니다. 링크에 이름(<code>aria-label</code>)과 지금 화면 표시(<code>aria-current="page"</code>)를 붙입니다. 아래쪽 묶음(관리자 등)은 <code>nav</code> 안 마지막 <code>ul</code>로 두면 바닥에 붙습니다.</td></tr>
+<tr><td><b>보조 메뉴</b></td><td><code>.ui-submenu</code> › <code>.ui-submenu-flat</code> · <code>.ui-submenu-group</code>(<code>.ui-submenu-title</code> + <code>.ui-submenu-list</code>)</td><td>보조 메뉴 패널 안 메뉴. 2단계 메뉴는 14px 줄, 묶음 제목은 12px 반굵게(펼치면 브랜드색, 접으면 회색 + 꺾쇠), 3단계 목록은 왼쪽 선이 이어지고 지금 화면 줄은 2px 브랜드 선입니다. 올림 · 지금 화면 색은 아이콘 메뉴와 같습니다.</td></tr>
 <tr><td><b>바닥</b></td><td><code>.gnb-footer</code></td><td>화면 맨 아래 한 줄.</td></tr>
 </tbody>
 </table>
-<p className="ds-sec__desc ds-after">아이콘 메뉴(<code>.main-menu</code>)는 틀만 DS에 있고, 메뉴 항목은 개발 마크업이라 클래스가 없습니다. 항목 모양은 <a className="ds-link" href="./?path=/docs/screens-plm-화면--docs" target="_top">Screens › PLM 화면</a>에서 볼 수 있습니다.</p>
+<p className="ds-sec__desc ds-after">아이콘 메뉴 · 보조 메뉴는 이전 버전 개발 마크업(<code>menu_icon_box</code> · <code>ui-submenu-*</code>)을 그대로 받습니다. 화면 안에서 함께 보는 모습은 <a className="ds-link" href="./?path=/docs/screens-plm-화면--docs" target="_top">Screens › PLM 화면</a>에 있습니다.</p>
 </Section>
 <Section title="예시" en="Examples">
 <Card of={S.상단_바} title="상단 바" en="GNB" desc="아이콘 메뉴가 있는 업무 화면. 위치가 페이지 제목을 대신합니다." />
@@ -30,10 +32,13 @@ import * as S from './AppShell.stories.js';
 <Card of={S.개수_배지} title="업무 개수" en="Count badge" desc="0 · 한 자리 · 두 자리 · 99+. 상자 높이가 18로 고정이라 글꼴이 늦게 와도 흔들리지 않습니다." />
 <Card of={S.페이지_머리} title="페이지 머리" en="Page head" desc="제목 · 즐겨찾기 · 위치." />
 <Card of={S.보조_메뉴_패널} title="보조 메뉴 패널" en="Sub panel" desc="머리 · 탭 · 폴더 트리 위 선택과 검색. 트리는 그리드 위젯이 그리는 자리입니다." />
+<Card of={S.아이콘_메뉴} title="아이콘 메뉴" en="Rail" desc="로고 · 메뉴 · 바닥 묶음(관리자). 지금 화면 = 문서관리." />
+<Card of={S.보조_메뉴} title="보조 메뉴" en="Sub menu" desc="2단계 메뉴 · 펼친 묶음(3단계 목록) · 접힌 묶음." />
 <Card of={S.바닥} title="바닥" en="Footer" />
 </Section>
 <Section title="전체 상태" en="States" desc="Hovered · Pressed · Focused는 마우스 · 키보드 상태를 정지 화면으로 보여 준 것입니다.">
 <Card of={S.전체_상태} title="앱 틀 버튼" />
+<Card of={S.메뉴_상태} title="메뉴 줄" desc="아이콘 메뉴 · 보조 메뉴 · 3단계 목록의 상태." />
 </Section>
 <Section title="Playground" desc="아래 표에서 값을 바꾸면 미리보기와 「코드 보기」가 함께 바뀝니다.">
 <Card of={S.Playground}>

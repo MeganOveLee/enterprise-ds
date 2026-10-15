@@ -1,5 +1,5 @@
 // Navigation/App Shell — 문서 화면은 AppShell.mdx. 모든 업무 화면이 함께 쓰는 틀: 상단 바(GNB) · 페이지 머리 · 보조 메뉴 패널
-// 아이콘 메뉴(.main-menu)의 항목은 개발 마크업이라 DS 클래스가 없음 — 틀만 여기, 항목 모양은 Screens 참고
+// 아이콘 메뉴(.main-menu) 항목 · 보조 메뉴(.ui-submenu)는 이전 버전 개발 마크업 그대로 — 값만 DS 토큰 (TD-45 45-3)
 import { matrix } from './_matrix.js';
 import { enablePseudo } from './_pseudo.js';
 
@@ -58,6 +58,56 @@ const panel = (tabX = '') =>
   '</div></div></aside>';
 export const 보조_메뉴_패널 = { parameters: { docs: { source: { code: panel() } } }, render: () => '<div style="display:flex">' + panel() + '</div>' };
 export const 바닥 = { render: () => frame('<footer class="gnb-footer">© 2026 Enterprise PLM</footer>') };
+
+// ── 아이콘 메뉴 · 보조 메뉴 (이전 버전 개발 마크업) ──
+const RAIL = {
+  work: '<rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 13h8M8 17h5"/>',
+  doc: '<path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 12h6M9 16h6"/>',
+  drawing: '<path d="M4 20 20 4M4 20v-6M4 20h6"/>',
+  part: '<circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/>',
+  admin: '<rect x="5" y="3" width="14" height="18" rx="2"/><circle cx="12" cy="10" r="2.5"/><path d="M8 17a4 4 0 0 1 8 0"/>',
+};
+// 아이콘 = mask 그림 — 제품은 메뉴마다 그림 파일 경로를 --lnb-icon 에 넣음
+const railIcon = (d) => "url('data:image/svg+xml," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' + d + '</svg>') + "')";
+const railItem = (ic, t, { current = false, liX = '', aX = '' } = {}) =>
+  '<li class="' + liX.trim() + '"><div class="menu_icon_box"><div class="menu_icon" style="--lnb-icon:' + railIcon(RAIL[ic]) + '"><a href="#" class="' + aX.trim() + '" aria-label="' + t + '"' + (current ? ' aria-current="page"' : '') + '></a></div></div><span aria-hidden="true">' + t + '</span></li>';
+const LOGO_MARK = '<svg width="34" height="34" viewBox="0 0 34 34" role="img" aria-label="홈"><rect width="34" height="34" rx="8" style="fill:var(--color-bg-brand)"/><path d="M16 10.2l6 3.45v6.9L16 24l-6-3.45v-6.9z" fill="none" stroke-width="2" stroke-linejoin="round" style="stroke:var(--color-icon-on-color)"/></svg>';
+const rail = () =>
+  '<aside class="main-menu" style="height:440px"><a class="lnb-logo" href="#">' + LOGO_MARK + '</a><nav aria-label="주 메뉴"><ul>' +
+  railItem('work', '업무관리') + railItem('doc', '문서관리', { current: true }) + railItem('drawing', '도면관리') + railItem('part', '부품관리') +
+  '</ul><ul>' + railItem('admin', '관리자') + '</ul></nav></aside>';
+export const 아이콘_메뉴 = { parameters: { docs: { source: { code: rail() } } }, render: () => '<div style="display:flex">' + rail() + '</div>' };
+
+const subMenu = () =>
+  '<div class="ui-submenu"><ul>' +
+  '<li class="ui-submenu-flat"><a href="#" aria-current="page">문서 검색</a></li>' +
+  '<li class="ui-submenu-flat"><a href="#">문서 등록</a></li>' +
+  '<li class="ui-submenu-group"><div class="ui-submenu-title"><a href="#" aria-expanded="true" aria-controls="sm-cr">설계 변경<span>3</span></a></div>' +
+  '<ul class="ui-submenu-list" id="sm-cr"><li><a href="#">변경 요청</a></li><li><a href="#">변경 지시</a></li><li><a href="#">변경 이력</a></li></ul></li>' +
+  '<li class="ui-submenu-group"><div class="ui-submenu-title"><a href="#" aria-expanded="false" aria-controls="sm-tp">양식 관리<span>2</span></a></div>' +
+  '<ul class="ui-submenu-list" id="sm-tp" hidden><li><a href="#">문서 양식</a></li><li><a href="#">결재선 양식</a></li></ul></li>' +
+  '</ul></div>';
+const subPanel = () =>
+  '<aside class="main-sub" style="height:440px"><div class="main-sub-header"><h3>문서 관리</h3><button type="button" class="sub-close" aria-label="메뉴 닫기">' + svg(I.close, 14) + '</button></div>' +
+  '<div class="main-sub-content">' + subMenu() + '</div></aside>';
+export const 보조_메뉴 = { parameters: { docs: { source: { code: subMenu() } } }, render: () => '<div style="display:flex">' + subPanel() + '</div>' };
+
+// 아이콘 메뉴 · 보조 메뉴 상태 — Hovered · Focused 는 정지 화면 클래스(.ps-*)
+export const 메뉴_상태 = {
+  parameters: { controls: { disable: true }, docs: { source: { language: 'html', code: '<!-- 지금 화면 = a 에 aria-current="page"(이전 버전 .active · .in 도 받음). Hovered · Focused 는 마우스 · 키보드에 따라 CSS가 표시 -->' } } },
+  render: () => {
+    enablePseudo();
+    const one = (o) => '<aside class="main-menu" style="height:auto;width:60px;border:0"><nav><ul>' + railItem('doc', '문서관리', o) + '</ul></nav></aside>';
+    const flat = (o) => '<div class="ui-submenu" style="width:200px;padding:0;text-align:start"><ul><li class="ui-submenu-flat"><a href="#" class="' + (o.aX || '') + '"' + (o.current ? ' aria-current="page"' : '') + '>문서 검색</a></li></ul></div>';
+    const list = (o) => '<div class="ui-submenu" style="width:200px;padding:0;text-align:start"><ul class="ui-submenu-list" style="margin-left:0"><li><a href="#" class="' + (o.aX || '') + '"' + (o.current ? ' aria-current="page"' : '') + '>변경 요청</a></li></ul></div>';
+    return matrix(['아이콘 메뉴', '보조 메뉴', '3단계 목록'], [
+      ['Default', [one({}), flat({}), list({})]],
+      ['Hovered', [one({ liX: 'ps-hover', aX: 'ps-hover' }), flat({ aX: 'ps-hover' }), list({ aX: 'ps-hover' })]],
+      ['Focused', [one({ aX: 'ps-focus-visible' }), flat({ aX: 'ps-focus-visible' }), list({ aX: 'ps-focus-visible' })]],
+      ['지금 화면', [one({ current: true }), flat({ current: true }), list({ current: true })]],
+    ]);
+  },
+};
 
 // ── 전체 상태 ──
 export const 전체_상태 = {
