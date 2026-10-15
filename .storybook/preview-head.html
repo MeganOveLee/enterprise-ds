@@ -115,6 +115,14 @@
   .ds-tbsel { position: relative; display: inline-flex; }
   .ds-tbsel__btn { display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 0 7px; border: 0; border-radius: 4px; background: rgba(0, 109, 235, .07); color: rgb(0, 85, 184); font: inherit; font-weight: 700; white-space: nowrap; cursor: pointer; }
   .ds-tbsel__btn:hover { background: rgba(0, 109, 235, .14); }
+  /* 처음 온 사람에게 「여기를 눌러 보세요」(TD-42 08:35 ④ 제안) — 브랜드색 고리가 세 번 번지고 멈춤 + 말풍선, 한 번 누르면 둘 다 사라짐. 모션 줄이기 = 고리 없이 테두리만 */
+  .ds-tb__sels { display: inline-flex; align-items: center; gap: 6px; border-radius: 6px; }
+  .ds-tb--hint .ds-tb__sels { animation: ds-tb-ring 1.6s ease-out 3 both; }   /* 두 버튼을 한 고리로 — 따로 두면 고리끼리 겹쳐 번짐 */
+  @keyframes ds-tb-ring { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--brand-500) 55%, transparent); } 100% { box-shadow: 0 0 0 10px color-mix(in srgb, var(--brand-500) 0%, transparent); } }
+  .ds-tb__hint { position: relative; display: inline-flex; align-items: center; height: 24px; padding: 0 8px; margin-left: 2px; border-radius: 4px; background: #1f2328; color: #fff; font-size: 12px; font-weight: 600; white-space: nowrap; animation: ds-tb-hint-in .3s ease-out both; }
+  .ds-tb__hint::before { content: ''; position: absolute; left: -5px; top: 50%; margin-top: -5px; border: 5px solid transparent; border-left: 0; border-right-color: #1f2328; }
+  @keyframes ds-tb-hint-in { from { opacity: 0; transform: translateX(-4px); } }
+  @media (prefers-reduced-motion: reduce) { .ds-tb--hint .ds-tb__sels { animation: none; box-shadow: 0 0 0 2px var(--brand-500); } .ds-tb__hint { animation: none; } }
   .ds-tbsel__btn svg { flex: none; }
   .ds-tbsel__list { position: absolute; z-index: 30; top: calc(100% + 8px); left: 0; display: block; min-width: 180px; padding: 4px; border-radius: 6px; background: rgba(255, 255, 255, .95); filter: drop-shadow(0 5px 5px rgba(0, 0, 0, .05)) drop-shadow(0 1px 3px rgba(0, 0, 0, .1)); outline: none; }
   .ds-tbsel__opt { display: flex; align-items: center; height: 32px; padding: 0 9px; border-radius: 4px; color: rgb(46, 51, 56); font-weight: 400; line-height: 16px; white-space: nowrap; cursor: pointer; }

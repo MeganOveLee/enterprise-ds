@@ -46,6 +46,8 @@ const readGlobals = () => {
   return { brand: c.contains('theme-fashion') ? 'fashion' : c.contains('theme-precision') ? 'precision' : 'e3ps', mode: document.body.classList.contains('dark-mode') ? 'dark' : 'light' };
 };
 let selSeq = 0;
+// 처음 온 사람에게 「여기를 눌러 보세요」(TD-42 08:35 ④ 제안) — 한 번 누르면 다시 안 보임(다시 그려져도 · 새로 열어도)
+let hintSeen = (() => { try { return localStorage.getItem('eds-tb-hint') === '1'; } catch (e) { return false; } })();
 let refocus = null;   // 고른 뒤 문서가 다시 그려져도 키보드 포커스를 같은 버튼으로 되돌림(바디로 빠지지 않게)
 const ToolSelect = ({ tool, value, onPick }) => {
   const [open, setOpen] = React.useState(false);
@@ -91,11 +93,14 @@ export const Toolbar = ({ figmaIcon }) => {
     ch.on('globalsUpdated', on);
     return () => ch.off('globalsUpdated', on);
   }, []);
+  const [hint, setHint] = React.useState(!hintSeen);
+  const done = (e) => { if (!hint || !e.target.closest('.ds-tbsel')) return; hintSeen = true; try { localStorage.setItem('eds-tb-hint', '1'); } catch (err) { /* 저장 안 돼도 이번 화면에서는 사라짐 */ } setHint(false); };
   const set = (key, value) => { addons.getChannel().emit('updateGlobals', { globals: { [key]: value } }); setG((o) => ({ ...o, [key]: value })); };
-  const bar = h('span', { className: 'ds-tb' },
+  const bar = h('span', { className: 'ds-tb' + (hint ? ' ds-tb--hint' : ''), onPointerDownCapture: done,
+      onKeyDownCapture: (e) => { if (['Enter', ' ', 'ArrowDown', 'ArrowUp'].includes(e.key)) done(e); } },
     h('a', { className: 'ds-tb__figma', href: FIGMA_URL, target: '_blank', rel: 'noreferrer' },
       figmaIcon ? h('img', { src: figmaIcon, alt: '', width: 18, height: 18 }) : null, 'Figma에서 보기 ↗'),
     h('span', { className: 'ds-tb__sep', 'aria-hidden': true }),
-    TOOLS.map((t) => h(ToolSelect, { key: t.key, tool: t, value: g[t.key], onPick: set })));
-  return h('div', { className: 'ds-tbrow' }, bar);
+    h('span', { className: 'ds-tb__sels' }, TOOLS.map((t) => h(ToolSelect, { key: t.key, tool: t, value: g[t.key], onPick: set }))));
+  return h('div', { className: 'ds-tbrow' }, bar, hint ? h('span', { className: 'ds-tb__hint', 'aria-hidden': true }, '눌러 보세요') : null);
 };
