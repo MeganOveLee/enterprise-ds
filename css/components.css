@@ -1159,15 +1159,16 @@ body.dark-mode .pop .pro_table { background: var(--color-bg-base); box-shadow: n
     word-break: break-word;
 }
 .detail-dl dd:empty::before { content: "\00a0"; }   /* 값이 없어도 줄 높이 유지 */
-/* 상세 내용 카드 — 이전 버전 팝업 상세 = 옅은 회색 바탕 + 1px 테두리 + 모서리, 안쪽 8 · 16, 섹션 머리와 12 (덮어쓰기 594 ~ 596줄) */
-.pop .contents .pro_table {
+/* 상세 내용 카드 — 이전 버전 팝업 상세 = 옅은 회색 바탕 + 1px 테두리 + 모서리, 안쪽 8 · 16, 섹션 머리와 12 (덮어쓰기 594 ~ 596줄)
+ *   입력 폼(.form-grid-2)이 든 카드는 빼고 흰 바탕 그대로 — 회색 바탕 위 칸 아래 오류 글자(red-600)가 4.37:1 로 AA 미달 (접는 섹션 카드와 같은 이유) */
+.pop .contents .pro_table:not(:has(.form-grid-2)) {
     margin-top: var(--spacing-12);
     padding: var(--spacing-8) var(--spacing-16);
     background: var(--color-bg-muted);
     border: 1px solid var(--color-border-base);
     border-radius: var(--radius-panel);
 }
-body.dark-mode .pop .contents .pro_table { background: var(--color-bg-muted); }   /* 다크 팝업 카드 규칙(bg-base)보다 세게 — 내용 바탕(bg-base) 위 한 단계 */
+body.dark-mode .pop .contents .pro_table:not(:has(.form-grid-2)) { background: var(--color-bg-muted); }   /* 다크 팝업 카드 규칙(bg-base)보다 세게 — 내용 바탕(bg-base) 위 한 단계 */
 
 /* 첨부 파일 목록 .file-download-list — 이전 버전 첨부 칩(.fileAttachLineItem, 덮어쓰기 579 ~ 587줄)
  *   한 줄 전체 칩: 파일 아이콘 + 파일 이름(반굵게, 누르면 내려받음). 마우스를 올리면 이름에 밑줄 + 오른쪽 내려받기 표시
