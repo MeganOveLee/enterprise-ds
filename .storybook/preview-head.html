@@ -107,20 +107,25 @@
   .intro-demo__no { font-size: var(--body-sm); color: var(--color-text-muted); font-variant-numeric: tabular-nums; }
   /* 소개 맨 위 「바로 보기」 — 포트폴리오로 보는 사람이 Figma 원본부터 열게 (10/13) */
   /* 문서 안 도구 막대(Toolbar 블록) — 화면 맨 위 Storybook 도구 막대에서 잰 값 그대로 (10/15 08:17) */
-  .ds-tbrow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin: 0 0 12px; }
-  .ds-tb { display: inline-flex; align-items: center; gap: 6px; height: 40px; padding: 0 8px; border-radius: 4px; background: #fff; box-shadow: inset 0 0 0 1px rgba(38, 74, 115, .15); font-family: "Nunito Sans", -apple-system, ".SFNSText-Regular", "San Francisco", BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 12px; line-height: 1; vertical-align: middle; }
+  .ds-tbrow { margin: 0; }
+  .ds-tbrow + .ds-card { border-top: 0; border-radius: 0 0 6px 6px; }   /* 막대 아래에 미리보기가 붙음 — 실제 화면처럼 막대 + 캔버스 한 덩어리 */
+  .ds-tb { display: flex; align-items: center; gap: 6px; box-sizing: border-box; width: 100%; height: 40px; padding: 0 10px; border: 1px solid #e1e4e8; border-bottom: 0; border-radius: 6px 6px 0 0; background: #fff; box-shadow: inset 0 -1px 0 rgba(38, 74, 115, .15); font-family: "Nunito Sans", -apple-system, ".SFNSText-Regular", "San Francisco", BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 12px; line-height: 1; vertical-align: middle; }
   .ds-tb__figma { display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 0 10px 0 6px; border-radius: 6px; background: #161616; color: #fff !important; font-weight: 600; text-decoration: none !important; white-space: nowrap; }
   .ds-tb__figma img { display: block; border-radius: 4px; }
-  .ds-tb__sep { width: 1px; height: 20px; margin: 0 6px; background: rgba(38, 74, 115, .15); }
+  .ds-tb__sep { width: 1px; height: 20px; margin: 0 2px 0 6px; background: rgba(38, 74, 115, .15); }   /* 실제 막대: Figma 끝 → 선 12 · 선 → 브랜드 8 */
   .ds-tbsel { position: relative; display: inline-flex; }
   .ds-tbsel__btn { display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 0 7px; border: 0; border-radius: 4px; background: rgba(0, 109, 235, .07); color: rgb(0, 85, 184); font: inherit; font-weight: 700; white-space: nowrap; cursor: pointer; }
   .ds-tbsel__btn:hover { background: rgba(0, 109, 235, .14); }
   /* 처음 온 사람에게 「여기를 눌러 보세요」(TD-42 08:35 ④ 제안) — 브랜드색 고리가 세 번 번지고 멈춤 + 말풍선, 한 번 누르면 둘 다 사라짐. 모션 줄이기 = 고리 없이 테두리만 */
   .ds-tb__sels { display: inline-flex; align-items: center; gap: 6px; border-radius: 6px; }
+  .ds-tb__deco { display: inline-flex; align-items: center; gap: 6px; margin-right: 8px; }
+  .ds-tb__end { margin: 0 0 0 auto; }
+  .ds-tb__ico { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 4px; color: rgb(92, 101, 112); }
   .ds-tb--hint .ds-tb__sels { animation: ds-tb-ring 1.6s ease-out 3 both; }   /* 두 버튼을 한 고리로 — 따로 두면 고리끼리 겹쳐 번짐 */
   @keyframes ds-tb-ring { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--brand-500) 55%, transparent); } 100% { box-shadow: 0 0 0 10px color-mix(in srgb, var(--brand-500) 0%, transparent); } }
-  .ds-tb__hint { position: relative; display: inline-flex; align-items: center; height: 24px; padding: 0 8px; margin-left: 2px; border-radius: 4px; background: #1f2328; color: #fff; font-size: 12px; font-weight: 600; white-space: nowrap; animation: ds-tb-hint-in .3s ease-out both; }
+  .ds-tb__hint { position: relative; display: inline-flex; align-items: center; height: 24px; padding: 0 8px; margin-left: 10px; border-radius: 4px; background: #1f2328; color: #fff; font-size: 12px; font-weight: 600; white-space: nowrap; animation: ds-tb-hint-in .3s ease-out both; }
   .ds-tb__hint::before { content: ''; position: absolute; left: -5px; top: 50%; margin-top: -5px; border: 5px solid transparent; border-left: 0; border-right-color: #1f2328; }
+  @media (max-width: 600px) { .ds-tb__deco, .ds-tb__hint { display: none; } }   /* 휴대폰 폭 — 장식 아이콘 · 말풍선을 빼야 막대가 한 줄에 들어감(빼지 않으면 문서 전체가 가로 스크롤) */
   @keyframes ds-tb-hint-in { from { opacity: 0; transform: translateX(-4px); } }
   @media (prefers-reduced-motion: reduce) { .ds-tb--hint .ds-tb__sels { animation: none; box-shadow: 0 0 0 2px var(--brand-500); } .ds-tb__hint { animation: none; } }
   .ds-tbsel__btn svg { flex: none; }
@@ -153,6 +158,34 @@
   .ds-hero__subs span:not(.ds-hero__dot) { grid-column: 2; font-size: 12px; color: #57606a; }
   .ds-hero__note { margin: 10px 0 0; font-size: 12px; color: #57606a; }
   @media (max-width: 720px) { .ds-hero__mains, .ds-hero__subs { grid-template-columns: 1fr; } .ds-hero__go { display: none; } }
+  /* 소개 — 문 세 개 · 결정 과정 카드 · 적용 환경 / 원칙 · 운영 흐름 (TD-50 두 페이지 안) */
+  .ds-doors { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 24px 0 8px; }
+  .ds-page a.ds-door { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; padding: 18px 20px; border-radius: 10px; background: #fff; color: #1f2328; text-decoration: none; box-shadow: inset 0 0 0 1px #d0d7de; }
+  .ds-page a.ds-door:hover { background: #f6f8fa; box-shadow: inset 0 0 0 1px #0550ae; }
+  .ds-page a.ds-door--dark { background: #161616; color: #fff; box-shadow: none; }
+  .ds-page a.ds-door--dark:hover { background: #2c2c2c; box-shadow: none; }
+  .ds-door b { margin-top: 6px; font-size: 18px; line-height: 1.4; }
+  .ds-door span { font-size: 13px; color: #57606a; }
+  .ds-door--dark span { color: #c9ced6; }
+  .ds-door em { margin-top: auto; padding-top: 8px; font-style: normal; font-size: 13px; font-weight: 700; }
+  .ds-door img, .ds-door .ds-hero__dot { width: 32px !important; height: 32px !important; border-radius: 8px !important; }
+  .ds-cases { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+  .ds-case { display: flex; flex-direction: column; gap: 6px; padding: 16px; border: 1px solid #e1e4e8; border-radius: 8px; background: #fff; }
+  .ds-case__kind { align-self: flex-start; padding: 1px 8px; border-radius: 999px; background: #eef4ff; color: #0550ae; font-size: 12px; font-weight: 600; }
+  .ds-case h3 { margin: 4px 0 0; font-size: 16px; line-height: 1.4; color: #111418; }
+  .ds-case p { margin: 0; font-size: 13px; color: #57606a; }
+  .ds-case a { margin-top: auto; padding-top: 6px; font-size: 13px; font-weight: 600; }
+  .ds-two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; align-items: start; }
+  .ds-two h3 { margin: 0 0 8px; font-size: 15px; color: #111418; }
+  .ds-two h3 small { margin-left: 6px; font-size: 12px; font-weight: 500; color: #656d76; }
+  .ds-two .ds-dl > div { grid-template-columns: 96px 1fr; }
+  .ds-flow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0 0 16px; padding: 0; list-style: none; counter-reset: f; }
+  .ds-flow li { padding: 6px 12px; border: 1px solid #d0d7de; border-radius: 999px; background: #fff; font-size: 13px; font-weight: 600; color: #1f2328; }
+  .ds-flow li { position: relative; }
+  .ds-note + .ds-dl { margin-top: 16px; }
+  .ds-flow li + li { margin-left: 22px; }
+  .ds-flow li + li::before { content: '→'; position: absolute; left: -23px; top: 50%; transform: translateY(-50%); color: #656d76; font-weight: 400; }
+  @media (max-width: 720px) { .ds-doors, .ds-cases, .ds-two { grid-template-columns: 1fr; } }
   /* 좁은 화면(휴대폰) — 표가 페이지 밖으로 밀어 가로 스크롤이 생기던 것 → 표 안에서만 가로로 밀리게, 칸 패딩도 줄임 (10/13) */
   @media (max-width: 720px) { .ds-page .ds-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; } .ds-table th, .ds-table td { padding: 8px 10px; } }
   /* 글 속 링크 = 색 + 밑줄(색만으로 구분하지 않음 — WCAG 1.4.1). 문서 틀 회색 #656d76 = 흰 바탕 5.2 · 회색 머리 #f6f8fa 4.9 (10/15 세영 승인) */
