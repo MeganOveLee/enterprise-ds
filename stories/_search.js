@@ -1,4 +1,4 @@
-// 상세 검색 펼침 동작 — Screens 문서 검색 · Patterns › SearchForm 이 같이 쓴다 (10/14)
+// 상세 검색 펼침 동작 — Screens 문서 검색 · Blocks › SearchForm 이 같이 쓴다 (10/14)
 // [상세 검색 펼치기](.btn--expand[aria-controls])가 영역(.search-detail)을 보이고 숨긴다. 문구 · 화살표는 CSS 가 aria-expanded 로 바꾼다
 export const EXPAND_LABEL = '<span class="t-open">상세 검색 펼치기</span><span class="t-close">상세 검색 접기</span>';
 export const wireSearchDetail = (root) => {
