@@ -2,13 +2,14 @@
 // 아이콘 메뉴(.main-menu) 항목 · 보조 메뉴(.ui-submenu)는 이전 버전 개발 마크업 그대로 — 값만 DS 토큰 (TD-45 45-3)
 import { matrix } from './_matrix.js';
 import { enablePseudo } from './_pseudo.js';
+import { folderIcon } from './_fileicon.js';
 
 const svg = (d, s = 16) => '<svg width="' + s + '" height="' + s + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + d + '</svg>';
 const I = {
   prev: '<path d="M15 6l-6 6 6 6"/>', next: '<path d="M9 6l6 6-6 6"/>',
   user: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="10" r="3"/><path d="M6.5 18.5a6 6 0 0 1 11 0"/>',
   logout: '<path d="M15 4h4v16h-4M10 8l-4 4 4 4M6 12h10"/>',
-  close: '<path d="M6 6l12 12M18 6L6 18"/>', search: '<circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/>',
+  close: '<path d="M6 6l12 12M18 6L6 18"/>', down: '<path d="M6 9l6 6 6-6"/>', search: '<circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/>',
   star: '<path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.6 6.6 19.5l1.2-6-4.5-4.2 6.1-.7z"/>',
 };
 
@@ -44,6 +45,12 @@ export const 페이지_머리 = {
     '<button type="button" class="favorite-icon" aria-label="즐겨찾기에 추가" aria-pressed="false" style="border:0;background:transparent;padding:0;display:inline-flex">' + svg(I.star, 18) + '</button></div>' +
     crumbs(['Home', '문서 관리', '문서 검색']) + '</div></div>'),
 };
+// 폴더 트리 = DS .tree — 단계는 --tree-level, 끝 항목도 꺾쇠 칸을 비워 둠 (TD-75)
+const FOLDERS = [[0, '제품 문서', true], [1, '설계 문서', true, true], [2, '사양서'], [2, '시험 성적서'], [1, '품질 문서', false], [1, '양식']];
+const tree = () => '<ul class="tree" role="tree" aria-label="문서 폴더">' + FOLDERS.map(([lv, t, open, on]) =>
+  '<li class="tree__item" role="treeitem"' + (open !== undefined ? ' aria-expanded="' + open + '"' : '') + (on ? ' aria-selected="true"' : '') + ' style="--tree-level:' + lv + '">' +
+  '<span class="tree__caret">' + (open !== undefined ? svg(open ? I.down : I.next, 12) : '') + '</span>' +
+  '<span class="tree__icon">' + folderIcon(!!open) + '</span>' + t + '</li>').join('') + '</ul>';
 const panel = (tabX = '') =>
   '<aside class="main-sub" aria-label="문서 관리 메뉴" style="height:360px">' +
   '<div class="main-sub-header"><h3>문서 관리</h3><button type="button" class="sub-close" aria-label="메뉴 닫기">' + svg(I.close, 14) + '</button></div>' +
@@ -51,7 +58,7 @@ const panel = (tabX = '') =>
   '<div class="main-sub-content"><div class="tree-section" style="margin-top:0;border-top:0"><div class="tree-controls">' +
   '<select class="select" aria-label="제품군"><option>전체 제품군</option><option>제동 부품</option></select>' +
   '<div class="tree-search-wrap">' + svg(I.search, 14) + '<input class="tree-search-input" aria-label="폴더 검색" placeholder="폴더 검색"></div></div>' +
-  '<div style="flex:1;display:flex;align-items:center;justify-content:center;border:1px dashed var(--color-border-base);border-radius:var(--radius-panel);color:var(--color-text-muted);font-size:var(--body-sm)">폴더 트리 (그리드 위젯)</div>' +
+  tree() +
   '</div></div></aside>';
 export const 보조_메뉴_패널 = { parameters: { docs: { source: { code: panel() } } }, render: () => '<div style="display:flex">' + panel() + '</div>' };
 export const 바닥 = { render: () => frame('<footer class="gnb-footer">© 2026 Enterprise PLM</footer>') };

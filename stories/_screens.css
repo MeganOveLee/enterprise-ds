@@ -2,8 +2,9 @@
  * 화면은 DS 클래스(components.css)로 짜고, 여기에는 DS에 아직 컴포넌트가 없는 자리만 둔다.
  * 값은 전부 DS 토큰 — 고정 색 · 고정 모서리 없음. 브랜드 · 화면 모드를 그대로 따른다.
  *   .scr-frame  실제 크기(1440 × 900)로 그린 화면을 칸 너비에 맞게 줄여 보여 주는 틀
- *   .scr-tree  폴더 트리 — 제품에서는 트리 위젯이 그리는 자리, 값은 LNB 토큰. 메뉴 항목은 DS(.main-menu 항목 · .ui-submenu)
- *   검색 조건 6열 · 상세 값 4열 = DS .form-grid--6 · --4 (.form-grid-2 확장)
+ *   폴더 트리 · 산출물 구조 = DS .tree (TD-75 10/17, 구 .scr-tree). 메뉴 항목은 DS(.main-menu 항목 · .ui-submenu)
+ *   검색 조건 6열 · 상세 값 4열 = DS .form-grid--6 · --4 (.form-grid-2 확장), 라디오 묶음 = DS .radio-group (구 .scr-radio-row)
+ *   올리는 중 막대 = DS .resumable .fileList progress (TD-48), 진행 상태 점 = DS .output-dot (구 .scr-dot)
  *   목록 표는 DS .grid-table (제품에서는 상용 그리드 라이브러리가 그리는 자리)
  *   상태 칩은 DS .status-chip */
 
@@ -31,49 +32,15 @@
 
 /* GNB 오른쪽 */
 .scr .gnb .header-actions { gap: var(--spacing-12); }
-.scr-avatar {
-  width: 28px;
-  height: 28px;
-  border-radius: var(--radius-rounded);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--color-bg-brand-subtle);
-  color: var(--color-text-on-brand-subtle);
-  font-size: var(--body-sm);
-  font-weight: var(--font-weight-semibold);
-}
 .scr-total { font-size: var(--body-sm); color: var(--color-text-muted); }
 .scr-total b { color: var(--color-text-base); font-weight: var(--font-weight-bold); }   /* 브랜드 글자는 회색 바탕(subtle) 위에서 4.46 — AA 미달이라 기본 글자 + 굵게 */
 
-/* 아이콘 메뉴 아래쪽 · 두 번째 메뉴 패널 · 폴더 트리 */
-.scr .tree-search-wrap svg { color: var(--color-text-muted); flex-shrink: 0; }
-.scr-tree { list-style: none; margin: 0; padding: 0; font-size: var(--body-sm); }
-.scr-tree li {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-4);
-  height: 30px;
-  padding-right: var(--spacing-8);
-  border-radius: var(--radius-item);
-  color: var(--color-text-base);
-}
-.scr-tree li:hover { background: var(--color-bg-muted); }
-.scr-tree li.is-selected { background: var(--color-bg-brand-subtle); font-weight: var(--font-weight-semibold); }
-.scr-tree__caret { width: 12px; display: inline-flex; color: var(--color-icon-muted); }
-.scr-tree__folder { display: inline-flex; color: var(--color-icon-warning); }
-
-/* 라벨 위 검색 폼 — 라벨 · 칸 짝은 .form-grid-2 .ff-field 그대로, 열 수만 6 */
-.scr-radio-row { display: flex; align-items: center; gap: var(--spacing-16); height: var(--size-input); }
-.scr-radio-row .radio { white-space: nowrap; }
-.scr .ui-datepicker-range { width: 100%; }
 
 /* 목록 표 = DS .grid-table (TD-93 10/16, 구 .scr-grid). 여기에는 화면 배치만 */
 .scr-link { color: var(--color-text-base); text-decoration: underline; text-underline-offset: 2px; }   /* 본문 링크(첨부 양식) — 그리드 링크는 DS .grid-custom-rows-link · .grid-link */
 .scr-link:hover { color: var(--color-text-brand); }
 .scr-file svg { vertical-align: middle; color: var(--color-icon-muted); }
 
-/* 상태 칩 */
 /* 상세 팝업 — 제품에서는 새 창. 여기서는 목록 화면 위에 띄운 창으로 */
 .scr-dim { position: absolute; inset: 0; z-index: 5; background: color-mix(in srgb, var(--color-bg-subtle) 72%, transparent); }   /* 덮개 = .loading--overlay 와 같은 방식(시맨틱 바탕을 반투명으로) */
 .scr-window {
@@ -97,18 +64,7 @@
 /* 등록 창 섹션 머리 — 모양은 DS .pop .seach_arm · .section-toggle 그대로, 여기서는 위 간격만 */
 .scr .pop .seach_arm.scr-sec { margin-top: var(--spacing-4); }
 
-/* 첨부 — 올리는 중 막대 (DS .resumable 에 막대 모양은 아직 없음). 형식 아이콘 색은 DS .file-icon--<형식> */
-.scr .fileList progress {
-  -webkit-appearance: none;
-  appearance: none;
-  border: none;
-  border-radius: var(--radius-rounded);
-  background: var(--color-bg-muted);
-  overflow: hidden;
-}
-.scr .fileList progress::-webkit-progress-bar { background: var(--color-bg-muted); border-radius: var(--radius-rounded); }
-.scr .fileList progress::-webkit-progress-value { background: var(--color-bg-brand); border-radius: var(--radius-rounded); }
-.scr .fileList progress::-moz-progress-bar { background: var(--color-bg-brand); border-radius: var(--radius-rounded); }
+/* 첨부 — 양식 받기 링크. 올리는 중 막대 · 형식 아이콘 색은 DS(.resumable · .file-icon--<형식>) */
 .scr .resumable-label .scr-link { text-decoration: underline; color: var(--color-text-info); }
 
 /* 홈 대시보드 — 카드 · 카드 목록 · 빈 상태는 DS 그대로(.card · .card-grid · .card-list · .empty--card).
@@ -189,9 +145,6 @@
 .scr .divide-detail-layout { min-height: 0; }
 .scr .left-panel { overflow: hidden; }
 .scr-wbs { flex: 1; min-height: 0; overflow: hidden; margin-top: var(--spacing-4); }
-.scr-wbs li { height: 28px; gap: 2px; }
-.scr .output-row { gap: var(--spacing-8); min-width: 0; }
-.scr-dot { width: 8px; height: 8px; border-radius: var(--radius-rounded); flex-shrink: 0; }   /* 제품은 그리드 셀 안 점 — 값은 진행 상태 토큰 */
 .scr-detail { display: flex; flex-direction: column; gap: 0; min-height: 0; overflow-y: auto; padding: var(--spacing-4); }   /* 사방 4 — 스크롤 상자 가장자리 버튼의 포커스 번짐(3)이 잘리지 않게 (구: 오른쪽만 4). 틈 0 — 섹션 머리 · 내용이 한 상자로 붙도록(섹션 사이는 DS 카드 위 여백 12) */
 .scr-detail .detail-header { margin-bottom: 0; }
 .scr-detail .detail-header__title .status-chip { margin-left: var(--spacing-4); }

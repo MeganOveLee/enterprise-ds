@@ -29,7 +29,7 @@ const searchForm = ({ open = false } = {}) => {
       field('문서 분류', input('문서 분류', '/제품 문서/설계 문서', true)) + field('문서 번호', input('문서 번호')) + field('문서 명', input('문서 명')) +
       field('작업현황', select('작업현황', ['전체', '작업 중', '검토 중', '승인', '반려'])) + field('등록일', range('등록일', '2026-09-01'), 2) +
     '</div><div class="search-detail" id="' + id + '"' + (open ? '' : ' hidden') + '><div class="form-grid-2 form-grid--6"><div class="search-divider">상세 검색</div>' +
-      field('버전', '<div role="radiogroup" aria-label="버전" style="display:flex;gap:16px;align-items:center;min-height:var(--size-input)">' +
+      field('버전', '<div class="radio-group" role="radiogroup" aria-label="버전">' +
         '<label class="radio"><input type="radio" name="' + id + '-v" checked><span class="radio__mark"></span>최신 버전</label>' +
         '<label class="radio"><input type="radio" name="' + id + '-v"><span class="radio__mark"></span>모든 버전</label></div>', 2) +
       field('등록자', select('등록자', ['', '김도윤', '이서연'])) + field('수정자', select('수정자', ['', '김도윤', '이서연'])) +

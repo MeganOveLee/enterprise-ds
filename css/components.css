@@ -336,7 +336,8 @@
     padding: 0 var(--spacing-8);
     gap: var(--spacing-4);
 }
-.tree-controls .tree-search-wrap .icon-search {
+.tree-controls .tree-search-wrap .icon-search,
+.tree-controls .tree-search-wrap svg {   /* 아이콘 글꼴(.icon-search) · svg 둘 다 */
     font-size: 14px;
     color: var(--color-text-muted);
     flex-shrink: 0;
@@ -356,6 +357,33 @@
     border-color: var(--color-border-focus);
     box-shadow: 0 0 0 3px var(--color-focus-ring);   /* 포커스 링 = 보더(브랜드 초록) + 옅은 브랜드 번짐 3px. overrides 404·537행과 동일 패턴 */
 }
+
+/* ─── 트리 .tree (TD-75, 10/17) — 폴더 트리 · 산출물 구조처럼 접고 펴는 계층 목록
+ *   제품에서는 그리드 위젯(트리 모드)이 그리는 자리 — 이 클래스는 같은 값의 HTML 판(.grid-table 과 같은 관계)
+ *   <ul class="tree" role="tree" aria-label="문서 폴더">
+ *     <li class="tree__item" role="treeitem" aria-expanded="true" style="--tree-level:0">
+ *       <span class="tree__caret">(꺾쇠 svg)</span><span class="tree__icon">(폴더 svg)</span>제품 문서</li>
+ *     <li class="tree__item" role="treeitem" aria-selected="true" style="--tree-level:1">…</li>
+ *   단계 = --tree-level(0부터) × 16 들여쓰기. 끝 항목도 꺾쇠 칸(.tree__caret, 비워 둠)을 둬서 폴더 아이콘이 같은 줄에 선다(이전 버전 잎 왼쪽 여백 = 꺾쇠 폭)
+ *   줄 26 = 이전 버전 폴더 트리 줄(그리드 위젯 기본 줄, 행 26). 꺾쇠 · 폴더 사이 4 = 이전 버전 아이콘 여백
+ *   올림 = 옅은 회색, 고른 폴더 = 옅은 브랜드 + 반굵게 (Figma App Shell 「LNB/Sub panel」 › Folder tree) */
+.tree { list-style: none; margin: 0; padding: 0; font-size: var(--body-sm); color: var(--color-text-base); }
+.tree__item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-4);
+    height: 26px;
+    padding-left: calc(var(--spacing-8) + var(--tree-level, 0) * 16px);
+    padding-right: var(--spacing-8);
+    border-radius: var(--radius-item);
+    white-space: nowrap;
+    cursor: pointer;
+}
+.tree__item:hover { background: var(--color-bg-muted); }
+.tree__item[aria-selected="true"] { background: var(--color-bg-brand-subtle); font-weight: var(--font-weight-semibold); }
+.tree__item:focus-visible { outline: 2px solid transparent; box-shadow: inset 0 0 0 1px var(--color-border-focus), inset 0 0 0 4px var(--color-focus-ring); }   /* 스크롤 상자 안 — 안쪽 글로우 (DS-ADR-023 예외와 같음) */
+.tree__caret { width: 12px; flex-shrink: 0; display: inline-flex; color: var(--color-icon-muted); }
+.tree__icon { flex-shrink: 0; display: inline-flex; color: var(--color-icon-warning); }   /* 폴더 = 노란 채운 폴더(Figma solid/folder · folder-open) */
 
 /* ============================================================
  * 상단 GNB 헤더 (모든 페이지 공통)
@@ -1620,6 +1648,10 @@ body.dark-mode .resumable:not(.center) .fileList .file-item { background: var(--
 }
 /* 폼 안 라디오 · 체크 라벨 = 12 — 이전 버전 「검색폼 폰트 12 통일」 묶음(입력칸 · 셀렉트와 같은 규칙, TD-45 45-3 규칙대로). 폼 밖(로그인 등)은 14 그대로 */
 :is(.form-grid-2, .mainTable) :is(.radio, .checkbox) { font-size: var(--body-sm); }
+/* 한 칸 안에 늘어놓는 라디오 · 체크박스 묶음 (TD-75, 10/17) — <div class="radio-group" role="radiogroup" aria-label="버전">
+ * 높이 = 옆 입력칸(--size-input)에 맞춰 세로 가운데. 항목 사이 = 각 항목 오른쪽 16(마지막 0), 칸보다 넓으면 다음 줄(줄 사이 4) — 이전 버전 검색 폼 라디오 묶음 값 */
+:is(.radio-group, .checkbox-group) { display: flex; flex-wrap: wrap; align-items: center; row-gap: var(--spacing-4); min-height: var(--size-input); }
+:is(.radio-group, .checkbox-group) > :last-child { margin-right: 0; }
 .checkbox input[type="checkbox"],
 .checkSelect .option input[type="checkbox"] {
     appearance: none;
@@ -2758,7 +2790,8 @@ body.dark-mode .select {
 
 
 /* AUI Grid 트리 셀 안 dot prefix */
-.output-row { display: inline-flex; align-items: center; }
+.output-row { display: inline-flex; align-items: center; gap: var(--spacing-8); min-width: 0; }
+.output-dot { width: 8px; height: 8px; border-radius: var(--radius-rounded); flex-shrink: 0; }   /* 진행 상태 점 — 바탕은 진행 상태 토큰(--color-progress-<상태>-end), 이름은 title · 범례 (TD-75, 구 Screens .scr-dot) */
 .output-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
 /* progress bar fill — 상태별 그라데이션 + width transition */

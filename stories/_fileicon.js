@@ -20,3 +20,14 @@ export const fileIcon = (name) => {
     '<rect x="1.5" y="9.6" width="13.6" height="6.4" rx="1.2" style="fill:currentColor"/>' +
     '<text x="8.3" y="14.5" text-anchor="middle" font-size="5" font-weight="700" font-family="Arial, sans-serif" style="fill:var(--color-bg-base)">' + label + '</text></svg></span>';
 };
+
+// 폴더 트리 아이콘 — Figma 「solid/folder」 · 「solid/folder-open」 모양(뒤판 + 앞판, 열리면 종이 한 장)을 색 토큰으로
+// 색 = 감싸는 .tree__icon 의 글자색(--color-icon-warning). 뒤판은 옅게(0.55), 앞판은 진하게, 종이는 종이색(--color-bg-base)
+const FOLDER_BACK = 'M5.29 4.3a.86.86 0 0 0-.74-.46H2.59a.83.83 0 0 0-.83.83v11.52c0 .45.37.83.83.83h14c.46 0 .82-.38.82-.83V6.32a.83.83 0 0 0-.82-.83H6.38a.86.86 0 0 1-.73-.46z';
+const FOLDER_FRONT = 'M2.52 7.9l-.68 8.23c-.04.48.34.9.82.9h14.01c.43 0 .78-.33.82-.76l.69-8.23a.83.83 0 0 0-.82-.9H3.33a.82.82 0 0 0-.81.76z';
+const FOLDER_OPEN_FRONT = 'M4.33 10.05l-2.5 6.08c-.18.47.17.9.66.9h14.01c.35 0 .67-.21.79-.54l1.87-5.76a.82.82 0 0 0-.69-1.01H5a.8.8 0 0 0-.67.33z';
+export const folderIcon = (open = false, s = 16) =>
+  '<svg width="' + s + '" height="' + s + '" viewBox="0 0 20 20" aria-hidden="true">' +
+  '<path d="' + FOLDER_BACK + '" style="fill:currentColor;fill-opacity:.55"/>' +
+  (open ? '<rect x="3.9" y="6.1" width="11.8" height="8.57" rx=".57" style="fill:var(--color-bg-base)"/><path d="' + FOLDER_OPEN_FRONT + '" style="fill:currentColor"/>'
+        : '<path d="' + FOLDER_FRONT + '" style="fill:currentColor"/>') + '</svg>';

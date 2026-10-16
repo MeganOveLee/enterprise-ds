@@ -6,7 +6,7 @@
 // 마크업은 문자열 이어 붙이기 — 스토리북 색인기가 여러 줄 HTML 템플릿을 MDX로 잘못 읽는 일을 피함
 import './_screens.css';
 import { wireSearchDetail, EXPAND_LABEL } from './_search.js';
-import { fileIcon } from './_fileicon.js';
+import { fileIcon, folderIcon } from './_fileicon.js';
 
 const W = 1440;
 const H = 900;
@@ -107,10 +107,10 @@ const sub = () =>
   '<div class="main-sub-content"><div class="ui-submenu"><ul><li class="ui-submenu-flat"><a href="#" aria-current="page">문서 검색</a></li><li class="ui-submenu-flat"><a href="#">문서 등록</a></li></ul></div>' +
   '<div class="tree-section"><div class="tree-controls">' + sel('제품군', ['전체 제품군', '제동 부품', '전장 부품']) +
   '<div class="tree-search-wrap">' + svg(I.search, 14) + '<input class="tree-search-input" aria-label="폴더 검색" placeholder="폴더 검색"></div></div>' +
-  '<ul class="scr-tree" role="tree" aria-label="문서 폴더">' +
-  TREE.map(([lv, t, open, on]) => '<li role="treeitem"' + (open !== undefined ? ' aria-expanded="' + !!open + '"' : '') + (on ? ' aria-selected="true" class="is-selected"' : '') +
-    ' style="padding-left:' + (8 + lv * 16) + 'px"><span class="scr-tree__caret">' + (lv < 2 ? svg(open ? I.down : I.next, 12) : '') + '</span>' +
-    '<span class="scr-tree__folder">' + svg(I.folder, 16) + '</span>' + t + '</li>').join('') +
+  '<ul class="tree" role="tree" aria-label="문서 폴더">' +
+  TREE.map(([lv, t, open, on]) => '<li class="tree__item" role="treeitem"' + (open !== undefined ? ' aria-expanded="' + !!open + '"' : '') + (on ? ' aria-selected="true"' : '') +
+    ' style="--tree-level:' + lv + '"><span class="tree__caret">' + (lv < 2 ? svg(open ? I.down : I.next, 12) : '') + '</span>' +
+    '<span class="tree__icon">' + folderIcon(!!open) + '</span>' + t + '</li>').join('') +
   '</ul></div></div></aside>';
 
 // ── 상단 바 ──
@@ -143,7 +143,7 @@ const searchForm = ({ open = false } = {}) => {
   field('작업현황', sel('작업현황', ['전체', '작업 중', '검토 중', '승인', '반려'])) +
   field('등록일', range('등록일', '2026-09-01', ''), { span: 2 }) +
   '</div><div class="search-detail" id="' + id + '"' + (open ? '' : ' hidden') + '><div class="form-grid-2 form-grid--6"><div class="search-divider">상세 검색</div>' +
-  field('버전', '<div class="scr-radio-row" role="radiogroup" aria-label="버전">' +
+  field('버전', '<div class="radio-group" role="radiogroup" aria-label="버전">' +
     '<label class="radio"><input type="radio" name="' + id + '-ver" checked><span class="radio__mark"></span>최신 버전</label>' +
     '<label class="radio"><input type="radio" name="' + id + '-ver"><span class="radio__mark"></span>모든 버전</label></div>', { span: 2 }) +
   field('등록자', sel('등록자', ['', '김도윤', '이서연'])) +
@@ -322,10 +322,10 @@ const leftPanel = () =>
     '<span class="legend-item"><span class="legend-dot" style="background:var(--color-progress-' + k + '-end)">' + svg(PS[k][2], 12) + '</span>' + PS[k][0] + '</span>').join('') + '</div>' +
   '<div class="left-search"><input class="input" aria-label="태스크 검색" placeholder="태스크 검색">' +
   '<button type="button" class="btn btn--secondary btn--outlined left-search-btn">검색</button></div>' +
-  '<ul class="scr-tree scr-wbs" role="tree" aria-label="산출물 구조">' +
-  WBS.map(([lv, t, k, open, on]) => '<li role="treeitem"' + (open ? ' aria-expanded="' + (open === 'open') + '"' : '') + (on ? ' aria-selected="true" class="is-selected"' : '') +
-    ' style="padding-left:' + (4 + lv * 14) + 'px"><span class="scr-tree__caret">' + (open ? svg(open === 'open' ? I.down : I.next, 12) : '') + '</span>' +
-    '<span class="output-row"><span class="scr-dot" style="background:var(--color-progress-' + k + '-end)" title="' + PS[k][0] + '"></span><span class="output-label">' + t + '</span></span></li>').join('') +
+  '<ul class="tree scr-wbs" role="tree" aria-label="산출물 구조">' +
+  WBS.map(([lv, t, k, open, on]) => '<li class="tree__item" role="treeitem"' + (open ? ' aria-expanded="' + (open === 'open') + '"' : '') + (on ? ' aria-selected="true"' : '') +
+    ' style="--tree-level:' + lv + '"><span class="tree__caret">' + (open ? svg(open === 'open' ? I.down : I.next, 12) : '') + '</span>' +
+    '<span class="output-row"><span class="output-dot" style="background:var(--color-progress-' + k + '-end)" title="' + PS[k][0] + '"></span><span class="output-label">' + t + '</span></span></li>').join('') +
   '</ul></aside>';
 
 // 섹션 머리 — DS .seach_arm + .section-toggle (등록 창과 같은 토글). 펼침 = 빼기, 접힘 = 더하기
