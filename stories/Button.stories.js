@@ -2,6 +2,7 @@
 // 예시는 미리보기와 「코드 보기」가 같은 마크업 문자열을 쓴다 (코드 = 그대로 붙여 쓰는 마크업)
 import { matrix } from './_matrix.js';
 import { enablePseudo } from './_pseudo.js';
+import { doDont } from './_dodont.js';
 
 const STAR = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.6 6.6 19.5l1.2-6-4.5-4.2 6.1-.7z"/></svg>';
 const X = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
@@ -132,6 +133,38 @@ export const Utility = {
 // ── 전체 조합 ──
 const STATES = ['Default', 'Hovered', 'Pressed', 'Focused', 'Disabled'];
 const PS = ['', 'ps-hover', 'ps-active', 'ps-focus-visible'];
+
+// ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-70) ── 미리보기만, 코드는 위 예시 카드에
+const grp = (h) => '<div class="button_group">' + h + '</div>';
+const box = (h) => '<div style="width:140px;padding:6px 0;outline:1px dashed var(--color-border-strong);outline-offset:4px">' + h + '</div>';
+export const 사용_지침 = {
+  parameters: { controls: { disable: true } },
+  render: () => doDont([
+    { title: '핵심 동작은 하나만 강조',
+      do: [grp(btn({ label: '취소', emphasis: 'secondary', shape: 'outlined' }) + btn({ label: '임시 저장', emphasis: 'secondary', shape: 'outlined' }) + btn({ label: '등록' })),
+        'primary는 등록 · 저장 · 검색처럼 그 영역의 핵심 동작 하나에만 씁니다. 나머지는 secondary입니다.'],
+      dont: [grp(btn({ label: '취소' }) + btn({ label: '임시 저장' }) + btn({ label: '등록' })),
+        '모두 primary면 어느 것이 핵심 동작인지 보이지 않습니다.'] },
+    { title: '빨강은 되돌릴 수 없는 동작에만',
+      do: [grp(btn({ label: '수정', emphasis: 'secondary', shape: 'outlined' }) + btn({ label: '삭제', emphasis: 'destructive', shape: 'outlined' })),
+        'destructive는 삭제처럼 되돌릴 수 없는 동작에만 씁니다. 색은 동작의 종류가 아니라 중요도로 정합니다.'],
+      dont: [grp(btn({ label: '수정', emphasis: 'destructive' }) + btn({ label: '삭제', emphasis: 'destructive' })),
+        '수정 · 저장에도 빨강을 쓰면 정말 위험한 동작이 묻힙니다.'] },
+    { title: '라벨은 짧은 동사로, 한 줄',
+      do: [box(btn({ label: '결재 요청' })),
+        '동사로 짧게 씁니다. 버튼이 들어갈 자리가 좁으면 자리를 넓힙니다.'],
+      dont: [box(btn({ label: '선택한 문서를 결재 요청합니다' })),
+        '문장형 라벨은 버튼이 자리 밖으로 넘칩니다. 줄을 바꾸거나 줄임표로 자르지도 않습니다.'] },
+    { title: '초록 엑셀 버튼은 엑셀 내려받기에만',
+      do: [UTILITY[0], '브랜드와 상관없이 고정된 초록입니다. 엑셀 파일을 내려받는 버튼 하나에만 씁니다.'],
+      dont: ['<button type="button" class="btn btn--excel">저장</button>', '다른 동작에 쓰면 엑셀 버튼과 구분되지 않습니다.'] },
+    { title: '큰 버튼은 단독 폼의 주 동작에만',
+      do: ['<div style="display:grid;gap:8px;width:240px"><input class="input input--lg" aria-label="아이디" placeholder="아이디"><button type="button" class="btn btn--primary btn--filled btn--lg">로그인</button></div>',
+        '로그인처럼 칸이 몇 개뿐인 폼의 주 동작 하나에만, 큰 칸(.input--lg)과 짝으로 씁니다.'],
+      dont: ['<div class="sb-row" style="gap:8px"><input class="input" aria-label="문서 번호" placeholder="문서 번호" style="width:140px"><button type="button" class="btn btn--primary btn--filled btn--lg">검색</button></div>',
+        '검색 · 목록 화면에서 크게 쓰면 옆 칸과 높이가 어긋납니다.'] },
+  ]),
+};
 
 export const AllStates = {
   parameters: html([

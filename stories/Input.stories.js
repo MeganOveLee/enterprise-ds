@@ -1,6 +1,7 @@
 // Form/Input — 문서 화면은 Input.mdx. 여기 스토리는 MDX 카드 안에 들어가는 예시 표 · 전체 상태 · Playground
 import { matrix } from './_matrix.js';
 import { enablePseudo } from './_pseudo.js';
+import { doDont } from './_dodont.js';
 
 // cls = 문서용 정지 상태 클래스(ps-hover · ps-focus, _pseudo.js)
 const field = ({ kind, state, value, placeholder, cls = '' }) => {
@@ -78,6 +79,41 @@ export const Locked = {
 };
 
 // ── 전체 상태 ──
+// ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-70) — 입력 · 선택 ──
+const ff = (label, ctl, id) => '<div class="form-grid-2" style="grid-template-columns:1fr;width:220px"><div class="ff-field"><label class="search-label" for="' + id + '">' + label + '</label><div class="td">' + ctl + '</div></div></div>';
+const one = (ctl) => '<div style="width:220px">' + ctl + '</div>';
+export const 사용_지침 = {
+  parameters: { controls: { disable: true } },
+  render: () => doDont([
+    { title: '라벨은 칸 위에 늘 보이게',
+      do: [ff('문서 번호', '<input class="input" id="dd-no" placeholder="예: DOC-2610-0013">', 'dd-no'),
+        '라벨(.search-label)을 칸 위에 두고 for · id로 잇습니다. 안내 글자는 입력 예시에만 씁니다.'],
+      dont: [one('<input class="input" placeholder="문서 번호">'),
+        '안내 글자만 두면 입력을 시작하는 순간 사라져, 무엇을 넣는 칸이었는지 잊습니다.'] },
+    { title: '정해진 값 중에서 고를 때는 선택',
+      do: [ff('작업현황', '<select class="select" id="dd-st"><option>전체</option><option>작업 중</option><option>검토 중</option></select>', 'dd-st'),
+        '값이 정해져 있으면 선택(.select)으로 받습니다.'],
+      dont: [ff('작업현황', '<input class="input" id="dd-st2" placeholder="작업 중 / 검토 중 중에서 입력">', 'dd-st2'),
+        '직접 입력하면 같은 값을 다르게 적어 검색에서 빠집니다.'] },
+    { title: '두세 개를 한눈에 비교할 때는 라디오',
+      do: ['<div class="form-grid-2" style="grid-template-columns:1fr;width:220px"><div class="ff-field"><span class="search-label" id="dd-ver">버전</span><div class="radio-group" role="radiogroup" aria-labelledby="dd-ver">' +
+        '<label class="radio"><input type="radio" name="dd-ver" checked><span class="radio__mark"></span>최신 버전</label><label class="radio"><input type="radio" name="dd-ver"><span class="radio__mark"></span>모든 버전</label></div></div></div>',
+        '선택지가 두세 개면 라디오 묶음(.radio-group)으로 펼쳐 둡니다. 누르지 않아도 모두 보입니다.'],
+      dont: [ff('버전', '<select class="select" id="dd-ver2"><option>최신 버전</option><option>모든 버전</option></select>', 'dd-ver2'),
+        '두 개뿐인 값을 선택 안에 숨기면 다른 값이 있는지 열어 봐야 압니다.'] },
+    { title: '보여 주기만 하는 값은 읽기 전용',
+      do: [ff('문서 분류', '<input class="input" id="dd-cls" value="/제품 문서/설계 문서" readonly>', 'dd-cls'),
+        '편집만 막고 값은 그대로 읽힙니다. 키보드로 들어가 값을 복사할 수 있습니다.'],
+      dont: [ff('문서 분류', '<input class="input" id="dd-cls2" value="/제품 문서/설계 문서" disabled>', 'dd-cls2'),
+        '비활성은 지금 조건에서 쓸 수 없는 칸에만 씁니다. 키보드로 들어갈 수 없어 값을 복사하기 어렵습니다.'] },
+    { title: '오류는 글로 알려 주기',
+      do: [ff('문서 명', '<input class="input" id="dd-nm" aria-invalid="true" aria-describedby="dd-nm-err"><span class="field-error-msg" id="dd-nm-err">문서 명을 입력해 주세요</span>', 'dd-nm'),
+        '칸에 aria-invalid를 붙이고, 무엇이 틀렸는지 오류 글(.field-error-msg)로 적어 aria-describedby로 잇습니다.'],
+      dont: [ff('문서 명', '<input class="input" id="dd-nm2" aria-invalid="true">', 'dd-nm2'),
+        '빨간 테두리만으로는 무엇을 고쳐야 할지 모르고, 색을 구분하기 어려우면 보이지도 않습니다.'] },
+  ]),
+};
+
 export const 전체_상태 = {
   parameters: html([
     '<!-- Hovered · Focused 는 마우스 · 키보드에 따라 CSS가 표시한다 (클래스 불필요) -->',

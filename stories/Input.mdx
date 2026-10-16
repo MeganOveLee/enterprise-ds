@@ -25,6 +25,9 @@ import * as S from './Input.stories.js';
 <Card of={S.Label} title="라벨" en="Label" desc="라벨 위 · 칸 아래 짝. 검색 조건 · 등록 폼이 같은 짝을 씁니다." />
 <Card of={S.Locked} title="입력할 수 없는 칸" en="Disabled · Readonly" desc="둘 다 편집은 막지만 뜻이 다릅니다. 값을 보여 주기만 하는 칸은 읽기 전용입니다." />
 </Section>
+<Section title="언제 쓰고 쓰지 말지" en="Do · Don't">
+<Card of={S.사용_지침} code={false} />
+</Section>
 <Section title="전체 상태" en="States" desc="상태별 모습을 모았습니다. Hovered · Focused는 마우스 · 키보드 상태를 정지 화면으로 보여 준 것입니다.">
 <Card of={S.전체_상태} title="입력칸 종류별" desc="행 = 상태, 열 = 종류" />
 </Section>

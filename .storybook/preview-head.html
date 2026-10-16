@@ -31,6 +31,18 @@
   .sb-table--full thead th:first-child, .sb-table--full tbody th { width: 180px; }
   .sb-table code { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 12px; color: var(--color-text-brand); }
   .sb-note { font-size: 12px; line-height: 1.6; color: var(--color-text-muted); }
+  /* 언제 쓰고 쓰지 말지 (Do · Don't, stories/_dodont.js) — 두 칸 한 줄, 머리 선 색 + ✓ · ✕ 글자 */
+  .sb-dd { display: grid; gap: 20px; }
+  .sb-dd__row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .sb-dd__title { grid-column: 1 / -1; margin: 0; font-size: 13px; font-weight: 600; color: var(--color-text-base); }
+  .sb-dd__pane { display: flex; flex-direction: column; border: 1px solid var(--color-border-base); border-top: 3px solid; border-radius: var(--radius-card); overflow: hidden; background: var(--color-bg-base); }
+  .sb-dd__pane--do { border-top-color: var(--color-border-success); }
+  .sb-dd__pane--dont { border-top-color: var(--color-border-danger); }
+  .sb-dd__view { flex: 1; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; min-height: 72px; padding: 20px 16px; background: var(--color-bg-muted); }
+  .sb-dd__text { margin: 0; padding: 10px 12px; border-top: 1px solid var(--color-border-subtle); font-size: 12px; line-height: 1.6; color: var(--color-text-muted); }
+  .sb-dd__text b { display: block; font-weight: 600; }
+  .sb-dd__pane--do .sb-dd__text b { color: var(--color-text-success); }
+  .sb-dd__pane--dont .sb-dd__text b { color: var(--color-text-danger); }
 
   /* ── 문서 페이지 (MDX) ─────────────────────────────────────────────
    * 페이지 머리(.ds-head) → 섹션(.ds-sec) → 예시 카드(.ds-card: 머리 · 미리보기 · 코드 보기). 블록은 stories/_blocks.js
