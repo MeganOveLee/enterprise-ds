@@ -1609,6 +1609,15 @@ body.dark-mode .resumable:not(.center) .fileList .file-item { background: var(--
     white-space: nowrap;              /* 라벨은 한 줄 — 칸이 좁으면 칸을 넓힌다(이전 버전 화면, 10/14) */
 }
 .radio .radio__mark { margin-top: calc((1lh - 16px) / 2); }   /* 표식을 첫 줄 가운데에 */
+/* 누름 영역 높이 24 이상 — 라벨 글줄(12 → 19 · 14 → 22)보다 위아래로 넓힌 투명 판. 줄 높이 · 배치는 그대로 (Selection Controls 검수 P4 #5) */
+:is(.checkbox, .radio) { position: relative; }
+:is(.checkbox, .radio)::before {
+    content: '';
+    position: absolute;
+    left: 0; right: 0; top: 50%;
+    height: max(100%, 24px);
+    transform: translateY(-50%);
+}
 /* 폼 안 라디오 · 체크 라벨 = 12 — 이전 버전 「검색폼 폰트 12 통일」 묶음(입력칸 · 셀렉트와 같은 규칙, TD-45 45-3 규칙대로). 폼 밖(로그인 등)은 14 그대로 */
 :is(.form-grid-2, .mainTable) :is(.radio, .checkbox) { font-size: var(--body-sm); }
 .checkbox input[type="checkbox"],
@@ -2337,7 +2346,8 @@ body.dark-mode .select {
     font-weight: var(--font-weight-semibold);
     color: var(--color-text-base);
     cursor: pointer;
-    padding: 4px 6px;
+    border: 1px solid transparent;   /* 포커스 테두리 자리 — 없으면 글로우만 보이고 테두리 1px가 빠짐 (DS-ADR-023, TD-93 포커스 다시 보기) */
+    padding: 3px 5px;                /* 4 6 − 테두리 1 = 크기 그대로 */
     border-radius: var(--radius-btn);
     display: inline-flex;
     align-items: center;
@@ -2405,6 +2415,12 @@ body.dark-mode .select {
     color: var(--color-text-on-color) !important;
     border-color: var(--color-border-brand);
 }
+.datepicker__day.is-range-end,
+.datepicker__day.is-range-end:hover {      /* 기간의 다른 쪽 끝(시작 칸 달력의 종료일 · 종료 칸 달력의 시작일) = 고른 날과 같은 채움. 이 칸 값은 아님(aria-selected 없음, 이름에 「종료일」 · 「시작일」) — TD-93 검수 P4 #4 */
+    background: var(--color-bg-brand);
+    color: var(--color-text-on-color);
+    border-color: var(--color-border-brand);
+}
 .datepicker__day.is-outside {
     color: var(--color-text-muted);   /* 누를 수 있는 날짜라 4.5:1 필요 — text-disabled 는 2.3(라이트)·1.8(다크)이었음 (E-4 검수 #1, DS-ADR-016) */
 }
@@ -2432,7 +2448,12 @@ body.dark-mode .select {
 }
 /* 스크롤 상자 안이라 글로우를 안쪽으로(보더 1px + 번짐 3px) — 바깥 번짐은 상자에 잘림 */
 .datepicker__dropdown-item:focus-visible { outline: 2px solid transparent; outline-offset: -2px; box-shadow: inset 0 0 0 1px var(--color-border-focus), inset 0 0 0 4px var(--color-focus-ring); }
-.datepicker__day:focus-visible { position: relative; z-index: 1; }   /* 번짐이 칸 밖 3px 로 나가는데 뒤 칸(기간 색 등)이 덮어 안 보였음 → 앞으로 */
+.datepicker__day:focus-visible { position: relative; z-index: 1; }
+/* 채운 날짜(고른 날 · 기간 끝)의 포커스 = 흰 테두리 — 브랜드 테두리가 브랜드 면과 같아 안 보였음. 채운 버튼과 같은 규칙: 테두리 = 글자색 (DS-ADR-023) */
+.datepicker__day.is-selected:focus-visible,
+.datepicker__day.is-range-end:focus-visible { border-color: var(--color-text-on-color); }
+/* 고른 월 · 연도(브랜드 채움)의 포커스 = 안쪽 흰 선 — 안쪽 브랜드 선이 면과 같아 안 보였음 (DS-ADR-023 · 스크롤 상자 안쪽 예외) */
+.datepicker__dropdown-item.is-selected:focus-visible { box-shadow: inset 0 0 0 1px var(--color-text-on-color), inset 0 0 0 4px var(--color-focus-ring); }   /* 번짐이 칸 밖 3px 로 나가는데 뒤 칸(기간 색 등)이 덮어 안 보였음 → 앞으로 */
 
 /* 하단 Cancel/Apply(.datepicker__footer · __btn) 삭제 — 날짜를 누르면 바로 닫힘 (DS-ADR-016) */
 
@@ -2953,7 +2974,14 @@ body.dark-mode .checkSelect .options {   /* 다중 선택 펼침 목록도 같�
     background: var(--color-bg-muted) !important;   /* 그림자는 토큰 다크 값이 맡음 (10/14) */
 }
 body.dark-mode .pop-area,
-body.dark-mode .pop-popup { box-shadow: var(--shadow-modal) !important; }   /* 덮개 층 — 구 다크 묶음 값과 같음 */
+body.dark-mode .pop-popup { box-shadow: var(--shadow-modal) !important; }
+/* 떠 있는 층(bg-muted 750) 위 채운 보조 버튼 = 한 단계 밝게 — 버튼 면(750)이 층 바탕과 같아 안 보였음 (Date Picker 검수 P3 #2, 달력 Today · 팝업 버튼).
+ * 글자 대비: 700 위 8.26 · 마우스 올림 600 위 6.45 · 누름 500 위 4.52 */
+body.dark-mode :is(.datepicker, .pop-area, .pop-popup, .checkSelect .options) {
+    --color-bg-interactive-secondary:         var(--neutral-700);
+    --color-bg-interactive-secondary-hover:   var(--neutral-600);
+    --color-bg-interactive-secondary-pressed: var(--neutral-500);
+}   /* 덮개 층 — 구 다크 묶음 값과 같음 */
 /* main-menu 우측 경계 — 다크에서 border-base 보다 한 단계 밝게 (LNB↔메인 구분) */
 body.dark-mode .main-menu {
     border-right-color: var(--color-border-strong) !important;

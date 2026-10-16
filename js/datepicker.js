@@ -12,7 +12,7 @@
  *   - 입력칸 직접 입력 허용(readonly 해제). 마우스 클릭은 달력을 열되 포커스는 입력칸에 둠.
  *     키보드로 열기 = 달력 아이콘 버튼(Tab 으로 도달) 또는 입력칸에서 Alt+↓
  *   - 고를 수 없는 날짜: input 의 min / max (YYYY-MM-DD). .ui-datepicker-range 안 두 칸은 서로의 min/max 를 자동으로 잡아
- *     기간이 뒤집히지 않게 하고, 그 사이 날짜를 .is-in-range 로 표시
+ *     기간이 뒤집히지 않게 하고, 그 사이 날짜를 .is-in-range, 다른 쪽 끝 날짜를 .is-range-end 로 표시
  * ===================================================================== */
 (function() {
     'use strict';
@@ -199,6 +199,9 @@
         var daysHTML = '';
         var minD = parseDate(this.input.getAttribute('min')), maxD = parseDate(this.input.getAttribute('max'));
         var rng = rangeOf(this.input);   /* 기간 칸이면 {start, end} */
+        /* 기간의 다른 쪽 끝 — 시작 칸 달력엔 종료일, 종료 칸 달력엔 시작일을 고른 날과 같은 채움으로 (is-range-end). 이 칸의 값은 아니라 aria-selected 없이 이름에만 붙임 */
+        var rl = rangeInputs(this.input), peer = null, peerName = '';
+        if (rl) { var isStartField = rl[0] === this.input; peer = parseDate(rl[isStartField ? 1 : 0].value); peerName = isStartField ? '종료일' : '시작일'; }
         var fd = this.focusDate;
         if (!fd || fd.getFullYear() !== year || fd.getMonth() !== month) fd = this.focusDate = (this.tempSelected && this.tempSelected.getFullYear() === year && this.tempSelected.getMonth() === month) ? this.tempSelected : new Date(year, month, 1);
         /* 동적 5주/6주 — 35칸 안에 다 들어가면 5주, 안 되면 6주 */
@@ -225,13 +228,15 @@
             if (isSel) cls += ' is-selected';
             if (isDis) cls += ' is-disabled';
             if (rng && rng.start && rng.end && dayKey(cellDate) > dayKey(rng.start) && dayKey(cellDate) < dayKey(rng.end)) cls += ' is-in-range';
+            var isPeer = !!(peer && !isSel && sameDay(cellDate, peer));
+            if (isPeer) cls += ' is-range-end';
             if (i % 7 === 0) daysHTML += '<div class="datepicker__week" role="row">';
             daysHTML += '<button type="button" role="gridcell" class="' + cls + '"'
                 + ' tabindex="' + (sameDay(cellDate, fd) ? '0' : '-1') + '"'
                 + ' aria-selected="' + (isSel ? 'true' : 'false') + '"'
                 + (isToday ? ' aria-current="date"' : '')
                 + (isDis ? ' aria-disabled="true"' : '')
-                + ' aria-label="' + labelOf(cellDate) + '"'
+                + ' aria-label="' + labelOf(cellDate) + (isPeer ? ', ' + peerName : '') + '"'
                 + ' data-year="' + cellDate.getFullYear() + '" data-month="' + cellDate.getMonth() + '" data-day="' + cellDate.getDate() + '">' + cellDate.getDate() + '</button>';
             if (i % 7 === 6) daysHTML += '</div>';
         }
