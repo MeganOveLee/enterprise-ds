@@ -76,7 +76,7 @@ h6 { font-size: var(--heading-xs); font-weight: var(--font-weight-bold); margin:
 
 /* ===== 상세검색 토글 (switchDetail) — 검색폼 상세행 펼침/접힘 ===== */
 .switchDetail {
-    transition: opacity 0.2s;
+    transition: opacity var(--duration-base);
 }
 .switchDetail.hide { display: none; }
 

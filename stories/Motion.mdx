@@ -1,0 +1,51 @@
+import { Meta, Unstyled } from '@storybook/addon-docs/blocks';
+import { PageHead, Section, Card } from './_blocks.js';
+import * as S from './Motion.stories.js';
+
+<Meta of={S} />
+
+<Unstyled>
+<div className="ds-page">
+<PageHead eyebrow="Foundation" title="Motion" lead="움직임은 뜻이 있을 때만 씁니다. 지금 처리 중이면 빛, 상태 표시는 깜빡임, 저장된 값은 정지입니다." />
+<Section title="개요" en="Overview">
+<table className="ds-table">
+<thead><tr><th>구분</th><th>무엇을 알려 주는 움직임인가</th><th>사용처</th><th>토큰</th></tr></thead>
+<tbody>
+<tr><td><b>빛</b><span className="ds-muted">Shimmer</span></td><td>시스템이 지금 처리 중이고 곧 끝납니다. 채운 부분 안에서만 흰 띠가 왼쪽에서 오른쪽으로 지나가고, 한 번 지나간 뒤 잠깐 쉽니다.</td><td>첨부 업로더의 올리는 중 막대. 스켈레톤도 같은 뜻(불러오는 중)의 빛입니다.</td><td><code>--duration-shimmer</code><br/><code>--ease-loop</code></td></tr>
+<tr><td><b>깜빡임</b><span className="ds-muted">Pulse</span></td><td>상태 표시가 있는 자리로 눈길을 모읍니다. 상태 자체는 옆 글자가 알려 주고, 막대는 꾸밈입니다.</td><td>상태 표시 막대 5개(<code>statusPulse</code>). 막대마다 조금씩 늦게 시작해 물결처럼 보입니다.</td><td><code>--duration-pulse</code><br/><code>--ease-loop</code></td></tr>
+<tr><td><b>정지</b><span className="ds-muted">Static</span></td><td>저장된 값입니다. 지금 바뀌는 중이 아니므로 움직이지 않습니다.</td><td>프로젝트 · 태스크 진행률 막대, 상태 칩. 값이 바뀔 때만 막대 채움이 늘어납니다.</td><td>—</td></tr>
+</tbody>
+</table>
+<p className="ds-sec__desc ds-after">불러오는 중 표시(스피너 · 로고 로더 · 스켈레톤)의 움직임은 <a className="ds-link" href="./?path=/docs/feedback-loading--docs" target="_top">Feedback › Loading</a> · <a className="ds-link" href="./?path=/docs/feedback-skeleton--docs" target="_top">Skeleton</a> 문서에 있습니다.</p>
+</Section>
+<Section title="견본" en="Samples" desc="실제 컴포넌트 마크업입니다. 화면에서 보는 움직임과 같습니다.">
+<Card of={S.빛} title="빛" en="Shimmer" desc="지금 처리 중 — 첨부 파일을 올리는 중입니다. 올린 파일 줄에는 막대가 없습니다." />
+<Card of={S.깜빡임} title="깜빡임" en="Pulse" desc="상태 표시 — 막대가 물결처럼 진해졌다 흐려지고, 상태는 옆 글자(지연)가 알려 줍니다." />
+<Card of={S.정지} title="정지" en="Static" desc="저장된 값 — 진행률 막대는 움직이지 않습니다." />
+</Section>
+<Section title="토큰" en="Tokens">
+<table className="ds-table ds-props">
+<thead><tr><th>토큰</th><th>값</th><th>사용처</th></tr></thead>
+<tbody>
+<tr><td><code>--duration-fast</code></td><td>.12s</td><td>색 · 테두리 바뀜(메뉴 · 탭 · 페이지 번호 · 입력칸 포커스), 툴팁 나타남, 스위치 손잡이</td></tr>
+<tr><td><code>--duration-base</code></td><td>.2s</td><td>펼침 화살표 회전, 상세 검색 펼침, 사용자 메뉴 안 바탕 · 화면 모드 스위치</td></tr>
+<tr><td><code>--duration-shimmer</code></td><td>2.4s</td><td>빛 한 바퀴 — 지나감 1.8초 + 쉼 0.6초</td></tr>
+<tr><td><code>--duration-pulse</code></td><td>1.6s</td><td>깜빡임 한 바퀴 — 진함 → 흐림 35% → 진함, 이전 버전 값</td></tr>
+<tr><td><code>--ease-loop</code></td><td>ease-in-out</td><td>반복 움직임 곡선 — 빛 · 깜빡임 · 스켈레톤 · 로고 로더</td></tr>
+</tbody>
+</table>
+<p className="ds-sec__desc ds-after">값은 <code>tokens.css</code> 한 곳에만 있고, 컴포넌트는 토큰 이름으로 씁니다. <code>--duration-fast</code> · <code>--duration-base</code>는 이전 버전의 모션 토큰 이름과 값을 그대로 옮긴 것입니다.</p>
+</Section>
+<Section title="규칙" en="Rules">
+<table className="ds-table">
+<thead><tr><th>규칙</th><th>설명</th></tr></thead>
+<tbody>
+<tr><td><b>한 자리에 움직임 하나</b></td><td>같은 곳에서 두 가지가 함께 움직이지 않게 합니다. 상태 표시가 깜빡이는 줄의 진행률 막대는 정지입니다.</td></tr>
+<tr><td><b>느리고 옅게</b></td><td>빛은 흰색 낮은 투명도라 막대 옆 글자 · 숫자 대비를 해치지 않습니다. 한 바퀴 사이에 쉼이 있습니다.</td></tr>
+<tr><td><b>빛은 지금 처리 중일 때만</b></td><td>엑셀 내보내기 · 저장 · 검색 · 결재 요청처럼 다른 「지금 처리 중」 자리가 생기면 같은 빛을 씁니다. 저장된 상태 값(진행 · 완료 · 예정)에는 쓰지 않습니다.</td></tr>
+<tr><td><b>모션 줄이기</b></td><td>운영체제의 「동작 줄이기」 설정(<code>prefers-reduced-motion</code>)이면 빛 · 깜빡임은 멈춥니다. 빛은 띠 없이 채움만, 깜빡임은 진한 색으로 보입니다. 스피너 · 로고 로더는 멈추면 멈춘 화면으로 오해할 수 있어 느리게만 돕니다. 화면 읽기 프로그램이 읽는 이름은 그대로입니다.</td></tr>
+</tbody>
+</table>
+</Section>
+</div>
+</Unstyled>
