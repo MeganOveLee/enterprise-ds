@@ -143,14 +143,15 @@ export const 메뉴_상태 = {
   parameters: { controls: { disable: true }, docs: { source: { language: 'html', code: '<!-- 지금 화면 = a 에 aria-current="page"(이전 버전 .active · .in 도 받음). Hovered · Focused 는 마우스 · 키보드에 따라 CSS가 표시 -->' } } },
   render: () => {
     enablePseudo();
-    const one = (o) => '<aside class="main-menu" style="height:auto;width:60px;border:0"><nav><ul>' + railItem('doc', '문서관리', o) + '</ul></nav></aside>';
+    // 상태마다 영역 이름을 따로 — 같은 이름 없는 영역이 여러 개면 화면 읽기에서 구분이 안 됨(접근성 검사 landmark-unique)
+    const one = (o) => '<aside class="main-menu" aria-label="아이콘 메뉴 예시 — ' + o.name + '" style="height:auto;width:60px;border:0"><nav aria-label="주 메뉴 예시 — ' + o.name + '"><ul>' + railItem('doc', '문서관리', o) + '</ul></nav></aside>';
     const flat = (o) => '<div class="ui-submenu" style="width:200px;padding:0;text-align:start"><ul><li class="ui-submenu-flat"><a href="#" class="' + (o.aX || '') + '"' + (o.current ? ' aria-current="page"' : '') + '>문서 검색</a></li></ul></div>';
     const list = (o) => '<div class="ui-submenu" style="width:200px;padding:0;text-align:start"><ul class="ui-submenu-list" style="margin-left:0"><li><a href="#" class="' + (o.aX || '') + '"' + (o.current ? ' aria-current="page"' : '') + '>변경 요청</a></li></ul></div>';
     return matrix(['아이콘 메뉴', '보조 메뉴', '3단계 목록'], [
-      ['Default', [one({}), flat({}), list({})]],
-      ['Hovered', [one({ liX: 'ps-hover', aX: 'ps-hover' }), flat({ aX: 'ps-hover' }), list({ aX: 'ps-hover' })]],
-      ['Focused', [one({ aX: 'ps-focus-visible' }), flat({ aX: 'ps-focus-visible' }), list({ aX: 'ps-focus-visible' })]],
-      ['지금 화면', [one({ current: true }), flat({ current: true }), list({ current: true })]],
+      ['Default', [one({ name: 'Default' }), flat({}), list({})]],
+      ['Hovered', [one({ name: 'Hovered', liX: 'ps-hover', aX: 'ps-hover' }), flat({ aX: 'ps-hover' }), list({ aX: 'ps-hover' })]],
+      ['Focused', [one({ name: 'Focused', aX: 'ps-focus-visible' }), flat({ aX: 'ps-focus-visible' }), list({ aX: 'ps-focus-visible' })]],
+      ['지금 화면', [one({ name: '지금 화면', current: true }), flat({ current: true }), list({ current: true })]],
     ]);
   },
 };

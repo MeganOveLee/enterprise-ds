@@ -11,7 +11,7 @@ import * as S from './Accordion.stories.js';
 <table className="ds-table ds-props">
 <thead><tr><th>구분</th><th>클래스 · 속성</th><th>설명</th></tr></thead>
 <tbody>
-<tr><td><b>구조</b></td><td><code>.seach_arm</code> › <code>.leftbt</code> › <code>.section-toggle</code> + <code>h4</code><span className="ds-muted">오른쪽 글자 · 버튼은 .rightbt</span></td><td>섹션 머리 바로 다음에 내용이 옵니다. 폼 · 값이면 <code>.pro_table</code>, 표면 <code>.table_list</code>입니다.</td></tr>
+<tr><td><b>구조</b></td><td><code>.seach_arm</code> › <code>.leftbt</code> › <code>.section-toggle</code> + <code>h3</code> · <code>h4</code><span className="ds-muted">오른쪽 글자 · 버튼은 .rightbt</span></td><td>섹션 머리 바로 다음에 내용이 옵니다. 제목 단계는 문서 흐름에 맞춥니다 — 화면 제목(h2) 아래는 h3, 팝업 제목(h3) 아래는 h4이고 모양은 같습니다. 폼 · 값이면 <code>.pro_table</code>, 표면 <code>.table_list</code>입니다.</td></tr>
 <tr><td><b>상자형</b></td><td><span className="ds-muted">상세 화면 — .pop 밖</span></td><td>머리와 내용이 한 상자입니다. 머리 바탕은 섹션 머리 회색, 내용 바탕은 흰색이고, 접으면 머리만 남은 둥근 상자가 됩니다. 클래스를 따로 붙이지 않고 머리에 토글이 있으면 이 모양이 됩니다.</td></tr>
 <tr><td><b>이어지는 형</b></td><td><span className="ds-muted">등록 창 — .pop 안</span></td><td>상자 없이 바탕 없는 제목줄로 섹션이 이어집니다.</td></tr>
 <tr><td><b>토글</b></td><td><code>.section-toggle</code> · <code>aria-expanded</code><span className="ds-muted">true = 펼침 · false = 접힘</span></td><td>펼침은 흰 네모 안 빼기, 접힘은 채운 네모 안 더하기입니다. 누르는 자리는 보이는 네모보다 넓습니다. 글자가 없어 <code>aria-label</code>로 「제목 + 접기 · 펼치기」 이름을 붙입니다.</td></tr>

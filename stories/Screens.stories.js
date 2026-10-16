@@ -330,7 +330,7 @@ const leftPanel = () =>
 // 섹션 머리 — DS .seach_arm + .section-toggle (등록 창과 같은 토글). 펼침 = 빼기, 접힘 = 더하기
 const dsec = (title, open = true, right = '') =>
   '<div class="seach_arm"><div class="leftbt"><button type="button" class="section-toggle" aria-expanded="' + open + '" aria-label="' + title + (open ? ' 접기' : ' 펼치기') + '">' +
-  svg(open ? I.minus : I.plus, 16) + '</button><h4>' + title + '</h4></div>' + (right ? '<div class="rightbt">' + right + '</div>' : '') + '</div>';
+  svg(open ? I.minus : I.plus, 16) + '</button><h3>' + title + '</h3></div>' + (right ? '<div class="rightbt">' + right + '</div>' : '') + '</div>';
 const ro = (label, value, span = 0) => field(label, '<div class="ff-readonly">' + value + '</div>', { span });
 // 단계 — 이름 · 상태 · 실적 % · 기간 · 계획 %(기준일 10-13). 계획 0이면 표식 없음
 const PHASES = [['기획', 'done', 100, '07-01 ~ 07-31', 100], ['설계', 'progress', 72, '08-01 ~ 10-24', 87], ['시작품', 'delay', 25, '09-22 ~ 11-07', 46], ['검증', 'plan', 0, '11-10 ~ 12-05', 0], ['양산 이관', 'hold', 0, '12-08 ~ 12-18', 0]];

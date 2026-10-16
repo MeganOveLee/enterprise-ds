@@ -91,7 +91,7 @@ const SW = { bg: ['is-bg', 'background', 'bg'], text: ['is-text', 'color', 'colo
 export function tokenTable(kind, rows) {
   const [cls, prop, read] = SW[kind];
   return mountDoc(
-    '<table class="dt"><thead><tr><th class="dt-c-sw">미리보기</th><th>토큰</th><th>쓰임</th><th class="dt-c-val">값</th><th class="dt-c-act"></th></tr></thead><tbody>' +
+    '<table class="dt"><thead><tr><th class="dt-c-sw">미리보기</th><th>토큰</th><th>쓰임</th><th class="dt-c-val">값</th><th class="dt-c-act"><span class="sr-only">복사</span></th></tr></thead><tbody>' +
     rows.map(([name, use, extra = '']) =>
       '<tr data-row>' +
       '<td><div class="dt-sw ' + cls + (extra ? ' ' + extra : '') + '" data-probe style="' + prop + ':var(--' + name + ')">' + (kind === 'text' ? '가' : '') + '</div></td>' +

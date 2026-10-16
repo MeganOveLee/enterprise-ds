@@ -18,8 +18,8 @@ const num = (n, cur, extra = '') =>
 const arrow = (dir, disabled, extra = '') =>
   '<button type="button" class="ui-pagination__btn ui-pagination__btn--nav' + extra + '" aria-label="' + (dir === 'prev' ? '이전 쪽' : '다음 쪽') + '"' + (disabled ? ' disabled' : '') + '>' + (dir === 'prev' ? PREV : NEXT) + '</button>';
 const ELLIPSIS = '<span class="ui-pagination__ellipsis" aria-hidden="true">…</span>';
-const pager = (total, cur) =>
-  '<nav class="ui-pagination" aria-label="쪽 이동">' + arrow('prev', cur === 1) +
+const pager = (total, cur, label = '쪽 이동') =>   // label — 한 예시에 여러 개면 이름을 따로(landmark-unique)
+  '<nav class="ui-pagination" aria-label="' + label + '">' + arrow('prev', cur === 1) +
   pages(total, cur).map((n) => (n === '…' ? ELLIPSIS : num(n, cur))).join('') +
   arrow('next', cur === total) + '</nav>';
 
@@ -31,7 +31,7 @@ export default {
 
 // ── 예시 ──
 export const 기본 = { render: () => pager(5, 1) };
-export const 줄임표 = { render: () => '<div style="display:flex;flex-direction:column;gap:12px;align-items:flex-start">' + pager(24, 3) + pager(24, 12) + pager(24, 22) + '</div>' };
+export const 줄임표 = { parameters: { docs: { source: { code: pager(24, 12) } } }, render: () => '<div style="display:flex;flex-direction:column;gap:12px;align-items:flex-start">' + pager(24, 3, '쪽 이동 — 앞쪽 예시') + pager(24, 12, '쪽 이동 — 가운데 예시') + pager(24, 22, '쪽 이동 — 뒤쪽 예시') + '</div>' };
 export const 목록_아래 = {
   render: () =>
     '<div style="max-width:560px;display:flex;flex-direction:column;gap:12px">' +
