@@ -1371,9 +1371,10 @@ body.dark-mode .pop .contents .pro_table:not(:has(.form-grid-2)) { background: v
     align-items: center;
     gap: var(--spacing-8);
 }
-/* 섹션 제목은 h3 · h4 둘 다 같은 모양 — 문서 단계에 맞춰 고름: 화면 제목(h2) 아래 = h3, 팝업 제목(h3) 아래 = h4.
- * 이전 버전 마크업은 h4 (접근성 검사 heading-order — 상세 화면 h2 다음 h4 는 단계 건너뜀, 10/16) */
-.seach_arm .leftbt :is(h3, h4) {   /* 굵기는 h3 · h4(globals) 같은 bold. 색·마진·라인하이트 유지 (세영 2026-08-07) */
+/* 섹션 제목은 h3 · h4 · h5 모두 같은 모양 — 문서 단계에 맞춰 고름: 화면 제목(h2) 아래 = h3, 팝업 제목(h3) 아래 = h4.
+ * 이전 버전 마크업은 h4 (접근성 검사 heading-order — 상세 화면 h2 다음 h4 는 단계 건너뜀, 10/16).
+ * h5 = 이전 버전 프로젝트 템플릿 화면의 탭 안 섹션 제목 4곳 — 같은 .seach_arm .leftbt 구조 (TD-92, 10/17) */
+.seach_arm .leftbt :is(h3, h4, h5) {   /* 굵기는 h3 · h4(globals) 같은 bold. 색·마진·라인하이트 유지 (세영 2026-08-07) */
     font-size: var(--heading-sm);   /* 섹션 제목 16 — 이전 버전 h4 크기. h4 기본값(20, DS-ADR-012)은 그대로 두고 섹션 제목에서만 (TD-45 45-3) */
     color: var(--color-text-base);
     margin: 0;
