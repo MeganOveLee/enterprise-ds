@@ -8,9 +8,8 @@
  * 포함:
  *   - main-menu      (좌측 사이드 메뉴 — 모든 페이지)
  *   - gnb            (상단 헤더 — 모든 페이지)
- *   - menu-toggle    (드롭다운 트리거 버튼)
- *   - user-info      (사용자 정보 표시)
- *   - theme-toggle-btn (다크 모드 토글)
+ *   - menu-toggle    (드롭다운 트리거 버튼 — 사용자 메뉴 · 업무 개수)
+ *   - user-info      (사용자 메뉴 머리)
  *   - card           (모든 카드 — 대시보드/검색/결재 등 공유)
  *   - card-list      (카드 안 리스트)
  *   - tag            (작은 상태 라벨/뱃지)
@@ -427,7 +426,6 @@
 .gnb svg {
     flex-shrink: 0;
 }
-.theme-toggle-btn svg,
 .logout-btn svg,
 .user-info svg {
     width: 18px;
@@ -436,32 +434,8 @@
 .user-info svg { width: 20px; height: 20px; }
 
 /* ============================================================
- * 테마 토글 버튼
- * ============================================================ */
-.theme-toggle-btn {
-    background: transparent;
-    border: 1px solid var(--color-border-base);
-    border-radius: var(--radius-rounded);
-    width: 32px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    color: var(--color-text-muted);
-}
-.theme-toggle-btn:hover {
-    background: var(--color-bg-muted);
-    color: var(--color-text-base);
-}
-/* 라이트 모드 → 달 아이콘 표시, 다크 모드 → 해 아이콘 표시 */
-.theme-toggle-btn .icon-sun  { display: none; }
-.theme-toggle-btn .icon-moon { display: inline-block; }
-body.dark-mode .theme-toggle-btn .icon-sun  { display: inline-block; }
-body.dark-mode .theme-toggle-btn .icon-moon { display: none; }
-
-/* ============================================================
- * 메뉴 카운트 토글 버튼 (드롭다운 트리거)
+ * 드롭다운 트리거 버튼 — 사용자 메뉴(아이콘만) · 업무 개수(제목 + 개수)
+ * 상단 바 오른쪽 = 사용자 아이콘 · 결재업무 · 활동업무 셋뿐. 화면 모드 · 로그아웃은 사용자 메뉴 안 (이전 버전 상단 바 그대로, 10/16 세영)
  * ============================================================ */
 .menu-container { position: relative; }
 .menu-toggle {
@@ -480,6 +454,9 @@ body.dark-mode .theme-toggle-btn .icon-moon { display: none; }
     font-size: var(--body-md);
     white-space: nowrap;            /* 폰트 폭 차이로 줄바꿈 방지 */
 }
+/* 사용자 메뉴 버튼 — 사용자 아이콘 20, 흐린 아이콘 색(이전 버전 아이콘 #656565 자리) */
+.menu-toggle > svg { width: 20px; height: 20px; color: var(--color-icon-muted); }
+.menu-toggle:has(> :is(svg, img):only-child) { width: 32px; justify-content: center; }   /* 아이콘만 든 버튼 = 32 정사각 — 포커스 테두리가 세로로 길쭉해지지 않게 */
 /* .menu-toggle hover 배경 제거 — 원래(styles.css) hover 배경 없었음, 우리가 추가한 것 되돌림 (세영 2026-08-16) */
 .menu-toggle .title {
     margin: 0;
@@ -1050,11 +1027,10 @@ body.dark-mode .theme-toggle-btn .icon-moon { display: none; }
     stroke-width: 2;
 }
 /* 포커스 = 입력칸과 같은 글로우(보더 --color-border-focus + 바깥 3px --color-focus-ring) — 이전 버전 포커스 그대로 (10/14).
- * 페이지 번호 · 앱 틀 버튼(뒤로 · 앞으로 · 화면 모드 · 로그아웃 · 업무 개수 · 패널 닫기) · 팝업 닫기 · 첨부 내려받기 · 산출물 바로가기.
+ * 페이지 번호 · 앱 틀 버튼(뒤로 · 앞으로 · 사용자 메뉴 · 업무 개수 · 패널 닫기) · 팝업 닫기 · 첨부 내려받기 · 산출물 바로가기.
  * 보더가 없는 요소(팝업 닫기 · 첨부 내려받기)는 번짐만 보인다 */
 .ui-pagination__btn:focus-visible,
 .gnb .nav-history-btn:focus-visible,
-.theme-toggle-btn:focus-visible,
 .logout-btn:focus-visible,
 .menu-toggle:focus-visible,
 .main-sub-header .sub-close:focus-visible,

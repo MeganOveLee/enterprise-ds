@@ -6,8 +6,6 @@ import { enablePseudo } from './_pseudo.js';
 const svg = (d, s = 16) => '<svg width="' + s + '" height="' + s + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + d + '</svg>';
 const I = {
   prev: '<path d="M15 6l-6 6 6 6"/>', next: '<path d="M9 6l6 6-6 6"/>',
-  moon: '<path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/>',
-  sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
   user: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="10" r="3"/><path d="M6.5 18.5a6 6 0 0 1 11 0"/>',
   logout: '<path d="M15 4h4v16h-4M10 8l-4 4 4 4M6 12h10"/>',
   close: '<path d="M6 6l12 12M18 6L6 18"/>', search: '<circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/>',
@@ -18,10 +16,10 @@ const history = (x = '') =>
   '<div class="nav-history"><button type="button" class="nav-history-btn' + x + '" aria-label="뒤로">' + svg(I.prev, 14) + '</button>' +
   '<button type="button" class="nav-history-btn" aria-label="앞으로">' + svg(I.next, 14) + '</button></div>';
 const crumbs = (list) => '<div class="breadcrumb">' + list.map((c, i) => i < list.length - 1 ? '<span>' + c + '</span><span aria-hidden="true">›</span>' : '<span class="crumb-current" aria-current="page">' + c + '</span>').join('') + '</div>';
-const theme = (x = '') => '<button type="button" class="theme-toggle-btn' + x + '" aria-label="화면 모드 바꾸기"><span class="icon-moon">' + svg(I.moon, 18) + '</span><span class="icon-sun">' + svg(I.sun, 18) + '</span></button>';
 const count = (title, n) => '<div class="menu-container"><button type="button" class="menu-toggle" aria-haspopup="true" aria-expanded="false"><span class="title">' + title + '</span><span class="count">' + n + '</span></button></div>';
-const user = '<div class="user-info">' + svg(I.user, 20) + '김도윤</div>';
-const actions = (a = 2, b = 0) => '<div class="header-actions">' + theme() + user + count('결재업무', a) + count('활동업무', b) + '</div>';   // 로그아웃은 사용자 메뉴 맨 아래에만 (이전 버전 화면, 10/16 세영)
+// 사용자 메뉴 버튼 = 사용자 아이콘만(이름 없음). 누르면 사용자 메뉴(화면 모드 · 로그아웃 포함)가 펼쳐짐
+const userBtn = (x = '') => '<div class="menu-container"><button type="button" class="menu-toggle' + x + '" aria-label="사용자 메뉴" aria-haspopup="true" aria-expanded="false">' + svg(I.user, 20) + '</button></div>';
+const actions = (a = 2, b = 0) => '<div class="header-actions">' + userBtn() + count('결재업무', a) + count('활동업무', b) + '</div>';   // 이전 버전 상단 바 그대로: 사용자 아이콘 · 결재업무 · 활동업무만 (10/16 세영)
 
 const gnb = ({ list = ['Home', '문서 관리', '문서 검색'], a = 2, b = 0 } = {}) =>
   '<header class="gnb"><div style="display:flex;align-items:center">' + history() + crumbs(list) + '</div>' + actions(a, b) + '</header>';
@@ -166,14 +164,14 @@ export const 전체_상태 = {
     const wrapGnb = (h) => '<div class="gnb" style="height:auto;padding:4px;border:0;background:transparent;display:inline-flex">' + h + '</div>';
     const close = (x) => '<div class="main-sub-header" style="height:auto;padding:0;border:0"><button type="button" class="sub-close' + x + '" aria-label="메뉴 닫기">' + svg(I.close, 14) + '</button></div>';
     const tab = (x, on) => '<div class="main-sub-tabs" style="border:0;width:72px"><button type="button" class="sub-tab' + (on ? ' is-active' : '') + x + '">폴더</button></div>';
-    const row = (x) => [wrapGnb('<div class="nav-history" style="margin:0">' + nh(x) + '</div>'), theme(x), close(x), tab(x, false)];
-    return matrix(['뒤로 · 앞으로', '화면 모드', '패널 닫기', '패널 탭'], [
+    const row = (x) => [wrapGnb('<div class="nav-history" style="margin:0">' + nh(x) + '</div>'), userBtn(x), close(x), tab(x, false)];
+    return matrix(['뒤로 · 앞으로', '사용자 메뉴', '패널 닫기', '패널 탭'], [
       ['Default', row('')],
       ['Hovered', row(' ps-hover')],
       ['Pressed', [wrapGnb('<div class="nav-history" style="margin:0">' + nh(' ps-active') + '</div>'), '—', '—', '—']],
       ['Focused', row(' ps-focus-visible')],
       ['선택됨', ['—', '—', '—', tab('', true)]],
-    ]) + '<p class="sb-note" style="margin:8px 0 0">포커스는 버튼과 같은 2px 바깥 테두리입니다. 업무 개수 버튼(.menu-toggle)은 마우스 올림 모양 없이 포커스만 있습니다.</p>';
+    ]) + '<p class="sb-note" style="margin:8px 0 0">포커스는 버튼과 같은 2px 바깥 테두리입니다. 사용자 메뉴 · 업무 개수 버튼(.menu-toggle)은 마우스 올림 모양 없이 포커스만 있습니다.</p>';
   },
 };
 

@@ -62,9 +62,6 @@
 .scr-tree li.is-selected { background: var(--color-bg-brand-subtle); font-weight: var(--font-weight-semibold); }
 .scr-tree__caret { width: 12px; display: inline-flex; color: var(--color-icon-muted); }
 .scr-tree__folder { display: inline-flex; color: var(--color-icon-warning); }
-.scr-gnb-icon { display: inline-flex; padding: 0; border: 0; background: transparent; color: var(--color-icon-muted); cursor: pointer; border-radius: var(--radius-rounded); }
-.scr-gnb-icon:hover { color: var(--color-text-base); }
-.scr-gnb-icon:focus-visible { outline: 2px solid transparent; box-shadow: 0 0 0 3px var(--color-focus-ring); }   /* DS 버튼과 같은 글로우(보더 없는 아이콘이라 번짐만) */
 
 /* 라벨 위 검색 폼 — 라벨 · 칸 짝은 .form-grid-2 .ff-field 그대로, 열 수만 6 */
 .scr-radio-row { display: flex; align-items: center; gap: var(--spacing-16); height: var(--size-input); }

@@ -120,8 +120,7 @@ const gnb = (crumbs = ['Home', '문서 관리', '문서 검색']) =>
   '<button type="button" class="nav-history-btn" aria-label="앞으로">' + svg(I.next, 14) + '</button></div>' +
   '<div class="breadcrumb">' + crumbs.map((c, i) => i < crumbs.length - 1 ? '<span>' + c + '</span><span aria-hidden="true">›</span>' : '<span class="crumb-current">' + c + '</span>').join('') + '</div></div>' +
   '<div class="header-actions">' +
-  '<button type="button" class="theme-toggle-btn" aria-label="화면 모드 바꾸기"><span class="icon-moon">' + svg(I.moon, 16) + '</span><span class="icon-sun">' + svg(I.sun, 16) + '</span></button>' +
-  '<button type="button" class="scr-gnb-icon" aria-label="내 정보">' + svg(I.user, 20) + '</button>' +
+  '<div class="menu-container"><button type="button" class="menu-toggle" aria-label="사용자 메뉴" aria-haspopup="true" aria-expanded="false">' + svg(I.user, 20) + '</button></div>' +
   '<div class="menu-container"><button type="button" class="menu-toggle"><span class="title">결재업무</span><span class="count">2</span></button></div>' +
   '<div class="menu-container"><button type="button" class="menu-toggle"><span class="title">활동업무</span><span class="count">0</span></button></div>' +
   '</div></header>';
