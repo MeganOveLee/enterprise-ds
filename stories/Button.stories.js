@@ -53,9 +53,25 @@ const BASIC = [
   btn({ emphasis: 'secondary', shape: 'outlined', label: '임시저장' }),
   btn({ label: '저장' }),
 ];
+// 버튼 묶음 = .button_group (Figma 「Button stack」). 팝업 제목 줄 오른쪽은 .pop .top-btn-area 가 같은 일을 함
 export const Basic = {
-  parameters: html(BASIC),
-  render: () => '<div class="sb-row" style="justify-content:flex-end">' + BASIC.join('') + '</div>',
+  parameters: html(['<div class="button_group">'].concat(BASIC.map((b) => '  ' + b), ['</div>'])),
+  render: () => '<div class="sb-row" style="justify-content:flex-end"><div class="button_group">' + BASIC.join('') + '</div></div>',
+};
+
+// 크기 — 작은 버튼 = Figma 「Small Button」(.btn--sm), 큰 버튼 = 큰 칸(.input--lg)과 짝(.btn--lg)
+const SIZE = [
+  btn({ emphasis: 'secondary', shape: 'transparent', label: '전체 보기', extra: 'btn--sm' }),
+  btn({ emphasis: 'secondary', shape: 'outlined', label: '조회' }),
+  btn({ label: '로그인', extra: 'btn--lg' }),
+];
+export const Size = {
+  parameters: html(SIZE),
+  render: () => matrix(['작은 버튼', '기본', '큰 버튼'], [
+    ['미리보기', SIZE],
+    ['클래스', [code('.btn--sm'), code('.btn') + note(' (크기 클래스 없음)'), code('.btn--lg')]],
+    ['쓰임', [note('좁은 자리 — 카드 머리 · 알림 닫기'), note('대부분의 버튼'), note('큰 칸과 짝인 단독 폼의 주 동작 하나<br>(로그인)')]],
+  ], { full: true }),
 };
 
 const EMPHASIS = [btn({ label: '저장' }), btn({ emphasis: 'secondary', label: '조회' }), btn({ emphasis: 'destructive', label: '삭제' })];

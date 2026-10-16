@@ -53,6 +53,18 @@ const LOCKED = [
   field({ kind: 'input', state: 'disabled', value: 'BRK-20417', placeholder: '부품 번호' }),
   field({ kind: 'input', state: 'readonly', value: 'BRK-20417', placeholder: '부품 번호' }),
 ];
+// 라벨 — 칸 위에 붙는 글자 = .search-label (Figma 「Label」). 라벨 위 · 칸 아래 짝(.ff-field)을 폼 칸(.form-grid-2)에 놓음
+const LABEL = [
+  '<div class="form-grid-2">',
+  '  <div class="ff-field"><label class="search-label" for="in-docno">문서 번호</label><div class="td"><input class="input" id="in-docno"></div></div>',
+  '  <div class="ff-field"><label class="search-label" for="in-state">작업현황</label><div class="td"><select class="select" id="in-state"><option>전체</option><option>작업 중</option></select></div></div>',
+  '</div>',
+];
+export const Label = {
+  parameters: html(LABEL),
+  render: () => '<div style="max-width:480px">' + LABEL.join('') + '</div>',
+};
+
 export const Locked = {
   parameters: html(LOCKED),
   render: () => matrix(['비활성', '읽기 전용'], [
