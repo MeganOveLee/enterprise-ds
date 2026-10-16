@@ -4,7 +4,7 @@
  *   .scr-frame  실제 크기(1440 × 900)로 그린 화면을 칸 너비에 맞게 줄여 보여 주는 틀
  *   .scr-tree  폴더 트리 — 제품에서는 트리 위젯이 그리는 자리, 값은 LNB 토큰. 메뉴 항목은 DS(.main-menu 항목 · .ui-submenu)
  *   검색 조건 6열 · 상세 값 4열 = DS .form-grid--6 · --4 (.form-grid-2 확장)
- *   .scr-grid   목록 표 — 제품에서는 상용 그리드 라이브러리가 그리는 자리, 값은 그리드 토큰
+ *   목록 표는 DS .grid-table (제품에서는 상용 그리드 라이브러리가 그리는 자리)
  *   상태 칩은 DS .status-chip */
 
 .scr-frame {
@@ -68,42 +68,7 @@
 .scr-radio-row .radio { white-space: nowrap; }
 .scr .ui-datepicker-range { width: 100%; }
 
-/* 목록 표 */
-.scr-grid {
-  width: 100%;
-  border-collapse: collapse;
-  table-layout: fixed;
-  font-size: var(--body-sm);
-  color: var(--color-text-base);
-}
-.scr-grid th {
-  position: sticky;
-  top: 0;
-  z-index: 1;
-  height: 34px;   /* 이전 버전 그리드 머리 34 — 그리드 공통 스크립트의 머리 높이 상수 (TD-45 45-2) */
-  padding: 0 var(--spacing-12);
-  background: var(--color-bg-grid-header);
-  color: var(--color-text-on-color);
-  font-weight: var(--font-weight-semibold);
-  text-align: center;
-  white-space: nowrap;
-  border-bottom: 1px solid var(--color-border-grid-header-bottom);
-}
-.scr-grid td {
-  height: 30px;   /* 읽기 그리드 줄 30 — 같은 상수. 편집 그리드(일괄 등록)는 40, Screens 에는 편집 그리드 없음 */
-  padding: 0 var(--spacing-12);
-  border-bottom: 1px solid var(--color-border-grid-cell);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.scr-grid tbody tr:nth-child(even) td { background: var(--color-bg-row-alt); }
-.scr-grid tbody tr:hover td { background: var(--color-bg-grid-row-hover); }
-.scr-grid tbody tr.is-selected td { background: var(--color-bg-grid-row-selected); }
-.scr-grid .is-center { text-align: center; }
-.scr-grid .is-num { color: var(--color-text-brand); font-weight: var(--font-weight-medium); font-variant-numeric: tabular-nums; }
-.scr-grid .is-date { color: var(--color-text-muted); font-variant-numeric: tabular-nums; }
-.scr-grid .checkbox { margin: 0; gap: 0; }
+/* 목록 표 = DS .grid-table (TD-93 10/16, 구 .scr-grid). 여기에는 화면 배치만 */
 .scr-link { color: var(--color-text-base); text-decoration: underline; text-underline-offset: 2px; }   /* 본문 링크(첨부 양식) — 그리드 링크는 DS .grid-custom-rows-link · .grid-link */
 .scr-link:hover { color: var(--color-text-brand); }
 .scr-file svg { vertical-align: middle; color: var(--color-icon-muted); }
@@ -127,7 +92,7 @@
 }
 .scr-window .pop { height: 100%; min-width: 0; }
 .scr-window .contents { gap: var(--spacing-12); }
-.scr-window .scr-grid th { position: static; }
+.scr-window .grid-table th { position: static; }
 
 /* 등록 창 섹션 머리 — 모양은 DS .pop .seach_arm · .section-toggle 그대로, 여기서는 위 간격만 */
 .scr .pop .seach_arm.scr-sec { margin-top: var(--spacing-4); }
@@ -250,7 +215,7 @@
 .scr-phases__date { color: var(--color-text-muted); font-variant-numeric: tabular-nums; text-align: right; }
 .scr-phases .status-chip { justify-self: start; }
 .scr-tasks { flex: 0 0 auto; border: 1px solid var(--color-border-base); border-radius: var(--radius-panel); overflow: hidden; }
-.scr-tasks .scr-grid th { position: static; }
+.scr-tasks .grid-table th { position: static; }
 .scr-tasks .progress-bar { height: 14px; }
 .scr-tasks .progress-bar__label { font-size: 10px; }
 

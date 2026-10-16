@@ -37,13 +37,13 @@ export const 위치_표시 = {
   ], { full: true }),
 };
 
-// ── 전체 상태 — Hovered 는 마우스 상태를 정지 화면으로. 키보드 포커스: .grid-link 는 마우스 올림과 같은 모습, 식별자 링크는 브라우저 기본 테두리(DS 규칙 없음 — TD-93에 적음) ──
-const PS = ['', 'ps-hover'];
+// ── 전체 상태 — Hovered · Focused 는 마우스 · 키보드 상태를 정지 화면으로. 키보드 포커스 = 브랜드 테두리(글자 링크 규칙, TD-93 10/16) ──
+const PS = ['', 'ps-hover', 'ps-focus-visible'];
 export const 전체_상태 = {
   parameters: html(GRID),
   render: () => {
     enablePseudo();
-    return matrix(['Default', 'Hovered'], [
+    return matrix(['Default', 'Hovered', 'Focused'], [
       ['식별자 열 <code>.grid-custom-rows-link</code>', PS.map((p) => idLink('DOC-2610-0012', p))],
       ['나머지 링크 <code>.grid-link</code>', PS.map((p) => link('하우징 재질 변경 검토 보고서', p))],
     ]);

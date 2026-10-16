@@ -169,15 +169,16 @@ const grid = ({ paging = false } = {}) =>
   '<div class="rightbt">' + btn('선택 일괄 결재', 'btn--primary btn--filled') +
   '<button type="button" class="btn btn--excel">' + svg(I.excel, 14) + 'Excel</button>' +
   btn('필터 초기화', 'btn--secondary btn--transparent', I.reset) + '</div></div>' +
-  '<div class="table_list"><div class="list"><table class="scr-grid"><colgroup>' +
+  '<div class="table_list"><div class="list"><table class="grid-table"><colgroup>' +
   '<col style="width:52px"><col style="width:44px"><col style="width:140px"><col><col style="width:56px"><col style="width:64px"><col style="width:96px">' +
   '<col style="width:84px"><col style="width:104px"><col style="width:84px"><col style="width:104px"></colgroup>' +
   '<thead><tr><th>No.</th><th>' + ck('전체 선택') + '</th><th>문서 번호</th><th>문서 명</th><th>파일</th><th>버전</th><th>작업현황</th><th>등록자</th><th>등록일</th><th>수정자</th><th>수정일</th></tr></thead><tbody>' +
   ROWS.map((r, i) => '<tr' + (i === 1 ? ' class="is-selected"' : '') + '>' +
-    '<td class="is-center is-date">' + (i + 1) + '</td><td class="is-center">' + ck(r[0] + ' 선택', i === 1 ? ' checked' : '') + '</td>' +
-    '<td class="is-center"><a href="#" class="grid-custom-rows-link">' + r[0] + '</a></td><td>' + r[1] + '</td>' +
-    '<td class="is-center scr-file">' + svg(I.file, 16) + '</td><td class="is-center">' + r[2] + '</td><td class="is-center">' + chip(r[3]) + '</td>' +
-    '<td class="is-center">' + r[4] + '</td><td class="is-center is-date">' + r[5] + '</td><td class="is-center">' + r[6] + '</td><td class="is-center is-date">' + r[7] + '</td></tr>').join('') +
+    // 정렬 = DS .grid-table 기본 가운데(이전 버전 그리드), 문서 명만 왼쪽(.is-left)
+    '<td>' + (i + 1) + '</td><td>' + ck(r[0] + ' 선택', i === 1 ? ' checked' : '') + '</td>' +
+    '<td><a href="#" class="grid-custom-rows-link">' + r[0] + '</a></td><td class="is-left">' + r[1] + '</td>' +
+    '<td class="scr-file">' + svg(I.file, 16) + '</td><td>' + r[2] + '</td><td>' + chip(r[3]) + '</td>' +
+    '<td>' + r[4] + '</td><td>' + r[5] + '</td><td>' + r[6] + '</td><td>' + r[7] + '</td></tr>').join('') +
   '</tbody></table></div>' + (paging ? pager() : '') + '</div>';
 
 const listScreen = ({ paging = false } = {}) =>
@@ -361,12 +362,12 @@ const detailBody = () =>
   '<ul class="scr-phases">' + PHASES.map(([n, k, pct, d, plan]) =>
     '<li><span class="scr-phases__name">' + n + '</span>' + pbar(k, pct, n, true, plan > 0 ? plan : undefined) + '<span class="scr-phases__date">' + d + '</span>' + pchip(k) + '</li>').join('') + '</ul></div>' +
   dsec('태스크', true, '<span class="scr-total">전체 <b>21</b> · 지연 <b>2</b></span>') +
-  '<div class="table_list scr-tasks"><div class="list"><table class="scr-grid"><colgroup>' +
+  '<div class="table_list scr-tasks"><div class="list"><table class="grid-table"><colgroup>' +
   '<col style="width:48px"><col><col style="width:80px"><col style="width:84px"><col style="width:104px"><col style="width:104px"><col style="width:150px"><col style="width:84px"></colgroup>' +
   '<thead><tr><th>No.</th><th>태스크</th><th>단계</th><th>담당자</th><th>계획 종료</th><th>실적 종료</th><th>진행률</th><th>상태</th></tr></thead><tbody>' +
-  TASK_ROWS.map((r, i) => '<tr' + (i === 0 ? ' class="is-selected"' : '') + '><td class="is-center is-date">' + (i + 1) + '</td><td><a href="#" class="grid-link">' + r[0] + '</a></td>' +
-    '<td class="is-center">' + r[1] + '</td><td class="is-center">' + r[2] + '</td><td class="is-center is-date">' + r[3] + '</td><td class="is-center is-date">' + (r[4] || '—') + '</td>' +
-    '<td>' + pbar(r[6], r[5], r[0]) + '</td><td class="is-center">' + pchip(r[6]) + '</td></tr>').join('') +
+  TASK_ROWS.map((r, i) => '<tr' + (i === 0 ? ' class="is-selected"' : '') + '><td>' + (i + 1) + '</td><td class="is-left"><a href="#" class="grid-link">' + r[0] + '</a></td>' +
+    '<td>' + r[1] + '</td><td>' + r[2] + '</td><td>' + r[3] + '</td><td>' + (r[4] || '—') + '</td>' +
+    '<td>' + pbar(r[6], r[5], r[0]) + '</td><td>' + pchip(r[6]) + '</td></tr>').join('') +
   '</tbody></table></div></div>' +
   dsec('산출물 문서', false, '<span class="scr-total">14건</span>') +
   '</div></div>';

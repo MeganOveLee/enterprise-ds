@@ -1894,6 +1894,54 @@ body.dark-mode .resumable:not(.center) .fileList .file-item { background: var(--
 .table_list .aui-grid { border: none; border-radius: 0; }
 /* AUI Grid 내부 사이징 fix (max-width / 가로스크롤바 hide / content-panel-mask / body-panel)
  * → AUIGrid_custom_style.css 로 이관 (시스템 컨벤션: 그리드 내부 룰은 custom 파일). */
+
+/* ── 표 .grid-table (Figma Table component · Header · Cell 짝, TD-93 10/16) ─────────────
+ * 제품 목록 그리드는 상용 그리드 라이브러리가 그리고, DS 는 바깥 틀(.table_list › .list)과 그리드 토큰만 준다.
+ * .grid-table 은 같은 모양을 HTML <table> 로 — 라이브러리 없이 그리는 목록 · 문서 · 화면 예시. 값이 같은 그리드 토큰이라 같이 바뀐다.
+ * 근거 = 이전 버전 그리드 커스텀 스타일 · 그리드 설정 · 화면 캡처(문서 검색 0724):
+ *   머리 34 · 줄 30 (그리드 설정 상수, TD-45 45-2) · 글자 머리 · 본문 모두 body-sm, 머리 semibold
+ *   세로선 · 가로선 1px(grid-cell), 머리 아래선 grid-header-bottom, 마지막 열은 오른쪽 선 없음(바깥 틀이 그림)
+ *   정렬 = 가운데(그리드 기본), 이름 · 제목처럼 긴 글만 왼쪽(.is-left = 이전 버전 열 스타일 grid-custom-rows-left)
+ *   줄 = 얼룩(짝수 줄 row-alt) → 마우스 올림 grid-row-hover → 선택 grid-row-selected. 선택이 얼룩 · 올림을 이김
+ * 편집 그리드(일괄 등록, 줄 40 · 칸 안 입력칸)는 아직 없음 — 이전 버전은 별도 스타일(회색 판 + 입력 상자) */
+.grid-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    font-size: var(--body-sm);
+    color: var(--color-text-base);
+    background: var(--color-bg-base);   /* 숫자 글꼴 특성은 그대로(tabular-nums 를 걸면 Pretendard 고정폭 숫자가 넓어 식별자 링크가 벌어져 보임 — 이전 버전도 안 씀) */
+}
+.grid-table th {
+    height: 34px;
+    padding: 0 var(--spacing-12);
+    background: var(--color-bg-grid-header);
+    color: var(--color-text-on-color);
+    font-weight: var(--font-weight-semibold);
+    text-align: center;
+    white-space: nowrap;
+    border-right: 1px solid var(--color-border-grid-cell);
+    border-bottom: 1px solid var(--color-border-grid-header-bottom);
+}
+.grid-table td {
+    height: 30px;
+    padding: 0 var(--spacing-12);
+    text-align: center;
+    background: var(--color-bg-base);
+    border-right: 1px solid var(--color-border-grid-cell);
+    border-bottom: 1px solid var(--color-border-grid-cell);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.grid-table :is(th, td):last-child { border-right: none; }
+.grid-table .is-left { text-align: left; }
+.grid-table tbody tr:nth-child(even) td { background: var(--color-bg-row-alt); }
+.grid-table tbody tr:hover td { background: var(--color-bg-grid-row-hover); }
+.grid-table tbody :is(tr.is-selected, tr[aria-selected="true"]) td { background: var(--color-bg-grid-row-selected); }
+.grid-table .checkbox { margin: 0; gap: 0; vertical-align: middle; }   /* 칸 가운데 체크만 — 글자 없는 체크박스 */
+/* 바깥 틀 안에서 목록이 길면 머리는 위에 붙어 있음(그리드 라이브러리와 같게) */
+.table_list .list .grid-table th { position: sticky; top: 0; z-index: 1; }
 /* 검색 페이지에서만 .list 가 .table_list 의 남은 공간 차지 (그리드 화면 가득) */
 .searchLayout .table_list .list {
     flex: 1;
@@ -2193,6 +2241,10 @@ body.dark-mode .select {
 .grid-custom-rows-link:hover,
 .grid-link:hover,
 .grid-link:focus-visible { color: var(--color-text-brand); text-decoration: underline; text-underline-offset: 2px; }
+/* 키보드 포커스 = 글자 링크 규칙(.file-download-list a.file-name)과 같은 브랜드 테두리. 식별자 링크는 늘 밑줄이라 마우스 올림과 모습이 같아
+ * 테두리 없이는 키보드 위치가 안 보였음(브라우저 기본 테두리만, TD-93 10/16). 칸이 overflow:hidden 이라 간격은 1px */
+.grid-custom-rows-link:focus-visible,
+.grid-link:focus-visible { outline: 2px solid var(--color-border-focus); outline-offset: 1px; border-radius: var(--radius-sm); }
 /* 선택 행(bg-grid-row-selected) 위 = 한 단계 진한 글자. text-brand는 라이트 선택 행에서 4.08:1(E3PS)로 AA 미달 → interactive-primary-hover 7.5:1 이상 */
 :is(tr.is-selected, tr[aria-selected="true"]) :is(.grid-custom-rows-link, .grid-link:hover, .grid-link:focus-visible) { color: var(--color-text-interactive-primary-hover); }
 /* 펼친 상태 = 접힘과 같은 흰 고스트, 화살표와 문구만 바뀜 — 이전 버전 화면 그대로 (10/14). 구: 옅은 브랜드 면 + 브랜드 테두리(Button 제안 ⑬) */
