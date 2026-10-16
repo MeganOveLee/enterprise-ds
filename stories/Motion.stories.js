@@ -1,4 +1,4 @@
-// Foundation/Motion — 문서 화면은 Motion.mdx. 움직임 세 가지 견본: 빛(지금 처리 중) · 깜빡임(상태 표시) · 정지(저장된 값)
+// Foundation/Motion — 문서 화면은 Motion.mdx. 움직임 세 가지 견본: 빛(지금 처리 중) · 깜빡임(봐야 할 경고 = 지연) · 정지(저장된 값)
 // TD-48(10/16 세영 승인) — 빛은 지금 처리 중일 때만, 첫 자리 = 첨부 업로더 올리는 중 막대. 값은 tokens.css 모션 토큰
 // 견본은 실제 컴포넌트 마크업 그대로(업로더 · 상태 표시 · 진행률 막대) — 화면에서 보는 움직임과 같음
 import { fileIcon } from './_fileicon.js';
@@ -33,14 +33,14 @@ export const 빛 = {
   render: () => box(uploader(UP)),
 };
 
-// 깜빡임 — 상태 표시 막대 5개(statusPulse). 상태는 옆 글자가 알려 주고 막대는 꾸밈(aria-hidden)
+// 깜빡임 — 지연 상태 표시의 막대 5개(statusPulse). 다른 상태는 정지(10/16 세영). 상태는 옆 글자가 알려 주고 막대는 꾸밈(aria-hidden)
 export const 깜빡임 = {
   parameters: html(status('delay')),
   render: () => box('<div class="progress-row">' + status('delay') + bar('delay', 32, '시험 · 검증') + '</div>'),
 };
 
-// 정지 — 저장된 값. 지금 바뀌는 중이 아니라 움직이지 않음(값이 바뀔 때만 채움이 늘어남)
+// 정지 — 저장된 값(진행 상태 표시 + 진행률 막대). 지금 바뀌는 중이 아니라 움직이지 않음(값이 바뀔 때만 채움이 늘어남)
 export const 정지 = {
-  parameters: html(bar('progress', 58, '전체')),
-  render: () => box(bar('progress', 58, '전체')),
+  parameters: html('<div class="progress-row">' + status('progress') + bar('progress', 58, '전체') + '</div>'),
+  render: () => box('<div class="progress-row">' + status('progress') + bar('progress', 58, '전체') + '</div>'),
 };

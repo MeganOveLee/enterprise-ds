@@ -2688,7 +2688,7 @@ body.dark-mode .select {
 .progress-bar--plan    .pbar-fill { background: linear-gradient(to right, var(--color-progress-plan-start), var(--color-progress-plan-end)); }
 .progress-bar--hold    .pbar-fill { background: linear-gradient(to right, var(--color-progress-hold-start), var(--color-progress-hold-end)); }
 
-/* 좌측 segmented status indicator — 5개 막대, 상태색 pulse 애니메이션 */
+/* 좌측 segmented status indicator — 5개 막대 + 상태 글자. 깜빡임(statusPulse)은 지연일 때만 */
 .status-segments {
     display: flex;
     align-items: center;
@@ -2696,14 +2696,16 @@ body.dark-mode .select {
     flex-shrink: 0;
 }
 /* 애니메이션 = statusPulse(짙음↔흐림 wave) 단일. 색은 아래 modifier 가 담당.
- * 구 statusCycle(5색 순환)은 뒤에서 !important 로 덮여 한 번도 보인 적 없어 @keyframes 째로 제거 (2026-08-23) */
+ * 구 statusCycle(5색 순환)은 뒤에서 !important 로 덮여 한 번도 보인 적 없어 @keyframes 째로 제거 (2026-08-23)
+ * 깜빡임 = 사람이 봐야 할 경고 → 지연(--delay)만. 완료 · 진행 · 예정 · 보류는 저장된 상태 값이라 정지
+ * (이전 버전은 5 상태 모두 깜빡임. 10/16 22:28 세영 결정 — TD-48 「깜빡임 = 지연 경고」 규칙대로) */
 .status-segments__bar {
     width: 4px;
     height: 18px;
     border-radius: var(--radius-sm);
     background: var(--color-bg-disabled);   /* 구 #D9D9D9 하드코딩 → 쿨그레이 토큰 (세영 2026-08-25) */
-    animation: statusPulse var(--duration-pulse) var(--ease-loop) infinite;
 }
+.status-segments--delay .status-segments__bar { animation: statusPulse var(--duration-pulse) var(--ease-loop) infinite; }
 /* @keyframes statusPulse — 이전 버전 값 그대로 (2026-10-15 세영 결정: DS만 불러와도 움직이게).
  * 이전 버전에는 같은 이름이 두 곳: components(0.25↔1) · overrides(1↔.35). 화면은 components 다음
  * overrides 를 불러 overrides 쪽만 살아 있었으므로 그 값을 옮김. 상태 SVG 배지(1.4초)는 DS에 없는 이미지라 안 옮김. */
@@ -2715,7 +2717,7 @@ body.dark-mode .select {
 .status-segments__bar:nth-child(4) { animation-delay: 0.36s; }
 .status-segments__bar:nth-child(5) { animation-delay: 0.48s; }
 /* 모션 줄이기 = 멈춤(꾸밈 막대 · 상태는 옆 글자가 알려 줌). 멈추면 진한 쪽(opacity 1)으로 보임 */
-@media (prefers-reduced-motion: reduce) { .status-segments__bar { animation: none; } }
+@media (prefers-reduced-motion: reduce) { .status-segments--delay .status-segments__bar { animation: none; } }
 
 /* status modifier 별 색 (배경 직접) */
 .status-segments--done    .status-segments__bar { background: var(--color-progress-done-end) !important; }
