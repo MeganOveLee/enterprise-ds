@@ -13,6 +13,7 @@ import * as S from './Tooltip.stories.js';
 <tbody>
 <tr><td><b>구조</b></td><td><code>.has-tooltip</code> › 컨트롤 + <code>.tooltip</code></td><td>컨트롤과 툴팁을 한 묶음으로 감쌉니다. 어두운 바탕에 12px 글자, 컨트롤 쪽으로 작은 화살표가 붙습니다. 폭은 240까지이고 길면 줄을 바꿉니다.</td></tr>
 <tr><td><b>위치</b></td><td><code>.tooltip--bottom</code><span className="ds-muted">기본 = 위</span></td><td>보통은 컨트롤 위에 뜹니다. 화면 맨 위처럼 위가 좁으면 아래에 둡니다.</td></tr>
+<tr><td><b>가로 맞춤</b></td><td><code>.tooltip--start</code> · <code>.tooltip--end</code><span className="ds-muted">기본 = 가운데</span></td><td>보통은 컨트롤 가운데에 맞춥니다. 칸 왼쪽 끝 컨트롤은 툴팁 왼쪽 끝을, 오른쪽 끝 컨트롤은 오른쪽 끝을 컨트롤에 맞춰 칸 밖으로 잘리지 않게 합니다. 화살표는 컨트롤 가운데를 가리킵니다.</td></tr>
 <tr><td><b>열림</b></td><td><span className="ds-muted">마우스 · 키보드 포커스</span></td><td>마우스를 올리거나 Tab으로 오면 열립니다. 마우스를 툴팁 위로 옮겨도 닫히지 않아 긴 글도 읽을 수 있습니다. Esc로 닫는 것은 화면 스크립트가 <code>.is-hidden</code>을 붙여서 합니다.</td></tr>
 <tr><td><b>읽어 주기</b></td><td><code>role="tooltip"</code> · <code>aria-describedby</code></td><td>툴팁에 <code>id</code>를 주고 컨트롤의 <code>aria-describedby</code>로 잇습니다. 아이콘 버튼의 이름은 <code>aria-label</code>이 따로 맡습니다.</td></tr>
 </tbody>
@@ -22,6 +23,7 @@ import * as S from './Tooltip.stories.js';
 <Section title="예시" en="Examples" desc="문서에서는 첫 번째를 열어 둔 채로 그렸습니다. 나머지 버튼은 마우스를 올리거나 Tab으로 와 보세요.">
 <Card of={S.아이콘_버튼_설명} title="아이콘 버튼 설명" en="Icon button" desc="받기 · 인쇄 · 초기화처럼 그림만 있는 버튼." />
 <Card of={S.도움말} title="도움말" en="Help" desc="물음표 아이콘 옆에 조금 긴 설명. 240에서 줄을 바꿉니다." />
+<Card of={S.끝_맞춤} title="끝 맞춤" en="Start · End" desc="점선 = 칸 경계. 칸 왼쪽 끝 · 오른쪽 끝의 도움말은 툴팁을 컨트롤 쪽 끝에 맞춥니다." />
 <Card of={S.아래쪽} title="아래쪽" en="Bottom" desc="위가 좁은 자리(화면 맨 위 · 표 머리)에서." />
 </Section>
 <Section title="전체 상태" en="States" desc="글 길이 두 가지를 위치별로 모았습니다.">

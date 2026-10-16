@@ -3907,7 +3907,7 @@ body.dark-mode .empty-illo { --empty-illo-shadow: rgb(0 0 0 / .2); }
 
 /* ── Tooltip .tooltip ──────────────────────────────────────────────────────
  * 아이콘 버튼처럼 글자 없는 컨트롤의 짧은 설명. 어두운 바탕(bg-inverse) · 글자 12 medium · 화살표 6 (Figma Tooltip과 같은 까만 툴팁)
- * 감싸는 .has-tooltip 에 마우스가 오거나 키보드 포커스가 오면 보임. 기본 = 위, .tooltip--bottom = 아래
+ * 감싸는 .has-tooltip 에 마우스가 오거나 키보드 포커스가 오면 보임. 기본 = 위, .tooltip--bottom = 아래, 가로 맞춤 .tooltip--start · --end
  * 접근성: 툴팁에 role="tooltip" + id, 컨트롤에 aria-describedby. 아이콘 버튼 이름은 aria-label 이 따로 맡음
  *   마우스를 툴팁 위로 옮겨도 사라지지 않음(아래 다리) · Esc 로 닫기는 화면 스크립트(.is-hidden) — WCAG 1.4.13
  *   이전 버전 도움말 툴팁(초록 바탕 · 옆 화살표)은 그 전 버전 값이라 쓰지 않음(10/15 세영 결정) */
@@ -3953,6 +3953,13 @@ body.dark-mode .empty-illo { --empty-illo-shadow: rgb(0 0 0 / .2); }
 .tooltip--bottom { bottom: auto; top: calc(100% + 8px); }
 .tooltip--bottom::after { top: auto; bottom: 100%; border-top-color: transparent; border-bottom-color: var(--color-bg-inverse); }
 .tooltip--bottom::before { top: auto; bottom: 100%; }
+/* 가로 맞춤 (TD-93, 10/17) — 기본 = 컨트롤 가운데. 칸 왼쪽 끝 컨트롤은 .tooltip--start(툴팁 왼쪽 끝 = 컨트롤 왼쪽 끝),
+ * 오른쪽 끝은 .tooltip--end — 폭 240 툴팁이 칸 · 화면 밖으로 잘리지 않게. 화살표는 컨트롤 가운데(아이콘 버튼 폭 --size-btn 의 절반) */
+.tooltip--start, .tooltip--end { transform: none; }
+.tooltip--start { left: 0; }
+.tooltip--end { left: auto; right: 0; }
+.tooltip--start::after { left: calc(var(--size-btn) / 2); }
+.tooltip--end::after { left: auto; right: calc(var(--size-btn) / 2); transform: translateX(50%); }
 .has-tooltip:hover > .tooltip,
 .has-tooltip:focus-within > .tooltip,
 .tooltip.is-open { opacity: 1; visibility: visible; pointer-events: auto; }

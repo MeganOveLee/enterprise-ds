@@ -11,10 +11,10 @@ const I = {
 };
 let uid = 0;
 // 툴팁 하나 — 컨트롤(아이콘 버튼) + 툴팁. open = 문서에서 열어 둔 모습, bottom = 아래쪽
-const tip = ({ icon = 'down', label = '첨부 받기', text = '첨부 받기', bottom = false, open = false } = {}) => {
+const tip = ({ icon = 'down', label = '첨부 받기', text = '첨부 받기', bottom = false, open = false, side = '' } = {}) => {
   const id = 'tt' + (++uid);
   return '<span class="has-tooltip"><button type="button" class="btn btn--secondary btn--transparent btn--icon" aria-label="' + label + '" aria-describedby="' + id + '">' + svg(I[icon]) + '</button>' +
-    '<span class="tooltip' + (bottom ? ' tooltip--bottom' : '') + (open ? ' is-open' : '') + '" role="tooltip" id="' + id + '">' + text + '</span></span>';
+    '<span class="tooltip' + (bottom ? ' tooltip--bottom' : '') + (side ? ' tooltip--' + side : '') + (open ? ' is-open' : '') + '" role="tooltip" id="' + id + '">' + text + '</span></span>';
 };
 // 툴팁이 들어갈 자리 — 위(또는 아래)에 툴팁 높이만큼 비워 둠. center = 표 칸 가운데(긴 툴팁 240이 칸 안에 들어가게 칸 폭 300)
 const stage = (inner, h = 120, align = 'end', center = false) => '<div style="display:flex;align-items:' + align + ';gap:8px;min-height:' + h + 'px;padding:8px 24px' + (center ? ';justify-content:center;min-width:300px' : '') + '">' + inner + '</div>';
@@ -32,6 +32,13 @@ export const 아이콘_버튼_설명 = {
 export const 도움말 = {
   // 칸 가운데에 둠 — 왼쪽 끝에 두면 폭 240 툴팁이 칸 밖으로 나가 왼쪽이 잘렸음(10/16 세영 지적)
   render: () => stage(tip({ icon: 'help', label: '행 높이 도움말', text: '관련 객체 그리드는 행 높이 30을 씁니다. 편집 칸이 있는 그리드만 40입니다.', open: true }), 120, 'end', true),
+};
+// 칸 왼쪽 · 오른쪽 끝 — 가운데 맞춤이면 폭 240 툴팁이 칸 밖으로 잘림 → .tooltip--start · --end (TD-93, 10/17)
+const edge = (inner, justify) => '<div style="display:flex;align-items:end;justify-content:' + justify + ';min-height:120px;padding:8px 0;border-inline:1px dashed var(--color-border-strong);width:300px">' + inner + '</div>';
+export const 끝_맞춤 = {
+  render: () => '<div class="sb-row" style="gap:24px;padding:8px 24px">' +
+    edge(tip({ icon: 'help', label: '행 높이 도움말', text: '관련 객체 그리드는 행 높이 30을 씁니다. 편집 칸이 있는 그리드만 40입니다.', open: true, side: 'start' }), 'flex-start') +
+    edge(tip({ icon: 'help', label: '행 높이 도움말', text: '관련 객체 그리드는 행 높이 30을 씁니다. 편집 칸이 있는 그리드만 40입니다.', open: true, side: 'end' }), 'flex-end') + '</div>',
 };
 export const 아래쪽 = {
   render: () => stage(tip({ icon: 'down', label: '첨부 받기', text: '첨부 받기', bottom: true, open: true }), 80, 'start'),
