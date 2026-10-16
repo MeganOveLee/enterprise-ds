@@ -48,7 +48,15 @@ export const LOAD = [
 </tbody>
 </table>
 </Section>
-<Section title="개발자" en="Developers" desc="공통 레이아웃에서 CSS 파일을 아래 순서대로 불러오고, 마크업(JSP · HTML)에 컴포넌트 클래스를 붙이면 됩니다.">
+<Section title="개발자" en="Developers" desc="서버에서 그리는 화면(JSP · HTML)에 세 단계로 붙입니다.">
+<table className="ds-table">
+<thead><tr><th>단계</th><th>할 일</th></tr></thead>
+<tbody>
+<tr><td><b>1. 불러오기</b></td><td>공통 레이아웃에서 CSS 네 파일을 아래 코드의 순서(토큰 → 브랜드 → 전역 → 컴포넌트)대로 불러옵니다. 날짜 선택을 쓰는 화면만 <code>js/datepicker.js</code>를 더합니다.</td></tr>
+<tr><td><b>2. 클래스 붙이기</b></td><td>컴포넌트 문서 예시 카드의 「코드 보기」 마크업을 그대로 씁니다. 상태는 클래스가 아니라 HTML 속성으로 나타냅니다 — <code>disabled</code> · <code>readonly</code> · <code>aria-invalid="true"</code> · <code>aria-expanded</code> · <code>aria-pressed</code>.</td></tr>
+<tr><td><b>3. 브랜드 · 화면 모드</b></td><td>브랜드는 <code>{'<html class="theme-*">'}</code>, 다크는 <code>{'<body class="dark-mode">'}</code>입니다. 화면에 CSS를 더 쓸 때는 색을 시맨틱 토큰(<code>--color-*</code>)으로만 쓰고, 원천 색(<code>--neutral-N</code> · <code>--brand-N</code>)이나 색 값을 직접 쓰지 않습니다.</td></tr>
+</tbody>
+</table>
 <Source language="html" code={LOAD} />
 <p className="ds-sec__desc ds-after">외부 위젯이나 제품 기본 화면처럼 마크업을 고칠 수 없는 곳은, 클래스 대신 토큰과 테마 덮어쓰기 파일로 모양을 맞춥니다(예: 데이터 그리드 테마).</p>
 </Section>
