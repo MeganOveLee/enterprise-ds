@@ -152,8 +152,18 @@ const searchForm = ({ open = false } = {}) => {
   '</div></div></div>';
 };
 
-const grid = () =>
-  '<div class="seach_arm"><div class="leftbt">' + svg(I.list, 16) + '<h4>검색 결과 (' + ROWS.length + '/128)</h4>' +
+// 쪽 이동 — 이전 버전 화면에는 없음(개발 요청: 쪽을 나누면 다음 쪽 데이터가 검색 조건 · 정렬에 걸리지 않아서). 기본 화면은 이전 버전대로 빼고,
+// 쪽 이동은 「시안 2」에만 둠 — 검색 · 정렬을 전체 결과에 먼저 하고 쪽을 나누는 경우의 DS 제안 (10/16 세영 지시)
+const pager = () =>
+  '<nav class="ui-pagination" aria-label="쪽 이동">' +
+  '<button type="button" class="ui-pagination__btn ui-pagination__btn--nav is-disabled" aria-label="이전 쪽">' + svg(I.prev, 14) + '</button>' +
+  '<button type="button" class="ui-pagination__btn is-active" aria-current="page">1</button>' +
+  [2, 3, 4, 5].map((n) => '<button type="button" class="ui-pagination__btn">' + n + '</button>').join('') +
+  '<span class="ui-pagination__ellipsis">…</span><button type="button" class="ui-pagination__btn">7</button>' +
+  '<button type="button" class="ui-pagination__btn ui-pagination__btn--nav" aria-label="다음 쪽">' + svg(I.next, 14) + '</button></nav>';
+
+const grid = ({ paging = false } = {}) =>
+  '<div class="seach_arm"><div class="leftbt">' + svg(I.list, 16) + '<h4>검색 결과 (' + ROWS.length + '/' + (paging ? 128 : ROWS.length) + ')</h4>' +
   sel('한 쪽에 보일 개수', ['20', '50', '100']) + '</div>' +
   '<div class="rightbt">' + btn('선택 일괄 결재', 'btn--primary btn--filled', I.approve) +
   '<button type="button" class="btn btn--excel">' + svg(I.excel, 14) + 'Excel</button>' +
@@ -167,18 +177,12 @@ const grid = () =>
     '<td class="is-center"><a href="#" class="grid-custom-rows-link">' + r[0] + '</a></td><td>' + r[1] + '</td>' +
     '<td class="is-center scr-file">' + svg(I.file, 16) + '</td><td class="is-center">' + r[2] + '</td><td class="is-center">' + chip(r[3]) + '</td>' +
     '<td class="is-center">' + r[4] + '</td><td class="is-center is-date">' + r[5] + '</td><td class="is-center">' + r[6] + '</td><td class="is-center is-date">' + r[7] + '</td></tr>').join('') +
-  '</tbody></table></div>' +
-  '<nav class="ui-pagination" aria-label="쪽 이동">' +
-  '<button type="button" class="ui-pagination__btn ui-pagination__btn--nav is-disabled" aria-label="이전 쪽">' + svg(I.prev, 14) + '</button>' +
-  '<button type="button" class="ui-pagination__btn is-active" aria-current="page">1</button>' +
-  [2, 3, 4, 5].map((n) => '<button type="button" class="ui-pagination__btn">' + n + '</button>').join('') +
-  '<span class="ui-pagination__ellipsis">…</span><button type="button" class="ui-pagination__btn">7</button>' +
-  '<button type="button" class="ui-pagination__btn ui-pagination__btn--nav" aria-label="다음 쪽">' + svg(I.next, 14) + '</button></nav></div>';
+  '</tbody></table></div>' + (paging ? pager() : '') + '</div>';
 
-const listScreen = () =>
+const listScreen = ({ paging = false } = {}) =>
   '<div style="display:flex;height:100%">' + lnb() + sub() +
   '<div class="main-layout"><div class="main-body"><div class="main-nav-layout"><div class="main-area">' + gnb() +
-  '<div class="main-content"><div class="searchLayout"><div class="product">' + searchForm() + grid() + '</div></div></div>' +
+  '<div class="main-content"><div class="searchLayout"><div class="product">' + searchForm() + grid({ paging }) + '</div></div></div>' +
   '</div></div></div></div></div>';
 
 // ── 등록 창 — 제품에서는 새 창(.pop). 여기서는 목록 위에 띄운 창 ──
@@ -440,6 +444,12 @@ export const 홈 = {
 export const 문서_검색 = {
   parameters: src(listScreen()),
   render: () => wireSearchDetail(frame(listScreen())),
+};
+
+// 시안 2 — 쪽 이동을 넣은 DS 제안(이전 버전에는 없음, 위 pager 주석)
+export const 문서_검색_시안_2 = {
+  parameters: src(listScreen({ paging: true })),
+  render: () => wireSearchDetail(frame(listScreen({ paging: true }))),
 };
 
 export const 문서_등록 = {
