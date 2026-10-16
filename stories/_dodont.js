@@ -7,4 +7,4 @@ const pane = (kind, [view, text]) =>
 
 export const doDont = (rows) =>
   '<div class="sb-dd">' + rows.map((r) =>
-    '<section class="sb-dd__row"><h4 class="sb-dd__title">' + r.title + '</h4>' + pane('do', r.do) + pane('dont', r.dont) + '</section>').join('') + '</div>';
+    '<section class="sb-dd__row"><h3 class="sb-dd__title">' + r.title + '</h3>' + pane('do', r.do) + pane('dont', r.dont) + '</section>').join('') + '</div>';

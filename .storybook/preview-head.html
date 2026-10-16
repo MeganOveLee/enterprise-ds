@@ -221,6 +221,6 @@
   .ds-tl__card--human { background: #fff; border: 1px solid #d5dcea; color: #111418; }
   .ds-tl__card--ai { background: #5b72c4; border: 1px solid #5b72c4; color: #fff; }
   .ds-tl__card small { display: block; margin-top: 8px; font-size: 11px; line-height: 1.4; color: #656d76; }
-  .ds-tl__card--ai small { color: #fff; opacity: 0.85; }
+  .ds-tl__card--ai small { color: #fff; }   /* 흰 글자 그대로 4.52:1 — 투명도 0.85면 3.75:1로 AA 미달이었음 (10/17) */
   @media (max-width: 760px) { .ds-tl { grid-template-columns: minmax(0, 1fr); } .ds-tl::before, .ds-tl::after, .ds-tl__start, .ds-tl__lg { display: none; } .ds-tl__head { flex-direction: row; text-align: left; } .ds-tl__title { min-height: 0; } }
 </style>
