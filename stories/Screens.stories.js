@@ -165,7 +165,8 @@ const pager = () =>
 const grid = ({ paging = false } = {}) =>
   '<div class="seach_arm"><div class="leftbt">' + svg(I.list, 16) + '<h4>검색 결과 (' + ROWS.length + '/' + (paging ? 128 : ROWS.length) + ')</h4>' +
   sel('한 쪽에 보일 개수', ['20', '50', '100']) + '</div>' +
-  '<div class="rightbt">' + btn('선택 일괄 결재', 'btn--primary btn--filled', I.approve) +
+  // [선택 일괄 결재] 아이콘 없음 — 이전 버전 캡처(03 · 06 · 07) 그대로. ✓ 아이콘은 근거 없이 넣었던 것(10/16 대조)
+  '<div class="rightbt">' + btn('선택 일괄 결재', 'btn--primary btn--filled') +
   '<button type="button" class="btn btn--excel">' + svg(I.excel, 14) + 'Excel</button>' +
   btn('필터 초기화', 'btn--secondary btn--transparent', I.reset) + '</div></div>' +
   '<div class="table_list"><div class="list"><table class="scr-grid"><colgroup>' +
