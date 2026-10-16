@@ -54,6 +54,31 @@ export const 기본 = {
   render: () => wrap(table(ROWS.map((r, i) => row(r, i, { sel: i === 1 })).join(''))),
 };
 
+// ── 편집 표 — 일괄 등록처럼 칸 안에 입력칸. 회색 판 + 흰 입력 상자(이전 버전 편집 그리드) ──
+const EROWS = [['설계 사양서', '브레이크 캘리퍼 조립 사양서', '김도윤'], ['시험 성적서', '', '김도윤'], ['도면', '하우징 3D 모델', '김도윤']];
+const sel = (label, v) => '<select class="select" aria-label="' + label + '">' + ['설계 사양서', '시험 성적서', '도면'].map((o) => '<option' + (o === v ? ' selected' : '') + '>' + o + '</option>').join('') + '</select>';
+const ECOLS = '<colgroup><col style="width:52px"><col style="width:44px"><col style="width:150px"><col><col style="width:120px"></colgroup>';
+const EHEAD = '<thead><tr><th>No.</th><th>' + ck('전체 선택') + '</th><th>문서 분류</th><th>문서 명</th><th>등록자</th></tr></thead>';
+const erow = (r, i, on = false) => '<tr' + (on ? ' class="is-selected" aria-selected="true"' : '') + '><td>' + (i + 1) + '</td><td>' + ck((i + 1) + '번 줄 선택', on) + '</td>' +
+  '<td>' + sel((i + 1) + '번 줄 문서 분류', r[0]) + '</td>' +
+  '<td><input class="input" aria-label="' + (i + 1) + '번 줄 문서 명" placeholder="문서 명을 입력하세요" value="' + r[1] + '"></td>' +
+  '<td><input class="input" aria-label="' + (i + 1) + '번 줄 등록자" value="' + r[2] + '" readonly></td></tr>';
+const ESRC = [
+  '<table class="grid-table grid-table--edit">',
+  '  <thead>…</thead>',
+  '  <tbody>',
+  '    <tr><td>1</td><td><label class="checkbox"><input type="checkbox" aria-label="1번 줄 선택"></label></td>',
+  '        <td><select class="select" aria-label="1번 줄 문서 분류">…</select></td>',
+  '        <td><input class="input" aria-label="1번 줄 문서 명"></td>',
+  '        <td><input class="input" aria-label="1번 줄 등록자" value="김도윤" readonly></td></tr>',
+  '  </tbody>',
+  '</table>',
+].join('\n');
+export const 편집 = {
+  parameters: html(ESRC),
+  render: () => wrap('<table class="grid-table grid-table--edit">' + ECOLS + EHEAD + '<tbody>' + EROWS.map((r, i) => erow(r, i, i === 2)).join('') + '</tbody></table>'),
+};
+
 // ── 전체 상태 — 줄 상태. Hovered 는 마우스 상태를, 링크 Focused 는 키보드 상태를 정지 화면으로 ──
 export const 전체_상태 = {
   parameters: html('<tr>…</tr>                                        <!-- Default -->\n<tr>…</tr>                                        <!-- 짝수 줄 = 얼룩 -->\n<tr class="is-selected" aria-selected="true">…</tr>  <!-- Selected -->'),

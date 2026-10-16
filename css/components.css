@@ -1903,7 +1903,8 @@ body.dark-mode .resumable:not(.center) .fileList .file-item { background: var(--
  *   세로선 · 가로선 1px(grid-cell), 머리 아래선 grid-header-bottom, 마지막 열은 오른쪽 선 없음(바깥 틀이 그림)
  *   정렬 = 가운데(그리드 기본), 이름 · 제목처럼 긴 글만 왼쪽(.is-left = 이전 버전 열 스타일 grid-custom-rows-left)
  *   줄 = 얼룩(짝수 줄 row-alt) → 마우스 올림 grid-row-hover → 선택 grid-row-selected. 선택이 얼룩 · 올림을 이김
- * 편집 그리드(일괄 등록, 줄 40 · 칸 안 입력칸)는 아직 없음 — 이전 버전은 별도 스타일(회색 판 + 입력 상자) */
+ *   편집 표 .grid-table--edit = 일괄 등록처럼 칸 안에 입력칸이 든 표 (아래)
+ */
 .grid-table {
     width: 100%;
     border-collapse: collapse;
@@ -1942,6 +1943,16 @@ body.dark-mode .resumable:not(.center) .fileList .file-item { background: var(--
 .grid-table .checkbox { margin: 0; gap: 0; vertical-align: middle; }   /* 칸 가운데 체크만 — 글자 없는 체크박스 */
 /* 바깥 틀 안에서 목록이 길면 머리는 위에 붙어 있음(그리드 라이브러리와 같게) */
 .table_list .list .grid-table th { position: sticky; top: 0; z-index: 1; }
+/* 편집 표 .grid-table--edit (TD-93 10/16) — 이전 버전 편집 그리드(overrides .ui-grid-edit) 그대로:
+ *   줄 40(그리드 설정 상수) · 칸 안쪽 좌우 4 · 칸 바탕 = 회색 판(bg-subtle, 짝수 줄은 얼룩 row-alt)
+ *   입력칸 = DS .input · .select 를 칸 너비로, 높이 30(이전 버전 편집 칸 상자) · 읽기 전용 값은 .input[readonly](DS 읽기 전용 모양)
+ *   번호 · 체크 칸은 상자 없이 가운데. 마우스 올림 · 선택 바탕은 읽기 표와 같음(입력칸은 흰 상자 그대로) */
+.grid-table--edit td {
+    height: 40px;
+    padding: 0 var(--spacing-4);
+    background: var(--color-bg-subtle);
+}
+.grid-table--edit td > :is(.input, .select) { height: 30px; }
 /* 검색 페이지에서만 .list 가 .table_list 의 남은 공간 차지 (그리드 화면 가득) */
 .searchLayout .table_list .list {
     flex: 1;
