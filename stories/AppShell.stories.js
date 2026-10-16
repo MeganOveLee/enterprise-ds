@@ -45,7 +45,7 @@ export const 페이지_머리 = {
     crumbs(['Home', '문서 관리', '문서 검색']) + '</div></div>'),
 };
 const panel = (tabX = '') =>
-  '<aside class="main-sub" style="height:360px">' +
+  '<aside class="main-sub" aria-label="문서 관리 메뉴" style="height:360px">' +
   '<div class="main-sub-header"><h3>문서 관리</h3><button type="button" class="sub-close" aria-label="메뉴 닫기">' + svg(I.close, 14) + '</button></div>' +
   '<div class="main-sub-tabs" role="tablist"><button type="button" class="sub-tab is-active" role="tab" aria-selected="true">메뉴</button><button type="button" class="sub-tab' + tabX + '" role="tab" aria-selected="false">폴더</button></div>' +
   '<div class="main-sub-content"><div class="tree-section" style="margin-top:0;border-top:0"><div class="tree-controls">' +
@@ -85,7 +85,7 @@ const subMenu = () =>
   '<ul class="ui-submenu-list" id="sm-tp" hidden><li><a href="#">문서 양식</a></li><li><a href="#">결재선 양식</a></li></ul></li>' +
   '</ul></div>';
 const subPanel = () =>
-  '<aside class="main-sub" style="height:440px"><div class="main-sub-header"><h3>문서 관리</h3><button type="button" class="sub-close" aria-label="메뉴 닫기">' + svg(I.close, 14) + '</button></div>' +
+  '<aside class="main-sub" aria-label="문서 관리 메뉴" style="height:440px"><div class="main-sub-header"><h3>문서 관리</h3><button type="button" class="sub-close" aria-label="메뉴 닫기">' + svg(I.close, 14) + '</button></div>' +
   '<div class="main-sub-content">' + subMenu() + '</div></aside>';
 export const 보조_메뉴 = { parameters: { docs: { source: { code: subMenu() } } }, render: () => '<div style="display:flex">' + subPanel() + '</div>' };
 

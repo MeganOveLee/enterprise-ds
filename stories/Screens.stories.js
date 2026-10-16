@@ -102,7 +102,7 @@ const lnb = (active = '문서관리') =>
 
 const TREE = [[0, '제품 문서', true], [1, '설계 문서', true, true], [2, '사양서'], [2, '시험 성적서'], [2, '회의록'], [1, '품질 문서'], [1, '양식']];
 const sub = () =>
-  '<aside class="main-sub"><div class="main-sub-header"><h3>문서 관리</h3>' +
+  '<aside class="main-sub" aria-label="문서 관리 메뉴"><div class="main-sub-header"><h3>문서 관리</h3>' +
   '<button type="button" class="sub-close" aria-label="메뉴 닫기">' + svg(I.close, 14) + '</button></div>' +
   '<div class="main-sub-content"><div class="ui-submenu"><ul><li class="ui-submenu-flat"><a href="#" aria-current="page">문서 검색</a></li><li class="ui-submenu-flat"><a href="#">문서 등록</a></li></ul></div>' +
   '<div class="tree-section"><div class="tree-controls">' + sel('제품군', ['전체 제품군', '제동 부품', '전장 부품']) +
