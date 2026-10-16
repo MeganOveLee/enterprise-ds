@@ -30,8 +30,6 @@
 .scr .main-menu,
 .scr .main-sub { height: 100%; }
 
-/* GNB 오른쪽 */
-.scr .gnb .header-actions { gap: var(--spacing-12); }
 .scr-total { font-size: var(--body-sm); color: var(--color-text-muted); }
 .scr-total b { color: var(--color-text-base); font-weight: var(--font-weight-bold); }   /* 브랜드 글자는 회색 바탕(subtle) 위에서 4.46 — AA 미달이라 기본 글자 + 굵게 */
 
@@ -39,7 +37,6 @@
 /* 목록 표 = DS .grid-table (TD-93 10/16, 구 .scr-grid). 여기에는 화면 배치만 */
 .scr-link { color: var(--color-text-base); text-decoration: underline; text-underline-offset: 2px; }   /* 본문 링크(첨부 양식) — 그리드 링크는 DS .grid-custom-rows-link · .grid-link */
 .scr-link:hover { color: var(--color-text-brand); }
-.scr-file svg { vertical-align: middle; color: var(--color-icon-muted); }
 
 /* 상세 팝업 — 제품에서는 새 창. 여기서는 목록 화면 위에 띄운 창으로 */
 .scr-dim { position: absolute; inset: 0; z-index: 5; background: color-mix(in srgb, var(--color-bg-subtle) 72%, transparent); }   /* 덮개 = .loading--overlay 와 같은 방식(시맨틱 바탕을 반투명으로) */

@@ -177,7 +177,7 @@ const grid = ({ paging = false } = {}) =>
     // 정렬 = DS .grid-table 기본 가운데(이전 버전 그리드), 문서 명만 왼쪽(.is-left)
     '<td>' + (i + 1) + '</td><td>' + ck(r[0] + ' 선택', i === 1 ? ' checked' : '') + '</td>' +
     '<td><a href="#" class="grid-custom-rows-link">' + r[0] + '</a></td><td class="is-left">' + r[1] + '</td>' +
-    '<td class="scr-file">' + svg(I.file, 16) + '</td><td>' + r[2] + '</td><td>' + chip(r[3]) + '</td>' +
+    '<td>' + svg(I.file, 16) + '</td><td>' + r[2] + '</td><td>' + chip(r[3]) + '</td>' +
     '<td>' + r[4] + '</td><td>' + r[5] + '</td><td>' + r[6] + '</td><td>' + r[7] + '</td></tr>').join('') +
   '</tbody></table></div>' + (paging ? pager() : '') + '</div>';
 
