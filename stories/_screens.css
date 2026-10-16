@@ -5,7 +5,7 @@
  *   폴더 트리 · 산출물 구조 = DS .tree (TD-75 10/17, 구 .scr-tree). 메뉴 항목은 DS(.main-menu 항목 · .ui-submenu)
  *   검색 조건 6열 · 상세 값 4열 = DS .form-grid--6 · --4 (.form-grid-2 확장), 라디오 묶음 = DS .radio-group (구 .scr-radio-row)
  *   올리는 중 막대 = DS .resumable .fileList progress (TD-48), 진행 상태 점 = DS .output-dot (구 .scr-dot)
- *   목록 표는 DS .grid-table (제품에서는 상용 그리드 라이브러리가 그리는 자리)
+ *   목록 표는 DS .grid-table (제품에서는 상용 그리드 라이브러리가 그리는 자리), 양식 받기 링크 = DS .text-link.no-arrow (구 .scr-link)
  *   상태 칩은 DS .status-chip */
 
 .scr-frame {
@@ -33,11 +33,6 @@
 .scr-total { font-size: var(--body-sm); color: var(--color-text-muted); }
 .scr-total b { color: var(--color-text-base); font-weight: var(--font-weight-bold); }   /* 브랜드 글자는 회색 바탕(subtle) 위에서 4.46 — AA 미달이라 기본 글자 + 굵게 */
 
-
-/* 목록 표 = DS .grid-table (TD-93 10/16, 구 .scr-grid). 여기에는 화면 배치만 */
-.scr-link { color: var(--color-text-base); text-decoration: underline; text-underline-offset: 2px; }   /* 본문 링크(첨부 양식) — 그리드 링크는 DS .grid-custom-rows-link · .grid-link */
-.scr-link:hover { color: var(--color-text-brand); }
-
 /* 상세 팝업 — 제품에서는 새 창. 여기서는 목록 화면 위에 띄운 창으로 */
 .scr-dim { position: absolute; inset: 0; z-index: 5; background: color-mix(in srgb, var(--color-bg-subtle) 72%, transparent); }   /* 덮개 = .loading--overlay 와 같은 방식(시맨틱 바탕을 반투명으로) */
 .scr-window {
@@ -60,9 +55,6 @@
 
 /* 등록 창 섹션 머리 — 모양은 DS .pop .seach_arm · .section-toggle 그대로, 여기서는 위 간격만 */
 .scr .pop .seach_arm.scr-sec { margin-top: var(--spacing-4); }
-
-/* 첨부 — 양식 받기 링크. 올리는 중 막대 · 형식 아이콘 색은 DS(.resumable · .file-icon--<형식>) */
-.scr .resumable-label .scr-link { text-decoration: underline; color: var(--color-text-info); }
 
 /* 홈 대시보드 — 카드 · 카드 목록 · 빈 상태는 DS 그대로(.card · .card-grid · .card-list · .empty--card).
  * 여기에는 DS에 아직 없는 자리만: 프로필 카드 · 숫자 카드 · 도넛 · 바로가기, 그리고 3열 배치 */

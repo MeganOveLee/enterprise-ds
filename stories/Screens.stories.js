@@ -202,7 +202,7 @@ const FILES = [
 ];
 const uploader = () =>
   '<div class="resumable"><div class="resumable-bar">' +
-  '<div class="resumable-label"><span class="resumable-label__name">' + FILES.length + '개 · 올리는 중 1개</span><a href="#" class="scr-link">(양식) 사양서 양식.docx</a></div>' +
+  '<div class="resumable-label"><span class="resumable-label__name">' + FILES.length + '개 · 올리는 중 1개</span><a href="#" class="text-link no-arrow" download>(양식) 사양서 양식.docx</a></div>' +
   '<div class="resumable-bar__right">' + btn('파일 선택', 'btn--secondary btn--outlined') + '<button type="button" class="btn btn--destructive btn--transparent" data-role="clear-all">전체 삭제</button></div></div>' +
   '<div class="resumable-drop" role="button" tabindex="0"><span class="drop-cta">파일을 여기로 끌어다 놓거나 눌러서 고르세요 · 한 파일 100 MB까지</span></div>' +
   '<ul class="fileList">' + FILES.map(([n, ext, size, pct]) =>

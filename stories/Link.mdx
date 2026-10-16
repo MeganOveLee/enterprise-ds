@@ -6,7 +6,7 @@ import * as S from './Link.stories.js';
 
 <Unstyled>
 <div className="ds-page">
-<PageHead eyebrow="Navigation" title="Link" lead="다른 화면 · 상세로 가는 글자입니다. 목록 그리드 안 링크와 지금 위치 표시를 다룹니다." />
+<PageHead eyebrow="Navigation" title="Link" lead="다른 화면 · 상세로 가는 글자입니다. 목록 그리드 안 링크, 상세 정보 · 폼 안 본문 링크, 지금 위치 표시를 다룹니다." />
 <Section title="구성" en="Spec">
 <table className="ds-table ds-props">
 <thead><tr><th>구분</th><th>클래스 · 속성</th><th>설명</th></tr></thead>
@@ -15,6 +15,7 @@ import * as S from './Link.stories.js';
 <tr><td><b>나머지 링크</b></td><td><code>.grid-link</code></td><td>이름 · 제목 같은 나머지 링크는 평소 본문 글자이고, 마우스를 올리거나 키보드로 오면 브랜드 글자 + 밑줄이 됩니다. 모두 늘 밑줄이면 마우스를 올린 것처럼 보이기 때문입니다.</td></tr>
 <tr><td><b>키보드 포커스</b></td><td><code>:focus-visible</code></td><td>두 링크 모두 브랜드 테두리가 둘립니다(첨부 목록 파일 이름과 같은 글자 링크 규칙). 식별자 링크는 늘 밑줄이라 테두리가 없으면 키보드 위치가 보이지 않습니다.</td></tr>
 <tr><td><b>선택 행 위</b></td><td><code>tr.is-selected</code> · <code>tr[aria-selected="true"]</code></td><td>선택한 행의 브랜드 바탕 위에서는 링크 글자가 한 단계 진해집니다(대비 유지). 클래스를 따로 붙이지 않습니다.</td></tr>
+<tr><td><b>본문 링크</b></td><td><code>.text-link</code> · <code>.no-arrow</code></td><td>표 밖 상세 정보 · 폼 안에서 다른 문서를 여는 글자입니다. 굵은 브랜드 글자이고 평소 밑줄이 없으며, 마우스 · 키보드가 오면 밑줄이 생깁니다. 끝의 「↗」는 다른 창으로 열린다는 표시이고, 양식 내려받기처럼 창이 열리지 않는 링크는 <code>.no-arrow</code>로 뺍니다. 화살표는 장식이라 화면 읽기 프로그램은 읽지 않습니다.</td></tr>
 <tr><td><b>위치 표시</b></td><td><code>.breadcrumb</code> › <code>span</code> · <code>.crumb-current</code><span className="ds-muted">aria-current="page"</span></td><td>「›」로 이은 경로이고 마지막이 지금 화면입니다. 상단 바 안에서는 칸이 모두 같은 글자이고, 페이지 머리 안에서는 흐린 글자에 지금 화면만 진하게 씁니다.</td></tr>
 </tbody>
 </table>
@@ -22,10 +23,12 @@ import * as S from './Link.stories.js';
 </Section>
 <Section title="예시" en="Examples">
 <Card of={S.그리드_링크} title="그리드 링크" en="Grid link" desc="행마다 식별자 하나만 늘 밑줄." />
+<Card of={S.본문_링크} title="본문 링크" en="Text link" desc="다른 창으로 여는 링크 · 내려받기 링크." />
 <Card of={S.위치_표시} title="위치 표시" en="Breadcrumb" desc="상단 바 안 · 페이지 머리 안." />
 </Section>
 <Section title="전체 상태" en="States" desc="Hovered · Focused는 마우스 · 키보드 상태를 정지 화면으로 보여 준 것입니다.">
 <Card of={S.전체_상태} title="그리드 링크" />
+<Card of={S.본문_링크_상태} title="본문 링크" />
 </Section>
 </div>
 </Unstyled>

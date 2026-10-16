@@ -1495,7 +1495,7 @@ body.dark-mode .pop .contents .pro_table:not(:has(.form-grid-2)) { background: v
     display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-8);
 }
 .resumable:not(.center) .resumable-bar__right { display: flex; align-items: center; gap: var(--spacing-8); }
-/* 라벨 옵트인(.has-label): 바 좌측 라벨 = 이름(폼라벨 초록) 위 / (양식)링크(.text-link) 아래, 세로 스택. 오른쪽엔 파일선택 버튼 */
+/* 라벨 옵트인(.has-label): 바 좌측 라벨 = 이름(폼라벨 초록) 위 / (양식)링크(.text-link.no-arrow — 내려받기라 화살표 없음) 아래, 세로 스택. 오른쪽엔 파일선택 버튼 */
 .resumable:not(.center) .resumable-label { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: var(--spacing-4); font-size: var(--body-sm); }
 .resumable:not(.center) .resumable-label a { font-size: var(--body-sm); }
 .resumable:not(.center) .resumable-label__name { font-size: var(--body-sm); font-weight: var(--font-weight-semibold); color: var(--color-text-brand); }
@@ -2301,6 +2301,15 @@ body.dark-mode .select {
 .grid-link:focus-visible { outline: 2px solid var(--color-border-focus); outline-offset: 1px; border-radius: var(--radius-sm); }
 /* 선택 행(bg-grid-row-selected) 위 = 한 단계 진한 글자. text-brand는 라이트 선택 행에서 4.08:1(E3PS)로 AA 미달 → interactive-primary-hover 7.5:1 이상 */
 :is(tr.is-selected, tr[aria-selected="true"]) :is(.grid-custom-rows-link, .grid-link:hover, .grid-link:focus-visible) { color: var(--color-text-interactive-primary-hover); }
+/* 본문 링크(.text-link) — 표 밖 상세 정보 · 폼 안에서 다른 문서를 여는 글자 링크. 이전 버전 규칙 그대로(TD-93 3.1 대조, 10/17):
+ * 굵게 · 평소 밑줄 없음 · 마우스 · 키보드가 오면 밑줄(간격 3 · 두께 1), 끝에 「↗」 = 다른 창으로 열림.
+ * 내려받기처럼 다른 창이 안 열리는 링크는 .no-arrow 로 화살표를 뺌. 글자색은 그리드 링크와 같은 브랜드색(10/16 결정 — 이전 버전은 파랑) */
+.text-link { color: var(--color-text-brand); font-weight: var(--font-weight-semibold); text-decoration: none; }
+.text-link:not(:empty)::after { content: "\2197"; content: "\2197" / ""; display: inline-block; margin-left: 2px; font-size: .85em; text-decoration: none; }   /* 장식 — 화면 읽기 프로그램은 건너뜀 */
+.text-link.no-arrow::after { content: none; }
+.text-link:hover,
+.text-link:focus-visible { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.text-link:focus-visible { outline: 2px solid var(--color-border-focus); outline-offset: 2px; border-radius: 2px; }   /* 파일 이름 링크와 같은 테두리 */
 /* 펼친 상태 = 접힘과 같은 흰 고스트, 화살표와 문구만 바뀜 — 이전 버전 화면 그대로 (10/14). 구: 옅은 브랜드 면 + 브랜드 테두리(Button 제안 ⑬) */
 
 /* 켜짐 + 비활성 = 회색 (Button 제안 ⑮, DS-ADR-015 선택 컨트롤과 같은 규칙). 구: 켜짐 규칙이 더 구체적이라 브랜드색이 남았음.
