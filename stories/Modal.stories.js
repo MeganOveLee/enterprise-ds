@@ -4,12 +4,12 @@
 // 여기서는 창 크기를 정해 둔 틀(win) 안에 .pop 을 그림. 높이만 틀에 맞추고(100vh → 100%) 나머지 규칙은 DS 그대로
 import { matrix } from './_matrix.js';
 import { enablePseudo } from './_pseudo.js';
+import { fileIcon } from './_fileicon.js';
 
 const svg = (d, s = 16) => '<svg width="' + s + '" height="' + s + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + d + '</svg>';
 const I = {
   doc: '<path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 12h6M9 16h6"/>',
   close: '<path d="M6 6l12 12M18 6L6 18"/>',
-  file: '<path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/>',
   down: '<path d="M12 4v11M7 10l5 5 5-5M5 20h14"/>',
 };
 const btn = (t, cls) => '<button type="button" class="btn ' + cls + '">' + t + '</button>';
@@ -38,7 +38,7 @@ const ROWS = [
 const MAIN_FILE = ['캘리퍼 조립 사양서_A.2.pdf'];
 const SUB_FILES = ['체결 토크 시험 결과.xlsx', '조립도_BRK-20417.dwg'];
 const files = (list) => '<ul class="file-download-list">' + list.map((n) =>
-  '<li><span class="file-icon">' + svg(I.file, 18) + '</span><a class="file-name" href="#" download>' + n + '</a></li>').join('') + '</ul>';
+  '<li>' + fileIcon(n) + '<a class="file-name" href="#" download>' + n + '</a></li>').join('') + '</ul>';
 const row = (cells) => '<dl class="detail-dl__row">' + cells.map(([k, v]) => '<div><dt>' + k + '</dt><dd>' + v + '</dd></div>').join('') + '</dl>';
 // 값 보기 — 섹션 머리 + 옅은 회색 카드 안에 줄
 const dl = () => '<div class="seach_arm"><div class="leftbt"><h4>기본 정보</h4></div></div>' +
@@ -93,7 +93,7 @@ export const 전체_상태 = {
   render: () => {
     enablePseudo();
     const close = (x) => '<button type="button" class="pop-close' + x + '" aria-label="닫기">' + svg(I.close, 14) + '</button>';
-    const chip = (x) => '<ul class="file-download-list" style="width:260px"><li><span class="file-icon">' + svg(I.file, 18) + '</span><a class="file-name' + x + '" href="#" download>사양서_A.2.pdf</a></li></ul>';
+    const chip = (x) => '<ul class="file-download-list" style="width:260px"><li>' + fileIcon('pdf') + '<a class="file-name' + x + '" href="#" download>사양서_A.2.pdf</a></li></ul>';
     return matrix(['닫기', '첨부 파일'], [
       ['Default', [close(''), chip('')]],
       ['Hovered', [close(' ps-hover'), chip(' ps-hover')]],

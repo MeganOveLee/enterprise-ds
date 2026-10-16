@@ -6,6 +6,7 @@
 // 마크업은 문자열 이어 붙이기 — 스토리북 색인기가 여러 줄 HTML 템플릿을 MDX로 잘못 읽는 일을 피함
 import './_screens.css';
 import { wireSearchDetail, EXPAND_LABEL } from './_search.js';
+import { fileIcon } from './_fileicon.js';
 
 const W = 1440;
 const H = 900;
@@ -187,16 +188,7 @@ const section = (title, open = true, right = '') =>
   '<div class="seach_arm scr-sec"><div class="leftbt"><button type="button" class="section-toggle" aria-expanded="' + open + '" aria-label="' + title + (open ? ' 접기' : ' 펼치기') + '">' +
   svg(open ? I.minus : I.plus, 16) + '</button><h4>' + title + '</h4></div>' + (right ? '<div class="rightbt">' + right + '</div>' : '') + '</div>';
 
-// 첨부 — 파일 형식 아이콘(형식별 색 + 확장자 띠)
-const FT = { pdf: ['danger', 'PDF'], xlsx: ['success', 'XLS'], docx: ['info', 'DOC'], dwg: ['base', 'DWG'], zip: ['warning', 'ZIP'] };
-const fileIcon = (ext) => {
-  const [tone, label] = FT[ext] || ['muted', 'FILE'];
-  return '<span class="file-icon scr-ft scr-ft--' + tone + '"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">' +
-    '<path d="M4.5 1.5h7.5l4 4v12.2a.8.8 0 0 1-.8.8H4.5a.8.8 0 0 1-.8-.8V2.3a.8.8 0 0 1 .8-.8z" stroke-width="1.2" style="fill:var(--color-bg-base);stroke:currentColor"/>' +
-    '<path d="M12 1.5v4h4" fill="none" stroke-width="1.2" style="stroke:currentColor"/>' +
-    '<rect x="1.5" y="9.6" width="13.6" height="6.4" rx="1.2" style="fill:currentColor"/>' +
-    '<text x="8.3" y="14.5" text-anchor="middle" font-size="5" font-weight="700" font-family="Arial, sans-serif" style="fill:var(--color-text-on-color)">' + label + '</text></svg></span>';
-};
+// 첨부 — 파일 형식 아이콘은 _fileicon.js(상세 창 첨부 목록과 같은 것)
 const FILES = [
   ['BRK-20417_조립사양_B2.pdf', 'pdf', '1.8 MB'],
   ['체결토크_시험결과.xlsx', 'xlsx', '96 KB'],

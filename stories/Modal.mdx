@@ -17,7 +17,7 @@ import * as S from './Modal.stories.js';
 <tr><td><b>탭</b></td><td><code>.tab</code><span className="ds-muted">.pop 안에서만</span></td><td>제목 줄 아래 탭 줄(높이 50). 상세 창의 버튼(결재 요청 · 수정 · 삭제 등)은 탭 줄 오른쪽 <code>.tab-actions</code>에 둡니다. 모양 · 키보드는 <a className="ds-link" href="./?path=/docs/navigation-tabs--docs" target="_top">Tabs</a> 문서.</td></tr>
 <tr><td><b>내용</b></td><td><code>.contents</code> · <code>.product</code></td><td>탭이 있는 창은 탭 아래 <code>.contents</code>, 탭이 없는 창(등록)은 <code>.product</code>. 둘 다 여백 16이고 내용이 넘치면 그 안에서 스크롤합니다. <code>.product</code>는 묶음 사이 간격 12.</td></tr>
 <tr><td><b>값 보기</b></td><td><code>.pro_table</code> › <code>.detail-dl</code> › <code>dl.detail-dl__row</code> › <code>div</code>(<code>dt</code> · <code>dd</code>)</td><td>섹션 머리(「기본 정보」) 아래 옅은 회색 카드에 줄을 쌓습니다. 한 줄에 칸이 두 개, 칸 하나만 있는 줄은 줄 전체를 씁니다. 라벨이 위, 값이 아래이고 둘 다 12px입니다. 줄과 줄 사이에 1px 선이 있고, 마지막 줄 아래에는 없습니다.</td></tr>
-<tr><td><b>첨부 목록</b></td><td><code>.file-download-list</code> › <code>li</code> › <code>.file-icon</code> · <code>a.file-name</code></td><td>파일마다 줄 전체 칩입니다. 파일 이름이 내려받기 링크라 누르면 바로 내려받고, 마우스나 키보드가 오면 밑줄과 오른쪽 내려받기 표시가 보입니다. 올리는 칸은 첨부 업로더(<code>.resumable</code>, Screens 문서 등록 화면).</td></tr>
+<tr><td><b>첨부 목록</b></td><td><code>.file-download-list</code> › <code>li</code> › <code>.file-icon</code> · <code>a.file-name</code><span className="ds-muted">.file-icon--pdf · xls · doc · ppt · dwg · zip · file</span></td><td>파일마다 줄 전체 칩입니다. 아이콘은 파일 형식마다 색과 확장자 띠가 다릅니다(등록 창 업로더와 같은 아이콘). 파일 이름이 내려받기 링크라 누르면 바로 내려받고, 마우스나 키보드가 오면 밑줄과 오른쪽 내려받기 표시가 보입니다. 올리는 칸은 첨부 업로더(<code>.resumable</code>, Screens 문서 등록 화면).</td></tr>
 <tr><td><b>창 제목</b></td><td><code>{'<title>'}</code> = <code>h3</code></td><td>새 창이라 스크린 리더는 창 제목부터 읽습니다. 문서 제목과 제목 줄 글자를 같게 둡니다.</td></tr>
 </tbody>
 </table>

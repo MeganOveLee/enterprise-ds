@@ -135,13 +135,7 @@
 /* 등록 창 섹션 머리 — 모양은 DS .pop .seach_arm · .section-toggle 그대로, 여기서는 위 간격만 */
 .scr .pop .seach_arm.scr-sec { margin-top: var(--spacing-4); }
 
-/* 첨부 — 파일 형식 아이콘 색 · 올리는 중 막대 (DS .resumable 에 막대 모양은 아직 없음) */
-.scr-ft--danger  { color: var(--color-icon-danger); }
-.scr-ft--success { color: var(--color-icon-success); }
-.scr-ft--info    { color: var(--color-icon-info); }
-.scr-ft--warning { color: var(--color-icon-warning); }
-.scr-ft--base    { color: var(--color-icon-base); }
-.scr-ft--muted   { color: var(--color-icon-muted); }
+/* 첨부 — 올리는 중 막대 (DS .resumable 에 막대 모양은 아직 없음). 형식 아이콘 색은 DS .file-icon--<형식> */
 .scr .fileList progress {
   -webkit-appearance: none;
   appearance: none;

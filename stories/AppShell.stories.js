@@ -21,8 +21,7 @@ const crumbs = (list) => '<div class="breadcrumb">' + list.map((c, i) => i < lis
 const theme = (x = '') => '<button type="button" class="theme-toggle-btn' + x + '" aria-label="화면 모드 바꾸기"><span class="icon-moon">' + svg(I.moon, 18) + '</span><span class="icon-sun">' + svg(I.sun, 18) + '</span></button>';
 const count = (title, n) => '<div class="menu-container"><button type="button" class="menu-toggle" aria-haspopup="true" aria-expanded="false"><span class="title">' + title + '</span><span class="count">' + n + '</span></button></div>';
 const user = '<div class="user-info">' + svg(I.user, 20) + '김도윤</div>';
-const logout = (x = '') => '<button type="button" class="logout-btn' + x + '" aria-label="로그아웃">' + svg(I.logout, 18) + '</button>';
-const actions = (a = 2, b = 0) => '<div class="header-actions">' + theme() + user + count('결재업무', a) + count('활동업무', b) + logout() + '</div>';
+const actions = (a = 2, b = 0) => '<div class="header-actions">' + theme() + user + count('결재업무', a) + count('활동업무', b) + '</div>';   // 로그아웃은 사용자 메뉴 맨 아래에만 (이전 버전 화면, 10/16 세영)
 
 const gnb = ({ list = ['Home', '문서 관리', '문서 검색'], a = 2, b = 0 } = {}) =>
   '<header class="gnb"><div style="display:flex;align-items:center">' + history() + crumbs(list) + '</div>' + actions(a, b) + '</header>';
@@ -167,13 +166,13 @@ export const 전체_상태 = {
     const wrapGnb = (h) => '<div class="gnb" style="height:auto;padding:4px;border:0;background:transparent;display:inline-flex">' + h + '</div>';
     const close = (x) => '<div class="main-sub-header" style="height:auto;padding:0;border:0"><button type="button" class="sub-close' + x + '" aria-label="메뉴 닫기">' + svg(I.close, 14) + '</button></div>';
     const tab = (x, on) => '<div class="main-sub-tabs" style="border:0;width:72px"><button type="button" class="sub-tab' + (on ? ' is-active' : '') + x + '">폴더</button></div>';
-    const row = (x) => [wrapGnb('<div class="nav-history" style="margin:0">' + nh(x) + '</div>'), theme(x), logout(x), close(x), tab(x, false)];
-    return matrix(['뒤로 · 앞으로', '화면 모드', '로그아웃', '패널 닫기', '패널 탭'], [
+    const row = (x) => [wrapGnb('<div class="nav-history" style="margin:0">' + nh(x) + '</div>'), theme(x), close(x), tab(x, false)];
+    return matrix(['뒤로 · 앞으로', '화면 모드', '패널 닫기', '패널 탭'], [
       ['Default', row('')],
       ['Hovered', row(' ps-hover')],
-      ['Pressed', [wrapGnb('<div class="nav-history" style="margin:0">' + nh(' ps-active') + '</div>'), '—', '—', '—', '—']],
+      ['Pressed', [wrapGnb('<div class="nav-history" style="margin:0">' + nh(' ps-active') + '</div>'), '—', '—', '—']],
       ['Focused', row(' ps-focus-visible')],
-      ['선택됨', ['—', '—', '—', '—', tab('', true)]],
+      ['선택됨', ['—', '—', '—', tab('', true)]],
     ]) + '<p class="sb-note" style="margin:8px 0 0">포커스는 버튼과 같은 2px 바깥 테두리입니다. 업무 개수 버튼(.menu-toggle)은 마우스 올림 모양 없이 포커스만 있습니다.</p>';
   },
 };

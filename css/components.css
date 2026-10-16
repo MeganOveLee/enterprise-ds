@@ -507,7 +507,8 @@ body.dark-mode .theme-toggle-btn .icon-moon { display: none; }
 }
 
 /* ============================================================
- * 사용자 정보 + 로그아웃
+ * 사용자 정보 + 로그아웃 버튼
+ * 로그아웃 버튼은 사용자 메뉴 맨 아래(.logoutBtn)에만 — 상단 바에 따로 두지 않음 (이전 버전 화면, 10/16 세영)
  * ============================================================ */
 .user-info {
     display: flex;
@@ -1341,6 +1342,17 @@ body.dark-mode .pop .contents .pro_table:not(:has(.form-grid-2)) { background: v
 }
 .file-download-list li:has(a.file-name:is(:hover, :focus-visible))::after { opacity: 1; }
 @media (forced-colors: active) { .file-download-list li:has(a.file-name)::after { background-color: CanvasText; } }
+
+/* 첨부 파일 형식 아이콘 .file-icon--<형식> — 형식마다 색 + 확장자 띠(PDF · XLS · DOC · PPT · DWG · ZIP).
+ * 이전 버전도 확장자마다 다른 아이콘(PDF 빨강 · 엑셀 초록 …) — 그림 파일 대신 아이콘 토큰 색 (10/16 세영).
+ * 상세 창 첨부 목록 · 등록 창 업로더 · 최근 문서가 같이 씀. 그 밖 형식(--file) = 흐린 회색 */
+.file-icon.file-icon--pdf { color: var(--color-icon-danger); }
+.file-icon.file-icon--xls { color: var(--color-icon-success); }
+.file-icon.file-icon--doc { color: var(--color-icon-info); }
+.file-icon.file-icon--ppt,
+.file-icon.file-icon--zip { color: var(--color-icon-warning); }
+.file-icon.file-icon--dwg { color: var(--color-icon-base); }
+.file-icon.file-icon--file { color: var(--color-icon-muted); }
 
 /* 검색/결과 헤더 (.seach_arm) — 원본 클래스명 그대로 (오타도 보존) */
 .seach_arm {
