@@ -13,7 +13,7 @@ import * as S from './AppShell.stories.js';
 <tbody>
 <tr><td><b>상단 바</b></td><td><code>.gnb</code><span className="ds-muted">높이 56 · 고정</span></td><td>왼쪽 = 뒤로 · 앞으로 + 위치, 오른쪽 = <code>.header-actions</code>. 앱 틀이라 높이는 브랜드를 따라가지 않습니다(DS-ADR-020 예외).</td></tr>
 <tr><td><b>뒤로 · 앞으로</b></td><td><code>.nav-history</code> · <code>.nav-history-btn</code></td><td>22 × 22 화살표 버튼 두 개입니다. 테두리 · 바탕 없이 흐린 화살표만 있고, 마우스를 올리면 진해집니다. 글자가 없어 <code>aria-label</code>로 이름을 붙입니다.</td></tr>
-<tr><td><b>위치</b></td><td><code>.breadcrumb</code> · <code>.crumb-current</code><span className="ds-muted">aria-current="page"</span></td><td>「›」로 이은 경로. 마지막이 지금 화면이고 굵게 보입니다. 상단 바 안 · 페이지 머리 안에서 글자 크기만 다릅니다.</td></tr>
+<tr><td><b>위치</b></td><td><code>.breadcrumb</code> · <code>.crumb-current</code><span className="ds-muted">aria-current="page"</span></td><td>「›」로 이은 경로. 마지막이 지금 화면입니다. 상단 바 안에서는 다른 칸과 같은 글자이고, 페이지 머리 안에서는 진한 글자로 구분합니다.</td></tr>
 <tr><td><b>오른쪽 동작</b></td><td><code>.theme-toggle-btn</code> · <code>.user-info</code> · <code>.logout-btn</code></td><td>화면 모드(라이트에서는 달, 다크에서는 해 아이콘) · 사용자 · 로그아웃.</td></tr>
 <tr><td><b>업무 개수</b></td><td><code>.menu-container</code> · <code>.menu-toggle</code> · <code>.title</code> · <code>.count</code></td><td>결재업무 · 활동업무 같은 대기 개수. 개수는 반전 바탕의 알약(Figma Badge 자리)이고, 누르면 목록이 펼쳐집니다(<code>aria-expanded</code>).</td></tr>
 <tr><td><b>로고형 상단 바</b></td><td><code>.logo-container</code> · <code>.logo-mark</code> · <code>.logo-text</code> · <code>.logo-version</code><span className="ds-muted">로고 이미지는 .brand-logo</span></td><td>왼쪽 아이콘 메뉴가 없는 화면용. 로고 마크는 브랜드 자산이라 모서리 역할을 따르지 않습니다.</td></tr>

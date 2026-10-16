@@ -177,10 +177,7 @@
     color: var(--color-text-muted);
     font-weight: var(--font-weight-medium);
 }
-.gnb .breadcrumb .crumb-current {
-    color: var(--color-text-base);
-    font-weight: var(--font-weight-semibold);
-}
+/* 상단 바의 지금 화면 칸은 다른 칸과 같은 글자 — 이전 버전 화면 그대로 (TD-45 아침 결정 2, 10/16 세영). 지금 위치는 aria-current 로 읽힘 */
 
 /* 뒤로 / 앞으로 — 핀터레스트 SaaS 패턴 */
 .gnb .nav-history {
@@ -486,6 +483,7 @@ body.dark-mode .theme-toggle-btn .icon-moon { display: none; }
 /* .menu-toggle hover 배경 제거 — 원래(styles.css) hover 배경 없었음, 우리가 추가한 것 되돌림 (세영 2026-08-16) */
 .menu-toggle .title {
     margin: 0;
+    color: var(--color-text-muted);   /* 이전 버전 업무 개수 제목 = 흐린 글자 (TD-45 아침 결정 3, 10/16 세영) */
     font-weight: var(--font-weight-medium);
     line-height: 1;
     white-space: nowrap;
@@ -1228,7 +1226,7 @@ body.dark-mode .pop .pro_table { background: var(--color-bg-base); box-shadow: n
     margin: 0;
     padding: 0;
     display: flex;
-    gap: 0;
+    gap: var(--spacing-2);   /* 이전 버전 탭 사이 2 (TD-45 아침 결정 1, 10/16 세영) */
 }
 .pop .tab li {
     display: inline-flex;   /* 탭 줄 높이(50)만큼 늘어난 칸 안에서 글자는 가운데 — 이전 버전 값 */
