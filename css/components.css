@@ -1170,7 +1170,7 @@
 }
 .pop .top-btn-area {
     display: flex;
-    gap: var(--spacing-4);
+    gap: var(--spacing-8);   /* 버튼 묶음 간격 = 8, .button_group 과 같음 (TD-45 10/17 세영 동의). 구: 4 */
 }
 .pop-close {
     width: var(--size-btn); height: var(--size-btn);   /* LNB 서브 닫기와 같은 규격 (구 32, DS-ADR-020) */
@@ -2001,11 +2001,13 @@ body.dark-mode .resumable:not(.center) .fileList .file-item { background: var(--
     flex: 1;
 }
 
-/* 결과 영역 액션 버튼 그룹 */
+/* 결과 영역 액션 버튼 그룹 — Figma 「Button stack」. 간격 8 = 검색 바 오른쪽(.seach_arm .rightbt)과 같고,
+ * 키보드 포커스 번짐(바깥 3)이 옆 버튼에 닿지 않음 (TD-45 10/17 세영 동의). 구: 4.
+ * 이전 버전은 이 묶음을 풀어(display: contents) 검색 바 오른쪽 간격을 그대로 썼음 */
 .button_group {
     display: inline-flex;
     align-items: center;
-    gap: var(--spacing-4);
+    gap: var(--spacing-8);
 }
 
 /* ============================================================

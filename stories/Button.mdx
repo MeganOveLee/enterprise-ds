@@ -15,7 +15,7 @@ import * as S from './Button.stories.js';
 <tr><td><b>모양</b></td><td><code>{'.btn--{모양}'}</code><span className="ds-muted">filled · outlined · transparent</span></td><td>같은 중요도 안에서 강조 정도를 나눕니다.</td></tr>
 <tr><td><b>형태</b></td><td><code>.btn--icon</code> · <code>.btn--expand</code><span className="ds-muted">아이콘만 · 펼침</span></td><td>기본은 글자 버튼이고, 왼쪽 아이콘은 클래스 없이 글자 앞에 svg를 넣습니다. 아이콘만 있는 버튼은 정사각형이며 이름을 <code>aria-label</code>로 붙입니다. 펼침 버튼은 글자 오른쪽에 화살표가 붙습니다.</td></tr>
 <tr><td><b>크기</b></td><td><code>.btn--sm</code> · <code>.btn--lg</code><span className="ds-muted">작은 버튼 · 큰 버튼</span></td><td>기본은 크기 클래스 없이 씁니다. 작은 버튼은 카드 머리 · 알림 닫기처럼 좁은 자리에, 큰 버튼은 큰 칸(<code>.input--lg</code>)과 짝인 단독 폼의 주 동작 하나에만 씁니다.</td></tr>
-<tr><td><b>묶음</b></td><td><code>.button_group</code><span className="ds-muted">팝업 제목 줄 = .pop .top-btn-area</span></td><td>버튼 여러 개를 한 줄로 붙입니다. 결과 영역 오른쪽 · 팝업 제목 줄 오른쪽의 버튼 묶음이 같은 간격을 씁니다.</td></tr>
+<tr><td><b>묶음</b></td><td><code>.button_group</code><span className="ds-muted">팝업 제목 줄 = .pop .top-btn-area</span></td><td>버튼 여러 개를 한 줄로 붙입니다. 결과 영역 오른쪽 · 팝업 제목 줄 오른쪽의 버튼 묶음이 검색 바 오른쪽과 같은 간격을 씁니다. 키보드 포커스 번짐이 옆 버튼에 닿지 않는 넓이입니다.</td></tr>
 <tr><td><b>상태</b></td><td><code>disabled</code> · <code>.is-loading</code><span className="ds-muted">처리 중에는 aria-busy="true"를 함께</span></td><td>누를 수 없음 · 처리 중. 마우스 · 키보드 상태(Hovered · Pressed · Focused)는 CSS가 알아서 표시합니다.</td></tr>
 <tr><td><b>토글</b></td><td><code>aria-pressed</code> · <code>aria-expanded</code><span className="ds-muted">true · false</span></td><td>켜고 끄는 버튼 · 접고 펴는 버튼의 현재 상태입니다. 클래스가 아니라 속성이라 스크립트가 값만 바꿉니다.</td></tr>
 <tr><td><b>특수</b></td><td><code>.btn--excel</code><span className="ds-muted">엑셀 다운로드</span></td><td>엑셀 내려받기 전용. 브랜드와 상관없이 고정 초록입니다.</td></tr>
