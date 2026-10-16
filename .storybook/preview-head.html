@@ -194,4 +194,21 @@
   /* Controls 표 켜기/끄기 스위치의 꺼진 쪽 글자(스토리북 기본 50% 투명 = 대비 2.8) */
   .docblock-argstable label > input[role="switch"]:checked + span,
   .docblock-argstable label > input[role="switch"]:not(:checked) + span + span { color: #5c636a; }
+  .ds-tl-wrap { overflow-x: auto; padding-bottom: 8px; }
+  .ds-tl { position: relative; display: grid; grid-template-columns: 112px repeat(7, minmax(120px, 1fr)); column-gap: 12px; row-gap: 12px; min-width: 960px; align-items: stretch; margin: 8px 0 0; }
+  .ds-tl::before { content: ""; position: absolute; top: 26px; height: 0; left: calc(124px + (100% - 196px) / 14); right: calc((100% - 196px) / 14); border-top: 2px dotted #c9d2e3; z-index: 0; pointer-events: none; }
+  .ds-tl::after { content: "END"; position: absolute; right: 0; top: 18px; font-size: 12px; color: #656d76; }
+  .ds-tl__start { align-self: start; padding-top: 14px; font-size: 12px; color: #656d76; }
+  .ds-tl__head { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; padding-bottom: 4px; }
+  .ds-tl__no-circle { width: 52px; height: 52px; border-radius: 50%; background: #fff; border: 2px solid #5b72c4; color: #3f56a8; display: grid; place-items: center; font-size: 15px; font-weight: 700; }
+  .ds-tl__num { font-size: 12px; color: #656d76; letter-spacing: 0.04em; }
+  .ds-tl__title { font-size: 14px; font-weight: 700; color: #111418; min-height: 40px; text-wrap: balance; }
+  .ds-tl__lg { align-self: center; font-size: 13px; font-weight: 700; color: #111418; }
+  .ds-tl__lg span { display: block; font-size: 12px; font-weight: 500; color: #656d76; }
+  .ds-tl__card { box-sizing: border-box; min-width: 0; padding: 12px; border-radius: 10px; font-size: 13px; line-height: 1.5; overflow-wrap: anywhere; }
+  .ds-tl__card--human { background: #fff; border: 1px solid #d5dcea; color: #111418; }
+  .ds-tl__card--ai { background: #5b72c4; border: 1px solid #5b72c4; color: #fff; }
+  .ds-tl__card small { display: block; margin-top: 8px; font-size: 11px; line-height: 1.4; color: #656d76; }
+  .ds-tl__card--ai small { color: #fff; opacity: 0.85; }
+  @media (max-width: 760px) { .ds-tl { grid-template-columns: minmax(0, 1fr); } .ds-tl::before, .ds-tl::after, .ds-tl__start, .ds-tl__lg { display: none; } .ds-tl__head { flex-direction: row; text-align: left; } .ds-tl__title { min-height: 0; } }
 </style>
