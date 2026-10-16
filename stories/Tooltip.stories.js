@@ -30,7 +30,8 @@ export const 아이콘_버튼_설명 = {
   render: () => stage(tip({ icon: 'down', label: '첨부 받기', text: '첨부 받기', open: true }) + tip({ icon: 'print', label: '인쇄', text: '인쇄' }) + tip({ icon: 'reset', label: '검색 조건 초기화', text: '검색 조건 초기화' }), 80),
 };
 export const 도움말 = {
-  render: () => stage(tip({ icon: 'help', label: '행 높이 도움말', text: '관련 객체 그리드는 행 높이 30을 씁니다. 편집 칸이 있는 그리드만 40입니다.', open: true }), 120),
+  // 칸 가운데에 둠 — 왼쪽 끝에 두면 폭 240 툴팁이 칸 밖으로 나가 왼쪽이 잘렸음(10/16 세영 지적)
+  render: () => stage(tip({ icon: 'help', label: '행 높이 도움말', text: '관련 객체 그리드는 행 높이 30을 씁니다. 편집 칸이 있는 그리드만 40입니다.', open: true }), 120, 'end', true),
 };
 export const 아래쪽 = {
   render: () => stage(tip({ icon: 'down', label: '첨부 받기', text: '첨부 받기', bottom: true, open: true }), 80, 'start'),
