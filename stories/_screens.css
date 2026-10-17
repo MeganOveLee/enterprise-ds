@@ -157,7 +157,7 @@
 .scr-tasks { flex: 0 0 auto; border: 1px solid var(--color-border-base); border-radius: var(--radius-panel); overflow: hidden; }
 .scr-tasks .grid-table th { position: static; }
 .scr-tasks .progress-bar { height: 14px; }
-.scr-tasks .progress-bar__label { font-size: 10px; }
+.scr-tasks .progress-bar__label { font-size: var(--body-xs); }   /* 표 칸(30) 안 낮은 막대 옆 숫자 = 가장 작은 글자 토큰 (구 10, TD-44 10/17) */
 
 /* 로그인 — 왼쪽 브랜드 딥 패널(--color-bg-panel) + 오른쪽 폼. 칸 · 체크박스 · 버튼은 DS 그대로.
  * 높이 44 = DS .input--lg · .btn--lg */

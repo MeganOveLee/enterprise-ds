@@ -289,7 +289,7 @@
 .main-menu > nav > ul > li > span {
     display: block;
     margin-top: var(--spacing-4);
-    font-size: 11px;   /* 이전 버전 값 (글자 토큰에 11 없음) */
+    font-size: var(--body-xs);   /* 11 — 이전 버전 값, 토큰 Body/xs (TD-44 10/17) */
     line-height: 1.25;
     text-align: center;
     word-break: keep-all;
@@ -499,7 +499,7 @@
     color: var(--color-text-inverse);
     border-radius: var(--radius-rounded);
     padding: 2px 8px;
-    font-size: 11px;
+    font-size: var(--body-xs);   /* 11 — 이전 버전 값, 토큰 Body/xs (TD-44 10/17) */
     line-height: 1;
     font-weight: var(--font-weight-semibold);
     min-width: 22px;
@@ -3818,7 +3818,6 @@ body.dark-mode .empty-illo { --empty-illo-shadow: rgb(0 0 0 / .2); }
 .status-chip--danger,
 .status-chip--error   { --chip-bg: var(--color-bg-danger-subtle);  --chip-fg: var(--color-text-danger-bold); }
 @media (forced-colors: active) { .status-chip { border: 1px solid CanvasText; } }
-=======
 /* ═════════════════════════════════════════════════════════════════════════
  * 알림 — Alert(화면 안 줄) · Toast(잠깐 뜨는 알림) · Tooltip(짧은 설명) (TD-45 45-1, 10/14 제안 승인)
  *   자리 나누기(10/14 결정): 입력 확인 → 칸 아래 오류 문구 + 화면 안 Alert / 저장 완료 같은 짧은 결과 → Toast /

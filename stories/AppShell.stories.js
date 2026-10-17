@@ -1,5 +1,6 @@
 // Navigation/App Shell — 문서 화면은 AppShell.mdx. 모든 업무 화면이 함께 쓰는 틀: 상단 바(GNB) · 페이지 머리 · 보조 메뉴 패널
 // 아이콘 메뉴(.main-menu) 항목 · 보조 메뉴(.ui-submenu)는 이전 버전 개발 마크업 그대로 — 값만 DS 토큰 (TD-45 45-3)
+import { railLogo } from './_logo.js';
 import { matrix } from './_matrix.js';
 import { enablePseudo } from './_pseudo.js';
 import { folderIcon } from './_fileicon.js';
@@ -16,7 +17,7 @@ const I = {
 const history = (x = '') =>
   '<div class="nav-history"><button type="button" class="nav-history-btn' + x + '" aria-label="뒤로">' + svg(I.prev, 14) + '</button>' +
   '<button type="button" class="nav-history-btn" aria-label="앞으로">' + svg(I.next, 14) + '</button></div>';
-const crumbs = (list) => '<div class="breadcrumb">' + list.map((c, i) => i < list.length - 1 ? '<span>' + c + '</span><span aria-hidden="true">›</span>' : '<span class="crumb-current" aria-current="page">' + c + '</span>').join('') + '</div>';
+const crumbs = (list) => '<div class="breadcrumb">' + list.map((c, i) => i < list.length - 1 ? '<span>' + c + '</span><span aria-hidden="true">&gt;</span>' : '<span class="crumb-current" aria-current="page">' + c + '</span>').join('') + '</div>';
 const count = (title, n) => '<div class="menu-container"><button type="button" class="menu-toggle" aria-haspopup="true" aria-expanded="false"><span class="title">' + title + '</span><span class="count">' + n + '</span></button></div>';
 // 사용자 메뉴 버튼 = 사용자 아이콘만(이름 없음). 누르면 사용자 메뉴(화면 모드 · 로그아웃 포함)가 펼쳐짐
 const userBtn = (x = '') => '<div class="menu-container"><button type="button" class="menu-toggle' + x + '" aria-label="사용자 메뉴" aria-haspopup="true" aria-expanded="false">' + svg(I.user, 20) + '</button></div>';
@@ -77,7 +78,7 @@ const railItem = (ic, t, { current = false, liX = '', aX = '' } = {}) =>
   '<li class="' + liX.trim() + '"><div class="menu_icon_box"><div class="menu_icon" style="--lnb-icon:' + railIcon(RAIL[ic]) + '"><a href="#" class="' + aX.trim() + '" aria-label="' + t + '"' + (current ? ' aria-current="page"' : '') + '></a></div></div><span aria-hidden="true">' + t + '</span></li>';
 const LOGO_MARK = '<svg width="34" height="34" viewBox="0 0 34 34" role="img" aria-label="홈"><rect width="34" height="34" rx="8" style="fill:var(--color-bg-brand)"/><path d="M16 10.2l6 3.45v6.9L16 24l-6-3.45v-6.9z" fill="none" stroke-width="2" stroke-linejoin="round" style="stroke:var(--color-icon-on-color)"/></svg>';
 const rail = () =>
-  '<aside class="main-menu" style="height:440px"><a class="lnb-logo" href="#">' + LOGO_MARK + '</a><nav aria-label="주 메뉴"><ul>' +
+  '<aside class="main-menu" style="height:440px"><a class="lnb-logo" href="#">' + railLogo(LOGO_MARK, '홈') + '</a><nav aria-label="주 메뉴"><ul>' +
   railItem('work', '업무관리') + railItem('doc', '문서관리', { current: true }) + railItem('drawing', '도면관리') + railItem('part', '부품관리') +
   '</ul><ul>' + railItem('admin', '관리자') + '</ul></nav></aside>';
 export const 아이콘_메뉴 = { parameters: { docs: { source: { code: rail() } } }, render: () => '<div style="display:flex">' + rail() + '</div>' };

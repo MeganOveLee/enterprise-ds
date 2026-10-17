@@ -32,6 +32,9 @@
   .sb-table code { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 12px; color: var(--color-text-brand); }
   .sb-note { font-size: 12px; line-height: 1.6; color: var(--color-text-muted); }
   /* 언제 쓰고 쓰지 말지 (Do · Don't, stories/_dodont.js) — 두 칸 한 줄, 머리 선 색 + ✓ · ✕ 글자 */
+  /* 레일 로고 — E3PS 브랜드 = 실제 로고, 가상 브랜드(Fashion · Precision) = 마크 (stories/_logo.js, TD-44 10/17) */
+  html:is(.theme-fashion, .theme-precision) .sb-logo-e3ps { display: none !important; }
+  html:not(.theme-fashion):not(.theme-precision) [data-sb-logo="mark"] { display: none !important; }
   .sb-dd { display: grid; gap: 20px; }
   .sb-dd__row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
   .sb-dd__title { grid-column: 1 / -1; margin: 0; font-size: 13px; font-weight: 600; color: var(--color-text-base); }

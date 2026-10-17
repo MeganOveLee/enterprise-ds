@@ -7,7 +7,7 @@ import { enablePseudo } from './_pseudo.js';
 
 const idLink = (t, extra = '') => '<a href="#" class="grid-custom-rows-link' + (extra ? ' ' + extra : '') + '">' + t + '</a>';
 const link = (t, extra = '') => '<a href="#" class="grid-link' + (extra ? ' ' + extra : '') + '">' + t + '</a>';
-const crumbs = (list) => '<div class="breadcrumb">' + list.map((c, i) => i < list.length - 1 ? '<span>' + c + '</span><span aria-hidden="true">›</span>' : '<span class="crumb-current" aria-current="page">' + c + '</span>').join('') + '</div>';
+const crumbs = (list) => '<div class="breadcrumb">' + list.map((c, i) => i < list.length - 1 ? '<span>' + c + '</span><span aria-hidden="true">&gt;</span>' : '<span class="crumb-current" aria-current="page">' + c + '</span>').join('') + '</div>';
 const tlink = (t, extra = '') => '<a href="#" class="text-link' + (extra ? ' ' + extra : '') + '">' + t + '</a>';
 const html = (lines) => ({ controls: { disable: true }, docs: { source: { language: 'html', code: lines.join('\n') } } });
 const note = (t) => '<span class="sb-note">' + t + '</span>';

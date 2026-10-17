@@ -37,6 +37,7 @@ export const 본문 = {
     ['body-lg', '강조 본문 · 큰 안내', 'font-size:var(--body-lg)'],
     ['body-md', '기본 본문 · 입력칸 · 그리드 셀', 'font-size:var(--body-md)'],
     ['body-sm', '보조 설명 · 도움말 · 배지', 'font-size:var(--body-sm)'],
+    ['body-xs', '레일 메뉴 이름 · 개수 배지 · 표 안 진행률 숫자', 'font-size:var(--body-xs)'],
   ]),
 };
 
