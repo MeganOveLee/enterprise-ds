@@ -112,7 +112,7 @@ export const Toolbar = ({ figmaIcon }) => {
       figmaIcon ? h('img', { src: figmaIcon, alt: '', width: 18, height: 18 }) : null, 'Figma에서 보기 ↗'),
     h('span', { className: 'ds-tb__sep', 'aria-hidden': true }),
     h('span', { className: 'ds-tb__sels' }, TOOLS.map((t) => h(ToolSelect, { key: t.key, tool: t, value: g[t.key], onPick: set }))),
-    hint ? h('span', { className: 'ds-tb__hint', 'aria-hidden': true }, '눌러 보세요') : null,
+    hint ? h('span', { className: 'ds-tb__hint', 'aria-hidden': true }, '직접 선택해 보세요') : null,
     h('span', { className: 'ds-tb__deco ds-tb__end', 'aria-hidden': true }, deco('full')));
   return h('div', { className: 'ds-tbrow' }, bar);
 };

@@ -14,62 +14,62 @@ export const LOAD = [
   '<link rel="stylesheet" href="css/brands/e3ps.css">   <!-- 기본 브랜드. 다른 브랜드는 위 표 참고 -->',
   '<link rel="stylesheet" href="css/globals.css">',
   '<link rel="stylesheet" href="css/components.css">',
-  '<script src="js/datepicker.js"></script>   <!-- 날짜 선택을 쓸 때만 -->',
+  '<script src="js/datepicker.js"></script>   <!-- 날짜 선택 사용 시 -->',
   '',
-  '<!-- 마크업에 컴포넌트 클래스를 붙이면 됩니다 -->',
+  '<!-- 마크업에 컴포넌트 클래스를 적용합니다 -->',
   '<button type="button" class="btn btn--primary btn--filled">저장</button>',
 ].join('\n');
 
 <Unstyled>
 <div className="ds-page">
-<PageHead eyebrow="EDS · v1.0" title="시작하기" lead="스토리북 보는 법과, 디자이너 · 개발자가 각자 작업에 적용하는 방법을 정리했습니다." />
-<Section title="스토리북 보는 법" en="Using this Storybook" desc="화면 맨 위 막대에서 Figma를 열거나 브랜드와 화면 모드를 바꿀 수 있습니다. 아래 미리보기에서 직접 눌러 보세요. 고른 값은 모든 문서의 미리보기에 똑같이 적용됩니다.">
+<PageHead eyebrow="Design System v1.0" title="시작하기" lead="스토리북 사용 방법과 디자이너 · 개발자별 적용 방법을 안내합니다." />
+<Section title="스토리북 사용 방법" en="Using this Storybook" desc="상단 도구 막대에서 Figma를 열거나 브랜드와 화면 모드를 전환할 수 있습니다. 아래 미리보기에서 직접 확인해 보세요. 선택한 값은 모든 문서의 미리보기에 동일하게 적용됩니다.">
 <Toolbar figmaIcon={figmaIcon} />
 <Card of={P.Sample} />
 <table className="ds-table ds-after">
-<thead><tr><th>막대의 버튼</th><th>바뀌는 것</th><th>실제 화면에서는</th></tr></thead>
+<thead><tr><th>도구 막대</th><th>변경 내용</th><th>적용 코드</th></tr></thead>
 <tbody>
-<tr><td><b>브랜드</b><span className="ds-muted">E3PS · Fashion · Precision</span></td><td>고객사마다 다른 색과 모양을 한 번에 바꿉니다. 색뿐 아니라 모서리 둥글기와 버튼 · 입력칸 높이도 브랜드마다 다르게 정할 수 있습니다. Fashion(패션 리테일)과 Precision(자동차 부품)은 이것을 보여 주려고 만든 가상 브랜드입니다 — Fashion은 모서리가 둥글고, Precision은 모서리가 각지고 버튼 · 입력칸이 32px로 더 높습니다.</td><td><code>{'<html class="theme-fashion">'}</code><span className="ds-muted">붙이지 않으면 기본 브랜드(E3PS)</span></td></tr>
-<tr><td><b>화면 모드</b><span className="ds-muted">라이트 · 다크</span></td><td>밝은 화면(라이트)과 어두운 화면(다크)을 바꿉니다. 화면 코드는 그대로 두고 클래스 하나만 붙이면 됩니다.</td><td><code>{'<body class="dark-mode">'}</code><span className="ds-muted">빼면 라이트</span></td></tr>
+<tr><td><b>브랜드</b><span className="ds-muted">E3PS · Fashion · Precision</span></td><td>고객사별 색상과 형태를 일괄 전환합니다. 색상뿐 아니라 모서리 반경과 버튼 · 입력칸 높이도 브랜드별로 정의할 수 있습니다. Fashion(패션 리테일)과 Precision(자동차 부품)은 이를 보여 주기 위한 가상 브랜드로, Fashion은 둥근 모서리, Precision은 직각 모서리와 32px 높이를 사용합니다.</td><td><code>{'<html class="theme-fashion">'}</code><span className="ds-muted">클래스가 없으면 기본 브랜드(E3PS)</span></td></tr>
+<tr><td><b>화면 모드</b><span className="ds-muted">라이트 · 다크</span></td><td>라이트 · 다크 모드를 전환합니다. 화면 코드 변경 없이 클래스 하나로 적용합니다.</td><td><code>{'<body class="dark-mode">'}</code><span className="ds-muted">클래스가 없으면 라이트</span></td></tr>
 </tbody>
 </table>
-<p className="ds-note">어떻게 바뀌나요 — 브랜드와 화면 모드는 토큰의 <b>값</b>만 바꿉니다. 컴포넌트는 값 대신 토큰 <b>이름</b>을 쓰기 때문에, 컴포넌트 코드를 고치지 않아도 모양이 따라 바뀝니다.</p>
+<p className="ds-note">전환 원리 — 브랜드와 화면 모드는 토큰의 <b>값</b>만 변경합니다. 컴포넌트는 값이 아닌 토큰 <b>이름</b>을 참조하므로, 컴포넌트 코드를 수정하지 않아도 스타일이 함께 바뀝니다.</p>
 <dl className="ds-dl ds-after">
-<div><dt>코드 보기</dt><dd>예시 카드 아래 「코드 보기」를 펼치면 그 마크업을 그대로 복사할 수 있습니다.</dd></div>
-<div><dt>Playground</dt><dd>컴포넌트 문서 맨 아래 표에서 글자 · 중요도 · 모양 · 상태를 바꾸면 미리보기와 코드가 같이 바뀝니다.</dd></div>
-<div><dt>링크 공유</dt><dd>고른 브랜드와 화면 모드는 주소(URL)에 들어갑니다. 주소를 보내면 받는 사람도 같은 화면으로 엽니다.</dd></div>
+<div><dt>코드 보기</dt><dd>예시 카드 하단의 「코드 보기」에서 해당 마크업을 복사할 수 있습니다.</dd></div>
+<div><dt>Playground</dt><dd>컴포넌트 문서 하단 표에서 텍스트 · 중요도 · 스타일 · 상태를 변경하면 미리보기와 코드가 함께 갱신됩니다.</dd></div>
+<div><dt>링크 공유</dt><dd>선택한 브랜드와 화면 모드는 URL에 저장되어, 링크를 공유하면 같은 설정으로 열립니다.</dd></div>
 </dl>
 </Section>
-<Section title="디자이너" en="Designers" desc="Figma가 디자인 원본이고, 이 스토리북은 같은 값을 실제 CSS로 그려 둔 견본입니다.">
+<Section title="디자이너" en="Designers" desc="Figma가 디자인 원본이며, 스토리북은 같은 값을 실제 CSS로 구현한 견본입니다.">
 <table className="ds-table">
 <tbody>
 <tr><td><img className="ds-res-icon" src={figmaIcon} alt="" width="20" height="20" /><b>UI Kit</b></td><td>컴포넌트 원본입니다. 첫 페이지에 전체 요약이 있습니다.</td><td><a className="ds-link" href="https://www.figma.com/design/99ff5JQYQPCdY3xRBWHHlO/?node-id=8111-5" target="_blank" rel="noreferrer">Figma — UI Kit ↗</a></td></tr>
-<tr><td><img className="ds-res-icon" src={figmaIcon} alt="" width="20" height="20" /><b>Foundation</b></td><td>토큰(변수)과 글자 스타일 원본입니다. 브랜드와 라이트 · 다크는 변수 모드를 바꿔 확인합니다.</td><td><a className="ds-link" href="https://www.figma.com/design/Mf4XTC6dNUOH0anjOMcRPi" target="_blank" rel="noreferrer">Figma — Foundation ↗</a></td></tr>
+<tr><td><img className="ds-res-icon" src={figmaIcon} alt="" width="20" height="20" /><b>Foundation</b></td><td>토큰(변수)과 글자 스타일 원본입니다. 브랜드와 라이트 · 다크 모드는 변수 모드로 전환해 확인합니다.</td><td><a className="ds-link" href="https://www.figma.com/design/Mf4XTC6dNUOH0anjOMcRPi" target="_blank" rel="noreferrer">Figma — Foundation ↗</a></td></tr>
 </tbody>
 </table>
 </Section>
-<Section title="개발자" en="Developers" desc="서버에서 그리는 화면(JSP · HTML)에 세 단계로 붙입니다.">
+<Section title="개발자" en="Developers" desc="서버 렌더링 화면(JSP · HTML)에 세 단계로 적용합니다.">
 <table className="ds-table">
 <thead><tr><th>단계</th><th>할 일</th></tr></thead>
 <tbody>
-<tr><td><b>1. 불러오기</b></td><td>공통 레이아웃에서 CSS 네 파일을 아래 코드의 순서(토큰 → 브랜드 → 전역 → 컴포넌트)대로 불러옵니다. 날짜 선택을 쓰는 화면만 <code>js/datepicker.js</code>를 더합니다.</td></tr>
-<tr><td><b>2. 클래스 붙이기</b></td><td>컴포넌트 문서 예시 카드의 「코드 보기」 마크업을 그대로 씁니다. 상태는 클래스가 아니라 HTML 속성으로 나타냅니다 — <code>disabled</code> · <code>readonly</code> · <code>aria-invalid="true"</code> · <code>aria-expanded</code> · <code>aria-pressed</code>.</td></tr>
-<tr><td><b>3. 브랜드 · 화면 모드</b></td><td>브랜드는 <code>{'<html class="theme-*">'}</code>, 다크는 <code>{'<body class="dark-mode">'}</code>입니다. 화면에 CSS를 더 쓸 때는 색을 시맨틱 토큰(<code>--color-*</code>)으로만 쓰고, 원천 색(<code>--neutral-N</code> · <code>--brand-N</code>)이나 색 값을 직접 쓰지 않습니다.</td></tr>
+<tr><td><b>1. 불러오기</b></td><td>공통 레이아웃에서 CSS 네 파일을 아래 코드의 순서(토큰 → 브랜드 → 전역 → 컴포넌트)로 불러옵니다. 날짜 선택을 사용하는 화면에만 <code>js/datepicker.js</code>를 추가합니다.</td></tr>
+<tr><td><b>2. 클래스 적용</b></td><td>컴포넌트 문서 예시 카드의 「코드 보기」 마크업을 그대로 사용합니다. 상태는 클래스가 아닌 HTML 속성으로 표현합니다 — <code>disabled</code> · <code>readonly</code> · <code>aria-invalid="true"</code> · <code>aria-expanded</code> · <code>aria-pressed</code>.</td></tr>
+<tr><td><b>3. 브랜드 · 화면 모드</b></td><td>브랜드는 <code>{'<html class="theme-*">'}</code>, 다크 모드는 <code>{'<body class="dark-mode">'}</code>로 적용합니다. 화면에 CSS를 추가할 때는 색상에 시맨틱 토큰(<code>--color-*</code>)만 사용하고, 원천 색(<code>--neutral-N</code> · <code>--brand-N</code>)이나 색상 값을 직접 사용하지 않습니다.</td></tr>
 </tbody>
 </table>
 <Source language="html" code={LOAD} />
-<p className="ds-sec__desc ds-after">외부 위젯이나 제품 기본 화면처럼 마크업을 고칠 수 없는 곳은, 클래스 대신 토큰과 테마 덮어쓰기 파일로 모양을 맞춥니다(예: 데이터 그리드 테마).</p>
+<p className="ds-sec__desc ds-after">외부 위젯 등 마크업을 수정할 수 없는 영역은 클래스 대신 토큰과 테마 오버라이드 파일로 스타일을 맞춥니다(예: 데이터 그리드 테마).</p>
 </Section>
 <Section title="참고 자료 · 문의" en="Resources">
 <table className="ds-table">
 <tbody>
-<tr><td><img className="ds-res-icon" src={githubIcon} alt="" width="20" height="20" /><b>저장소</b></td><td>소스 코드와 바뀐 기록</td><td><a className="ds-link" href="https://github.com/MeganOveLee/enterprise-ds" target="_blank" rel="noreferrer">github.com/MeganOveLee/enterprise-ds</a></td></tr>
+<tr><td><img className="ds-res-icon" src={githubIcon} alt="" width="20" height="20" /><b>저장소</b></td><td>소스 코드와 변경 이력</td><td><a className="ds-link" href="https://github.com/MeganOveLee/enterprise-ds" target="_blank" rel="noreferrer">github.com/MeganOveLee/enterprise-ds</a></td></tr>
 
-<tr><td><img className="ds-res-icon ds-res-icon--light" src={notionIcon} alt="" width="20" height="20" /><b>결정 기록 (ADR)</b></td><td>토큰과 컴포넌트를 정할 때 무엇을 놓고 고민했고 왜 골랐는지</td><td><a className="ds-link" href="https://app.notion.com/p/3eda8196682d8126967fcc86f796fcb4" target="_blank" rel="noreferrer">Notion — 결정 기록 (ADR)</a></td></tr>
-<tr><td><img className="ds-res-icon" src={githubIcon} alt="" width="20" height="20" /><b>문의 · 제안</b></td><td>질문이나 개선 제안은 이슈로 남겨 주세요</td><td><a className="ds-link" href="https://github.com/MeganOveLee/enterprise-ds/issues" target="_blank" rel="noreferrer">GitHub Issues ↗</a></td></tr>
+<tr><td><img className="ds-res-icon ds-res-icon--light" src={notionIcon} alt="" width="20" height="20" /><b>결정 기록 (ADR)</b></td><td>디자인 시스템을 기획 · 설계하며 검토한 선택지와 결정 근거</td><td><a className="ds-link" href="https://app.notion.com/p/3eda8196682d8126967fcc86f796fcb4" target="_blank" rel="noreferrer">Notion — 결정 기록 (ADR)</a></td></tr>
+<tr><td><img className="ds-res-icon" src={githubIcon} alt="" width="20" height="20" /><b>문의 · 제안</b></td><td>질문과 개선 제안은 GitHub 이슈로 등록해 주세요</td><td><a className="ds-link" href="https://github.com/MeganOveLee/enterprise-ds/issues" target="_blank" rel="noreferrer">GitHub Issues ↗</a></td></tr>
 </tbody>
 </table>
 </Section>
-<p className="ds-note">© 2026 이세영 (MeganOveLee). All rights reserved. 포트폴리오 열람용으로 공개합니다 — 별도 허락 없이 복제 · 수정 · 배포 · 상업적 이용을 할 수 없습니다. 글꼴 Pretendard(SIL Open Font License 1.1), GitHub · Figma · Notion 로고는 각 회사의 상표입니다.</p>
+<p className="ds-note">© 2026 이세영 (MeganOveLee). All rights reserved. 포트폴리오 열람 목적으로 공개합니다. 사전 허락 없이 복제 · 수정 · 배포 · 상업적 이용을 할 수 없습니다. 글꼴 Pretendard(SIL Open Font License 1.1). GitHub · Figma · Notion 로고는 각 사의 상표입니다.</p>
 </div>
 </Unstyled>
