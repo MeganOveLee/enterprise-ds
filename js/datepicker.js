@@ -40,7 +40,7 @@
         var m = s && s.match(/[T ](\d{1,2}):(\d{1,2})/);
         return m ? { h: parseInt(m[1],10), min: parseInt(m[2],10) } : { h: 0, min: 0 };
     }
-    function formatDateTime(d) { return formatDate(d) + '  ' + pad(d.getHours()) + ':' + pad(d.getMinutes()) + ':00'; }   /* T 대신 공백 2칸 = 읽기 쉽게. save()의 replace("T"," ")는 무해 (세영 2026-08-05) */
+    function formatDateTime(d) { return formatDate(d) + '  ' + pad(d.getHours()) + ':' + pad(d.getMinutes()) + ':00'; }   /* T 대신 공백 2칸 = 읽기 쉽게. save()의 replace("T"," ")는 무해 */
     function sameDay(a, b) {
         return a && b && a.getFullYear()===b.getFullYear() && a.getMonth()===b.getMonth() && a.getDate()===b.getDate();
     }
@@ -152,10 +152,10 @@
      * wrapper(.ui-datepicker) 가 overflow:hidden 이어도 영향 없음. */
     Datepicker.prototype.positionPopup = function() {
         var rect = this.input.getBoundingClientRect();
-        var host = this.input.closest('.ui-datepicker') || this.input;  // 좌측 아이콘 포함 컨테이너 기준으로 좌측 정렬 (세영 2026-07-10)
+        var host = this.input.closest('.ui-datepicker') || this.input;  // 좌측 아이콘 포함 컨테이너 기준으로 좌측 정렬
         var hrect = host.getBoundingClientRect();
         this.popup.style.position = 'fixed';
-        // 아래 공간 부족하면 위로 뒤집어 열기(flip-up). 좌우도 화면 안에 물리게 클램프. 크기는 getBoundingClientRect로 = .datepicker의 transform:scale(0.92) 반영된 실측(offsetHeight는 축소전이라 갭 생김) (세영 2026-08-07)
+        // 아래 공간 부족하면 위로 뒤집어 열기(flip-up). 좌우도 화면 안에 물리게 클램프. 크기는 getBoundingClientRect로 = .datepicker의 transform:scale(0.92) 반영된 실측(offsetHeight는 축소전이라 갭 생김)
         var prect = this.popup.getBoundingClientRect();
         var ph = prect.height || 320;
         var pw = prect.width || 280;
@@ -186,7 +186,7 @@
         this.popup = popup;
         this.positionPopup();
         var self = this;
-        requestAnimationFrame(function () { if (self.popup) self.positionPopup(); });   // 최종 렌더 높이로 재배치 → flip-up 시 인풋과 갭 방지 (세영 2026-08-07)
+        requestAnimationFrame(function () { if (self.popup) self.positionPopup(); });   // 최종 렌더 높이로 재배치 → flip-up 시 인풋과 갭 방지
         this.bindEvents();
         if (moveFocus || hadFocus) this.focusGrid();
     };
@@ -264,7 +264,7 @@
             + (this.hasTime ? this.buildTimeBar() : '');
     };
 
-    /* 시간 줄 = 오전/오후 드롭다운(년/월 버튼과 동일) + 시·분 타이핑 (피그마 보충 · 세영 2026-08-05) */
+    /* 시간 줄 = 오전/오후 드롭다운(년/월 버튼과 동일) + 시·분 타이핑 (피그마 보충) */
     Datepicker.prototype.buildTimeBar = function() {
         var h = this.hour || 0;
         var ampm = h < 12 ? '오전' : '오후';
@@ -305,7 +305,7 @@
                 else if (act === 'month-toggle') { self.openMonthDropdown(t); }
                 else if (act === 'year-toggle') { self.openYearDropdown(t); }
                 else if (act === 'ampm-toggle') { self.openAmpmDropdown(t); }
-                else if (act === 'confirm') { self.writeValue(); self.close(true); }   /* 시간형 달력 완료 = 값 확정 후 달력만 닫기(팝업창은 유지) (세영 2026-08-06) */
+                else if (act === 'confirm') { self.writeValue(); self.close(true); }   /* 시간형 달력 완료 = 값 확정 후 달력만 닫기(팝업창은 유지) */
                 return;
             }
             var dayBtn = e.target.closest('.datepicker__day');

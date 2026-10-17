@@ -154,7 +154,7 @@ const searchForm = ({ open = false } = {}) => {
 };
 
 // 쪽 이동 — 이전 버전 화면에는 없음(개발 요청: 쪽을 나누면 다음 쪽 데이터가 검색 조건 · 정렬에 걸리지 않아서). 기본 화면은 이전 버전대로 빼고,
-// 쪽 이동은 「시안 2」에만 둠 — 검색 · 정렬을 전체 결과에 먼저 하고 쪽을 나누는 경우의 DS 제안 (10/16 세영 지시)
+// 쪽 이동은 「시안 2」에만 둠 — 검색 · 정렬을 전체 결과에 먼저 하고 쪽을 나누는 경우의 DS 제안
 const pager = () =>
   '<nav class="ui-pagination" aria-label="쪽 이동">' +
   '<button type="button" class="ui-pagination__btn ui-pagination__btn--nav is-disabled" aria-label="이전 쪽">' + svg(I.prev, 14) + '</button>' +

@@ -21,7 +21,7 @@ const crumbs = (list) => '<div class="breadcrumb">' + list.map((c, i) => i < lis
 const count = (title, n) => '<div class="menu-container"><button type="button" class="menu-toggle" aria-haspopup="true" aria-expanded="false"><span class="title">' + title + '</span><span class="count">' + n + '</span></button></div>';
 // 사용자 메뉴 버튼 = 사용자 아이콘만(이름 없음). 누르면 사용자 메뉴(화면 모드 · 로그아웃 포함)가 펼쳐짐
 const userBtn = (x = '') => '<div class="menu-container"><button type="button" class="menu-toggle' + x + '" aria-label="사용자 메뉴" aria-haspopup="true" aria-expanded="false">' + svg(I.user, 20) + '</button></div>';
-const actions = (a = 2, b = 0) => '<div class="header-actions">' + userBtn() + count('결재업무', a) + count('활동업무', b) + '</div>';   // 이전 버전 상단 바 그대로: 사용자 아이콘 · 결재업무 · 활동업무만 (10/16 세영)
+const actions = (a = 2, b = 0) => '<div class="header-actions">' + userBtn() + count('결재업무', a) + count('활동업무', b) + '</div>';   // 이전 버전 상단 바 그대로: 사용자 아이콘 · 결재업무 · 활동업무만
 
 const gnb = ({ list = ['Home', '문서 관리', '문서 검색'], a = 2, b = 0 } = {}) =>
   '<header class="gnb"><div style="display:flex;align-items:center">' + history() + crumbs(list) + '</div>' + actions(a, b) + '</header>';

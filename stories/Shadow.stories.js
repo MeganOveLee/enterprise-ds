@@ -1,4 +1,4 @@
-// Foundation/Shadow — 문서 화면은 Shadow.mdx. Spacing · Radius 문서에 있던 그림자를 따로 뺌(10/15 세영 — 10/13 최종 목차의 Foundation › Shadow)
+// Foundation/Shadow — 문서 화면은 Shadow.mdx. Spacing · Radius 문서에 있던 그림자를 따로 뺌(10/13 최종 목차의 Foundation › Shadow)
 import { mount } from './_foundation.js';
 
 export default {

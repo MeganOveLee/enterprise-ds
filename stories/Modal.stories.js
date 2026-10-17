@@ -25,7 +25,7 @@ const tabs = (list = TABS, actions = '') =>
   '<div class="tab"><ul role="tablist" aria-label="문서 상세">' +
   list.map((t, i) => '<li role="tab" tabindex="' + (i ? -1 : 0) + '" aria-selected="' + !i + '"' + (i ? '' : ' class="is-active"') + '>' + t + '</li>').join('') + '</ul>' +
   (actions ? '<div class="tab-actions">' + actions + '</div>' : '') + '</div>';
-// 핵심 동작 하나만 primary(Button 「언제 쓰고 쓰지 말지」) — 결재 요청만 채운 primary, 수정은 secondary outlined. 배치는 이전 버전 그대로 (TD-70 10/17 세영 승인). 구: 수정도 primary
+// 핵심 동작 하나만 primary(Button 「언제 쓰고 쓰지 말지」) — 결재 요청만 채운 primary, 수정은 secondary outlined. 배치는 이전 버전 그대로 (TD-70). 구: 수정도 primary
 const VIEW_ACTIONS = btn('결재 요청', 'btn--primary btn--filled') + btn('수정', 'btn--secondary btn--outlined') + btn('삭제', 'btn--destructive btn--outlined');
 // 줄 = 칸 한두 개. 칸 하나면 줄 전체 폭
 const ROWS = [
