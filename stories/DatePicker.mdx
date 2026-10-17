@@ -38,6 +38,9 @@ import * as S from './DatePicker.stories.js';
 <Card of={S.기간} title="기간" en="Range" desc="검색 기간처럼 시작일과 종료일을 받습니다. 종료일은 시작일보다 앞 날짜를 고를 수 없습니다." />
 <Card of={S.고를_수_있는_범위} title="고를 수 있는 범위" en="Min · Max" desc="달력을 열어 보면 10월 10일 ~ 25일 밖의 날짜는 고를 수 없습니다." />
 </Section>
+<Section title="언제 쓰고 쓰지 말지" en="Do · Don't">
+<Card of={S.사용_지침} code={false} />
+</Section>
 <Section title="전체 상태" en="States" desc="칸의 상태별 모습입니다. Hovered · Focused는 마우스 · 키보드 상태를 정지 화면으로 보여 준 것이고, Focused는 달력이 열렸을 때도 같은 모습입니다.">
 <Card of={S.전체_상태} title="날짜 칸" desc="행 = 상태, 열 = 하나 · 기간" />
 </Section>

@@ -1,5 +1,6 @@
 // Feedback/Empty — 문서 화면은 Empty.mdx. 여기 스토리는 MDX 카드 안에 들어가는 예시 · Playground
 import { emptyIllo } from './_illustrations.js';
+import { doDont } from './_dodont.js';
 
 const I = {
   inbox: '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M6 28 12 10h24l6 18v10H6z"/><path d="M6 28h11l3 5h8l3-5h11"/></svg>',
@@ -34,6 +35,32 @@ export const 검색_결과_없음 = { render: (_, { globals }) => frame(empty({ 
 export const 네트워크_오류 = { render: (_, { globals }) => frame(empty({ illo: useIllo(globals), mod: 'empty--error', icon: 'wifi', title: '네트워크에 연결되지 않았어요', desc: '연결을 확인한 뒤 다시 시도해 주세요.', actions: btn('다시 시도') })) };
 export const 서버_오류 = { render: (_, { globals }) => frame(empty({ illo: useIllo(globals), mod: 'empty--error', icon: 'alert', title: '목록을 불러오지 못했어요', desc: '잠시 후 다시 시도해 주세요. 계속되면 관리자에게 오류 코드를 알려 주세요.', code: 'E-5021', actions: btn('다시 시도') + btn('문의하기', 'secondary', 'transparent') })) };
 export const 카드_안 = { render: () => frame(empty({ mod: 'empty--card', icon: 'inbox', title: '결재할 문서가 없어요', desc: '새로 상신된 문서가 오면 알려 드려요.' }), '280px') };
+
+// ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-102) ── 미리보기만, 코드는 위 예시 카드에
+const ddFrame = (inner, w = '') => `<div style="${w ? 'width:' + w : 'flex:1;min-width:0'};border:1px solid var(--color-border-base);border-radius:var(--radius-card)">${inner}</div>`;
+export const 사용_지침 = {
+  parameters: { controls: { disable: true } },
+  render: (_, { globals }) => doDont([
+    // 근거: Empty 머리 설명(이유와 다음 행동) · 구성 「빈 이유」(이유가 액션을 정함)
+    { title: '빈 이유와 다음 행동을 함께',
+      do: [ddFrame(empty({ illo: useIllo(globals), icon: 'search', title: '조건에 맞는 문서가 없어요', desc: '기간을 넓히거나 구분을 \'전체\'로 바꿔 보세요.', actions: btn('조건 초기화') })),
+        '검색 결과가 없으면 조건을 넓히도록 안내하고 조건 초기화를 둡니다.'],
+      dont: [ddFrame('<div class="empty" role="status"><p class="empty__title">데이터가 없습니다</p></div>'),
+        '이유와 다음 행동이 없으면 비어 있는 것인지 오류인지 알 수 없습니다.'] },
+    // 근거: Empty 구성 「자리」 — 카드 안은 그림을 작게 하고 액션을 두지 않음
+    { title: '좁은 카드 안은 작게, 액션 없이',
+      do: [ddFrame(empty({ mod: 'empty--card', icon: 'inbox', title: '결재할 문서가 없어요', desc: '새로 상신된 문서가 오면 알려 드려요.' }), '240px'),
+        '카드 안은 .empty--card로 그림을 줄이고 액션을 두지 않습니다.'],
+      dont: [ddFrame(empty({ illo: useIllo(globals), icon: 'inbox', title: '결재할 문서가 없어요', desc: '새로 상신된 문서가 오면 알려 드려요.', actions: btn('결재 문서 보기', 'primary', 'filled') }), '240px'),
+        '영역용 빈 상태를 그대로 넣으면 그림과 버튼이 카드를 채웁니다.'] },
+    // 근거: Empty 구성 「빈 이유」 — 서버 오류는 다시 시도 + 오류 코드, 서버 원문은 보이지 않음
+    { title: '서버 오류는 원문 대신 오류 코드',
+      do: [ddFrame(empty({ illo: useIllo(globals), mod: 'empty--error', icon: 'alert', title: '목록을 불러오지 못했어요', desc: '계속되면 관리자에게 오류 코드를 알려 주세요.', code: 'E-5021', actions: btn('다시 시도') })),
+        '다시 시도와 함께 관리자에게 알릴 오류 코드를 보여 줍니다.'],
+      dont: [ddFrame(empty({ illo: useIllo(globals), mod: 'empty--error', icon: 'alert', title: '목록을 불러오지 못했어요', desc: 'java.sql.SQLSyntaxErrorException: ORA-00942: table or view does not exist' })),
+        '서버 원문은 사용자가 읽고 할 일을 알 수 없어 보이지 않습니다.'] },
+  ]),
+};
 
 const REASONS = [['inbox', '아직 없음', ''], ['search', '검색 결과 없음', ''], ['wifi', '네트워크 오류', 'empty--error'], ['alert', '서버 오류', 'empty--error']];
 const cellStyle = 'display:flex;flex-direction:column;align-items:center;gap:8px;font-size:var(--body-sm);color:var(--color-text-muted)';

@@ -7,17 +7,6 @@ import * as S from './Alert.stories.js';
 <Unstyled>
 <div className="ds-page">
 <PageHead eyebrow="Feedback" title="Alert" lead="화면 안에 한 줄로 놓여, 지금 화면에서 알아야 할 것을 알려 줍니다." />
-<Section title="언제 쓰나" en="Usage">
-<table className="ds-table">
-<thead><tr><th>알릴 것</th><th>쓰는 것</th></tr></thead>
-<tbody>
-<tr><td>입력을 확인해 보니 비었거나 틀린 칸이 있음</td><td>칸 아래 빨간 문구 + 폼 위 <b>Alert</b>(위험). 어느 칸인지 Alert에도 적습니다.</td></tr>
-<tr><td>이 화면에서 할 수 없는 일 · 알아 둘 조건</td><td><b>Alert</b>(경고 · 정보). 사용자가 읽고 넘어갈 때까지 화면에 남습니다.</td></tr>
-<tr><td>저장 · 복사처럼 방금 한 일의 짧은 결과</td><td><a className="ds-link" href="./?path=/docs/feedback-toast--docs" target="_top">Toast</a> — 잠깐 뜨고 사라집니다.</td></tr>
-<tr><td>삭제처럼 되돌릴 수 없는 일 확인</td><td>확인 창 — Overlay 묶음에 들어갈 자리이고, 아직 DS에 없습니다.</td></tr>
-</tbody>
-</table>
-</Section>
 <Section title="구성" en="Spec">
 <table className="ds-table ds-props">
 <thead><tr><th>구분</th><th>클래스 · 속성</th><th>설명</th></tr></thead>
@@ -36,6 +25,9 @@ import * as S from './Alert.stories.js';
 <Card of={S.안내} title="안내" en="Notice" desc="이 화면의 조건 · 할 수 없는 일. 읽을 때까지 남습니다." />
 <Card of={S.결과} title="결과" en="Result" desc="여러 건을 한 번에 처리한 결과처럼, 화면에 남겨 둘 결과." />
 <Card of={S.공지} title="공지 · 이어 하기" en="Announcement" desc="새 기능 알림은 닫을 수 있게, 임시 저장본 안내는 테두리 없이." />
+</Section>
+<Section title="언제 쓰고 쓰지 말지" en="Do · Don't">
+<Card of={S.사용_지침} code={false} />
 </Section>
 <Section title="전체 상태" en="States" desc="상태 여섯 가지를 두 모양으로 모았습니다.">
 <Card of={S.전체_상태} title="상태 × 모양" />

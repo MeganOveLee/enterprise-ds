@@ -3,6 +3,7 @@
 // 목록 앞 칸(90)은 화면이 채움 — 상태 칩은 DS에 아직 없어서 여기서는 글자만
 import { matrix } from './_matrix.js';
 import { enablePseudo } from './_pseudo.js';
+import { doDont } from './_dodont.js';
 
 const svg = (d, s = 16) => '<svg width="' + s + '" height="' + s + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + d + '</svg>';
 const INBOX = '<path d="M4 13l2.5-7h11L20 13v6H4z"/><path d="M4 13h4.5l1 2h5l1-2H20"/>';
@@ -78,4 +79,20 @@ export const Playground = {
   args: { title: '결재 업무', count: '2', rows: 5, withMore: true, visited: -1 },
   parameters: { docs: { source: { transform: (_, { args }) => card(args) } } },
   render: (a) => box(card(a)),
+};
+
+// ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-102) — 미리보기만, 코드는 위 예시 카드에 ──
+const ddBox = (h) => '<div style="width:100%">' + h + '</div>';
+export const 사용_지침 = {
+  parameters: { controls: { disable: true } },
+  render: () => doDont([
+    // 근거: Card.mdx 구성 「비어 있음 — .empty.empty--card」 · 예시 「보여 줄 것이 없으면 목록 대신 빈 상태」
+    { title: '비어 있으면 빈 상태',
+      do: [ddBox(card({ title: '활동 업무', count: 0, rows: 0, withMore: false })), '목록 대신 카드 안 빈 상태(.empty--card)를 둡니다.'],
+      dont: [ddBox('<section class="card">' + head('활동 업무', 0) + '<ul class="card-list" style="min-height:140px"></ul></section>'), '빈 목록 자리를 그대로 비워 두지 않습니다.'] },
+    // 근거: Card.mdx 구성 「개수 — 0도 그대로 보여 줍니다」
+    { title: '개수는 0도 표시',
+      do: [ddBox('<section class="card">' + head('결재 업무', 0, more()) + '</section>'), '0도 숨기지 않고 보여 줍니다.'],
+      dont: [ddBox('<section class="card">' + head('결재 업무', '', more()) + '</section>'), '0일 때 개수를 빼면 비어 있는지 알 수 없습니다.'] },
+  ]),
 };

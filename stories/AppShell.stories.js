@@ -3,6 +3,7 @@
 import { matrix } from './_matrix.js';
 import { enablePseudo } from './_pseudo.js';
 import { folderIcon } from './_fileicon.js';
+import { doDont } from './_dodont.js';
 
 const svg = (d, s = 16) => '<svg width="' + s + '" height="' + s + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + d + '</svg>';
 const I = {
@@ -193,4 +194,25 @@ export const Playground = {
   args: { path: 'Home, 문서 관리, 문서 검색', approvals: '2', activities: '0' },
   parameters: { docs: { source: { transform: (_, { args }) => gnb({ list: String(args.path).split(',').map((x) => x.trim()).filter(Boolean), a: args.approvals, b: args.activities }) } } },
   render: (a) => frame(gnb({ list: String(a.path).split(',').map((x) => x.trim()).filter(Boolean), a: a.approvals, b: a.activities })),
+};
+
+// ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-102) — 미리보기만, 코드는 위 예시 카드에 ──
+const ddBar = (h) => '<div style="width:100%;border:1px solid var(--color-border-base);border-radius:var(--radius-card);overflow:hidden"><header class="gnb">' + h + '</header></div>';
+const ddRight = (extra = '') => '<div></div><div class="header-actions">' + userBtn() + count('결재업무', 2) + count('활동업무', 0) + extra + '</div>';
+const ddLeft = '<div style="display:flex;align-items:center">' + history() + crumbs(['Home', '문서 관리', '문서 검색']) + '</div>';
+const ddHead = '<div style="padding:12px 16px;display:flow-root;background:var(--color-bg-subtle)"><div class="page-head" style="margin:0"><div class="page-title-area"><h1>문서 검색</h1></div>' +
+  crumbs(['Home', '문서 관리', '문서 검색']) + '</div></div>';
+const ddBody = '<div style="padding:16px;color:var(--color-text-muted);font-size:var(--body-sm)">화면 내용</div>';
+export const 사용_지침 = {
+  parameters: { controls: { disable: true } },
+  render: () => doDont([
+    // 근거: AppShell.mdx 구성 「사용자 메뉴 버튼 — 화면 모드 · 로그아웃은 그 안에만, 상단 바 오른쪽은 사용자 아이콘 · 결재업무 · 활동업무 셋뿐」
+    { title: '상단 바 오른쪽은 세 가지',
+      do: [ddBar(ddRight()), '사용자 아이콘 · 결재업무 · 활동업무만 둡니다.'],
+      dont: [ddBar(ddRight('<button type="button" class="btn btn--secondary btn--outlined btn--sm">로그아웃</button>')), '로그아웃은 상단 바에 꺼내지 않고 사용자 메뉴 안에 둡니다.'] },
+    // 근거: AppShell.mdx 구성 「페이지 머리 — 상단 바에 위치가 없는 화면에서 씁니다」 · 예시 「위치가 페이지 제목을 대신합니다」
+    { title: '위치는 한 곳에만',
+      do: ['<div style="width:100%;border:1px solid var(--color-border-base);border-radius:var(--radius-card);overflow:hidden"><header class="gnb">' + ddLeft + '</header>' + ddBody + '</div>', '상단 바에 위치가 있으면 그 위치가 제목을 대신합니다.'],
+      dont: ['<div style="width:100%;border:1px solid var(--color-border-base);border-radius:var(--radius-card);overflow:hidden"><header class="gnb">' + ddLeft + '</header>' + ddHead + '</div>', '같은 위치를 페이지 머리에 한 번 더 쓰지 않습니다.'] },
+  ]),
 };

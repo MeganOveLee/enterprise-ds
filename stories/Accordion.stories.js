@@ -3,6 +3,7 @@
 // 예시는 눌러 볼 수 있게 토글을 이어 둔다(wire) — 제품에서는 화면 스크립트가 같은 일을 함
 import { matrix } from './_matrix.js';
 import { enablePseudo } from './_pseudo.js';
+import { doDont } from './_dodont.js';
 
 const svg = (d) => '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + d + '</svg>';
 const MINUS = '<path d="M6 12h12"/>';
@@ -77,4 +78,23 @@ export const 전체_상태 = {
       ['접힘 ' + '<code>aria-expanded="false"</code>', PS.map((p) => toggle('기본 정보', false, { extra: p }))],
     ]);
   },
+};
+
+// ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-102) — 미리보기만, 코드는 위 예시 카드에 ──
+const DINFO = '<div class="form-grid-2">' + ro('문서 번호', 'DOC-2610-0012') + ro('버전', 'A.3') + '</div>';
+// 상태와 다른 아이콘을 일부러 그린 토글(하지 않음 예시)
+const wrongHead = (title) => '<div class="seach_arm"><div class="leftbt"><button type="button" class="section-toggle" aria-expanded="false" aria-label="' + title + ' 펼치기">' + svg(MINUS) + '</button><h4>' + title + '</h4></div></div>';
+const ddWrap = (h) => '<div style="width:100%">' + h + '</div>';
+export const 사용_지침 = {
+  parameters: { controls: { disable: true } },
+  render: () => doDont([
+    // 근거: Accordion.mdx 구성 「토글 — 펼침은 흰 네모 안 빼기, 접힘은 채운 네모 안 더하기」
+    { title: '아이콘은 지금 상태대로',
+      do: [ddWrap(section('기본 정보', DINFO) + section('첨부 파일', '', { open: false })), '펼친 섹션은 빼기, 접힌 섹션은 더하기로 표시합니다.'],
+      dont: [ddWrap(section('기본 정보', DINFO) + wrongHead('첨부 파일')), '접힌 섹션에 빼기 아이콘을 두지 않습니다.'] },
+    // 근거: Accordion.mdx 구성 「머리 오른쪽 글자 — 작은 흐린 글자, 숫자만 기본 글자 굵게」
+    { title: '머리 오른쪽은 숫자만 굵게',
+      do: [ddWrap(section('태스크', '', { open: false, right: '<span class="section-meta">전체 <b>21</b> · 지연 <b>2</b></span>' })), '안내는 흐린 작은 글자로 두고 숫자만 굵게 씁니다.'],
+      dont: [ddWrap(section('태스크', '', { open: false, right: '<span class="section-meta"><b>전체 21 · 지연 2</b></span>' })), '안내 글자까지 굵게 쓰지 않습니다.'] },
+  ]),
 };

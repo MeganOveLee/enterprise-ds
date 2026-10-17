@@ -3,6 +3,7 @@
 // 여기 스토리는 누르면 탭이 바뀌는 짧은 스크립트를 붙여 눌러 볼 수 있게 함(제품은 탭 로더 스크립트)
 import { matrix } from './_matrix.js';
 import { enablePseudo } from './_pseudo.js';
+import { doDont } from './_dodont.js';
 
 const POP_TABS = ['기본 정보', '첨부 파일', '결재 이력', '관련 도면'];
 const btn = (t, cls) => '<button type="button" class="btn ' + cls + '">' + t + '</button>';
@@ -92,4 +93,22 @@ export const Playground = {
     const i = Math.min(Math.max(0, a.active), tabs.length - 1);
     return a.kind === '패널 탭' ? live(panelFrame(panelTabs(tabs, i)), '280px') : live(popFrame(popTabs(tabs, i, { actions: a.actions })));
   },
+};
+
+// ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-102) — 미리보기만, 코드는 위 예시 카드에 ──
+const ddPanel = (tabs) => '<div class="main-sub" style="height:auto;width:240px;border:1px solid var(--color-border-base);border-radius:var(--radius-card);overflow:hidden"><div class="main-sub-header"><h3>문서 관리</h3></div>' + tabs +
+  '<div style="padding:16px;color:var(--color-text-muted);font-size:var(--body-sm)">패널 내용</div></div>';
+const ddPop = (tabs) => '<div class="pop" style="height:auto;min-width:0;width:100%;overflow:visible">' + popTabs(tabs, 0, { actions: false }) + '</div>';
+export const 사용_지침 = {
+  parameters: { controls: { disable: true } },
+  render: () => doDont([
+    // 근거: Tabs.mdx 구성 「패널 탭 — 탭이 하나뿐이면 .is-single로 줄 전체를 숨깁니다」
+    { title: '탭이 하나면 탭 줄을 숨김',
+      do: [ddPanel(panelTabs(['메뉴']).replace('class="main-sub-tabs"', 'class="main-sub-tabs is-single"')), '탭이 하나뿐이면 .is-single로 탭 줄을 숨깁니다.'],
+      dont: [ddPanel(panelTabs(['메뉴'])), '고를 것이 없는 탭 한 칸을 남겨 두지 않습니다.'] },
+    // 근거: Tabs.mdx 머리 설명 「같은 자리의 내용을 나눠 보여 주는 탭」 · 화면 이동은 App Shell 보조 메뉴(.ui-submenu)
+    { title: '같은 창 안의 내용 전환에만',
+      do: [ddPop(['기본 정보', '첨부 파일', '결재 이력']), '한 문서의 내용을 나눠 보여 줄 때 씁니다.'],
+      dont: [ddPop(['문서 검색', '문서 등록', '도면 검색']), '다른 화면으로 가는 메뉴는 탭이 아니라 보조 메뉴로 둡니다.'] },
+  ]),
 };

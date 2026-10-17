@@ -1,6 +1,7 @@
 // Form/Date Picker — 문서 화면은 DatePicker.mdx. 여기 스토리는 MDX 카드 안에 들어가는 예시 · 전체 상태 · Playground
 import { matrix } from './_matrix.js';
 import { enablePseudo } from './_pseudo.js';
+import { doDont } from './_dodont.js';
 
 const ICON = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>';
 const dp = (label, value = '', extra = '', cls = '') =>
@@ -30,6 +31,23 @@ export const 기간 = {
 export const 고를_수_있는_범위 = {
   parameters: { docs: { description: { story: '`min` · `max` 밖의 날짜는 비활성(취소선)으로 보입니다.' } } },
   render: () => `<div style="max-width:200px">${dp('희망일', '2026-10-15', ' min="2026-10-10" max="2026-10-25"')}</div>`,
+};
+
+// ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-102) — 미리보기만 ──
+const wide = (h) => '<div style="width:100%;max-width:360px">' + h + '</div>';
+export const 사용_지침 = {
+  parameters: { controls: { disable: true } },
+  render: () => doDont([
+    // 근거: 구성 「기간」 · DS-ADR-016 — 두 칸이 서로 min/max를 잡아 기간이 뒤집히지 않음
+    { title: '기간은 기간 묶음으로',
+      do: [wide(range('2026-10-06', '2026-10-20')), '시작일 · 종료일은 .ui-datepicker-range로 묶어 기간이 뒤집히지 않게 합니다.'],
+      dont: [wide('<div class="sb-row" style="gap:8px;flex-wrap:nowrap">' + dp('시작일', '2026-10-20') + dp('종료일', '2026-10-06') + '</div>'),
+        '두 칸을 따로 두면 종료일이 시작일보다 앞서도 막지 못합니다.'] },
+    // 근거: DS-ADR-016 직접 입력 · 구성 「상태」 — 읽기 전용이면 달력이 열리지 않음
+    { title: '입력받는 칸은 직접 입력도 열어 두기',
+      do: ['<div style="width:200px">' + dp('납기일', '2026-10-06') + '</div>', '날짜를 직접 입력하거나 달력으로 고를 수 있게 둡니다.'],
+      dont: ['<div style="width:200px">' + dp('납기일', '2026-10-06', ST.readonly) + '</div>', '입력받을 칸에 readonly를 붙이면 입력도 달력도 막힙니다.'] },
+  ]),
 };
 
 // ── 전체 상태 ── (Hovered · Focused = 문서용 정지 화면, _pseudo.js. 오류 · 비활성 · 읽기 전용 = 입력칸과 같은 규칙, 2026-10-13)

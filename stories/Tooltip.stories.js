@@ -1,6 +1,7 @@
 // Feedback/Tooltip — 문서 화면은 Tooltip.mdx. 여기 스토리는 MDX 카드 안에 들어가는 예시 · 전체 상태 · Playground
 // 문서에서는 마우스 없이도 보이게 .is-open 으로 열어 둔 예시가 있음 — 제품에서는 마우스 · 키보드 포커스가 오면 열림
 import { matrix } from './_matrix.js';
+import { doDont } from './_dodont.js';
 
 const svg = (d, s = 16) => '<svg width="' + s + '" height="' + s + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + d + '</svg>';
 const I = {
@@ -42,6 +43,36 @@ export const 끝_맞춤 = {
 };
 export const 아래쪽 = {
   render: () => stage(tip({ icon: 'down', label: '첨부 받기', text: '첨부 받기', bottom: true, open: true }), 80, 'start'),
+};
+
+// ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-102) ── 미리보기만, 코드는 위 예시 카드에
+const ddStage = (inner) => '<div style="flex:1;display:flex;align-items:end;justify-content:center;gap:8px;min-height:96px">' + inner + '</div>';   // 가운데 — 긴 툴팁도 판 안에
+// 점선 = 칸 경계. 왼쪽을 비워 둬 칸 밖으로 넘친 툴팁도 보이게
+const ddEdge = (inner) => '<div style="display:flex;align-items:end;min-height:112px;margin-left:112px;padding:8px 0;border-inline:1px dashed var(--color-border-strong);width:220px">' + inner + '</div>';
+const textTip = (t) => { const id = 'tt' + (++uid); return '<span class="has-tooltip"><button type="button" class="btn btn--secondary btn--outlined" aria-describedby="' + id + '">' + t + '</button><span class="tooltip is-open" role="tooltip" id="' + id + '">' + t + '</span></span>'; };
+const HELP = '편집 칸이 있는 그리드만 행 높이 40입니다.';
+export const 사용_지침 = {
+  parameters: { controls: { disable: true } },
+  render: () => doDont([
+    // 근거: Tooltip 구성 아래 — 툴팁에는 꼭 알아야 할 내용을 넣지 않음(마우스를 올려야만 보임)
+    { title: '꼭 알아야 할 내용은 툴팁 밖에',
+      do: [ddStage(tip({ icon: 'print', label: '인쇄', text: '인쇄', open: true })),
+        '아이콘 버튼이 무엇을 하는지만 짧게 적습니다.'],
+      dont: [ddStage(tip({ icon: 'help', label: '수정 안내', text: '결재 중인 문서는 수정할 수 없습니다.', open: true })),
+        '수정할 수 없는 조건처럼 꼭 알아야 할 내용은 마우스를 올려야만 보여 놓칩니다.'] },
+    // 근거: Tooltip 머리 설명 — 아이콘 버튼처럼 글자가 없는 컨트롤에 씀
+    { title: '글자가 있는 버튼에는 쓰지 않음',
+      do: [ddStage(tip({ icon: 'reset', label: '검색 조건 초기화', text: '검색 조건 초기화', open: true })),
+        '글자가 없는 아이콘 버튼에만 붙입니다.'],
+      dont: [ddStage(textTip('초기화')),
+        '보이는 글자를 툴팁으로 한 번 더 보여 주지 않습니다.'] },
+    // 근거: Tooltip 구성 「가로 맞춤」 — 칸 왼쪽 끝 컨트롤은 .tooltip--start (TD-93)
+    { title: '칸 끝에서는 툴팁도 끝에 맞춤',
+      do: [ddEdge(tip({ icon: 'help', label: '행 높이 도움말', text: HELP, open: true, side: 'start' })),
+        '점선 = 칸 경계. 칸 왼쪽 끝 컨트롤은 .tooltip--start로 툴팁 왼쪽 끝을 맞춥니다.'],
+      dont: [ddEdge(tip({ icon: 'help', label: '행 높이 도움말', text: HELP, open: true })),
+        '가운데 맞춤 그대로 두면 툴팁이 칸 밖으로 넘칩니다.'] },
+  ]),
 };
 
 // ── 전체 상태 — 행 = 글 길이, 열 = 위치 ──

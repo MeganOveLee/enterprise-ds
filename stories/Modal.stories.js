@@ -5,6 +5,7 @@
 import { matrix } from './_matrix.js';
 import { enablePseudo } from './_pseudo.js';
 import { fileIcon } from './_fileicon.js';
+import { doDont } from './_dodont.js';
 
 const svg = (d, s = 16) => '<svg width="' + s + '" height="' + s + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + d + '</svg>';
 const I = {
@@ -86,6 +87,31 @@ export const 상세_창 = {
 export const 등록_창 = {
   parameters: { docs: { source: { code: '<div class="pop">\n  ' + registerPop() + '\n</div>' } } },
   render: () => win(registerPop(), 400),
+};
+
+// ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-102) — 미리보기만. 작은 틀이라 .pop 최소 폭(600)만 풀어 둠 ──
+const mini = (inner) =>
+  '<div style="width:100%;overflow:hidden;border:1px solid var(--color-border-base);border-radius:var(--radius-card)">' +
+  '<div class="pop" style="height:auto;min-width:0">' + inner + '</div></div>';
+const DD_TITLE = '문서 - DOC-2610-0013, 조립 사양서, A.2';
+export const 사용_지침 = {
+  parameters: { controls: { disable: true } },
+  render: () => doDont([
+    // 근거: 문서 머리(상세 · 등록 화면의 창 틀) · Toast 문서 머리(방금 한 일의 결과는 화면 안에 잠깐)
+    { title: '새 창은 상세 · 등록 화면에만',
+      do: [mini(top({ title: DD_TITLE }) + tabs(['세부 내용', '이력'])), '새 창은 상세 · 등록처럼 화면 한 장이 필요한 내용에 엽니다.'],
+      dont: [mini(top({ title: '알림' }) + '<div class="contents"><p style="margin:0">저장했습니다.</p></div>'), '한 줄 결과 알림은 새 창 대신 화면 안의 Toast로 알립니다.'] },
+    // 근거: 구성 「제목 줄」 · 「창 제목」 — 상세 창 제목은 「문서 - 번호, 이름, 버전」
+    { title: '창 제목은 연 대상을 그대로',
+      do: [mini(top({ title: DD_TITLE })), '상세 창 제목은 「종류 - 번호, 이름, 버전」으로 적습니다.'],
+      dont: [mini(top({ title: '상세 보기' })), '「상세 보기」로 쓰면 여러 창을 띄웠을 때 구분되지 않습니다.'] },
+    // 근거: 구성 「탭」 · 예시 「상세 창」 — 버튼은 탭 줄 오른쪽 .tab-actions
+    { title: '상세 창 버튼은 탭 줄 오른쪽',
+      do: [mini(tabs(['세부 내용', '이력'], btn('결재 요청', 'btn--primary btn--filled') + btn('수정', 'btn--secondary btn--outlined')) + '<div class="contents"><div class="detail-dl">' + row([['문서 명', '조립 사양서']]) + '</div></div>'),
+        '결재 요청 · 수정 같은 버튼은 탭 줄 오른쪽(.tab-actions)에 둡니다.'],
+      dont: [mini(tabs(['세부 내용', '이력']) + '<div class="contents"><div class="detail-dl">' + row([['문서 명', '조립 사양서']]) + '</div><div class="sb-row" style="gap:8px;margin-top:8px">' + btn('결재 요청', 'btn--primary btn--filled') + btn('수정', 'btn--secondary btn--outlined') + '</div></div>'),
+        '내용 아래에 두면 내용을 끝까지 내려야 버튼이 보입니다.'] },
+  ]),
 };
 
 // ── 전체 상태 — 창 안의 아이콘 버튼(닫기) · 첨부 이름 링크 ──

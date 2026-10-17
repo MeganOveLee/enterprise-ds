@@ -3,6 +3,7 @@
 // 값 근거 = 이전 버전 그리드(머리 34 · 줄 30 · 글자 12 · 세로선 · 얼룩 줄 · 가운데 정렬, 긴 글만 왼쪽) — components.css 주석
 import { matrix } from './_matrix.js';
 import { enablePseudo } from './_pseudo.js';
+import { doDont } from './_dodont.js';
 
 const STATUS = { 작업: ['info', '작업 중'], 검토: ['warning', '검토 중'], 승인: ['success', '승인'] };
 const ROWS = [
@@ -94,4 +95,35 @@ export const 전체_상태 = {
       ['링크 Focused', [box(row(ROWS[0], 0, { linkPs: 'ps-focus-visible' }))]],
     ]);
   },
+};
+
+// ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-102) — 미리보기만, 코드는 위 예시 카드에. 칸 넷으로 줄인 표 ──
+const DCOLS = '<colgroup><col style="width:44px"><col style="width:120px"><col><col style="width:100px"></colgroup>';
+const DHEAD = '<thead><tr><th>' + ck('전체 선택') + '</th><th>문서 번호</th><th>문서 명</th><th>작업현황</th></tr></thead>';
+const drow = (r, { sel = false, mark = sel, left = false } = {}) => {
+  const L = left ? ' class="is-left"' : '';
+  return '<tr' + (sel ? ' class="is-selected" aria-selected="true"' : '') + '><td>' + ck(r[0] + ' 선택', mark) + '</td>' +
+    '<td' + L + '><a href="#" class="grid-custom-rows-link">' + r[0] + '</a></td><td class="is-left">' + r[1] + '</td><td' + L + '>' + chip(r[3]) + '</td></tr>';
+};
+const dtable = (rows) => '<div class="table_list" style="width:100%"><div class="list"><table class="grid-table">' + DCOLS + DHEAD + '<tbody>' + rows + '</tbody></table></div></div>';
+const DECOLS = '<colgroup><col style="width:44px"><col><col style="width:96px"></colgroup>';
+const DEHEAD = '<thead><tr><th>No.</th><th>문서 명</th><th>등록자</th></tr></thead>';
+const derow = (i, name) => '<tr><td>' + i + '</td><td><input class="input" aria-label="' + i + '번 줄 문서 명" value="' + name + '"></td><td><input class="input" aria-label="' + i + '번 줄 등록자" value="김도윤" readonly></td></tr>';
+const detable = (cls) => '<div class="table_list" style="width:100%"><div class="list"><table class="' + cls + '">' + DECOLS + DEHEAD + '<tbody>' + derow(1, '브레이크 캘리퍼 조립 사양서') + derow(2, '하우징 3D 모델') + '</tbody></table></div></div>';
+export const 사용_지침 = {
+  parameters: { controls: { disable: true } },
+  render: () => doDont([
+    // 근거: Table.mdx 구성 「긴 글 — 문서 명 · 태스크 이름처럼 길이가 제각각인 글만 왼쪽 정렬, 번호 · 날짜 · 상태는 가운데」
+    { title: '긴 글만 왼쪽 정렬',
+      do: [dtable(drow(ROWS[0]) + drow(ROWS[1])), '문서 명처럼 길이가 제각각인 글만 왼쪽 정렬합니다.'],
+      dont: [dtable(drow(ROWS[0], { left: true }) + drow(ROWS[1], { left: true })), '번호 · 상태처럼 짧은 값까지 왼쪽 정렬하지 않습니다.'] },
+    // 근거: Table.mdx 구성 「줄 상태 — 선택한 줄(체크한 줄)은 한 단계 진한 브랜드 바탕」
+    { title: '체크한 줄은 선택 바탕과 함께',
+      do: [dtable(drow(ROWS[0]) + drow(ROWS[1], { sel: true })), '체크한 줄에 .is-selected · aria-selected를 함께 붙입니다.'],
+      dont: [dtable(drow(ROWS[0]) + drow(ROWS[1], { mark: true })), '체크만 하고 줄 바탕을 그대로 두지 않습니다.'] },
+    // 근거: Table.mdx 구성 「편집 표 — 줄 높이 40」 · DS-ADR-030 표 밀도(목록 표 줄 30 · 편집 표 줄 40)
+    { title: '칸 안에서 입력하면 편집 표',
+      do: [detable('grid-table grid-table--edit'), '칸 안에 입력칸이 들어가면 .grid-table--edit(줄 40)를 씁니다.'],
+      dont: [detable('grid-table'), '목록 표(줄 30)에 입력칸을 바로 넣지 않습니다.'] },
+  ]),
 };

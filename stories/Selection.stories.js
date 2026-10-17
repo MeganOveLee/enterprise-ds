@@ -1,6 +1,7 @@
 // Form/Selection Controls — 문서 화면은 Selection.mdx. 여기 스토리는 MDX 카드 안에 들어가는 예시 · 전체 상태 · Playground
 import { matrix } from './_matrix.js';
 import { enablePseudo } from './_pseudo.js';
+import { doDont } from './_dodont.js';
 
 const ck = (t, o = '') => `<label class="checkbox"><input type="checkbox"${o}>${t}</label>`;
 const rd = (n, t, o = '') => `<label class="radio"><input type="radio" name="${n}"${o}><span class="radio__mark"></span>${t}</label>`;
@@ -39,6 +40,36 @@ export const Radio = {
 };
 
 export const Switch = { args: { label: '자동 저장' }, render: (a) => sw(a.label, opt(a)) };
+
+// ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-102) — 미리보기만 ──
+const saveForm = (ctl) => '<div class="sb-row" style="gap:12px">' + ctl + '<button type="button" class="btn btn--primary btn--filled">저장</button></div>';
+const stack = (h) => '<div style="display:grid;gap:8px">' + h + '</div>';
+export const 사용_지침 = {
+  parameters: { controls: { disable: true } },
+  render: () => {
+    const el = document.createElement('div');
+    el.innerHTML = doDont([
+      // 근거: 구성 「스위치」 — 누르는 즉시 적용되는 설정에만, 저장해야 적용되는 값은 체크박스
+      { title: '저장해야 적용되는 값은 체크박스',
+        do: [saveForm(ck('결재 포함')), '저장을 눌러야 적용되는 값은 체크박스로 받습니다.'],
+        dont: [saveForm(sw('결재 포함')), '스위치는 누르는 즉시 적용되는 것으로 읽힙니다.'] },
+      // 근거: 예시 「체크박스 · 라디오」 — 여러 개는 체크박스, 하나만은 라디오
+      { title: '하나만 고르는 값은 라디오',
+        do: ['<div role="radiogroup" aria-label="처리 구분" class="sb-row">' + rd('dd-sel-g1', '정규', ' checked') + rd('dd-sel-g1', '긴급') + '</div>',
+          '둘 중 하나만 고르는 값은 라디오로 묶습니다.'],
+        dont: ['<div class="sb-row">' + ck('정규', ' checked') + ck('긴급', ' checked') + '</div>',
+          '체크박스로 두면 서로 맞지 않는 값을 함께 고를 수 있습니다.'] },
+      // 근거: 예시 「부분 선택」 — 「전체 선택」 아래 항목 중 일부만 골랐을 때
+      { title: '일부만 골랐을 때는 부분 선택',
+        do: [stack(ck('전체 선택', ' data-ind') + ck('사양서', ' checked') + ck('도면', ' checked') + ck('시험 성적서')),
+          '아래 항목 중 일부만 고르면 「전체 선택」을 부분 선택으로 표시합니다.'],
+        dont: [stack(ck('전체 선택') + ck('사양서', ' checked') + ck('도면', ' checked') + ck('시험 성적서')),
+          '꺼진 채로 두면 아무것도 고르지 않은 것처럼 보입니다.'] },
+    ]);
+    el.querySelectorAll('[data-ind]').forEach((i) => { i.indeterminate = true; });
+    return el;
+  },
+};
 
 // ── 전체 상태 ──
 export const 전체_상태 = {

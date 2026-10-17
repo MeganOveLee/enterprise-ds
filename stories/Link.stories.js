@@ -4,6 +4,7 @@
 // 위치 표시(.breadcrumb)는 App Shell 문서에 예시가 있어 여기서는 상단 바 · 페이지 머리 두 자리만 다시 보여 줌
 import { matrix } from './_matrix.js';
 import { enablePseudo } from './_pseudo.js';
+import { doDont } from './_dodont.js';
 
 const idLink = (t, extra = '') => '<a href="#" class="grid-custom-rows-link' + (extra ? ' ' + extra : '') + '">' + t + '</a>';
 const link = (t, extra = '') => '<a href="#" class="grid-link' + (extra ? ' ' + extra : '') + '">' + t + '</a>';
@@ -70,4 +71,24 @@ export const 본문_링크_상태 = {
       ['내려받기 <code>.no-arrow</code>', PS.map((p) => tlink('(양식) 사양서 양식.docx', ('no-arrow ' + p).trim()))],
     ]);
   },
+};
+
+// ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-102) — 미리보기만, 코드는 위 예시 카드에 ──
+const ddTable = (first, second) => '<div class="table_list" style="width:100%"><div class="list"><table class="grid-table"><colgroup><col style="width:132px"><col></colgroup>' +
+  '<thead><tr><th>문서 번호</th><th>문서 명</th></tr></thead><tbody>' +
+  '<tr><td>' + first('DOC-2610-0013') + '</td><td class="is-left">' + second('브레이크 캘리퍼 조립 사양서') + '</td></tr>' +
+  '<tr><td>' + first('DOC-2610-0012') + '</td><td class="is-left">' + second('하우징 재질 변경 검토 보고서') + '</td></tr></tbody></table></div></div>';
+const ddStack = (h) => '<div style="display:grid;gap:8px">' + h + '</div>';
+export const 사용_지침 = {
+  parameters: { controls: { disable: true } },
+  render: () => doDont([
+    // 근거: Link.mdx 구성 「식별자 링크 · 나머지 링크」 (그리드 링크 결정)
+    { title: '늘 밑줄인 링크는 행마다 하나',
+      do: [ddTable((t) => idLink(t), (t) => link(t)), '식별자 열 하나만 늘 밑줄이고, 나머지는 마우스 · 키보드가 올 때만 밑줄입니다.'],
+      dont: [ddTable((t) => idLink(t), (t) => idLink(t)), '모든 링크가 늘 밑줄이면 마우스를 올린 것처럼 보입니다.'] },
+    // 근거: Link.mdx 구성 「본문 링크 — 끝의 「↗」는 다른 창으로 열린다는 표시, 창이 열리지 않는 링크는 .no-arrow」
+    { title: '↗는 다른 창으로 열 때만',
+      do: [ddStack(tlink('PJT-2026-014 브레이크 캘리퍼 경량화 개발') + tlink('(양식) 사양서 양식.docx', 'no-arrow')), '내려받기처럼 창이 열리지 않는 링크는 .no-arrow로 화살표를 뺍니다.'],
+      dont: [ddStack(tlink('PJT-2026-014 브레이크 캘리퍼 경량화 개발') + tlink('(양식) 사양서 양식.docx')), '내려받기 링크에 「↗」를 붙이지 않습니다.'] },
+  ]),
 };

@@ -1,5 +1,6 @@
 // Feedback/Alert — 문서 화면은 Alert.mdx. 여기 스토리는 MDX 카드 안에 들어가는 예시 · 전체 상태 · Playground
 import { matrix } from './_matrix.js';
+import { doDont } from './_dodont.js';
 
 const svg = (d, s = 16) => '<svg width="' + s + '" height="' + s + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + d + '</svg>';
 // 상태 아이콘 — 정보 · 성공 · 경고 · 위험. 브랜드 · 중립은 정보 아이콘
@@ -45,6 +46,35 @@ export const 공지 = {
   render: () => stack([
     alert({ status: 'brand', title: '결재선을 저장해 두고 다시 쓸 수 있어요', close: true }),
     alert({ status: 'neutral', plain: true, title: '임시 저장본이 있어요 (10-14 18:20)' }),
+  ]),
+};
+
+// ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-102) ── 미리보기만, 코드는 위 예시 카드에
+const col = (items) => '<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:8px">' + items.join('') + '</div>';
+const ddField = (label, id, err = '') => '<div class="form-grid-2" style="grid-template-columns:1fr"><div class="ff-field"><label class="search-label" for="' + id + '">' + label + '</label><div class="td">' +
+  '<input class="input" id="' + id + '" aria-invalid="true"' + (err ? ' aria-describedby="' + id + '-err"' : '') + '>' + (err ? '<span class="field-error-msg" id="' + id + '-err">' + err + '</span>' : '') + '</div></div></div>';
+const toastLike = (status, msg) => '<div class="toast toast--' + status + '"><span class="toast__icon">' + svg(I[status]) + '</span><span class="toast__msg">' + msg + '</span></div>';
+export const 사용_지침 = {
+  parameters: { controls: { disable: true } },
+  render: () => doDont([
+    // 근거: 이전 「언제 쓰나」 표 1행 — 칸 아래 빨간 문구 + 폼 위 Alert(위험), 어느 칸인지 Alert에도 적음
+    { title: '입력 오류는 칸 이름까지',
+      do: [col([alert({ status: 'danger', title: '문서 명이 비어 있어요' }), ddField('문서 명', 'dd-al-nm', '문서 명을 입력해 주세요')]),
+        '폼 위 Alert와 칸 아래 오류 글에 같은 칸 이름을 적습니다.'],
+      dont: [col([alert({ status: 'danger', title: '입력값을 확인해 주세요' }), ddField('문서 명', 'dd-al-nm2')]),
+        '칸 이름이 없으면 폼 전체를 다시 살펴야 합니다.'] },
+    // 근거: 이전 「언제 쓰나」 표 2행(읽고 넘어갈 때까지 남음) · Toast 구성 「사라짐」(4초 뒤 닫힘)
+    { title: '읽고 넘어갈 조건은 Alert로',
+      do: [col([alert({ status: 'warning', title: '결재 중인 문서는 수정할 수 없어요', desc: '결재가 끝나거나 회수한 뒤에 수정하세요.' })]),
+        'Alert는 사용자가 읽고 넘어갈 때까지 화면에 남습니다.'],
+      dont: [toastLike('warning', '결재 중인 문서는 수정할 수 없어요.'),
+        '토스트는 4초 뒤 사라져, 조건을 읽기 전에 놓칩니다.'] },
+    // 근거: 이전 「언제 쓰나」 표 3행 — 저장 · 복사처럼 방금 한 일의 짧은 결과는 Toast
+    { title: '방금 한 일의 짧은 결과는 토스트로',
+      do: [toastLike('success', '저장했어요.'),
+        '저장 · 복사의 결과는 잠깐 뜨고 사라지는 토스트로 알립니다.'],
+      dont: [col([alert({ status: 'success', title: '저장했어요' })]),
+        '끝난 일의 짧은 결과를 화면에 남겨 두지 않습니다.'] },
   ]),
 };
 

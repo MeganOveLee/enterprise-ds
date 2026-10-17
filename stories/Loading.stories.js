@@ -4,6 +4,8 @@ const LOGO = { default: new URL('../assets/brand/default-logo.svg', import.meta.
 const brandLoader = (src) =>
   `<span class="brand-loader" style="--brand-loader-width:72px" aria-hidden="true"><img class="brand-loader__base" src="${src}" alt=""><img class="brand-loader__fill" src="${src}" alt=""></span>`;
 
+import { doDont } from './_dodont.js';
+
 const spin = (size = '', tone = '') =>
   `<span class="spinner${size ? ' spinner--' + size : ''}${tone ? ' spinner--' + tone : ''}" aria-hidden="true"></span>`;
 
@@ -61,6 +63,28 @@ export const 버튼_안 = {
     <button type="button" class="btn btn--primary btn--filled is-loading" aria-busy="true">${spin('sm', 'neutral')}저장 중</button>
     <span class="loading loading--inline" role="status">${spin('sm')}<span class="loading__text">확인 중</span></span>
   </div>`,
+};
+
+// ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-102) ── 미리보기만, 코드는 위 예시 카드에
+const ddArea = (inner) => `<div style="position:relative;flex:1;min-height:140px;border:1px solid var(--color-border-base);border-radius:var(--radius-card);overflow:hidden">${inner}</div>`;
+export const 사용_지침 = {
+  parameters: { controls: { disable: true } },
+  render: () => doDont([
+    // 근거: Loading 구성 「시간 규칙」 — 10초가 넘을 것 같으면 진행 상황 + 취소
+    { title: '오래 걸리는 일은 문구와 취소까지',
+      do: [`<div class="loading" role="status" aria-live="polite">${spin('lg')}<p class="loading__text">도면 2,481건을 엑셀로 만드는 중입니다</p><p class="loading__sub">1분 정도 걸릴 수 있어요</p>` +
+        `<div class="loading__actions"><button type="button" class="btn btn--secondary btn--outlined">취소</button></div></div>`,
+        '10초가 넘을 것 같은 작업은 진행 상황과 취소를 함께 둡니다.'],
+      dont: [`<div class="loading" role="status">${spin('lg')}<span class="sr-only">불러오는 중</span></div>`,
+        '스피너만 두면 얼마나 기다릴지, 멈출 수 있는지 알 수 없습니다.'] },
+    // 근거: Loading 예시 「버튼 · 글자 줄 안」(누른 버튼의 처리 중 상태) · 「영역 오버레이」(그리드 · 팝업 본문을 다시 불러올 때)
+    { title: '저장 대기는 버튼 안에서',
+      do: [`<button type="button" class="btn btn--primary btn--filled is-loading" aria-busy="true">${spin('sm', 'neutral')}저장 중</button>`,
+        '누른 버튼의 처리 중 상태로 기다림을 알립니다.'],
+      dont: [ddArea(`<div style="padding:16px;display:flex;gap:8px;justify-content:flex-end"><button type="button" class="btn btn--secondary btn--outlined">취소</button><button type="button" class="btn btn--primary btn--filled">저장</button></div>` +
+        `<div class="loading loading--overlay" role="status" aria-live="polite">${spin('lg')}<p class="loading__text">저장하는 중입니다</p></div>`),
+        '영역 오버레이는 본문을 다시 불러올 때만 쓰고, 저장 대기에는 쓰지 않습니다.'] },
+  ]),
 };
 
 // ── Playground ──

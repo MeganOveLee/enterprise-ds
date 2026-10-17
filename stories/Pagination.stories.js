@@ -2,6 +2,7 @@
 // Figma UI Kit 「Pagination page」 · 「Pagination control」과 같은 짝. 마크업은 문자열 이어 붙이기(색인기 오류 회피)
 import { matrix } from './_matrix.js';
 import { enablePseudo } from './_pseudo.js';
+import { doDont } from './_dodont.js';
 
 const PREV = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>';
 const NEXT = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>';
@@ -68,4 +69,23 @@ export const Playground = {
   },
   args: { total: 12, current: 5 },
   render: (a) => pager(a.total, Math.min(a.current, a.total)),
+};
+
+// ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-102) — 미리보기만, 코드는 위 예시 카드에. 쪽 이동이 여럿이라 이름을 따로(landmark-unique) ──
+const ddAll = (total, cur, label) => '<nav class="ui-pagination" aria-label="' + label + '">' + arrow('prev', cur === 1) +
+  Array.from({ length: total }, (_, i) => num(i + 1, cur)).join('') + arrow('next', cur === total) + '</nav>';
+const ddList = '<div style="height:56px;border:1px solid var(--color-border-base);border-radius:var(--radius-panel);display:flex;align-items:center;justify-content:center;color:var(--color-text-muted);font-size:var(--body-sm)">목록(그리드)</div>';
+const ddCol = (h) => '<div style="width:100%;display:flex;flex-direction:column;gap:12px">' + h + '</div>';
+export const 사용_지침 = {
+  parameters: { controls: { disable: true } },
+  render: () => doDont([
+    // 근거: Pagination.mdx 구성 「줄임표 — 7쪽이 넘으면 처음 · 끝 · 지금 쪽 앞뒤만」 · 예시 「칸 수가 7개로 같아 화살표 자리가 흔들리지 않습니다」
+    { title: '7쪽이 넘으면 줄임표',
+      do: [pager(10, 5, '쪽 이동 — 지침 예시 1'), '처음 · 끝 · 지금 쪽 앞뒤만 남겨 칸 수를 7개로 유지합니다.'],
+      dont: [ddAll(10, 5, '쪽 이동 — 지침 예시 2'), '번호를 모두 늘어놓으면 쪽 수에 따라 화살표 자리가 바뀝니다.'] },
+    // 근거: Pagination.mdx 머리 설명 「목록 바로 아래 가운데에 둡니다」
+    { title: '목록 바로 아래 가운데',
+      do: [ddCol(ddList + pager(5, 1, '쪽 이동 — 지침 예시 3')), '목록 바로 아래 가운데에 둡니다.'],
+      dont: [ddCol(pager(5, 1, '쪽 이동 — 지침 예시 4') + ddList), '목록 위에 두지 않습니다.'] },
+  ]),
 };
