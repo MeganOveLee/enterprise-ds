@@ -1403,6 +1403,11 @@ body.dark-mode .pop .contents .pro_table:not(:has(.form-grid-2)) { background: v
     align-items: center;
     gap: var(--spacing-8);
 }
+/* 섹션 머리 오른쪽 작은 글자(.section-meta) — 「필수」 · 「전체 21 · 지연 2」 · 「14건」 같은 안내 · 개수. 흐린 작은 글자, 숫자(b)만 기본 글자 굵게.
+ * 등록 창 안 머리 오른쪽 글자(.pop .seach_arm .rightbt > span, 이전 버전 규칙)와 같은 모양을 상세 화면(.pop 밖)에서도 쓰려고 이름을 붙임 (TD-75 10/17 세영 승인).
+ * 숫자를 브랜드 글자로 하지 않는 이유: 섹션 머리 회색 바탕(bg-subtle) 위 브랜드 글자 4.46:1 — AA 미달. Figma는 컴포넌트 없이 글자 스타일(Body/sm · text/muted) */
+.section-meta { font-size: var(--body-sm); font-weight: var(--font-weight-regular); color: var(--color-text-muted); }
+.section-meta b { color: var(--color-text-base); font-weight: var(--font-weight-bold); }
 
 /* 검색 폼 영역 */
 .pro_table {

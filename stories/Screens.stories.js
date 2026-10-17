@@ -215,7 +215,7 @@ const registerPop = () =>
   '<div class="pop"><div class="top"><div class="top-title-area"><span class="doc-type-badge">' + svg(I.doc, 16) + '</span><h3>문서 등록</h3></div>' +
   '<div class="top-btn-area">' + btn('임시 저장', 'btn--secondary btn--outlined') + btn('등록', 'btn--primary btn--filled') +
   '<button type="button" class="pop-close" aria-label="닫기">' + svg(I.close, 14) + '</button></div></div>' +
-  '<div class="contents">' + section('기본 정보', true, '<span class="scr-total"><span class="required" aria-hidden="true"></span> 필수</span>') +
+  '<div class="contents">' + section('기본 정보', true, '<span class="section-meta"><span class="required" aria-hidden="true"></span> 필수</span>') +
   '<div class="pro_table"><div class="form-grid-2">' +
   field('문서 분류', '<div class="ff-readonly">/제품 문서/설계 문서/사양서</div>', { req: true }) +
   field('문서 번호', '<div class="ff-readonly">저장하면 자동으로 매겨집니다</div>') +
@@ -353,7 +353,7 @@ const detailBody = () =>
   ro('프로젝트 번호', 'PJT-2026-014') + ro('제품군', '제동 부품') + ro('PM', '김도윤 · 설계1팀') + ro('개발 단계', '설계 검증 (DV)') +
   ro('계획 기간', '2026-07-01 ~ 2026-12-18', 2) + ro('실적 시작일', '2026-07-03') + ro('관리 등급', 'A · 중점 관리') +
   '</div></div>' +
-  dsec('진행 현황', true, '<span class="scr-total"><span class="progress-plan-key" aria-hidden="true"></span>계획 · 기준 2026-10-13</span>') +
+  dsec('진행 현황', true, '<span class="section-meta"><span class="progress-plan-key" aria-hidden="true"></span>계획 · 기준 2026-10-13</span>') +
   '<div class="pro_table scr-progress"><div class="scr-progress__top">' +
   '<div class="status-block status-block--delay"><div class="status-segments status-segments--delay">' + '<span class="status-segments__bar"></span>'.repeat(5) + '</div><span class="status-text"></span></div>' +
   '<div class="scr-progress__main"><div class="scr-progress__meta"><b>전체 진행률</b><span>계획 64% · 실적 58% · <em>6%p 늦음</em></span></div>' +
@@ -361,7 +361,7 @@ const detailBody = () =>
   '<dl class="scr-kv"><div><dt>남은 기간</dt><dd>66일</dd></div><div><dt>지연 태스크</dt><dd class="is-danger">2건</dd></div><div><dt>완료 태스크</dt><dd>9 / 21</dd></div></dl></div>' +
   '<ul class="scr-phases">' + PHASES.map(([n, k, pct, d, plan]) =>
     '<li><span class="scr-phases__name">' + n + '</span>' + pbar(k, pct, n, true, plan > 0 ? plan : undefined) + '<span class="scr-phases__date">' + d + '</span>' + pchip(k) + '</li>').join('') + '</ul></div>' +
-  dsec('태스크', true, '<span class="scr-total">전체 <b>21</b> · 지연 <b>2</b></span>') +
+  dsec('태스크', true, '<span class="section-meta">전체 <b>21</b> · 지연 <b>2</b></span>') +
   '<div class="table_list scr-tasks"><div class="list"><table class="grid-table"><colgroup>' +
   '<col style="width:48px"><col><col style="width:80px"><col style="width:84px"><col style="width:104px"><col style="width:104px"><col style="width:150px"><col style="width:84px"></colgroup>' +
   '<thead><tr><th>No.</th><th>태스크</th><th>단계</th><th>담당자</th><th>계획 종료</th><th>실적 종료</th><th>진행률</th><th>상태</th></tr></thead><tbody>' +
@@ -369,7 +369,7 @@ const detailBody = () =>
     '<td>' + r[1] + '</td><td>' + r[2] + '</td><td>' + r[3] + '</td><td>' + (r[4] || '—') + '</td>' +
     '<td>' + pbar(r[6], r[5], r[0]) + '</td><td>' + pchip(r[6]) + '</td></tr>').join('') +
   '</tbody></table></div></div>' +
-  dsec('산출물 문서', false, '<span class="scr-total">14건</span>') +
+  dsec('산출물 문서', false, '<span class="section-meta">14건</span>') +
   '</div></div>';
 const detailScreen = () =>
   '<div style="display:flex;height:100%">' + lnb('프로젝트') +

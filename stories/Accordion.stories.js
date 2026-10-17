@@ -51,9 +51,10 @@ export default {
 
 // ── 예시 ──
 // 상자형 — 상세 화면(.pop 밖). 머리 + 내용이 한 상자, 접으면 머리만 둥근 상자
-const BOX = () => section('기본 정보', INFO) + section('변경 내용', NOTE) + section('산출물 문서', '', { open: false });
+const META = '<span class="section-meta">전체 <b>14</b>건</span>';   // 머리 오른쪽 글자 = .section-meta (TD-75)
+const BOX = () => section('기본 정보', INFO) + section('변경 내용', NOTE) + section('산출물 문서', '', { open: false, right: META });
 export const 상자형 = {
-  parameters: html(section('기본 정보', '<!-- 내용: 폼 · 값(.form-grid-2) -->') + '\n' + section('산출물 문서', '', { open: false })),
+  parameters: html(section('기본 정보', '<!-- 내용: 폼 · 값(.form-grid-2) -->') + '\n' + section('산출물 문서', '', { open: false, right: META })),
   render: () => wire('<div style="max-width:720px">' + BOX() + '</div>'),
 };
 
