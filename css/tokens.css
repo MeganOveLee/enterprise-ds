@@ -79,7 +79,7 @@
   /* ─── 브랜드 컬러 스케일 (--brand-50~900 · --accent-500) ─────────────────────
    * 값은 이 파일에 없다 → brands/{브랜드}.css 에서 선언 (DS-ADR-003, 2026-10-02).
    *   불러오는 순서: tokens → brands/{브랜드}.css → globals → components
-   *   전환: <html class="theme-{브랜드}">. 클래스가 없으면 brands/e3ps.css(기본 브랜드).
+   *   전환: <html class="theme-{브랜드}">. 클래스가 없으면 brands/default.css(기본 브랜드).
    *   html 에 거는 이유: 아래 Layer 4 시맨틱이 :root(=html) 에서 계산되므로 body 클래스로는 안 바뀜.
    *   국가별 오버라이드가 필요해지면 brands/{브랜드}.{국가}.css 를 이 순서 바로 뒤에 (현재 없음).
    *   브랜드 파일이 여는 것 = 색(필수) + 형태(선택 — Layer 3 모서리 역할 · 높이, DS-ADR-020). 목록은 brands/_template.css.
@@ -314,11 +314,11 @@
   /* LNB hover / active */
   --color-bg-lnb-hover:         var(--brand-50);
   --color-bg-lnb-active:        var(--brand-100);
-  --color-text-lnb-active:      var(--brand-600);       /* 활성 메뉴 글자 — 600(바탕 100 위 E3PS 4.92 · Fashion 5.70 · Precision 5.74, 500은 E3PS 4.08 미달, 10/13). 다크는 흰색 — 아이콘(흰 마스크)과 톤을 맞춰야 함 */
+  --color-text-lnb-active:      var(--brand-600);       /* 활성 메뉴 글자 — 600(바탕 100 위 Default 4.92 · Fashion 5.70 · Precision 5.74, 500은 Default 4.08 미달, 10/13). 다크는 흰색 — 아이콘(흰 마스크)과 톤을 맞춰야 함 */
 
   /* 버튼 — 등록 Create primary (.btn_blue)
    * primary = 그 영역의 마무리 동작 1개 = 브랜드색. 동작 종류(CRUD)로 색을 정하지 않는다 (DS-ADR-005).
-   * E3PS 에서 brand-600 = blue-700 (#0457CB) 이라 값 그대로 */
+   * Default 에서 brand-600 = blue-700 (#0457CB) 이라 값 그대로 */
   --color-bg-btn-primary:           var(--brand-600);
   --color-text-btn-primary:           var(--white);
   --color-border-btn-primary:       transparent;
@@ -474,7 +474,7 @@ body.dark-mode {
   --color-bg-readonly:       var(--neutral-750);   /* 읽기전용 — 카드보다 밝게 떠서 '건드릴 수 없는 칸' */
   --color-bg-inverse:        var(--neutral-100);
   --color-bg-inverse-soft:   var(--neutral-200);
-  --color-bg-brand:          var(--brand-500);   /* 다크도 500 — 채색 면 위에 흰 글자(on-color)가 올라감. 400 은 흰 글자 대비 E3PS 4.27 · 고객사 A 3.91 로 AA 미달.
+  --color-bg-brand:          var(--brand-500);   /* 다크도 500 — 채색 면 위에 흰 글자(on-color)가 올라감. 400 은 흰 글자 대비 Default 4.27 · 고객사 A 3.91 로 AA 미달.
                                                  '다크 브랜드 = 400' 은 다크 바탕 위 글자·보더용 (DS-ADR-004) */
   --color-bg-brand-subtle:      color-mix(in srgb, var(--brand-500) 30%, transparent);
   --color-text-on-brand-subtle: var(--brand-200);   /* 300(#5CA3DD)은 옅은 브랜드 칩 위에서 어두워 뱃지 글씨가 묻힘 */
@@ -496,7 +496,7 @@ body.dark-mode {
   --color-text-disabled:       var(--neutral-600);
   --color-text-inverse:        var(--neutral-900);
   --color-text-label:          var(--brand-300);   /* 다크는 brand-800(잉크)이 배경에 묻혀서 밝은 단계로. 400은 카드 위 3.5 → 300 (5.5, DS-ADR-014) */
-  --color-text-brand:          var(--brand-300);   /* 다크 브랜드 글자 = 300. 400은 카드(800) 위 E3PS 3.52 · 고객사 A 3.84로 AA 미달 (DS-ADR-014). 보더·아이콘은 400 유지 */
+  --color-text-brand:          var(--brand-300);   /* 다크 브랜드 글자 = 300. 400은 카드(800) 위 Default 3.52 · 고객사 A 3.84로 AA 미달 (DS-ADR-014). 보더·아이콘은 400 유지 */
   --color-text-link-visited:   var(--neutral-400);
   --color-text-danger:         var(--red-300);   /* 400은 카드 위 4.05 → 300 (5.91, DS-ADR-014) */
   --color-text-danger-bold:    var(--red-200);
@@ -550,7 +550,7 @@ body.dark-mode {
   --color-border-grid-outer:    var(--color-border-base);
   --color-bg-grid-row-hover:    var(--neutral-750);   /* 다크는 명도차만으로 구분 — 어두운 배경이 채도를 먹어서 틴트를 줘도 잘 안 보임 */
   --color-bg-grid-row-selected: color-mix(in srgb, var(--brand-500) 14%, var(--neutral-800));   /* 선택만 브랜드 틴트 — 호버와 구분되고 인풋과도 분리.
-                                              구 #243044 하드코딩 → 브랜드 추종 (DS-ADR-003). E3PS 에서 rgb(30,48,68) ≈ 구 값 rgb(36,48,68) */
+                                              구 #243044 하드코딩 → 브랜드 추종 (DS-ADR-003). Default 에서 rgb(30,48,68) ≈ 구 값 rgb(36,48,68) */
 
   /* LNB hover / active — 다크 위 옅은 브랜드 반투명. 옛 브랜드(빨강) 하드코딩 rgba(239,0,16,…) 이었던 것 → 브랜드 추종 */
   /* 다크 LNB — 사이드바가 순검정(#000)이라 반투명 브랜드색은 다 먹힘.

@@ -47,12 +47,12 @@ const DECO = {
 };
 const deco = (k) => h('span', { key: k, className: 'ds-tb__ico' }, h('svg', { width: 14, height: 14, viewBox: '0 0 14 14', fill: 'none' }, DECO[k].map((d, i) => h('path', { key: i, fillRule: 'evenodd', clipRule: 'evenodd', d, fill: 'currentColor' }))));
 const TOOLS = [   // 글자 = .storybook/preview.js globalTypes 와 같게
-  { key: 'brand', label: '브랜드', items: [['e3ps', 'E3PS'], ['fashion', 'Fashion · 패션 리테일'], ['precision', 'Precision · 자동차 부품']] },
+  { key: 'brand', label: '브랜드', items: [['default', 'Default'], ['fashion', 'Fashion · 패션 리테일'], ['precision', 'Precision · 자동차 부품']] },
   { key: 'mode', label: '화면 모드 (라이트 / 다크)', items: [['light', '라이트'], ['dark', '다크']] },
 ];
 const readGlobals = () => {
   const c = document.documentElement.classList;
-  return { brand: c.contains('theme-fashion') ? 'fashion' : c.contains('theme-precision') ? 'precision' : 'e3ps', mode: document.body.classList.contains('dark-mode') ? 'dark' : 'light' };
+  return { brand: c.contains('theme-fashion') ? 'fashion' : c.contains('theme-precision') ? 'precision' : 'default', mode: document.body.classList.contains('dark-mode') ? 'dark' : 'light' };
 };
 let selSeq = 0;
 // 처음 온 사람에게 「여기를 눌러 보세요」(TD-42 08:35 ④ 제안) — 한 번 누르면 다시 안 보임(다시 그려져도 · 새로 열어도)

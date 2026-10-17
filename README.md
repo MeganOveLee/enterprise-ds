@@ -19,7 +19,7 @@ v1.0 · 설계 · 퍼블리싱 이세영
 | 경로 | 내용 |
 |---|---|
 | `css/tokens.css` | 공통 토큰 (원천 램프 → 시맨틱 → 다크) |
-| `css/brands/` | 브랜드 값 파일. 브랜드가 여는 토큰(색 · 형태) 목록은 `_template.css`(새 브랜드 양식)에 있고, 지금 값은 스토리북 Foundation › Color(색) · Spacing · Radius · Size(형태)에서 브랜드를 바꿔 볼 수 있습니다. `e3ps.css` = 기본 브랜드, `fashion.css` · `precision.css` = 시연용 가상 산업 브랜드(Fashion · 패션 리테일 = 색 + 둥근 모서리 / Precision · 자동차 부품 = 색 + 직각 · 높이 32) |
+| `css/brands/` | 브랜드 값 파일. 브랜드가 여는 토큰(색 · 형태) 목록은 `_template.css`(새 브랜드 양식)에 있고, 지금 값은 스토리북 Foundation › Color(색) · Spacing · Radius · Size(형태)에서 브랜드를 바꿔 볼 수 있습니다. `default.css` = 기본 브랜드, `fashion.css` · `precision.css` = 시연용 가상 산업 브랜드(Fashion · 패션 리테일 = 색 + 둥근 모서리 / Precision · 자동차 부품 = 색 + 직각 · 높이 32) |
 | `css/globals.css` · `components.css` | 전역 · 컴포넌트. 브랜드를 모릅니다 |
 | `js/datepicker.js` | 날짜 선택 (WAI-ARIA APG Date Picker Dialog 패턴) |
 | `stories/` · `.storybook/` | Storybook (HTML 프레임워크) |

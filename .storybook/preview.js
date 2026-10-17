@@ -1,6 +1,6 @@
 /* 불러오는 순서는 README와 같다: tokens → brands → globals → components */
 import '../css/tokens.css';
-import '../css/brands/e3ps.css';
+import '../css/brands/default.css';
 import '../css/brands/fashion.css';
 import '../css/brands/precision.css';
 import '../css/globals.css';
@@ -27,7 +27,7 @@ export default {
     brand: {
       description: '브랜드',
       toolbar: { title: '브랜드', icon: 'paintbrush', dynamicTitle: true,
-        items: [{ value: 'e3ps', title: 'E3PS' }, { value: 'fashion', title: 'Fashion · 패션 리테일' }, { value: 'precision', title: 'Precision · 자동차 부품' }] },
+        items: [{ value: 'default', title: 'Default' }, { value: 'fashion', title: 'Fashion · 패션 리테일' }, { value: 'precision', title: 'Precision · 자동차 부품' }] },
     },
     mode: {
       description: '화면 모드 (라이트 / 다크)',
@@ -35,7 +35,7 @@ export default {
         items: [{ value: 'light', title: '라이트' }, { value: 'dark', title: '다크' }] },
     },
   },
-  initialGlobals: { brand: 'e3ps', mode: 'light' },
+  initialGlobals: { brand: 'default', mode: 'light' },
   decorators: [withTheme],
   parameters: {
     layout: 'fullscreen',

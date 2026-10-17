@@ -1,8 +1,8 @@
 // Feedback/Loading — 문서 화면은 Loading.mdx. 여기 스토리는 MDX 카드 안에 들어가는 예시 · Playground
 // 브랜드 로더 로고 — 브랜드(제품)에 로고 로더가 있으면 로고, 없으면 스피너 --lg (Fashion · Precision)
-const LOGO = { e3ps: new URL('../assets/brand/e3ps-logo.png', import.meta.url).href };
+const LOGO = { default: new URL('../assets/brand/default-logo.svg', import.meta.url).href };   // 가상 제품 마크 (Screens 레일과 같은 모양)
 const brandLoader = (src) =>
-  `<span class="brand-loader" aria-hidden="true"><img class="brand-loader__base" src="${src}" alt=""><img class="brand-loader__fill" src="${src}" alt=""></span>`;
+  `<span class="brand-loader" style="--brand-loader-width:72px" aria-hidden="true"><img class="brand-loader__base" src="${src}" alt=""><img class="brand-loader__fill" src="${src}" alt=""></span>`;
 
 const spin = (size = '', tone = '') =>
   `<span class="spinner${size ? ' spinner--' + size : ''}${tone ? ' spinner--' + tone : ''}" aria-hidden="true"></span>`;
@@ -52,7 +52,7 @@ export const 페이지_로딩 = {
     </div>`;
   },
   parameters: { docs: { description: { story:
-    '페이지 전체를 처음 불러올 때만 — 브랜드에 로고 로더가 있으면 로고가 왼쪽부터 채워지고(E3PS), 없으면 스피너 `--lg`(Fashion · Precision). ' +
+    '페이지 전체를 처음 불러올 때만 — 브랜드에 로고 로더가 있으면 로고가 왼쪽부터 채워지고(Default), 없으면 스피너 `--lg`(Fashion · Precision). ' +
     '영역 · 버튼 안은 언제나 스피너. 로고 이미지는 원본 그대로 두 장 겹쳐 쓰고(아래 회색 · 위 원본), 모션 줄이기 설정이면 느리게.' } } },
 };
 

@@ -4,7 +4,6 @@
 // 업무 화면 = 아이콘 메뉴 + 두 번째 메뉴 패널(메뉴 · 폴더 트리) + 상단 바 + 라벨 위 검색 폼 + 목록
 // 프로젝트 상세 = 아이콘 메뉴 + 상단 바 + 왼쪽 산출물 구조 패널 + 오른쪽 상세(섹션 · 진행률)
 // 마크업은 문자열 이어 붙이기 — 스토리북 색인기가 여러 줄 HTML 템플릿을 MDX로 잘못 읽는 일을 피함
-import { railLogo } from './_logo.js';
 import './_screens.css';
 import { wireSearchDetail, EXPAND_LABEL } from './_search.js';
 import { fileIcon, folderIcon } from './_fileicon.js';
@@ -83,7 +82,7 @@ const field = (label, control, { req = false, span = 0, id = '', cls = '' } = {}
 
 // ── 아이콘 메뉴 + 두 번째 메뉴 패널 ──
 const LNB = [['work', '업무관리'], ['doc', '문서관리'], ['drawing', '도면관리'], ['part', '부품관리'], ['project', '프로젝트'], ['change', '설계변경']];
-// 가상 제품 로고(Fashion · Precision 레일 · 모든 브랜드 로그인) — E3PS 레일은 실제 E3PS 로고(_logo.js, TD-44 10/17). 브랜드 타일 위에 부품(육면체)과 그 둘레를 도는 수명 주기 궤도, 궤도 끝에 브랜드 포인트색 점.
+// 가상 제품 로고(모든 브랜드 레일 · 로그인, TD-101 10/17). 브랜드 타일 위에 부품(육면체)과 그 둘레를 도는 수명 주기 궤도, 궤도 끝에 브랜드 포인트색 점.
 // 브랜드를 바꾸면 타일 · 점 색이 따라감. 로고 = 브랜드 자산이라 모서리는 고정이고, 점은 브랜드 파일의 포인트색(--accent-500)을 그대로 씀 — 화면 코드에서 원색을 쓰는 유일한 곳
 const LOGO =
   '<svg class="scr-logo" width="34" height="34" viewBox="0 0 34 34" role="img" aria-label="Enterprise PLM">' +
@@ -98,7 +97,7 @@ const LOGO =
 const lnbIcon = (d) => "url('data:image/svg+xml," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' + d + '</svg>') + "')";
 const lnbItem = ([ic, t], active) => '<li><div class="menu_icon_box"><div class="menu_icon" style="--lnb-icon:' + lnbIcon(I[ic]) + '"><a href="#" aria-label="' + t + '"' + (t === active ? ' aria-current="page"' : '') + '></a></div></div><span aria-hidden="true">' + t + '</span></li>';
 const lnb = (active = '문서관리') =>
-  '<aside class="main-menu"><a class="lnb-logo" href="#" aria-label="홈">' + railLogo(LOGO, 'E3PS') + '</a>' +
+  '<aside class="main-menu"><a class="lnb-logo" href="#" aria-label="홈">' + LOGO + '</a>' +
   '<nav aria-label="주 메뉴"><ul>' + LNB.map((x) => lnbItem(x, active)).join('') + '</ul><ul>' + lnbItem(['admin', '관리자'], active) + '</ul></nav></aside>';
 
 const TREE = [[0, '제품 문서', true], [1, '설계 문서', true, true], [2, '사양서'], [2, '시험 성적서'], [2, '회의록'], [1, '품질 문서'], [1, '양식']];

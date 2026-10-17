@@ -9,8 +9,8 @@ const I = {
 };
 // 픽토그램 → 일러스트 배지 종류 (빈 이유가 같으면 같은 그림)
 const ILLO = { inbox: 'empty', search: 'search', wifi: 'network', alert: 'error' };
-// 브랜드 선택은 제품 설정 — E3PS = 일러스트, Fashion(공개 시연) = 선 픽토그램
-const useIllo = (globals) => (globals.brand || 'e3ps') === 'e3ps';   // 일러스트는 E3PS 브랜드 자산 (DS-ADR-018). 다른 브랜드는 픽토그램
+// 브랜드 선택은 제품 설정 — Default = 일러스트, Fashion · Precision = 선 픽토그램
+const useIllo = (globals) => (globals.brand || 'default') === 'default';   // 일러스트 = 기본 브랜드 설정 (DS-ADR-018). 다른 브랜드는 픽토그램
 
 const btn = (t, k = 'secondary', s = 'outlined') => `<button type="button" class="btn btn--${k} btn--${s}">${t}</button>`;
 const empty = ({ icon, title, desc, actions = '', code = '', mod = '', illo = false }) =>
@@ -38,7 +38,7 @@ export const 카드_안 = { render: () => frame(empty({ mod: 'empty--card', icon
 const REASONS = [['inbox', '아직 없음', ''], ['search', '검색 결과 없음', ''], ['wifi', '네트워크 오류', 'empty--error'], ['alert', '서버 오류', 'empty--error']];
 const cellStyle = 'display:flex;flex-direction:column;align-items:center;gap:8px;font-size:var(--body-sm);color:var(--color-text-muted)';
 export const 그림_두_가지 = {
-  parameters: { docs: { description: { story: '같은 빈 이유를 두 그림으로 — 위 = 일러스트(E3PS), 아래 = 선 픽토그램(Fashion · Precision · 카드 안). 도구 막대와 상관없이 둘 다 보여요.' } } },
+  parameters: { docs: { description: { story: '같은 빈 이유를 두 그림으로 — 위 = 일러스트(Default), 아래 = 선 픽토그램(Fashion · Precision · 카드 안). 도구 막대와 상관없이 둘 다 보여요.' } } },
   render: () => `<div class="sb-table-wrap" style="display:grid;grid-template-columns:repeat(4,auto);gap:24px 40px;justify-content:start;align-items:end">
     ${REASONS.map(([k, label, mod]) => `<div class="${mod}" style="${cellStyle}"><span class="empty__icon empty__icon--illo" style="margin:0">${emptyIllo(ILLO[k])}</span>${label}</div>`).join('')}
     ${REASONS.map(([k, label, mod]) => `<div class="${mod}" style="${cellStyle}"><span class="empty__icon" style="margin:0">${I[k]}</span>${label}</div>`).join('')}

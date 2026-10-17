@@ -1076,7 +1076,7 @@
     background: var(--color-bg-brand-subtle);
 }
 .main-sub-tabs .sub-tab.is-active:focus-visible,
-.pop .tab li.is-active:focus-visible { color: var(--color-text-on-brand-subtle); }   /* 선택 글자는 옅은 브랜드 바탕과 한 쌍 — 다크 text-brand 는 이 바탕 위 4.29:1(E3PS · Fashion), on-brand-subtle 6.49:1 이상. 라이트는 같은 값 */
+.pop .tab li.is-active:focus-visible { color: var(--color-text-on-brand-subtle); }   /* 선택 글자는 옅은 브랜드 바탕과 한 쌍 — 다크 text-brand 는 이 바탕 위 4.29:1(Default · Fashion), on-brand-subtle 6.49:1 이상. 라이트는 같은 값 */
 .ui-pagination__ellipsis {
     display: inline-flex;
     align-items: center;
@@ -2306,7 +2306,7 @@ body.dark-mode .select {
  * 테두리 없이는 키보드 위치가 안 보였음(브라우저 기본 테두리만, TD-93 10/16). 칸이 overflow:hidden 이라 간격은 1px */
 .grid-custom-rows-link:focus-visible,
 .grid-link:focus-visible { outline: 2px solid var(--color-border-focus); outline-offset: 1px; border-radius: var(--radius-sm); }
-/* 선택 행(bg-grid-row-selected) 위 = 한 단계 진한 글자. text-brand는 라이트 선택 행에서 4.08:1(E3PS)로 AA 미달 → interactive-primary-hover 7.5:1 이상 */
+/* 선택 행(bg-grid-row-selected) 위 = 한 단계 진한 글자. text-brand는 라이트 선택 행에서 4.08:1(Default)로 AA 미달 → interactive-primary-hover 7.5:1 이상 */
 :is(tr.is-selected, tr[aria-selected="true"]) :is(.grid-custom-rows-link, .grid-link:hover, .grid-link:focus-visible) { color: var(--color-text-interactive-primary-hover); }
 /* 본문 링크(.text-link) — 표 밖 상세 정보 · 폼 안에서 다른 문서를 여는 글자 링크. 이전 버전 규칙 그대로(TD-93 3.1 대조, 10/17):
  * 굵게 · 평소 밑줄 없음 · 마우스 · 키보드가 오면 밑줄(간격 3 · 두께 1), 끝에 「↗」 = 다른 창으로 열림.
@@ -3648,7 +3648,7 @@ input.onKeySearch2 { display: block; flex: 1 1 auto; min-width: 0; }
 /* ── 브랜드 로더 .brand-loader ──────────────────────────────────────────────
  * 페이지 전체를 처음 불러올 때(화면 전환 덮개 · 로그인 직후)만. 영역 · 버튼 안은 언제나 스피너
  * 로고 원본 이미지 두 장: 아래 = 회색으로 흐리게, 위 = 원본을 왼쪽부터 채움(마스크). 이미지 파일은 손대지 않음 (10/8)
- * 브랜드 선택은 제품 설정: E3PS = 로고 로더 · Fashion · Precision(공개 시연) = 스피너 --lg. 고객사 화면은 기존 로딩 이미지 유지
+ * 브랜드 선택은 제품 설정: Default = 로고 로더 · Fashion · Precision(공개 시연) = 스피너 --lg. 고객사 화면은 기존 로딩 이미지 유지
  *   <div class="loading loading--overlay" role="status" aria-live="polite">
  *     <span class="brand-loader" aria-hidden="true">
  *       <img class="brand-loader__base" src="logo.png" alt=""><img class="brand-loader__fill" src="logo.png" alt="">
@@ -3771,7 +3771,7 @@ input.onKeySearch2 { display: block; flex: 1 1 auto; min-width: 0; }
 .empty--error .empty__icon { color: var(--color-icon-danger); }
 
 /* 빈 상태 일러스트 .empty-illo — 폴더 + 이유 배지(검색 · 네트워크 · 오류). 색은 전부 토큰 → 브랜드 · 다크 따라감 (10/8)
- * 브랜드 선택은 제품 설정: E3PS = 일러스트(.empty__icon--illo) · Fashion · Precision(공개 시연) = 선 픽토그램. 카드 안(.empty--card)은 둘 다 픽토그램
+ * 브랜드 선택은 제품 설정: Default = 일러스트(.empty__icon--illo) · Fashion · Precision(공개 시연) = 선 픽토그램. 카드 안(.empty--card)은 둘 다 픽토그램
  * 배지 글리프는 currentColor → .empty__icon 색(icon-muted, 오류는 icon-danger)을 따른다 */
 .empty__icon--illo { width: 104px; height: auto; margin-bottom: var(--spacing-4); }
 .empty--page .empty__icon--illo { width: 128px; }

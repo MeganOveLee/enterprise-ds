@@ -15,7 +15,7 @@ import * as S from './Empty.stories.js';
 <tr><td><b>빈 이유</b></td><td><span className="ds-muted">아직 없음 · 검색 결과 없음 · 네트워크 오류 · 서버 오류</span></td><td>이유가 액션을 정합니다. 아직 없으면 만들기, 검색 결과가 없으면 조건 바꾸기, 네트워크 오류는 다시 시도, 서버 오류는 다시 시도 + 문의 + 오류 코드(서버 원문은 보이지 않음).</td></tr>
 <tr><td><b>오류</b></td><td><code>.empty--error</code></td><td>네트워크 · 서버 오류일 때 그림을 위험 색으로 바꿉니다.</td></tr>
 <tr><td><b>자리</b></td><td><code>.empty--card</code> · <code>.empty--page</code><span className="ds-muted">기본 = 영역(그리드 · 패널)</span></td><td>카드 안은 그림을 작게 하고 액션을 두지 않습니다. 페이지 전체는 그림을 크게 둡니다.</td></tr>
-<tr><td><b>그림</b></td><td><code>.empty__icon--illo</code><span className="ds-muted">일러스트 · 선 픽토그램</span></td><td>브랜드(제품) 설정입니다. E3PS는 폴더 일러스트에 빈 이유 배지, Fashion · Precision은 선 픽토그램, 카드 안은 둘 다 픽토그램입니다. 색은 모두 토큰이라 다크 모드에서도 따라 바뀝니다.</td></tr>
+<tr><td><b>그림</b></td><td><code>.empty__icon--illo</code><span className="ds-muted">일러스트 · 선 픽토그램</span></td><td>브랜드(제품) 설정입니다. Default는 폴더 일러스트에 빈 이유 배지, Fashion · Precision은 선 픽토그램, 카드 안은 둘 다 픽토그램입니다. 색은 모두 토큰이라 다크 모드에서도 따라 바뀝니다.</td></tr>
 </tbody>
 </table>
 </Section>
@@ -27,7 +27,7 @@ import * as S from './Empty.stories.js';
 <Card of={S.카드_안} title="카드 안" en="In card" desc="대시보드 카드처럼 좁은 자리. 그림을 작게, 액션 없이." />
 </Section>
 <Section title="전체 상태" en="States" desc="빈 이유마다 일러스트와 선 픽토그램을 모았습니다. 브랜드와 상관없이 둘 다 보입니다.">
-<Card of={S.그림_두_가지} title="일러스트 · 선 픽토그램" desc="위 = 일러스트(E3PS), 아래 = 선 픽토그램(Fashion · Precision · 카드 안)" />
+<Card of={S.그림_두_가지} title="일러스트 · 선 픽토그램" desc="위 = 일러스트(Default), 아래 = 선 픽토그램(Fashion · Precision · 카드 안)" />
 </Section>
 <Section title="Playground" desc="아래 표에서 값을 바꾸면 미리보기와 「코드 보기」가 함께 바뀝니다.">
 <Card of={S.Playground}>

@@ -6,7 +6,7 @@ storybook-static/
 source-*/
 css/brands/*
 !css/brands/_template.css
-!css/brands/e3ps.css
+!css/brands/default.css
 !css/brands/fashion.css
 !css/brands/precision.css
 tools/
