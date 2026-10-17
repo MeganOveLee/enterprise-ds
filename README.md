@@ -48,6 +48,10 @@ npm install
 npm run storybook
 ```
 
+## 다음 버전
+
+- Figma 변수와 CSS 토큰을 하나의 JSON 파일에서 생성해, 한쪽을 고치면 다른 쪽이 따라가도록 할 계획입니다.
+
 ---
 
 © 2026 이세영 (MeganOveLee). All rights reserved.

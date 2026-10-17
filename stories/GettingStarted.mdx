@@ -29,11 +29,10 @@ export const LOAD = [
 <table className="ds-table ds-after">
 <thead><tr><th>도구 막대</th><th>변경 내용</th><th>적용 코드</th></tr></thead>
 <tbody>
-<tr><td><b>브랜드</b><span className="ds-muted">E3PS · Fashion · Precision</span></td><td>고객사별 색상과 형태를 일괄 전환합니다. 색상뿐 아니라 모서리 반경과 버튼 · 입력칸 높이도 브랜드별로 정의할 수 있습니다. Fashion(패션 리테일)과 Precision(자동차 부품)은 이를 보여 주기 위한 가상 브랜드로, Fashion은 둥근 모서리, Precision은 직각 모서리와 32px 높이를 사용합니다.</td><td><code>{'<html class="theme-fashion">'}</code><span className="ds-muted">클래스가 없으면 기본 브랜드(E3PS)</span></td></tr>
+<tr><td><b>브랜드</b><span className="ds-muted">E3PS · Fashion · Precision</span></td><td>브랜드별 색상과 형태를 일괄 전환합니다. 색상뿐 아니라 모서리 반경과 버튼 · 입력칸 높이도 브랜드별로 정의할 수 있습니다. Fashion · Precision은 전환 방식을 보여 주기 위한 가상 브랜드입니다.</td><td><code>{'<html class="theme-fashion">'}</code><span className="ds-muted">클래스가 없으면 기본 브랜드(E3PS)</span></td></tr>
 <tr><td><b>화면 모드</b><span className="ds-muted">라이트 · 다크</span></td><td>라이트 · 다크 모드를 전환합니다. 화면 코드 변경 없이 클래스 하나로 적용합니다.</td><td><code>{'<body class="dark-mode">'}</code><span className="ds-muted">클래스가 없으면 라이트</span></td></tr>
 </tbody>
 </table>
-<p className="ds-note">전환 원리 — 브랜드와 화면 모드는 토큰의 <b>값</b>만 변경합니다. 컴포넌트는 값이 아닌 토큰 <b>이름</b>을 참조하므로, 컴포넌트 코드를 수정하지 않아도 스타일이 함께 바뀝니다.</p>
 <dl className="ds-dl ds-after">
 <div><dt>코드 보기</dt><dd>예시 카드 하단의 「코드 보기」에서 해당 마크업을 복사할 수 있습니다.</dd></div>
 <div><dt>Playground</dt><dd>컴포넌트 문서 하단 표에서 텍스트 · 중요도 · 스타일 · 상태를 변경하면 미리보기와 코드가 함께 갱신됩니다.</dd></div>
@@ -52,13 +51,12 @@ export const LOAD = [
 <table className="ds-table">
 <thead><tr><th>단계</th><th>할 일</th></tr></thead>
 <tbody>
-<tr><td><b>1. 불러오기</b></td><td>공통 레이아웃에서 CSS 네 파일을 아래 코드의 순서(토큰 → 브랜드 → 전역 → 컴포넌트)로 불러옵니다. 날짜 선택을 사용하는 화면에만 <code>js/datepicker.js</code>를 추가합니다.</td></tr>
+<tr><td><b>1. 불러오기</b></td><td>공통 레이아웃에서 CSS 네 파일을 아래 코드의 순서(토큰 → 브랜드 → 전역 → 컴포넌트)로 불러옵니다.</td></tr>
 <tr><td><b>2. 클래스 적용</b></td><td>컴포넌트 문서 예시 카드의 「코드 보기」 마크업을 그대로 사용합니다. 상태는 클래스가 아닌 HTML 속성으로 표현합니다 — <code>disabled</code> · <code>readonly</code> · <code>aria-invalid="true"</code> · <code>aria-expanded</code> · <code>aria-pressed</code>.</td></tr>
 <tr><td><b>3. 브랜드 · 화면 모드</b></td><td>브랜드는 <code>{'<html class="theme-*">'}</code>, 다크 모드는 <code>{'<body class="dark-mode">'}</code>로 적용합니다. 화면에 CSS를 추가할 때는 색상에 시맨틱 토큰(<code>--color-*</code>)만 사용하고, 원천 색(<code>--neutral-N</code> · <code>--brand-N</code>)이나 색상 값을 직접 사용하지 않습니다.</td></tr>
 </tbody>
 </table>
 <Source language="html" code={LOAD} />
-<p className="ds-sec__desc ds-after">외부 위젯 등 마크업을 수정할 수 없는 영역은 클래스 대신 토큰과 테마 오버라이드 파일로 스타일을 맞춥니다(예: 데이터 그리드 테마).</p>
 </Section>
 <Section title="참고 자료 · 문의" en="Resources">
 <table className="ds-table">
