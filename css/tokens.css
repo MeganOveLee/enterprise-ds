@@ -183,7 +183,9 @@
   --size-sidebar-toggle: 0.4375rem;                                     /* LNB 오른쪽 리사이즈 손잡이 폭 */
   --size-sidebar:        calc(13.875rem - var(--size-sidebar-toggle));  /* LNB 폭 = 사이드 영역 222px − 손잡이.
                             구 Layer 5 --sidebar-width/-toggle-width 를 치수 층으로 올림 — 이름만 있고 아무도 안 쓰고
-                            components 는 같은 숫자를 직접 적고 있었음 (세영 2026-10-02 Legacy 별칭 종결) */
+                            components 는 같은 숫자를 직접 적고 있었음 (세영 2026-10-02 Legacy 별칭 종결).
+                            size 층에서 폭을 담는 토큰은 이 둘(sidebar · sidebar-toggle)뿐 — 「size = 높이」의 예외.
+                            이름은 그대로 둔다: 바꾸면 이전 버전 덮어쓰기 파일도 같이 바꿔야 함 (TD-92, 2026-10-17) */
 
   /* 모션 — 값은 여기 한 곳. 컴포넌트 transition · animation 은 이 토큰을 쓴다 (TD-48, 2026-10-16).
      fast · base = 이전 버전 tokens 의 모션 토큰 그대로(이전 버전에 함께 있던 ease-standard 는 쓰는 곳이 없어 안 옮김).
