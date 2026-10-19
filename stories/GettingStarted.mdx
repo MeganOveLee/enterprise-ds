@@ -33,11 +33,12 @@ export const LOAD = [
 <table className="ds-table ds-after">
 <thead><tr><th>도구 막대</th><th>변경 내용</th><th>적용 코드</th></tr></thead>
 <tbody>
-<tr><td><b>브랜드</b><span className="ds-muted">Default · Fashion · Precision</span></td><td>브랜드별 색상과 형태를 일괄 전환합니다. 색상뿐 아니라 모서리 반경과 버튼 · 입력칸 높이도 브랜드별로 정의할 수 있습니다. Fashion · Precision은 전환 방식을 보여 주기 위한 가상 브랜드입니다.</td><td><code>css/brands/fashion.css</code><br /><code>{'<html class="theme-fashion">'}</code><span className="ds-muted">브랜드 파일과 클래스를 함께 적용합니다. 클래스가 없으면 기본 브랜드(Default)</span></td></tr>
+<tr><td><b>브랜드</b><span className="ds-muted">Default · Fashion · Precision</span></td><td>브랜드별 색상과 형태를 일괄 전환합니다. 색상뿐 아니라 모서리 반경과 버튼 · 입력 필드 높이도 브랜드별로 정의할 수 있습니다. Fashion · Precision은 전환 방식을 보여 주기 위한 가상 브랜드입니다.</td><td><code>css/brands/fashion.css</code><br /><code>{'<html class="theme-fashion">'}</code><span className="ds-muted">브랜드 파일과 클래스를 함께 적용합니다. 클래스가 없으면 기본 브랜드(Default)</span></td></tr>
 <tr><td><b>화면 모드</b><span className="ds-muted">라이트 · 다크</span></td><td>라이트 · 다크 모드를 전환합니다. 화면 코드 변경 없이 클래스 하나로 적용합니다.</td><td><code>{'<body class="dark-mode">'}</code><span className="ds-muted">클래스가 없으면 라이트</span></td></tr>
 </tbody>
 </table>
-<dl className="ds-dl ds-after">
+<h3 className="ds-subhead">문서 기능</h3>
+<dl className="ds-dl">
 <div><dt>코드 보기</dt><dd>예시 카드 하단의 「코드 보기」에서 해당 마크업을 복사할 수 있습니다.</dd></div>
 <div><dt>Playground</dt><dd>컴포넌트 문서 하단 표에서 텍스트 · 중요도 · 스타일 · 상태를 변경하면 미리보기와 코드가 함께 갱신됩니다.</dd></div>
 <div><dt>링크 공유</dt><dd>선택한 브랜드와 화면 모드는 URL에 저장되어, 링크를 공유하면 같은 설정으로 열립니다.</dd></div>
@@ -60,9 +61,11 @@ export const LOAD = [
 <tr><td><b>3. 브랜드 · 화면 모드</b><span className="ds-muted">선택 — 적용하지 않으면 Default · 라이트</span></td><td>브랜드는 브랜드 파일(<code>{'css/brands/*.css'}</code>)과 <code>{'<html class="theme-*">'}</code>를 함께, 다크 모드는 <code>{'<body class="dark-mode">'}</code>로 적용합니다. 화면에 CSS를 추가할 때는 색상에 시맨틱 토큰(<code>--color-*</code>)만 사용하고, 원천 색(<code>--neutral-N</code> · <code>--brand-N</code>)이나 색상 값을 직접 사용하지 않습니다.</td></tr>
 </tbody>
 </table>
+<h3 className="ds-subhead">불러오는 코드</h3>
 <Source language="html" code={LOAD} />
 </Section>
 <Section title="기존 화면에 적용할 때" en="Adopting in existing screens" desc="화면 코드를 한 번에 바꾸지 않고 네 단계로 나누어 적용합니다. 화면에 색상 코드가 남아 있으면 다크 모드에서 그 부분만 밝게 남으므로, 다크 모드는 마지막에 적용합니다.">
+<h3 className="ds-subhead">적용 단계</h3>
 <table className="ds-table">
 <thead><tr><th>단계</th><th>할 일</th><th>화면 코드 수정</th></tr></thead>
 <tbody>
@@ -72,13 +75,15 @@ export const LOAD = [
 <tr><td><b>4. 브랜드 · 다크 모드</b></td><td>브랜드 파일과 클래스를 적용하고 다크 모드를 켭니다.</td><td>없음</td></tr>
 </tbody>
 </table>
-<table className="ds-table ds-after">
-<thead><tr><th>불러오기만 해도 바뀌는 것</th><th>이전 버전과 같은 이름으로 적용되는 것</th><th>새 클래스로 바꿔야 하는 것</th></tr></thead>
+<h3 className="ds-subhead">바뀌는 범위</h3>
+<table className="ds-table">
+<thead><tr><th>불러오기만 해도 바뀌는 것</th><th>기존 화면과 같은 이름으로 적용되는 것</th><th>새 클래스로 바꿔야 하는 것</th></tr></thead>
 <tbody>
-<tr><td>글꼴 · 글자색 · 제목(<code>h1</code>~<code>h6</code>) · 입력칸 높이(<code>input</code> · <code>select</code>) · 체크박스 색 · <code>select.js</code>를 함께 불러오면 화면의 모든 선택 목록</td><td>목록 표 <code>.table_list</code> · 등록 창 섹션 <code>.pro_table</code> · 다중 선택 <code>.checkSelect</code> · 첨부 <code>.resumable</code></td><td>버튼 <code>{'.btn_*'}</code> → <code>{'.btn--*'}</code> · 입력칸 → <code>.input</code> · <code>.select</code> · <code>.textarea</code> · 체크박스 · 라디오 → <code>.checkbox</code> · <code>.radio</code></td></tr>
+<tr><td>글꼴 · 글자색 · 제목(<code>h1</code>~<code>h6</code>) · 입력 필드 높이(<code>input</code> · <code>select</code>) · 체크박스 색 · <code>select.js</code>를 함께 불러오면 화면의 모든 선택 목록</td><td>목록 표 <code>.table_list</code> · 등록 창 섹션 <code>.pro_table</code> · 다중 선택 <code>.checkSelect</code> · 첨부 <code>.resumable</code></td><td>버튼 <code>{'.btn_*'}</code> → <code>{'.btn--*'}</code> · 입력 필드 → <code>.input</code> · <code>.select</code> · <code>.textarea</code> · 체크박스 · 라디오 → <code>.checkbox</code> · <code>.radio</code></td></tr>
 </tbody>
 </table>
-<dl className="ds-dl ds-after">
+<h3 className="ds-subhead">지원 범위</h3>
+<dl className="ds-dl">
 <div><dt>적용 범위</dt><dd>태그 기본값까지 화면 전체에 적용됩니다.</dd></div>
 <div><dt>브랜드 · 모드</dt><dd>페이지 단위로 적용됩니다(<code>html</code> · <code>body</code> 클래스). 화면 일부만 다른 브랜드로 표시할 수 없습니다.</dd></div>
 <div><dt>포함하지 않는 JS</dt><dd>첨부(<code>.resumable</code>)의 파일 올리기, 다중 선택의 사람 검색(서버에 물어 옵션 채우기), 목록 그리드 라이브러리는 서버 · 라이브러리와 묶여 있어 각 시스템이 맡습니다. 디자인 시스템은 그 자리의 모양(CSS)만 제공합니다.</dd></div>

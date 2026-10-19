@@ -6,28 +6,28 @@ import * as S from './Tabs.stories.js';
 
 <Unstyled>
 <div className="ds-page">
-<PageHead eyebrow="Navigation" title="Tabs" lead="같은 자리의 내용을 나눠 보여 주는 탭으로, 팝업 탭과 보조 메뉴 패널 탭이 있습니다." />
+<PageHead eyebrow="Navigation" title="Tabs" lead="같은 영역의 내용을 나누어 표시하는 탭입니다. 상세 창의 팝업 탭(Modal)과 LNB 서브 패널 탭(App Shell)이 있습니다." />
 <Section title="구성" en="Spec">
 <table className="ds-table ds-props">
 <thead><tr><th>구분</th><th>클래스 · 속성</th><th>설명</th></tr></thead>
 <tbody>
-<tr><td><b>팝업 탭</b></td><td><code>.pop .tab</code> › <code>ul</code> › <code>li</code><span className="ds-muted">.pop 안에서만</span></td><td>상세 · 등록 창의 제목 줄 아래. 오른쪽에 <code>.tab-actions</code>(수정 · 개정 같은 버튼)를 함께 둡니다. 선택된 탭은 브랜드 글자와 아래 3px 브랜드 선이고, 마우스를 올린 탭은 글자만 브랜드색이 됩니다. 키보드 포커스는 칸에 옅은 브랜드 바탕입니다.</td></tr>
-<tr><td><b>패널 탭</b></td><td><code>.main-sub-tabs</code> › <code>.sub-tab</code><span className="ds-muted">button</span></td><td>보조 메뉴 패널의 메뉴 · 폴더 전환. 칸을 똑같이 나눠 씁니다. 탭이 하나뿐이면 <code>.is-single</code>로 줄 전체를 숨깁니다.</td></tr>
-<tr><td><b>선택됨</b></td><td><code>.is-active</code> · <code>aria-selected="true"</code></td><td>모양은 클래스가, 스크린 리더 안내는 속성이 맡습니다. 둘을 함께 바꿉니다.</td></tr>
-<tr><td><b>접근성</b></td><td><code>role="tablist"</code> · <code>role="tab"</code> · <code>tabindex</code></td><td>목록에 tablist, 탭마다 tab. 선택된 탭만 <code>tabindex="0"</code>, 나머지는 <code>-1</code>. 이전 버전 팝업 탭은 <code>li</code>라 이 속성을 더해야 키보드로 닿습니다.</td></tr>
-<tr><td><b>키보드</b></td><td><span className="ds-muted">← → · Home · End</span></td><td>Tab으로 탭 줄에 들어와 ← →로 옆 탭, Home · End로 처음 · 끝 탭을 고릅니다(WAI-ARIA APG Tabs, 자동 선택).</td></tr>
+<tr><td><b>팝업 탭</b></td><td><code>.pop .tab</code> › <code>ul</code> › <code>li</code><span className="ds-muted">.pop 안에서만</span></td><td>상세 창의 제목 줄 아래 탭 줄입니다(<a className="ds-link" href="./?path=/docs/overlay-modal--docs" target="_top">Modal</a>). 오른쪽에 창 버튼 <code>.tab-actions</code>(결재 요청 · 수정 · 삭제)를 둡니다.</td></tr>
+<tr><td><b>패널 탭</b></td><td><code>.main-sub-tabs</code> › <code>.sub-tab</code><span className="ds-muted">button</span></td><td>LNB 서브 패널의 메뉴 · 폴더 전환입니다(<a className="ds-link" href="./?path=/docs/navigation-app-shell--docs" target="_top">App Shell</a>). 너비를 균등하게 나눕니다. 탭이 하나뿐이면 <code>.is-single</code>로 탭 줄을 숨깁니다.</td></tr>
+<tr><td><b>선택됨</b></td><td><code>.is-active</code> · <code>aria-selected="true"</code></td><td>선택된 탭입니다. 브랜드 글자 + 아래 3px 브랜드 선(패널 탭은 아래 선)으로 표시합니다. 모양은 클래스가, 스크린 리더 안내는 속성이 맡으므로 둘을 함께 바꿉니다.</td></tr>
+<tr><td><b>접근성</b></td><td><code>role="tablist"</code> · <code>role="tab"</code> · <code>tabindex</code></td><td>목록에 tablist, 탭마다 tab을 붙입니다. 선택된 탭만 <code>tabindex="0"</code>, 나머지는 <code>-1</code>입니다. <code>li</code>로 만든 탭도 이 속성이 있어야 키보드로 이동할 수 있습니다.</td></tr>
+<tr><td><b>키보드</b></td><td><span className="ds-muted">← → · Home · End</span></td><td>Tab으로 탭 줄에 들어와 ← →로 옆 탭, Home · End로 처음 · 끝 탭을 선택합니다(WAI-ARIA APG Tabs, 자동 선택).</td></tr>
 </tbody>
 </table>
-<p className="ds-sec__desc ds-after">Figma UI Kit의 Tabs와 짝입니다. 어디서나 쓰는 단독 탭 클래스(<code>.tabs</code>)는 아직 없어, 두 자리 밖에서 탭이 필요하면 새로 정해야 합니다.</p>
+<p className="ds-sec__desc ds-after">Figma UI Kit의 Tabs와 짝입니다.</p>
 </Section>
 <Section title="예시" en="Examples">
-<Card of={S.팝업_탭} title="팝업 탭" en="Popup tabs" desc="상세 창. 탭을 누르거나 ← →로 바꿔 보세요." />
-<Card of={S.패널_탭} title="패널 탭" en="Panel tabs" desc="보조 메뉴 패널 머리 아래." />
+<Card of={S.팝업_탭} title="팝업 탭" en="Popup tabs" desc="상세 창의 탭 줄. 탭을 누르거나 ← →로 바꿔 보세요." />
+<Card of={S.패널_탭} title="패널 탭" en="Panel tabs" desc="LNB 서브 패널 헤더 아래 탭 줄." />
 </Section>
 <Section title="언제 쓰고 쓰지 말지" en="Do · Don't">
 <Card of={S.사용_지침} code={false} />
 </Section>
-<Section title="전체 상태" en="States" desc="Hovered · Focused는 마우스 · 키보드 상태를 정지 화면으로 보여 준 것입니다.">
+<Section title="전체 상태" en="States" desc="Hovered · Focused는 상호작용 상태를 고정해 표시한 것입니다. Hovered = 글자만 브랜드색, Focused = 옅은 브랜드 바탕입니다.">
 <Card of={S.전체_상태} title="탭 하나" />
 </Section>
 <Section title="Playground" desc="아래 표에서 값을 바꾸면 미리보기와 「코드 보기」가 함께 바뀝니다.">

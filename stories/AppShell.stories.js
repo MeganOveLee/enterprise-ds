@@ -1,5 +1,5 @@
-// Navigation/App Shell — 문서 화면은 AppShell.mdx. 모든 업무 화면이 함께 쓰는 틀: 상단 바(GNB) · 페이지 머리 · 보조 메뉴 패널
-// 아이콘 메뉴(.main-menu) 항목 · 보조 메뉴(.ui-submenu)는 이전 버전 개발 마크업 그대로 — 값만 DS 토큰 (TD-45 45-3)
+// Navigation/App Shell — 문서 화면은 AppShell.mdx. 모든 업무 화면이 함께 쓰는 레이아웃: GNB · LNB(레일 · 서브 패널) · 페이지 헤더 · 푸터
+// LNB 레일(.main-menu) · 서브 메뉴(.ui-submenu) 마크업은 제품 마크업 그대로, 값만 DS 토큰
 import { matrix } from './_matrix.js';
 import { enablePseudo } from './_pseudo.js';
 import { folderIcon } from './_fileicon.js';
@@ -21,7 +21,7 @@ const crumbs = (list) => '<div class="breadcrumb">' + list.map((c, i) => i < lis
 const count = (title, n) => '<div class="menu-container"><button type="button" class="menu-toggle" aria-haspopup="true" aria-expanded="false"><span class="title">' + title + '</span><span class="count">' + n + '</span></button></div>';
 // 사용자 메뉴 버튼 = 사용자 아이콘만(이름 없음). 누르면 사용자 메뉴(화면 모드 · 로그아웃 포함)가 펼쳐짐
 const userBtn = (x = '') => '<div class="menu-container"><button type="button" class="menu-toggle' + x + '" aria-label="사용자 메뉴" aria-haspopup="true" aria-expanded="false">' + svg(I.user, 20) + '</button></div>';
-const actions = (a = 2, b = 0) => '<div class="header-actions">' + userBtn() + count('결재업무', a) + count('활동업무', b) + '</div>';   // 이전 버전 상단 바 그대로: 사용자 아이콘 · 결재업무 · 활동업무만
+const actions = (a = 2, b = 0) => '<div class="header-actions">' + userBtn() + count('결재업무', a) + count('활동업무', b) + '</div>';   // GNB 오른쪽 = 사용자 아이콘 · 결재업무 · 활동업무
 
 const gnb = ({ list = ['Home', '문서 관리', '문서 검색'], a = 2, b = 0 } = {}) =>
   '<header class="gnb"><div style="display:flex;align-items:center">' + history() + crumbs(list) + '</div>' + actions(a, b) + '</header>';
@@ -55,7 +55,7 @@ const tree = () => '<ul class="tree" role="tree" aria-label="문서 폴더">' + 
 const panel = (tabX = '') =>
   '<aside class="main-sub" aria-label="문서 관리 메뉴" style="height:360px">' +
   '<div class="main-sub-header"><h3>문서 관리</h3><button type="button" class="sub-close" aria-label="메뉴 닫기">' + svg(I.close, 14) + '</button></div>' +
-  '<div class="main-sub-tabs" role="tablist"><button type="button" class="sub-tab is-active" role="tab" aria-selected="true">메뉴</button><button type="button" class="sub-tab' + tabX + '" role="tab" aria-selected="false">폴더</button></div>' +
+  '<div class="main-sub-tabs" role="tablist"><button type="button" class="sub-tab" role="tab" aria-selected="false">메뉴</button><button type="button" class="sub-tab is-active' + tabX + '" role="tab" aria-selected="true">폴더</button></div>' +
   '<div class="main-sub-content"><div class="tree-section" style="margin-top:0;border-top:0"><div class="tree-controls">' +
   '<select class="select" aria-label="제품군"><option>전체 제품군</option><option>제동 부품</option></select>' +
   '<div class="tree-search-wrap">' + svg(I.search, 14) + '<input class="tree-search-input" aria-label="폴더 검색" placeholder="폴더 검색"></div></div>' +
@@ -64,7 +64,7 @@ const panel = (tabX = '') =>
 export const 보조_메뉴_패널 = { parameters: { docs: { source: { code: panel() } } }, render: () => '<div style="display:flex">' + panel() + '</div>' };
 export const 바닥 = { render: () => frame('<footer class="gnb-footer">© 2026 Enterprise PLM</footer>') };
 
-// ── 아이콘 메뉴 · 보조 메뉴 (이전 버전 개발 마크업) ──
+// ── LNB 레일 · 서브 메뉴 ──
 const RAIL = {
   work: '<rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 13h8M8 17h5"/>',
   doc: '<path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 12h6M9 16h6"/>',
@@ -79,7 +79,7 @@ const railItem = (ic, t, { current = false, liX = '', aX = '' } = {}) =>
 const LOGO_MARK = '<svg width="34" height="34" viewBox="0 0 34 34" role="img" aria-label="홈"><rect width="34" height="34" rx="8" style="fill:var(--color-bg-brand)"/><path d="M16 10.2l6 3.45v6.9L16 24l-6-3.45v-6.9z" fill="none" stroke-width="2" stroke-linejoin="round" style="stroke:var(--color-icon-on-color)"/></svg>';
 const rail = () =>
   '<aside class="main-menu" style="height:440px"><a class="lnb-logo" href="#">' + LOGO_MARK + '</a><nav aria-label="주 메뉴"><ul>' +
-  railItem('work', '업무관리') + railItem('doc', '문서관리', { current: true }) + railItem('drawing', '도면관리') + railItem('part', '부품관리') +
+  railItem('work', '업무 관리') + railItem('doc', '문서 관리', { current: true }) + railItem('drawing', '도면 관리') + railItem('part', '부품 관리') +
   '</ul><ul>' + railItem('admin', '관리자') + '</ul></nav></aside>';
 export const 아이콘_메뉴 = { parameters: { docs: { source: { code: rail() } } }, render: () => '<div style="display:flex">' + rail() + '</div>' };
 
@@ -97,7 +97,7 @@ const subPanel = () =>
   '<div class="main-sub-content">' + subMenu() + '</div></aside>';
 export const 보조_메뉴 = { parameters: { docs: { source: { code: subMenu() } } }, render: () => '<div style="display:flex">' + subPanel() + '</div>' };
 
-// ── 사용자 메뉴 (이전 버전 개발 마크업) — 상단 바 사용자 아이콘을 누르면 펼침 ──
+// ── 사용자 메뉴 — GNB 사용자 아이콘을 누르면 열림 ──
 const UM = {
   map: '<path d="M3 6l6-3 6 3 6-3v15l-6 3-6-3-6 3z"/><path d="M9 3v15M15 6v15"/>',
   palette: '<circle cx="12" cy="12" r="9"/><circle cx="8" cy="10" r="1.2"/><circle cx="12" cy="7.5" r="1.2"/><circle cx="16" cy="10" r="1.2"/><path d="M12 21a2 2 0 0 1 0-4h1.5a2.5 2.5 0 0 0 0-5"/>',
@@ -127,39 +127,43 @@ const userMenu = ({ name = '김도윤', org = '설계1팀' } = {}) =>
 export const 사용자_메뉴 = { parameters: { docs: { source: { code: userMenu() } } }, render: () => '<div style="padding:8px">' + userMenu() + '</div>' };
 
 export const 사용자_메뉴_상태 = {
-  parameters: { controls: { disable: true }, docs: { source: { language: 'html', code: '<!-- Hovered · Focused 는 마우스 · 키보드에 따라 CSS가 표시. 화면 모드 켬 = aria-checked="true" (이전 버전 마크업 #theme-toggle-button 은 다크 모드일 때) -->' } } },
+  parameters: { controls: { disable: true }, docs: { source: { language: 'html', code: '<!-- Hovered · Focused 는 마우스 · 키보드에 따라 CSS가 표시. 화면 모드 켬 = aria-checked="true" -->' } } },
   render: () => {
     enablePseudo();
-    // 줄 하나만 잘라 보여 줌 — 규칙이 「로그아웃 버튼이 든 펼침」에만 걸리므로 빈 로그아웃 자리를 숨겨 둠
-    const box = (h) => '<div class="dropdown-content-top" style="border-radius:0;box-shadow:none"><div class="section">' + h + '</div><div class="logoutBtn" hidden></div></div>';
-    const foot = (h) => '<div class="dropdown-content-top" style="border-radius:0;box-shadow:none"><div class="section"><div class="logoutBtn">' + h + '</div></div></div>';
+    // 행 하나만 잘라 보여 줌 — 규칙이 「로그아웃 버튼이 든 펼침」에만 걸리므로 빈 로그아웃 자리를 숨겨 둠
+    // 카드 폭 안에 3열이 들어가게 패널 폭 220(제품 258)
+    const box = (h) => '<div class="dropdown-content-top" style="border-radius:0;box-shadow:none;width:220px"><div class="section">' + h + '</div><div class="logoutBtn" hidden></div></div>';
+    const foot = (h) => '<div class="dropdown-content-top" style="border-radius:0;box-shadow:none;width:220px"><div class="section"><div class="logoutBtn">' + h + '</div></div></div>';
     const link = (x) => box(umRow('map', '사이트맵', '<a href="#" class="' + x.trim() + '" aria-label="사이트맵"></a>', x.includes('hover') ? ' ps-hover' : ''));
     const dl = (x) => box(umRow('download', '뷰어 다운로드', umDownload(x)));
     const lang = (x) => box(umRow('globe', '언어 설정', umLang(x)));
     const sw = (on, x = '') => box(umRow('moon', '화면 모드', umSwitch(on, x)));
-    return matrix(['줄 링크', '내려받기', '언어', '화면 모드', '로그아웃'], [
-      ['Default', [link(''), dl(''), lang(''), sw(false), foot(umLogout())]],
-      ['Hovered', [link(' ps-hover'), dl(' ps-hover'), '—', '—', foot(umLogout(' ps-hover'))]],
-      ['Focused', [link(' ps-focus-visible'), dl(' ps-focus-visible'), lang(' ps-focus-visible'), sw(false, ' ps-focus-visible'), foot(umLogout(' ps-focus-visible'))]],
-      ['켬', ['—', '—', '—', sw(true), '—']],
+    // 행 = 항목, 열 = 상태
+    return matrix(['Default', 'Hovered', 'Focused'], [
+      ['행 링크', [link(''), link(' ps-hover'), link(' ps-focus-visible')]],
+      ['내려받기', [dl(''), dl(' ps-hover'), dl(' ps-focus-visible')]],
+      ['언어', [lang(''), '—', lang(' ps-focus-visible')]],
+      ['화면 모드 · 끔', [sw(false), '—', sw(false, ' ps-focus-visible')]],
+      ['화면 모드 · 켬', [sw(true), '—', sw(true, ' ps-focus-visible')]],
+      ['로그아웃', [foot(umLogout()), foot(umLogout(' ps-hover')), foot(umLogout(' ps-focus-visible'))]],
     ]);
   },
 };
 
-// 아이콘 메뉴 · 보조 메뉴 상태 — Hovered · Focused 는 정지 화면 클래스(.ps-*)
+// LNB 레일 · 서브 메뉴 상태 — Hovered · Focused 는 정지 화면 클래스(.ps-*)
 export const 메뉴_상태 = {
-  parameters: { controls: { disable: true }, docs: { source: { language: 'html', code: '<!-- 지금 화면 = a 에 aria-current="page"(이전 버전 .active · .in 도 받음). Hovered · Focused 는 마우스 · 키보드에 따라 CSS가 표시 -->' } } },
+  parameters: { controls: { disable: true }, docs: { source: { language: 'html', code: '<!-- 지금 화면 = a 에 aria-current="page". Hovered · Focused 는 마우스 · 키보드에 따라 CSS가 표시 -->' } } },
   render: () => {
     enablePseudo();
     // 상태마다 영역 이름을 따로 — 같은 이름 없는 영역이 여러 개면 화면 읽기에서 구분이 안 됨(접근성 검사 landmark-unique)
-    const one = (o) => '<aside class="main-menu" aria-label="아이콘 메뉴 예시 — ' + o.name + '" style="height:auto;width:60px;border:0"><nav aria-label="주 메뉴 예시 — ' + o.name + '"><ul>' + railItem('doc', '문서관리', o) + '</ul></nav></aside>';
+    const one = (o) => '<aside class="main-menu" aria-label="LNB 레일 예시 — ' + o.name + '" style="height:auto;width:60px;border:0"><nav aria-label="주 메뉴 예시 — ' + o.name + '"><ul>' + railItem('doc', '문서 관리', o) + '</ul></nav></aside>';
     const flat = (o) => '<div class="ui-submenu" style="width:200px;padding:0;text-align:start"><ul><li class="ui-submenu-flat"><a href="#" class="' + (o.aX || '') + '"' + (o.current ? ' aria-current="page"' : '') + '>문서 검색</a></li></ul></div>';
     const list = (o) => '<div class="ui-submenu" style="width:200px;padding:0;text-align:start"><ul class="ui-submenu-list" style="margin-left:0"><li><a href="#" class="' + (o.aX || '') + '"' + (o.current ? ' aria-current="page"' : '') + '>변경 요청</a></li></ul></div>';
-    return matrix(['아이콘 메뉴', '보조 메뉴', '3단계 목록'], [
+    return matrix(['LNB 레일', '서브 메뉴', '3단계 목록'], [
       ['Default', [one({ name: 'Default' }), flat({}), list({})]],
       ['Hovered', [one({ name: 'Hovered', liX: 'ps-hover', aX: 'ps-hover' }), flat({ aX: 'ps-hover' }), list({ aX: 'ps-hover' })]],
       ['Focused', [one({ name: 'Focused', aX: 'ps-focus-visible' }), flat({ aX: 'ps-focus-visible' }), list({ aX: 'ps-focus-visible' })]],
-      ['지금 화면', [one({ name: '지금 화면', current: true }), flat({ current: true }), list({ current: true })]],
+      ['Current', [one({ name: '현재 화면', current: true }), flat({ current: true }), list({ current: true })]],
     ]);
   },
 };
@@ -179,8 +183,8 @@ export const 전체_상태 = {
       ['Hovered', row(' ps-hover')],
       ['Pressed', [wrapGnb('<div class="nav-history" style="margin:0">' + nh(' ps-active') + '</div>'), '—', '—', '—']],
       ['Focused', row(' ps-focus-visible')],
-      ['선택됨', ['—', '—', '—', tab('', true)]],
-    ]) + '<p class="sb-note" style="margin:8px 0 0">포커스는 버튼과 같은 2px 바깥 테두리입니다. 사용자 메뉴 · 업무 개수 버튼(.menu-toggle)은 마우스 올림 모양 없이 포커스만 있습니다.</p>';
+      ['Selected', ['—', '—', '—', tab('', true)]],
+    ]) + '<p class="sb-note" style="margin:8px 0 0">Focused = 포커스 테두리(--color-border-focus) + 바깥 3px 링(--color-focus-ring), 입력 필드와 같은 표시입니다. 패널 탭은 옅은 브랜드 바탕입니다. 사용자 메뉴 · 업무 개수 버튼(.menu-toggle)은 Hovered 모양 없이 Focused만 있습니다.</p>';
   },
 };
 

@@ -27,9 +27,9 @@ export default {
   render: (args) => `<div style="max-width:280px">${field(args)}</div>`,
   argTypes: {
     kind: { control: 'inline-radio', options: ['input', 'select', 'textarea'], description: '종류 — `.input` · `.select` · `.textarea`' },
-    state: { control: 'inline-radio', options: ['default', 'error', 'disabled', 'readonly'], description: '상태 — 오류 = `aria-invalid="true"`. select에서 readonly를 고르면 readonly input으로 그림(select는 readonly가 안 됨)' },
+    state: { control: 'inline-radio', options: ['default', 'error', 'disabled', 'readonly'], description: '상태 — 오류 = `aria-invalid="true"`. 셀렉트에서 readonly를 고르면 readonly 텍스트 필드로 그림(셀렉트는 readonly가 없음)' },
     value: { control: 'text', description: '값' },
-    placeholder: { control: 'text', description: '빈 칸 안내 글자' },
+    placeholder: { control: 'text', description: 'placeholder — 입력 전 안내 글자' },
   },
   args: { kind: 'input', state: 'default', value: '', placeholder: '부품 번호 입력' },
   parameters: { docs: { source: { language: 'html' } } },
@@ -72,13 +72,13 @@ export const Locked = {
     ['미리보기', LOCKED],
     ['속성', [code('disabled'), code('readonly')]],
     ['쓰임', [
-      note('지금은 쓸 수 없는 칸 — 조건이 맞으면 열림<br>Tab으로 가지 않고, 폼을 보낼 때 값이 빠짐'),
-      note('값을 보여 주기만 하는 칸 — 상세 화면 · 결재 끝난 문서<br>Tab으로 들어가 값을 복사할 수 있고, 값은 함께 보내짐'),
+      note('지금 입력할 수 없는 필드 — 조건이 맞으면 활성<br>Tab 순서에서 빠지고, 값은 제출되지 않음'),
+      note('값을 표시만 하는 필드 — 상세 화면 · 결재가 끝난 문서<br>Tab으로 이동해 값을 복사할 수 있고, 값은 제출됨'),
     ]],
   ], { full: true }),
 };
 
-// ── 선택 목록 (TD-101) — js/select.js 가 select 를 같은 목록(.ui-select)으로 바꿈. 왼쪽 = 눌러 보기, 오른쪽 = 열린 모습(정지 화면) ──
+// ── 셀렉트 목록 — js/select.js 가 select 를 같은 목록(.ui-select)으로 바꿈. 왼쪽 = 눌러 보기, 오른쪽 = 열린 모습(정지 화면) ──
 const SEL_OPTS = ['전체', '작업 중', '검토 중', '승인', '반려'];
 const CHEV = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>';
 const openList = (id, pick, act) => '<div class="ui-select"><div class="ui-select__trigger is-open" role="combobox" tabindex="0" aria-haspopup="listbox" aria-expanded="true" aria-controls="' + id + '-list" aria-labelledby="' + id + '-lb" aria-activedescendant="' + id + '-opt-' + act + '">' +
@@ -108,9 +108,9 @@ export const 선택_목록 = {
   render: () => {
     const el = document.createElement('div');
     el.innerHTML = matrix(['눌러 보기', '열린 모습'], [
-      ['미리보기', ['<div class="form-grid-2" style="grid-template-columns:1fr;width:220px"><div class="ff-field"><label class="search-label" for="in-sel-live">작업현황</label><div class="td">' +
+      ['미리보기', ['<div class="form-grid-2" style="grid-template-columns:1fr;width:220px;text-align:left"><div class="ff-field"><label class="search-label" for="in-sel-live">작업현황</label><div class="td">' +
         '<select class="select" id="in-sel-live">' + SEL_OPTS.map((o) => '<option>' + o + '</option>').join('') + '</select></div></div></div>',
-        '<div class="form-grid-2" style="grid-template-columns:1fr;width:220px;min-height:208px"><div class="ff-field"><span class="search-label" id="in-sel-open-lb">작업현황</span><div class="td">' + openList('in-sel-open', 2, 3) + '</div></div></div>']],
+        '<div class="form-grid-2" style="grid-template-columns:1fr;width:220px;min-height:208px;text-align:left"><div class="ff-field"><span class="search-label" id="in-sel-open-lb">작업현황</span><div class="td">' + openList('in-sel-open', 2, 3) + '</div></div></div>']],
       ['쓰임', [note('누르거나 ↓ · Enter로 열고, ↑↓로 옮겨 Enter로 고릅니다<br>Esc = 고르지 않고 닫기 · 글자 입력 = 그 글자로 시작하는 항목'), note('고른 항목 = 옅은 브랜드 바탕 + 오른쪽 ✓<br>키보드로 옮긴 항목 = 테두리(포커스는 상자에 둠)')]],
     ], { full: true });
     setTimeout(() => { const sel = el.querySelector('#in-sel-live'); if (sel && window.buildCustomSelect) window.buildCustomSelect(sel); }, 0);
@@ -120,7 +120,7 @@ export const 선택_목록 = {
 
 // ── 전체 상태 ──
 // ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-70) — 입력 · 선택 ──
-const ff = (label, ctl, id) => '<div class="form-grid-2" style="grid-template-columns:1fr;width:220px"><div class="ff-field"><label class="search-label" for="' + id + '">' + label + '</label><div class="td">' + ctl + '</div></div></div>';
+const ff = (label, ctl, id) => '<div class="form-grid-2" style="grid-template-columns:1fr;width:220px;text-align:left"><div class="ff-field"><label class="search-label" for="' + id + '">' + label + '</label><div class="td">' + ctl + '</div></div></div>';
 const one = (ctl) => '<div style="width:220px">' + ctl + '</div>';
 export const 사용_지침 = {
   parameters: { controls: { disable: true } },
@@ -136,7 +136,7 @@ export const 사용_지침 = {
       dont: [ff('작업현황', '<input class="input" id="dd-st2" placeholder="작업 중 / 검토 중 중에서 입력">', 'dd-st2'),
         '직접 입력하면 같은 값을 다르게 적어 검색에서 빠집니다.'] },
     { title: '두세 개를 한눈에 비교할 때는 라디오',
-      do: ['<div class="form-grid-2" style="grid-template-columns:1fr;width:220px"><div class="ff-field"><span class="search-label" id="dd-ver">버전</span><div class="radio-group" role="radiogroup" aria-labelledby="dd-ver">' +
+      do: ['<div class="form-grid-2" style="grid-template-columns:1fr;width:220px;text-align:left"><div class="ff-field"><span class="search-label" id="dd-ver">버전</span><div class="radio-group" role="radiogroup" aria-labelledby="dd-ver">' +
         '<label class="radio"><input type="radio" name="dd-ver" checked><span class="radio__mark"></span>최신 버전</label><label class="radio"><input type="radio" name="dd-ver"><span class="radio__mark"></span>모든 버전</label></div></div></div>',
         '선택지가 두세 개면 라디오 묶음(.radio-group)으로 펼쳐 둡니다. 누르지 않아도 모두 보입니다.'],
       dont: [ff('버전', '<select class="select" id="dd-ver2"><option>최신 버전</option><option>모든 버전</option></select>', 'dd-ver2'),
@@ -164,17 +164,20 @@ export const 전체_상태 = {
   ]),
   render: () => {
     enablePseudo();
-    const st = [['기본', 'default', ''], ['값 있음', 'default', 'v'], ['Hovered', 'default', 'v', 'ps-hover'], ['Focused', 'default', 'v', 'ps-focus'],
-      ['error', 'error', 'v'], ['disabled', 'disabled', 'v'], ['readonly', 'readonly', 'v']];
+    const st = [['Default', 'default', ''], ['Filled', 'default', 'v'], ['Hovered', 'default', 'v', 'ps-hover'], ['Focused', 'default', 'v', 'ps-focus'],
+      ['Error', 'error', 'v'], ['Disabled', 'disabled', 'v'], ['Readonly', 'readonly', 'v']];
+    // 셀렉트는 js/select.js 가 .ui-select 로 바꾸므로, Hovered · Focused 는 바뀐 트리거에 상태 클래스를 붙여 그림
+    const trig = (cls) => '<div class="ui-select"><div class="ui-select__trigger ' + cls + '" role="combobox" tabindex="-1" aria-haspopup="listbox" aria-expanded="false" aria-label="상태 예시"><span class="ui-select__value">' + val.select + '</span><span class="ui-select__chevron">' + CHEV + '</span></div></div>';
     const val = { input: 'BRK-20417', select: '설계 변경', textarea: '홀 위치 2mm 이동' };
     const ph = { input: '부품 번호 입력', select: '', textarea: '변경 사유' };
     const kinds = ['input', 'select', 'textarea'];
     const na = '<span class="sb-h">—</span>';
     const rows = st.map(([name, state, v, cls]) =>
       [name, kinds.map((k) => (k === 'select' && state === 'readonly' ? na
+        : k === 'select' && cls ? trig(cls)
         : field({ kind: k, state, value: v ? val[k] : '', placeholder: ph[k] || name, cls })))]);
     return matrix(kinds.map((k) => '.' + k), rows, { wide: true }) +
-      '<p class="sb-note" style="margin:8px 0 0">select의 readonly 칸은 비워 둡니다 — 네이티브 select는 readonly가 되지 않습니다. 값만 보여 줄 때는 readonly input을 씁니다.</p>';
+      '<p class="sb-note" style="margin:8px 0 0">셀렉트에는 Readonly가 없습니다(네이티브 select는 readonly가 되지 않음). 값만 표시할 때는 readonly 텍스트 필드를 씁니다.</p>';
   },
 };
 

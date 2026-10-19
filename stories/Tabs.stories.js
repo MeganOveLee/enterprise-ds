@@ -1,5 +1,5 @@
 // Navigation/Tabs — 문서 화면은 Tabs.mdx. 같은 자리의 내용을 나눠 보여 주는 탭
-// DS 탭은 두 자리에만 있음: 팝업(상세 · 등록 창) 탭 .pop .tab · 보조 메뉴 패널 탭 .main-sub-tabs. 어디서나 쓰는 단독 .tabs 는 아직 없음
+// DS 탭은 두 자리: 팝업(상세 창) 탭 .pop .tab · LNB 서브 패널 탭 .main-sub-tabs
 // 여기 스토리는 누르면 탭이 바뀌는 짧은 스크립트를 붙여 눌러 볼 수 있게 함(제품은 탭 로더 스크립트)
 import { matrix } from './_matrix.js';
 import { enablePseudo } from './_pseudo.js';
@@ -19,9 +19,10 @@ const popFrame = (inner) => '<div class="pop" style="height:auto;min-width:0;ove
 
 // 패널 탭 — button. 탭이 하나뿐이면 .is-single 로 줄 전체를 숨김
 const panelTabs = (tabs = ['메뉴', '폴더'], active = 0, x = []) =>
-  '<div class="main-sub-tabs" role="tablist" aria-label="보조 메뉴">' +
+  '<div class="main-sub-tabs" role="tablist" aria-label="LNB 서브 패널">' +
   tabs.map((t, i) => '<button type="button" role="tab" aria-selected="' + (i === active) + '" tabindex="' + (i === active ? 0 : -1) + '" class="sub-tab' + (i === active ? ' is-active' : '') + (x[i] || '') + '">' + t + '</button>').join('') + '</div>';
-const panelFrame = (inner) => '<aside class="main-sub" style="height:auto">' + inner + '<div style="padding:24px 16px;color:var(--color-text-muted);font-size:var(--body-sm)">패널 내용</div></aside>';
+const XI = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+const panelFrame = (inner) => '<aside class="main-sub" aria-label="문서 관리 메뉴" style="height:auto"><div class="main-sub-header"><h3>문서 관리</h3><button type="button" class="sub-close" aria-label="메뉴 닫기">' + XI + '</button></div>' + inner + '<div style="padding:24px 16px;color:var(--color-text-muted);font-size:var(--body-sm)">패널 내용</div></aside>';
 
 // 누르면 바뀜 + ← → 로 옆 탭, Home · End 로 처음 · 끝 (WAI-ARIA APG Tabs, 자동 선택)
 const wire = (root) => {
@@ -109,6 +110,6 @@ export const 사용_지침 = {
     // 근거: Tabs.mdx 머리 설명 「같은 자리의 내용을 나눠 보여 주는 탭」 · 화면 이동은 App Shell 보조 메뉴(.ui-submenu)
     { title: '같은 창 안의 내용 전환에만',
       do: [ddPop(['기본 정보', '첨부 파일', '결재 이력']), '한 문서의 내용을 나눠 보여 줄 때 씁니다.'],
-      dont: [ddPop(['문서 검색', '문서 등록', '도면 검색']), '다른 화면으로 가는 메뉴는 탭이 아니라 보조 메뉴로 둡니다.'] },
+      dont: [ddPop(['문서 검색', '문서 등록', '도면 검색']), '다른 화면으로 가는 메뉴는 탭이 아니라 서브 메뉴로 둡니다.'] },
   ]),
 };

@@ -1,5 +1,5 @@
-// Feedback/고르는 법 — 문서 화면은 ChooseFeedback.mdx. 상태를 알리는 컴포넌트 중 무엇을 쓰는지 한 표로 (TD-104 반영 3)
-// 기준 문장은 새로 만들지 않고 각 컴포넌트 문서의 머리 문장 · 구성 · 「언제 쓰고 쓰지 말지」에서 가져온다
+// Feedback/고르는 법 — 문서 화면은 ChooseFeedback.mdx. 피드백 컴포넌트의 표준 이름 · 정의 · 고르는 기준을 한 표로
+// 이름 · 정의 = 공개 DS 문서(KRDS · Carbon · Polaris · Atlassian)의 표준 용어
 import { matrix } from './_matrix.js';
 
 const svg = (d, s = 16) => '<svg width="' + s + '" height="' + s + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + d + '</svg>';
@@ -12,30 +12,32 @@ const I = {
 const INBOX = '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M6 28 12 10h24l6 18v10H6z"/><path d="M6 28h11l3 5h8l3-5h11"/></svg>';
 const link = (name, path) => '<a class="text-link no-arrow" href="./?path=/docs/' + path + '--docs" target="_top">' + name + '</a>';
 const code = (t) => '<code>' + t + '</code>';
-const note = (t) => '<span class="sb-note">' + t + '</span>';
+const note = (t) => '<span class="sb-note" style="display:block;text-align:left">' + t + '</span>';
+const left = (h) => '<div style="text-align:left">' + h + '</div>';
 
+// [표준 이름, 미리보기, 컴포넌트 링크 · 클래스, 정의, 고르는 기준]
 const ROWS = [
-  ['읽고 넘어갈 조건 · 오류',
-    '<div class="alert alert--warning" role="status" style="max-width:300px"><span class="alert__icon">' + svg(I.warning) + '</span><div class="alert__body"><strong class="alert__title">결재 중에는 수정할 수 없어요</strong></div></div>',
-    link('Alert', 'feedback-alert') + ' ' + code('.alert'), '읽고 넘어갈 때까지 화면에 남습니다.'],
-  ['방금 한 일의 결과',
-    '<div class="toast toast--success" style="max-width:280px"><span class="toast__icon">' + svg(I.success) + '</span><span class="toast__msg">저장했어요.</span></div>',
-    link('Toast', 'feedback-toast') + ' ' + code('.toast'), '저장 · 복사의 결과. 잠깐 뜨고 사라집니다.'],
-  ['글자 없는 버튼의 이름',
+  ['인라인 알림',
+    '<div class="alert alert--warning" role="status" style="max-width:280px"><span class="alert__icon">' + svg(I.warning) + '</span><div class="alert__body"><strong class="alert__title">결재 중에는 수정할 수 없어요</strong></div></div>',
+    link('Alert', 'feedback-alert') + ' ' + code('.alert'), '화면 안에 배치되어, 해결하거나 닫을 때까지 남는 상태 메시지입니다.', '현재 화면의 안내 · 경고 · 오류. 서버 검증 오류는 필드 오류와 함께 표시합니다.'],
+  ['토스트',
+    '<div class="toast toast--success" style="max-width:260px"><span class="toast__icon">' + svg(I.success) + '</span><span class="toast__msg">저장했어요.</span></div>',
+    link('Toast', 'feedback-toast') + ' ' + code('.toast'), '사용자 동작의 결과를 잠시 표시하고 사라지는 알림입니다.', '저장 · 삭제의 결과. 입력 오류 · 긴 설명 · 중요한 내용에는 쓰지 않습니다.'],
+  ['툴팁',
     '<div style="padding-top:36px"><span class="has-tooltip"><button type="button" class="btn btn--secondary btn--transparent btn--icon" aria-label="첨부 받기" aria-describedby="cfb-tt">' + svg(I.down) + '</button><span class="tooltip is-open" role="tooltip" id="cfb-tt">첨부 받기</span></span></div>',
-    link('Tooltip', 'feedback-tooltip') + ' ' + code('.tooltip'), '꼭 알아야 할 내용은 툴팁 밖에 둡니다.'],
-  ['보여 줄 내용이 없음',
-    '<div class="empty empty--card" role="status" style="max-width:260px;border:1px solid var(--color-border-base);border-radius:var(--radius-card)"><span class="empty__icon">' + INBOX + '</span><p class="empty__title">결재할 문서가 없어요</p></div>',
-    link('Empty', 'feedback-empty') + ' ' + code('.empty'), '빈 이유와 다음 행동을 함께 알립니다.'],
-  ['진행률을 모르는 기다림',
+    link('Tooltip', 'feedback-tooltip') + ' ' + code('.tooltip'), '포인터를 올리거나 포커스가 갔을 때 나타나는 짧은 보조 설명입니다.', '라벨 없는 아이콘 버튼. 필수 정보 · 오류 · 링크가 필요한 설명에는 쓰지 않습니다.'],
+  ['빈 상태',
+    '<div class="empty empty--card" role="status" style="max-width:240px;border:1px solid var(--color-border-base);border-radius:var(--radius-card)"><span class="empty__icon">' + INBOX + '</span><p class="empty__title">결재할 문서가 없어요</p><p class="empty__desc">결재 요청이 오면 이 목록에 표시돼요.</p></div>',
+    link('Empty', 'feedback-empty') + ' ' + code('.empty'), '표시할 데이터가 없을 때 이유와 다음 동작을 안내하는 영역입니다.', '데이터 없음 · 검색 결과 없음. 표 · 카드 · 페이지 단위로 배치합니다.'],
+  ['스피너',
     '<div class="loading" role="status" aria-live="polite"><span class="spinner" aria-hidden="true"></span><p class="loading__text">문서 목록을 불러오는 중입니다</p></div>',
-    link('Loading', 'feedback-loading') + ' ' + code('.loading'), '3초 미만은 스피너만, 3~10초는 문구, 더 길면 진행 상황 + 취소.'],
-  ['내용이 오기 전',
-    '<div style="display:grid;gap:8px;width:240px" aria-hidden="true"><span class="skeleton-title"></span><span class="skeleton-line"></span><span class="skeleton-line" style="width:70%"></span></div>',
-    link('Skeleton', 'feedback-skeleton') + ' ' + code('.skeleton-line'), '실제 내용과 같은 자리 모양을 먼저 보입니다.'],
-  ['진행 정도',
-    '<div class="progress-bar progress-bar--progress" role="progressbar" aria-label="전체 진행률" aria-valuenow="58" aria-valuemin="0" aria-valuemax="100" style="width:200px"><div class="pbar-fill" style="width:58%"></div><span class="progress-bar__label">58%</span></div>',
-    link('Progress', 'feedback-progress') + ' ' + code('.progress-bar'), '얼마나 진행됐는지 보여 주기만 합니다.'],
+    link('Loading', 'feedback-loading') + ' ' + code('.loading'), '처리 중임을 알리는 회전 표시입니다.', '1초 이상 걸리고 진행률을 모를 때. 한 영역에 하나만 둡니다.'],
+  ['스켈레톤',
+    '<div style="display:grid;gap:8px;width:220px" aria-hidden="true"><span class="skeleton-title"></span><span class="skeleton-line"></span><span class="skeleton-line" style="width:70%"></span></div>',
+    link('Skeleton', 'feedback-skeleton') + ' ' + code('.skeleton-line'), '콘텐츠가 들어올 자리를 실제 크기 · 모양으로 미리 표시하는 자리 표시자입니다.', '첫 로드의 표 · 카드. 버튼 · 입력 필드 · 토스트에는 쓰지 않습니다.'],
+  ['진행 바',
+    '<div class="progress-bar progress-bar--progress" role="progressbar" aria-label="전체 진행률" aria-valuenow="58" aria-valuemin="0" aria-valuemax="100" style="width:180px"><div class="pbar-fill" style="width:58%"></div><span class="progress-bar__label">58%</span></div>',
+    link('Progress', 'feedback-progress') + ' ' + code('.progress-bar'), '작업이 얼마나 진행됐는지 비율로 표시하는 막대입니다.', '진행률을 셀 수 있는 작업, 프로젝트 · 태스크의 진행률.'],
 ];
 
 export default {
@@ -45,5 +47,5 @@ export default {
 };
 
 export const 고르는_표 = {
-  render: () => matrix(['미리보기', '컴포넌트', '기준'], ROWS.map(([when, view, comp, why]) => [when, [view, comp, note(why)]]), { full: true }),
+  render: () => matrix(['미리보기', '컴포넌트', '정의', '고르는 기준'], ROWS.map(([name, view, comp, def, why]) => [name, [left(view), comp, note(def), note(why)]]), { full: true }),
 };

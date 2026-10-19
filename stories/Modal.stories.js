@@ -1,6 +1,5 @@
 // Overlay/Modal — 문서 화면은 Modal.mdx. Figma 이름은 Modal, DS 클래스는 .pop(팝업 창)
 // 제품은 상세 · 등록 화면을 새 창으로 띄우고, .pop 이 그 창 한 장을 채우는 틀(높이 100vh · 내용이 넘치면 창 안에서 스크롤)
-// 같은 페이지 위에 띄우는 대화 상자(덮개 · 포커스 가두기 · role="dialog")는 DS에 아직 없음 — Screens 문서 등록 화면의 덮개는 화면 보조 CSS
 // 여기서는 창 크기를 정해 둔 틀(win) 안에 .pop 을 그림. 높이만 틀에 맞추고(100vh → 100%) 나머지 규칙은 DS 그대로
 import { matrix } from './_matrix.js';
 import { enablePseudo } from './_pseudo.js';
@@ -15,24 +14,24 @@ const I = {
 };
 const btn = (t, cls) => '<button type="button" class="btn ' + cls + '">' + t + '</button>';
 
-// ── 조각 ── (상세 창 = 이전 버전 문서 상세 팝업 캡쳐 「08_문서 상세 팝업」과 같은 배치)
+// ── 조각 ──
 const top = ({ title = '문서 - DOC-2610-0013, 브레이크 캘리퍼 조립 사양서, A.2', version = '', buttons = '' } = {}) =>
   '<div class="top"><div class="top-title-area"><span class="doc-type-badge">' + svg(I.doc, 16) + '</span><h3>' + title + '</h3>' +
   (version ? '<span class="version">' + version + '</span>' : '') + '</div>' +
   '<div class="top-btn-area">' + buttons + '<button type="button" class="pop-close" aria-label="닫기">' + svg(I.close, 14) + '</button></div></div>';
 const TABS = ['세부 내용', '관련 객체', '이력'];
-// 탭 줄 — 오른쪽 버튼(.tab-actions)은 이전 버전처럼 탭 줄에
+// 탭 줄 — 오른쪽 버튼(.tab-actions)은 탭 줄에
 const tabs = (list = TABS, actions = '') =>
   '<div class="tab"><ul role="tablist" aria-label="문서 상세">' +
   list.map((t, i) => '<li role="tab" tabindex="' + (i ? -1 : 0) + '" aria-selected="' + !i + '"' + (i ? '' : ' class="is-active"') + '>' + t + '</li>').join('') + '</ul>' +
   (actions ? '<div class="tab-actions">' + actions + '</div>' : '') + '</div>';
-// 핵심 동작 하나만 primary(Button 「언제 쓰고 쓰지 말지」) — 결재 요청만 채운 primary, 수정은 secondary outlined. 배치는 이전 버전 그대로 (TD-70). 구: 수정도 primary
+// 핵심 동작 하나만 primary — 결재 요청 = primary filled, 수정 = secondary outlined, 삭제 = destructive outlined (Button 업무 동작별 버튼)
 const VIEW_ACTIONS = btn('결재 요청', 'btn--primary btn--filled') + btn('수정', 'btn--secondary btn--outlined') + btn('삭제', 'btn--destructive btn--outlined');
-// 줄 = 칸 한두 개. 칸 하나면 줄 전체 폭
+// 행 = 필드 한두 개. 필드 하나면 행 전체 폭
 const ROWS = [
   [['문서 명', '브레이크 캘리퍼 조립 사양서']],
   [['문서 번호', 'DOC-2610-0013'], ['문서 분류', '/제품 문서/설계 문서']],
-  [['작업 현황', '작업중'], ['버전', 'A.2']],
+  [['작업현황', '작업 중'], ['버전', 'A.2']],
   [['등록자', '김도윤'], ['등록일', '2026-10-06 09:12:40']],
   [['수정자', '김도윤'], ['수정일', '2026-10-13 16:43:24']],
   [['설명', '조립 순서와 체결 토크 기준을 정리한 사양서']],
@@ -42,26 +41,31 @@ const SUB_FILES = ['체결 토크 시험 결과.xlsx', '조립도_BRK-20417.dwg'
 const files = (list) => '<ul class="file-download-list">' + list.map((n) =>
   '<li>' + fileIcon(n) + '<a class="file-name" href="#" download>' + n + '</a></li>').join('') + '</ul>';
 const row = (cells) => '<dl class="detail-dl__row">' + cells.map(([k, v]) => '<div><dt>' + k + '</dt><dd>' + v + '</dd></div>').join('') + '</dl>';
-// 값 보기 — 섹션 머리 + 옅은 회색 카드 안에 줄
+// 값 보기 — 섹션 헤더 + 옅은 회색 카드 안에 행
 const dl = () => '<div class="seach_arm"><div class="leftbt"><h4>기본 정보</h4></div></div>' +
   '<div class="pro_table"><div class="detail-dl">' + ROWS.map(row).join('') +
   row([['주 첨부 파일', files(MAIN_FILE)]]) + row([['부 첨부 파일', files(SUB_FILES)]]) + '</div></div>';
 
-// 상세 창 — 제목 줄(닫기만) + 탭 줄(탭 · 오른쪽 버튼) + 내용(.contents) = 섹션 머리 · 값 보기 카드
+// 상세 창 — 제목 줄(닫기만) + 탭 줄(탭 · 오른쪽 버튼) + 내용(.contents) = 섹션 헤더 · 값 보기 카드
 const viewPop = ({ title, version, withTabs = true } = {}) =>
   top({ title, version }) +
   (withTabs ? tabs(TABS, VIEW_ACTIONS) : '') +
   '<div class="contents">' + dl() + '</div>';
 
-// 등록 창 — 탭 없음. 제목 줄 버튼 = 임시 저장 · 등록, 내용(.product) = 라벨 위 폼 (Input 문서와 같은 칸)
+// 등록 창 — 탭 없음. 제목 줄 버튼 = 임시 저장 · 등록, 내용(.contents) = 접는 섹션 상자(섹션 헤더 + 폼, 배경 bg-muted). Screens 등록 창과 같은 구성
 const field = (label, control, { req = false, id = '', col2 = false } = {}) =>
   '<div class="ff-field' + (col2 ? ' col-2' : '') + '"><label class="search-label"' + (id ? ' for="' + id + '"' : '') + '>' + label +
   (req ? '<span class="required" aria-hidden="true"></span>' : '') + '</label><div class="td">' + control + '</div></div>';
-let uid = 0;   // 한 문서 화면에 등록 창이 두 번 그려질 수 있어 라벨 · 칸 id 를 겹치지 않게
+let uid = 0;   // 한 문서 화면에 등록 창이 두 번 그려질 수 있어 라벨 · 필드 id 를 겹치지 않게
+const MINUS = '<path d="M6 12h12"/>';
+const sectionHead = (title, right = '') =>
+  '<div class="seach_arm"><div class="leftbt"><button type="button" class="section-toggle" aria-expanded="true" aria-label="' + title + ' 접기">' + svg(MINUS, 16) + '</button><h4>' + title + '</h4></div>' +
+  (right ? '<div class="rightbt">' + right + '</div>' : '') + '</div>';
 const registerPop = ({ title = '문서 등록' } = {}, u = 'mdl' + (++uid)) =>
   top({ title, version: '', buttons: btn('임시 저장', 'btn--secondary btn--outlined') + btn('등록', 'btn--primary btn--filled') }) +
-  '<div class="product"><div class="pro_table"><div class="form-grid-2">' +
-  field('문서 분류', '<div class="ff-readonly">/제품 문서/설계 문서/사양서</div>') +
+  '<div class="contents">' + sectionHead('기본 정보', '<span class="section-meta"><span class="required" aria-hidden="true"></span> 필수</span>') +
+  '<div class="pro_table"><div class="form-grid-2">' +
+  field('문서 분류', '<div class="ff-readonly">/제품 문서/설계 문서/사양서</div>', { req: true }) +
   field('문서 번호', '<div class="ff-readonly">저장하면 자동으로 매겨집니다</div>') +
   field('문서 명', '<input class="input" id="' + u + '-name" aria-required="true" placeholder="문서 명 입력">', { req: true, id: u + '-name' }) +
   field('작업현황', '<select class="select" id="' + u + '-state"><option>작업 중</option><option>검토 중</option></select>', { id: u + '-state' }) +
@@ -134,7 +138,7 @@ export const Playground = {
   argTypes: {
     kind: { control: 'inline-radio', options: ['상세', '등록'], description: '창 종류 — 상세 = 버튼이 탭 줄 오른쪽, 등록 = 버튼이 제목 줄' },
     title: { control: 'text', description: '창 제목 — `.top-title-area h3`' },
-    version: { control: 'text', description: '버전 칩 — `.version` (비우면 없음). 이전 버전 상세 창은 제목에 버전을 적고 칩은 없음' },
+    version: { control: 'text', description: '버전 표시 — `.version` (비우면 없음). 제목에 버전을 적었으면 비워 둡니다' },
     withTabs: { control: 'boolean', description: '탭 줄 — `.tab` (상세 창만)' },
     height: { control: { type: 'range', min: 280, max: 640, step: 20 }, description: '틀 높이 — 내용이 넘치면 창 안에서 스크롤, 제목 줄은 위에 붙어 있음' },
   },

@@ -1,13 +1,13 @@
 // Feedback/Progress — 문서 화면은 Progress.mdx. Figma 이름은 Progress bar, DS 클래스는 .progress-bar
 // 프로젝트 · 태스크의 진행률 막대(.progress-bar + .pbar-fill)와 상태 표시(.status-block = 막대 5개 + 상태 글자). 상태 5가지 = 완료 · 진행 · 지연 · 예정 · 보류
-// 상태 글자(완료 · 진행중 …)는 CSS가 ::before 로 넣음 — 마크업은 비워 둠. 범례 점 색은 화면이 지정(클래스 없음)
+// 상태 글자(완료 · 진행 중 …)는 CSS가 ::before 로 넣음 — 마크업은 비워 둠. 범례 점 색은 화면이 지정(클래스 없음)
 import { matrix } from './_matrix.js';
 import { doDont } from './_dodont.js';
 
 const svg = (d, s = 16) => '<svg width="' + s + '" height="' + s + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + d + '</svg>';
 const ST = {   // 상태 — 이름 · 범례 기호
   done: ['완료', '<path d="M5 12l4 4 10-10"/>'],
-  progress: ['진행', '<path d="M9 6l6 6-6 6"/>'],
+  progress: ['진행 중', '<path d="M9 6l6 6-6 6"/>'],
   delay: ['지연', '<path d="M12 6v7M12 17.5v.5"/>'],
   plan: ['예정', '<path d="M12 7v5l3 2"/>'],
   hold: ['보류', '<path d="M9 7v10M15 7v10"/>'],
@@ -41,8 +41,8 @@ export const 진행률_막대 = {
   render: () => box(bar()),
 };
 export const 상태_표시와_함께 = {
-  parameters: { docs: { source: { code: row('delay', 58, '전체') } } },
-  render: () => box(row('delay', 58, '전체')),
+  parameters: { docs: { source: { code: row('progress', 58, '전체') } } },
+  render: () => box(row('progress', 58, '전체')),
 };
 const PHASES = [['설계', 'done', 100], ['시제품 제작', 'progress', 64], ['시험 · 검증', 'delay', 32], ['양산 이관', 'plan', 0]];
 const phases = () => '<div style="display:grid;gap:10px">' + PHASES.map(([n, k, p]) =>
@@ -58,7 +58,7 @@ export const 계획_표식 = {
   render: () => box(planHead + bar('delay', 58, '전체', true, 64)),
 };
 export const 범례 = {
-  parameters: { docs: { source: { code: legend() } } },
+  parameters: { docs: { source: { code: legend(KEYS) } } },
   render: () => box(legend(KEYS), '360px'),
 };
 

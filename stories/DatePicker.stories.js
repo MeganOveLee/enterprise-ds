@@ -33,6 +33,35 @@ export const 고를_수_있는_범위 = {
   render: () => `<div style="max-width:200px">${dp('희망일', '2026-10-15', ' min="2026-10-10" max="2026-10-25"')}</div>`,
 };
 
+// ── 펼친 달력 — 날짜 상태 클래스. 실제 달력(js/datepicker.js)을 한 번 열어 그 모습을 옆에 고정해 둠(눌러지지 않는 그림) ──
+const DAY_SRC = [
+  '<!-- 달력은 js/datepicker.js 가 그린다. 날짜 칸의 상태 클래스 -->',
+  '<button class="datepicker__day is-today" aria-current="date">     <!-- 오늘 -->',
+  '<button class="datepicker__day is-selected" aria-selected="true"> <!-- 고른 날 -->',
+  '<button class="datepicker__day is-in-range">                      <!-- 기간 사이 -->',
+  '<button class="datepicker__day is-range-end">                     <!-- 기간의 다른 쪽 끝 -->',
+  '<button class="datepicker__day is-disabled" aria-disabled="true"> <!-- 선택 가능 범위 밖 -->',
+  '<button class="datepicker__day is-outside">                       <!-- 앞 · 뒤 달 -->',
+].join('\n');
+export const 펼친_달력 = {
+  parameters: { controls: { disable: true }, docs: { source: { language: 'html', code: DAY_SRC } } },
+  render: () => {
+    const el = document.createElement('div');
+    el.style.cssText = 'display:flex;gap:32px;align-items:flex-start;flex-wrap:wrap';
+    el.innerHTML = '<div style="width:420px">' + range('2026-10-06', '2026-10-20') + '</div><div class="dp-static" inert aria-hidden="true" style="min-height:300px"></div>';
+    setTimeout(() => {
+      const inp = el.querySelector('.ui-datepicker__input'); if (!inp) return;
+      inp.click();
+      setTimeout(() => {
+        const pop = document.querySelector('.datepicker.is-open');
+        if (pop) { const c = pop.cloneNode(true); c.removeAttribute('id'); c.querySelectorAll('[id]').forEach((n) => n.removeAttribute('id')); c.style.cssText = 'position:static;display:block'; el.querySelector('.dp-static').appendChild(c); }
+        document.body.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));   // 실제 달력은 닫음(바깥 누름)
+      }, 250);
+    }, 500);
+    return el;
+  },
+};
+
 // ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-102) — 미리보기만 ──
 const wide = (h) => '<div style="width:100%;max-width:360px">' + h + '</div>';
 export const 사용_지침 = {
@@ -56,7 +85,7 @@ export const 전체_상태 = {
     controls: { disable: true },
     docs: { source: { language: 'html', code: [
       '<!-- Hovered · Focused 는 마우스 · 키보드에 따라 CSS가 표시한다 (클래스 불필요) -->',
-      '<!-- 오류 · 비활성 · 읽기 전용은 날짜 칸(input)에 속성을 붙이면 감싸는 상자가 모양을 바꾼다 -->',
+      '<!-- 오류 · 비활성 · 읽기 전용은 날짜 필드(input)에 속성을 붙이면 감싸는 상자가 모양을 바꾼다 -->',
       dp('납기일', '2026-10-06', ST.error),
       dp('납기일', '2026-10-06', ST.disabled),
       dp('납기일', '2026-10-06', ST.readonly),
@@ -65,14 +94,14 @@ export const 전체_상태 = {
   render: () => {
     enablePseudo();
     const v1 = '2026-10-06', v2 = '2026-10-20';
-    return matrix(['하나', '기간'], [
-      ['빈 칸', [dp('납기일'), range('', '')]],
-      ['값 있음', [dp('납기일', v1), range(v1, v2)]],
+    return matrix(['단일 날짜', '기간'], [
+      ['Default', [dp('납기일'), range('', '')]],
+      ['Filled', [dp('납기일', v1), range(v1, v2)]],
       ['Hovered', [dp('납기일', v1, '', ' ps-hover'), range(v1, v2, { c1: ' ps-hover' })]],
       ['Focused', [dp('납기일', v1, '', ' ps-focus-within'), range(v1, v2, { c1: ' ps-focus-within' })]],
-      ['error', [dp('납기일', v1, ST.error), range(v1, v2, { x2: ST.error })]],
-      ['disabled', [dp('납기일', v1, ST.disabled), range(v1, v2, { x1: ST.disabled, x2: ST.disabled })]],
-      ['readonly', [dp('납기일', v1, ST.readonly), range(v1, v2, { x1: ST.readonly, x2: ST.readonly })]],
+      ['Error', [dp('납기일', v1, ST.error), range(v1, v2, { x2: ST.error })]],
+      ['Disabled', [dp('납기일', v1, ST.disabled), range(v1, v2, { x1: ST.disabled, x2: ST.disabled })]],
+      ['Readonly', [dp('납기일', v1, ST.readonly), range(v1, v2, { x1: ST.readonly, x2: ST.readonly })]],
     ], { full: true });
   },
 };

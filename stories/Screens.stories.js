@@ -1,8 +1,8 @@
-// Screens — DS 클래스와 토큰만으로 짠 PLM 업무 화면 (실제 크기 1440 × 900, 가상 데이터)
+// Screens — DS 컴포넌트와 토큰으로 구성한 PLM 업무 화면 (실제 크기 1440 × 900, 가상 데이터). 화면 배치만 _screens.css
 // 문서 화면은 Screens.mdx. 도구 막대의 브랜드 · 화면 모드를 그대로 따른다.
-// 구조는 실제 제품 화면과 같다: 로그인 = 브랜드 패널 + 폼 / 홈 = 아이콘 메뉴 + 상단 바 + 카드 대시보드
-// 업무 화면 = 아이콘 메뉴 + 두 번째 메뉴 패널(메뉴 · 폴더 트리) + 상단 바 + 라벨 위 검색 폼 + 목록
-// 프로젝트 상세 = 아이콘 메뉴 + 상단 바 + 왼쪽 산출물 구조 패널 + 오른쪽 상세(섹션 · 진행률)
+// 로그인 = 브랜드 패널 + 폼 / 대시보드 = LNB 레일 + GNB + 카드
+// 목록 = LNB 레일 + LNB 서브 패널(메뉴 · 폴더 트리) + GNB + 검색 폼 + 목록
+// 상세 = LNB 레일 + GNB + 왼쪽 산출물 구조 패널 + 오른쪽 상세(섹션 · 진행률)
 // 마크업은 문자열 이어 붙이기 — 스토리북 색인기가 여러 줄 HTML 템플릿을 MDX로 잘못 읽는 일을 피함
 import './_screens.css';
 import { wireSearchDetail, EXPAND_LABEL } from './_search.js';
@@ -81,7 +81,7 @@ const field = (label, control, { req = false, span = 0, id = '', cls = '' } = {}
   '<div class="td">' + control + '</div></div>';
 
 // ── 아이콘 메뉴 + 두 번째 메뉴 패널 ──
-const LNB = [['work', '업무관리'], ['doc', '문서관리'], ['drawing', '도면관리'], ['part', '부품관리'], ['project', '프로젝트'], ['change', '설계변경']];
+const LNB = [['work', '업무 관리'], ['doc', '문서 관리'], ['drawing', '도면 관리'], ['part', '부품 관리'], ['project', '프로젝트'], ['change', '설계 변경']];
 // 가상 제품 로고(모든 브랜드 레일 · 로그인, TD-101 10/17). 브랜드 타일 위에 부품(육면체)과 그 둘레를 도는 수명 주기 궤도, 궤도 끝에 브랜드 포인트색 점.
 // 브랜드를 바꾸면 타일 · 점 색이 따라감. 로고 = 브랜드 자산이라 모서리는 고정이고, 점은 브랜드 파일의 포인트색(--accent-500)을 그대로 씀 — 화면 코드에서 원색을 쓰는 유일한 곳
 const LOGO =
@@ -96,7 +96,7 @@ const LOGO =
 // 링크 이름은 a 의 aria-label, 화면에 보이는 이름(span)은 읽기에서 뺌(두 번 읽지 않게)
 const lnbIcon = (d) => "url('data:image/svg+xml," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' + d + '</svg>') + "')";
 const lnbItem = ([ic, t], active) => '<li><div class="menu_icon_box"><div class="menu_icon" style="--lnb-icon:' + lnbIcon(I[ic]) + '"><a href="#" aria-label="' + t + '"' + (t === active ? ' aria-current="page"' : '') + '></a></div></div><span aria-hidden="true">' + t + '</span></li>';
-const lnb = (active = '문서관리') =>
+const lnb = (active = '문서 관리') =>
   '<aside class="main-menu"><a class="lnb-logo" href="#" aria-label="홈">' + LOGO + '</a>' +
   '<nav aria-label="주 메뉴"><ul>' + LNB.map((x) => lnbItem(x, active)).join('') + '</ul><ul>' + lnbItem(['admin', '관리자'], active) + '</ul></nav></aside>';
 
@@ -152,19 +152,19 @@ const searchForm = ({ open = false } = {}) => {
   '</div></div></div>';
 };
 
-// 쪽 이동 — 이전 버전 화면에는 없음(개발 요청: 쪽을 나누면 다음 쪽 데이터가 검색 조건 · 정렬에 걸리지 않아서). 기본 화면은 이전 버전대로 빼고,
-// 쪽 이동은 「시안 2」에만 둠 — 검색 · 정렬을 전체 결과에 먼저 하고 쪽을 나누는 경우의 DS 제안
+// 페이지 이동 — 이전 버전 화면에는 없음(개발 요청: 쪽을 나누면 다음 페이지 데이터가 검색 조건 · 정렬에 걸리지 않아서). 기본 화면은 이전 버전대로 빼고,
+// 페이지 이동은 「시안 2」에만 둠 — 검색 · 정렬을 전체 결과에 먼저 하고 쪽을 나누는 경우의 DS 제안
 const pager = () =>
-  '<nav class="ui-pagination" aria-label="쪽 이동">' +
-  '<button type="button" class="ui-pagination__btn ui-pagination__btn--nav is-disabled" aria-label="이전 쪽">' + svg(I.prev, 14) + '</button>' +
+  '<nav class="ui-pagination" aria-label="페이지 이동">' +
+  '<button type="button" class="ui-pagination__btn ui-pagination__btn--nav is-disabled" aria-label="이전 페이지">' + svg(I.prev, 14) + '</button>' +
   '<button type="button" class="ui-pagination__btn is-active" aria-current="page">1</button>' +
   [2, 3, 4, 5].map((n) => '<button type="button" class="ui-pagination__btn">' + n + '</button>').join('') +
   '<span class="ui-pagination__ellipsis">…</span><button type="button" class="ui-pagination__btn">7</button>' +
-  '<button type="button" class="ui-pagination__btn ui-pagination__btn--nav" aria-label="다음 쪽">' + svg(I.next, 14) + '</button></nav>';
+  '<button type="button" class="ui-pagination__btn ui-pagination__btn--nav" aria-label="다음 페이지">' + svg(I.next, 14) + '</button></nav>';
 
 const grid = ({ paging = false } = {}) =>
   '<div class="seach_arm"><div class="leftbt">' + svg(I.list, 16) + '<h4>검색 결과 (' + ROWS.length + '/' + (paging ? 128 : ROWS.length) + ')</h4>' +
-  sel('한 쪽에 보일 개수', ['20', '50', '100']) + '</div>' +
+  sel('한 페이지에 보일 개수', ['20', '50', '100']) + '</div>' +
   // [선택 일괄 결재] 아이콘 없음 — 이전 버전 캡처(03 · 06 · 07) 그대로. ✓ 아이콘은 근거 없이 넣었던 것(10/16 대조)
   '<div class="rightbt">' + btn('선택 일괄 결재', 'btn--primary btn--filled') +
   '<button type="button" class="btn btn--excel">' + svg(I.excel, 14) + 'Excel</button>' +
@@ -230,8 +230,8 @@ const registerPop = () =>
   section('첨부 파일') + uploader() +
   '</div></div>';
 
-// ── 홈 대시보드 — 두 번째 메뉴 패널 없음. 위 = 프로필 카드 + 숫자 카드 3, 아래 = .card-grid 3열 × 2줄 ──
-const more = (t = '전체 보기') => '<a href="#" class="scr-more">' + t + svg(I.next, 12) + '</a>';
+// ── 대시보드 — LNB 서브 패널 없음. 위 = 인사 카드 + 숫자 카드 3, 아래 = .card-grid 3열 × 2행 ──
+const more = (t = '전체 보기') => '<a href="#" class="card-more">' + t + '</a>';
 const cardHead = (title, count, right = '') =>
   '<div class="card-header"><h2 class="card-title">' + title + (count !== undefined ? '<span class="card-title-count">' + count + '</span>' : '') + '</h2>' + right + '</div>';
 const tile = (icon, tone) => '<span class="scr-tile scr-tile--' + tone + '">' + svg(I[icon], 20) + '</span>';
@@ -273,7 +273,7 @@ const homeBody = () =>
   '<div class="scr-home"><div class="scr-home__top">' + profile() + STATS.map(stat).join('') + '</div>' +
   '<div class="card-grid card-grid--3 scr-home__grid">' +
   '<section class="card">' + cardHead('내 업무 구성') + '<div class="scr-mix">' + donut() + '</div></section>' +
-  '<section class="card">' + cardHead('결재 업무', 2, more('최근 5건 · 전체 보기')) + '<ul class="card-list">' +
+  '<section class="card">' + cardHead('결재 업무', 2, more()) + '<ul class="card-list">' +
     APPROVALS.map(([k, label, t, d]) => li('<span class="status-chip status-chip--' + STATUS[k][0] + '">' + label + '</span>', t, d)).join('') + '</ul></section>' +
   '<section class="card">' + cardHead('활동 업무', 0) +
     '<div class="empty empty--card" role="status"><span class="empty__icon">' + svg(I.inbox, 32) + '</span>' +
@@ -282,7 +282,7 @@ const homeBody = () =>
     TASKS.map(([tone, label, t, d]) => li('<span class="status-chip status-chip--' + tone + '">' + label + '</span>', t, d)).join('') + '</ul></section>' +
   '<section class="card">' + cardHead('최근 작업 중인 데이터', undefined, more()) + '<ul class="card-list scr-recent">' +
     RECENT.map(([ext, t, d]) => li(fileIcon(ext), t, d)).join('') + '</ul></section>' +
-  '<section class="card">' + cardHead('바로가기', undefined, '<a href="#" class="scr-more">' + svg(I.plus, 12) + '편집</a>') +
+  '<section class="card">' + cardHead('바로가기', undefined, '<button type="button" class="btn btn--secondary btn--transparent btn--sm">편집</button>') +
     '<ul class="scr-shortcuts">' + SHORTCUTS.map(([ic, t]) => '<li><a href="#">' + tile(ic, 'brand') + '<span>' + t + '</span>' + svg(I.next, 14) + '</a></li>').join('') + '</ul></section>' +
   '</div></div>';
 const homeScreen = () =>
@@ -295,7 +295,7 @@ const homeScreen = () =>
 // .divide-detail-layout > .left-panel(.left-actions · .left-legend · .left-search) + .right-panel(.detail-header · .section-toggle · .progress-bar)
 const PS = {   // 진행 상태 — 글자 · 진행률 막대 · 상태 칩 · 범례 기호
   done: ['완료', 'success', '<path d="M5 12l4 4 10-10"/>'],
-  progress: ['진행', 'info', '<path d="M9 6l6 6-6 6"/>'],
+  progress: ['진행 중', 'info', '<path d="M9 6l6 6-6 6"/>'],
   delay: ['지연', 'danger', '<path d="M12 6v7M12 17.5v.5"/>'],
   plan: ['예정', 'neutral', '<path d="M12 7v5l3 2"/>'],
   hold: ['보류', 'warning', '<path d="M9 7v10M15 7v10"/>'],
@@ -435,27 +435,51 @@ export default {
 
 // ── 화면 지도 (TD-104 반영 7) ── 화면마다 영역 상자 + 영역 이름 + 쓰는 블록 · 컴포넌트. 「언제」 한 줄로 어떤 화면을 고르는지
 // 상자 색 = 토큰(브랜드 · 화면 모드를 따름). 문서용 그림이라 화면 마크업과 따로
-const R = (area, name, uses = '', kind = '') => '<div class="scr-map__r' + (kind ? ' scr-map__r--' + kind : '') + '" style="grid-area:' + area + '">' +
-  (name ? '<b>' + name + '</b>' : '') + (uses ? '<span>' + uses + '</span>' : '') + '</div>';
+const R = (area, no, name, uses = '', kind = '') => '<div class="scr-map__r' + (kind ? ' scr-map__r--' + kind : '') + '" style="grid-area:' + area + '">' +
+  '<span class="scr-map__head"><i class="scr-map__no" aria-hidden="true">' + no + '</i>' + (name ? '<b>' + name + '</b>' : '') + '</span>' + (uses ? '<span>' + uses + '</span>' : '') + '</div>';
 const MAPS = [
-  ['로그인', '처음 들어올 때', '"panel form"', '1fr 1fr', '1fr',
-    R('panel', '브랜드 패널', '서비스 소개 · 문의처', 'panel') + R('form', '로그인 폼', 'Input · Checkbox · Button', 'focus')],
-  ['홈', '로그인 뒤 첫 화면 — 할 일 요약', '"rail top" "rail info" "rail cards"', '16px 1fr', '16px auto 1fr',
-    R('rail', '', '', 'nav') + R('top', '상단 바', '', 'bar') + R('info', '내 정보 · 숫자 카드', 'Card') + R('cards', '카드 3열 × 2', 'Card · Empty', 'focus')],
-  ['문서 검색', '목록에서 조건으로 찾을 때', '"rail sub top" "rail sub search" "rail sub list"', '16px 24% 1fr', '16px auto 1fr',
-    R('rail', '', '', 'nav') + R('sub', '메뉴 패널', '메뉴 · 폴더 트리', 'nav') + R('top', '상단 바', '', 'bar') +
-    R('search', '검색 조건', 'SearchForm', 'focus') + R('list', '결과 목록', 'Table · Status Chip', 'focus')],
-  ['문서 등록', '새로 등록 · 편집할 때', '"title" "form" "file"', '1fr', '16px 1fr auto',
-    R('title', '창 제목 줄', '', 'bar') + R('form', '접는 섹션 · 2열 폼', 'Accordion · Input · Date Picker', 'focus') + R('file', '첨부', '업로더')],
-  ['프로젝트 상세', '하나를 열어 자세히 보고 관리할 때', '"rail tree top" "rail tree head" "rail tree sec"', '16px 24% 1fr', '16px auto 1fr',
-    R('rail', '', '', 'nav') + R('tree', '산출물 패널', '트리 · 상태 점', 'nav') + R('top', '상단 바', '', 'bar') +
-    R('head', '상세 머리', 'Button · Status Chip') + R('sec', '접는 섹션', 'Accordion · Progress · Table', 'focus')],
+  ['로그인', '로그인할 때', '"panel form"', '1fr 1fr', '1fr',
+    R('panel', 4, '브랜드 패널', '서비스 소개 · 문의처', 'panel') + R('form', 5, '로그인 폼', 'Input · Checkbox · Button', 'focus')],
+  ['대시보드', '로그인 뒤 첫 화면 — 할 일 요약', '"rail top" "rail info" "rail cards"', '16px 1fr', '16px auto 1fr',
+    R('rail', 1, '', '', 'nav') + R('top', 3, 'GNB', '', 'bar') + R('info', 6, '인사 · 숫자 카드', 'Card') + R('cards', 7, '카드 그리드', 'Card · Empty', 'focus')],
+  ['목록 — 문서 검색', '조건으로 찾을 때', '"rail sub top" "rail sub search" "rail sub list"', '16px 24% 1fr', '16px auto 1fr',
+    R('rail', 1, '', '', 'nav') + R('sub', 2, 'LNB 서브 패널', '메뉴 · 폴더 트리', 'nav') + R('top', 3, 'GNB', '', 'bar') +
+    R('search', 8, '검색 폼', 'Search Form', 'focus') + R('list', 9, '결과 표', 'Table · Status Chip', 'focus')],
+  ['등록 창 — 문서 등록', '새로 등록 · 수정할 때', '"title" "form" "file"', '1fr', '16px 1fr auto',
+    R('title', 10, '창 제목 줄', '', 'bar') + R('form', 11, '접는 섹션 · 2열 폼', 'Accordion · Input · Date Picker', 'focus') + R('file', 12, '첨부', '업로더')],
+  ['상세 — 프로젝트', '하나를 열어 보고 관리할 때', '"rail tree top" "rail tree head" "rail tree sec"', '16px 24% 1fr', '16px auto 1fr',
+    R('rail', 1, '', '', 'nav') + R('tree', 13, '산출물 패널', '트리 · 상태 점', 'nav') + R('top', 3, 'GNB', '', 'bar') +
+    R('head', 14, '상세 헤더', 'Button · Status Chip') + R('sec', 15, '접는 섹션', 'Accordion · Progress · Table', 'focus')],
+];
+// 번호별 클래스 · 토큰 — 지도 번호와 같은 번호(1 · 2 · 3 은 여러 화면에 공통)
+const c = (t) => '<code>' + t + '</code>';
+const mu = (t) => '<span class="ds-muted">' + t + '</span>';
+const lk = (t, path) => '<a class="ds-link" href="./?path=/docs/' + path + '" target="_top">' + t + '</a>';
+const ANATOMY = [
+  ['1 · 2 · 3', '레이아웃', c('.main-layout') + ' · ' + c('.main-area') + ' · ' + c('.main-content'), 'LNB 레일 · LNB 서브 패널 옆에 GNB와 본문이 쌓이는 공통 레이아웃입니다. 본문이 남은 높이를 모두 차지합니다. ' + lk('App Shell', 'navigation-app-shell--docs')],
+  ['1', 'LNB 레일', c('.main-menu') + mu('--color-bg-lnb-hover · -active · --color-text-lnb-active'), '업무 메뉴 아이콘 열입니다.'],
+  ['2', 'LNB 서브 패널', c('.main-sub') + ' · ' + c('.tree-controls'), '고른 메뉴의 하위 메뉴와 폴더 트리입니다.'],
+  ['3', 'GNB', c('.gnb') + ' · ' + c('.nav-history') + ' · ' + c('.breadcrumb') + ' · ' + c('.menu-toggle'), '뒤로 · 앞으로, 브레드크럼, 사용자 메뉴, 결재업무 · 활동업무 개수입니다.'],
+  ['4', '브랜드 패널', mu('--color-bg-panel · --color-text-on-panel'), '패널 일러스트는 패널 위 글자 토큰을 옅게 쓴 SVG라 브랜드 · 화면 모드를 따릅니다.'],
+  ['5', '로그인 폼', c('.input--lg') + ' · ' + c('.checkbox') + ' · ' + c('.btn--lg'), '필드 · 체크박스 · 버튼은 DS 그대로이고, 높이 44는 큰 필드 · 큰 버튼입니다.'],
+  ['6', '인사 · 숫자 카드', c('.card') + mu('--color-bg-panel · --color-text-on-panel · -on-panel-2'), '인사 카드는 브랜드 패널 색이라 브랜드에 따라 바뀝니다.'],
+  ['7', '카드 그리드', c('.card-grid') + ' · ' + c('.card-header') + ' · ' + c('.card-title-count') + ' · ' + c('.card-list') + ' · ' + c('.empty--card'), '3열 고정입니다(' + c('.card-grid') + '는 최소 폭 460이라 1440 화면에서 2열). 차트 색은 아이콘 신호색 토큰을 씁니다. ' + lk('Card', 'data-display-card--docs')],
+  ['8', '검색 폼', c('.seach_arm') + ' · ' + c('.pro_table') + ' · ' + c('.form-grid--6') + ' · ' + c('.ff-field') + ' · ' + c('.search-label') + ' · ' + c('.search-detail'), lk('Search Form', 'blocks-searchform--docs') + ' 블록 그대로입니다.'],
+  ['9', '결과 표', c('.table_list') + ' · ' + c('.ui-pagination') + mu('--color-bg-grid-header · -row-hover · -row-selected · --color-bg-row-alt'), '제품에서는 그리드 라이브러리가 그리는 자리라 같은 그리드 토큰의 표로 구성했습니다. 페이지네이션은 시안 2에만 있습니다. ' + lk('Table', 'data-display-table--docs')],
+  ['10', '창 제목 줄', c('.pop .top') + ' · ' + c('.top-btn-area'), '창 이름과 [임시 저장] · [등록] · 닫기입니다. ' + lk('Modal', 'overlay-modal--docs')],
+  ['11', '접는 섹션 · 2열 폼', c('.seach_arm') + ' · ' + c('.section-toggle') + ' · ' + c('.pro_table') + ' · ' + c('.form-grid-2') + ' · ' + c('.ff-readonly') + ' · ' + c('.field-error-msg'), '섹션 헤더와 내용이 배경색이 있는 상자 하나입니다. 필수 표시(*) · 오류 필드 · 읽기 전용 필드를 함께 보여 줍니다. ' + lk('Accordion', 'data-display-accordion--docs')],
+  ['12', '첨부', c('.resumable'), '끌어다 놓기 · 파일 형식 아이콘 · 올리는 중 막대입니다.'],
+  ['13', '산출물 패널', c('.divide-detail-layout') + ' · ' + c('.left-panel') + ' · ' + c('.left-legend') + ' · ' + c('.left-search') + ' · ' + c('.output-row'), '바로가기 · 상태 범례 · 검색 · 트리입니다. 제품에서는 트리를 그리드 라이브러리가 그립니다.'],
+  ['14', '상세 헤더', c('.detail-header') + mu('Status Chip · Button'), '제목 · 번호 · 상태 칩 · 버튼입니다.'],
+  ['15', '접는 섹션 · 진행률', c('.section-toggle') + ' · ' + c('.progress-bar') + ' · ' + c('.status-block'), '진행 상태는 점 · 막대 · 칩에 같은 색으로 표시합니다. ' + lk('Progress', 'feedback-progress--docs')],
 ];
 export const 화면_지도 = {
   parameters: { controls: { disable: true } },
   render: () => '<div class="scr-maps">' + MAPS.map(([name, when, areas, cols, rows, inner]) =>
     '<figure class="scr-map"><figcaption><b>' + name + '</b><span>' + when + '</span></figcaption>' +
-    '<div class="scr-map__frame" style="grid-template-areas:' + areas.replace(/"/g, "'") + ';grid-template-columns:' + cols + ';grid-template-rows:' + rows + '">' + inner + '</div></figure>').join('') + '</div>',
+    '<div class="scr-map__frame" style="grid-template-areas:' + areas.replace(/"/g, "'") + ';grid-template-columns:' + cols + ';grid-template-rows:' + rows + '">' + inner + '</div></figure>').join('') + '</div>' +
+    '<table class="ds-table ds-props ds-props--wrap scr-anatomy"><thead><tr><th>번호</th><th>자리</th><th>클래스 · 토큰</th><th>설명</th></tr></thead><tbody>' +
+    ANATOMY.map(([no, name, cls, desc]) => '<tr><td><i class="scr-map__no">' + no + '</i></td><td><b>' + name + '</b></td><td>' + cls + '</td><td>' + desc + '</td></tr>').join('') + '</tbody></table>',
 };
 
 // ── 상세 머리 — 보기 · 편집 중 · 잠김 (TD-104 반영 5 · 업무 정책) ── 같은 머리에서 버튼만 바뀐다
@@ -493,7 +517,7 @@ export const 문서_검색 = {
   render: () => wireSearchDetail(frame(listScreen())),
 };
 
-// 시안 2 — 쪽 이동을 넣은 DS 제안(이전 버전에는 없음, 위 pager 주석)
+// 시안 2 — 페이지 이동을 넣은 DS 제안(이전 버전에는 없음, 위 pager 주석)
 export const 문서_검색_시안_2 = {
   parameters: src(listScreen({ paging: true })),
   render: () => wireSearchDetail(frame(listScreen({ paging: true }))),

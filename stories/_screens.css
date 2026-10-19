@@ -48,11 +48,10 @@
   border-color: var(--color-border-strong);
 }
 .scr-window .pop { height: 100%; min-width: 0; }
-.scr-window .contents { gap: var(--spacing-12); }
+/* 섹션 사이 간격은 섹션 머리(margin-top 12)가 맡는다 — gap 을 두면 머리와 내용 상자 사이가 벌어짐 (TD-108) */
 .scr-window .grid-table th { position: static; }
 
-/* 등록 창 섹션 머리 — 모양은 DS .pop .seach_arm · .section-toggle 그대로, 여기서는 위 간격만 */
-.scr .pop .seach_arm.scr-sec { margin-top: var(--spacing-4); }
+
 
 /* 홈 대시보드 — 카드 · 카드 목록 · 빈 상태는 DS 그대로(.card · .card-grid · .card-list · .empty--card).
  * 여기에는 DS에 아직 없는 자리만: 프로필 카드 · 숫자 카드 · 도넛 · 바로가기, 그리고 3열 배치 */
@@ -62,8 +61,6 @@
 .scr .card-grid.scr-home__grid { grid-template-rows: 1fr 1fr; gap: var(--spacing-16); min-height: 0; }   /* 3열 = DS .card-grid--3 */
 .scr-home__grid .card { min-width: 0; min-height: 0; overflow: hidden; display: flex; flex-direction: column; }
 .scr .card-title { font-size: var(--heading-sm); }
-.scr-more { display: inline-flex; align-items: center; gap: 2px; font-size: var(--body-sm); color: var(--color-text-muted); text-decoration: none; white-space: nowrap; }
-.scr-more:hover { color: var(--color-text-brand); }
 
 /* 프로필 카드 — 브랜드 딥 패널(--color-bg-panel, 토큰 주석의 '홈 프로필 카드' 자리) */
 .scr-profile {
@@ -87,7 +84,7 @@
 .scr-stat__label { font-size: var(--body-sm); color: var(--color-text-muted); }
 .scr-stat__num { font-size: var(--heading-xl); font-weight: var(--font-weight-bold); line-height: var(--line-height-tight); color: var(--color-text-base); font-variant-numeric: tabular-nums; }
 .scr-stat__num span { margin-left: 2px; font-size: var(--body-md); font-weight: var(--font-weight-medium); color: var(--color-text-muted); }
-.scr-stat .scr-more { padding-top: var(--spacing-8); border-top: 1px solid var(--color-border-base); justify-content: space-between; }
+.scr-stat .card-more { padding-top: var(--spacing-8); border-top: 1px solid var(--color-border-base); justify-content: space-between; }
 .scr-tile { width: 40px; height: 40px; flex-shrink: 0; border-radius: var(--radius-md); display: inline-flex; align-items: center; justify-content: center; }
 .scr-tile--brand   { background: var(--color-bg-brand-subtle);   color: var(--color-icon-brand); }
 .scr-tile--info    { background: var(--color-bg-info-subtle);    color: var(--color-icon-info); }
@@ -208,6 +205,12 @@
 .scr-map__frame { display: grid; gap: 3px; aspect-ratio: 16 / 10; padding: 3px; border-radius: var(--radius-card); background: var(--color-border-base); overflow: hidden; }
 .scr-map__r { display: flex; flex-direction: column; gap: 2px; min-width: 0; padding: 6px 8px; border-radius: 2px; background: var(--color-bg-subtle); font-size: 11px; line-height: 1.35; color: var(--color-text-base); }
 .scr-map__r b { font-weight: var(--font-weight-semibold); }
+.scr-map__head { display: flex; align-items: center; gap: 4px; min-width: 0; }
+.scr-map__no { display: inline-flex; align-items: center; justify-content: center; flex: none; min-width: 14px; height: 14px; padding: 0 3px; border-radius: 7px; background: var(--color-bg-inverse); color: var(--color-text-inverse); font-size: 10px; font-style: normal; font-weight: var(--font-weight-semibold); line-height: 1; }
+.scr-map__r--nav .scr-map__no, .scr-map__r--bar .scr-map__no { align-self: flex-start; }
+.scr-anatomy { margin-top: var(--spacing-16); }
+.scr-anatomy td:first-child { width: 72px; white-space: nowrap; }
+.scr-anatomy .scr-map__no { min-width: 18px; height: 18px; border-radius: 9px; font-size: 11px; }
 .scr-map__r span { color: var(--color-text-muted); }
 .scr-map__r--nav { background: var(--color-bg-header); }
 .scr-map__r--bar { background: var(--color-bg-base); padding: 0 8px; justify-content: center; font-size: 10px; }

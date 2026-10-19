@@ -43,9 +43,9 @@ export const 동작이_있는_알림 = {
 };
 export const 쌓임 = {
   render: () => stage([
-    toast({ msg: '주소를 복사했어요.' }),
-    toast({ status: 'success', msg: '저장했어요.' }),
-    toast({ status: 'warning', msg: '첨부 1개는 크기가 커서 빠졌어요.' }),
+    toast({ status: 'success', msg: '문서를 저장했어요.' }),
+    toast({ status: 'success', msg: '첨부 파일 2개를 올렸어요.' }),
+    toast({ status: 'success', msg: '결재를 요청했어요.' }),
   ], 230),
 };
 
@@ -81,11 +81,10 @@ export const 사용_지침 = {
 // ── 전체 상태 — 행 = 상태, 열 = 구성 ──
 const STATES = [['정보', 'info'], ['성공', 'success'], ['경고', 'warning'], ['위험', 'danger']];
 export const 전체_상태 = {
-  render: () => matrix(['글자 + 닫기', '동작 버튼', '두 줄'],
+  render: () => matrix(['한 줄 + 닫기', '두 줄 + 동작 버튼'],
     STATES.map(([name, s]) => [name, [
       toast({ status: s, msg: name + ' 알림' }),
-      toast({ status: s, msg: name + ' 알림', action: '보기' }),
-      toast({ status: s, msg: name + ' 알림 — 글이 길면 줄을 바꿔 두 줄로 보여요. 폭은 360까지.', action: '보기' }),
+      toast({ status: s, msg: name + ' 알림 — 글이 길면 줄을 바꿔 두 줄로 표시합니다.', action: '보기' }),
     ]]), { full: true }),
 };
 

@@ -1,7 +1,7 @@
 // Navigation/Link — 문서 화면은 Link.mdx. 여기 스토리는 MDX 카드 안에 들어가는 예시 · 전체 상태
-// 그리드 링크(10/14 결정) — 행마다 식별자 열 하나만 항상 밑줄(.grid-custom-rows-link), 나머지 링크는 마우스 · 키보드가 올 때만 밑줄(.grid-link)
-// 본문 링크(.text-link) — 표 밖 상세 정보 · 폼 안 글자 링크, 끝 「↗」= 다른 창. 내려받기는 .no-arrow (이전 버전 규칙, TD-93 3.1 대조 10/17)
-// 위치 표시(.breadcrumb)는 App Shell 문서에 예시가 있어 여기서는 상단 바 · 페이지 머리 두 자리만 다시 보여 줌
+// 그리드 링크 — 행마다 식별자 열 하나만 항상 밑줄(.grid-custom-rows-link), 일반 링크는 마우스 · 키보드가 올 때만 밑줄(.grid-link)
+// 본문 링크(.text-link) — 표 밖 상세 정보 · 폼 안 글자 링크, 끝 「↗」= 다른 창. 내려받기는 .no-arrow
+// 브레드크럼(.breadcrumb) 규칙은 이 문서, GNB · 페이지 헤더 안 배치는 App Shell 문서
 import { matrix } from './_matrix.js';
 import { enablePseudo } from './_pseudo.js';
 import { doDont } from './_dodont.js';
@@ -23,10 +23,12 @@ export default {
 const GRID = [idLink('DOC-2610-0012'), link('하우징 재질 변경 검토 보고서')];
 export const 그리드_링크 = {
   parameters: html(GRID),
-  render: () => matrix(['식별자 열', '나머지 링크'], [
+  render: () => matrix(['식별자 링크', '일반 링크'], [
     ['미리보기', GRID],
+    ['선택한 행 위', ['<table class="grid-table" style="width:auto"><tbody><tr class="is-selected" aria-selected="true"><td>' + idLink('DOC-2610-0012') + '</td></tr></tbody></table>',
+      '<table class="grid-table" style="width:auto"><tbody><tr class="is-selected" aria-selected="true"><td>' + link('하우징 재질 변경 검토 보고서', 'ps-hover') + '</td></tr></tbody></table>']],
     ['클래스', ['<code>.grid-custom-rows-link</code>', '<code>.grid-link</code>']],
-    ['쓰임', [note('문서 번호 · 품번처럼 행마다 하나<br>늘 밑줄 · 브랜드 글자'), note('이름 · 제목 같은 나머지<br>마우스 · 키보드가 올 때만 밑줄')]],
+    ['쓰임', [note('문서 번호 · 품번처럼 행마다 하나<br>늘 밑줄 · 브랜드 글자'), note('이름 · 버전 이력 같은 그 밖의 링크<br>마우스 · 키보드가 올 때만 밑줄')]],
   ], { full: true }),
 };
 

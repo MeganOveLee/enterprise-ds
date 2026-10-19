@@ -6,29 +6,29 @@ import * as S from './Accordion.stories.js';
 
 <Unstyled>
 <div className="ds-page">
-<PageHead eyebrow="Data Display" title="Accordion" lead="제목줄의 토글로 내용을 접고 펴는 섹션입니다. 상세 화면과 등록 창이 같은 토글을 씁니다." />
+<PageHead eyebrow="Data Display" title="Accordion" lead="섹션 헤더의 토글로 내용을 접고 펴는 영역입니다. 상세 화면과 등록 창이 같은 모양을 씁니다." />
 <Section title="구성" en="Spec">
 <table className="ds-table ds-props">
 <thead><tr><th>구분</th><th>클래스 · 속성</th><th>설명</th></tr></thead>
 <tbody>
-<tr><td><b>구조</b></td><td><code>.seach_arm</code> › <code>.leftbt</code> › <code>.section-toggle</code> + <code>h3</code> · <code>h4</code><span className="ds-muted">오른쪽 글자 · 버튼은 .rightbt</span></td><td>섹션 머리 바로 다음에 내용이 옵니다. 제목 단계는 문서 흐름에 맞춥니다 — 화면 제목(h2) 아래는 h3, 팝업 제목(h3) 아래는 h4이고 모양은 같습니다. 폼 · 값이면 <code>.pro_table</code>, 표면 <code>.table_list</code>입니다.</td></tr>
-<tr><td><b>머리 오른쪽 글자</b></td><td><code>.rightbt</code> › <code>.section-meta</code><span className="ds-muted">숫자는 b</span></td><td>「필수」 · 「전체 21 · 지연 2」 · 「14건」처럼 섹션의 안내 · 개수를 머리 오른쪽에 작은 흐린 글자로 둡니다. 숫자만 기본 글자 굵게 하고, 회색 머리 바탕 위에서 대비가 모자라 브랜드 글자로 쓰지 않습니다.</td></tr>
-<tr><td><b>상자형</b></td><td><span className="ds-muted">상세 화면 — .pop 밖</span></td><td>머리와 내용이 한 상자입니다. 머리 바탕은 섹션 머리 회색, 내용 바탕은 흰색이고, 접으면 머리만 남은 둥근 상자가 됩니다. 클래스를 따로 붙이지 않고 머리에 토글이 있으면 이 모양이 됩니다.</td></tr>
-<tr><td><b>이어지는 형</b></td><td><span className="ds-muted">등록 창 — .pop 안</span></td><td>상자 없이 바탕 없는 제목줄로 섹션이 이어집니다.</td></tr>
+<tr><td><b>구조</b></td><td><code>.seach_arm</code> › <code>.leftbt</code> › <code>.section-toggle</code> + <code>h3</code> · <code>h4</code><span className="ds-muted">오른쪽 글자 · 버튼은 .rightbt</span></td><td>섹션 헤더 바로 다음에 내용이 옵니다. 제목 단계는 문서 흐름에 맞춥니다 — 화면 제목(h2) 아래는 h3, 팝업 제목(h3) 아래는 h4이고 모양은 같습니다. 폼 · 값이면 <code>.pro_table</code>, 표면 <code>.table_list</code>, 첨부면 <code>.resumable</code>입니다.</td></tr>
+<tr><td><b>헤더 오른쪽 글자</b></td><td><code>.rightbt</code> › <code>.section-meta</code><span className="ds-muted">숫자는 b</span></td><td>「필수」 · 「전체 21 · 지연 2」 · 「14건」처럼 섹션의 안내 · 개수를 헤더 오른쪽에 작은 흐린 글자로 둡니다. 숫자만 기본 글자로 굵게 합니다.</td></tr>
+<tr><td><b>섹션 상자</b></td><td><span className="ds-muted">--color-bg-muted · --color-border-base · --radius-panel</span></td><td>헤더와 내용이 한 상자입니다. 상자 바탕은 bg-muted이고, 입력 필드 · 표 · 첨부 영역은 흰 바탕 그대로라 상자 위에서 구분됩니다. 접으면 헤더만 남은 상자가 됩니다. 헤더에 토글이 있으면 클래스를 더하지 않아도 이 모양이며, 상세 화면 · 등록 창이 같습니다.</td></tr>
+<tr><td><b>오류 문구</b></td><td><code>.field-error-msg</code><span className="ds-muted">--color-text-danger-bold</span></td><td>상자 안 오류 문구는 진한 위험 글자입니다. 상자 바탕 위에서도 대비 4.5:1 이상입니다. 문구 모양 · 자리는 <a className="ds-link" href="./?path=/docs/form-input--docs" target="_top">Input</a>의 「오류」.</td></tr>
 <tr><td><b>토글</b></td><td><code>.section-toggle</code> · <code>aria-expanded</code><span className="ds-muted">true = 펼침 · false = 접힘</span></td><td>펼침은 흰 네모 안 빼기, 접힘은 채운 네모 안 더하기입니다. 누르는 자리는 보이는 네모보다 넓습니다. 글자가 없어 <code>aria-label</code>로 「제목 + 접기 · 펼치기」 이름을 붙입니다.</td></tr>
 <tr><td><b>내용 숨김</b></td><td><code>aria-controls</code> · <code>hidden</code></td><td>토글의 <code>aria-controls</code>를 내용의 <code>id</code>와 잇고, 화면 스크립트가 <code>aria-expanded</code>를 바꾸면서 내용에 <code>hidden</code>을 붙였다 뗍니다. 위 예시는 눌러 볼 수 있습니다.</td></tr>
 </tbody>
 </table>
-<p className="ds-sec__desc ds-after">Figma UI Kit의 Accordion · Section toggle과 짝입니다. 모양은 이전 버전 등록 창 · 상세 화면의 섹션 접기 그대로이고, 화면 안에서 함께 보는 모습은 <a className="ds-link" href="./?path=/docs/screens-plm-화면--docs" target="_top">Screens › PLM 화면</a>의 프로젝트 상세 · 문서 등록에 있습니다.</p>
+<p className="ds-sec__desc ds-after">Figma UI Kit의 Accordion · Section toggle과 짝입니다. 화면 안에서 함께 보는 모습은 <a className="ds-link" href="./?path=/docs/screens-plm-화면--docs" target="_top">Screens › PLM 화면</a>의 프로젝트 상세 · 문서 등록에 있습니다.</p>
 </Section>
 <Section title="예시" en="Examples" desc="토글을 눌러 접고 펴 보세요.">
-<Card of={S.상자형} title="상자형" en="Boxed" desc="상세 화면. 섹션마다 한 상자이고, 맨 아래 섹션은 접혀 있습니다." />
-<Card of={S.이어지는_형} title="이어지는 형" en="Flush" desc="등록 창 안. 바탕 없는 제목줄로 이어집니다." />
+<Card of={S.상자형} title="상세 화면" en="Detail" desc="섹션마다 한 상자입니다. 값을 표시하는 섹션은 펼치고, 첨부 파일은 접어 둡니다." />
+<Card of={S.이어지는_형} title="등록 창" en="In a window" desc="같은 섹션을 창 안에 둔 모습입니다. 입력할 섹션은 펼쳐 두고, 제목은 창 제목 아래 단계(h4)입니다." />
 </Section>
 <Section title="언제 쓰고 쓰지 말지" en="Do · Don't">
 <Card of={S.사용_지침} code={false} />
 </Section>
-<Section title="전체 상태" en="States" desc="토글의 모습입니다. Hovered · Focused는 마우스 · 키보드 상태를 정지 화면으로 보여 준 것입니다.">
+<Section title="전체 상태" en="States" desc="토글의 모습입니다. Hovered · Focused는 상호작용 상태를 고정해 표시한 것입니다.">
 <Card of={S.전체_상태} title="펼침 · 접힘" />
 </Section>
 </div>

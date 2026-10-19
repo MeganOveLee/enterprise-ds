@@ -47,6 +47,7 @@
         box.setAttribute('aria-haspopup', 'true');
         box.setAttribute('aria-expanded', 'false');
         box.setAttribute('aria-controls', uid + '-list');
+        if (sel.disabled) { box.setAttribute('aria-disabled', 'true'); box.setAttribute('tabindex', '-1'); }   // 비활성 = 열리지 않고 Tab 순서에서 빠짐
 
         var list = document.createElement('div');
         list.className = 'options';

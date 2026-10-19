@@ -191,10 +191,11 @@
      fast · base = 이전 버전 tokens 의 모션 토큰 그대로(이전 버전에 함께 있던 ease-standard 는 쓰는 곳이 없어 안 옮김).
      shimmer · pulse · loop = 반복 움직임. 무엇을 알려 주는 움직임인지는 스토리북 Foundation › Motion.
      모션 줄이기(prefers-reduced-motion)는 컴포넌트마다 — 빛 · 깜빡임은 멈춤, 스피너 · 로고 로더는 느리게만 */
-  --duration-fast:    .12s;          /* 색 · 테두리 바뀜(메뉴 · 탭 · 입력칸 포커스) · 툴팁 나타남 · 스위치 손잡이 */
+  --duration-fast:    .12s;          /* 색 · 테두리 바뀜(메뉴 · 탭 · 입력 필드 포커스) · 툴팁 나타남 · 스위치 손잡이 */
   --duration-base:    .2s;           /* 펼침 화살표 회전 · 상세 검색 펼침 · 사용자 메뉴 안 바탕 · 화면 모드 스위치 */
-  --duration-shimmer: 2.4s;          /* 빛 한 바퀴 = 지나감 1.8초 + 쉼 0.6초. 지금 처리 중(업로더 올리는 중 막대) */
-  --duration-pulse:   1.6s;          /* 깜빡임 한 바퀴 — 지연 상태 표시 막대(statusPulse, 이전 버전 값) */
+  --duration-shimmer: 2.4s;          /* Shimmer 한 바퀴 = 지나감 1.8초 + 쉼 0.6초. 업로더 올리는 중 막대 · 스켈레톤 */
+  --duration-pulse:   1.6s;          /* Pulse 한 바퀴 — 지연 상태 표시 막대(statusPulse) */
+  --duration-fill:    1.6s;          /* 진행률 막대 채움이 늘어나는 시간(값이 바뀔 때 한 번) */
   --ease-loop:        ease-in-out;   /* 반복 움직임 곡선 — 빛 · 깜빡임 · 스켈레톤 · 로고 로더 */
 
 

@@ -6,31 +6,31 @@ import * as S from './Tooltip.stories.js';
 
 <Unstyled>
 <div className="ds-page">
-<PageHead eyebrow="Feedback" title="Tooltip" lead="아이콘 버튼처럼 글자가 없는 컨트롤에 마우스나 키보드가 오면, 무엇을 하는지 짧게 보여 줍니다." />
+<PageHead eyebrow="Feedback" title="Tooltip" lead="포인터를 올리거나 포커스가 갔을 때 나타나는 짧은 보조 설명입니다. 라벨 없는 아이콘 버튼에 씁니다." />
 <Section title="구성" en="Spec">
 <table className="ds-table ds-props">
 <thead><tr><th>구분</th><th>클래스 · 속성</th><th>설명</th></tr></thead>
 <tbody>
-<tr><td><b>구조</b></td><td><code>.has-tooltip</code> › 컨트롤 + <code>.tooltip</code></td><td>컨트롤과 툴팁을 한 묶음으로 감쌉니다. 어두운 바탕에 12px 글자, 컨트롤 쪽으로 작은 화살표가 붙습니다. 폭은 240까지이고 길면 줄을 바꿉니다.</td></tr>
-<tr><td><b>위치</b></td><td><code>.tooltip--bottom</code><span className="ds-muted">기본 = 위</span></td><td>보통은 컨트롤 위에 뜹니다. 화면 맨 위처럼 위가 좁으면 아래에 둡니다.</td></tr>
-<tr><td><b>가로 맞춤</b></td><td><code>.tooltip--start</code> · <code>.tooltip--end</code><span className="ds-muted">기본 = 가운데</span></td><td>보통은 컨트롤 가운데에 맞춥니다. 칸 왼쪽 끝 컨트롤은 툴팁 왼쪽 끝을, 오른쪽 끝 컨트롤은 오른쪽 끝을 컨트롤에 맞춰 칸 밖으로 잘리지 않게 합니다. 화살표는 컨트롤 가운데를 가리킵니다.</td></tr>
-<tr><td><b>열림</b></td><td><span className="ds-muted">마우스 · 키보드 포커스</span></td><td>마우스를 올리거나 Tab으로 오면 열립니다. 마우스를 툴팁 위로 옮겨도 닫히지 않아 긴 글도 읽을 수 있습니다. Esc로 닫는 것은 화면 스크립트가 <code>.is-hidden</code>을 붙여서 합니다.</td></tr>
-<tr><td><b>읽어 주기</b></td><td><code>role="tooltip"</code> · <code>aria-describedby</code></td><td>툴팁에 <code>id</code>를 주고 컨트롤의 <code>aria-describedby</code>로 잇습니다. 아이콘 버튼의 이름은 <code>aria-label</code>이 따로 맡습니다.</td></tr>
+<tr><td><b>구조</b></td><td><code>.has-tooltip</code> › 컨트롤 + <code>.tooltip</code></td><td>컨트롤과 툴팁을 한 묶음으로 감쌉니다. 어두운 바탕에 12px 글자, 컨트롤 쪽으로 작은 화살표가 붙습니다. 최대 폭은 240이고, 넘으면 줄을 바꿉니다.</td></tr>
+<tr><td><b>위치</b></td><td><code>.tooltip--bottom</code><span className="ds-muted">클래스가 없는 것이 기본(위)입니다</span></td><td>보통은 컨트롤 위에 뜹니다. 화면 맨 위처럼 위가 좁으면 아래에 둡니다.</td></tr>
+<tr><td><b>가로 맞춤</b></td><td><code>.tooltip--start</code> · <code>.tooltip--end</code><span className="ds-muted">클래스가 없는 것이 기본(가운데)입니다</span></td><td>보통은 컨트롤 가운데에 맞춥니다. 셀 왼쪽 끝 컨트롤은 툴팁 왼쪽 끝을, 오른쪽 끝 컨트롤은 오른쪽 끝을 컨트롤에 맞춰 셀 밖으로 잘리지 않게 합니다. 화살표는 컨트롤 가운데를 가리킵니다.</td></tr>
+<tr><td><b>열림</b></td><td><code>:hover</code> · <code>:focus-within</code><span className="ds-muted">.is-open · .is-hidden</span></td><td>마우스를 올리거나(<code>:hover</code>) 키보드 포커스가 오면(<code>:focus-within</code>) 열립니다. 툴팁 위로 마우스를 옮겨도 닫히지 않아 긴 글도 읽을 수 있습니다. <code>.is-open</code> = 열어 둔 상태(문서 예시용), <code>.is-hidden</code> = Esc로 닫은 상태로, 화면 스크립트가 붙이고 마우스 · 포커스가 떠나면 뗍니다.</td></tr>
+<tr><td><b>접근성</b></td><td><code>role="tooltip"</code> · <code>aria-describedby</code></td><td>툴팁에 <code>id</code>를 주고 컨트롤의 <code>aria-describedby</code>로 잇습니다. 아이콘 버튼의 이름은 <code>aria-label</code>이 따로 맡습니다.</td></tr>
 </tbody>
 </table>
-<p className="ds-sec__desc ds-after">Figma UI Kit의 Tooltip(까만 툴팁)과 짝입니다. 이전 버전의 도움말 툴팁(초록 바탕 · 옆 화살표)은 그보다 앞 버전의 값을 그대로 옮긴 것이라 쓰지 않습니다. 툴팁에는 꼭 알아야 할 내용을 넣지 않습니다 — 마우스를 올려야만 보이기 때문입니다.</p>
+<p className="ds-sec__desc ds-after">Figma UI Kit의 Tooltip(까만 툴팁)과 짝입니다. 툴팁에는 꼭 알아야 할 내용을 넣지 않습니다 — 마우스를 올려야만 보이기 때문입니다.</p>
 </Section>
 <Section title="예시" en="Examples" desc="문서에서는 첫 번째를 열어 둔 채로 그렸습니다. 나머지 버튼은 마우스를 올리거나 Tab으로 와 보세요.">
-<Card of={S.아이콘_버튼_설명} title="아이콘 버튼 설명" en="Icon button" desc="받기 · 인쇄 · 초기화처럼 그림만 있는 버튼." />
+<Card of={S.아이콘_버튼_설명} title="아이콘 버튼 설명" en="Icon button" desc="받기 · 인쇄 · 초기화처럼 아이콘만 있는 버튼." />
 <Card of={S.도움말} title="도움말" en="Help" desc="물음표 아이콘 옆에 조금 긴 설명. 240에서 줄을 바꿉니다." />
-<Card of={S.끝_맞춤} title="끝 맞춤" en="Start · End" desc="점선 = 칸 경계. 칸 왼쪽 끝 · 오른쪽 끝의 도움말은 툴팁을 컨트롤 쪽 끝에 맞춥니다." />
-<Card of={S.아래쪽} title="아래쪽" en="Bottom" desc="위가 좁은 자리(화면 맨 위 · 표 머리)에서." />
+<Card of={S.끝_맞춤} title="끝 맞춤" en="Start · End" desc="점선 = 셀 경계. 셀 왼쪽 끝 · 오른쪽 끝의 도움말은 툴팁을 컨트롤 쪽 끝에 맞춥니다." />
+<Card of={S.아래쪽} title="아래쪽" en="Bottom" desc="위가 좁은 자리(화면 맨 위 · 헤더 행)에서." />
 </Section>
 <Section title="언제 쓰고 쓰지 말지" en="Do · Don't">
 <Card of={S.사용_지침} code={false} />
 </Section>
-<Section title="전체 상태" en="States" desc="글 길이 두 가지를 위치별로 모았습니다.">
-<Card of={S.전체_상태} title="글 길이 × 위치" />
+<Section title="전체 상태" en="States" desc="위치(위 · 아래) × 가로 맞춤(가운데 · 시작 · 끝)을 모았습니다.">
+<Card of={S.전체_상태} title="위치 × 가로 맞춤" />
 </Section>
 <Section title="Playground" desc="아래 표에서 값을 바꾸면 미리보기와 「코드 보기」가 함께 바뀝니다.">
 <Card of={S.Playground}>

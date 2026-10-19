@@ -30,8 +30,10 @@ export default {
 };
 
 // ── 예시 ──
+const ddField = (label, id, err = '') => '<div class="form-grid-2" style="grid-template-columns:1fr"><div class="ff-field"><label class="search-label" for="' + id + '">' + label + '</label><div class="td">' +
+  '<input class="input" id="' + id + '" aria-invalid="true"' + (err ? ' aria-describedby="' + id + '-err"' : '') + '>' + (err ? '<span class="field-error-msg" id="' + id + '-err">' + err + '</span>' : '') + '</div></div></div>';
 export const 입력_확인 = {
-  render: () => stack([alert({ status: 'danger', title: '필수 항목 두 개가 비어 있어요', desc: '문서 분류 · 문서 명을 입력하세요. 칸 아래에도 빨간 문구가 함께 보여요.' })]),
+  render: () => stack([alert({ status: 'danger', title: '필수 항목을 모두 입력해 주세요.' }), ddField('문서 명', 'al-v1', '문서 명을 입력해 주세요')]),
 };
 export const 안내 = {
   render: () => stack([
@@ -43,16 +45,11 @@ export const 결과 = {
   render: () => stack([alert({ status: 'success', title: '일괄 등록 12건을 모두 마쳤어요' })]),
 };
 export const 공지 = {
-  render: () => stack([
-    alert({ status: 'brand', title: '결재선을 저장해 두고 다시 쓸 수 있어요', close: true }),
-    alert({ status: 'neutral', plain: true, title: '임시 저장본이 있어요 (10-14 18:20)' }),
-  ]),
+  render: () => stack([alert({ status: 'brand', title: '결재선을 저장해 두고 다시 쓸 수 있어요', close: true })]),
 };
 
 // ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-102) ── 미리보기만, 코드는 위 예시 카드에
 const col = (items) => '<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:8px">' + items.join('') + '</div>';
-const ddField = (label, id, err = '') => '<div class="form-grid-2" style="grid-template-columns:1fr"><div class="ff-field"><label class="search-label" for="' + id + '">' + label + '</label><div class="td">' +
-  '<input class="input" id="' + id + '" aria-invalid="true"' + (err ? ' aria-describedby="' + id + '-err"' : '') + '>' + (err ? '<span class="field-error-msg" id="' + id + '-err">' + err + '</span>' : '') + '</div></div></div>';
 const toastLike = (status, msg) => '<div class="toast toast--' + status + '"><span class="toast__icon">' + svg(I[status]) + '</span><span class="toast__msg">' + msg + '</span></div>';
 export const 사용_지침 = {
   parameters: { controls: { disable: true } },
@@ -85,7 +82,7 @@ export const 전체_상태 = {
     STATES.map(([name, s]) => [name, [
       alert({ status: s, title: name + ' 알림' }),
       alert({ status: s, plain: true, title: name + ' 알림' }),
-      alert({ status: s, title: name + ' 알림', desc: '한 줄 설명이 들어가는 자리예요.', close: true }),
+      alert({ status: s, title: name + ' 알림', desc: '설명은 12px로 한 단계 작게 씁니다.', close: true }),
     ]]), { wide: true, full: true }),
 };
 

@@ -15,15 +15,20 @@ export default {
   parameters: { docs: { source: { language: 'html' } } },
 };
 
+const cap = (inner, t) => `<div style="display:flex;flex-direction:column;align-items:center;gap:8px">${inner}<span class="sb-note">${t}</span></div>`;
 export const 스피너_크기 = {
-  render: () => `<div class="sb-row" style="gap:24px">
-    ${spin('sm')} ${spin()} ${spin('lg')} ${spin('', 'neutral')}
+  render: () => `<div style="display:flex;gap:40px;align-items:flex-end">
+    ${cap(spin('sm'), '.spinner--sm 16')} ${cap(spin(), '.spinner 24')} ${cap(spin('lg'), '.spinner--lg 40')}
   </div>`,
-  parameters: { docs: { description: { story: '`--sm` 16 (버튼 · 셀 안) · 기본 24 (영역) · `--lg` 40 (페이지 · 팝업) · `--neutral` 회색' } } },
+};
+export const 스피너_색 = {
+  render: () => `<div style="display:flex;gap:40px;align-items:flex-end">
+    ${cap(spin(), '.spinner (브랜드)')} ${cap(spin('', 'neutral'), '.spinner--neutral (회색)')}
+  </div>`,
 };
 
 export const 구성_3단계 = {
-  render: () => `<div class="sb-row" style="align-items:flex-start;gap:32px">
+  render: () => `<div style="display:flex;flex-wrap:wrap;align-items:flex-start;gap:32px">
     <div class="loading" role="status">${spin()}<span class="sr-only">불러오는 중</span></div>
     <div class="loading" role="status" aria-live="polite">${spin()}<p class="loading__text">문서 목록을 불러오는 중입니다</p></div>
     <div class="loading" role="status" aria-live="polite">${spin('lg')}
@@ -34,14 +39,13 @@ export const 구성_3단계 = {
   </div>`,
 };
 
+const ROWS_T = [['DOC-2610-0013', '브레이크 캘리퍼 조립 사양서'], ['DOC-2610-0012', '하우징 재질 변경 검토 보고서'], ['DOC-2610-0011', '커넥터 핀 배열 설계 기준']];
 export const 영역_오버레이 = {
   name: '영역 오버레이 (Overlay)',
-  render: () => `<div style="position:relative;max-width:480px;border:1px solid var(--color-border-base);border-radius:var(--radius-card)">
-    <div style="padding:16px">
-      <div class="skeleton-title" style="animation:none"></div>
-      <p style="margin:0">오버레이가 이 영역을 덮어 조작을 막아요. 부모에 position: relative가 필요해요.</p>
-      <p style="margin:8px 0 0">그리드 · 팝업 본문을 다시 불러올 때 써요.</p>
-    </div>
+  render: () => `<div style="position:relative;max-width:520px">
+    <div class="table_list"><div class="list"><table class="grid-table"><colgroup><col style="width:140px"><col></colgroup>
+      <thead><tr><th>문서 번호</th><th>문서 명</th></tr></thead>
+      <tbody>${ROWS_T.map(([n, t]) => `<tr><td><a href="#" class="grid-custom-rows-link" tabindex="-1">${n}</a></td><td class="is-left">${t}</td></tr>`).join('')}</tbody></table></div></div>
     <div class="loading loading--overlay" role="status" aria-live="polite">${spin()}<p class="loading__text">다시 불러오는 중</p></div>
   </div>`,
 };
@@ -59,10 +63,10 @@ export const 페이지_로딩 = {
 };
 
 export const 버튼_안 = {
-  render: () => `<div class="sb-row">
-    <button type="button" class="btn btn--primary btn--filled is-loading" aria-busy="true">${spin('sm', 'neutral')}저장 중</button>
-    <span class="loading loading--inline" role="status">${spin('sm')}<span class="loading__text">확인 중</span></span>
-  </div>`,
+  render: () => `<button type="button" class="btn btn--primary btn--filled is-loading" aria-busy="true">${spin('sm', 'neutral')}저장 중</button>`,
+};
+export const 인라인 = {
+  render: () => `<p style="margin:0;font-size:var(--body-sm)">문서 번호 중복 <span class="loading loading--inline" role="status">${spin('sm')}<span class="loading__text">확인 중</span></span></p>`,
 };
 
 // ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-102) ── 미리보기만, 코드는 위 예시 카드에

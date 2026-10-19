@@ -1,72 +1,66 @@
-import { Meta } from '@storybook/addon-docs/blocks';
+import { Meta, Unstyled } from '@storybook/addon-docs/blocks';
+import { PageHead, Section } from './_blocks.js';
 
 <Meta title="Foundation/State" />
 
-# 상태 (State)
-
-모든 누르는 요소는 같은 상태 이름을 씁니다. 피그마 변형 속성 `State`의 값과 CSS 선택자가 1:1로 대응합니다.
-
-## 기본 상태
-
-<table>
-  <thead><tr><th>State (피그마)</th><th>CSS</th><th>뜻</th></tr></thead>
-  <tbody>
-    <tr><td>Default</td><td>—</td><td>아무 일도 없는 상태</td></tr>
-    <tr><td>Hovered</td><td><code>:hover</code></td><td>마우스가 위에 있음</td></tr>
-    <tr><td>Pressed</td><td><code>:active</code></td><td>누르고 있는 순간</td></tr>
-    <tr><td>Focused</td><td><code>:focus-visible</code> (입력칸만 <code>:focus</code>)</td><td>키보드로 여기에 와 있음</td></tr>
-    <tr><td>Disabled</td><td><code>:disabled</code> · <code>[aria-disabled="true"]</code></td><td>못 누름. 진짜 비활성은 <code>disabled</code>(탭에서 빠짐), 잠시 못 누르면 <code>aria-disabled</code></td></tr>
-  </tbody>
+<Unstyled>
+<div className="ds-page">
+<PageHead eyebrow="Foundation" title="State" lead="상호작용 요소의 상태 이름과 CSS 선택자입니다. Figma 변형 속성 State의 값과 CSS 선택자가 1:1로 대응합니다." />
+<Section title="기본 상태" en="Interaction states">
+<table className="ds-table ds-props">
+<thead><tr><th>State (Figma)</th><th>CSS</th><th>정의</th></tr></thead>
+<tbody>
+<tr><td><b>Default</b></td><td>—</td><td>상호작용이 없는 기본 상태입니다.</td></tr>
+<tr><td><b>Hovered</b></td><td><code>:hover</code></td><td>포인터가 요소 위에 있는 상태입니다.</td></tr>
+<tr><td><b>Pressed</b></td><td><code>:active</code></td><td>요소를 누르고 있는 상태입니다.</td></tr>
+<tr><td><b>Focused</b></td><td><code>:focus-visible</code><span className="ds-muted">입력 필드는 :focus</span></td><td>키보드 포커스가 요소에 있는 상태입니다. 입력 필드는 마우스로 눌러도 입력 중임을 표시해야 하므로 <code>:focus</code>를 씁니다.</td></tr>
+<tr><td><b>Disabled</b></td><td><code>:disabled</code> · <code>[aria-disabled="true"]</code></td><td>지금 조작할 수 없는 상태입니다. <code>disabled</code>는 Tab 순서에서도 빠지고, <code>aria-disabled</code>는 포커스는 받되 실행만 막습니다(이유를 툴팁으로 설명해야 할 때).</td></tr>
+</tbody>
 </table>
-## 추가 상태
-
-필요한 컴포넌트에만 둡니다. 새로 늘릴 때는 이 표에 사유를 적습니다.
-
-<table>
-  <thead><tr><th>값</th><th>쓰는 곳</th><th>CSS</th><th>사유</th></tr></thead>
-  <tbody>
-    <tr><td>Loading</td><td>버튼</td><td><code>.is-loading</code> + <code>aria-busy="true"</code></td><td>처리 중 중복 클릭을 막고 폭을 유지</td></tr>
-    <tr><td>Error</td><td>입력칸</td><td><code>[aria-invalid="true"]</code></td><td>스크린리더도 읽도록 클래스가 아니라 속성으로</td></tr>
-    <tr><td>Readonly</td><td>입력칸</td><td><code>[readonly]</code></td><td>값은 보이고 편집만 막음. 회색 박스(한 줄 · 여러 줄 · 상세 폼 같은 모양, DS-ADR-017). hover·클릭 강조 없음, 키보드 포커스만 링</td></tr>
-  </tbody>
+</Section>
+<Section title="추가 상태" en="Component states" desc="필요한 컴포넌트에만 둡니다. 새로 추가할 때는 이 표에 이유를 함께 적습니다.">
+<table className="ds-table ds-props">
+<thead><tr><th>State</th><th>CSS</th><th>사용처</th><th>정의 · 이유</th></tr></thead>
+<tbody>
+<tr><td><b>Loading</b></td><td><code>.is-loading</code> + <code>aria-busy="true"</code></td><td>버튼</td><td>요청을 처리하는 중인 상태입니다. 중복 실행을 막고 버튼 폭을 유지합니다.</td></tr>
+<tr><td><b>Error</b></td><td><code>[aria-invalid="true"]</code></td><td>입력 필드</td><td>입력값이 검증을 통과하지 못한 상태입니다. 스크린 리더도 읽도록 클래스가 아니라 속성으로 표시합니다.</td></tr>
+<tr><td><b>Readonly</b></td><td><code>[readonly]</code> · <code>.ff-readonly</code></td><td>입력 필드</td><td>값을 표시하지만 수정할 수 없는 상태입니다. 회색 바탕이고 Hovered 강조가 없으며, 키보드 포커스만 표시합니다.</td></tr>
+</tbody>
 </table>
-입력칸에는 **Pressed가 없습니다** — 누르는 순간 바로 Focused가 되기 때문입니다.
-
-## 켜짐 · 선택
-
-켜짐 · 선택은 상태와 함께 일어나서(선택된 채로 hover) 상태 값에 섞지 않고 따로 둡니다.
-
-<table>
-  <thead><tr><th>축</th><th>값</th><th>쓰는 곳</th></tr></thead>
-  <tbody>
-    <tr><td>Checked</td><td>False · True · Indeterminate</td><td>체크박스 · 라디오 · 스위치 — <code>:checked</code> · <code>:indeterminate</code></td></tr>
-    <tr><td>Selected</td><td>False · True</td><td>페이지 번호 · 옵션 · 달력 날짜 · 토글 버튼 — <code>aria-selected</code> · <code>aria-current</code> · <code>aria-pressed</code></td></tr>
-  </tbody>
+<p className="ds-sec__desc ds-after">입력 필드에는 Pressed가 없습니다. 누르는 순간 Focused가 되기 때문입니다.</p>
+</Section>
+<Section title="선택 · 펼침" en="Selection" desc="선택 · 펼침은 기본 상태와 동시에 일어나므로(선택된 채 Hovered) State 값에 섞지 않고 별도 속성으로 둡니다.">
+<table className="ds-table ds-props">
+<thead><tr><th>속성</th><th>값</th><th>CSS · ARIA</th><th>사용처</th></tr></thead>
+<tbody>
+<tr><td><b>Checked</b></td><td>False · True · Indeterminate</td><td><code>:checked</code> · <code>:indeterminate</code></td><td>체크박스 · 라디오 · 토글 스위치</td></tr>
+<tr><td><b>Selected</b></td><td>False · True</td><td><code>aria-selected</code> · <code>aria-current</code> · <code>aria-pressed</code></td><td>탭 · 옵션 · 달력 날짜 · 페이지 번호 · 토글 버튼</td></tr>
+<tr><td><b>Expanded</b></td><td>False · True</td><td><code>aria-expanded</code></td><td>접는 섹션 · 셀렉트 · 상세 검색 · 사용자 메뉴</td></tr>
+</tbody>
 </table>
-## 포커스
-
-방식은 두 가지뿐입니다.
-
-<table>
-  <thead><tr><th>대상</th><th>방식</th><th>이유</th></tr></thead>
-  <tbody>
-    <tr><td>입력칸 <code>.input</code> · <code>.select</code> · <code>.textarea</code></td><td>보더 <code>--color-border-focus</code> + 바깥 3px <code>--color-focus-ring</code></td><td>클릭해도 "지금 입력 중"을 보여줘야 함</td></tr>
-    <tr><td>그 밖의 누르는 요소</td><td>입력칸과 같은 글로우 — 보더 <code>--color-border-focus</code> + 바깥 3px <code>--color-focus-ring</code>. 탭은 칸에 옅은 브랜드 바탕(<code>--color-bg-brand-subtle</code>, 선 · 번짐 없음)</td><td>이전 버전 포커스 그대로. 스크롤 상자 · <code>overflow:hidden</code> 안(달력 연도 · 월 목록, 날짜 칸 아이콘)은 같은 글로우를 안쪽으로</td></tr>
-  </tbody>
+</Section>
+<Section title="포커스" en="Focus" desc="입력 필드와 그 밖의 요소, 두 가지 방식이 있습니다. 좁은 영역 안에서는 같은 표시를 안쪽으로 그립니다.">
+<table className="ds-table ds-props">
+<thead><tr><th>대상</th><th>표시</th><th>설명</th></tr></thead>
+<tbody>
+<tr><td><b>입력 필드</b><span className="ds-muted">.input · .select · .textarea</span></td><td><code>--color-border-focus</code> 테두리 + 바깥 3px <code>--color-focus-ring</code></td><td>마우스로 눌러도 표시합니다(입력 중 표시).</td></tr>
+<tr><td><b>그 밖의 요소</b><span className="ds-muted">버튼 · 링크 · 체크박스 …</span></td><td>입력 필드와 같은 테두리 + 바깥 3px</td><td>키보드 포커스일 때만 표시합니다. 탭은 예외로 옅은 브랜드 바탕(<code>--color-bg-brand-subtle</code>)입니다.</td></tr>
+<tr><td><b>좁은 영역 안</b><span className="ds-muted">overflow:hidden · 스크롤 영역</span></td><td>같은 표시를 안쪽으로(inset)</td><td>달력 연도 · 월 목록, 카드 목록 행, 날짜 필드 아이콘처럼 바깥 번짐이 잘리는 곳입니다.</td></tr>
+</tbody>
 </table>
-## 토큰
-
-색 토큰은 상태마다 따로 있는 것과 공통 한 벌로 쓰는 것이 나뉩니다.
-
-<table>
-  <thead><tr><th>상태</th><th>토큰</th><th>왜 이렇게</th></tr></thead>
-  <tbody>
-    <tr><td>Default</td><td><code>--color-bg-interactive-secondary</code> (상태 접미사 없음)</td><td>기본값</td></tr>
-    <tr><td>Hovered</td><td><code>--color-bg-interactive-secondary-hover</code></td><td>중요도(primary · secondary · danger · selected)마다 색이 달라서 <strong>중요도별로</strong> 있음</td></tr>
-    <tr><td>Pressed</td><td><code>--color-bg-interactive-secondary-pressed</code></td><td>Hovered와 같은 이유로 중요도별</td></tr>
-    <tr><td>Focused</td><td><code>--color-border-focus</code> · <code>--color-focus-ring</code></td><td>모든 요소에 <strong>같은 포커스 링 하나</strong> — 중요도와 상관없어서 공통 한 벌</td></tr>
-    <tr><td>Disabled</td><td><code>--color-bg-disabled</code> · <code>--color-text-disabled</code> · <code>--color-border-disabled</code> · <code>--color-icon-disabled</code></td><td>못 누르는 건 어느 중요도든 <strong>똑같이 회색</strong> — 공통 한 벌</td></tr>
-  </tbody>
+</Section>
+<Section title="토큰" en="Tokens" desc="Hovered · Pressed는 중요도마다 색이 달라 중요도별 토큰이 있고, Focused · Disabled는 모든 요소가 공통 토큰 한 벌을 씁니다.">
+<table className="ds-table ds-props">
+<thead><tr><th>State</th><th>토큰</th><th>구분</th></tr></thead>
+<tbody>
+<tr><td><b>Default</b></td><td><code>--color-bg-interactive-secondary</code></td><td>중요도별(상태 접미사 없음)</td></tr>
+<tr><td><b>Hovered</b></td><td><code>--color-bg-interactive-secondary-hover</code></td><td>중요도별</td></tr>
+<tr><td><b>Pressed</b></td><td><code>--color-bg-interactive-secondary-pressed</code></td><td>중요도별</td></tr>
+<tr><td><b>Focused</b></td><td><code>--color-border-focus</code><br/><code>--color-focus-ring</code></td><td>공통</td></tr>
+<tr><td><b>Disabled</b></td><td><code>--color-bg-disabled</code><br/><code>--color-text-disabled</code><br/><code>--color-border-disabled</code><br/><code>--color-icon-disabled</code></td><td>공통</td></tr>
+</tbody>
 </table>
-
-이름 규칙: <code>--color-</code> + 속성(bg · text · border · icon) + <code>-interactive-</code> + 중요도(primary · secondary · danger · selected) + 상태(hover · pressed)
+<p className="ds-sec__desc ds-after">이름 규칙 — <code>--color-</code> + 속성(bg · text · border · icon) + <code>-interactive-</code> + 중요도(primary · secondary · danger · selected) + 상태(hover · pressed). 버튼 중요도 destructive(<code>.btn--destructive</code>)는 danger 토큰을 씁니다.</p>
+</Section>
+</div>
+</Unstyled>

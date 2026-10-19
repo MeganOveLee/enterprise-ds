@@ -30,24 +30,24 @@ export const 모서리 = {
   render: () => mount(`
     <p class="fd-lead">단계 — 값 사전입니다. 모든 브랜드가 같은 값을 씁니다.</p>
     <div class="fd-boxes">${[
-      ['none', '직각 — 브랜드가 역할을 0으로 둘 때'], ['sm', '입력칸 · 체크박스 · 작은 표식의 기본'], ['md', '버튼 · 영역 박스 · 떠 있는 층의 기본'], ['lg', '카드의 기본'], ['rounded', '알약 · 칩 · 스위치'],
+      ['none', '직각 — 브랜드가 역할을 0으로 둘 때'], ['sm', '입력 필드 · 체크박스 · 작은 표식의 기본'], ['md', '버튼 · 영역 · 팝오버의 기본'], ['lg', '카드의 기본'], ['rounded', '완전 둥근 모서리 — 칩 · 스위치'],
     ].map(([n, use]) => `
       <div class="fd-item">
         <div class="fd-sw fd-box" style="border-radius:var(--radius-${n})"></div>
         <span class="fd-name">--radius-${n}</span><span class="fd-val" data-read="radius"></span>
         <span class="fd-val">${use}</span>
       </div>`).join('')}</div>
-    <p class="fd-lead" style="margin-top:32px">역할 — 컴포넌트는 이 이름을 씁니다. 브랜드가 값을 바꿀 수 있는 자리입니다(플렉시블).</p>
+    <p class="fd-lead" style="margin-top:32px">역할 — 컴포넌트는 이 이름을 씁니다. 브랜드가 값을 바꿀 수 있습니다.</p>
     <div class="fd-row fd-head" style="padding-top:0;align-items:center"><span>토큰 · 기본 단계</span><span>지금 값</span><span>쓰는 곳</span></div>
     ${[
       ['btn', 'md', '모든 버튼 — 표준 · 아이콘(닫기 · 페이지 번호 · 달력 화살표) · 작은 버튼'],
       ['input', 'sm', '입력칸 · 셀렉트 · 여러 줄 입력 · 날짜 · 다중 선택'],
       ['checkbox', 'sm', '체크박스 표식'],
-      ['chip', 'rounded', '칩 — Chip · Status chip, 버전 표시'],
+      ['chip', 'rounded', '칩 — Status chip · 버전 표시'],
       ['item', 'sm', '목록 · 메뉴 안의 행'],
       ['card', 'lg', '카드 · 스켈레톤 카드'],
       ['panel', 'md', '화면 안 영역 박스 — 그리드 목록 · 검색 폼'],
-      ['popover', 'md', '떠 있는 층 — 달력 · 드롭다운'],
+      ['popover', 'md', '팝오버 — 달력 · 드롭다운'],
       ['skeleton', 'sm', '스켈레톤 조각'],
     ].map(([n, base, use]) => `
       <div class="fd-row fd-item" style="align-items:center">
@@ -57,7 +57,7 @@ export const 모서리 = {
           <div class="fd-sw" style="width:56px;height:28px;flex-shrink:0;background:var(--color-bg-brand-subtle);border:1px solid var(--color-border-brand);border-radius:var(--radius-${n})"></div>
           <span class="fd-use">${use}</span></div>
       </div>`).join('')}
-    <p class="fd-use" style="margin:12px 0 0">원형(라디오 · 스피너) · 알약(스위치 · 개수 배지) · 로고 마크는 역할이 없어 모든 브랜드가 같습니다(스태틱).</p>`),
+    <p class="fd-use" style="margin:12px 0 0">원형(라디오 · 스피너) · 완전 둥근 모서리(스위치 · 개수 배지) · 로고 마크는 역할이 없어 모든 브랜드가 같습니다.</p>`),
 };
 
 export const 높이 = {

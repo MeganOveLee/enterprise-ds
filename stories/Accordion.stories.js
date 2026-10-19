@@ -14,16 +14,21 @@ let uid = 0;
 const toggle = (title, open, { controls = '', extra = '' } = {}) =>
   '<button type="button" class="section-toggle' + (extra ? ' ' + extra : '') + '" aria-expanded="' + open + '" aria-label="' + title + (open ? ' 접기' : ' 펼치기') + '"' +
   (controls ? ' aria-controls="' + controls + '"' : '') + '>' + svg(open ? MINUS : PLUS) + '</button>';
-// 섹션 머리 + 내용
-const section = (title, body, { open = true, right = '' } = {}) => {
+// 섹션 헤더 + 내용. h = 제목 단계(화면 제목 h2 아래 = h3, 창 제목 h3 아래 = h4)
+const section = (title, body, { open = true, right = '', h = 'h3' } = {}) => {
   const id = 'acc-' + (++uid);
-  return '<div class="seach_arm"><div class="leftbt">' + toggle(title, open, { controls: id }) + '<h4>' + title + '</h4></div>' +
+  return '<div class="seach_arm"><div class="leftbt">' + toggle(title, open, { controls: id }) + '<' + h + '>' + title + '</' + h + '></div>' +
     (right ? '<div class="rightbt">' + right + '</div>' : '') + '</div>' +
     '<div class="pro_table" id="' + id + '"' + (open ? '' : ' hidden') + '>' + body + '</div>';
 };
 const ro = (label, value) => '<div class="ff-field"><span class="search-label">' + label + '</span><div class="td"><div class="ff-readonly">' + value + '</div></div></div>';
 const INFO = '<div class="form-grid-2">' + ro('문서 번호', 'DOC-2610-0012') + ro('버전', 'A.3') + ro('등록자', '이서연') + ro('등록일', '2026-10-12') + '</div>';
 const NOTE = '<div class="form-grid-2">' + ro('변경 사유', '하우징 재질 변경(알루미늄 → 마그네슘)에 따른 검토') + ro('관련 부품', 'BRK-20417') + '</div>';
+// 등록 창 — 같은 섹션, 내용은 입력 필드
+let fid = 0;
+const inp = (label, ph, req) => { const id = 'acc-f' + (++fid); return '<div class="ff-field"><label class="search-label" for="' + id + '">' + label + (req ? '<span class="required" aria-hidden="true"></span>' : '') + '</label><div class="td"><input class="input" id="' + id + '"' + (req ? ' aria-required="true"' : '') + ' placeholder="' + ph + '"></div></div>'; };
+const INFO_IN = () => '<div class="form-grid-2">' + ro('문서 번호', '저장하면 자동으로 매겨집니다') + inp('문서 명', '문서 명 입력', true) + '</div>';
+const NOTE_IN = () => '<div class="form-grid-2">' + inp('변경 사유', '변경 사유 입력') + inp('관련 부품', '품번 입력') + '</div>';
 
 // 눌러 보기 — 토글이 aria-expanded 를 바꾸고, aria-controls 로 이은 내용에 hidden 을 붙였다 뗌. 아이콘 · 이름도 같이 바뀜
 const wire = (html) => {
@@ -52,18 +57,19 @@ export default {
 
 // ── 예시 ──
 // 상자형 — 상세 화면(.pop 밖). 머리 + 내용이 한 상자, 접으면 머리만 둥근 상자
-const META = '<span class="section-meta">전체 <b>14</b>건</span>';   // 머리 오른쪽 글자 = .section-meta (TD-75)
-const BOX = () => section('기본 정보', INFO) + section('변경 내용', NOTE) + section('산출물 문서', '', { open: false, right: META });
+const META = '<span class="section-meta"><b>2</b>건</span>';   // 헤더 오른쪽 글자 = .section-meta
+// 두 예시는 같은 섹션(기본 정보 · 변경 내용 펼침, 첨부 파일 접힘) — 놓이는 자리만 다름
+const BOX = () => section('기본 정보', INFO) + section('변경 내용', NOTE) + section('첨부 파일', '', { open: false, right: META });
 export const 상자형 = {
-  parameters: html(section('기본 정보', '<!-- 내용: 폼 · 값(.form-grid-2) -->') + '\n' + section('산출물 문서', '', { open: false, right: META })),
+  parameters: html(section('기본 정보', '<!-- 내용: 폼 · 값(.form-grid-2) -->') + '\n' + section('첨부 파일', '', { open: false, right: META })),
   render: () => wire('<div style="max-width:720px">' + BOX() + '</div>'),
 };
 
-// 이어지는 형 — 등록 창(.pop) 안. 바탕 없는 제목줄, 섹션끼리 이어짐 (.pop 높이는 문서용으로 풂)
-const POP = () => '<div class="pop" style="height:auto;min-width:0"><div class="product"><div class="contents">' +
-  section('기본 정보', INFO) + section('첨부 파일', '', { open: false }) + '</div></div></div>';
+// 등록 창(.pop) 안 — 같은 섹션 상자, 제목은 창 제목(h3) 아래 h4 (.pop 높이는 문서용으로 풂)
+const POP = () => '<div class="pop" style="height:auto;min-width:0"><div class="contents">' +
+  section('기본 정보', INFO_IN(), { h: 'h4' }) + section('변경 내용', NOTE_IN(), { h: 'h4' }) + section('첨부 파일', '', { open: false, right: META, h: 'h4' }) + '</div></div>';
 export const 이어지는_형 = {
-  parameters: html('<div class="pop">\n  <div class="product"><div class="contents">\n    ' + section('기본 정보', '<!-- 내용 -->') + '\n  </div></div>\n</div>'),
+  parameters: html('<div class="pop">\n  <div class="contents">\n    ' + section('기본 정보', '<!-- 내용 -->', { h: 'h4' }) + '\n  </div>\n</div>'),
   render: () => wire('<div style="max-width:720px">' + POP() + '</div>'),
 };
 

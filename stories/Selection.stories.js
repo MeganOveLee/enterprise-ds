@@ -22,21 +22,25 @@ export default {
 };
 
 // ── 예시 ──
-export const Checkbox = { render: (a) => ck(a.label, opt(a)) };
+export const Checkbox = {
+  render: (a) => '<div class="checkbox-group" role="group" aria-label="포함 항목">' + ck(a.label, opt(a)) + ck('첨부 파일 포함', ' checked') + ck('이력 포함') + '</div>',
+};
 
+const TREE = (all) => '<div style="display:grid;gap:8px">' + ck('전체 선택', all) +
+  '<div class="checkbox-group" role="group" aria-label="문서 종류" style="display:grid;gap:8px;padding-left:24px">' + ck('사양서', ' checked') + ck('도면', ' checked') + ck('시험 성적서') + '</div></div>';
 export const 부분_선택 = {
-  parameters: html([ck('전체 선택'), '<!-- 부분 선택은 속성이 없어 스크립트로 켠다: input.indeterminate = true -->']),
+  parameters: html(['<!-- 하위 항목 중 일부만 선택 = 「전체 선택」을 부분 선택으로. 속성이 없어 스크립트로 켠다: input.indeterminate = true -->', TREE(' data-ind')]),
   render: () => {
     const el = document.createElement('div');
-    el.innerHTML = ck('전체 선택');
-    el.querySelector('input').indeterminate = true;
+    el.innerHTML = TREE(' data-ind');
+    el.querySelector('[data-ind]').indeterminate = true;
     return el;
   },
 };
 
 export const Radio = {
   args: { label: '긴급' },
-  render: (a) => `<div role="radiogroup" aria-label="처리 구분" class="sb-row">${rd('g1', '정규', ' checked')}${rd('g1', a.label, opt(a))}</div>`,
+  render: (a) => `<div class="radio-group" role="radiogroup" aria-label="처리 구분">${rd('g1', '정규', ' checked')}${rd('g1', a.label, opt(a))}</div>`,
 };
 
 export const Switch = { args: { label: '자동 저장' }, render: (a) => sw(a.label, opt(a)) };
@@ -55,9 +59,9 @@ export const 사용_지침 = {
         dont: [saveForm(sw('결재 포함')), '스위치는 누르는 즉시 적용되는 것으로 읽힙니다.'] },
       // 근거: 예시 「체크박스 · 라디오」 — 여러 개는 체크박스, 하나만은 라디오
       { title: '하나만 고르는 값은 라디오',
-        do: ['<div role="radiogroup" aria-label="처리 구분" class="sb-row">' + rd('dd-sel-g1', '정규', ' checked') + rd('dd-sel-g1', '긴급') + '</div>',
+        do: ['<div class="radio-group" role="radiogroup" aria-label="처리 구분">' + rd('dd-sel-g1', '정규', ' checked') + rd('dd-sel-g1', '긴급') + '</div>',
           '둘 중 하나만 고르는 값은 라디오로 묶습니다.'],
-        dont: ['<div class="sb-row">' + ck('정규', ' checked') + ck('긴급', ' checked') + '</div>',
+        dont: ['<div class="checkbox-group" role="group" aria-label="처리 구분">' + ck('정규', ' checked') + ck('긴급', ' checked') + '</div>',
           '체크박스로 두면 서로 맞지 않는 값을 함께 고를 수 있습니다.'] },
       // 근거: 예시 「부분 선택」 — 「전체 선택」 아래 항목 중 일부만 골랐을 때
       { title: '일부만 골랐을 때는 부분 선택',
@@ -76,7 +80,7 @@ export const 전체_상태 = {
   parameters: html([
     '<!-- Hovered · Focused 는 마우스 · 키보드에 따라 CSS가 표시한다 (클래스 불필요) -->',
     ck('결재 포함', ' checked disabled'),
-    rd('d', '보류', ' checked disabled'),
+    rd('d', '정규', ' checked disabled'),
     sw('자동 저장', ' checked disabled'),
   ]),
   // 행 = 상태, 열 = 종류 (상태가 7개라 열로 두면 칸이 좁아 글자가 줄바꿈됨 — Input · Date Picker와 같은 방향)
@@ -84,13 +88,13 @@ export const 전체_상태 = {
     enablePseudo();
     const na = '<span class="sb-h">—</span>';
     const rows = [
-      ['꺼짐', [ck('결재 포함'), rd('a', '정규'), sw('자동 저장')]],
+      ['Default', [ck('결재 포함'), rd('a', '정규'), sw('자동 저장')]],
       ['Hovered', [ck('결재 포함', ' class="ps-hover"'), rd('h', '정규', ' class="ps-hover"'), sw('자동 저장', ' class="ps-hover"')]],
       ['Focused', [ck('결재 포함', ' class="ps-focus-visible"'), rd('f', '정규', ' class="ps-focus-visible"'), sw('자동 저장', ' class="ps-focus-visible"')]],
-      ['켜짐', [ck('결재 포함', ' checked'), rd('b', '긴급', ' checked'), sw('자동 저장', ' checked')]],
-      ['부분 선택', [ck('결재 포함', ' data-ind'), na, na]],
-      ['disabled', [ck('결재 포함', ' disabled'), rd('c', '보류', ' disabled'), sw('자동 저장', ' disabled')]],
-      ['켜짐+disabled', [ck('결재 포함', ' disabled checked'), rd('d', '보류', ' disabled checked'), sw('자동 저장', ' disabled checked')]],
+      ['Checked', [ck('결재 포함', ' checked'), rd('b', '정규', ' checked'), sw('자동 저장', ' checked')]],
+      ['Indeterminate', [ck('결재 포함', ' data-ind'), na, na]],
+      ['Disabled', [ck('결재 포함', ' disabled'), rd('c', '정규', ' disabled'), sw('자동 저장', ' disabled')]],
+      ['Checked · Disabled', [ck('결재 포함', ' disabled checked'), rd('d', '정규', ' disabled checked'), sw('자동 저장', ' disabled checked')]],
     ];
     const el = document.createElement('div');
     el.innerHTML = matrix(['.checkbox', '.radio', '.switch'], rows, { full: true });

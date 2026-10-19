@@ -6,9 +6,10 @@ import * as S from './ChooseFeedback.stories.js';
 
 <Unstyled>
 <div className="ds-page">
-<PageHead eyebrow="Feedback" title="고르는 법" lead="상태를 알리는 상황마다 쓰는 컴포넌트입니다." />
-<Section title="상황별 컴포넌트" en="Which to use" desc="기준은 각 컴포넌트 문서의 「언제 쓰고 쓰지 말지」와 같습니다.">
+<PageHead eyebrow="Feedback" title="고르는 법" lead="피드백 컴포넌트의 표준 이름 · 정의 · 고르는 기준입니다." />
+<Section title="컴포넌트별 기준" en="Which to use">
 <Card of={S.고르는_표} code={false} />
+<p className="ds-sec__desc ds-after">대기 시간 기준 — 1초 미만 = 표시 없음 · 진행률을 모름 = 스피너 · 진행률을 셀 수 있음 = 진행 바 · 첫 로드 = 스켈레톤. 이름 · 정의는 공개 디자인 시스템(KRDS · Carbon · Polaris · Atlassian)의 표준 용어를 따릅니다.</p>
 </Section>
 </div>
 </Unstyled>

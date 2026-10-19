@@ -6,19 +6,19 @@ import * as S from './Button.stories.js';
 
 <Unstyled>
 <div className="ds-page">
-<PageHead eyebrow="Form" title="Button" lead="동작을 실행하는 요소로, 중요도와 모양을 조합해 씁니다." />
+<PageHead eyebrow="Form" title="Button" lead="동작을 실행하는 요소입니다. 중요도와 모양을 조합해 사용합니다." />
 <Section title="구성" en="Spec">
 <table className="ds-table ds-props">
 <thead><tr><th>구분</th><th>클래스 · 속성</th><th>설명</th></tr></thead>
 <tbody>
 <tr><td><b>중요도</b></td><td><code>{'.btn--{중요도}'}</code><span className="ds-muted">primary · secondary · destructive</span></td><td>동작의 중요도로 색을 정합니다. 한 영역에 primary는 하나만 씁니다.</td></tr>
 <tr><td><b>모양</b></td><td><code>{'.btn--{모양}'}</code><span className="ds-muted">filled · outlined · transparent</span></td><td>같은 중요도 안에서 강조 정도를 나눕니다.</td></tr>
-<tr><td><b>형태</b></td><td><code>.btn--icon</code> · <code>.btn--expand</code><span className="ds-muted">아이콘만 · 펼침</span></td><td>기본은 글자 버튼이고, 왼쪽 아이콘은 클래스 없이 글자 앞에 svg를 넣습니다. 아이콘만 있는 버튼은 정사각형이며 이름을 <code>aria-label</code>로 붙입니다. 펼침 버튼은 글자 오른쪽에 화살표가 붙습니다.</td></tr>
-<tr><td><b>크기</b></td><td><code>.btn--sm</code> · <code>.btn--lg</code><span className="ds-muted">작은 버튼 · 큰 버튼</span></td><td>기본은 크기 클래스 없이 씁니다. 작은 버튼은 카드 머리 · 알림 닫기처럼 좁은 자리에, 큰 버튼은 큰 칸(<code>.input--lg</code>)과 짝인 단독 폼의 주 동작 하나에만 씁니다.</td></tr>
+<tr><td><b>형태</b></td><td><code>.btn--icon</code> · <code>.btn--expand</code><span className="ds-muted">아이콘만 · 펼침</span></td><td>클래스가 없는 것이 기본(글자 버튼)입니다. 아이콘은 글자 앞에 svg 또는 아이콘 글꼴(<code>{'<i class="icon-*">'}</code>)을 넣으며, 크기 14 · 색은 글자색을 따릅니다. 아이콘만 있는 버튼은 정사각형이며 이름을 <code>aria-label</code>로 붙입니다. 펼침 버튼은 글자 오른쪽에 화살표가 붙습니다.</td></tr>
+<tr><td><b>크기</b></td><td><code>.btn--sm</code> · <code>.btn--lg</code><span className="ds-muted">작은 버튼 · 큰 버튼</span></td><td>클래스가 없는 것이 기본(높이 28)입니다. 작은 버튼(26)은 카드 헤더 · 알림 닫기처럼 좁은 자리에, 큰 버튼(44)은 큰 필드(<code>.input--lg</code>)과 짝인 단독 폼의 주 동작 하나에만 씁니다. 높이는 브랜드가 바꿀 수 있습니다.</td></tr>
 <tr><td><b>묶음</b></td><td><code>.button_group</code><span className="ds-muted">팝업 제목 줄 = .pop .top-btn-area</span></td><td>버튼 여러 개를 한 줄로 붙입니다. 결과 영역 오른쪽 · 팝업 제목 줄 오른쪽의 버튼 묶음이 검색 바 오른쪽과 같은 간격을 씁니다. 키보드 포커스 번짐이 옆 버튼에 닿지 않는 넓이입니다.</td></tr>
-<tr><td><b>상태</b></td><td><code>disabled</code> · <code>.is-loading</code><span className="ds-muted">처리 중에는 aria-busy="true"를 함께</span></td><td>누를 수 없음 · 처리 중. 마우스 · 키보드 상태(Hovered · Pressed · Focused)는 CSS가 알아서 표시합니다.</td></tr>
+<tr><td><b>상태</b></td><td><code>disabled</code> · <code>.is-loading</code><span className="ds-muted">처리 중에는 aria-busy="true"를 함께</span></td><td><code>disabled</code> = 지금 실행할 수 없는 버튼입니다. 흐리게 표시하고 누를 수도 포커스할 수도 없습니다. <code>.is-loading</code> = 요청을 처리하는 중인 버튼입니다. 라벨 대신 스피너와 「처리 중」을 표시하고, 끝날 때까지 다시 누를 수 없습니다.</td></tr>
 <tr><td><b>토글</b></td><td><code>aria-pressed</code> · <code>aria-expanded</code><span className="ds-muted">true · false</span></td><td>켜고 끄는 버튼 · 접고 펴는 버튼의 현재 상태입니다. 클래스가 아니라 속성이라 스크립트가 값만 바꿉니다.</td></tr>
-<tr><td><b>특수</b></td><td><code>.btn--excel</code><span className="ds-muted">엑셀 다운로드</span></td><td>엑셀 내려받기 전용. 이전 버전과 같은 고정 초록으로, 브랜드가 바뀌어도 엑셀 파일을 받는 버튼임을 알아볼 수 있게 합니다.</td></tr>
+<tr><td><b>특수</b></td><td><code>.btn--excel</code><span className="ds-muted">엑셀 다운로드</span></td><td>엑셀 내려받기 전용입니다. 브랜드와 상관없이 고정된 초록이라, 브랜드가 바뀌어도 엑셀 파일을 받는 버튼임을 알아볼 수 있습니다.</td></tr>
 </tbody>
 </table>
 <p className="ds-sec__desc ds-after">중요도 × 모양 9가지는 Figma · CSS에 모두 있지만, 업무 동작에는 아래 「업무 동작별 버튼」의 조합만 씁니다. primary outlined · primary transparent · secondary filled · destructive filled는 업무 동작에 쓰지 않습니다.</p>
@@ -30,14 +30,14 @@ import * as S from './Button.stories.js';
 <Card of={S.Emphasis} title="중요도" en="Emphasis" desc="색은 동작의 종류(등록 · 조회 같은 CRUD)가 아니라 중요도로 정합니다." />
 <Card of={S.Style} title="모양" en="Style" desc="같은 중요도 안에서 강조 정도를 나눕니다." />
 <Card of={S.Type} title="형태" en="Type" desc="글자 버튼을 기본으로, 아이콘을 더하거나 아이콘만 쓰거나 화살표를 붙입니다." />
-<Card of={S.Size} title="크기" en="Size" desc="기본 크기를 주로 쓰고, 자리에 맞춰 작은 버튼 · 큰 버튼을 고릅니다." />
+<Card of={S.Size} title="크기" en="Size" desc="같은 버튼의 높이만 다릅니다. 기본 크기를 주로 쓰고, 자리에 맞춰 작은 버튼 · 큰 버튼을 고릅니다." />
 <Card of={S.Toggle} title="토글" en="Toggle" desc="같은 버튼에 상태 속성 값만 바꿉니다. 켜고 끄기는 aria-pressed, 접고 펴기는 aria-expanded입니다." />
 <Card of={S.Utility} title="특수" en="Utility" desc="특정 용도에만 쓰는 버튼입니다." />
 </Section>
 <Section title="언제 쓰고 쓰지 말지" en="Do · Don't">
 <Card of={S.사용_지침} code={false} />
 </Section>
-<Section title="전체 조합" en="States" desc="상태별 모습을 모았습니다. Hovered · Pressed · Focused는 마우스 · 키보드 상태를 정지 화면으로 보여 준 것입니다.">
+<Section title="전체 조합" en="States" desc="상태별 모습을 모았습니다. Hovered · Pressed · Focused는 상호작용 상태를 고정해 표시한 것입니다.">
 <Card of={S.AllStates} title="글자 버튼" desc="중요도 × 모양 전체 조합" />
 <Card of={S.IconStates} title="아이콘 · 토글 버튼" desc="아이콘만 있는 버튼과 켜고 끄기 · 접고 펴기 버튼" />
 </Section>

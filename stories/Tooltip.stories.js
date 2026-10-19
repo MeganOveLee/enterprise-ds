@@ -17,7 +17,7 @@ const tip = ({ icon = 'down', label = '첨부 받기', text = '첨부 받기', b
   return '<span class="has-tooltip"><button type="button" class="btn btn--secondary btn--transparent btn--icon" aria-label="' + label + '" aria-describedby="' + id + '">' + svg(I[icon]) + '</button>' +
     '<span class="tooltip' + (bottom ? ' tooltip--bottom' : '') + (side ? ' tooltip--' + side : '') + (open ? ' is-open' : '') + '" role="tooltip" id="' + id + '">' + text + '</span></span>';
 };
-// 툴팁이 들어갈 자리 — 위(또는 아래)에 툴팁 높이만큼 비워 둠. center = 표 칸 가운데(긴 툴팁 240이 칸 안에 들어가게 칸 폭 300)
+// 툴팁이 들어갈 자리 — 위(또는 아래)에 툴팁 높이만큼 비워 둠. center = 표 셀 가운데(긴 툴팁 240이 셀 안에 들어가게 셀 폭 300)
 const stage = (inner, h = 120, align = 'end', center = false) => '<div style="display:flex;align-items:' + align + ';gap:8px;min-height:' + h + 'px;padding:8px 24px' + (center ? ';justify-content:center;min-width:300px' : '') + '">' + inner + '</div>';
 
 export default {
@@ -31,15 +31,15 @@ export const 아이콘_버튼_설명 = {
   render: () => stage(tip({ icon: 'down', label: '첨부 받기', text: '첨부 받기', open: true }) + tip({ icon: 'print', label: '인쇄', text: '인쇄' }) + tip({ icon: 'reset', label: '검색 조건 초기화', text: '검색 조건 초기화' }), 80),
 };
 export const 도움말 = {
-  // 칸 가운데에 둠 — 왼쪽 끝에 두면 폭 240 툴팁이 칸 밖으로 나가 왼쪽이 잘렸음
-  render: () => stage(tip({ icon: 'help', label: '행 높이 도움말', text: '관련 객체 그리드는 행 높이 30을 씁니다. 편집 칸이 있는 그리드만 40입니다.', open: true }), 120, 'end', true),
+  // 셀 가운데에 둠 — 왼쪽 끝에 두면 폭 240 툴팁이 셀 밖으로 나가 왼쪽이 잘렸음
+  render: () => stage(tip({ icon: 'help', label: '행 높이 도움말', text: '관련 객체 그리드는 행 높이 30을 씁니다. 편집 셀이 있는 그리드만 40입니다.', open: true }), 120, 'end', true),
 };
-// 칸 왼쪽 · 오른쪽 끝 — 가운데 맞춤이면 폭 240 툴팁이 칸 밖으로 잘림 → .tooltip--start · --end (TD-93, 10/17)
+// 셀 왼쪽 · 오른쪽 끝 — 가운데 맞춤이면 폭 240 툴팁이 셀 밖으로 잘림 → .tooltip--start · --end (TD-93, 10/17)
 const edge = (inner, justify) => '<div style="display:flex;align-items:end;justify-content:' + justify + ';min-height:120px;padding:8px 0;border-inline:1px dashed var(--color-border-strong);width:300px">' + inner + '</div>';
 export const 끝_맞춤 = {
   render: () => '<div class="sb-row" style="gap:24px;padding:8px 24px">' +
-    edge(tip({ icon: 'help', label: '행 높이 도움말', text: '관련 객체 그리드는 행 높이 30을 씁니다. 편집 칸이 있는 그리드만 40입니다.', open: true, side: 'start' }), 'flex-start') +
-    edge(tip({ icon: 'help', label: '행 높이 도움말', text: '관련 객체 그리드는 행 높이 30을 씁니다. 편집 칸이 있는 그리드만 40입니다.', open: true, side: 'end' }), 'flex-end') + '</div>',
+    edge(tip({ icon: 'help', label: '행 높이 도움말', text: '관련 객체 그리드는 행 높이 30을 씁니다. 편집 셀이 있는 그리드만 40입니다.', open: true, side: 'start' }), 'flex-start') +
+    edge(tip({ icon: 'help', label: '행 높이 도움말', text: '관련 객체 그리드는 행 높이 30을 씁니다. 편집 셀이 있는 그리드만 40입니다.', open: true, side: 'end' }), 'flex-end') + '</div>',
 };
 export const 아래쪽 = {
   render: () => stage(tip({ icon: 'down', label: '첨부 받기', text: '첨부 받기', bottom: true, open: true }), 80, 'start'),
@@ -47,10 +47,10 @@ export const 아래쪽 = {
 
 // ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-102) ── 미리보기만, 코드는 위 예시 카드에
 const ddStage = (inner) => '<div style="flex:1;display:flex;align-items:end;justify-content:center;gap:8px;min-height:96px">' + inner + '</div>';   // 가운데 — 긴 툴팁도 판 안에
-// 점선 = 칸 경계. 왼쪽을 비워 둬 칸 밖으로 넘친 툴팁도 보이게
-const ddEdge = (inner) => '<div style="display:flex;align-items:end;min-height:112px;margin-left:112px;padding:8px 0;border-inline:1px dashed var(--color-border-strong);width:220px">' + inner + '</div>';
-const textTip = (t) => { const id = 'tt' + (++uid); return '<span class="has-tooltip"><button type="button" class="btn btn--secondary btn--outlined" aria-describedby="' + id + '">' + t + '</button><span class="tooltip is-open" role="tooltip" id="' + id + '">' + t + '</span></span>'; };
-const HELP = '편집 칸이 있는 그리드만 행 높이 40입니다.';
+// 점선 = 셀 경계. 왼쪽을 비워 둬 셀 밖으로 넘친 툴팁도 보이게
+const ddEdge = (inner) => '<div style="display:flex;align-items:end;min-height:112px;margin-left:112px;padding:8px 0;border-inline:1px dashed var(--color-border-strong);width:260px">' + inner + '</div>';
+const textTip = (t) => { const id = 'tt' + (++uid); return '<span class="has-tooltip"><button type="button" class="btn btn--secondary btn--transparent" aria-describedby="' + id + '">' + t + '</button><span class="tooltip is-open" role="tooltip" id="' + id + '">' + t + '</span></span>'; };
+const HELP = '편집 셀이 있는 그리드만 행 높이 40입니다.';
 export const 사용_지침 = {
   parameters: { controls: { disable: true } },
   render: () => doDont([
@@ -66,21 +66,24 @@ export const 사용_지침 = {
         '글자가 없는 아이콘 버튼에만 붙입니다.'],
       dont: [ddStage(textTip('초기화')),
         '보이는 글자를 툴팁으로 한 번 더 보여 주지 않습니다.'] },
-    // 근거: Tooltip 구성 「가로 맞춤」 — 칸 왼쪽 끝 컨트롤은 .tooltip--start (TD-93)
-    { title: '칸 끝에서는 툴팁도 끝에 맞춤',
+    // 근거: Tooltip 구성 「가로 맞춤」 — 셀 왼쪽 끝 컨트롤은 .tooltip--start (TD-93)
+    { title: '셀 끝에서는 툴팁도 끝에 맞춤',
       do: [ddEdge(tip({ icon: 'help', label: '행 높이 도움말', text: HELP, open: true, side: 'start' })),
-        '점선 = 칸 경계. 칸 왼쪽 끝 컨트롤은 .tooltip--start로 툴팁 왼쪽 끝을 맞춥니다.'],
+        '점선 = 셀 경계. 셀 왼쪽 끝 컨트롤은 .tooltip--start로 툴팁 왼쪽 끝을 맞춥니다.'],
       dont: [ddEdge(tip({ icon: 'help', label: '행 높이 도움말', text: HELP, open: true })),
-        '가운데 맞춤 그대로 두면 툴팁이 칸 밖으로 넘칩니다.'] },
+        '가운데 맞춤 그대로 두면 툴팁이 셀 밖으로 넘칩니다.'] },
   ]),
 };
 
-// ── 전체 상태 — 행 = 글 길이, 열 = 위치 ──
+// ── 전체 상태 — 행 = 가로 맞춤, 열 = 위치. 점선 = 셀 경계(시작 · 끝 맞춤은 컨트롤을 셀 끝에) ──
+const LONG = '관련 객체 그리드는 행 높이 30을 씁니다. 편집 셀이 있는 그리드만 40입니다.';
+const cell = (inner, justify, bottom) => '<div style="display:flex;align-items:' + (bottom ? 'start' : 'end') + ';justify-content:' + justify + ';min-height:110px;width:300px;padding:8px 0;border-inline:1px dashed var(--color-border-strong)">' + inner + '</div>';
+const SIDES = [['가운데 (기본)', '', 'center'], ['시작 (.tooltip--start)', 'start', 'flex-start'], ['끝 (.tooltip--end)', 'end', 'flex-end']];
 export const 전체_상태 = {
-  render: () => matrix(['위 (기본)', '아래 (.tooltip--bottom)'], [
-    ['짧은 설명', [stage(tip({ text: '첨부 받기', open: true }), 70, 'end', true), stage(tip({ text: '첨부 받기', bottom: true, open: true }), 70, 'start', true)]],
-    ['긴 설명', [stage(tip({ icon: 'help', label: '도움말', text: '관련 객체 그리드는 행 높이 30을 씁니다. 편집 칸이 있는 그리드만 40입니다.', open: true }), 110, 'end', true), stage(tip({ icon: 'help', label: '도움말', text: '관련 객체 그리드는 행 높이 30을 씁니다. 편집 칸이 있는 그리드만 40입니다.', bottom: true, open: true }), 110, 'start', true)]],
-  ], { wide: true }),
+  render: () => matrix(['위 (기본)', '아래 (.tooltip--bottom)'],
+    SIDES.map(([name, side, justify]) => [name, [false, true].map((bottom) =>
+      cell(tip({ icon: 'help', label: '도움말', text: LONG, bottom, side, open: true }), justify, bottom))]),
+  { wide: true }),
 };
 
 // ── Playground ──
@@ -88,8 +91,9 @@ export const Playground = {
   argTypes: {
     text: { control: 'text', description: '설명 — `.tooltip` (role="tooltip", 폭 240까지)' },
     bottom: { control: 'boolean', description: '아래쪽 — `.tooltip--bottom` (위가 좁을 때)' },
+    side: { control: 'inline-radio', options: ['center', 'start', 'end'], description: '가로 맞춤 — center = 클래스 없음(기본) · `.tooltip--start` · `.tooltip--end` (셀 끝 컨트롤)' },
     open: { control: 'boolean', description: '열어 두기 — `.is-open` (문서용. 제품은 마우스 · 포커스로 열림)' },
   },
-  args: { text: '첨부 받기', bottom: false, open: true },
-  render: (a) => stage(tip({ icon: 'down', label: '첨부 받기', text: a.text, bottom: a.bottom, open: a.open }), 110, a.bottom ? 'start' : 'end'),
+  args: { text: '첨부 받기', bottom: false, side: 'center', open: true },
+  render: (a) => cell(tip({ icon: 'down', label: '첨부 받기', text: a.text, bottom: a.bottom, side: a.side === 'center' ? '' : a.side, open: a.open }), a.side === 'start' ? 'flex-start' : a.side === 'end' ? 'flex-end' : 'center', a.bottom),
 };

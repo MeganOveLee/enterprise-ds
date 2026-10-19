@@ -6,47 +6,46 @@ import * as S from './AppShell.stories.js';
 
 <Unstyled>
 <div className="ds-page">
-<PageHead eyebrow="Navigation" title="App Shell" lead="모든 업무 화면이 함께 쓰는 틀 — 상단 바 · 페이지 머리 · 보조 메뉴 패널 · 바닥입니다." />
+<PageHead eyebrow="Navigation" title="App Shell" lead="모든 업무 화면이 공통으로 쓰는 레이아웃입니다. GNB · LNB(레일 · 서브 패널) · 페이지 헤더 · 푸터로 구성됩니다." />
 <Section title="구성" en="Spec">
 <table className="ds-table ds-props">
-<thead><tr><th>구분</th><th>클래스 · 속성</th><th>설명</th></tr></thead>
+<thead><tr><th>구분</th><th>클래스 · 속성</th><th>Figma</th><th>설명</th></tr></thead>
 <tbody>
-<tr><td><b>상단 바</b></td><td><code>.gnb</code><span className="ds-muted">높이 56 · 고정</span></td><td>왼쪽 = 뒤로 · 앞으로 + 위치, 오른쪽 = <code>.header-actions</code>. 앱 틀이라 높이는 브랜드를 따라가지 않습니다(DS-ADR-020 예외).</td></tr>
-<tr><td><b>뒤로 · 앞으로</b></td><td><code>.nav-history</code> · <code>.nav-history-btn</code></td><td>22 × 22 화살표 버튼 두 개입니다. 테두리 · 바탕 없이 흐린 화살표만 있고, 마우스를 올리면 진해집니다. 글자가 없어 <code>aria-label</code>로 이름을 붙입니다.</td></tr>
-<tr><td><b>위치</b></td><td><code>.breadcrumb</code> · <code>.crumb-current</code><span className="ds-muted">aria-current="page"</span></td><td>「{'>'}」로 이은 경로. 마지막이 지금 화면입니다. 상단 바 안에서는 다른 칸과 같은 글자이고, 페이지 머리 안에서는 진한 글자로 구분합니다.</td></tr>
-<tr><td><b>사용자 메뉴 버튼</b></td><td><code>.menu-container</code> › <code>.menu-toggle</code><span className="ds-muted">aria-label · aria-haspopup</span></td><td>오른쪽 맨 앞 사용자 아이콘입니다(이름 없음). 누르면 아래 「사용자 메뉴」가 펼쳐지고, 화면 모드 · 로그아웃은 그 안에만 있습니다. 상단 바 오른쪽은 사용자 아이콘 · 결재업무 · 활동업무 셋뿐입니다.</td></tr>
-<tr><td><b>업무 개수</b></td><td><code>.menu-container</code> · <code>.menu-toggle</code> · <code>.title</code> · <code>.count</code></td><td>결재업무 · 활동업무 같은 대기 개수. 개수는 반전 바탕의 알약이고, 누르면 목록이 펼쳐집니다(<code>aria-expanded</code>).</td></tr>
-<tr><td><b>로고형 상단 바</b></td><td><code>.logo-container</code> · <code>.logo-mark</code> · <code>.logo-text</code> · <code>.logo-version</code><span className="ds-muted">로고 이미지는 .brand-logo</span></td><td>왼쪽 아이콘 메뉴가 없는 화면용. 로고 마크는 브랜드 자산이라 모서리 역할을 따르지 않습니다.</td></tr>
-<tr><td><b>페이지 머리</b></td><td><code>.page-head</code> · <code>.page-title-area</code> · <code>.favorite-icon</code></td><td>제목 + 즐겨찾기 + 위치를 한 줄에. 상단 바에 위치가 없는 화면에서 씁니다.</td></tr>
-<tr><td><b>보조 메뉴 패널</b></td><td><code>.main-sub</code> · <code>.main-sub-header</code> · <code>.main-sub-tabs</code> · <code>.main-sub-content</code> · <code>.tree-controls</code></td><td>아이콘 메뉴 옆에 펼치는 280 패널. 머리(제목 + 닫기) · 탭(메뉴 · 폴더, 하나면 숨김 <code>.is-single</code>) · 내용(폴더 트리 위 선택 · 검색). 닫으면 <code>.is-closed</code>.</td></tr>
-<tr><td><b>아이콘 메뉴</b></td><td><code>.main-menu</code> › <code>.lnb-logo</code> · <code>nav</code> › <code>ul</code> › <code>li</code> › <code>.menu_icon_box</code> › <code>.menu_icon</code> › <code>a</code> + <code>span</code></td><td>왼쪽 60 세로 메뉴. 항목 = 아이콘 24 위 · 이름 11px 아래, 줄 전체를 눌러 이동합니다. 마우스를 올리면 옅은 브랜드 바탕과 브랜드색 이름, 지금 화면은 한 단계 진한 바탕 · 브랜드색 · 반굵게 · 왼쪽 3px 선입니다. 아이콘은 그림 한 장(<code>--lnb-icon</code>)을 글자색으로 칠해 상태에 따라 색이 바뀝니다. 링크에 이름(<code>aria-label</code>)과 지금 화면 표시(<code>aria-current="page"</code>)를 붙입니다. 아래쪽 묶음(관리자 등)은 <code>nav</code> 안 마지막 <code>ul</code>로 두면 바닥에 붙습니다.</td></tr>
-<tr><td><b>폴더 트리</b></td><td><code>.tree</code> › <code>.tree__item</code>(<code>.tree__caret</code> + <code>.tree__icon</code>)<span className="ds-muted">role="tree" · "treeitem"</span></td><td>보조 메뉴 패널 · 프로젝트 상세 왼쪽처럼 접고 펴는 계층 목록. 단계는 <code>--tree-level</code>(0부터)마다 16px 들여 씁니다. 끝 항목도 꺾쇠 칸을 비워 두어 폴더가 같은 줄에 섭니다. 줄 높이 26px, 고른 폴더(<code>aria-selected="true"</code>)는 옅은 브랜드 바탕에 반굵게. 제품에서는 그리드 위젯이 같은 값으로 그립니다.</td></tr>
-<tr><td><b>보조 메뉴</b></td><td><code>.ui-submenu</code> › <code>.ui-submenu-flat</code> · <code>.ui-submenu-group</code>(<code>.ui-submenu-title</code> + <code>.ui-submenu-list</code>)</td><td>보조 메뉴 패널 안 메뉴. 2단계 메뉴는 14px 줄, 묶음 제목은 12px 반굵게(펼치면 브랜드색, 접으면 회색 + 꺾쇠), 3단계 목록은 왼쪽 선이 이어지고 지금 화면 줄은 2px 브랜드 선입니다. 올림 · 지금 화면 색은 아이콘 메뉴와 같습니다.</td></tr>
-<tr><td><b>사용자 메뉴</b></td><td><code>.dropdown-content-top</code> › <code>.user-info</code> · <code>.section-title</code> · <code>.logoutBtn</code><span className="ds-muted">로그아웃 버튼이 든 펼침만</span></td><td>상단 바 사용자 아이콘을 누르면 펼치는 258 패널입니다. 진한 브랜드 면 위에 머리(아바타 <code>.user-avatar</code> · 이름 · 소속), 줄(사이트맵 · 메뉴 색상 · 비밀번호 · 언어 · 화면 모드 · 내려받기), 로그아웃이 쌓입니다. 몸통은 <code>--color-bg-panel-2</code>, 머리와 로그아웃 줄은 한 단계 진한 <code>--color-bg-panel</code>이고, 글자 · 테두리 · 스위치 노브는 모두 패널 글자색(<code>--color-text-on-panel</code>)입니다. 진한 면 위에서는 포인트색 글자가 떨려 보여 쓰지 않습니다. 줄 아이콘은 줄마다 그림 한 장(<code>--row-icon</code>)을 넣고, 사이트맵 · 비밀번호 변경은 줄 전체를 눌러 엽니다. 화면 모드 스위치는 <code>role="switch"</code> · <code>aria-checked</code>, 언어 선택은 <code>role="button"</code>을 붙입니다.</td></tr>
-<tr><td><b>바닥</b></td><td><code>.gnb-footer</code></td><td>화면 맨 아래 한 줄.</td></tr>
+<tr><td><b>GNB</b></td><td><code>.gnb</code><span className="ds-muted">높이 56 · 고정</span></td><td>GNB/Top bar</td><td>화면 위 가로 막대입니다. 왼쪽 = 뒤로 · 앞으로 + 브레드크럼, 오른쪽 = <code>.header-actions</code>. 높이는 브랜드를 따르지 않습니다.</td></tr>
+<tr><td><b>뒤로 · 앞으로</b></td><td><code>.nav-history</code> › <code>.nav-history-btn</code></td><td>GNB/History button</td><td>22 × 22 아이콘 버튼 두 개입니다. 글자가 없어 <code>aria-label</code>로 이름을 붙입니다.</td></tr>
+<tr><td><b>브레드크럼</b></td><td><code>.breadcrumb</code> › <code>.crumb-current</code><span className="ds-muted">aria-current="page"</span></td><td>—</td><td>「{'>'}」로 연결한 경로이고, 마지막이 현재 화면입니다. 규칙은 <a className="ds-link" href="./?path=/docs/navigation-link--docs" target="_top">Link</a> 문서.</td></tr>
+<tr><td><b>사용자 메뉴 버튼</b></td><td><code>.menu-container</code> › <code>.menu-toggle</code><span className="ds-muted">aria-label · aria-haspopup</span></td><td>Avatar</td><td>GNB 오른쪽 맨 앞 사용자 아이콘입니다. 누르면 사용자 메뉴가 열립니다. GNB 오른쪽은 사용자 아이콘 · 결재업무 · 활동업무 세 가지입니다.</td></tr>
+<tr><td><b>카운트 배지</b></td><td><code>.menu-toggle</code> › <code>.title</code> + <code>.count</code></td><td>—</td><td>결재업무 · 활동업무의 대기 개수입니다. 높이 18 고정, 100 이상은 99+. 누르면 목록이 열립니다(<code>aria-expanded</code>).</td></tr>
+<tr><td><b>로고형 GNB</b></td><td><code>.logo-container</code> › <code>.logo-mark</code> · <code>.logo-text</code> · <code>.logo-version</code></td><td>CI LOGO</td><td>LNB 레일이 없는 화면의 GNB입니다. 로고 마크는 브랜드 자산이라 모서리 토큰을 따르지 않습니다.</td></tr>
+<tr><td><b>LNB 레일</b></td><td><code>.main-menu</code> › <code>nav</code> › <code>li</code> › <code>.menu_icon_box</code> + <code>span</code></td><td>LNB/Rail · LNB/Rail item</td><td>화면 왼쪽 60px 세로 메뉴입니다. 항목 = 아이콘 24 + 이름 11px(한 줄). 아이콘은 이미지 한 장(<code>--lnb-icon</code>)을 글자색으로 칠합니다. 링크에 <code>aria-label</code>과 현재 화면 표시(<code>aria-current="page"</code>)를 붙입니다. 아래쪽 묶음(관리자)은 <code>nav</code> 안 마지막 <code>ul</code>입니다.</td></tr>
+<tr><td><b>LNB 서브 패널</b></td><td><code>.main-sub</code> › <code>.main-sub-header</code> · <code>.main-sub-tabs</code> · <code>.main-sub-content</code></td><td>LNB/Sub panel</td><td>LNB 레일 옆 280px 패널입니다. 헤더(제목 + 닫기) · 탭(메뉴 · 폴더, 하나면 <code>.is-single</code>로 숨김) · 내용. 닫으면 <code>.is-closed</code>.</td></tr>
+<tr><td><b>서브 메뉴</b></td><td><code>.ui-submenu</code> › <code>.ui-submenu-flat</code> · <code>.ui-submenu-group</code></td><td>LNB/Sub menu item</td><td>LNB 서브 패널의 메뉴 탭 내용입니다. 2단계 메뉴와, 접고 펴는 묶음(<code>.ui-submenu-title</code> + 3단계 <code>.ui-submenu-list</code>)으로 구성합니다. 묶음 제목은 14px 반굵게, 3단계 목록은 왼쪽 선으로 이어집니다.</td></tr>
+<tr><td><b>폴더 트리</b></td><td><code>.tree</code> › <code>.tree__item</code><span className="ds-muted">role="tree" · "treeitem"</span></td><td>—</td><td>LNB 서브 패널의 폴더 탭 · 상세 화면 왼쪽의 계층 목록입니다. 단계(<code>--tree-level</code>)마다 16px 들여 씁니다. 행 높이 26, 선택한 폴더(<code>aria-selected="true"</code>)는 옅은 브랜드 바탕 + 반굵게입니다. 트리 위 선택 · 검색은 <code>.tree-controls</code>.</td></tr>
+<tr><td><b>페이지 헤더</b></td><td><code>.page-head</code> › <code>.page-title-area</code> · <code>.favorite-icon</code></td><td>—</td><td>제목 + 즐겨찾기 + 브레드크럼을 한 행에 둡니다. GNB에 브레드크럼이 없는 화면에서 씁니다.</td></tr>
+<tr><td><b>사용자 메뉴</b></td><td><code>.dropdown-content-top</code> › <code>.user-info</code> · <code>.section-title</code> · <code>.logoutBtn</code></td><td>—</td><td>사용자 아이콘을 누르면 열리는 258px 패널입니다. 헤더(아바타 · 이름 · 소속) · 설정 행 여섯 · 로그아웃. 바탕은 <code>--color-bg-panel-2</code> · <code>--color-bg-panel</code>, 글자 · 테두리 · 스위치는 <code>--color-text-on-panel</code>입니다. 화면 모드 스위치는 <code>role="switch"</code> · <code>aria-checked</code>.</td></tr>
+<tr><td><b>푸터</b></td><td><code>.gnb-footer</code></td><td>—</td><td>화면 맨 아래 한 행입니다.</td></tr>
 </tbody>
 </table>
-<p className="ds-sec__desc ds-after">아이콘 메뉴 · 보조 메뉴 · 사용자 메뉴는 이전 버전 개발 마크업(<code>menu_icon_box</code> · <code>ui-submenu-*</code> · <code>dropdown-content-top</code>)을 그대로 받습니다. 화면 안에서 함께 보는 모습은 <a className="ds-link" href="./?path=/docs/screens-plm-화면--docs" target="_top">Screens › PLM 화면</a>에 있습니다.</p>
-<p className="ds-sec__desc">Figma UI Kit과 짝 — GNB/Top bar = <code>.gnb</code> · GNB/History button = <code>.nav-history-btn</code> · LNB/Rail = <code>.main-menu</code> · LNB/Rail item = <code>.menu_icon_box</code> · LNB/Sub panel = <code>.main-sub</code> · LNB/Sub menu item = <code>.ui-submenu</code> · CI LOGO = <code>.logo-mark</code> · <code>.lnb-logo</code> · Avatar = <code>.user-avatar</code>.</p>
+<p className="ds-sec__desc ds-after">화면 안에서 함께 보는 모습은 <a className="ds-link" href="./?path=/docs/screens-plm-화면--docs" target="_top">Screens › PLM 화면</a>에 있습니다.</p>
 </Section>
 <Section title="예시" en="Examples">
-<Card of={S.상단_바} title="상단 바" en="GNB" desc="아이콘 메뉴가 있는 업무 화면. 위치가 페이지 제목을 대신합니다." />
-<Card of={S.상단_바_로고} title="로고형 상단 바" en="GNB with logo" desc="아이콘 메뉴가 없는 화면." />
-<Card of={S.개수_배지} title="업무 개수" en="Count badge" desc="0 · 한 자리 · 두 자리 · 99+. 상자 높이가 18로 고정이라 글꼴이 늦게 와도 흔들리지 않습니다." />
-<Card of={S.페이지_머리} title="페이지 머리" en="Page head" desc="제목 · 즐겨찾기 · 위치." />
-<Card of={S.보조_메뉴_패널} title="보조 메뉴 패널" en="Sub panel" desc="머리 · 탭 · 폴더 트리 위 선택과 검색 · 폴더 트리." />
-<Card of={S.아이콘_메뉴} title="아이콘 메뉴" en="Rail" desc="로고 · 메뉴 · 바닥 묶음(관리자). 지금 화면 = 문서관리." />
-<Card of={S.보조_메뉴} title="보조 메뉴" en="Sub menu" desc="2단계 메뉴 · 펼친 묶음(3단계 목록) · 접힌 묶음." />
-<Card of={S.사용자_메뉴} title="사용자 메뉴" en="User menu" desc="머리 · 설정 줄 여섯 · 로그아웃. 브랜드를 바꾸면 패널 색이 함께 바뀝니다." />
-<Card of={S.바닥} title="바닥" en="Footer" />
+<Card of={S.상단_바} title="GNB" en="GNB" desc="LNB 레일이 있는 업무 화면. 위치가 페이지 제목을 대신합니다." />
+<Card of={S.상단_바_로고} title="로고형 GNB" en="GNB with logo" desc="LNB 레일이 없는 화면." />
+<Card of={S.개수_배지} title="카운트 배지" en="Count badge" desc="0 · 한 자리 · 두 자리 · 99+. 높이 18 고정입니다." />
+<Card of={S.페이지_머리} title="페이지 헤더" en="Page head" desc="제목 · 즐겨찾기 · 위치." />
+<Card of={S.보조_메뉴_패널} title="LNB 서브 패널" en="Sub panel" desc="헤더 · 탭(폴더 선택) · 트리 위 선택과 검색 · 폴더 트리." />
+<Card of={S.아이콘_메뉴} title="LNB 레일" en="Rail" desc="로고 · 메뉴 · 아래쪽 묶음(관리자). 현재 화면 = 문서 관리." />
+<Card of={S.보조_메뉴} title="서브 메뉴" en="Sub menu" desc="2단계 메뉴 · 펼친 묶음(3단계 목록) · 접힌 묶음." />
+<Card of={S.사용자_메뉴} title="사용자 메뉴" en="User menu" desc="헤더 · 설정 행 여섯 · 로그아웃. 브랜드를 바꾸면 패널 색이 함께 바뀝니다." />
+<Card of={S.바닥} title="푸터" en="Footer" />
 </Section>
 <Section title="언제 쓰고 쓰지 말지" en="Do · Don't">
 <Card of={S.사용_지침} code={false} />
 </Section>
-<Section title="전체 상태" en="States" desc="Hovered · Pressed · Focused는 마우스 · 키보드 상태를 정지 화면으로 보여 준 것입니다.">
-<Card of={S.전체_상태} title="앱 틀 버튼" />
-<Card of={S.메뉴_상태} title="메뉴 줄" desc="아이콘 메뉴 · 보조 메뉴 · 3단계 목록의 상태." />
-<Card of={S.사용자_메뉴_상태} title="사용자 메뉴" desc="줄 링크 · 내려받기 · 언어 · 화면 모드 · 로그아웃. 진한 면 위라 포커스는 패널 글자색 2px입니다." />
+<Section title="전체 상태" en="States" desc="Hovered · Pressed · Focused는 상호작용 상태를 고정해 표시한 것입니다.">
+<Card of={S.전체_상태} title="GNB · 패널 버튼" />
+<Card of={S.메뉴_상태} title="메뉴 항목" desc="LNB 레일 · 서브 메뉴 · 3단계 목록의 상태." />
+<Card of={S.사용자_메뉴_상태} title="사용자 메뉴" desc="행 링크 · 내려받기 · 언어 · 화면 모드 · 로그아웃. 진한 면 위라 Focused는 패널 글자색 2px 테두리입니다." />
 </Section>
 <Section title="Playground" desc="아래 표에서 값을 바꾸면 미리보기와 「코드 보기」가 함께 바뀝니다.">
 <Card of={S.Playground}>

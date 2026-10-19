@@ -6,22 +6,23 @@ import * as S from './Skeleton.stories.js';
 
 <Unstyled>
 <div className="ds-page">
-<PageHead eyebrow="Feedback" title="Skeleton" lead="내용이 오기 전에 자리 모양을 먼저 보여 주는 골격입니다." />
+<PageHead eyebrow="Feedback" title="Skeleton" lead="데이터를 불러오는 동안 실제 콘텐츠의 레이아웃을 미리 표시하는 자리 표시자입니다." />
 <Section title="구성" en="Spec">
 <table className="ds-table ds-props">
 <thead><tr><th>구분</th><th>클래스 · 속성</th><th>설명</th></tr></thead>
 <tbody>
-<tr><td><b>조각</b></td><td><code>.skeleton-line</code> · <code>.skeleton-title</code> · <code>.skeleton-block</code><span className="ds-muted">글자 줄 · 제목 · 덩어리</span></td><td>클래스 하나로 화면마다 모양을 지어내지 않고, 조각을 조합합니다. 너비 · 높이만 바꿉니다.</td></tr>
-<tr><td><b>배치</b></td><td><code>.skeleton-grid-row</code> · <code>.skeleton-form</code> · <code>.skeleton-card</code></td><td>목록 행 · 라벨 | 입력칸 · 카드. 실제 그리드 · 폼과 같은 비율이라 내용이 와도 자리가 흔들리지 않습니다.</td></tr>
-<tr><td><b>접근성</b></td><td><code>aria-busy="true"</code> · <code>aria-hidden</code></td><td>묶음에 aria-busy와 숨김 글자 「불러오는 중」, 조각은 aria-hidden으로 읽지 않습니다.</td></tr>
-<tr><td><b>모션</b></td><td><span className="ds-muted">반짝임</span></td><td>왼쪽에서 오른쪽으로 반짝입니다. 모션 줄이기 설정이면 멈춥니다. 모서리는 <code>--radius-skeleton</code>(브랜드가 바꿀 수 있음).</td></tr>
+<tr><td><b>조각</b></td><td><code>.skeleton-line</code> · <code>.skeleton-title</code> · <code>.skeleton-block</code><span className="ds-muted">글자 줄 · 제목 · 영역</span></td><td>조각을 조합해 실제 콘텐츠의 모양을 만듭니다. 너비 · 높이만 바꿉니다. 바탕은 라이트 bg-subtle · 다크 bg-muted로, 흰 카드 위에서도 보입니다.</td></tr>
+<tr><td><b>배치</b></td><td><code>.skeleton-grid-row</code> · <code>.skeleton-form</code> › <code>.skeleton-field</code> · <code>.skeleton-card</code></td><td>목록 행 · 폼(라벨 위 · 입력 필드 2열) · 카드. 실제 그리드 · 폼과 같은 비율이라 내용이 들어와도 레이아웃이 바뀌지 않습니다.</td></tr>
+<tr><td><b>접근성</b></td><td><code>aria-busy="true"</code> · <code>.sr-only</code> · <code>aria-hidden</code></td><td>묶음에 <code>aria-busy="true"</code>와 숨김 글자 <code>{'<span class="sr-only">불러오는 중</span>'}</code>를 두고, 조각은 <code>aria-hidden="true"</code>로 스크린 리더가 읽지 않게 합니다.</td></tr>
+<tr><td><b>모션</b></td><td><code>--duration-shimmer</code> · <code>--ease-loop</code></td><td>Shimmer가 왼쪽에서 오른쪽으로 지나간 뒤 잠깐 쉽니다(<a className="ds-link" href="./?path=/docs/foundation-motion--docs" target="_top">Foundation › Motion</a>). 모션 줄이기 설정이면 멈춥니다.</td></tr>
+<tr><td><b>모서리</b></td><td><code>--radius-skeleton</code></td><td>브랜드가 바꿀 수 있습니다. 입력 필드 자리는 입력 필드 모서리(<code>--radius-input</code>)를 따릅니다.</td></tr>
 </tbody>
 </table>
 </Section>
 <Section title="예시" en="Examples">
-<Card of={S.조각} title="조각" en="Segment" desc="제목 + 글자 줄 + 덩어리." />
+<Card of={S.조각} title="조각" en="Segment" desc="제목 + 글자 줄 + 영역." />
 <Card of={S.그리드_행} title="목록 행" en="Grid row" desc="목록 화면 — 실제 그리드와 같은 열 비율로." />
-<Card of={S.상세_폼} title="상세 폼" en="Form" desc="등록 · 상세 팝업 — 라벨 | 입력칸." />
+<Card of={S.상세_폼} title="폼" en="Form" desc="등록 창 — 라벨 위 · 입력 필드 2열." />
 <Card of={S.카드} title="카드" en="Card" desc="대시보드 — 제목 · 숫자 · 차트 자리." />
 </Section>
 <Section title="언제 쓰고 쓰지 말지" en="Do · Don't">

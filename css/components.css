@@ -292,7 +292,7 @@
     font-size: var(--body-xs);   /* 11 — 이전 버전 값, 토큰 Body/xs (TD-44 10/17) */
     line-height: 1.25;
     text-align: center;
-    word-break: keep-all;
+    white-space: nowrap;   /* 메뉴 이름은 한 줄(띄어 쓴 「문서 관리」도 줄바꿈 없이) */
     color: inherit;
 }
 @media (forced-colors: active) { .main-menu .menu_icon::before { background-color: CanvasText; } }
@@ -606,6 +606,20 @@
     font-size: var(--body-sm);
     font-weight: var(--font-weight-semibold);
 }
+/* 헤더 오른쪽 이동 링크(전체 보기 · 자세히 보기). 목록 화면으로 이동하므로 버튼이 아니라 링크 */
+.card-more {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-4);
+    font-size: var(--body-sm);
+    color: var(--color-text-muted);
+    text-decoration: none;
+    white-space: nowrap;
+    border-radius: 2px;
+}
+.card-more::after { content: ""; width: 5px; height: 5px; border: solid currentColor; border-width: 1.5px 1.5px 0 0; transform: rotate(45deg); margin-right: 2px; }
+.card-more:hover { color: var(--color-text-brand); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.card-more:focus-visible { outline: 2px solid var(--color-border-focus); outline-offset: 2px; }
 
 /* ============================================================
  * 카드 리스트 (재사용)
@@ -839,10 +853,9 @@
 .ui-submenu-title > a {
     display: flex;
     align-items: center;
-    padding: var(--spacing-12) var(--spacing-16) 6px;
-    font-size: var(--body-sm);
+    padding: var(--spacing-12) var(--spacing-12) 6px;   /* 왼쪽 12 = 2단계 메뉴 글자와 같은 선 */
+    font-size: var(--body-md);   /* 접고 펴는 메뉴 항목이라 하위 항목(14)과 같은 크기, 굵기로 구분 (Carbon SideNavMenu). 구: 12 */
     font-weight: var(--font-weight-semibold);
-    letter-spacing: .02em;
     color: var(--color-text-brand);
     text-decoration: none;
     cursor: pointer;
@@ -1098,13 +1111,27 @@
 }
 .required::before { content: "*"; }
 
-.field-error-msg {
-    display: block;
+.field-error-msg {   /* Figma Part/Help message Error — 아이콘 16(x-circle, icon-danger) + 문구, 높이 24 */
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-4);
+    min-height: 24px;
     margin-top: var(--spacing-4);
     color: var(--color-text-danger);
     font-size: var(--body-sm);
     font-weight: var(--font-weight-medium);
+    line-height: 1.4;
 }
+.field-error-msg::before {
+    content: "";
+    flex: none;
+    width: 16px;
+    height: 16px;
+    background: var(--color-icon-danger);
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M15 9l-6 6M9 9l6 6'/%3E%3C/svg%3E") center / contain no-repeat;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M15 9l-6 6M9 9l6 6'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+@media (forced-colors: active) { .field-error-msg::before { background: CanvasText; } }
 
 
 /* .ui-file-upload 컴포넌트 24개 규칙 삭제 — JSP·JS·Java 전수조사 결과 마크업 0곳.
@@ -1301,14 +1328,14 @@ body.dark-mode .pop .pro_table { background: var(--color-bg-base); box-shadow: n
 .detail-dl dd:empty::before { content: "\00a0"; }   /* 값이 없어도 줄 높이 유지 */
 /* 상세 내용 카드 — 이전 버전 팝업 상세 = 옅은 회색 바탕 + 1px 테두리 + 모서리, 안쪽 8 · 16, 섹션 머리와 12 (덮어쓰기 594 ~ 596줄)
  *   입력 폼(.form-grid-2)이 든 카드는 빼고 흰 바탕 그대로 — 회색 바탕 위 칸 아래 오류 글자(red-600)가 4.37:1 로 AA 미달 (접는 섹션 카드와 같은 이유) */
-.pop .contents .pro_table:not(:has(.form-grid-2)) {
+.pop .contents .pro_table:not(:has(.form-grid-2)):not(.seach_arm:has(.section-toggle) + .pro_table) {
     margin-top: var(--spacing-12);
     padding: var(--spacing-8) var(--spacing-16);
     background: var(--color-bg-muted);
     border: 1px solid var(--color-border-base);
     border-radius: var(--radius-panel);
 }
-body.dark-mode .pop .contents .pro_table:not(:has(.form-grid-2)) { background: var(--color-bg-muted); }   /* 다크 팝업 카드 규칙(bg-base)보다 세게 — 내용 바탕(bg-base) 위 한 단계 */
+body.dark-mode .pop .contents .pro_table:not(:has(.form-grid-2)):not(.seach_arm:has(.section-toggle) + .pro_table) { background: var(--color-bg-muted); }   /* 다크 팝업 카드 규칙(bg-base)보다 세게 — 내용 바탕(bg-base) 위 한 단계 */
 
 /* 첨부 파일 목록 .file-download-list — 이전 버전 첨부 칩(.fileAttachLineItem, 덮어쓰기 579 ~ 587줄)
  *   한 줄 전체 칩: 파일 아이콘 + 파일 이름(반굵게, 누르면 내려받음). 마우스를 올리면 이름에 밑줄 + 오른쪽 내려받기 표시
@@ -1433,6 +1460,12 @@ body.dark-mode .pop .contents .pro_table:not(:has(.form-grid-2)) { background: v
 }
 .form-grid-2 .ff-field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
 .form-grid-2 .ff-field.col-2 { grid-column: 1 / -1; }
+/* 등록 폼(2열) — 필드마다 오류 문구 자리 28(간격 4 + 문구 24)을 늘 비워 둔다. 문구가 나타나도 행 높이 · 정렬이 바뀌지 않음
+ * (Figma: 필드의 Help message 를 켜 두고 평소에는 빈 글자 = 같은 높이). 4 · 6열(검색 조건 · 상세 값)은 오류 문구가 없어 그대로 */
+.form-grid-2:not(.form-grid--4):not(.form-grid--6) { row-gap: 0; }
+.form-grid-2:not(.form-grid--4):not(.form-grid--6) > .ff-field { padding-bottom: 28px; }
+.form-grid-2:not(.form-grid--4):not(.form-grid--6) > .ff-field > .td { position: relative; }
+.form-grid-2:not(.form-grid--4):not(.form-grid--6) > .ff-field > .td > .field-error-msg { position: absolute; top: 100%; left: 0; right: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 /* 여러 열 (제안 H) — 검색 조건(6열) · 상세 값(4열)처럼 라벨 위 · 칸 아래 짝을 한 줄에 더 많이. 칸 하나가 두 칸을 차지하면 .span-2
  * 이전 버전은 고객사 덮어쓰기 파일이 .mainTable(표)을 이 모양으로 바꾸던 자리 */
 .form-grid-2.form-grid--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--spacing-12) var(--spacing-16); }
@@ -1664,6 +1697,8 @@ body.dark-mode .resumable:not(.center) .fileList .file-item { background: var(--
     -webkit-appearance: none;
     width: 16px;
     height: 16px;
+    font: inherit;          /* 1lh = 라벨의 줄 높이 (input 기본 글꼴 13.33px 로 계산되면 표식이 3px 위로 감) */
+    line-height: inherit;
     margin: calc((1lh - 16px) / 2) 0 0;   /* 표식을 첫 줄 가운데에 */
     border: 1.5px solid var(--color-border-input);
     border-radius: var(--radius-checkbox);   /* 고정 3px → 토큰 (DS-ADR-011) */
@@ -2160,6 +2195,7 @@ body.dark-mode .select {
 }
 .btn img, .btn svg { width: 14px; height: 14px; flex-shrink: 0; }
 .btn svg { color: currentColor; }
+.btn i[class^="icon-"], .btn i[class*=" icon-"] { font-size: 14px; line-height: 1; color: currentColor; flex-shrink: 0; }   /* 아이콘 글꼴도 svg 와 같은 14 · 글자색 (TD-108) */
 
 .btn--primary {
     --btn-solid:         var(--color-bg-btn-primary);
@@ -2302,6 +2338,7 @@ body.dark-mode .select {
 .grid-custom-rows-link:hover,
 .grid-link:hover,
 .grid-link:focus-visible { color: var(--color-text-brand); text-decoration: underline; text-underline-offset: 2px; }
+.grid-custom-rows-link:hover { color: var(--color-text-interactive-primary-hover); text-decoration-thickness: 2px; }   /* 식별자 링크는 늘 밑줄이라 Hovered = 한 단계 진한 글자 + 굵은 밑줄 */
 /* 키보드 포커스 = 글자 링크 규칙(.file-download-list a.file-name)과 같은 브랜드 테두리. 식별자 링크는 늘 밑줄이라 마우스 올림과 모습이 같아
  * 테두리 없이는 키보드 위치가 안 보였음(브라우저 기본 테두리만, TD-93 10/16). 칸이 overflow:hidden 이라 간격은 1px */
 .grid-custom-rows-link:focus-visible,
@@ -2629,34 +2666,46 @@ body.dark-mode .select {
 .section-toggle[aria-expanded="false"]:hover::before { background: var(--color-icon-muted); border-color: var(--color-icon-muted); }
 .section-toggle[aria-expanded="false"]:focus-visible::before { border-color: var(--color-border-focus); }
 
-/* 접는 섹션 카드 — 상자로 묶이는 곳(상세 화면). 머리 + 내용이 한 상자, 접히면 머리 단독 둥근 상자 (11:36 결정 ①).
- * 이전 버전 프로젝트 상세 값: 테두리 border-base · 모서리 md · 머리 안쪽 8 / 16 · 섹션 사이 12, 머리 바탕은 bg-muted 였지만
- * DS 는 섹션 헤더 바 토큰 bg-header — bg-muted 면 다크에서 펼침 네모 테두리(border-input)가 바 위 2.67:1 로 비텍스트 3:1 미달, bg-header 는 3.44:1.
- * 등록 창(.pop)은 상자 없이 이어지는 곳 → 위 .pop .seach_arm(바탕 없는 제목줄) 그대로 */
-.seach_arm:has(.section-toggle):not(.pop .seach_arm) {
-    margin-top: var(--spacing-12);
-    padding: var(--spacing-8) var(--spacing-16);
-    background: var(--color-bg-header);
+/* 접는 섹션 = 머리 + 내용이 한 상자, 바탕 bg-muted — 상세 화면 · 등록 창(.pop) 공통 (TD-108 10/19).
+ * 근거 = 이전 버전 캡처 08 · 09: 상자 바탕 #F8F9FA(= bg-muted) · 1px 테두리 · 머리가 상자 안. 접히면 머리 단독 상자.
+ * 내용 = 폼(.pro_table) · 표(.table_list) · 첨부(.resumable). 입력칸 · 표 · 첨부 칸은 흰 바탕 그대로라 상자 위에서 구분된다.
+ * 구(10/14): 등록 창은 바탕 없는 제목줄 + 흰 내용, 상세 화면은 bg-header 머리 + 흰 내용 — 오류 글자 대비 때문에 흰 바탕을 썼음.
+ * 대비 — 상자 안 오류 글자는 danger-bold(라이트 7.66:1 · 다크 7.34:1). danger(red-600)는 bg-muted 위 4.37:1 로 AA 미달.
+ *        다크에서 펼침 토글 네모 테두리(border-input)는 bg-muted 위 2.67:1 → 상자 안에서는 icon-muted(다크 9:1 이상) */
+.seach_arm:has(.section-toggle),
+.pop .seach_arm:has(.section-toggle),
+.pop form .seach_arm:has(.section-toggle) {
+    margin: var(--spacing-12) 0 0;
+    padding: var(--spacing-12) var(--spacing-16);
+    background: var(--color-bg-muted);
     border: 1px solid var(--color-border-base);
     border-bottom: none;
-    border-radius: var(--radius-md) var(--radius-md) 0 0;
+    border-radius: var(--radius-panel) var(--radius-panel) 0 0;
 }
-.seach_arm:has(.section-toggle[aria-expanded="false"]):not(.pop .seach_arm) {
+.seach_arm:has(.section-toggle[aria-expanded="false"]),
+.pop .seach_arm:has(.section-toggle[aria-expanded="false"]),
+.pop form .seach_arm:has(.section-toggle[aria-expanded="false"]) {
     border-bottom: 1px solid var(--color-border-base);
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-panel);
 }
-.seach_arm:has(.section-toggle):not(.pop .seach_arm) + .pro_table {   /* 내용 바탕은 흰색 그대로 — 이전 버전은 내용도 bg-muted 지만 그 위 위험 글자(red-600)가 4.37:1 로 AA 미달 */
-    margin-top: 0;
+.seach_arm:has(.section-toggle) + :is(.pro_table, .table_list, .resumable),
+.pop .product .seach_arm:has(.section-toggle) + :is(.pro_table, .table_list, .resumable) {
+    margin: 0;
+    padding: 0 var(--spacing-16) var(--spacing-16);
+    background: var(--color-bg-muted);
     border: 1px solid var(--color-border-base);
     border-top: none;
-    border-radius: 0 0 var(--radius-md) var(--radius-md);
+    border-radius: 0 0 var(--radius-panel) var(--radius-panel);
 }
-.seach_arm:has(.section-toggle):not(.pop .seach_arm) + .table_list {   /* 표는 바탕 그대로, 테두리 · 모서리만 이어 붙임 */
-    margin-top: 0;
-    border-top: none;
-    border-radius: 0 0 var(--radius-md) var(--radius-md);
-    overflow: hidden;
-}
+body.dark-mode .seach_arm:has(.section-toggle) + :is(.pro_table, .table_list, .resumable) { background: var(--color-bg-muted) !important; border-color: var(--color-border-base) !important; }   /* 다크 .pro_table(bg-base !important)보다 세게 */
+.seach_arm:has(.section-toggle) + :is(.pro_table, .table_list, .resumable) .field-error-msg { color: var(--color-text-danger-bold); }
+body.dark-mode .seach_arm:has(.section-toggle) .section-toggle[aria-expanded="true"]::before { border-color: var(--color-icon-muted); }
+.contents > .seach_arm:has(.section-toggle):first-child, .pop .contents > .seach_arm:has(.section-toggle):first-child { margin-top: 0; }   /* 첫 섹션은 위 여백 없이 */
+/* 섹션 상자 안 표 — 흰 표 + 테두리는 표(.list)가, 상자 바탕은 섹션이 맡는다 */
+.seach_arm:has(.section-toggle) + .table_list { overflow: visible; }
+.seach_arm:has(.section-toggle) + .table_list > .list { background: var(--color-bg-base); border: 1px solid var(--color-border-grid-outer); border-radius: var(--radius-panel); overflow: hidden; }
+/* 제목줄(접기 없음) 바로 아래 표 — 간격 8. .product · .searchLayout 은 이미 flex gap 12 라 빼고 (TD-108: 결과 0건 · 결재선 영역에서 머리와 표가 붙어 있던 것) */
+:not(.product):not(.searchLayout) > .seach_arm:not(:has(.section-toggle)) + .table_list { margin-top: var(--spacing-8); }
 
 /* 진행률 progress-bar — 두꺼운 그라데이션 bar + 중앙 % 라벨 (캡쳐 디자인 반영) */
 .progress-row {
@@ -2817,7 +2866,7 @@ body.dark-mode .select {
     height: 100%;
     background: linear-gradient(to right, var(--color-progress-progress-start), var(--color-progress-progress-end));
     border-radius: var(--radius-rounded);    /* .progress-bar 와 같은 알약 모양. 구 9px(높이 17의 절반 이상 = 이미 알약) → 토큰 (DS-ADR-020). 구 14px → 아래 !important 규칙 흡수 (2026-08-23) */
-    transition: width 1.6s ease-out;
+    transition: width var(--duration-fill) ease-out;
 }
 .progress-bar--done    .pbar-fill { background: linear-gradient(to right, var(--color-progress-done-start), var(--color-progress-done-end)); }
 .progress-bar--progress .pbar-fill { background: linear-gradient(to right, var(--color-progress-progress-start), var(--color-progress-progress-end)); }
@@ -2915,7 +2964,7 @@ body.dark-mode .select {
 /* 텍스트는 비워두고 modifier 별로 CSS content 자동 출력
  * → modifier만 바꾸면 GIF 색 + 텍스트(완료/진행/지연/예정/보류) 세트로 변경 */
 .status-block--done    .status-text::before { content: "완료"; }
-.status-block--progress .status-text::before { content: "진행중"; }
+.status-block--progress .status-text::before { content: "진행 중"; }
 .status-block--delay   .status-text::before { content: "지연"; }
 .status-block--plan    .status-text::before { content: "예정"; }
 .status-block--hold    .status-text::before { content: "보류"; }
@@ -3407,6 +3456,12 @@ body.dark-mode .dropdown-content-top:has(.logoutBtn) .section-title > #theme-tog
     background-size: 16px 16px;
 }
 .checkSelect .selected-text:hover { border-color: var(--color-border-input-hover); }
+.checkSelect .selected-text[aria-disabled="true"] {   /* 비활성 = .select:disabled 와 같은 모양 */
+    background-color: var(--color-bg-disabled);
+    border-color: var(--color-border-disabled);
+    color: var(--color-text-disabled);
+    cursor: not-allowed;
+}
 /* 두 개 이상 고르면 「첫 값 외 N」 — 첫 값은 넘치면 말줄임, 「외 N」은 늘 보이는 옅은 브랜드 알약 (10/15 결정 · DS-ADR-022).
  * 위젯 스크립트가 쉼표로 잇던 글자 대신 두 span 을 넣고, 고른 값 전체는 aria-label(화면 읽기) · title(마우스)에 */
 .checkSelect .selected-text:has(.selected-text__more) { display: flex; align-items: center; gap: var(--spacing-4); }
@@ -3671,7 +3726,7 @@ input.onKeySearch2 { display: block; flex: 1 1 auto; min-width: 0; }
     border-radius: var(--radius-panel);
     overflow: hidden;
 }
-.searchLayout .table_list > .ui-pagination { flex-shrink: 0; margin-top: var(--spacing-8); background: transparent; }
+.searchLayout .table_list > .ui-pagination { flex-shrink: 0; margin: var(--spacing-8) 0 var(--spacing-16); background: transparent; }   /* 아래 16 — 화면 바닥에 붙지 않게 (TD-108) */
 
 /* 검색결과 그리드 셀 폰트(13px) → AUIGrid_custom_style.css 로 이관. */
 
@@ -3782,34 +3837,37 @@ input.onKeySearch2 { display: block; flex: 1 1 auto; min-width: 0; }
  *   .skeleton-line  본문 한 줄. 여러 줄은 n개 나열, 마지막 줄은 60%
  *   .skeleton-title 제목. 굵고 짧게(40%)
  *   .skeleton-block 썸네일 · 차트 · 버튼 자리. width/height 는 쓰는 곳에서 지정
- * 모션 = 반짝임(shimmer). 모션 줄이기 설정이면 멈춤
- * 접근성: 묶음에 aria-busy="true" + 숨김 글자 "불러오는 중", 조각은 aria-hidden
+ * 모션 = Shimmer(--duration-shimmer, 지나감 + 쉼). 모션 줄이기 설정이면 멈춤
+ * 조각 바탕 = 라이트 bg-subtle · 다크 bg-muted — 흰 카드(bg-base) 위에서도 보이는 한 단계 진한 면
+ * 접근성: 묶음에 aria-busy="true" + 숨김 글자(.sr-only) "불러오는 중", 조각은 aria-hidden
  */
 .skeleton-line,
 .skeleton-title,
 .skeleton-block {
+    --skeleton-bg: var(--color-bg-subtle);
     display: block;
     border-radius: var(--radius-skeleton);
-    background-color: var(--color-bg-muted);
+    background-color: var(--skeleton-bg);
     background-image: linear-gradient(90deg,
         transparent 0%,
         color-mix(in srgb, var(--color-bg-base) 60%, transparent) 50%,
         transparent 100%);
     background-size: 200% 100%;
     background-repeat: no-repeat;
-    animation: ds-shimmer 1.4s var(--ease-loop) infinite;
+    animation: ds-shimmer var(--duration-shimmer) var(--ease-loop) infinite;
 }
+body.dark-mode :is(.skeleton-line, .skeleton-title, .skeleton-block) { --skeleton-bg: var(--color-bg-muted); }
 .skeleton-line  { height: 12px; width: 100%; }
 .skeleton-line + .skeleton-line { margin-top: var(--spacing-8); }
 .skeleton-line:last-child:not(:first-child) { width: 60%; }
 .skeleton-title { height: 16px; width: 40%; margin-bottom: var(--spacing-12); }
 .skeleton-block { width: 100%; height: 80px; }
 @keyframes ds-shimmer {
-    from { background-position: 150% 0; }
-    to   { background-position: -50% 0; }
+    0%        { background-position: 150% 0; }
+    75%, 100% { background-position: -50% 0; }
 }
 
-/* 조합 예시 — 그리드 행(목록) · 상세 폼(팝업) · 카드(대시보드). 화면 3개와 같은 자리 */
+/* 조합 — 그리드 행(목록) · 폼(등록 창, 라벨 위 2열) · 카드(대시보드). 실제 화면과 같은 배치 */
 .skeleton-grid-row {
     display: grid;
     grid-template-columns: 24px 2fr 1fr 1fr 1fr;
@@ -3821,11 +3879,12 @@ input.onKeySearch2 { display: block; flex: 1 1 auto; min-width: 0; }
 .skeleton-grid-row .skeleton-block { height: 16px; }
 .skeleton-form {
     display: grid;
-    grid-template-columns: 120px 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--spacing-12) var(--spacing-16);
-    align-items: center;
 }
-.skeleton-form .skeleton-block { height: var(--size-input); border-radius: var(--radius-input); }   /* 입력칸을 흉내 내는 조각 = 입력칸 모양 (DS-ADR-020) */
+.skeleton-field { display: flex; flex-direction: column; gap: 6px; }
+.skeleton-field > .skeleton-line { width: 64px; height: 10px; margin: 0; }
+.skeleton-form .skeleton-block { height: var(--size-input); border-radius: var(--radius-input); }   /* 입력 필드 자리 = 입력 필드 모양 (DS-ADR-020) */
 .skeleton-card {
     padding: var(--spacing-16);
     border: 1px solid var(--color-border-subtle);

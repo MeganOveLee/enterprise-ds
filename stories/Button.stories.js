@@ -62,15 +62,15 @@ export const Basic = {
 
 // 크기 — 작은 버튼 = Figma 「Small Button」(.btn--sm), 큰 버튼 = 큰 칸(.input--lg)과 짝(.btn--lg)
 const SIZE = [
-  btn({ emphasis: 'secondary', shape: 'transparent', label: '전체 보기', extra: 'btn--sm' }),
+  btn({ emphasis: 'secondary', shape: 'outlined', label: '조회', extra: 'btn--sm' }),
   btn({ emphasis: 'secondary', shape: 'outlined', label: '조회' }),
-  btn({ label: '로그인', extra: 'btn--lg' }),
+  btn({ emphasis: 'secondary', shape: 'outlined', label: '조회', extra: 'btn--lg' }),
 ];
 export const Size = {
   parameters: html(SIZE),
   render: () => matrix(['작은 버튼', '기본', '큰 버튼'], [
     ['미리보기', SIZE],
-    ['클래스', [code('.btn--sm'), code('.btn') + note(' (크기 클래스 없음)'), code('.btn--lg')]],
+    ['클래스', [code('.btn--sm'), note('클래스 없음'), code('.btn--lg')]],
     ['쓰임', [note('좁은 자리 — 카드 머리 · 알림 닫기'), note('대부분의 버튼'), note('큰 칸과 짝인 단독 폼의 주 동작 하나<br>(로그인)')]],
   ], { full: true }),
 };
@@ -105,8 +105,8 @@ export const Type = {
   parameters: html(TYPE),
   render: () => matrix(['글자', '아이콘 + 글자', '아이콘만', '펼침'], [
     ['미리보기', TYPE],
-    ['클래스', [code('.btn'), code('.btn') + note(' + 글자 앞 svg'), code('.btn--icon'), code('.btn--expand')]],
-    ['쓰임', [note('기본'), note('아이콘 14 × 14'), note('정사각형, 아이콘 16 × 16<br>이름은 aria-label'), note('영역을 접고 펴는 버튼<br>글자 오른쪽 화살표')]],
+    ['클래스', [note('클래스 없음'), note('글자 앞 svg · ') + code('&lt;i class="icon-*"&gt;'), code('.btn--icon'), code('.btn--expand')]],
+    ['쓰임', [note('기본'), note('svg 또는 아이콘 글꼴 14 × 14'), note('정사각형, 아이콘 16 × 16<br>이름은 aria-label'), note('영역을 접고 펴는 버튼<br>글자 오른쪽 화살표')]],
   ], { full: true }),
 };
 
@@ -114,9 +114,9 @@ const TOGGLE = [toggleBtn({ on: false }), toggleBtn({ on: true }), expandBtn({ o
 export const Toggle = {
   parameters: html(TOGGLE),
   render: () => matrix([code('false') + note('<br>꺼짐 · 접힘'), code('true') + note('<br>켜짐 · 펼침')], [
-    ['켜고 끄기 ' + code('aria-pressed'), [TOGGLE[0], TOGGLE[1]]],
-    ['접고 펴기 ' + code('aria-expanded'), [TOGGLE[2], TOGGLE[3]]],
-    ['아이콘만 접고 펴기 ' + code('aria-expanded'), [TOGGLE[4], TOGGLE[5]]],
+    ['켜고 끄기<br>' + code('aria-pressed'), [TOGGLE[0], TOGGLE[1]]],
+    ['접고 펴기<br>' + code('aria-expanded'), [TOGGLE[2], TOGGLE[3]]],
+    ['아이콘만 접고 펴기<br>' + code('aria-expanded'), [TOGGLE[4], TOGGLE[5]]],
   ], { full: true }),
 };
 
