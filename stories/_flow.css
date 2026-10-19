@@ -1,0 +1,27 @@
+/* Blocks 문서 공통 — 「기본 화면 → 누르면 열리는 창」 틀 (TD-103). 문서 전용 그림 틀이라 DS 클래스가 아님(.flow-*)
+ * 1단 = 기본 화면에서 누르는 곳이 보이는 만큼, 2단 = 열리는 창 · 화면. 둘 다 실제 크기로 그리고, 칸보다 넓으면 줄여 맞춤(.flow__fit)
+ * 색 · 글자는 토큰 — 도구 막대의 브랜드 · 화면 모드를 따름 */
+.flow { display: flex; flex-direction: column; gap: var(--spacing-8); font-family: var(--font-family-base); color: var(--color-text-base); }
+.flow__label { display: flex; align-items: center; flex-wrap: wrap; gap: var(--spacing-8); margin: 0; font-size: var(--body-sm); }
+.flow__label b { font-weight: var(--font-weight-semibold); }
+.flow__label span:last-child { color: var(--color-text-muted); }
+.flow__no {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 20px; height: 20px; border-radius: var(--radius-rounded);
+  background: var(--color-bg-brand); color: var(--color-text-on-color);
+  font-size: var(--body-xs); font-weight: var(--font-weight-bold);
+}
+.flow__arrow { display: flex; align-items: center; gap: var(--spacing-8); margin: var(--spacing-4) 0; padding-left: 2px; font-size: var(--body-sm); color: var(--color-text-muted); }
+.flow__arrow svg { color: var(--color-icon-brand); flex-shrink: 0; }
+.flow__arrow b { color: var(--color-text-base); font-weight: var(--font-weight-semibold); }
+
+/* 실제 크기 틀 — 너비 · 높이를 정하고, 칸이 좁으면 비율대로 줄임(1보다 크게 키우지 않음) */
+.flow__fit { position: relative; width: 100%; overflow: hidden; border: 1px solid var(--color-border-base); border-radius: var(--radius-card); background: var(--color-bg-subtle); }
+.flow__fit > .flow__inner { position: absolute; top: 0; left: 0; transform-origin: 0 0; overflow: hidden; }
+.flow__inner > .pop { height: 100%; min-width: 0; }   /* 제품 창(.pop)은 높이 100vh — 틀 안에서는 틀 높이 */
+.flow__inner .grid-table th { position: static; }      /* 표 머리 sticky가 틀 밖으로 새지 않게 */
+
+/* 누르는 곳 표시 — 테두리만, 동작 · 모양은 그대로 */
+.flow-mark { outline: 2px dashed var(--color-border-brand); outline-offset: 3px; }
+.flow__inner > .main-sub { height: 100%; }             /* 메뉴 패널(높이 100vh)도 틀 높이로 */
+.flow__inner > .main-content { height: 100%; padding-top: var(--spacing-8); padding-bottom: var(--spacing-16); }   /* 본문 영역 한 장 — 위 여백은 상단 바 아래 자리 */

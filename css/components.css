@@ -3989,3 +3989,42 @@ body.dark-mode .empty-illo { --empty-illo-shadow: rgb(0 0 0 / .2); }
     .skeleton-line, .skeleton-title, .skeleton-block { animation: none; }
     .brand-loader__fill { animation-duration: 4.8s; }   /* 스피너와 같은 이유로 멈추지 않고 느리게만 */
 }
+
+/* ═════════════════════════════════════════════════════════════════════════
+ * Blocks — 여러 컴포넌트를 묶는 자리에만 필요한 배치 · 표시 (TD-103)
+ * 이름은 이전 버전 화면 CSS와 같게(.ui-compare · .ui-field-addon · .compare-legend) — 화면 코드를 고치지 않고 옮김
+ * ═════════════════════════════════════════════════════════════════════════ */
+
+/* ── 입력칸 + 덧붙이는 선택 .ui-field-addon ── 품목 번호 칸 옆 버전 선택처럼 한 칸에 둘. 앞 = 남는 폭, 뒤 = 고정 폭 */
+.ui-field-addon { display: flex; align-items: center; gap: var(--spacing-8); }
+.ui-field-addon__main { flex: 1 1 auto; min-width: 0; display: flex; }
+.ui-field-addon__main > :is(.input, .select) { width: 100%; }
+.ui-field-addon__addon { flex: 0 0 110px; display: flex; }
+.ui-field-addon__addon > .select { width: 100%; }
+.ui-field-addon__addon:has(> .btn) { flex-basis: auto; }   /* 뒤가 버튼이면 버튼 폭 그대로(경로 칸 + [선택]) */
+
+/* ── 좌우 비교 .ui-compare ── BOM 비교처럼 같은 구성의 두 열을 나란히(기준 | 비교 대상). 두 표는 같은 줄 = 같은 품목 */
+/* 두 열의 조건 · 머리줄 · 표가 같은 높이에서 시작하도록 열 안의 세 줄을 바깥 격자에 맞춤(subgrid) — 한쪽 조건이 두 줄이 돼도 표 줄이 어긋나지 않음 */
+.ui-compare { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: auto auto 1fr; column-gap: var(--spacing-16); flex: 1; min-height: 0; }
+.ui-compare__col { display: grid; grid-row: span 3; grid-template-rows: subgrid; row-gap: var(--spacing-8); min-width: 0; min-height: 0; }
+/* 표 안 찾기 — 열 머리줄의 품목 번호 칸 + [찾기]. 서버에 다시 묻지 않고 그려진 표에서 다음 줄로 이동(이전 버전 .ui-compare__header-input 폭 140) */
+.ui-compare__find { display: flex; align-items: center; gap: var(--spacing-4); }
+.ui-compare__find > .input { width: 140px; }
+
+/* 비교 결과 줄 — 범례와 표가 같은 토큰. 색만으로 알리지 않게 줄마다 「비교」 칸에 같은 글자를 둠
+ *   같음 = 표시 없음 · 수량 다름(.compare-row--similar) = 정보색 · 한쪽에만 있음(.compare-row--unassigned) = 주의색
+ *   그리드 위젯을 쓰는 화면은 줄 스타일 함수가 같은 클래스 이름을 돌려주면 됨 */
+.grid-table tbody tr.compare-row--similar td { background: var(--color-bg-info-subtle); }
+.grid-table tbody tr.compare-row--unassigned td { background: var(--color-bg-warning-subtle); }
+/* 칠한 줄 위 링크 — 선택한 줄과 같은 한 단계 진한 글자(다크 주의색 바탕에서 브랜드 글자 대비 부족) */
+.grid-table tr:is(.compare-row--similar, .compare-row--unassigned) .grid-custom-rows-link { color: var(--color-text-interactive-primary-hover); }
+.grid-table .compare-cell { font-size: var(--body-xs); color: var(--color-text-muted); white-space: nowrap; }
+.grid-table tr.compare-row--similar .compare-cell { color: var(--color-text-info-bold); font-weight: var(--font-weight-semibold); }
+.grid-table tr.compare-row--unassigned .compare-cell { color: var(--color-text-warning-bold); font-weight: var(--font-weight-semibold); }
+
+/* 범례 — 칸 하나 = 색 견본 + 이름 + 뜻 */
+.compare-legend { display: flex; flex-wrap: wrap; align-items: center; gap: var(--spacing-4) var(--spacing-12); margin: 0; padding: 0; list-style: none; font-size: var(--body-sm); color: var(--color-text-base); }
+.compare-legend > li { display: inline-flex; align-items: center; gap: var(--spacing-4); }
+.compare-legend__swatch { width: 12px; height: 12px; flex-shrink: 0; border: 1px solid var(--color-border-strong); border-radius: var(--radius-sm); background: var(--color-bg-base); }
+.compare-legend__swatch--similar { background: var(--color-bg-info-subtle); border-color: var(--color-border-info); }
+.compare-legend__swatch--unassigned { background: var(--color-bg-warning-subtle); border-color: var(--color-border-warning); }
