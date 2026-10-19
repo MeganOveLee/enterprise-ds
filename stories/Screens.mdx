@@ -9,6 +9,9 @@ import * as S from './Screens.stories.js';
 <PageHead eyebrow="Screens" title="PLM 화면" lead="이 디자인 시스템의 클래스와 토큰만으로 만든 PLM 업무 화면입니다.">
 <ul className="ds-meta"><li>실제 크기 1440 × 900</li><li>가상 데이터</li><li>브랜드 × 라이트 · 다크</li></ul>
 </PageHead>
+<Section title="화면 지도" en="Screen map" desc="만들려는 화면과 가장 가까운 예시를 고릅니다. 색 상자 = 블록 · 컴포넌트가 들어가는 자리입니다.">
+<Card of={S.화면_지도} code={false} />
+</Section>
 <Section title="로그인" en="Sign in" desc="처음 보는 화면입니다. 왼쪽 = 브랜드 딥 패널(서비스 소개 · 문의처), 오른쪽 = 로그인 폼. 패널 색과 그림은 브랜드 · 화면 모드를 따릅니다.">
 <Card of={S.로그인} />
 <p className="ds-sec__desc ds-after">크게 보기 — <a className="ds-link" href="./iframe.html?id=screens-plm-화면--로그인&viewMode=story&globals=brand:default" target="_blank" rel="noreferrer">Default</a> · <a className="ds-link" href="./iframe.html?id=screens-plm-화면--로그인&viewMode=story&globals=brand:fashion" target="_blank" rel="noreferrer">Fashion</a> · <a className="ds-link" href="./iframe.html?id=screens-plm-화면--로그인&viewMode=story&globals=brand:precision" target="_blank" rel="noreferrer">Precision</a> · <a className="ds-link" href="./iframe.html?id=screens-plm-화면--로그인&viewMode=story&globals=mode:dark" target="_blank" rel="noreferrer">다크</a></p>
@@ -31,9 +34,10 @@ import * as S from './Screens.stories.js';
 <Section title="프로젝트 상세" en="Detail" desc="프로젝트 하나를 여는 화면입니다. 왼쪽 = 산출물 구조(단계 · 태스크 트리, 상태 점), 오른쪽 = 상세 머리 · 접는 섹션(기본 정보 · 진행 현황 · 태스크 · 산출물 문서). 진행 상태(완료 · 진행 · 지연 · 예정 · 보류)가 점 · 막대 · 칩에 같은 색으로 나옵니다. 전체 · 단계별 진행률 막대의 계획 표식(▼)은 DS 제안입니다 — 이전 버전은 「진행/적정(%)」 숫자만, DS는 계획 대비 늦음을 막대 위에서 한눈에.">
 <Card of={S.프로젝트_상세} />
 <p className="ds-sec__desc ds-after">크게 보기 — <a className="ds-link" href="./iframe.html?id=screens-plm-화면--프로젝트-상세&viewMode=story&globals=brand:default" target="_blank" rel="noreferrer">Default</a> · <a className="ds-link" href="./iframe.html?id=screens-plm-화면--프로젝트-상세&viewMode=story&globals=brand:fashion" target="_blank" rel="noreferrer">Fashion</a> · <a className="ds-link" href="./iframe.html?id=screens-plm-화면--프로젝트-상세&viewMode=story&globals=brand:precision" target="_blank" rel="noreferrer">Precision</a> · <a className="ds-link" href="./iframe.html?id=screens-plm-화면--프로젝트-상세&viewMode=story&globals=mode:dark" target="_blank" rel="noreferrer">다크</a></p>
+<Card of={S.상세_머리_상태} title="상세 머리 — 보기 · 편집 중 · 잠김" en="Header states" desc="같은 머리에서 버튼만 바뀝니다. 편집 중에는 [취소] · [저장]만 두고, 다른 사람이 수정 중이면 편집 버튼을 막고 누가 · 언제부터 수정 중인지 머리에 늘 보입니다." />
 </Section>
 <Section title="쓰인 것" en="Anatomy" desc="화면의 자리마다 쓴 클래스와 토큰입니다. 화면 코드는 토큰 이름만 쓰고, 값은 브랜드 파일과 화면 모드가 정합니다.">
-<table className="ds-table ds-props">
+<table className="ds-table ds-props ds-props--wrap">
 <thead><tr><th>자리</th><th>클래스 · 토큰</th><th>설명</th></tr></thead>
 <tbody>
 <tr><td><b>틀</b></td><td><code>.main-layout</code> · <code>.main-area</code> · <code>.main-content</code></td><td>아이콘 메뉴와 두 번째 메뉴 패널 옆에 상단 바와 본문이 쌓이는 공통 틀입니다. 본문이 남은 높이를 모두 차지합니다.</td></tr>

@@ -130,6 +130,25 @@ export const Utility = {
   ], { full: true }),
 };
 
+// ── 업무 동작별 버튼 (TD-104 반영 4) ── 행 = 동작, 근거 = DS-ADR-009 대응표 · Screens 화면. 같은 동작은 화면이 달라도 같은 버튼
+const SRCH = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/></svg>';
+const RST = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9 9l6 6M15 9l-6 6"/></svg>';
+const UP = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg>';
+const raw = (cls, inner, attrs = '') => '<button type="button" class="btn ' + cls + '"' + attrs + '>' + inner + '</button>';
+const ACTIONS = [
+  ['등록 · 저장 · 결재 요청', '영역의 핵심 동작 하나', raw('btn--primary btn--filled', '등록'), '.btn--primary.btn--filled'],
+  ['검색', '검색 조건 영역의 [검색]', raw('btn--primary btn--filled', SRCH + '검색'), '.btn--primary.btn--filled'],
+  ['조회 · 선택 · 수정 · 임시 저장', '핵심 동작 옆의 보조 동작', raw('btn--secondary btn--outlined', '수정'), '.btn--secondary.btn--outlined'],
+  ['초기화 · 취소', '되돌리거나 그만두는 동작', raw('btn--secondary btn--transparent', RST + '검색 조건 초기화'), '.btn--secondary.btn--transparent'],
+  ['삭제', '되돌릴 수 없는 동작. 목록 전체 삭제는 transparent', raw('btn--destructive btn--outlined', '삭제'), '.btn--destructive.btn--outlined'],
+  ['엑셀 내려받기', '엑셀 파일을 받는 버튼 하나', UTILITY[0], '.btn--excel'],
+  ['순서 이동 · 닫기', '아이콘만, 이름은 aria-label', raw('btn--secondary btn--transparent btn--icon', UP, ' aria-label="위로 이동"'), '.btn--secondary.btn--transparent.btn--icon'],
+];
+export const 업무_동작 = {
+  parameters: html(ACTIONS.map((a) => a[2])),
+  render: () => matrix(['버튼', '클래스', '쓰는 자리'], ACTIONS.map(([name, where, b, cls]) => [name, [b, code(cls), note(where)]]), { full: true }),
+};
+
 // ── 전체 조합 ──
 const STATES = ['Default', 'Hovered', 'Pressed', 'Focused', 'Disabled'];
 const PS = ['', 'ps-hover', 'ps-active', 'ps-focus-visible'];
@@ -141,7 +160,7 @@ export const 사용_지침 = {
   parameters: { controls: { disable: true } },
   render: () => doDont([
     { title: '핵심 동작은 하나만 강조',
-      do: [grp(btn({ label: '취소', emphasis: 'secondary', shape: 'outlined' }) + btn({ label: '임시 저장', emphasis: 'secondary', shape: 'outlined' }) + btn({ label: '등록' })),
+      do: [grp(btn({ label: '취소', emphasis: 'secondary', shape: 'transparent' }) + btn({ label: '임시 저장', emphasis: 'secondary', shape: 'outlined' }) + btn({ label: '등록' })),
         'primary는 등록 · 저장 · 검색처럼 그 영역의 핵심 동작 하나에만 씁니다. 나머지는 secondary입니다.'],
       dont: [grp(btn({ label: '취소' }) + btn({ label: '임시 저장' }) + btn({ label: '등록' })),
         '모두 primary면 어느 것이 핵심 동작인지 보이지 않습니다.'] },

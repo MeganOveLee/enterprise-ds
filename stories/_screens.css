@@ -189,3 +189,30 @@
 .scr-login__form .checkbox { align-self: flex-start; }
 .scr .scr-login__submit { width: 100%; margin-top: var(--spacing-8); }   /* 높이 · 글자 = DS .btn--lg */
 .scr-login__copy { margin: var(--spacing-32) 0 0; text-align: center; font-size: var(--body-sm); color: var(--color-text-muted); }
+
+/* 상세 머리 상태 카드(보기 · 편집 중 · 잠김) — 문서용 배치. 머리 하나씩 흰 판에 */
+.scr-states { display: grid; gap: var(--spacing-12); }
+.scr-state__label { margin: 0 0 var(--spacing-4); font-size: var(--body-sm); color: var(--color-text-muted); }
+.scr-state__box .detail-header { border-bottom: 0; padding-bottom: 0; }
+.scr-state__box { overflow: visible; background: var(--color-bg-base); border: 1px solid var(--color-border-base); border-radius: var(--radius-card); padding: var(--spacing-16); }
+/* 잠김 이유 — 제목 줄 안 흐린 작은 글자 + 자물쇠. 편집 버튼이 aria-describedby 로 이 문구를 읽음 */
+.scr-lock { display: inline-flex; align-items: center; gap: var(--spacing-4); margin-left: var(--spacing-8); font-size: var(--body-sm); color: var(--color-text-muted); white-space: nowrap; }
+.scr-lock svg { color: var(--color-icon-muted); }
+
+/* 화면 지도 — 화면마다 영역 상자. 색은 토큰이라 브랜드 · 화면 모드를 따름 (문서용 그림) */
+.scr-maps { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: var(--spacing-16); }
+.scr-map { margin: 0; display: flex; flex-direction: column; gap: var(--spacing-8); }
+.scr-map figcaption { display: flex; flex-direction: column; gap: 2px; }
+.scr-map figcaption b { font-size: var(--body-md); font-weight: var(--font-weight-semibold); color: var(--color-text-base); }
+.scr-map figcaption span { font-size: var(--body-sm); color: var(--color-text-muted); }
+.scr-map__frame { display: grid; gap: 3px; aspect-ratio: 16 / 10; padding: 3px; border-radius: var(--radius-card); background: var(--color-border-base); overflow: hidden; }
+.scr-map__r { display: flex; flex-direction: column; gap: 2px; min-width: 0; padding: 6px 8px; border-radius: 2px; background: var(--color-bg-subtle); font-size: 11px; line-height: 1.35; color: var(--color-text-base); }
+.scr-map__r b { font-weight: var(--font-weight-semibold); }
+.scr-map__r span { color: var(--color-text-muted); }
+.scr-map__r--nav { background: var(--color-bg-header); }
+.scr-map__r--bar { background: var(--color-bg-base); padding: 0 8px; justify-content: center; font-size: 10px; }
+.scr-map__r--bar b { font-weight: var(--font-weight-regular); color: var(--color-text-muted); }
+.scr-map__r--panel { background: var(--color-bg-panel); color: var(--color-text-on-panel); }
+.scr-map__r--panel span { color: var(--color-text-on-panel-2); }
+.scr-map__r--focus { background: var(--color-bg-brand-subtle); color: var(--color-text-on-brand-subtle); }
+.scr-map__r--focus span { color: var(--color-text-on-brand-subtle); }

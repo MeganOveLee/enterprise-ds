@@ -28,7 +28,7 @@ export const Sample = {
       <input class="input" aria-label="부품 번호" placeholder="부품 번호">
       <select class="select" aria-label="구분"><option>전체 구분</option><option>설계 변경</option><option>도면 개정</option></select>
       <label class="checkbox"><input type="checkbox" checked>내 요청만</label>
-      <button type="button" class="btn btn--secondary btn--filled">조회</button>
+      <button type="button" class="btn btn--secondary btn--outlined">조회</button>
     </div>
     <ul class="card-list">
 ${ROWS.map(([no, title, date]) => `      <li><a href="#"><span class="intro-demo__no">${no}</span><span class="item-title">${title}</span><span class="item-date">${date}</span></a></li>`).join('\n')}

@@ -433,6 +433,51 @@ export default {
   parameters: { layout: 'fullscreen' },
 };
 
+// ── 화면 지도 (TD-104 반영 7) ── 화면마다 영역 상자 + 영역 이름 + 쓰는 블록 · 컴포넌트. 「언제」 한 줄로 어떤 화면을 고르는지
+// 상자 색 = 토큰(브랜드 · 화면 모드를 따름). 문서용 그림이라 화면 마크업과 따로
+const R = (area, name, uses = '', kind = '') => '<div class="scr-map__r' + (kind ? ' scr-map__r--' + kind : '') + '" style="grid-area:' + area + '">' +
+  (name ? '<b>' + name + '</b>' : '') + (uses ? '<span>' + uses + '</span>' : '') + '</div>';
+const MAPS = [
+  ['로그인', '처음 들어올 때', '"panel form"', '1fr 1fr', '1fr',
+    R('panel', '브랜드 패널', '서비스 소개 · 문의처', 'panel') + R('form', '로그인 폼', 'Input · Checkbox · Button', 'focus')],
+  ['홈', '로그인 뒤 첫 화면 — 할 일 요약', '"rail top" "rail info" "rail cards"', '16px 1fr', '16px auto 1fr',
+    R('rail', '', '', 'nav') + R('top', '상단 바', '', 'bar') + R('info', '내 정보 · 숫자 카드', 'Card') + R('cards', '카드 3열 × 2', 'Card · Empty', 'focus')],
+  ['문서 검색', '목록에서 조건으로 찾을 때', '"rail sub top" "rail sub search" "rail sub list"', '16px 24% 1fr', '16px auto 1fr',
+    R('rail', '', '', 'nav') + R('sub', '메뉴 패널', '메뉴 · 폴더 트리', 'nav') + R('top', '상단 바', '', 'bar') +
+    R('search', '검색 조건', 'SearchForm', 'focus') + R('list', '결과 목록', 'Table · Status Chip', 'focus')],
+  ['문서 등록', '새로 등록 · 편집할 때', '"title" "form" "file"', '1fr', '16px 1fr auto',
+    R('title', '창 제목 줄', '', 'bar') + R('form', '접는 섹션 · 2열 폼', 'Accordion · Input · Date Picker', 'focus') + R('file', '첨부', '업로더')],
+  ['프로젝트 상세', '하나를 열어 자세히 보고 관리할 때', '"rail tree top" "rail tree head" "rail tree sec"', '16px 24% 1fr', '16px auto 1fr',
+    R('rail', '', '', 'nav') + R('tree', '산출물 패널', '트리 · 상태 점', 'nav') + R('top', '상단 바', '', 'bar') +
+    R('head', '상세 머리', 'Button · Status Chip') + R('sec', '접는 섹션', 'Accordion · Progress · Table', 'focus')],
+];
+export const 화면_지도 = {
+  parameters: { controls: { disable: true } },
+  render: () => '<div class="scr-maps">' + MAPS.map(([name, when, areas, cols, rows, inner]) =>
+    '<figure class="scr-map"><figcaption><b>' + name + '</b><span>' + when + '</span></figcaption>' +
+    '<div class="scr-map__frame" style="grid-template-areas:' + areas.replace(/"/g, "'") + ';grid-template-columns:' + cols + ';grid-template-rows:' + rows + '">' + inner + '</div></figure>').join('') + '</div>',
+};
+
+// ── 상세 머리 — 보기 · 편집 중 · 잠김 (TD-104 반영 5 · 업무 정책) ── 같은 머리에서 버튼만 바뀐다
+// 잠김 = 다른 사람이 수정 중. 편집 버튼은 aria-disabled(포커스는 받음) + 이유 문구를 늘 보이게, 버튼이 aria-describedby 로 그 문구를 읽음
+const LOCK = '<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>';
+const headTitle = (extra = '') => '<div class="detail-header__title"><span class="detail-icon">' + svg(I.project, 24) + '</span>' +
+  '<h2>브레이크 캘리퍼 경량화 개발</h2><span class="detail-code">PJT-2026-014</span>' + pchip('delay') + extra + '</div>';
+const headView = () => '<div class="detail-header">' + headTitle() + '<div class="detail-header__actions">' +
+  btn('수정', 'btn--secondary btn--outlined') + btn('태스크 추가', 'btn--secondary btn--outlined', I.plus) + btn('결재 요청', 'btn--primary btn--filled') + '</div></div>';
+const headEdit = () => '<div class="detail-header">' + headTitle() + '<div class="detail-header__actions">' +
+  btn('취소', 'btn--secondary btn--transparent') + btn('저장', 'btn--primary btn--filled') + '</div></div>';
+const headLocked = () => '<div class="detail-header">' +
+  headTitle('<span class="scr-lock" id="lock-reason">' + svg(LOCK, 14) + '김도윤 님이 수정 중 · 10:24부터</span>') + '<div class="detail-header__actions">' +
+  '<button type="button" class="btn btn--secondary btn--outlined" aria-disabled="true" aria-describedby="lock-reason">수정</button>' +
+  '<button type="button" class="btn btn--secondary btn--outlined" aria-disabled="true" aria-describedby="lock-reason">' + svg(I.plus, 14) + '태스크 추가</button>' +
+  btn('결재 요청', 'btn--primary btn--filled') + '</div></div>';
+const headStage = (label, inner) => '<div class="scr-state"><p class="scr-state__label">' + label + '</p><div class="scr-detail scr-state__box">' + inner + '</div></div>';
+export const 상세_머리_상태 = {
+  parameters: src([headView(), headEdit(), headLocked()].join('\n')),
+  render: () => '<div class="scr-states">' + headStage('보기', headView()) + headStage('편집 중', headEdit()) + headStage('잠김 — 다른 사람이 수정 중', headLocked()) + '</div>',
+};
+
 export const 로그인 = {
   parameters: src(loginScreen()),
   render: () => frame(loginScreen()),

@@ -55,6 +55,20 @@ export const 기본 = {
   render: () => wrap(table(ROWS.map((r, i) => row(r, i, { sel: i === 1 })).join(''))),
 };
 
+// ── 결과 0건 (TD-104 반영 5 · 업무 정책) — 머리줄은 그대로, 표 아래 빈 상태(검색 결과 없음), 내보내기는 누를 수 없음 ──
+const LIST = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/></svg>';
+const XLS = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>';
+const NOHIT = '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="21" cy="21" r="12"/><path d="m30 30 10 10"/></svg>';
+const ZERO = '<div class="seach_arm" style="margin-top:0"><div class="leftbt">' + LIST + '<h4>검색 결과 (0)</h4></div>' +
+  '<div class="rightbt"><button type="button" class="btn btn--excel" disabled>' + XLS + 'Excel</button></div></div>' +
+  '<div class="table_list"><div class="list"><table class="grid-table">' + COLS + HEAD.replace('aria-label="전체 선택"', 'aria-label="전체 선택" disabled') + '<tbody></tbody></table>' +
+  '<div class="empty empty--card" role="status"><span class="empty__icon">' + NOHIT + '</span><p class="empty__title">조건에 맞는 문서가 없어요</p>' +
+  '<p class="empty__desc">기간을 넓히거나 작업현황을 \'전체\'로 바꿔 보세요.</p></div></div></div>';
+export const 결과_0건 = {
+  parameters: html(ZERO),
+  render: () => '<div style="max-width:760px">' + ZERO + '</div>',
+};
+
 // ── 편집 표 — 일괄 등록처럼 칸 안에 입력칸. 회색 판 + 흰 입력 상자(이전 버전 편집 그리드) ──
 const EROWS = [['설계 사양서', '브레이크 캘리퍼 조립 사양서', '김도윤'], ['시험 성적서', '', '김도윤'], ['도면', '하우징 3D 모델', '김도윤']];
 const sel = (label, v) => '<select class="select" aria-label="' + label + '">' + ['설계 사양서', '시험 성적서', '도면'].map((o) => '<option' + (o === v ? ' selected' : '') + '>' + o + '</option>').join('') + '</select>';

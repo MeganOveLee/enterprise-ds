@@ -10,8 +10,9 @@ import notionIcon from '../assets/links/notion.svg';
 {/* 시작하기 = 이 스토리북을 보고 가져다 쓰는 법 — 미리보기(도구 막대 직접 눌러 보기) · 디자이너 · 개발자 · 참고 자료 (TD-50). 도구 막대 · 테마 전환 설명은 여기 한 곳에만 */}
 
 export const LOAD = [
+  '<!-- 기존 전역 CSS는 빼고 아래 순서로 불러옵니다 -->',
   '<link rel="stylesheet" href="css/tokens.css">',
-  '<link rel="stylesheet" href="css/brands/default.css">   <!-- 기본 브랜드. 다른 브랜드는 위 표 참고 -->',
+  '<link rel="stylesheet" href="css/brands/default.css">   <!-- 기본 브랜드. 다른 브랜드는 css/brands/{이름}.css + html 클래스 -->',
   '<link rel="stylesheet" href="css/globals.css">',
   '<link rel="stylesheet" href="css/components.css">',
   '<script src="js/datepicker.js"></script>   <!-- 날짜 선택 사용 시 -->',
@@ -29,7 +30,7 @@ export const LOAD = [
 <table className="ds-table ds-after">
 <thead><tr><th>도구 막대</th><th>변경 내용</th><th>적용 코드</th></tr></thead>
 <tbody>
-<tr><td><b>브랜드</b><span className="ds-muted">Default · Fashion · Precision</span></td><td>브랜드별 색상과 형태를 일괄 전환합니다. 색상뿐 아니라 모서리 반경과 버튼 · 입력칸 높이도 브랜드별로 정의할 수 있습니다. Fashion · Precision은 전환 방식을 보여 주기 위한 가상 브랜드입니다.</td><td><code>{'<html class="theme-fashion">'}</code><span className="ds-muted">클래스가 없으면 기본 브랜드(Default)</span></td></tr>
+<tr><td><b>브랜드</b><span className="ds-muted">Default · Fashion · Precision</span></td><td>브랜드별 색상과 형태를 일괄 전환합니다. 색상뿐 아니라 모서리 반경과 버튼 · 입력칸 높이도 브랜드별로 정의할 수 있습니다. Fashion · Precision은 전환 방식을 보여 주기 위한 가상 브랜드입니다.</td><td><code>css/brands/fashion.css</code><br /><code>{'<html class="theme-fashion">'}</code><span className="ds-muted">브랜드 파일과 클래스를 함께 적용합니다. 클래스가 없으면 기본 브랜드(Default)</span></td></tr>
 <tr><td><b>화면 모드</b><span className="ds-muted">라이트 · 다크</span></td><td>라이트 · 다크 모드를 전환합니다. 화면 코드 변경 없이 클래스 하나로 적용합니다.</td><td><code>{'<body class="dark-mode">'}</code><span className="ds-muted">클래스가 없으면 라이트</span></td></tr>
 </tbody>
 </table>
@@ -51,12 +52,34 @@ export const LOAD = [
 <table className="ds-table">
 <thead><tr><th>단계</th><th>할 일</th></tr></thead>
 <tbody>
-<tr><td><b>1. 불러오기</b></td><td>공통 레이아웃에서 CSS 네 파일을 아래 코드의 순서(토큰 → 브랜드 → 전역 → 컴포넌트)로 불러옵니다.</td></tr>
-<tr><td><b>2. 클래스 적용</b></td><td>컴포넌트 문서 예시 카드의 「코드 보기」 마크업을 그대로 사용합니다. 상태는 클래스가 아닌 HTML 속성으로 표현합니다 — <code>disabled</code> · <code>readonly</code> · <code>aria-invalid="true"</code> · <code>aria-expanded</code> · <code>aria-pressed</code>.</td></tr>
-<tr><td><b>3. 브랜드 · 화면 모드</b></td><td>브랜드는 <code>{'<html class="theme-*">'}</code>, 다크 모드는 <code>{'<body class="dark-mode">'}</code>로 적용합니다. 화면에 CSS를 추가할 때는 색상에 시맨틱 토큰(<code>--color-*</code>)만 사용하고, 원천 색(<code>--neutral-N</code> · <code>--brand-N</code>)이나 색상 값을 직접 사용하지 않습니다.</td></tr>
+<tr><td><b>1. 불러오기</b><span className="ds-muted">필수</span></td><td>공통 레이아웃에서 기존 전역 CSS를 빼고, CSS 네 파일을 아래 코드의 순서(토큰 → 브랜드 → 전역 → 컴포넌트)로 불러옵니다. 글꼴(Pretendard) 파일은 저장소에 포함되어 있지 않습니다. 경로가 맞지 않으면 시스템 글꼴로 표시되므로 <code>globals.css</code>의 <code>@font-face</code> 경로를 화면 폴더 구조에 맞춥니다.</td></tr>
+<tr><td><b>2. 클래스 적용</b><span className="ds-muted">필수</span></td><td>컴포넌트 문서 예시 카드의 「코드 보기」 마크업을 그대로 사용합니다. 상태는 클래스가 아닌 HTML 속성으로 표현합니다 — <code>disabled</code> · <code>readonly</code> · <code>aria-invalid="true"</code> · <code>aria-expanded</code> · <code>aria-pressed</code>.</td></tr>
+<tr><td><b>3. 브랜드 · 화면 모드</b><span className="ds-muted">선택 — 적용하지 않으면 Default · 라이트</span></td><td>브랜드는 브랜드 파일(<code>{'css/brands/*.css'}</code>)과 <code>{'<html class="theme-*">'}</code>를 함께, 다크 모드는 <code>{'<body class="dark-mode">'}</code>로 적용합니다. 화면에 CSS를 추가할 때는 색상에 시맨틱 토큰(<code>--color-*</code>)만 사용하고, 원천 색(<code>--neutral-N</code> · <code>--brand-N</code>)이나 색상 값을 직접 사용하지 않습니다.</td></tr>
 </tbody>
 </table>
 <Source language="html" code={LOAD} />
+</Section>
+<Section title="기존 화면에 적용할 때" en="Adopting in existing screens" desc="화면 코드를 한 번에 바꾸지 않고 네 단계로 나누어 적용합니다. 화면에 색상 코드가 남아 있으면 다크 모드에서 그 부분만 밝게 남으므로, 다크 모드는 마지막에 적용합니다.">
+<table className="ds-table">
+<thead><tr><th>단계</th><th>할 일</th><th>화면 코드 수정</th></tr></thead>
+<tbody>
+<tr><td><b>1. 교체</b></td><td>기존 전역 CSS를 빼고 네 파일을 불러옵니다.</td><td>없음</td></tr>
+<tr><td><b>2. 화면 단위 전환</b></td><td>새 화면은 처음부터 새 클래스로 만들고, 기존 화면은 옛 클래스를 대응표에 따라 하나씩 바꿉니다. <a className="ds-link" href="https://app.notion.com/p/3efa8196682d8190a8eaf1c60196737f" target="_blank" rel="noreferrer">버튼 클래스 대응표(DS-ADR-009) ↗</a></td><td>화면마다</td></tr>
+<tr><td><b>3. 화면 CSS 정리</b></td><td>화면 CSS에 남은 색상 코드를 시맨틱 토큰(<code>--color-*</code>)으로 바꿉니다.</td><td>화면 CSS</td></tr>
+<tr><td><b>4. 브랜드 · 다크 모드</b></td><td>브랜드 파일과 클래스를 적용하고 다크 모드를 켭니다.</td><td>없음</td></tr>
+</tbody>
+</table>
+<table className="ds-table ds-after">
+<thead><tr><th>불러오기만 해도 바뀌는 것</th><th>이전 버전과 같은 이름으로 적용되는 것</th><th>새 클래스로 바꿔야 하는 것</th></tr></thead>
+<tbody>
+<tr><td>글꼴 · 글자색 · 제목(<code>h1</code>~<code>h6</code>) · 입력칸 높이(<code>input</code> · <code>select</code>) · 체크박스 색</td><td>목록 표 <code>.table_list</code> · 등록 창 섹션 <code>.pro_table</code> · 다중 선택 <code>.checkSelect</code> · 첨부 <code>.resumable</code></td><td>버튼 <code>{'.btn_*'}</code> → <code>{'.btn--*'}</code> · 입력칸 → <code>.input</code> · <code>.select</code> · <code>.textarea</code> · 체크박스 · 라디오 → <code>.checkbox</code> · <code>.radio</code></td></tr>
+</tbody>
+</table>
+<dl className="ds-dl ds-after">
+<div><dt>적용 범위</dt><dd>태그 기본값까지 화면 전체에 적용됩니다.</dd></div>
+<div><dt>브랜드 · 모드</dt><dd>페이지 단위로 적용됩니다(<code>html</code> · <code>body</code> 클래스). 화면 일부만 다른 브랜드로 표시할 수 없습니다.</dd></div>
+<div><dt>함께 쓰지 않는 것</dt><dd><code>.btn</code> · <code>.card</code> · <code>.alert</code>처럼 같은 클래스 이름을 쓰는 CSS 라이브러리와 함께 쓰지 않습니다. 이름이 겹쳐 스타일이 섞입니다.</dd></div>
+</dl>
 </Section>
 <Section title="참고 자료 · 문의" en="Resources">
 <table className="ds-table">

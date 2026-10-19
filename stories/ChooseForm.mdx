@@ -1,0 +1,14 @@
+import { Meta, Unstyled } from '@storybook/addon-docs/blocks';
+import { PageHead, Section, Card } from './_blocks.js';
+import * as S from './ChooseForm.stories.js';
+
+<Meta of={S} />
+
+<Unstyled>
+<div className="ds-page">
+<PageHead eyebrow="Form" title="고르는 법" lead="값을 받는 상황마다 쓰는 입력 컴포넌트입니다." />
+<Section title="상황별 컴포넌트" en="Which to use" desc="기준은 각 컴포넌트 문서의 「언제 쓰고 쓰지 말지」와 같습니다.">
+<Card of={S.고르는_표} code={false} />
+</Section>
+</div>
+</Unstyled>
