@@ -78,6 +78,46 @@ export const Locked = {
   ], { full: true }),
 };
 
+// ── 선택 목록 (TD-101) — js/select.js 가 select 를 같은 목록(.ui-select)으로 바꿈. 왼쪽 = 눌러 보기, 오른쪽 = 열린 모습(정지 화면) ──
+const SEL_OPTS = ['전체', '작업 중', '검토 중', '승인', '반려'];
+const CHEV = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>';
+const openList = (id, pick, act) => '<div class="ui-select"><div class="ui-select__trigger is-open" role="combobox" tabindex="0" aria-haspopup="listbox" aria-expanded="true" aria-controls="' + id + '-list" aria-labelledby="' + id + '-lb" aria-activedescendant="' + id + '-opt-' + act + '">' +
+  '<span class="ui-select__value">' + SEL_OPTS[pick] + '</span><span class="ui-select__chevron">' + CHEV + '</span></div>' +
+  '<div class="ui-select__menu show" role="listbox" id="' + id + '-list" aria-labelledby="' + id + '-lb">' +
+  SEL_OPTS.map((o, i) => '<div class="ui-select__option' + (i === pick ? ' is-selected' : '') + (i === act ? ' is-active' : '') + '" role="option" id="' + id + '-opt-' + i + '" aria-selected="' + (i === pick) + '">' + o + '</div>').join('') + '</div></div>';
+const SEL_SRC = [
+  '<!-- 불러오기만 하면 화면의 보이는 단일 select 가 모두 같은 목록으로 바뀝니다. 바꾸지 않을 select 는 class="no-ui" -->',
+  '<script src="js/select.js"></script>',
+  '',
+  '<label class="search-label" for="state">작업현황</label>',
+  '<select class="select" id="state">' + SEL_OPTS.map((o) => '<option>' + o + '</option>').join('') + '</select>',
+  '',
+  '<!-- 바뀐 뒤(스크립트가 그림) — 원래 select 는 숨어서 값 · 폼 제출 · change 를 그대로 맡음 -->',
+  '<div class="ui-select">',
+  '  <div class="ui-select__trigger" role="combobox" tabindex="0" aria-haspopup="listbox" aria-expanded="false" aria-controls="…-list" aria-labelledby="state-label">',
+  '    <span class="ui-select__value">전체</span><span class="ui-select__chevron">…</span>',
+  '  </div>',
+  '  <div class="ui-select__menu" role="listbox" id="…-list">',
+  '    <div class="ui-select__option is-selected" role="option" aria-selected="true">전체</div> …',
+  '  </div>',
+  '  <select class="select ui-select__native" id="state" aria-hidden="true" tabindex="-1">…</select>',
+  '</div>',
+];
+export const 선택_목록 = {
+  parameters: html(SEL_SRC),
+  render: () => {
+    const el = document.createElement('div');
+    el.innerHTML = matrix(['눌러 보기', '열린 모습'], [
+      ['미리보기', ['<div class="form-grid-2" style="grid-template-columns:1fr;width:220px"><div class="ff-field"><label class="search-label" for="in-sel-live">작업현황</label><div class="td">' +
+        '<select class="select" id="in-sel-live">' + SEL_OPTS.map((o) => '<option>' + o + '</option>').join('') + '</select></div></div></div>',
+        '<div class="form-grid-2" style="grid-template-columns:1fr;width:220px;min-height:208px"><div class="ff-field"><span class="search-label" id="in-sel-open-lb">작업현황</span><div class="td">' + openList('in-sel-open', 2, 3) + '</div></div></div>']],
+      ['쓰임', [note('누르거나 ↓ · Enter로 열고, ↑↓로 옮겨 Enter로 고릅니다<br>Esc = 고르지 않고 닫기 · 글자 입력 = 그 글자로 시작하는 항목'), note('고른 항목 = 옅은 브랜드 바탕 + 오른쪽 ✓<br>키보드로 옮긴 항목 = 테두리(포커스는 상자에 둠)')]],
+    ], { full: true });
+    setTimeout(() => { const sel = el.querySelector('#in-sel-live'); if (sel && window.buildCustomSelect) window.buildCustomSelect(sel); }, 0);
+    return el;
+  },
+};
+
 // ── 전체 상태 ──
 // ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-70) — 입력 · 선택 ──
 const ff = (label, ctl, id) => '<div class="form-grid-2" style="grid-template-columns:1fr;width:220px"><div class="ff-field"><label class="search-label" for="' + id + '">' + label + '</label><div class="td">' + ctl + '</div></div></div>';

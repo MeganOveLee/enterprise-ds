@@ -1,6 +1,6 @@
 // Form/Multi Select — 문서 화면은 MultiSelect.mdx. 여러 값을 고르는 드롭다운(.checkSelect)
-// Figma UI Kit 「Option」 · 「Option group」과 같은 짝. 제품에서는 위젯 스크립트가 여닫기 · 표시 글자를 맡고,
-// 여기 스토리는 같은 일을 하는 짧은 스크립트로 눌러 볼 수 있게 함
+// Figma UI Kit 「Option」 · 「Option group」과 같은 짝. 여닫기 · 표시 글자는 js/multiselect.js(TD-101 10/19 — 이전 버전 화면 스크립트에서 화면 동작만 옮김)
+// 「고른 값 줄여 보기」 카드는 그 스크립트로 바꾼 것, 나머지 카드는 같은 마크업을 짧은 스크립트(wire)로 눌러 볼 수 있게 함
 import { matrix } from './_matrix.js';
 import { enablePseudo } from './_pseudo.js';
 import { doDont } from './_dodont.js';
@@ -60,9 +60,19 @@ export default {
 };
 
 // ── 예시 ──
+const SRC_SELECT = '<label class="search-label" for="state">작업현황</label>\n<select class="checkSelect" id="state" multiple data-searchBox="true">\n' +
+  STATUS.map((t, i) => '  <option' + (i < 3 ? ' selected' : '') + '>' + t + '</option>').join('\n') + '\n</select>';
 export const 기본 = {
-  parameters: { docs: { source: { code: box({ picked: ['작업 중', '검토 중', '승인'] }) } } },
-  render: () => live(box({ picked: ['작업 중', '검토 중', '승인'] }), 40),
+  parameters: { docs: { source: { code: '<!-- 불러오기만 하면 select.checkSelect[multiple] 이 모두 바뀝니다. 목록 위 검색 칸 = data-searchBox="true" -->\n<script src="js/multiselect.js"></script>\n\n' +
+    SRC_SELECT + '\n\n<!-- 바뀐 뒤(스크립트가 그림) -->\n' + box({ picked: ['작업 중', '검토 중', '승인'] }) } } },
+  render: () => {
+    const el = document.createElement('div');
+    el.style.cssText = 'max-width:240px;min-height:40px';
+    const [lab, ...rest] = SRC_SELECT.replace('id="state"', 'id="ms-live"').replace('for="state"', 'for="ms-live"').split('\n');
+    el.innerHTML = '<div class="form-grid-2" style="grid-template-columns:1fr"><div class="ff-field">' + lab + '<div class="td">' + rest.join('') + '</div></div></div>';
+    setTimeout(() => { const sel = el.querySelector('#ms-live'); if (sel && window.buildMultiSelect) window.buildMultiSelect(sel); }, 0);
+    return el;
+  },
 };
 export const 펼친_모습 = {
   parameters: { docs: { source: { code: box({ picked: ['작업 중'], open: true }) } } },

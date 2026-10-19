@@ -15,7 +15,10 @@ export const LOAD = [
   '<link rel="stylesheet" href="css/brands/default.css">   <!-- 기본 브랜드. 다른 브랜드는 css/brands/{이름}.css + html 클래스 -->',
   '<link rel="stylesheet" href="css/globals.css">',
   '<link rel="stylesheet" href="css/components.css">',
-  '<script src="js/datepicker.js"></script>   <!-- 날짜 선택 사용 시 -->',
+  '<!-- JS는 쓰는 컴포넌트 것만 -->',
+  '<script src="js/select.js"></script>        <!-- 선택(select) 목록을 같은 모양으로 -->',
+  '<script src="js/multiselect.js"></script>   <!-- 다중 선택 사용 시 -->',
+  '<script src="js/datepicker.js"></script>    <!-- 날짜 선택 사용 시 -->',
   '',
   '<!-- 마크업에 컴포넌트 클래스를 적용합니다 -->',
   '<button type="button" class="btn btn--primary btn--filled">저장</button>',
@@ -52,7 +55,7 @@ export const LOAD = [
 <table className="ds-table">
 <thead><tr><th>단계</th><th>할 일</th></tr></thead>
 <tbody>
-<tr><td><b>1. 불러오기</b><span className="ds-muted">필수</span></td><td>공통 레이아웃에서 기존 전역 CSS를 빼고, CSS 네 파일을 아래 코드의 순서(토큰 → 브랜드 → 전역 → 컴포넌트)로 불러옵니다. 글꼴(Pretendard) 파일은 저장소에 포함되어 있지 않습니다. 경로가 맞지 않으면 시스템 글꼴로 표시되므로 <code>globals.css</code>의 <code>@font-face</code> 경로를 화면 폴더 구조에 맞춥니다.</td></tr>
+<tr><td><b>1. 불러오기</b><span className="ds-muted">필수</span></td><td>공통 레이아웃에서 기존 전역 CSS를 빼고, CSS 네 파일을 아래 코드의 순서(토큰 → 브랜드 → 전역 → 컴포넌트)로 불러옵니다. 글꼴(Pretendard) 파일은 저장소에 포함되어 있지 않습니다. 경로가 맞지 않으면 시스템 글꼴로 표시되므로 <code>globals.css</code>의 <code>@font-face</code> 경로를 화면 폴더 구조에 맞춥니다. JS는 쓰는 컴포넌트 것만 불러옵니다 — 선택 목록 <code>select.js</code> · 다중 선택 <code>multiselect.js</code> · 날짜 선택 <code>datepicker.js</code>.</td></tr>
 <tr><td><b>2. 클래스 적용</b><span className="ds-muted">필수</span></td><td>컴포넌트 문서 예시 카드의 「코드 보기」 마크업을 그대로 사용합니다. 상태는 클래스가 아닌 HTML 속성으로 표현합니다 — <code>disabled</code> · <code>readonly</code> · <code>aria-invalid="true"</code> · <code>aria-expanded</code> · <code>aria-pressed</code>.</td></tr>
 <tr><td><b>3. 브랜드 · 화면 모드</b><span className="ds-muted">선택 — 적용하지 않으면 Default · 라이트</span></td><td>브랜드는 브랜드 파일(<code>{'css/brands/*.css'}</code>)과 <code>{'<html class="theme-*">'}</code>를 함께, 다크 모드는 <code>{'<body class="dark-mode">'}</code>로 적용합니다. 화면에 CSS를 추가할 때는 색상에 시맨틱 토큰(<code>--color-*</code>)만 사용하고, 원천 색(<code>--neutral-N</code> · <code>--brand-N</code>)이나 색상 값을 직접 사용하지 않습니다.</td></tr>
 </tbody>
@@ -72,12 +75,13 @@ export const LOAD = [
 <table className="ds-table ds-after">
 <thead><tr><th>불러오기만 해도 바뀌는 것</th><th>이전 버전과 같은 이름으로 적용되는 것</th><th>새 클래스로 바꿔야 하는 것</th></tr></thead>
 <tbody>
-<tr><td>글꼴 · 글자색 · 제목(<code>h1</code>~<code>h6</code>) · 입력칸 높이(<code>input</code> · <code>select</code>) · 체크박스 색</td><td>목록 표 <code>.table_list</code> · 등록 창 섹션 <code>.pro_table</code> · 다중 선택 <code>.checkSelect</code> · 첨부 <code>.resumable</code></td><td>버튼 <code>{'.btn_*'}</code> → <code>{'.btn--*'}</code> · 입력칸 → <code>.input</code> · <code>.select</code> · <code>.textarea</code> · 체크박스 · 라디오 → <code>.checkbox</code> · <code>.radio</code></td></tr>
+<tr><td>글꼴 · 글자색 · 제목(<code>h1</code>~<code>h6</code>) · 입력칸 높이(<code>input</code> · <code>select</code>) · 체크박스 색 · <code>select.js</code>를 함께 불러오면 화면의 모든 선택 목록</td><td>목록 표 <code>.table_list</code> · 등록 창 섹션 <code>.pro_table</code> · 다중 선택 <code>.checkSelect</code> · 첨부 <code>.resumable</code></td><td>버튼 <code>{'.btn_*'}</code> → <code>{'.btn--*'}</code> · 입력칸 → <code>.input</code> · <code>.select</code> · <code>.textarea</code> · 체크박스 · 라디오 → <code>.checkbox</code> · <code>.radio</code></td></tr>
 </tbody>
 </table>
 <dl className="ds-dl ds-after">
 <div><dt>적용 범위</dt><dd>태그 기본값까지 화면 전체에 적용됩니다.</dd></div>
 <div><dt>브랜드 · 모드</dt><dd>페이지 단위로 적용됩니다(<code>html</code> · <code>body</code> 클래스). 화면 일부만 다른 브랜드로 표시할 수 없습니다.</dd></div>
+<div><dt>포함하지 않는 JS</dt><dd>첨부(<code>.resumable</code>)의 파일 올리기, 다중 선택의 사람 검색(서버에 물어 옵션 채우기), 목록 그리드 라이브러리는 서버 · 라이브러리와 묶여 있어 각 시스템이 맡습니다. 디자인 시스템은 그 자리의 모양(CSS)만 제공합니다.</dd></div>
 <div><dt>함께 쓰지 않는 것</dt><dd><code>.btn</code> · <code>.card</code> · <code>.alert</code>처럼 같은 클래스 이름을 쓰는 CSS 라이브러리와 함께 쓰지 않습니다. 이름이 겹쳐 스타일이 섞입니다.</dd></div>
 </dl>
 </Section>

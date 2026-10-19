@@ -3521,6 +3521,101 @@ body.dark-mode .checkSelect .search-text {
 .checkSelect .option:has(input[type="checkbox"]:disabled) { color: var(--color-text-disabled); cursor: not-allowed; }
 .checkSelect .option:has(input[type="checkbox"]:disabled):hover { background-color: transparent; }
 
+/* ── 선택 목록 .ui-select (js/select.js, TD-101 10/19) ──
+ * 단일 select 를 화면 전체에서 같은 목록으로 바꾸는 위젯(브라우저 · 운영체제마다 다른 열린 목록을 통일). 이름은 이전 버전과 같음
+ * 닫힌 상자 = .select 와 같은 토큰 · 같은 화살표 색, 열린 목록 = 다중 선택(.checkSelect) 목록과 같은 줄 높이 · 바탕
+ * 하나만 고르는 목록이라 고른 항목은 오른쪽 ✓(Figma Option Type=Text) — 다중 선택의 왼쪽 체크박스와 구분 (DS-ADR-022)
+ * 상태는 스크립트가 붙이는 속성 · 클래스: 열림 .is-open + aria-expanded · 지금 항목 .is-active(aria-activedescendant) · 고른 항목 .is-selected(aria-selected)
+ *   오류 aria-invalid · 막힘 aria-disabled 는 원래 select 의 것을 옮겨 붙임 */
+.ui-select { position: relative; display: inline-block; vertical-align: middle; width: 100%; }
+:is(.leftbt, .rightbt) > .ui-select { width: auto; }   /* 머리줄(한 쪽 개수 등)은 글자 폭만 */
+.ui-select > select.ui-select__native { display: none; }   /* 값 · 이름 · 폼 제출은 숨은 select 가 그대로 맡음 */
+.ui-select__trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-4);
+    width: 100%;
+    min-width: 64px;
+    height: var(--size-input);
+    padding: 0 var(--spacing-8);
+    box-sizing: border-box;
+    border: 1px solid var(--color-border-input);
+    border-radius: var(--radius-input);
+    background-color: var(--color-bg-input);
+    color: var(--color-text-base);
+    font-family: var(--font-family-base);
+    font-size: var(--body-sm);
+    cursor: pointer;
+    transition: border-color var(--duration-fast), box-shadow var(--duration-fast);
+}
+.ui-select__value { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ui-select__value.is-placeholder { color: var(--color-text-muted); }
+.ui-select__chevron { display: inline-flex; flex: none; color: var(--color-icon-interactive-secondary); transition: transform var(--duration-fast); }   /* .select 화살표와 같은 색 */
+.ui-select__chevron svg { width: 16px; height: 16px; }
+.ui-select__trigger:hover { border-color: var(--color-border-input-hover); }
+.ui-select__trigger:focus,
+.ui-select__trigger.is-open { outline: none; border-color: var(--color-border-focus); box-shadow: 0 0 0 3px var(--color-focus-ring); }   /* .select:focus 와 같음 */
+.ui-select__trigger.is-open .ui-select__chevron { transform: rotate(180deg); }
+.ui-select__trigger[aria-invalid="true"] { border-color: var(--color-border-danger); }
+.ui-select__trigger[aria-disabled="true"] { background-color: var(--color-bg-disabled); border-color: var(--color-border-disabled); color: var(--color-text-disabled); cursor: not-allowed; box-shadow: none; }
+.ui-select__trigger[aria-disabled="true"] .ui-select__chevron { color: var(--color-icon-disabled); }
+/* 열린 목록 — 열 때 body 로 옮겨 fixed 로 띄움(스크립트가 top · left 를 씀). 문서 견본처럼 상자 아래에 그대로 둘 때는 absolute */
+.ui-select__menu {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    z-index: 1000;
+    display: none;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 100%;
+    max-height: 240px;
+    padding: var(--spacing-4);
+    box-sizing: border-box;
+    overflow-y: auto;
+    background-color: var(--color-bg-base);
+    border: 1px solid var(--color-border-base);
+    border-radius: var(--radius-popover);
+    box-shadow: var(--shadow-popover);
+    font-family: var(--font-family-base);
+}
+.ui-select__menu.show { display: flex; }
+.ui-select__option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-8);
+    height: 28px;
+    flex-shrink: 0;
+    padding: 0 var(--spacing-8);
+    border-radius: var(--radius-item);
+    font-size: var(--body-sm);
+    color: var(--color-text-base);
+    white-space: nowrap;
+    cursor: pointer;
+}
+.ui-select__option:hover,
+.ui-select__option.is-active { background-color: var(--color-bg-brand-subtle); }
+.ui-select__option.is-active { box-shadow: inset 0 0 0 1px var(--color-border-focus); }   /* 키보드로 옮긴 지금 항목 — 포커스는 상자에 있고 목록 안 위치만 표시 */
+.ui-select__option.is-selected { background-color: var(--color-bg-brand-subtle); font-weight: var(--font-weight-semibold); }
+.ui-select__option.is-selected::after {
+    content: "";
+    flex: none;
+    width: 16px;
+    height: 16px;
+    background-color: var(--color-icon-brand);
+    -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'/></svg>") center / contain no-repeat;
+            mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'/></svg>") center / contain no-repeat;
+}
+.ui-select__option[aria-disabled="true"] { color: var(--color-text-disabled); cursor: not-allowed; }
+.ui-select__option[aria-disabled="true"]:hover { background-color: transparent; }
+@media (forced-colors: active) {
+    .ui-select__menu { border-color: CanvasText; }
+    .ui-select__option.is-active { outline: 2px solid Highlight; outline-offset: -2px; }
+    .ui-select__option.is-selected::after { background-color: CanvasText; }
+}
+
 /* ── onKeySearch: 번호 입력 + 보조(부분일치) 가로 정렬 ──
  * div 래퍼에만 flex (input 요소엔 flex 금지). 자동완성 드롭다운은 .hide 로 토글. */
 div.onKeySearch,
