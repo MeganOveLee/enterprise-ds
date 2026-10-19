@@ -160,7 +160,7 @@
   --radius-item:     var(--radius-sm);   /* 목록 · 메뉴 안의 행 — 카드 목록 · 파일 행 · 드롭다운 항목 */
   --radius-card:     var(--radius-lg);   /* 카드 · 스켈레톤 카드 */
   --radius-panel:    var(--radius-md);   /* 화면 안 영역 박스 — 그리드 목록 · 검색 폼 · 왼쪽 패널 · 첨부 영역 */
-  --radius-popover:  var(--radius-md);   /* 떠 있는 층 — 달력 · 드롭다운 · 다중 선택 펼침 · GNB 메뉴 */
+  --radius-popover:  var(--radius-md);   /* 떠 있는 층 — 달력 · 드롭다운 · GNB 메뉴 (다중 선택 펼침은 표시 상자에 붙어 아래 모서리만 radius-input) */
   --radius-skeleton: var(--radius-sm);   /* 스켈레톤 조각(줄 · 제목 · 블록) */
 
   --spacing-0:  0;
@@ -179,7 +179,7 @@
   --size-btn:      28px;   /* 버튼 기본 (인풋 매칭) · 아이콘 버튼 가로세로. 옛 md(32px)는 실사용 없어 삭제 */
   --size-input-lg: 44px;   /* 큰 칸 — 로그인처럼 칸이 몇 개뿐인 단독 폼 (제안 E). 브랜드가 바꾸지 않음(스태틱) */
   --size-btn-lg:   44px;   /* 큰 버튼 — 큰 칸과 같은 높이의 주 동작 */
-  --size-btn-sm:   26px;   /* 작은 버튼 = Figma 「Small Button」 — 섹션 접기 · 첨부 삭제. 최소 누름 영역 24 이상 (DS-ADR-020) */
+  --size-btn-sm:   26px;   /* 작은 버튼 = Figma 「Small Button」 — .btn--sm · 첨부 삭제. 최소 누름 영역 24 이상 (DS-ADR-020) */
   --size-sidebar-toggle: 0.4375rem;                                     /* LNB 오른쪽 리사이즈 손잡이 폭 */
   --size-sidebar:        calc(13.875rem - var(--size-sidebar-toggle));  /* LNB 폭 = 사이드 영역 222px − 손잡이.
                             구 Layer 5 --sidebar-width/-toggle-width 를 치수 층으로 올림 — 이름만 있고 아무도 안 쓰고
@@ -269,7 +269,7 @@
   --color-border-disabled: var(--neutral-300);
   --color-border-input:       var(--neutral-500);   /* 입력칸·체크박스·라디오 테두리. 흰 바탕 4.77 — 비텍스트 대비 3:1 (WCAG 1.4.11). base(300)는 1.48이라 분리 (DS-ADR-013) */
   --color-border-input-hover: var(--neutral-700);   /* 입력칸 hover — 기본보다 한 단계 진하게 */
-  --color-border-brand:   var(--brand-500);        /* 브랜드 보더. 이름값 일치시킴 — 옛 고객사 색 잔재였음 */
+  --color-border-brand:   var(--brand-500);        /* 브랜드 보더. 이름과 값(brand-500)을 맞춤 */
   --color-border-focus:   var(--brand-500);   /* 포커스 링 = 브랜드색. 구 blue-600 이라 인풋 포커스(초록)와 어긋났음 → 통일, 팔레트 교체 시 같이 따라옴 */
 
   --color-border-danger:  var(--red-700);
@@ -317,7 +317,7 @@
   --color-bg-lnb-active:        var(--brand-100);
   --color-text-lnb-active:      var(--brand-600);       /* 활성 메뉴 글자 — 600(바탕 100 위 Default 4.92 · Fashion 5.70 · Precision 5.74, 500은 Default 4.08 미달, 10/13). 다크는 흰색 — 아이콘(흰 마스크)과 톤을 맞춰야 함 */
 
-  /* 버튼 — 등록 Create primary (.btn_blue)
+  /* 버튼 — primary(등록 · 저장)
    * primary = 그 영역의 마무리 동작 1개 = 브랜드색. 동작 종류(CRUD)로 색을 정하지 않는다 (DS-ADR-005).
    * Default 에서 brand-600 = blue-700 (#0457CB) 이라 값 그대로 */
   --color-bg-btn-primary:           var(--brand-600);
@@ -334,7 +334,7 @@
   --color-text-interactive-primary-pressed:   var(--brand-900);
   --color-border-interactive-primary-hover:   var(--brand-700);
   --color-border-interactive-primary-pressed: var(--brand-900);
-  /* secondary = 보조 동작(조회·검색·선택·취소·닫기·초기화). 회색 */
+  /* secondary = 보조 동작(조회·선택·취소·닫기·초기화). 회색. 검색 조건 영역 [검색]은 primary (DS-ADR-009) */
   --color-bg-interactive-secondary:           var(--neutral-100);
   --color-bg-interactive-secondary-hover:     var(--neutral-200);
   --color-bg-interactive-secondary-pressed:   var(--neutral-300);
@@ -430,7 +430,7 @@ body {
   --def-text-color:    var(--color-text-base);
   --grid-border-color: var(--color-border-base);
 
-  /* AUIGrid 테마(AUIGrid_custom_style.css)가 참조하는 이름 4개.
+  /* AUIGrid 테마(AUIGrid_custom_style.css)가 참조하는 이름 3개.
      그리드 벤더 클래스와 물려 있어 이름 유지, 값만 이전 버전 시멘틱 참조. */
   /* AUIGrid 셀 하이라이트 배경. 벤더가 헤더·필터·선택셀에 칠하는 자기 배경을 끄는 용도라 기본 transparent.
      다크는 AUIGrid_custom_style.css 에서 #2E2E38, BOM편집기만 overrides 에서 연파랑으로 켬.
@@ -493,7 +493,7 @@ body.dark-mode {
 
   /* Foreground */
   --color-text-base:           var(--neutral-200);   /* components.css:2333 에 !important 로 중복돼 있던 값 흡수 (구 neutral-100) */
-  --color-text-muted:          var(--neutral-400);   /* 구 text-subtle 다크값. 구 muted(300)는 subtle(400)과 대비 1.01로 뭉쳤음 (DS-ADR-008) */
+  --color-text-muted:          var(--neutral-400);   /* 구 text-subtle 다크값. 구 muted(300)와 subtle(400)은 한 단계 차이라 구분되지 않았음 — 이전 버전 다크에서는 대비 1.01 (DS-ADR-001 · 008) */
   --color-text-disabled:       var(--neutral-600);
   --color-text-inverse:        var(--neutral-900);
   --color-text-label:          var(--brand-300);   /* 다크는 brand-800(잉크)이 배경에 묻혀서 밝은 단계로. 400은 카드 위 3.5 → 300 (5.5, DS-ADR-014) */
@@ -561,7 +561,7 @@ body.dark-mode {
   --color-text-lnb-active:      var(--brand-50);   /* 딥 브랜드 면 위 글자 = --color-text-on-panel 과 같은 처지라 같은 단계로.
                                                       흰색으로 두면 이 토큰만 브랜드 계열을 벗어남 */
 
-  /* 버튼 — 등록 Create (.btn_blue) */
+  /* 버튼 — primary(등록 · 저장) */
   --color-bg-btn-primary:           color-mix(in srgb, var(--brand-500) 35%, transparent);   /* 구 rgba(21,93,252,.35) 하드코딩 → 브랜드 추종 (DS-ADR-005) */
   --color-text-btn-primary:           var(--white);
   --color-border-btn-primary:       var(--brand-400);   /* 다크 브랜드 = 400 (다크 머리말 규칙). 500 은 고객사 A 그린에서 바탕에 묻힘 */

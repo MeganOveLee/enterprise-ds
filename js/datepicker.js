@@ -2,7 +2,7 @@
  * datepicker.js - 자체 캘린더 컴포넌트
  * 사용:
  *   .ui-datepicker__input 와 .ui-datepicker__icon 에 자동 attach
- *   외부 클릭 -> 닫힘 / Cancel -> 닫힘 / Apply -> input 값 채우고 닫힘
+ *   날짜를 고르면 입력칸에 채우고 바로 닫힘 / 바깥 누름 · Esc -> 닫힘 (확인 · 취소 버튼 없음)
  * calendar / month / year 디자인 반영.
  *
  * Enterprise DS v1.0 (2026-10-06, DS-ADR-016) — 이전 버전에서 직접 만든 달력에 접근성 · 키보드를 덧붙임
@@ -53,7 +53,7 @@
         this.viewYear = initial ? initial.getFullYear() : this.today.getFullYear();
         this.viewMonth = initial ? initial.getMonth() : this.today.getMonth();
         this.selectedDate = initial;
-        this.tempSelected = initial;   /* Apply 누르기 전 임시 */
+        this.tempSelected = initial;   /* 달력이 고른 날로 표시하는 값 */
         this.hasTime = input.dataset.hasTime === 'true';   /* datetime-local 변환분만 시간 UI */
         var tp = parseTimeParts(input.value);
         this.hour = tp.h; this.minute = tp.min;   /* 24h 내부 저장 */

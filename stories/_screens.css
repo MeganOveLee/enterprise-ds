@@ -140,12 +140,12 @@
 .scr-progress__main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
 .scr-progress__meta { display: flex; align-items: baseline; gap: var(--spacing-12); font-size: var(--body-sm); color: var(--color-text-muted); }   /* 숫자 = 제목 바로 옆(10/14 결정, 구: 오른쪽 끝) */
 .scr-progress__meta b { color: var(--color-text-base); font-size: var(--body-md); font-weight: var(--font-weight-semibold); }
-.scr-progress__meta em { font-style: normal; color: var(--color-text-danger); font-weight: var(--font-weight-semibold); }
+.scr-progress__meta em { font-style: normal; color: var(--color-text-danger-bold); font-weight: var(--font-weight-semibold); }
 .scr-kv { display: flex; gap: var(--spacing-24); margin: 0; }
 .scr-kv div { display: flex; flex-direction: column; gap: 2px; }
 .scr-kv dt { font-size: var(--body-sm); color: var(--color-text-muted); }
 .scr-kv dd { margin: 0; font-size: var(--heading-sm); font-weight: var(--font-weight-semibold); color: var(--color-text-base); font-variant-numeric: tabular-nums; }
-.scr-kv dd.is-danger { color: var(--color-text-danger); }
+.scr-kv dd.is-danger { color: var(--color-text-danger-bold); }   /* bg-subtle 위 4.5 이상 — danger(600)는 4.37 */
 .scr-phases { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-8) var(--spacing-32); }
 .scr-phases li { display: grid; grid-template-columns: 64px 1fr 96px 52px; align-items: center; gap: var(--spacing-12); font-size: var(--body-sm); }
 .scr-phases__name { font-weight: var(--font-weight-medium); color: var(--color-text-base); }

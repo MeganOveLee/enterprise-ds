@@ -1,4 +1,4 @@
-// Blocks(조합)/BomCompare — 문서 화면은 BomCompare.mdx. 두 BOM을 나란히 놓고 같은 품목끼리 줄을 맞춰 차이를 보이는 화면 (TD-103 ①)
+// Blocks/BOM Compare — 문서 화면은 BomCompare.mdx. 두 BOM을 나란히 놓고 같은 품목끼리 줄을 맞춰 차이를 보이는 화면
 // 근거 = 이전 버전 jsp/part/compareBom.jsp(= bom/compareBom.jsp) — 부품 관리 메뉴 › BOM 조회 › BOM 비교로 여는 본문 화면(새 창 아님)
 //   열마다 조건(BOM 유형 · 품목 번호 + 버전 · Baseline) + 표, 왼쪽 열에 비교 옵션(단일 · 멀티 레벨), 오른쪽 열에 조회 옵션(Identical · Unassigned · Similar)
 //   두 표는 같은 줄 = 같은 품목(한쪽에 없으면 빈 줄), 세로 스크롤을 서로 맞춤. 표 안 찾기(품목 번호) · 필터 초기화
@@ -29,8 +29,10 @@ const checks = (label, opts, on) => '<div class="radio-group" role="group" aria-
 const STATE = { identical: ['같음', ''], similar: ['수량 다름', 'similar'], unassigned: ['한쪽에만 있음', 'unassigned'] };
 const NAMES = ['같음', '수량 다름', '한쪽에만 있음'];
 const MEANS = ['품목 번호 · 버전 · 수량이 같음', '같은 품목 번호 · 버전, 수량이 다름', '다른 쪽에 같은 품목 번호 · 버전이 없음'];
+// 범례 — 같음 · 다름(수량 다름 · 한쪽에만 있음). 다른 줄은 모두 같은 빨간 표시, 종류는 「비교」 칸 글자로
 const legend = () => '<ul class="compare-legend" aria-label="비교 결과 범례">' +
-  ['', 'similar', 'unassigned'].map((k, i) => '<li title="' + MEANS[i] + '"><span class="compare-legend__swatch' + (k ? ' compare-legend__swatch--' + k : '') + '"></span>' + NAMES[i] + '</li>').join('') + '</ul>';
+  '<li title="' + MEANS[0] + '"><span class="compare-legend__swatch"></span>같음</li>' +
+  '<li title="' + MEANS[1] + ' · ' + MEANS[2] + '"><span class="compare-legend__swatch compare-legend__swatch--diff"></span>다름(수량 다름 · 한쪽에만 있음)</li></ul>';
 
 // 가상 데이터 — 기준 B.2 와 비교 대상 B.3. 줄 = 한 쌍(같은 품목), 한쪽에 없으면 null
 const P = (no, name, ver, qty) => [no, name, ver, qty, 'EA'];
@@ -49,7 +51,7 @@ const HEAD = '<thead><tr><th>No.</th><th>품목 번호</th><th>품목 명</th><t
 const row = (r, state, i) => {
   const [name, k] = STATE[state];
   return '<tr' + (k ? ' class="compare-row--' + k + '"' : '') + '><td>' + (i + 1) + '</td>' +
-    (r ? '<td><a href="#" class="grid-custom-rows-link">' + r[0] + '</a></td><td class="is-left">' + r[1] + '</td><td>' + r[2] + '</td><td>' + r[3] + '</td><td>' + r[4] + '</td>'
+    (r ? '<td><a href="#" class="grid-custom-rows-link">' + r[0] + '</a></td><td class="is-left">' + r[1] + '</td><td>' + r[2] + '</td><td' + (state === 'similar' ? ' class="compare-qty"' : '') + '>' + r[3] + '</td><td>' + r[4] + '</td>'
        : '<td></td><td></td><td></td><td></td><td></td>') +
     '<td class="compare-cell">' + name + '</td></tr>';
 };
@@ -96,7 +98,7 @@ const menu = () =>
 
 const W = 1240, H = 600;
 export default {
-  title: 'Blocks/BomCompare',
+  title: 'Blocks/BOM Compare',
   tags: ['!dev', '!autodocs'],   // 메뉴에는 문서 한 장만, 문서는 BomCompare.mdx
   parameters: { controls: { disable: true }, docs: { source: { language: 'html' } } },
 };
@@ -117,8 +119,7 @@ export const 차이만_보기 = {
 
 // ── 언제 쓰고 쓰지 말지 (Do · Don't) — 미리보기만. 작은 표 3줄 ──
 const mini = (rows, { colorOnly = false, mismatch = false } = {}) => {
-  const lg = '<ul class="compare-legend" style="margin-bottom:8px"><li><span class="compare-legend__swatch compare-legend__swatch--similar"></span>수량 다름</li>' +
-    '<li><span class="compare-legend__swatch compare-legend__swatch--unassigned"></span>한쪽에만 있음</li></ul>';
+  const lg = '<div style="margin-bottom:8px">' + legend() + '</div>';
   const tr = ([no, q, s]) => {
     const k = STATE[s][1];
     const cls = mismatch && s === 'unassigned' ? 'compare-row--danger-demo' : k ? 'compare-row--' + k : '';
@@ -133,11 +134,8 @@ export const 사용_지침 = {
   render: () => {
     const el = document.createElement('div');
     el.innerHTML = doDont([
-      { title: '범례와 줄 색은 같은 토큰으로',
-        do: [mini(MINI), '범례 견본과 줄 바탕이 같은 토큰입니다. 범례만 보고 줄을 찾을 수 있습니다.'],
-        dont: [mini(MINI, { mismatch: true }), '범례는 노랑인데 줄은 빨강이면 어느 결과인지 알 수 없습니다.'] },
       { title: '색만으로 알리지 않기',
-        do: [mini(MINI), '「비교」 칸에 결과를 글자로 둡니다. 색을 구분하기 어려워도, 흑백으로 인쇄해도 결과가 보입니다.'],
+        do: [mini(MINI), '다른 행은 빨간 바탕 · 테두리와 함께 「비교」 열에 결과를 글자로 둡니다. 흑백으로 인쇄해도 결과가 보입니다.'],
         dont: [mini(MINI, { colorOnly: true }), '줄 색만 있으면 색을 구분하기 어려운 사람과 흑백 인쇄에서 결과가 사라집니다.'] },
     ]);
     // Don't 견본 — 범례와 다른 색(빨강) 줄. 문서 견본 전용이라 DS 클래스가 아님

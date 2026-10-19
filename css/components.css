@@ -1494,8 +1494,8 @@ body.dark-mode .pop .contents .pro_table:not(:has(.form-grid-2)):not(.seach_arm:
     background: var(--color-bg-danger-subtle) !important;
 }
 /* === 인풋 상태 디자인 ===
- * 입력 인풋(편집 가능) = 채움 #F2F4F7 + 실선 + hover/focus 반응 → '여기 입력'
- * 읽기전용 고정값(.ff-readonly) = 점선 보더 + 흐린 글씨 + 비활성 톤 → '잠김(편집 불가)' */
+ * 입력칸(편집 가능) = 흰 바탕 + border-input + hover/focus 반응 → '여기 입력'
+ * 읽기 전용 값(.ff-readonly) = bg-readonly 바탕 + border-base 실선 + text-muted, hover 반응 없음 → '편집 불가' (DS-ADR-017) */
 .form-grid-2 .ff-readonly {
     display: flex; align-items: center;
     width: 100%; min-height: var(--size-input); box-sizing: border-box;
@@ -1537,6 +1537,7 @@ body.dark-mode .pop .contents .pro_table:not(:has(.form-grid-2)):not(.seach_arm:
 .resumable:not(.center) .resumable-label { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: var(--spacing-4); font-size: var(--body-sm); }
 .resumable:not(.center) .resumable-label a { font-size: var(--body-sm); }
 .resumable:not(.center) .resumable-label__name { font-size: var(--body-sm); font-weight: var(--font-weight-semibold); color: var(--color-text-brand); }
+.resumable:not(.center) .resumable-help { font-size: var(--body-sm); color: var(--color-text-muted); }   /* 바 왼쪽 안내(개수 · 크기 · 형식 제한) — 보조 문구 */
 /* 파일선택=.btn .btn--neutral .btn--outline, 전체삭제=.btn .btn--error .btn--transparent (마크업에 이전 버전 버튼 직접).
  * 전체삭제는 파일 있을 때만 노출 */
 .resumable:not(.center) [data-role="clear-all"] { display: none; }
@@ -2155,7 +2156,7 @@ body.dark-mode .select {
  * .btn + 중요도 .btn--{primary|secondary|destructive} + 모양 .btn--{filled|outlined|transparent}
  * 피그마 Button 의 Type × Style 과 같은 말. 색은 중요도로 정한다(CRUD 아님, DS-ADR-005)
  *   primary     = 그 영역의 핵심 동작 1개(등록·저장·확인) — 브랜드
- *   secondary   = 보조 동작(조회·검색·선택 / 취소·닫기·초기화) — 회색
+ *   secondary   = 보조 동작(조회·선택 / 취소·닫기·초기화) — 회색. 검색 조건 영역 [검색]은 primary
  *   destructive = 삭제 등 되돌릴 수 없는 동작 — 빨강
  * 상태: :hover · :active(pressed) · :focus-visible · :disabled/[aria-disabled] · .is-loading
  * 옛 이름(.btn_blue · _green · _gray · _red · _excel 등)은 v1.0에 없다 — 대응표는 DS-ADR-009
@@ -2701,8 +2702,13 @@ body.dark-mode .seach_arm:has(.section-toggle) + :is(.pro_table, .table_list, .r
 .seach_arm:has(.section-toggle) + :is(.pro_table, .table_list, .resumable) .field-error-msg { color: var(--color-text-danger-bold); }
 body.dark-mode .seach_arm:has(.section-toggle) .section-toggle[aria-expanded="true"]::before { border-color: var(--color-icon-muted); }
 .contents > .seach_arm:has(.section-toggle):first-child, .pop .contents > .seach_arm:has(.section-toggle):first-child { margin-top: 0; }   /* 첫 섹션은 위 여백 없이 */
-/* 섹션 상자 안 표 — 흰 표 + 테두리는 표(.list)가, 상자 바탕은 섹션이 맡는다 */
-.seach_arm:has(.section-toggle) + .table_list { overflow: visible; }
+/* 섹션 상자 안 표 — 흰 표 + 테두리는 표(.list)가, 상자 바탕은 섹션이 맡는다. 창 내용은 스크롤되므로 표는 줄지 않고 행 높이만큼 (flex: none) */
+.seach_arm:has(.section-toggle) + .table_list { flex: none; overflow: visible; }
+/* 섹션 상자(접기 없음) .section-box — 접는 섹션과 같은 상자(bg-muted · 테두리 · radius-panel)에 헤더(.seach_arm) + 내용. 결재선 역할 상자 · Template 목록처럼 접지 않는 묶음 (Figma 섹션 상자 toggle 없음과 짝) */
+.section-box { display: flex; flex-direction: column; min-width: 0; padding: 0 var(--spacing-16) var(--spacing-16); background: var(--color-bg-muted); border: 1px solid var(--color-border-base); border-radius: var(--radius-panel); }
+.section-box > .seach_arm, .pop .section-box > .seach_arm { margin: 0; padding: var(--spacing-12) 0; min-height: 52px; box-sizing: border-box; background: none; border: 0; }
+.section-box > .seach_arm + .table_list { margin-top: 0; }
+body.dark-mode .section-box { background: var(--color-bg-muted); }
 .seach_arm:has(.section-toggle) + .table_list > .list { background: var(--color-bg-base); border: 1px solid var(--color-border-grid-outer); border-radius: var(--radius-panel); overflow: hidden; }
 /* 제목줄(접기 없음) 바로 아래 표 — 간격 8. .product · .searchLayout 은 이미 flex gap 12 라 빼고 (TD-108: 결과 0건 · 결재선 영역에서 머리와 표가 붙어 있던 것) */
 :not(.product):not(.searchLayout) > .seach_arm:not(:has(.section-toggle)) + .table_list { margin-top: var(--spacing-8); }
@@ -2999,7 +3005,7 @@ body.dark-mode .seach_arm:has(.section-toggle) .section-toggle[aria-expanded="tr
  * ===================================================================== */
 
 /* ── 다크모드 면·글자 토큰은 tokens.css 의 body.dark-mode 한 곳이 단일 출처.
- *   여기 있던 !important 재정의 7줄은 그쪽에서 --carbon-* 팔레트를 참조하도록 흡수 (값 동일).
+ *   여기 있던 !important 재정의 7줄은 그쪽에서 neutral 팔레트(DS-ADR-001)를 참조하도록 흡수 (값 동일).
  *   같은 토큰을 두 파일에서 정의하면 특이도·로드순서에 따라 어느 쪽이 이기는지 안 보임 — 실제로
  *   tokens.css 의 zebra 값이 여기에 막혀 아무 효과가 없었고, 그 사이 그린 캐스트가 남아 있었음. */
 
@@ -4165,20 +4171,25 @@ body.dark-mode .empty-illo { --empty-illo-shadow: rgb(0 0 0 / .2); }
 .ui-compare__find { display: flex; align-items: center; gap: var(--spacing-4); }
 .ui-compare__find > .input { width: 140px; }
 
-/* 비교 결과 줄 — 범례와 표가 같은 토큰. 색만으로 알리지 않게 줄마다 「비교」 칸에 같은 글자를 둠
- *   같음 = 표시 없음 · 수량 다름(.compare-row--similar) = 정보색 · 한쪽에만 있음(.compare-row--unassigned) = 주의색
+/* 비교 결과 줄 — 다른 줄(수량 다름 · 한쪽에만 있음) = 위험 옅은 바탕 + 위험 테두리. 비교 사이트처럼 다른 곳이 한눈에 보이게
+ *   색만으로 알리지 않게 줄마다 「비교」 칸에 결과 글자(수량 다름 · 한쪽에만 있음), 수량이 다른 칸은 진한 위험 글자(.compare-qty)
  *   그리드 위젯을 쓰는 화면은 줄 스타일 함수가 같은 클래스 이름을 돌려주면 됨 */
-.grid-table tbody tr.compare-row--similar td { background: var(--color-bg-info-subtle); }
-.grid-table tbody tr.compare-row--unassigned td { background: var(--color-bg-warning-subtle); }
-/* 칠한 줄 위 링크 — 선택한 줄과 같은 한 단계 진한 글자(다크 주의색 바탕에서 브랜드 글자 대비 부족) */
+.grid-table tbody tr:is(.compare-row--similar, .compare-row--unassigned) td {
+    background: var(--color-bg-danger-subtle);
+    box-shadow: inset 0 1px 0 var(--color-border-danger), inset 0 -1px 0 var(--color-border-danger);
+}
+.grid-table tbody tr:is(.compare-row--similar, .compare-row--unassigned) td:first-child { box-shadow: inset 1px 0 0 var(--color-border-danger), inset 0 1px 0 var(--color-border-danger), inset 0 -1px 0 var(--color-border-danger); }
+.grid-table tbody tr:is(.compare-row--similar, .compare-row--unassigned) td:last-child { box-shadow: inset -1px 0 0 var(--color-border-danger), inset 0 1px 0 var(--color-border-danger), inset 0 -1px 0 var(--color-border-danger); }
+/* 칠한 줄 위 링크 — 한 단계 진한 글자(옅은 위험 바탕 위 대비) */
 .grid-table tr:is(.compare-row--similar, .compare-row--unassigned) .grid-custom-rows-link { color: var(--color-text-interactive-primary-hover); }
 .grid-table .compare-cell { font-size: var(--body-xs); color: var(--color-text-muted); white-space: nowrap; }
-.grid-table tr.compare-row--similar .compare-cell { color: var(--color-text-info-bold); font-weight: var(--font-weight-semibold); }
-.grid-table tr.compare-row--unassigned .compare-cell { color: var(--color-text-warning-bold); font-weight: var(--font-weight-semibold); }
+.grid-table tr:is(.compare-row--similar, .compare-row--unassigned) .compare-cell,
+.grid-table .compare-qty { color: var(--color-text-danger-bold); font-weight: var(--font-weight-semibold); }
 
 /* 범례 — 칸 하나 = 색 견본 + 이름 + 뜻 */
 .compare-legend { display: flex; flex-wrap: wrap; align-items: center; gap: var(--spacing-4) var(--spacing-12); margin: 0; padding: 0; list-style: none; font-size: var(--body-sm); color: var(--color-text-base); }
 .compare-legend > li { display: inline-flex; align-items: center; gap: var(--spacing-4); }
 .compare-legend__swatch { width: 12px; height: 12px; flex-shrink: 0; border: 1px solid var(--color-border-strong); border-radius: var(--radius-sm); background: var(--color-bg-base); }
-.compare-legend__swatch--similar { background: var(--color-bg-info-subtle); border-color: var(--color-border-info); }
-.compare-legend__swatch--unassigned { background: var(--color-bg-warning-subtle); border-color: var(--color-border-warning); }
+.compare-legend__swatch--diff,
+.compare-legend__swatch--similar,
+.compare-legend__swatch--unassigned { background: var(--color-bg-danger-subtle); border-color: var(--color-border-danger); }

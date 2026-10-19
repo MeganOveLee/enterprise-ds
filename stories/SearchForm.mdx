@@ -6,25 +6,21 @@ import * as S from './SearchForm.stories.js';
 
 <Unstyled>
 <div className="ds-page">
-<PageHead eyebrow="Blocks" title="SearchForm" lead="목록 화면 위의 검색 조건 영역 — 제목줄과 라벨 위 · 필드 아래 짝의 조건 필드입니다." />
-<Section title="예시" en="Examples" desc="조건이 한 행(6열)에 들어가면 모두 보이고, 넘치면 첫 줄만 보이고 나머지는 상세 검색에 넣습니다.">
-<Card of={S.첫_줄_상세_검색} title="첫 줄 + 상세 검색" en="First row + detailed search" desc="조건이 한 줄을 넘을 때. 자주 쓰는 조건을 첫 줄에 두고, 나머지는 [상세 검색 펼치기]로 펼칩니다." />
-<Card of={S.모든_조건} title="모든 조건" en="All conditions" desc="기본보다 조건이 적어 한 줄에 다 들어갈 때. 접을 조건이 없으므로 펼치기 버튼을 두지 않습니다." />
-<Card of={S.펼친_채_시작} title="펼친 채 시작" en="Starts expanded" desc="기본보다 상세 조건을 자주 쓸 때. 처음부터 펼쳐 두고, 버튼은 「상세 검색 접기」로 시작합니다." />
-</Section>
-<Section title="구성" en="Spec">
-<table className="ds-table ds-props">
-<thead><tr><th>구분</th><th>클래스 · 속성</th><th>설명</th></tr></thead>
+<PageHead eyebrow="Blocks" title="Search Form" lead="목록 화면 위의 검색 조건 영역입니다. 섹션 헤더와, 라벨 위 · 필드 아래 한 쌍의 조건 필드로 이루어집니다." />
+<Section title="예시" en="Examples" desc="한 행에 조건을 최대 6칸 둡니다. 조건이 두 행을 넘으면 첫 행만 보이고 나머지는 상세 검색으로 접습니다.">
+<Card of={S.모두_보기} title="모두 보기" en="All conditions" desc="조건을 모두 한 격자에 둡니다. 접을 조건이 없으므로 펼치기 버튼을 두지 않습니다. 그림의 번호는 아래 표의 이름 · 클래스입니다.">
+<table className="ds-table ds-props anno-list">
+<thead><tr><th>번호</th><th>이름</th><th>클래스</th><th>설명</th></tr></thead>
 <tbody>
-<tr><td><b>제목줄</b></td><td><code>.seach_arm</code> › <code>.leftbt</code> · <code>.rightbt</code></td><td>왼쪽 「검색 조건」, 오른쪽 [검색] → [상세 검색 펼치기] → [검색 조건 초기화] 순서입니다. [검색]만 primary입니다.</td></tr>
-<tr><td><b>펼치기 버튼</b></td><td><code>.btn--expand</code> · <code>.t-open</code> · <code>.t-close</code> · <code>aria-expanded</code> · <code>aria-controls</code></td><td>상세 조건이 있을 때만 둡니다. 펼치면 문구가 「상세 검색 접기」로, 화살표가 위로 바뀝니다. 모양은 <a className="ds-link" href="./?path=/docs/form-button--docs" target="_top">Button</a> 「접고 펴기」.</td></tr>
-<tr><td><b>첫 줄</b></td><td><code>.form-grid-2.form-grid--6</code> · <code>.span-2</code></td><td>6열 한 줄. 기간 · 라디오 묶음은 두 칸.</td></tr>
-<tr><td><b>상세 조건</b></td><td><code>.search-detail</code> · <code>.search-divider</code> · <code>hidden</code></td><td>첫 줄 아래 「상세 검색」 글자 + 회색 1px 선(<code>--color-border-base</code>) 다음에 나머지 조건. 줄 간격은 첫 줄과 같고, 접히면 <code>hidden</code>.</td></tr>
+<tr><td><span className="flow__no">1</span></td><td><b>섹션 헤더</b></td><td><code>.seach_arm</code> › <code>.leftbt</code> · <code>.rightbt</code></td><td>왼쪽 「검색 조건」, 오른쪽 [검색] · [검색 조건 초기화]입니다. [검색]은 primary, [검색 조건 초기화]는 secondary transparent입니다.</td></tr>
+<tr><td><span className="flow__no">2</span></td><td><b>조건 영역</b></td><td><code>.pro_table</code></td><td>흰 바탕 · 테두리 상자입니다.</td></tr>
+<tr><td><span className="flow__no">3</span></td><td><b>조건 격자</b></td><td><code>.form-grid-2.form-grid--6</code></td><td>6열 격자입니다. 한 행에 조건을 최대 6칸 둡니다.</td></tr>
+<tr><td><span className="flow__no">4</span></td><td><b>조건 필드</b></td><td><code>.ff-field</code> › <code>.search-label</code> + <code>.td</code></td><td>라벨 위 · 필드 아래 한 쌍입니다. 입력 필드는 placeholder로 입력할 내용을 안내합니다.</td></tr>
+<tr><td><span className="flow__no">5</span></td><td><b>두 칸 필드</b></td><td><code>.span-2</code></td><td>기간(<code>.ui-datepicker-range</code>) · 라디오 묶음(<code>.radio-group</code>)은 두 칸을 씁니다.</td></tr>
 </tbody>
 </table>
-</Section>
-<Section title="언제 쓰고 쓰지 말지" en="Do · Don't">
-<Card of={S.사용_지침} code={false} />
+</Card>
+<Card of={S.접고_펴기} title="접고 펴기" en="Collapsible" desc={<>자주 쓰는 조건을 첫 행에 두고, 나머지는 [상세 검색 펼치기]로 펼칩니다. 모두 보기에서 달라지는 것 — 섹션 헤더에 펼치기 버튼(<code>.btn--expand</code> · <code>aria-expanded</code> · <code>aria-controls</code>)이 생기고, 나머지 조건은 <code>.search-detail</code> 안에 「상세 검색」 구분선(<code>.search-divider</code>) 다음에 들어갑니다. 접히면 <code>hidden</code>. 버튼 모양은 <a className="ds-link" href="./?path=/docs/form-button--docs" target="_top">Button</a> 「접고 펴기」입니다.</>} />
 </Section>
 </div>
 </Unstyled>

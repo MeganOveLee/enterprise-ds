@@ -25,3 +25,18 @@
 .flow-mark { outline: 2px dashed var(--color-border-brand); outline-offset: 3px; }
 .flow__inner > .main-sub { height: 100%; }             /* 메뉴 패널(높이 100vh)도 틀 높이로 */
 .flow__inner > .main-content { height: 100%; padding-top: var(--spacing-8); padding-bottom: var(--spacing-16); }   /* 본문 영역 한 장 — 위 여백은 상단 바 아래 자리 */
+
+/* 번호 표시 — 예시 그림 위 요소에 data-no 를 붙이면 점선 테두리 + 왼쪽 바깥에 번호 배지(.flow__no 와 같은 모양). 아래 .anno-list 가 번호별 이름 · 클래스
+   배지는 요소 왼쪽 26px 바깥(격자 간격 · 안쪽 여백 자리)에 둔다 — 글자를 가리지 않게. 그림 상자는 왼쪽 여백 32px */
+.anno { padding: 20px 16px 16px 32px; background: var(--color-bg-subtle); }
+.anno [data-no] { position: relative; outline: 1px dashed var(--color-border-brand); outline-offset: 2px; }
+.anno [data-no]::after {
+  content: attr(data-no); position: absolute; top: 0; left: -26px; z-index: 3;
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 20px; height: 20px; border-radius: var(--radius-rounded);
+  background: var(--color-bg-brand); color: var(--color-text-on-color);
+  font-size: var(--body-xs); font-weight: var(--font-weight-bold); line-height: 1;
+}
+.anno [data-no][data-mid]::after { top: 50%; transform: translateY(-50%); }
+.anno-list { margin: var(--spacing-8) 0 0; }
+.anno-list td:first-child { width: 40px; }

@@ -18,7 +18,9 @@ export function enablePseudo() {
   // 복제한 규칙을 원래 규칙 바로 뒤에 넣는다 — 같은 구체성 규칙 사이의 순서(캐스케이드)를 실제와 같게.
   // 예전처럼 맨 끝 <style>에 모으면 .btn--transparent.ps-hover 가 뒤에 오는 켜짐 규칙(aria-pressed)을 이겨,
   // 정지 화면의 켜짐 + 마우스 올림 글자색이 실제와 달랐음 (10/13)
-  const convert = (r) => r.selectorText.split(',')
+  // 선택자 목록을 맨 바깥 쉼표에서만 자른다 — :is(a, b) 안 쉼표에서 자르면 복제 규칙이 깨져 빠짐(선택 행 링크 정지 화면)
+  const split = (sel) => { const out = []; let depth = 0, cur = ''; for (const ch of sel) { if (ch === '(') depth++; if (ch === ')') depth--; if (ch === ',' && !depth) { out.push(cur); cur = ''; } else cur += ch; } out.push(cur); return out; };
+  const convert = (r) => split(r.selectorText)
     .filter((p) => HAS.test(p))
     .map((p) => MAP.reduce((s, [re, cls]) => s.replace(re, cls), p.trim()))
     .join(', ') + ' { ' + r.style.cssText + ' }';
