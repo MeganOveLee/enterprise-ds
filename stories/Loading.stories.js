@@ -29,7 +29,7 @@ export const 구성_3단계 = {
     <div class="loading" role="status" aria-live="polite">${spin('lg')}
       <p class="loading__text">도면 2,481건을 엑셀로 만드는 중입니다</p>
       <p class="loading__sub">1분 정도 걸릴 수 있어요</p>
-      <div class="loading__actions"><button type="button" class="btn btn--secondary btn--outlined">취소</button></div>
+      <div class="loading__actions"><button type="button" class="btn btn--secondary btn--transparent">취소</button></div>
     </div>
   </div>`,
 };
@@ -73,7 +73,7 @@ export const 사용_지침 = {
     // 근거: Loading 구성 「시간 규칙」 — 10초가 넘을 것 같으면 진행 상황 + 취소
     { title: '오래 걸리는 일은 문구와 취소까지',
       do: [`<div class="loading" role="status" aria-live="polite">${spin('lg')}<p class="loading__text">도면 2,481건을 엑셀로 만드는 중입니다</p><p class="loading__sub">1분 정도 걸릴 수 있어요</p>` +
-        `<div class="loading__actions"><button type="button" class="btn btn--secondary btn--outlined">취소</button></div></div>`,
+        `<div class="loading__actions"><button type="button" class="btn btn--secondary btn--transparent">취소</button></div></div>`,
         '10초가 넘을 것 같은 작업은 진행 상황과 취소를 함께 둡니다.'],
       dont: [`<div class="loading" role="status">${spin('lg')}<span class="sr-only">불러오는 중</span></div>`,
         '스피너만 두면 얼마나 기다릴지, 멈출 수 있는지 알 수 없습니다.'] },
@@ -81,7 +81,7 @@ export const 사용_지침 = {
     { title: '저장 대기는 버튼 안에서',
       do: [`<button type="button" class="btn btn--primary btn--filled is-loading" aria-busy="true">${spin('sm', 'neutral')}저장 중</button>`,
         '누른 버튼의 처리 중 상태로 기다림을 알립니다.'],
-      dont: [ddArea(`<div style="padding:16px;display:flex;gap:8px;justify-content:flex-end"><button type="button" class="btn btn--secondary btn--outlined">취소</button><button type="button" class="btn btn--primary btn--filled">저장</button></div>` +
+      dont: [ddArea(`<div style="padding:16px;display:flex;gap:8px;justify-content:flex-end"><button type="button" class="btn btn--secondary btn--transparent">취소</button><button type="button" class="btn btn--primary btn--filled">저장</button></div>` +
         `<div class="loading loading--overlay" role="status" aria-live="polite">${spin('lg')}<p class="loading__text">저장하는 중입니다</p></div>`),
         '영역 오버레이는 본문을 다시 불러올 때만 쓰고, 저장 대기에는 쓰지 않습니다.'] },
   ]),
@@ -99,5 +99,5 @@ export const Playground = {
   render: (a) => '<div class="loading" role="status" aria-live="polite">' +
     spin(a.size === '기본' ? '' : a.size, a.tone === 'neutral' ? 'neutral' : '') +
     (a.text ? '<p class="loading__text">' + a.text + '</p>' : '<span class="sr-only">불러오는 중</span>') +
-    (a.cancel ? '<div class="loading__actions"><button type="button" class="btn btn--secondary btn--outlined">취소</button></div>' : '') + '</div>',
+    (a.cancel ? '<div class="loading__actions"><button type="button" class="btn btn--secondary btn--transparent">취소</button></div>' : '') + '</div>',
 };
