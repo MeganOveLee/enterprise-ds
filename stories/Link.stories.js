@@ -57,9 +57,11 @@ export const 전체_상태 = {
   parameters: html(GRID),
   render: () => {
     enablePseudo();
+    // 표 칸과 같은 글자 크기(--body-sm)로 그림 — 상태마다 글자 크기 · 폭은 같고, Focused는 바깥 2px 테두리만 더해짐(TD-121)
+    const inCell = (h) => '<span style="font-size:var(--body-sm)">' + h + '</span>';
     return matrix(['Default', 'Hovered', 'Focused'], [
-      ['식별자 열 <code>.grid-custom-rows-link</code>', PS.map((p) => idLink('DOC-2610-0012', p))],
-      ['일반 링크 <code>.grid-link</code>', PS.map((p) => link('하우징 재질 변경 검토 보고서', p))],
+      ['식별자 열 <code>.grid-custom-rows-link</code>', PS.map((p) => inCell(idLink('DOC-2610-0012', p)))],
+      ['일반 링크 <code>.grid-link</code>', PS.map((p) => inCell(link('하우징 재질 변경 검토 보고서', p)))],
     ]);
   },
 };

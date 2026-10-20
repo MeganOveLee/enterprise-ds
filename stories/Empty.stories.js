@@ -10,7 +10,7 @@ const empty = ({ type, title, desc, actions = '', code = '', mod = '' }) =>
   `<div class="empty${mod ? ' ' + mod : ''}" role="status">
     ${emptyArt(type)}
     <p class="empty__title">${title}</p>
-    <p class="empty__desc">${desc}</p>
+    ${desc ? `<p class="empty__desc">${desc}</p>` : ''}
     ${code ? `<p class="empty__code">오류 코드 ${code}</p>` : ''}
     ${actions ? `<div class="empty__actions">${actions}</div>` : ''}
   </div>`;
@@ -33,15 +33,23 @@ export const 카드_안 = { render: () => frame(empty({ mod: 'empty--card', type
 const ddFrame = (inner, w = '') => `<div style="${w ? 'width:' + w : 'flex:1;min-width:0'};border:1px solid var(--color-border-base);border-radius:var(--radius-card)">${inner}</div>`;
 // 카드 안 — 카드 제목 + 빈 상태. Don't 는 페이지용(.empty--page) 큰 일러스트
 const ddCard = (inner) => `<div style="width:240px;border:1px solid var(--color-border-base);border-radius:var(--radius-card);overflow:hidden"><p style="margin:0;padding:12px 16px;border-bottom:1px solid var(--color-border-subtle);font-size:var(--body-md);font-weight:var(--font-weight-semibold);color:var(--color-text-base)">결재할 문서</p>${inner}</div>`;
+// 검색 조건 줄 — Do · Don't 그림 위에 「검색한 뒤」라는 맥락을 보임
+const searchCtx = '<p style="margin:0 0 8px;padding:6px 10px;border-radius:var(--radius-sm);background:var(--color-bg-muted);font-size:var(--body-sm);color:var(--color-text-muted)">검색 조건 — 작업현황 <b style="color:var(--color-text-base)">반려</b> · 등록일 <b style="color:var(--color-text-base)">2026-09-01 ~ 2026-09-30</b></p>';
 export const 사용_지침 = {
   parameters: { controls: { disable: true } },
   render: () => doDont([
-    // ① 유형이 다음 동작을 정함 — 검색 결과 없음 = [검색 조건 초기화], 데이터 없음 = [등록]
-    { title: '유형에 맞는 문구 · 버튼',
-      do: [ddFrame(empty({ type: 'search', title: '조건에 맞는 문서가 없습니다', desc: '기간을 넓히거나 구분을 \'전체\'로 바꿔 주십시오.', actions: btn('검색 조건 초기화', 'secondary', 'transparent') })),
-        '검색 결과 없음은 조건을 넓히도록 안내하고 [검색 조건 초기화]를 둡니다. 데이터 없음은 [등록]을 둡니다.'],
-      dont: [ddFrame(empty({ type: 'empty', title: '등록된 문서가 없습니다', desc: '새 문서를 등록하면 이 목록에 표시됩니다.', actions: btn('문서 등록', 'primary', 'filled') })),
-        '검색 결과 없음에 데이터 없음과 같은 문구 · 버튼을 두면 조건 때문에 비었는지 알 수 없습니다.'] },
+    // ① 아직 없음에는 다음 동작 — 사용자가 만들 수 있는 것이 비었으면 [등록] (TD-121: 예전 Don't는 「검색 결과 없음」 자리에 아직 없음 문구를 둔 것이었는데 검색 맥락이 그림에 없어 맞는 예처럼 보였음)
+    { title: '아직 없음에는 다음 동작을',
+      do: [ddFrame(empty({ type: 'empty', title: '등록된 문서가 없습니다', desc: '새 문서를 등록하면 이 목록에 표시됩니다.', actions: btn('문서 등록', 'primary', 'filled') })),
+        '사용자가 만들 수 있는 것이 비어 있으면 [등록]을 둡니다.'],
+      dont: [ddFrame(empty({ type: 'empty', title: '데이터가 없습니다' })),
+        '이유와 다음 동작이 없으면 기다려야 하는지 직접 만들어야 하는지 알 수 없습니다.'] },
+    // ①-2 검색한 뒤 비었으면 검색 결과 없음 — 조건을 넓히는 안내 + [검색 조건 초기화]. 그림 위 줄 = 검색 조건(맥락)
+    { title: '검색한 뒤에는 검색 결과 없음',
+      do: [ddFrame(searchCtx + empty({ type: 'search', title: '조건에 맞는 문서가 없습니다', desc: '기간을 넓히거나 작업현황을 \'전체\'로 바꿔 주십시오.', actions: btn('검색 조건 초기화', 'secondary', 'transparent') })),
+        '검색 결과가 비면 조건을 넓히도록 안내하고 [검색 조건 초기화]를 둡니다.'],
+      dont: [ddFrame(searchCtx + empty({ type: 'empty', title: '등록된 문서가 없습니다', desc: '새 문서를 등록하면 이 목록에 표시됩니다.', actions: btn('문서 등록', 'primary', 'filled') })),
+        '검색 결과 자리에 아직 없음 문구 · [등록]을 두면 조건 때문에 비었는지, 정말 없는지 알 수 없습니다.'] },
     // ② 배치에 맞는 크기 — 영역 · 표 안 = 기본, 카드 안 = .empty--card, 페이지 = .empty--page
     { title: '배치에 맞는 크기',
       do: [ddCard(empty({ mod: 'empty--card', type: 'empty', title: '결재할 문서가 없습니다', desc: '새로 상신된 문서가 이 목록에 표시됩니다.' })),

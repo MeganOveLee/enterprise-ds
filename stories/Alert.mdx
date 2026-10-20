@@ -11,7 +11,7 @@ import * as S from './Alert.stories.js';
 <table className="ds-table ds-props">
 <thead><tr><th>구분</th><th>클래스 · 속성</th><th>설명</th></tr></thead>
 <tbody>
-<tr><td><b>구조</b></td><td><code>.alert</code><span className="ds-muted">__icon · __body(__title · __desc) · __close</span></td><td>아이콘 → 제목 → 설명 순서입니다. 제목은 16px SemiBold, 설명은 14px Regular이고 제목과 설명 사이는 4입니다. 글자는 상태와 상관없이 기본 글자색입니다. 알릴 내용이 여러 건이면 설명 안에 목록(<code>{'<ul>'}</code>)으로 둡니다.</td></tr>
+<tr><td><b>구조</b></td><td><code>.alert</code><span className="ds-muted">__icon · __body(__title · __desc) · __close</span></td><td>아이콘 → 제목 → 설명 순서입니다. 아이콘은 20(Toast와 같은 크기)이고 첫 줄 가운데에 맞춥니다. 제목은 16px SemiBold, 설명은 14px Regular이고 제목과 설명 사이는 4입니다. 글자는 상태와 상관없이 기본 글자색입니다. 알릴 내용이 여러 건이면 설명 안에 목록(<code>{'<ul>'}</code>)으로 둡니다.</td></tr>
 <tr><td><b>상태</b></td><td><code>.alert--success</code> · <code>--warning</code> · <code>--danger</code> · <code>--brand</code> · <code>--neutral</code><span className="ds-muted">클래스가 없는 것이 기본(정보)입니다</span></td><td>아이콘 색 · 바탕 · 테두리가 함께 바뀝니다. 정보 = 화면의 조건 · 참고 정보, 성공 = 처리 완료, 경고 = 할 수 없는 일 · 주의할 조건, 위험 = 오류 · 실패, 브랜드 = 새 기능 · 공지, 중립 = 임시 저장본 같은 부가 정보입니다. Default 브랜드는 브랜드 색과 정보 색이 같은 파랑이라, 브랜드는 공지 · 새 기능에만 씁니다.</td></tr>
 <tr><td><b>모양</b></td><td><code>.alert--plain</code><span className="ds-muted">클래스가 없는 것이 기본(테두리)입니다</span></td><td>테두리 없이 바탕만 남깁니다. 여러 줄이 이어질 때 덜 무겁게 보입니다.</td></tr>
 <tr><td><b>닫기</b></td><td><code>.alert__close</code> · <code>aria-label</code></td><td>아이콘 버튼(<code>.btn--icon</code>, 28)입니다. 아이콘만 있으니 이름을 꼭 붙입니다. 위험(오류) Alert에는 두지 않고, 원인을 해결할 때까지 남깁니다.</td></tr>

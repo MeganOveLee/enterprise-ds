@@ -52,7 +52,8 @@ const ROW_MIN = 'flex:1;min-height:124px';
 // 빈 역할 상자 — 데이터 3줄 자리(90) 안에 들어가게 제목 + 설명만(그림 없음). 그림을 넣으면 이 상자만 커져 세 상자 높이가 같이 커짐
 const roleEmpty = (who, title) => '<div class="empty empty--card" role="status" style="padding:var(--spacing-16);gap:var(--spacing-4)"><p class="empty__title">지정한 ' + who + '가 없습니다</p>' +
   '<p class="empty__desc">담당자를 체크하고 [' + title + ' ›]' + (title === '합의' ? '를' : '을') + ' 누르거나 여기로 끌어다 놓아 주십시오.</p></div>';
-const moveBtn = (key) => { const [title, who] = ROLE[key]; return '<button type="button" class="btn btn--secondary btn--outlined" aria-label="체크한 담당자를 ' + who + '로 넣기">' + title + svg(I.next, 14) + '</button>'; };
+// 이름은 보이는 글자로 시작(2.5.3) — 「합의 — 체크한 담당자 넣기」
+const moveBtn = (key) => { const [title] = ROLE[key]; return '<button type="button" class="btn btn--secondary btn--outlined" aria-label="' + title + ' — 체크한 담당자 넣기">' + title + svg(I.next, 14) + '</button>'; };
 const roleBox = (key, list, { blank = true } = {}) => {
   const [title, who] = ROLE[key];
   const head = '<div class="seach_arm"><div class="leftbt"><h4>' + title + '</h4></div></div>';

@@ -4177,7 +4177,7 @@ body.dark-mode .empty-illo { --empty-illo-shadow: rgb(0 0 0 / .2); }
     line-height: var(--line-height-base);
     text-align: start;   /* 가운데 정렬된 자리(표 칸 등)에 놓여도 글은 왼쪽부터 */
 }
-.alert__icon { flex: none; width: 16px; height: 16px; margin-top: 5px; color: var(--alert-ic); }   /* 위 5 ≈ 첫 줄(제목 16 × 1.6 = 25.6) 가운데 */
+.alert__icon { flex: none; width: 20px; height: 20px; margin-top: 3px; color: var(--alert-ic); }   /* 20 = Toast 아이콘과 같은 크기(제목 16에 비해 16은 작아 보임, TD-121). 위 3 ≈ 첫 줄(제목 16 × 1.6 = 25.6) 가운데. 구: 16 · 위 5 */
 .alert__icon svg { display: block; width: 100%; height: 100%; }
 .alert__body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: var(--spacing-4); }
 .alert__title { display: block; font-size: var(--body-lg); font-weight: var(--font-weight-semibold); }
