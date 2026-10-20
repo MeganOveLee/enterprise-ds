@@ -7,6 +7,7 @@
 import './_screens.css';
 import { wireSearchDetail, EXPAND_LABEL } from './_search.js';
 import { fileIcon, folderIcon } from './_fileicon.js';
+import { emptyArt } from './_illustrations.js';
 import { lnbMask, lnbSvg, lnbLogo } from './_lnbicons.js';
 
 const W = 1440;
@@ -98,7 +99,7 @@ const sub = () =>
   '<ul class="tree" role="tree" aria-label="문서 폴더">' +
   TREE.map(([lv, t, open, on]) => '<li class="tree__item" role="treeitem"' + (open !== undefined ? ' aria-expanded="' + !!open + '"' : '') + (on ? ' aria-selected="true"' : '') +
     ' style="--tree-level:' + lv + '"><span class="tree__caret">' + (lv < 2 ? svg(open ? I.down : I.next, 12) : '') + '</span>' +
-    '<span class="tree__icon">' + folderIcon(!!open) + '</span>' + t + '</li>').join('') +
+    folderIcon(!!open) + t + '</li>').join('') +
   '</ul></div></div></aside>';
 
 // ── 상단 바 ──
@@ -264,7 +265,7 @@ const homeBody = () =>
   '<section class="card">' + cardHead('결재 업무', 2, more()) + '<ul class="card-list">' +
     APPROVALS.map(([k, label, t, d]) => li('<span class="status-chip status-chip--' + STATUS[k][0] + '">' + label + '</span>', t, d)).join('') + '</ul></section>' +
   '<section class="card">' + cardHead('활동 업무', 0) +
-    '<div class="empty empty--card" role="status"><span class="empty__icon">' + svg(I.inbox, 32) + '</span>' +
+    '<div class="empty empty--card" role="status">' + emptyArt('empty') +
     '<p class="empty__title">진행 중인 활동 업무가 없습니다</p><p class="empty__desc">배정된 활동이 생기면 여기에 표시됩니다.</p></div></section>' +
   '<section class="card">' + cardHead('나의 태스크', TASKS.length, more()) + '<ul class="card-list">' +
     TASKS.map(([tone, label, t, d]) => li('<span class="status-chip status-chip--' + tone + '">' + label + '</span>', t, d)).join('') + '</ul></section>' +

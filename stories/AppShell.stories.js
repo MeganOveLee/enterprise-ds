@@ -48,12 +48,12 @@ export const 페이지_머리 = {
     '<button type="button" class="favorite-icon" aria-label="즐겨찾기에 추가" aria-pressed="false" style="border:0;background:transparent;padding:0;display:inline-flex">' + svg(I.star, 18) + '</button></div>' +
     crumbs(['Home', '문서 관리', '문서 검색']) + '</div></div>'),
 };
-// 폴더 트리 = DS .tree — 단계는 --tree-level, 끝 항목도 꺾쇠 칸을 비워 둠 (TD-75)
+// 폴더 트리 = DS .tree — 단계는 --tree-level, 끝 항목도 꺾쇠 칸을 비워 둠 (TD-75). 폴더 아이콘 = 그림 자산(솔리드 · 라인, ./_fileicon.js)
 const FOLDERS = [[0, '제품 문서', true], [1, '설계 문서', true, true], [2, '사양서'], [2, '시험 성적서'], [1, '품질 문서', false], [1, '양식']];
 const tree = () => '<ul class="tree" role="tree" aria-label="문서 폴더">' + FOLDERS.map(([lv, t, open, on]) =>
   '<li class="tree__item" role="treeitem"' + (open !== undefined ? ' aria-expanded="' + open + '"' : '') + (on ? ' aria-selected="true"' : '') + ' style="--tree-level:' + lv + '">' +
   '<span class="tree__caret">' + (open !== undefined ? svg(open ? I.down : I.next, 12) : '') + '</span>' +
-  '<span class="tree__icon">' + folderIcon(!!open) + '</span>' + t + '</li>').join('') + '</ul>';
+  folderIcon(!!open) + t + '</li>').join('') + '</ul>';
 const panel = (tabX = '') =>
   '<aside class="main-sub" aria-label="문서 관리 메뉴" style="height:360px">' +
   '<div class="main-sub-header"><h3>문서 관리</h3><button type="button" class="sub-close" aria-label="메뉴 닫기">' + svg(I.close, 16) + '</button></div>' +

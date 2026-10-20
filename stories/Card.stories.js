@@ -4,9 +4,7 @@
 import { matrix } from './_matrix.js';
 import { enablePseudo } from './_pseudo.js';
 import { doDont } from './_dodont.js';
-
-const svg = (d, s = 16) => '<svg width="' + s + '" height="' + s + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + d + '</svg>';
-const INBOX = '<path d="M4 13l2.5-7h11L20 13v6H4z"/><path d="M4 13h4.5l1 2h5l1-2H20"/>';
+import { emptyArt } from './_illustrations.js';
 
 const TONE = { '결재 대기': 'warning', 승인: 'success', 반려: 'danger' };
 const chip = (label, tone = TONE[label]) => '<span class="status-chip status-chip--' + tone + '">' + label + '</span>';
@@ -30,7 +28,7 @@ const row = ([lead, title, date, tone], x = '', visited = false) =>
   '<li><a href="#"' + (x.trim() ? ' class="' + x.trim() + '"' : '') + '>' + chip(lead, tone) + '<span class="item-title' + (visited ? ' is-visited' : '') + '" title="' + title + '">' + title + '</span><span class="item-date">' + date + '</span></a></li>';
 const list = (n = 5, visited = -1, data = ROWS) => '<ul class="card-list">' + data.slice(0, n).map((r, i) => row(r, '', i === visited)).join('') + '</ul>';
 const empty = (t = '진행 중인 활동 업무가 없습니다', d = '배정된 활동이 생기면 여기에 표시됩니다.') =>
-  '<div class="empty empty--card" role="status"><span class="empty__icon">' + svg(INBOX, 32) + '</span><p class="empty__title">' + t + '</p><p class="empty__desc">' + d + '</p></div>';
+  '<div class="empty empty--card" role="status">' + emptyArt('empty') + '<p class="empty__title">' + t + '</p><p class="empty__desc">' + d + '</p></div>';
 const card = ({ title = '결재 업무', count = 2, rows = 5, withMore = true, visited = -1, data = ROWS } = {}) =>
   '<section class="card">' + head(title, count, withMore ? more() : '') + (rows > 0 ? list(rows, visited, data) : empty()) + '</section>';
 const box = (h, w = '560px') => '<div style="max-width:' + w + '">' + h + '</div>';

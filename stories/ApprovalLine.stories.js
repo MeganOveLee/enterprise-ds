@@ -3,6 +3,7 @@
 // 상자 = 접는 섹션 상자 · 섹션 상자(.section-box, 접기 없음). 두 칸 배치(왼쪽 | 역할 상자)만 이 블록의 inline grid
 import { flow, shot, MARK, wireSections, toggleIcon } from './_flow.js';
 import { doDont } from './_dodont.js';
+import { emptyArt } from './_illustrations.js';
 
 const svg = (d, s = 16) => '<svg width="' + s + '" height="' + s + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + d + '</svg>';
 const I = {
@@ -12,10 +13,10 @@ const I = {
   doc: '<path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 12h6M9 16h6"/>',
   search: '<circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/>',
 };
-const INBOX = '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M6 28 12 10h24l6 18v10H6z"/><path d="M6 28h11l3 5h8l3-5h11"/></svg>';
 const btn = (t, cls, label = '') => '<button type="button" class="btn ' + cls + '"' + (label ? ' aria-label="' + label + '"' : '') + '>' + t + '</button>';
 const ck = (label, on = false) => '<label class="checkbox"><input type="checkbox" aria-label="' + label + '"' + (on ? ' checked' : '') + '></label>';
-const empty = (title, desc) => '<div class="empty" role="status"><span class="empty__icon">' + INBOX + '</span><p class="empty__title">' + title + '</p>' + (desc ? '<p class="empty__desc">' + desc + '</p>' : '') + '</div>';
+// 빈 상태 일러스트 = 그림 자산(솔리드 · 라인, 브랜드 파일이 고름). 표 아래라 작은 크기(.grid-table + .empty)
+const empty = (title, desc) => '<div class="empty" role="status">' + emptyArt('empty') + '<p class="empty__title">' + title + '</p>' + (desc ? '<p class="empty__desc">' + desc + '</p>' : '') + '</div>';
 // 표 — after = 표 아래(.list 안)에 붙는 것(빈 상태). Table 「결과 0건」과 같은 자리
 const tbl = (label, cols, head, rows, after = '', style = '') => '<div class="table_list"' + (style ? ' style="' + style + '"' : '') + '><div class="list"><table class="grid-table" aria-label="' + label + '"><colgroup>' + cols.map((w) => '<col' + (w ? ' style="width:' + w + '"' : '') + '>').join('') + '</colgroup>' +
   '<thead><tr>' + head.map((h) => '<th>' + h + '</th>').join('') + '</tr></thead><tbody>' + rows + '</tbody></table>' + after + '</div></div>';

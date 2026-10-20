@@ -1,6 +1,7 @@
 // Feedback/고르는 법 — 문서 화면은 ChooseFeedback.mdx. 피드백 컴포넌트의 표준 이름 · 정의 · 고르는 기준을 한 표로
 // 이름 · 정의 = 공개 DS 문서(KRDS · Carbon · Polaris · Atlassian)의 표준 용어. 고르는 기준 = 언제 고르는지 + 대신 쓸 컴포넌트(쓰는 법은 각 문서의 Do · Don't)
 import { matrix } from './_matrix.js';
+import { emptyArt } from './_illustrations.js';
 
 // Alert · Toast 상태 아이콘(Figma Icons 모양, 16 격자) · 툴팁 받기 아이콘(24 격자)
 const svg16 = (d) => '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + d + '</svg>';
@@ -10,7 +11,6 @@ const I = {
   success: '<path d="m3.56 8 2.77 2.78 6.11-6.11"/>',
   down: '<path d="M12 4v11M7 10l5 5 5-5M5 20h14"/>',
 };
-const INBOX = '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M6 28 12 10h24l6 18v10H6z"/><path d="M6 28h11l3 5h8l3-5h11"/></svg>';
 const link = (name, path) => '<a class="text-link no-arrow" href="./?path=/docs/' + path + '--docs" target="_top">' + name + '</a>';
 const code = (t) => '<code>' + t + '</code>';
 const note = (t) => '<span class="sb-note" style="display:block;text-align:left">' + t + '</span>';
@@ -29,7 +29,7 @@ const ROWS = [
     '<div style="padding-top:36px"><span class="has-tooltip"><button type="button" class="btn btn--secondary btn--transparent btn--icon" aria-label="첨부 받기" aria-describedby="cfb-tt">' + svg(I.down) + '</button><span class="tooltip tooltip--start is-open" role="tooltip" id="cfb-tt">첨부 받기</span></span></div>',
     link('Tooltip', 'feedback-tooltip') + ' ' + code('.tooltip'), '포인터를 올리거나 포커스가 갔을 때 나타나는 짧은 보조 설명입니다.', '라벨 없는 아이콘 버튼의 이름 · 짧은 설명. 꼭 알아야 할 정보 · 오류는 화면 안 글이나 인라인 알림입니다.'],
   ['빈 상태',
-    '<div class="empty empty--card" role="status" style="border:1px solid var(--color-border-base);border-radius:var(--radius-card)"><span class="empty__icon">' + INBOX + '</span><p class="empty__title">결재할 문서가 없습니다</p><p class="empty__desc">결재 요청이 오면 이 목록에 표시됩니다.</p></div>',
+    '<div class="empty empty--card" role="status" style="border:1px solid var(--color-border-base);border-radius:var(--radius-card)">' + emptyArt('empty') + '<p class="empty__title">결재할 문서가 없습니다</p><p class="empty__desc">결재 요청이 오면 이 목록에 표시됩니다.</p></div>',
     link('Empty', 'feedback-empty') + ' ' + code('.empty'), '표시할 데이터가 없을 때 이유와 다음 동작을 안내하는 영역입니다.', '데이터 없음 · 검색 결과 없음 · 불러오기 오류로 표 · 카드 · 페이지에 보여 줄 내용이 없을 때.'],
   ['스피너',
     '<div class="loading" role="status" aria-live="polite"><span class="spinner" aria-hidden="true"></span><p class="loading__text">문서 목록을 불러오는 중입니다</p></div>',
