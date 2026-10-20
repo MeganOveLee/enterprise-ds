@@ -377,7 +377,7 @@
  *     <li class="tree__item" role="treeitem" aria-selected="true" style="--tree-level:1">…</li>
  *   단계 = --tree-level(0부터) × 16 들여쓰기. 끝 항목도 꺾쇠 칸(.tree__caret, 비워 둠)을 둬서 폴더 아이콘이 같은 줄에 선다(이전 버전 잎 왼쪽 여백 = 꺾쇠 폭)
  *   줄 26 = 이전 버전 폴더 트리 줄(그리드 위젯 기본 줄, 행 26). 꺾쇠 · 폴더 사이 4 = 이전 버전 아이콘 여백
- *   올림 = 옅은 회색, 고른 폴더 = 옅은 브랜드 + 반굵게, 펼친 폴더 = 반굵게, 행 아래 1px 선 · 모서리 0 (Figma App Shell 「LNB/Sub panel」 › Folder tree, TD-108) */
+ *   올림 = 옅은 회색, 고른 폴더 = 옅은 브랜드 + 반굵게(굵게는 고른 폴더만 — TD-108 31번 S1), 행 아래 1px 선 · 모서리 0 (Figma App Shell 「LNB/Sub panel」 › Folder tree, TD-108) */
 .tree { list-style: none; margin: 0; padding: 0; font-size: var(--body-sm); color: var(--color-text-base); }
 .tree__item {
     display: flex;
@@ -392,7 +392,6 @@
     cursor: pointer;
 }
 .tree__item:hover { background: var(--color-bg-muted); }
-.tree__item[aria-expanded="true"] { font-weight: var(--font-weight-semibold); }   /* 펼친 상위 폴더 = 반굵게 (Figma 「제품 문서」, TD-108) */
 .tree__item[aria-selected="true"] { background: var(--color-bg-brand-subtle); font-weight: var(--font-weight-semibold); }
 .tree__item:focus-visible { outline: 2px solid transparent; box-shadow: inset 0 0 0 1px var(--color-border-focus), inset 0 0 0 4px var(--color-focus-ring); }   /* 스크롤 상자 안 — 안쪽 글로우 (DS-ADR-023 예외와 같음) */
 .tree__caret { width: 12px; flex-shrink: 0; display: inline-flex; color: var(--color-icon-base); }   /* 꺾쇠 = Figma icon-base (TD-108, 구 icon-muted) */
