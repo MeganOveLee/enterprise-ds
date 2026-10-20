@@ -1207,7 +1207,7 @@
     display: inline-flex; align-items: center; justify-content: center;
 }
 .pop-close:hover { background: var(--color-bg-muted); color: var(--color-text-base); }
-.pop-close svg { width: 14px; height: 14px; }   /* 버튼 안 아이콘 14 (구 18) */
+.pop-close svg { width: 16px; height: 16px; }   /* 아이콘만 있는 버튼 = .btn--icon 과 같은 16 — Figma 닫기(Modal 4058:1560 · LNB 서브 패널 8131:575) x 16 (TD-108). 구: 14 */
 
 /* ── 등록/상세 팝업 — 레이어·패딩·타이포 위계 (검색 디자인 시스템 확장) ──────────
  * (1) 페이지는 한 단 가라앉은 톤, 카드(.pro_table)는 떠보이게 → 레이어감

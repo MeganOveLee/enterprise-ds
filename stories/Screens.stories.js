@@ -466,7 +466,7 @@ const ANATOMY = [
   ['7', '카드 그리드', c('.card-grid') + ' · ' + c('.card-header') + ' · ' + c('.card-title-count') + ' · ' + c('.card-list') + ' · ' + c('.empty--card'), '3열 고정입니다(' + c('.card-grid') + '는 최소 폭 460이라 1440 화면에서 2열). 차트 색은 아이콘 신호색 토큰을 씁니다. ' + lk('Card', 'data-display-card--docs')],
   ['8', '검색 폼', c('.seach_arm') + ' · ' + c('.pro_table') + ' · ' + c('.form-grid--6') + ' · ' + c('.ff-field') + ' · ' + c('.search-label') + ' · ' + c('.search-detail'), lk('Search Form', 'blocks-search-form--docs') + ' 블록 그대로입니다.'],
   ['9', '결과 표', c('.table_list') + ' · ' + c('.ui-pagination') + mu('--color-bg-grid-header · -row-hover · -row-selected · --color-bg-row-alt'), '제품에서는 그리드 라이브러리가 그리는 자리라 같은 그리드 토큰의 표로 구성했습니다. 페이지네이션은 시안 2에만 있습니다. ' + lk('Table', 'data-display-table--docs')],
-  ['10', '창 제목 줄', c('.pop .top') + ' · ' + c('.top-btn-area'), '창 이름과 [임시 저장] · [등록] · 닫기입니다. ' + lk('Modal', 'overlay-modal--docs')],
+  ['10', '창 제목 줄', c('.pop .top') + ' · ' + c('.top-btn-area'), '창 이름과 [임시 저장] · [등록] · 닫기입니다. ' + lk('Popup Window', 'overlay-popup-window--docs')],
   ['11', '접는 섹션 · 2열 폼', c('.seach_arm') + ' · ' + c('.section-toggle') + ' · ' + c('.pro_table') + ' · ' + c('.form-grid-2') + ' · ' + c('.ff-readonly') + ' · ' + c('.field-error-msg'), '섹션 헤더와 내용이 배경색이 있는 상자 하나입니다. 필수 표시(*) · 오류 필드 · 읽기 전용 필드를 함께 보여 줍니다. ' + lk('Accordion', 'data-display-accordion--docs')],
   ['12', '첨부', c('.resumable'), '끌어다 놓기 · 파일 형식 아이콘 · 올리는 중 막대입니다.'],
   ['13', '산출물 패널', c('.divide-detail-layout') + ' · ' + c('.left-panel') + ' · ' + c('.left-legend') + ' · ' + c('.left-search') + ' · ' + c('.output-row'), '바로가기 · 상태 범례 · 검색 · 트리입니다. 제품에서는 트리를 그리드 라이브러리가 그립니다.'],
