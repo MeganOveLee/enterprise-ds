@@ -19,7 +19,7 @@ v1.0 · 설계 · 퍼블리싱 이세영
 | 경로 | 내용 |
 |---|---|
 | `css/tokens.css` | 공통 토큰 (원천 램프 → 시맨틱 → 다크) |
-| `css/brands/` | 브랜드 값 파일. 브랜드가 여는 토큰(색 · 형태) 목록은 `_template.css`(새 브랜드 양식)에 있고, 지금 값은 스토리북 Foundation › Color(색) · Spacing · Radius · Size(형태)에서 브랜드를 바꿔 볼 수 있습니다. `default.css` = 기본 브랜드, `fashion.css` · `precision.css` = 시연용 가상 산업 브랜드(Fashion · 패션 리테일 = 색 + 둥근 모서리 / Precision · 자동차 부품 = 색 + 직각 · 높이 32) |
+| `css/brands/` | 브랜드 값 파일. 브랜드가 여는 토큰(색 · 형태 · 그림 자산) 목록은 `_template.css`(새 브랜드 양식)에 있고, 지금 값은 스토리북 Foundation › Color(색) · Spacing · Radius · Size(형태 · 그림 자산)에서 브랜드를 바꿔 볼 수 있습니다. `default.css` = 기본 브랜드(그림 자산 솔리드), `fashion.css` · `precision.css` = 시연용 가상 산업 브랜드(Fashion · 패션 리테일 = 색 + 둥근 모서리 / Precision · 자동차 부품 = 색 + 직각 · 높이 32, 둘 다 그림 자산 라인) |
 | `css/globals.css` · `components.css` | 전역 · 컴포넌트. 브랜드를 모릅니다 |
 | `js/select.js` | 선택 목록 — 화면의 단일 select를 같은 목록(`.ui-select`)으로 (APG Select-Only Combobox 패턴) |
 | `js/multiselect.js` | 다중 선택 — `select.checkSelect[multiple]`을 표시 상자 + 체크박스 목록으로 |

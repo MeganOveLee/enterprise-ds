@@ -15,9 +15,10 @@ import * as S from './Spacing.stories.js';
 <tr><td><b>모서리 단계</b><span className="ds-muted">Radius — 고정</span></td><td>단계 토큰 <code>--radius-none</code> · <code>-sm</code> · <code>-md</code> · <code>-lg</code> · <code>-rounded</code>. 모든 브랜드가 같음</td><td>역할 토큰이 가리키는 값</td><td>0 · 2 · 4 · 8px · 완전 둥근(rounded)</td><td>—</td></tr>
 <tr><td><b>모서리 역할</b><span className="ds-muted">Radius role — 브랜드 재정의 가능</span></td><td><code>--radius-btn</code> · <code>-input</code> · <code>-card</code> …. 컴포넌트는 이 이름만 씀</td><td>버튼 · 입력 필드 · 체크박스 · 칩 · 행 · 카드 · 영역 · 팝오버 · 스켈레톤</td><td>버튼 4 · 입력 필드 2 · 체크박스 2 · 칩 rounded · 행 2 · 카드 8 · 영역 4 · 팝오버 4 · 스켈레톤 2px</td><td><b>Fashion</b> 버튼 · 칩 rounded · 입력 필드 · 카드 · 영역 · 팝오버 8 · 체크박스 · 행 · 스켈레톤 4px<br /><b>Precision</b> 모두 0</td></tr>
 <tr><td><b>높이</b><span className="ds-muted">Size — 브랜드 재정의 가능</span></td><td><code>--size-input</code> · <code>--size-btn</code> · <code>--size-btn-sm</code></td><td>입력 필드 · 버튼 · 작은 버튼</td><td>입력 필드 28 · 버튼 28 · 작은 버튼 26px</td><td><b>Precision</b> 입력 필드 32 · 버튼 32 · 작은 버튼 28px</td></tr>
+<tr><td><b>그림 자산</b><span className="ds-muted">Art — 브랜드 재정의 가능</span></td><td><code>--art-solid</code><br /><code>--art-line</code><span className="ds-muted">둘 중 하나만 block</span></td><td>빈 상태 일러스트 · 폴더 트리 아이콘 · 첨부 파일 형식 아이콘의 모양(<a className="ds-link" href="./?path=/docs/feedback-empty--docs" target="_top">Empty</a> 문서 「일러스트」)</td><td>솔리드<span className="ds-muted">solid block · line none</span></td><td><b>Fashion · Precision</b> 라인<span className="ds-muted">solid none · line block</span></td></tr>
 </tbody>
 </table>
-<p className="ds-note"><b>브랜드</b>를 바꾸면 모서리 역할과 높이의 「지금 값」이 바뀝니다. 브랜드 파일이 바꾸는 것은 브랜드 색과 아래 표의 형태(모서리 역할 · 높이)뿐입니다.</p>
+<p className="ds-note"><b>브랜드</b>를 바꾸면 모서리 역할과 높이의 「지금 값」이 바뀝니다. 브랜드 파일이 바꾸는 것은 브랜드 색과 형태(모서리 역할 · 높이) · 그림 자산 모양(솔리드 · 라인)뿐입니다.</p>
 </Section>
 <Section title="단계" en="Scale">
 <Card of={S.간격} title="간격" en="Spacing" desc="막대 길이 = 실제 값" />

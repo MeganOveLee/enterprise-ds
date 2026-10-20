@@ -14,6 +14,7 @@
  *   색(필수)   --brand-50~900 · --accent-500   (목록은 _template.css)
  *   형태(선택) --radius-{btn · input · checkbox · chip · item · card · panel · popover · skeleton}
  *                   --size-input · --size-btn · --size-btn-sm
+ *   그림(선택) --art-solid · --art-line — 빈 상태 일러스트 · 폴더 · 파일 형식 아이콘의 모양. 이 브랜드는 라인 (DS-ADR-037)
  *   그 밖(단계 --radius-sm/md/lg, 간격, 글자, 신호색)은 덮지 않는다 — 스태틱.
  *
  * 대비 (2026-10-13 계산, WCAG)
@@ -49,4 +50,8 @@
   --size-input:      32px;   /* 28 → 32. 버튼과 같은 줄이라 같은 값 */
   --size-btn:        32px;
   --size-btn-sm:     28px;   /* 작은 버튼도 한 단계 위로 (26 → 28) */
+
+  /* --- 그림 자산 (DS-ADR-037) — 하나만 block -------------------------------- */
+  --art-solid: none;
+  --art-line:  block;
 }

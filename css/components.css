@@ -395,7 +395,7 @@
 .tree__item[aria-selected="true"] { background: var(--color-bg-brand-subtle); font-weight: var(--font-weight-semibold); }
 .tree__item:focus-visible { outline: 2px solid transparent; box-shadow: inset 0 0 0 1px var(--color-border-focus), inset 0 0 0 4px var(--color-focus-ring); }   /* 스크롤 상자 안 — 안쪽 글로우 (DS-ADR-023 예외와 같음) */
 .tree__caret { width: 12px; flex-shrink: 0; display: inline-flex; color: var(--color-icon-base); }   /* 꺾쇠 = Figma icon-base (TD-108, 구 icon-muted) */
-.tree__icon { flex-shrink: 0; display: inline-flex; color: var(--color-icon-warning); }   /* 폴더 = 노란 채운 폴더(Figma solid/folder · folder-open) */
+.tree__icon { flex-shrink: 0; display: inline-flex; color: var(--color-icon-warning); }   /* 폴더 = 그림 자산(.ds-art — 솔리드 Figma solid/folder · folder-open, 라인 Figma Icons folder). 두 모양 같은 색 (DS-ADR-037) */
 
 /* ============================================================
  * 상단 GNB 헤더 (모든 페이지 공통)
@@ -1392,7 +1392,7 @@ body.dark-mode .pop .contents .pro_table:not(:has(.form-grid-2)):not(.seach_arm:
     color: var(--color-text-base);
 }
 .file-download-list .file-icon { flex: none; width: 18px; height: 18px; color: var(--color-icon-muted); }
-.file-download-list .file-icon svg { display: block; width: 100%; height: 100%; }
+.file-download-list .file-icon svg { width: 100%; height: 100%; }   /* display 는 그림 자산 규칙(.ds-art)만 정함 */
 .file-download-list .file-name { color: var(--color-text-base); font-weight: var(--font-weight-semibold); text-decoration: none; }
 .file-download-list a.file-name:hover { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
 .file-download-list a.file-name:focus-visible { outline: 2px solid var(--color-border-focus); outline-offset: 2px; border-radius: 2px; }
@@ -1410,8 +1410,9 @@ body.dark-mode .pop .contents .pro_table:not(:has(.form-grid-2)):not(.seach_arm:
 .file-download-list li:has(a.file-name:is(:hover, :focus-visible))::after { opacity: 1; }
 @media (forced-colors: active) { .file-download-list li:has(a.file-name)::after { background-color: CanvasText; } }
 
-/* 첨부 파일 형식 아이콘 .file-icon--<형식> — 형식마다 색 + 확장자 띠(PDF · XLS · DOC · PPT · DWG · ZIP).
+/* 첨부 파일 형식 아이콘 .file-icon--<형식> — 형식마다 색 + 형식 글자(PDF · XLS · DOC · PPT · DWG · ZIP).
  * 이전 버전도 확장자마다 다른 아이콘(PDF 빨강 · 엑셀 초록 …) — 그림 파일 대신 아이콘 토큰 색.
+ * 그림 자산(.ds-art, DS-ADR-037): 솔리드 = 종이 + 색 띠, 라인 = 파일 윤곽 + 아래 형식 글자. 색은 두 모양 같음(아래 형식 색)
  * 상세 창 첨부 목록 · 등록 창 업로더 · 최근 문서가 같이 씀. 그 밖 형식(--file) = 흐린 회색 */
 .file-icon.file-icon--pdf { color: var(--color-icon-danger); }
 .file-icon.file-icon--xls { color: var(--color-icon-success); }
@@ -3986,14 +3987,30 @@ body.dark-mode :is(.skeleton-line, .skeleton-title, .skeleton-block) { --skeleto
     background: var(--color-bg-base);
 }
 
+/* ── 그림 자산 .ds-art — 솔리드 · 라인을 브랜드 파일 한 곳에서 바꿈 (DS-ADR-037, DS-ADR-018 「브랜드 선택은 제품 설정 · 마크업이 고름」 대체) ──
+ * 대상 = 그림 자산 셋: 빈 상태 일러스트(.empty__icon) · 폴더(.tree__icon) · 파일 형식(.file-icon)
+ *   UI 아이콘(검색 · 닫기 · 달력 · 상태 아이콘 · LNB 레일)은 대상이 아님 — 모든 브랜드가 라인 세트 하나
+ * 마크업: 그림 자리 클래스 + .ds-art 안에 두 모양을 함께 둔다 — <svg class="ds-art__solid"> + <svg class="ds-art__line">
+ * 어느 쪽이 보일지는 브랜드 파일의 토큰 두 줄이 정한다: --art-solid · --art-line (block | none, 하나만 block)
+ *   브랜드 파일에 줄이 없으면 솔리드(Default와 같음). 모양만 바뀌고 색 · 크기 규칙은 두 모양이 같은 자리 클래스를 따른다
+ * 두 svg 모두 aria-hidden — 뜻은 옆 글자(빈 상태 제목 · 폴더 이름 · 파일 이름)가 맡고, 숨긴 쪽은 display:none 이라 읽히지 않음
+ * 두 모양의 display 는 아래 두 줄만 정한다(다른 규칙에서 이 svg 의 display 를 정하지 않음) */
+.ds-art { display: inline-flex; flex: none; align-items: center; justify-content: center; }
+.ds-art > .ds-art__solid { display: var(--art-solid, block); }
+.ds-art > .ds-art__line  { display: var(--art-line, none); }
+
 /* ── 빈 상태 .empty ─────────────────────────────────────────────────────────
- * 구성(D-1 Empty Composition): 픽토그램 + 제목 + 설명 + 주 액션 1개(+ 보조 링크). 아이콘+문구 단독은 쓰지 않음
- * 놓이는 자리(D-1 Placement): 기본 = 영역 안 · .empty--card = 카드 안(여백 작게) · .empty--page = 페이지 전체
+ * 구성(D-1 Empty Composition): 일러스트 + 제목 + 설명 + 주 액션 1개(+ 보조 링크). 아이콘+문구 단독은 쓰지 않음
+ * 놓이는 자리(D-1 Placement): 기본 = 영역 안 · 표 아래(.grid-table + .empty) · .empty--card = 카드 안(여백 작게) · .empty--page = 페이지 전체
  * 빈 이유가 액션을 정한다(D-1 Empty ErrorVariant):
  *   아직 없음 → 만들기(primary) / 네트워크 오류 → 다시 시도 / 서버 오류 → 다시 시도 + 문의 + 오류 코드 / 일시적 오류 → 다시 시도 + 문의
- *   오류는 .empty--error: 픽토그램을 위험 색으로, 밝은 느낌 없이. 서버 원문은 보이지 않고 코드만(.empty__code)
+ *   오류는 .empty--error: 일러스트(라인 픽토그램 · 솔리드 배지 글리프)를 위험 색으로, 밝은 느낌 없이. 서버 원문은 보이지 않고 코드만(.empty__code)
+ * 일러스트 = 그림 자산(.empty__icon.ds-art, 위) — 크기는 배치가 정한다(아래 --empty-* 세 값)
  */
 .empty {
+    --empty-solid-size: 104px;   /* 솔리드 일러스트 폭(높이 = 폭 × 104/120) */
+    --empty-line-size: 48px;     /* 라인 픽토그램 크기 */
+    --empty-badge-scale: 1;      /* 솔리드 유형 배지 배율 — 작은 일러스트에서 배지를 키워 뭉개지지 않게 */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -4002,32 +4019,26 @@ body.dark-mode :is(.skeleton-line, .skeleton-title, .skeleton-block) { --skeleto
     padding: var(--spacing-48) var(--spacing-24);
     color: var(--color-text-muted);
 }
-.empty__icon {
-    width: 48px;
-    height: 48px;
-    margin-bottom: var(--spacing-8);
-    color: var(--color-icon-muted);
-}
-.empty__icon svg { width: 100%; height: 100%; }
+.empty__icon { display: flex; justify-content: center; color: var(--color-icon-muted); }
+.empty__icon > svg { width: var(--empty-line-size, 48px); height: var(--empty-line-size, 48px); margin-bottom: var(--spacing-8); }   /* 라인 픽토그램 — 아래 8 */
+.empty__icon > .empty-illo { width: var(--empty-solid-size, 104px); height: auto; margin-bottom: var(--spacing-4); }   /* 솔리드 일러스트 — 그림 아래 그림자가 있어 아래 4 */
 /* 제목 · 설명 줄 높이 = Figma Empty(글 상자 17 · 14, 1.2) (TD-108 32번) */
 .empty__title { margin: 0; color: var(--color-text-base); font-size: var(--heading-xs); font-weight: 600; line-height: var(--line-height-tight); }
 .empty__desc  { margin: 0; max-width: 360px; font-size: var(--body-sm); line-height: var(--line-height-base); word-break: keep-all; }
 .empty__code  { margin: 0; font-size: var(--body-sm); color: var(--color-text-muted); font-variant-numeric: tabular-nums; }
 .empty__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--spacing-8); margin-top: var(--spacing-8); }
-.empty--card { padding: var(--spacing-24) var(--spacing-16); }
-.empty--card .empty__icon { width: 32px; height: 32px; }
-.empty--page { min-height: 60vh; justify-content: center; }
+/* 배치별 크기 — 솔리드 영역 104 · 표 아래 56(라인 48과 같은 높이) · 카드 40(라인 32 자리) · 페이지 128 / 라인 48 · 카드 32 (DS-ADR-037) */
+.grid-table + .empty { --empty-solid-size: 56px; --empty-badge-scale: 1.25; }
+.empty--card { --empty-solid-size: 40px; --empty-line-size: 32px; --empty-badge-scale: 1.5; padding: var(--spacing-24) var(--spacing-16); }
+.empty--page { --empty-solid-size: 128px; min-height: 60vh; justify-content: center; }
 .empty--error .empty__icon { color: var(--color-icon-danger); }
 
-/* 빈 상태 일러스트 .empty-illo — 폴더 + 이유 배지(검색 · 네트워크 · 오류). 색은 전부 토큰 → 브랜드 · 다크 따라감 (10/8)
- * 브랜드 선택은 제품 설정: Default = 일러스트(.empty__icon--illo) · Fashion · Precision(공개 시연) = 선 픽토그램. 카드 안(.empty--card)은 둘 다 픽토그램
+/* 솔리드 일러스트 .empty-illo — 폴더 + 이유 배지(검색 · 네트워크 · 오류). 색은 전부 토큰 → 브랜드 · 다크 따라감
  * 배지 글리프는 currentColor → .empty__icon 색(icon-muted, 오류는 icon-danger)을 따른다 */
-.empty__icon--illo { width: 104px; height: auto; margin-bottom: var(--spacing-4); }
-.empty--page .empty__icon--illo { width: 128px; }
 .empty-illo {
     --empty-illo-edge: color-mix(in srgb, var(--color-border-brand) 30%, var(--color-border-base));
     --empty-illo-shadow: rgb(0 0 0 / .08);
-    display: block; width: 100%; height: auto; overflow: visible;
+    overflow: visible;
 }
 body.dark-mode .empty-illo { --empty-illo-shadow: rgb(0 0 0 / .2); }
 .empty-illo__shadow { fill: var(--empty-illo-shadow); }
@@ -4035,6 +4046,7 @@ body.dark-mode .empty-illo { --empty-illo-shadow: rgb(0 0 0 / .2); }
 .empty-illo__line   { fill: none; stroke: var(--color-border-strong); stroke-width: 1.5; }
 .empty-illo__folder { fill: var(--color-bg-base); fill-opacity: .85; stroke: var(--empty-illo-edge); stroke-width: 1; }
 .empty-illo__tint   { fill: var(--color-bg-brand-subtle); fill-opacity: .8; }
+.empty-illo__mark   { transform-origin: 98px 77px; transform: scale(var(--empty-badge-scale, 1)); }   /* 배지 가운데(98, 77) 기준 */
 .empty-illo__badge  { fill: var(--color-bg-base); stroke: var(--empty-illo-edge); stroke-width: 1.5; }
 .empty-illo__glyph  { fill: none; stroke: currentColor; stroke-width: 4.2; stroke-linecap: round; stroke-linejoin: round; }
 

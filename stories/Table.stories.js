@@ -4,6 +4,7 @@
 import { matrix } from './_matrix.js';
 import { enablePseudo } from './_pseudo.js';
 import { doDont } from './_dodont.js';
+import { emptyArt } from './_illustrations.js';
 
 const STATUS = { 작업: ['info', '작업 중'], 검토: ['warning', '검토 중'], 승인: ['success', '승인'] };
 const ROWS = [
@@ -63,8 +64,8 @@ export const 기본 = {
 };
 
 // ── 결과 0건 — 헤더 행은 그대로, 표 아래 빈 상태(검색 결과 없음 = 기본 .empty + [검색 조건 초기화]), 내보내기는 누를 수 없음 ──
-const NOHIT = '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="21" cy="21" r="12"/><path d="m30 30 10 10"/></svg>';
-const EMPTY_HIT = (actions = true) => '<div class="empty" role="status"><span class="empty__icon">' + NOHIT + '</span><p class="empty__title">조건에 맞는 문서가 없습니다</p>' +
+// 일러스트 = 그림 자산(솔리드 · 라인, 브랜드 파일이 고름). 표 헤더 행 바로 아래라 작은 크기(.grid-table + .empty)
+const EMPTY_HIT = (actions = true) => '<div class="empty" role="status">' + emptyArt('search') + '<p class="empty__title">조건에 맞는 문서가 없습니다</p>' +
   '<p class="empty__desc">기간을 넓히거나 작업현황을 \'전체\'로 바꿔 주십시오.</p>' +
   (actions ? '<div class="empty__actions"><button type="button" class="btn btn--secondary btn--transparent">검색 조건 초기화</button></div>' : '') + '</div>';
 const ZERO = resultHead(0) +

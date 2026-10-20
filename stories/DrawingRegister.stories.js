@@ -4,6 +4,7 @@
 import { flow, shot, MARK, wireSections, toggleIcon } from './_flow.js';
 import { fileIcon } from './_fileicon.js';
 import { doDont } from './_dodont.js';
+import { emptyArt } from './_illustrations.js';
 
 const svg = (d, s = 16) => '<svg width="' + s + '" height="' + s + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + d + '</svg>';
 const I = {
@@ -14,7 +15,6 @@ const I = {
   reset: '<circle cx="12" cy="12" r="9"/><path d="M9 9l6 6M15 9l-6 6"/>',
   danger: '<circle cx="12" cy="12" r="8.34"/><path d="m9.5 9.5 5 5m0-5-5 5"/>',   // Alert 위험 아이콘(x-circle)과 같은 모양
 };
-const INBOX = '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M6 28 12 10h24l6 18v10H6z"/><path d="M6 28h11l3 5h8l3-5h11"/></svg>';
 const btn = (t, cls, { icon = '', label = '', extra = '' } = {}) => '<button type="button" class="btn ' + cls + '"' + (label ? ' aria-label="' + label + '"' : '') + (extra ? ' ' + extra : '') + '>' + (icon ? svg(icon, 14) : '') + t + '</button>';
 const ck = (label, on = false) => '<label class="checkbox"><input type="checkbox" aria-label="' + label + '"' + (on ? ' checked' : '') + '></label>';
 const REQ = '<span class="required" aria-hidden="true"></span>';
@@ -52,7 +52,7 @@ const related = (what, head, rows) => (id, open) => '<div class="table_list" id=
   '<colgroup><col style="width:44px">' + head.map((h, i) => '<col' + (i === 1 ? '' : ' style="width:' + (i === 0 ? 150 : 90) + 'px"') + '>').join('') + '</colgroup>' +
   '<thead><tr><th>' + ck('전체 선택') + '</th>' + head.map((h) => '<th>' + h + '</th>').join('') + '</tr></thead><tbody>' +
   rows.map((r) => '<tr><td>' + ck(r[0] + ' 선택') + '</td><td><a href="#" class="grid-custom-rows-link">' + r[0] + '</a></td><td class="is-left">' + r[1] + '</td><td>' + r[2] + '</td></tr>').join('') + '</tbody></table>' +
-  (rows.length ? '' : '<div class="empty" role="status"><span class="empty__icon">' + INBOX + '</span><p class="empty__title">추가한 관련 ' + what + iga(what) + ' 없습니다</p><p class="empty__desc">[추가]를 눌러 ' + what + '을 선택해 주십시오.</p></div>') +
+  (rows.length ? '' : '<div class="empty" role="status">' + emptyArt('empty') + '<p class="empty__title">추가한 관련 ' + what + iga(what) + ' 없습니다</p><p class="empty__desc">[추가]를 눌러 ' + what + '을 선택해 주십시오.</p></div>') +
   '</div></div>';
 const addDel = (what) => btn('추가', 'btn--secondary btn--outlined', { label: '관련 ' + what + ' 추가' }) + btn('삭제', 'btn--destructive btn--outlined', { label: '관련 ' + what + ' 삭제' });
 
