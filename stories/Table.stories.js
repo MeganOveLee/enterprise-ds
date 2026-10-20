@@ -25,7 +25,7 @@ const row = (r, i, { sel = false, ps = '', linkPs = '' } = {}) => {
   return '<tr' + (cls ? ' class="' + cls + '"' : '') + (sel ? ' aria-selected="true"' : '') + '>' +
     '<td>' + (i + 1) + '</td><td>' + ck(r[0] + ' 선택', sel) + '</td>' +
     '<td><a href="#" class="grid-custom-rows-link' + (linkPs ? ' ' + linkPs : '') + '">' + r[0] + '</a></td><td class="is-left">' + r[1] + '</td>' +
-    '<td><a href="#" class="grid-link" aria-label="' + r[0] + ' 버전 이력">' + r[2] + '</a></td><td>' + chip(r[3]) + '</td><td>' + r[4] + '</td><td>' + r[5] + '</td></tr>';
+    '<td><a href="#" class="grid-link" aria-label="' + r[2] + ' 버전 이력 (' + r[0] + ')">' + r[2] + '</a></td><td>' + chip(r[3]) + '</td><td>' + r[4] + '</td><td>' + r[5] + '</td></tr>';
 };
 const table = (rows, head = true) => '<table class="grid-table">' + COLS + (head ? HEAD : '') + '<tbody>' + rows + '</tbody></table>';
 const wrap = (t, w = '760px') => '<div style="max-width:' + w + '"><div class="table_list"><div class="list">' + t + '</div></div></div>';
@@ -51,7 +51,7 @@ const SRC = [
   '    <thead><tr><th>No.</th><th>문서 번호</th><th>문서 명</th><th>버전</th><th>작업현황</th><th>등록일</th></tr></thead>',
   '    <tbody>',
   '      <tr><td>1</td><td><a href="#" class="grid-custom-rows-link">DOC-2610-0013</a></td><td class="is-left">브레이크 캘리퍼 조립 사양서</td>',
-  '          <td><a href="#" class="grid-link" aria-label="DOC-2610-0013 버전 이력">B.2</a></td>',
+  '          <td><a href="#" class="grid-link" aria-label="B.2 버전 이력 (DOC-2610-0013)">B.2</a></td>',
   '          <td><span class="status-chip status-chip--info">작업 중</span></td><td>2026-10-13</td></tr>',
   '      <tr class="is-selected" aria-selected="true">…</tr>',
   '    </tbody>',
