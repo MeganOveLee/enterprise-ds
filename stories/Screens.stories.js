@@ -29,7 +29,6 @@ const I = {
   close: '<path d="M6 6l12 12M18 6L6 18"/>',
   down: '<path d="M6 9l6 6 6-6"/>',
   folder: '<path d="M3 6a1 1 0 0 1 1-1h5l2 2h9a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/>',
-  file: '<path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/>',
   excel: '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9l4 6M11 9l-4 6M14.5 9H18M14.5 12H18M14.5 15H18"/>',   // Button 엑셀 아이콘과 같은 모양
   approve: '<path d="M5 12l4 4 10-10"/>',
   minus: '<path d="M6 12h12"/>',
@@ -60,6 +59,8 @@ const ROWS = [
   ['DOC-2609-0002', '모터 마운트 진동 시험 계획서', 'C.1', '검토', '최하은', '2026-09-17', '최하은', '2026-09-18'],
   ['DOC-2609-0001', '설계 검토 회의록 양식', 'A.1', '승인', '정우진', '2026-09-15', '정우진', '2026-09-15'],
 ];
+// 「파일」 열 첨부 형식 — 줄마다 다른 형식(문서 성격에 맞춤). 최근 문서(RECENT)와 같은 문서는 같은 형식
+const FILE_EXT = ['pdf', 'docx', 'pdf', 'pdf', 'xlsx', 'zip', 'pdf', 'dwg', 'pdf', 'pdf', 'xlsx', 'pptx', 'docx'];
 
 const chip = (k) => '<span class="status-chip status-chip--' + STATUS[k][0] + '">' + STATUS[k][1] + '</span>';
 const ck = (label, extra = '') => '<label class="checkbox"><input type="checkbox" aria-label="' + label + '"' + extra + '></label>';
@@ -166,7 +167,7 @@ const grid = ({ paging = false } = {}) =>
     // 정렬 = DS .grid-table 기본 가운데(이전 버전 그리드), 문서 명만 왼쪽(.is-left)
     '<td>' + (i + 1) + '</td><td>' + ck(r[0] + ' 선택', i === 1 ? ' checked' : '') + '</td>' +
     '<td><a href="#" class="grid-custom-rows-link">' + r[0] + '</a></td><td class="is-left">' + r[1] + '</td>' +
-    '<td>' + svg(I.file, 16) + '</td><td>' + r[2] + '</td><td>' + chip(r[3]) + '</td>' +
+    '<td>' + fileIcon(FILE_EXT[i], { label: true }) + '</td><td>' + r[2] + '</td><td>' + chip(r[3]) + '</td>' +
     '<td>' + r[4] + '</td><td>' + r[5] + '</td><td>' + r[6] + '</td><td>' + r[7] + '</td></tr>').join('') +
   '</tbody></table></div>' + (paging ? pager() : '') + '</div>';
 

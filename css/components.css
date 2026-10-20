@@ -1410,7 +1410,8 @@ body.dark-mode .pop .contents .pro_table:not(:has(.form-grid-2)):not(.seach_arm:
 .file-download-list li:has(a.file-name:is(:hover, :focus-visible))::after { opacity: 1; }
 @media (forced-colors: active) { .file-download-list li:has(a.file-name)::after { background-color: CanvasText; } }
 
-/* 첨부 파일 형식 아이콘 .file-icon--<형식> — 형식마다 색 + 형식 글자(PDF · XLS · DOC · PPT · DWG · ZIP).
+/* 첨부 파일 형식 아이콘 .file-icon--<형식> — 형식마다 색 + 형식 글자(PDF · XLS · DOC · PPT · DWG · ZIP · MP4 · TXT).
+ * 형식 목록은 Figma Art/File(✨ Icons › 그림 자산)과 같다 (TD-108 40번).
  * 이전 버전도 확장자마다 다른 아이콘(PDF 빨강 · 엑셀 초록 …) — 그림 파일 대신 아이콘 토큰 색.
  * 그림 자산(.ds-art, DS-ADR-037): 솔리드 = 종이 + 색 띠, 라인 = 파일 윤곽 + 아래 형식 글자. 색은 두 모양 같음(아래 형식 색)
  * 상세 창 첨부 목록 · 등록 창 업로더 · 최근 문서가 같이 씀. 그 밖 형식(--file) = 흐린 회색 */
@@ -1420,7 +1421,9 @@ body.dark-mode .pop .contents .pro_table:not(:has(.form-grid-2)):not(.seach_arm:
 .file-icon.file-icon--ppt,
 .file-icon.file-icon--zip { color: var(--color-icon-warning); }
 .file-icon.file-icon--dwg { color: var(--color-icon-base); }
-.file-icon.file-icon--file { color: var(--color-icon-muted); }
+.file-icon.file-icon--mp4,
+.file-icon.file-icon--txt,
+.file-icon.file-icon--file { color: var(--color-icon-muted); }   /* 형식 글자만 다름 — Figma Art/File Video · Memo · File 라인 색과 같음 */
 
 /* 검색/결과 헤더 (.seach_arm) — 원본 클래스명 그대로 (오타도 보존) */
 .seach_arm {
@@ -2067,7 +2070,8 @@ body.dark-mode .resumable:not(.center) .fileList .file-item { background: var(--
 .grid-table .checkbox { margin: 0; gap: 0; vertical-align: middle; }   /* 칸 가운데 체크만 — 글자 없는 체크박스 */
 .grid-table td .btn { height: min(var(--size-btn), 28px); }   /* 셀 안 버튼은 행 높이 30(DS-ADR-030) 안에 — Precision 버튼 32가 행을 33으로 늘리던 것 */
 .grid-table td .btn--icon { width: min(var(--size-btn), 28px); }
-.grid-table td > svg { vertical-align: middle; color: var(--color-icon-muted); }   /* 칸 안 아이콘(첨부 있음 등) — 글줄 가운데 · 흐린 아이콘색 (TD-75, 구 Screens .scr-file) */
+.grid-table td > svg { vertical-align: middle; color: var(--color-icon-muted); }   /* 칸 안 아이콘 — 글줄 가운데 · 흐린 아이콘색 (TD-75) */
+.grid-table td > .file-icon { vertical-align: middle; }   /* 「파일」 열 = 파일 형식 그림 자산(형식 색 · 브랜드 따라 솔리드 ↔ 라인, DS-ADR-026 · 037, TD-108 38번) */
 /* 바깥 틀 안에서 목록이 길면 머리는 위에 붙어 있음(그리드 라이브러리와 같게) */
 .table_list .list .grid-table th { position: sticky; top: 0; z-index: 1; }
 /* 편집 표 .grid-table--edit (TD-93 10/16) — 이전 버전 편집 그리드(overrides .ui-grid-edit) 그대로:

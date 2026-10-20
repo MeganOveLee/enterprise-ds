@@ -13,6 +13,8 @@ const TYPES = {
   ppt: ['ppt', 'PPT'], pptx: ['ppt', 'PPT'],
   dwg: ['dwg', 'DWG'],
   zip: ['zip', 'ZIP'],
+  mp4: ['mp4', 'MP4'], mov: ['mp4', 'MP4'], avi: ['mp4', 'MP4'],
+  txt: ['txt', 'TXT'], log: ['txt', 'TXT'],
 };
 const label = (text, x, y, fill) => '<text x="' + x + '" y="' + y + '" text-anchor="middle" font-size="5" font-weight="700" font-family="Arial, sans-serif" style="fill:' + fill + '">' + text + '</text>';
 const fileSolid = (text) => '<svg class="ds-art__solid" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false">' +
@@ -25,10 +27,12 @@ const fileLine = (text) => '<svg class="ds-art__line" width="20" height="20" vie
   '<path d="M4.44 12V4.44a1.39 1.39 0 0 1 1.39-1.39h4.86l4.87 4.87V12M10.69 3.05v4.87h4.87" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>' +
   label(text, 10, 17.3, 'currentColor') + '</svg>';
 
-export const fileIcon = (name) => {
+// label: 옆에 파일 이름이 없는 자리(목록 표 「파일」 열)에서 true — 형식 글자를 읽어 주는 이름(role="img")
+export const fileIcon = (name, { label = false } = {}) => {
   const ext = String(name).toLowerCase().split('.').pop();
   const [type, text] = TYPES[ext] || ['file', 'FILE'];
-  return '<span class="file-icon file-icon--' + type + ' ds-art">' + fileSolid(text) + fileLine(text) + '</span>';
+  const a11y = label ? ' role="img" aria-label="' + text + ' 파일"' : '';
+  return '<span class="file-icon file-icon--' + type + ' ds-art"' + a11y + '>' + fileSolid(text) + fileLine(text) + '</span>';
 };
 
 // ── 폴더 트리 아이콘 ── 색 = .tree__icon 글자색(--color-icon-warning), 두 모양 같은 색
