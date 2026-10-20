@@ -67,6 +67,18 @@ export const Label = {
   render: () => '<div style="max-width:480px">' + LABEL.join('') + '</div>',
 };
 
+// 지우기(×) — 조회 조건 칸에 값이 있을 때만(DS-ADR-042). data-ds-clear 를 달면 js/clear.js 가 버튼을 붙임. 편집 폼 · 읽기 전용 칸에는 붙지 않음
+const CLEAR = [
+  '<div class="form-grid-2">',
+  '  <div class="ff-field"><label class="search-label" for="in-clear-no">문서 번호</label><div class="td"><input class="input" id="in-clear-no" value="DOC-2610" data-ds-clear></div></div>',
+  '  <div class="ff-field"><label class="search-label" for="in-clear-ro">문서 분류</label><div class="td"><input class="input" id="in-clear-ro" value="/제품 문서/설계 문서" readonly data-ds-clear></div></div>',
+  '</div>',
+];
+export const 지우기 = {
+  parameters: html(CLEAR),
+  render: () => '<div style="max-width:480px">' + CLEAR.join('') + '</div>',
+};
+
 export const Locked = {
   parameters: html(LOCKED),
   render: () => matrix(['비활성', '읽기 전용'], [

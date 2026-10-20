@@ -26,6 +26,7 @@ v1.0 · 설계 · 퍼블리싱 이세영
 | `js/datepicker.js` | 날짜 선택 (WAI-ARIA APG Date Picker Dialog 패턴) |
 | `js/tabs.js` | 팝업 탭 넘침 — 탭이 줄보다 많으면 양 끝에 이전 · 다음 버튼. 고른 탭 밑줄이 다음 탭으로 미끄러짐 |
 | `js/motion.js` | 인터랙션 — 숫자 굴러가기 · 방금 바뀐 행 · 처리 끝 체크 · 다음 차이 · 끌어 순서 바꾸기 · 되돌리기 토스트 (`window.dsMotion`) |
+| `js/clear.js` | 조회 조건 입력 · 날짜 칸의 지우기(×) 버튼 — `data-ds-clear` 또는 검색 조건 영역(`.mainTable`) 안 칸에 붙음 |
 | `js/modal.js` | 확인 창 — `.modal` 열기 · 닫기 · 포커스 가두기 · Esc (APG Dialog (Modal) 패턴) |
 | `stories/` · `.storybook/` | Storybook (HTML 프레임워크) |
 
@@ -43,6 +44,7 @@ v1.0 · 설계 · 퍼블리싱 이세영
 <script src="js/tabs.js"></script>
 <script src="js/modal.js"></script>
 <script src="js/motion.js"></script>
+<script src="js/clear.js"></script>
 ```
 
 ## 규칙

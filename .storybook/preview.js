@@ -18,7 +18,7 @@ const withTheme = (Story, ctx) => {
   wrap.className = 'sb-ds';
   if (typeof out === 'string') wrap.innerHTML = out; else wrap.appendChild(out);
   // 날짜 선택은 그려진 뒤 초기화 (이미 붙은 칸은 건너뜀)
-  requestAnimationFrame(() => window.datepickerInit && window.datepickerInit());
+  requestAnimationFrame(() => { window.datepickerInit && window.datepickerInit(); window.dsClearInit && window.dsClearInit(); });   // 지우기(×)는 날짜 칸이 그려진 뒤
   return wrap;
 };
 

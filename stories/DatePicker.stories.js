@@ -28,6 +28,11 @@ export const 기간 = {
   render: () => `<div style="max-width:420px"><div class="ui-datepicker-range">${dp('시작일', '2026-10-06')}<span class="ui-datepicker-range__sep">~</span>${dp('종료일', '2026-10-20')}</div></div>`,
 };
 
+// 지우기(×) — 조회 조건의 기간에 값이 있을 때 틀 안 맨 끝에(DS-ADR-042). data-ds-clear 또는 검색 조건 영역(.mainTable) 안이면 js/clear.js 가 붙임
+export const 지우기 = {
+  parameters: { docs: { source: { code: range('2026-09-01', '2026-09-30', { x1: ' data-ds-clear', x2: ' data-ds-clear' }) } } },
+  render: () => '<div style="max-width:360px">' + range('2026-09-01', '2026-09-30', { x1: ' data-ds-clear', x2: ' data-ds-clear' }) + '</div>',
+};
 export const 고를_수_있는_범위 = {
   parameters: { docs: { description: { story: '`min` · `max` 밖의 날짜는 비활성(취소선)으로 보입니다.' } } },
   // min · max 값은 모양을 보이려는 예시(업무 규칙 아님, TD-120). 범위는 화면이 정함

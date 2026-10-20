@@ -39,6 +39,7 @@ import * as S from './DatePicker.stories.js';
 <Section title="예시" en="Examples">
 <Card of={S.하나} title="단일 날짜" en="Single" desc="납기일 · 희망일처럼 날짜 하나를 입력합니다." />
 <Card of={S.기간} title="기간" en="Range" desc="검색 기간처럼 시작일과 종료일을 입력합니다. 종료일은 시작일보다 앞 날짜를 선택할 수 없습니다." />
+<Card of={S.지우기} title="값 지우기" en="Clear" desc="기본보다 조회 조건의 기간에 값이 있을 때. 틀 안 맨 끝 ×로 값을 비웁니다(Input 「값 지우기」와 같은 규칙, DS-ADR-042)." />
 <Card of={S.고를_수_있는_범위} title="선택 가능 범위" en="Min · Max" desc="필드에 min · max를 주면 그 밖의 날짜는 달력에서 비활성이고, 연도 목록도 그 사이 해만 보입니다. 견본 값(min 2026-10-10 · max 2026-10-25)은 모양을 보이려고 정한 예시이고 업무 규칙이 아닙니다. 범위는 화면이 정합니다(예: 희망일은 오늘 이후)." />
 <Card of={S.펼친_달력} title="펼친 달력" en="Calendar" desc="왼쪽 시작일 필드의 달력을 연 모습입니다. 고른 날 · 기간 사이 · 다른 쪽 끝 · 선택 가능 범위 밖 · 앞뒤 달 날짜를 한 화면에 보여 줍니다." />
 </Section>

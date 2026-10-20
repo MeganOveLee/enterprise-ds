@@ -1120,6 +1120,26 @@
     color: var(--color-text-muted);
 }
 
+/* 지우기(×) 버튼 .field-clear — 조회 조건의 입력 · 날짜 칸에 값이 있을 때만 보임 (DS-ADR-042, TD-120). js/clear.js 가 붙임.
+ * 텍스트 칸 = .field-clear-wrap 으로 감싸 칸 안 오른쪽에 겹침(칸 오른쪽 여백 28), 날짜 칸 = .ui-datepicker 틀 안 맨 끝.
+ * 누름 영역 24(최소 누름 영역 24, DS-ADR-020) · 아이콘 12 · 색 icon-muted → 마우스 올림 icon-base. 편집 폼 · 읽기 전용 · 비활성 칸에는 붙지 않음 */
+.field-clear-wrap { position: relative; display: flex; flex: 1; min-width: 0; }
+.field-clear-wrap > .input { flex: 1; min-width: 0; padding-right: 28px; }
+.field-clear {
+    flex: none;
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 24px; height: 24px; padding: 0;
+    border: 0; border-radius: var(--radius-rounded);
+    background: transparent; color: var(--color-icon-muted);
+    cursor: pointer;
+}
+.field-clear[hidden] { display: none; }
+.field-clear:hover { background: var(--color-bg-muted); color: var(--color-icon-base); }
+.field-clear:focus-visible { outline: 2px solid transparent; box-shadow: 0 0 0 2px var(--color-border-focus), 0 0 0 5px var(--color-focus-ring); }
+.field-clear-wrap > .field-clear { position: absolute; top: 50%; right: 2px; transform: translateY(-50%); }
+.ui-datepicker > .field-clear { margin-right: 2px; }
+@media (forced-colors: active) { .field-clear { color: ButtonText; } }
+
 /* ============================================================
  * 폼 등록·수정 공통 — 필수 마크 / textarea / 파일 업로드 / 섹션
  * ============================================================ */

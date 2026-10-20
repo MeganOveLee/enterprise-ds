@@ -68,8 +68,9 @@ const ck = (label, extra = '') => '<label class="checkbox"><input type="checkbox
 const dp = (label, value = '', extra = '') =>
   '<div class="ui-datepicker"><button type="button" class="ui-datepicker__icon">' + svg(I.cal, 14) + '</button>' +
   '<input class="ui-datepicker__input" aria-label="' + label + '" placeholder="YYYY-MM-DD" value="' + value + '"' + extra + '></div>';
-const range = (label, a = '', b = '') =>
-  '<div class="ui-datepicker-range">' + dp(label + ' 시작', a) + '<span class="ui-datepicker-range__sep">~</span>' + dp(label + ' 끝', b) + '</div>';
+const range = (label, a = '', b = '', extra = '') =>
+  '<div class="ui-datepicker-range">' + dp(label + ' 시작', a, extra) + '<span class="ui-datepicker-range__sep">~</span>' + dp(label + ' 끝', b, extra) + '</div>';
+const CLR = ' data-ds-clear';   // 조회 조건 칸 = 값이 있으면 지우기(×) (DS-ADR-042)
 const btn = (t, cls, icon = '') => '<button type="button" class="btn ' + cls + '">' + (icon ? svg(icon, 14) : '') + t + '</button>';
 const sel = (label, opts, pick) => '<select class="select" aria-label="' + label + '">' + opts.map((o) => '<option' + (o === pick ? ' selected' : '') + '>' + o + '</option>').join('') + '</select>';
 // 라벨 위 · 칸 아래 — 검색 폼 · 등록 폼이 같은 짝 (.ff-field > .search-label + .td)
@@ -130,17 +131,17 @@ const searchForm = ({ open = false, mark = false } = {}) => {
   btn('검색 조건 초기화', 'btn--secondary btn--transparent', I.reset) + '</div></div>' +
   '<div class="pro_table"><div class="form-grid-2 form-grid--6">' +
   field('문서 분류', '<input class="input" aria-label="문서 분류" value="/제품 문서/설계 문서" readonly>') +
-  field('문서 번호', '<input class="input" aria-label="문서 번호">') +
-  field('문서 명', '<input class="input" aria-label="문서 명">') +
+  field('문서 번호', '<input class="input" aria-label="문서 번호"' + CLR + '>') +
+  field('문서 명', '<input class="input" aria-label="문서 명"' + CLR + '>') +
   field('작업현황', sel('작업현황', ['전체', '작업 중', '검토 중', '승인', '반려'])) +
-  field('등록일', range('등록일', '2026-09-01', ''), { span: 2 }) +
+  field('등록일', range('등록일', '2026-09-01', '', CLR), { span: 2 }) +
   '</div><div class="search-detail' + (mark ? ' flow-mark' : '') + '" id="' + id + '"' + (open ? '' : ' hidden') + '><div class="form-grid-2 form-grid--6"><div class="search-divider">상세 검색</div>' +
   field('버전', '<div class="radio-group" role="radiogroup" aria-label="버전">' +
     '<label class="radio"><input type="radio" name="' + id + '-ver" checked><span class="radio__mark"></span>최신 버전</label>' +
     '<label class="radio"><input type="radio" name="' + id + '-ver"><span class="radio__mark"></span>모든 버전</label></div>', { span: 2 }) +
   field('등록자', sel('등록자', ['', '김도윤', '이서연'])) +
   field('수정자', sel('수정자', ['', '김도윤', '이서연'])) +
-  field('수정일', range('수정일', '', ''), { span: 2 }) +
+  field('수정일', range('수정일', '', '', CLR), { span: 2 }) +
   '</div></div></div>';
 };
 
