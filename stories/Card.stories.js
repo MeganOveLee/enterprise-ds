@@ -25,10 +25,11 @@ const head = (title, count, right = '') =>
   '<div class="card-header"><h3 class="card-title">' + title + (count !== '' && count !== undefined ? '<span class="card-title-count">' + count + '</span>' : '') + '</h3>' + right + '</div>';
 // 태스크 — 마감까지 남은 날(D-n)을 상태 칩으로
 const TASKS = [['1일 지남', '캘리퍼 조립 사양 검토', '10-12', 'danger'], ['D-1', '하우징 재질 변경 승인 요청', '10-14', 'warning'], ['D-3', '방열판 핀 간격 해석 보완', '10-16', 'info']];
+// 행 = 링크 하나(<li><a href>). 제목이 길면 CSS 가 말줄임 — 전체 이름은 title 속성으로
 const row = ([lead, title, date, tone], x = '', visited = false) =>
-  '<li><a href="#"' + (x.trim() ? ' class="' + x.trim() + '"' : '') + '>' + chip(lead, tone) + '<span class="item-title' + (visited ? ' is-visited' : '') + '">' + title + '</span><span class="item-date">' + date + '</span></a></li>';
+  '<li><a href="#"' + (x.trim() ? ' class="' + x.trim() + '"' : '') + '>' + chip(lead, tone) + '<span class="item-title' + (visited ? ' is-visited' : '') + '" title="' + title + '">' + title + '</span><span class="item-date">' + date + '</span></a></li>';
 const list = (n = 5, visited = -1, data = ROWS) => '<ul class="card-list">' + data.slice(0, n).map((r, i) => row(r, '', i === visited)).join('') + '</ul>';
-const empty = (t = '진행 중인 활동 업무가 없어요', d = '배정된 활동이 생기면 여기에 보여요.') =>
+const empty = (t = '진행 중인 활동 업무가 없습니다', d = '배정된 활동이 생기면 여기에 표시됩니다.') =>
   '<div class="empty empty--card" role="status"><span class="empty__icon">' + svg(INBOX, 32) + '</span><p class="empty__title">' + t + '</p><p class="empty__desc">' + d + '</p></div>';
 const card = ({ title = '결재 업무', count = 2, rows = 5, withMore = true, visited = -1, data = ROWS } = {}) =>
   '<section class="card">' + head(title, count, withMore ? more() : '') + (rows > 0 ? list(rows, visited, data) : empty()) + '</section>';
@@ -85,18 +86,26 @@ export const Playground = {
   render: (a) => box(card(a)),
 };
 
-// ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-102) — 미리보기만, 코드는 위 예시 카드에 ──
-const ddBox = (h) => '<div style="width:100%">' + h + '</div>';
+// ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-108 9번 ① ② — 홈 화면 카드 안 목록 행 기준) — 미리보기만, 코드는 위 예시 카드에 ──
+const ddBox = (h) => '<div style="width:100%;align-self:flex-start">' + h + '</div>';   // 미리보기 위 정렬(TD-108 공통 · 간격)
+const ddCard = (rows) => '<section class="card">' + head('결재 업무', 2, more()) + '<ul class="card-list">' + rows + '</ul></section>';
+// 한 행 안에 링크 여러 곳(하지 않음 예시) — 제목 링크 + 「보기」 링크
+const splitRow = ([lead, title, , tone]) =>
+  '<li>' + chip(lead, tone) + '<span class="item-title"><a href="#" class="grid-custom-rows-link">' + title + '</a></span>' +
+  '<span class="item-date"><a href="#" class="text-link no-arrow">보기</a></span></li>';
+const LONG = [['결재 대기', '브레이크 캘리퍼 조립 사양서 개정에 따른 하우징 재질 변경 검토 보고서', '10-13'], ROWS[1], ROWS[2]];
+const wrapRow = ([lead, title, date, tone]) =>
+  '<li><a href="#">' + chip(lead, tone) + '<span class="item-title" style="white-space:normal">' + title + '</span><span class="item-date">' + date + '</span></a></li>';
 export const 사용_지침 = {
   parameters: { controls: { disable: true } },
-  render: () => doDont([
-    // 근거: Card.mdx 구성 「비어 있음 — .empty.empty--card」 · 예시 「보여 줄 것이 없으면 목록 대신 빈 상태」
-    { title: '비어 있으면 빈 상태',
-      do: [ddBox(card({ title: '활동 업무', count: 0, rows: 0, withMore: false })), '목록 대신 카드 안 빈 상태(.empty--card)를 둡니다.'],
-      dont: [ddBox('<section class="card">' + head('활동 업무', 0) + '<ul class="card-list" style="min-height:140px"></ul></section>'), '빈 목록 자리를 그대로 비워 두지 않습니다.'] },
-    // 근거: Card.mdx 구성 「개수 — 0도 그대로 보여 줍니다」
-    { title: '개수는 0도 표시',
-      do: [ddBox('<section class="card">' + head('결재 업무', 0, more()) + '</section>'), '0도 숨기지 않고 보여 줍니다.'],
-      dont: [ddBox('<section class="card">' + head('결재 업무', '', more()) + '</section>'), '0일 때 개수를 빼면 비어 있는지 알 수 없습니다.'] },
-  ]),
+  render: () => { enablePseudo(); return doDont([
+    // 근거: TD-108 9번 ① (Carbon Tile · Atlassian — 누르는 곳 하나)
+    { title: '행마다 링크 한 곳',
+      do: [ddBox(ddCard(row(ROWS[0]) + row(ROWS[1], ' ps-hover') + row(ROWS[2]))), '행 전체를 링크 하나(&lt;li&gt;&lt;a href&gt;)로 두어 어디를 눌러도 같은 상세로 이동합니다.'],
+      dont: [ddBox(ddCard(ROWS.slice(0, 3).map(splitRow).join(''))), '한 행 안에 제목 · 「보기」처럼 같은 곳으로 가는 링크를 여러 개 두지 않습니다.'] },
+    // 근거: TD-108 9번 ② · Card.mdx 구성 「목록 — 제목(.item-title, 길면 말줄임)」
+    { title: '긴 이름은 말줄임 + title',
+      do: [ddBox(ddCard(LONG.map((r) => row(r)).join(''))), '긴 이름은 한 줄로 줄이고(말줄임) 전체 이름은 title 속성으로 둡니다.'],
+      dont: [ddBox(ddCard(LONG.map(wrapRow).join(''))), '긴 이름을 줄바꿈해 행 높이가 제각각이 되게 두지 않습니다.'] },
+  ]); },
 };
