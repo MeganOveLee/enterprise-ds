@@ -38,7 +38,7 @@ export default {
 
 // ── 예시 — 문서 검색 결과처럼. 섹션 헤더(.seach_arm) + 표, 두 번째 행 선택 ──
 const LIST = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/></svg>';
-const XLS = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>';
+const XLS = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9l4 6M11 9l-4 6M14.5 9H18M14.5 12H18M14.5 15H18"/></svg>';   // Button 엑셀 아이콘과 같은 모양
 // 결과 헤더 — 기본 · 0건 예시가 같은 헤더를 쓰고 결과 수 · 내보내기 가능 여부만 다름
 const resultHead = (n) => '<div class="seach_arm"><div class="leftbt">' + LIST + '<h4>검색 결과 (' + n + ')</h4></div>' +
   '<div class="rightbt"><button type="button" class="btn btn--excel"' + (n ? '' : ' disabled') + '>' + XLS + 'Excel</button></div></div>';

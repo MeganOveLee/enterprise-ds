@@ -10,9 +10,9 @@ const I = {
   drawing: '<path d="M4 20L20 4M4 20h16M4 20V4"/><path d="M9 20a5 5 0 0 0-5-5"/>',
   close: '<path d="M6 6l12 12M18 6L6 18"/>',
   list: '<path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/>',
-  excel: '<rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9l6 6M15 9l-6 6"/>',
+  excel: '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9l4 6M11 9l-4 6M14.5 9H18M14.5 12H18M14.5 15H18"/>',   // Button 엑셀 아이콘과 같은 모양
   reset: '<circle cx="12" cy="12" r="9"/><path d="M9 9l6 6M15 9l-6 6"/>',
-  danger: '<circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5"/><circle cx="12" cy="16.2" r=".6" fill="currentColor"/>',
+  danger: '<circle cx="12" cy="12" r="8.34"/><path d="m9.5 9.5 5 5m0-5-5 5"/>',   // Alert 위험 아이콘(x-circle)과 같은 모양
 };
 const INBOX = '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M6 28 12 10h24l6 18v10H6z"/><path d="M6 28h11l3 5h8l3-5h11"/></svg>';
 const btn = (t, cls, { icon = '', label = '', extra = '' } = {}) => '<button type="button" class="btn ' + cls + '"' + (label ? ' aria-label="' + label + '"' : '') + (extra ? ' ' + extra : '') + '>' + (icon ? svg(icon, 14) : '') + t + '</button>';

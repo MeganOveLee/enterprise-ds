@@ -20,14 +20,14 @@ export default {
 const css = (lines) => ({ docs: { source: { language: 'css', code: lines.join('\n') } } });
 
 export const 제목 = {
-  parameters: css(['/* h1~h6 는 globals.css 가 같은 단계를 기본값으로 붙인다 */', 'h4 { font-size: var(--heading-md); font-weight: var(--font-weight-bold); line-height: var(--line-height-tight); }']),
+  parameters: css(['/* h1~h6 는 globals.css 가 같은 단계를 기본값으로 붙인다 */', 'h4 { font-size: var(--heading-md); font-weight: var(--font-weight-semibold); line-height: var(--line-height-tight); }']),
   render: () => rows([
-    ['heading-2xl', 'h1 · 홈 인사말', 'font-size:var(--heading-2xl);font-weight:var(--font-weight-bold);line-height:var(--line-height-tight)'],
-    ['heading-xl',  'h2', 'font-size:var(--heading-xl);font-weight:var(--font-weight-bold);line-height:var(--line-height-tight)'],
-    ['heading-lg',  'h3 · 상세 화면 제목', 'font-size:var(--heading-lg);font-weight:var(--font-weight-bold);line-height:var(--line-height-tight)'],
-    ['heading-md',  'h4 · 페이지 헤더 · 카드 제목', 'font-size:var(--heading-md);font-weight:var(--font-weight-bold);line-height:var(--line-height-tight)'],
-    ['heading-sm',  'h5 · 창(팝업) 제목 · 섹션 헤더', 'font-size:var(--heading-sm);font-weight:var(--font-weight-bold);line-height:var(--line-height-tight)'],
-    ['heading-xs',  'h6', 'font-size:var(--heading-xs);font-weight:var(--font-weight-bold);line-height:var(--line-height-tight)'],
+    ['heading-2xl', 'h1 · 홈 인사말', 'font-size:var(--heading-2xl);font-weight:var(--font-weight-semibold);line-height:var(--line-height-tight)'],
+    ['heading-xl',  'h2', 'font-size:var(--heading-xl);font-weight:var(--font-weight-semibold);line-height:var(--line-height-tight)'],
+    ['heading-lg',  'h3 · 상세 화면 제목', 'font-size:var(--heading-lg);font-weight:var(--font-weight-semibold);line-height:var(--line-height-tight)'],
+    ['heading-md',  'h4 · 페이지 헤더 · 카드 제목', 'font-size:var(--heading-md);font-weight:var(--font-weight-semibold);line-height:var(--line-height-tight)'],
+    ['heading-sm',  'h5 · 창(팝업) 제목 · 섹션 헤더', 'font-size:var(--heading-sm);font-weight:var(--font-weight-semibold);line-height:var(--line-height-tight)'],
+    ['heading-xs',  'h6', 'font-size:var(--heading-xs);font-weight:var(--font-weight-semibold);line-height:var(--line-height-tight)'],
   ]),
 };
 
@@ -46,8 +46,8 @@ export const 굵기 = {
   render: () => mount([
     ['regular', 400, '본문'],
     ['medium', 500, '버튼 · 탭'],
-    ['semibold', 600, '라벨 · 강조 · 카드 · 창 제목'],
-    ['bold', 700, '제목'],
+    ['semibold', 600, '라벨 · 강조 · 모든 제목'],
+    ['bold', 700, '위험 버튼 · 숫자 강조'],
   ].map(([n, w, use]) => `
     <div class="fd-row">
       <code>--font-weight-${n}</code><span class="fd-val">${w}</span>

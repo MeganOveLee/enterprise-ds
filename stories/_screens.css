@@ -169,7 +169,7 @@
 .scr-login__panel p, .scr-login__panel h2 { margin: 0; }
 .scr-login__brand { display: flex; align-items: center; gap: var(--spacing-12); font-size: var(--heading-sm); font-weight: var(--font-weight-bold); }
 .scr-login__eyebrow { font-size: var(--body-sm); font-weight: var(--font-weight-semibold); letter-spacing: .24em; color: var(--color-text-on-panel-2); }
-.scr-login__hero h2 { margin: var(--spacing-12) 0 var(--spacing-16); font-size: var(--heading-2xl); font-weight: var(--font-weight-bold); line-height: var(--line-height-tight); color: var(--color-text-on-panel); }
+.scr-login__hero h2 { margin: var(--spacing-12) 0 var(--spacing-16); font-size: var(--heading-2xl); font-weight: var(--font-weight-semibold); line-height: var(--line-height-tight); color: var(--color-text-on-panel); }
 .scr-login__hero p:last-child { max-width: 340px; font-size: var(--body-md); color: var(--color-text-on-panel-2); }
 .scr-login__contact { display: flex; flex-direction: column; gap: 6px; font-size: var(--body-sm); font-weight: var(--font-weight-semibold); }
 .scr-login__contact .scr-login__eyebrow { margin-bottom: var(--spacing-8); }
@@ -178,7 +178,7 @@
 .scr-login__logo { display: flex; align-items: center; gap: var(--spacing-12); margin-bottom: var(--spacing-24); }
 .scr-login__logo .scr-logo { width: 40px; height: 40px; }
 .scr-login__logo b { font-size: var(--heading-md); color: var(--color-text-base); }
-.scr-login__box h1 { margin: 0; font-size: var(--heading-2xl); font-weight: var(--font-weight-bold); line-height: var(--line-height-tight); color: var(--color-text-base); }
+.scr-login__box h1 { margin: 0; font-size: var(--heading-2xl); font-weight: var(--font-weight-semibold); line-height: var(--line-height-tight); color: var(--color-text-base); }
 .scr-login__lead { margin: var(--spacing-8) 0 var(--spacing-32); font-size: var(--body-md); color: var(--color-text-muted); }
 .scr-login__form { display: flex; flex-direction: column; gap: var(--spacing-16); }
 .scr-login__field { display: flex; flex-direction: column; gap: 6px; }

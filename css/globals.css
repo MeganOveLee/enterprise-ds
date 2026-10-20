@@ -65,13 +65,13 @@
 * { font-family: var(--font-family-base); box-sizing: border-box; }
 body { line-height: var(--line-height-base); }   /* 글줄 간격 1.6 = 이전 버전 body 값. 문서 화면(.ds-page 1.6)과 단독 화면 · 제품이 같아짐 (TD-45 45-3 D) */
 
-/* ═══ h1~h6 = 웹표준 스케일 명시 정의(32/24/19/16/12/10). styles.css(그 전 버전) h1~h4 대체 + h5·h6 신규 → styles.css 삭제 후에도 유지. margin:0 = 기존 앱 레이아웃 보존(UA 여백 도입 방지). 크기 오버라이드 없이 h태그 = 이 스케일 ═══ */
-h1 { font-size: var(--heading-2xl); font-weight: var(--font-weight-bold); margin: 0; line-height: var(--line-height-tight); }   /* 태그 기본값 = 크기 토큰 (DS-ADR-012) */
-h2 { font-size: var(--heading-xl); font-weight: var(--font-weight-bold); margin: 0; line-height: var(--line-height-tight); }   /* 태그 기본값 = 크기 토큰 (DS-ADR-012) */
-h3 { font-size: var(--heading-lg); font-weight: var(--font-weight-bold); margin: 0; line-height: var(--line-height-tight); }   /* 태그 기본값 = 크기 토큰 (DS-ADR-012) */
-h4 { font-size: var(--heading-md); font-weight: var(--font-weight-bold); margin: 0; line-height: var(--line-height-tight); }   /* 태그 기본값 = 크기 토큰 (DS-ADR-012) */
-h5 { font-size: var(--heading-sm); font-weight: var(--font-weight-bold); margin: 0; line-height: var(--line-height-tight); }   /* 태그 기본값 = 크기 토큰 (DS-ADR-012) */
-h6 { font-size: var(--heading-xs); font-weight: var(--font-weight-bold); margin: 0; line-height: var(--line-height-tight); }   /* 태그 기본값 = 크기 토큰 (DS-ADR-012) */
+/* ═══ h1~h6 = 제목 토큰 6단계(2xl~xs) · SemiBold · 줄 간격 tight. margin:0 = 기존 앱 레이아웃 보존(UA 여백 도입 방지) — DS-ADR-012 · 036 ═══ */
+h1 { font-size: var(--heading-2xl); font-weight: var(--font-weight-semibold); margin: 0; line-height: var(--line-height-tight); }   /* 태그 기본값 = 크기 토큰 (DS-ADR-012) · 굵기 SemiBold (DS-ADR-036) */
+h2 { font-size: var(--heading-xl); font-weight: var(--font-weight-semibold); margin: 0; line-height: var(--line-height-tight); }   /* 태그 기본값 = 크기 토큰 (DS-ADR-012) · 굵기 SemiBold (DS-ADR-036) */
+h3 { font-size: var(--heading-lg); font-weight: var(--font-weight-semibold); margin: 0; line-height: var(--line-height-tight); }   /* 태그 기본값 = 크기 토큰 (DS-ADR-012) · 굵기 SemiBold (DS-ADR-036) */
+h4 { font-size: var(--heading-md); font-weight: var(--font-weight-semibold); margin: 0; line-height: var(--line-height-tight); }   /* 태그 기본값 = 크기 토큰 (DS-ADR-012) · 굵기 SemiBold (DS-ADR-036) */
+h5 { font-size: var(--heading-sm); font-weight: var(--font-weight-semibold); margin: 0; line-height: var(--line-height-tight); }   /* 태그 기본값 = 크기 토큰 (DS-ADR-012) · 굵기 SemiBold (DS-ADR-036) */
+h6 { font-size: var(--heading-xs); font-weight: var(--font-weight-semibold); margin: 0; line-height: var(--line-height-tight); }   /* 태그 기본값 = 크기 토큰 (DS-ADR-012) · 굵기 SemiBold (DS-ADR-036) */
 
 
 /* ===== 상세검색 토글 (switchDetail) — 검색폼 상세행 펼침/접힘 ===== */

@@ -24,6 +24,8 @@ v1.0 · 설계 · 퍼블리싱 이세영
 | `js/select.js` | 선택 목록 — 화면의 단일 select를 같은 목록(`.ui-select`)으로 (APG Select-Only Combobox 패턴) |
 | `js/multiselect.js` | 다중 선택 — `select.checkSelect[multiple]`을 표시 상자 + 체크박스 목록으로 |
 | `js/datepicker.js` | 날짜 선택 (WAI-ARIA APG Date Picker Dialog 패턴) |
+| `js/tabs.js` | 팝업 탭 넘침 — 탭이 줄보다 많으면 양 끝에 이전 · 다음 버튼 |
+| `js/modal.js` | 확인 창 — `.modal` 열기 · 닫기 · 포커스 가두기 · Esc (APG Dialog (Modal) 패턴) |
 | `stories/` · `.storybook/` | Storybook (HTML 프레임워크) |
 
 ## 불러오는 순서
@@ -37,6 +39,8 @@ v1.0 · 설계 · 퍼블리싱 이세영
 <script src="js/select.js"></script>        <!-- JS는 쓰는 컴포넌트 것만 -->
 <script src="js/multiselect.js"></script>
 <script src="js/datepicker.js"></script>
+<script src="js/tabs.js"></script>
+<script src="js/modal.js"></script>
 ```
 
 ## 규칙

@@ -42,7 +42,7 @@
   .sb-dd__pane { display: flex; flex-direction: column; border: 1px solid var(--color-border-base); border-top: 3px solid; border-radius: var(--radius-card); overflow: hidden; background: var(--color-bg-base); }
   .sb-dd__pane--do { border-top-color: var(--color-border-success); }
   .sb-dd__pane--dont { border-top-color: var(--color-border-danger); }
-  .sb-dd__view { flex: 1; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; min-height: 72px; padding: 20px 16px; background: var(--color-bg-base); }   /* 미리보기 = 실제 카드와 같은 바탕 */
+  .sb-dd__view { flex: 1; display: flex; flex-wrap: wrap; align-items: flex-start; align-content: flex-start; gap: 8px; min-height: 72px; padding: 20px 16px; background: var(--color-bg-base); }   /* 미리보기 = 실제 카드와 같은 바탕 */
   .sb-dd__text { margin: 0; padding: 10px 12px; border-top: 1px solid var(--color-border-subtle); background: var(--color-bg-muted); font-size: 12px; line-height: 1.6; color: var(--color-text-muted); }
   .sb-dd__text b { display: block; font-weight: 600; }
   .sb-dd__pane--do .sb-dd__text b { color: var(--color-text-success-bold); }   /* 12px 굵은 글자 — success(라이트 4.37)는 AA 미달 */

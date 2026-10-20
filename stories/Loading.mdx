@@ -12,7 +12,7 @@ import * as S from './Loading.stories.js';
 <thead><tr><th>구분</th><th>클래스 · 속성</th><th>설명</th></tr></thead>
 <tbody>
 <tr><td><b>스피너 크기</b></td><td><code>.spinner--sm</code> · <code>.spinner--lg</code><span className="ds-muted">16 · 24 · 40</span></td><td>클래스가 없는 것이 기본(24, 영역)입니다. 버튼 · 셀 안은 sm(16), 페이지 · 창 전체는 lg(40)입니다. 트랙 위에 144° 호가 돌고, 호 끝은 둥급니다. 장식이라 <code>aria-hidden="true"</code>를 붙입니다.</td></tr>
-<tr><td><b>스피너 색</b></td><td><code>.spinner--neutral</code></td><td>클래스가 없는 것이 기본(브랜드색)입니다. 채운 버튼 안처럼 브랜드색 위에서는 회색(neutral)을 씁니다.</td></tr>
+<tr><td><b>스피너 색</b></td><td><code>.spinner--neutral</code></td><td>클래스가 없는 것이 기본(브랜드색)입니다. 회색(neutral)은 브랜드색과 겹치는 곳에 씁니다. 버튼 안 스피너는 버튼의 처리 중 상태(<code>.is-loading</code>)가 글자색으로 그리므로 따로 고르지 않습니다.</td></tr>
 <tr><td><b>묶음</b></td><td><code>.loading</code><span className="ds-muted">__text · __sub · __actions</span></td><td>스피너 아래에 안내 문구 · 보조 문구 · 취소 버튼을 둡니다. 스크린 리더 안내는 <code>role="status"</code>가 맡습니다.</td></tr>
 <tr><td><b>배치</b></td><td><code>.loading--overlay</code> · <code>.loading--inline</code></td><td>오버레이 = 영역을 덮어 조작을 막습니다(부모에 <code>position: relative</code>). 인라인 = 글자 행 안에 둡니다.</td></tr>
 <tr><td><b>시간별 구성</b></td><td><span className="ds-muted">3초 · 10초</span></td><td>3초 미만 = 스피너만, 3 ~ 10초 = 스피너 + 안내 문구, 10초 이상 = 진행 상황 + 취소(가능하면 백그라운드로).</td></tr>
