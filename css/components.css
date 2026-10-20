@@ -4333,6 +4333,11 @@ body.dark-mode .empty-illo { --empty-illo-shadow: rgb(0 0 0 / .2); }
  * Blocks — 여러 컴포넌트를 묶는 자리에만 필요한 배치 · 표시 (TD-103)
  * 이름은 이전 버전 화면 CSS와 같게(.ui-compare · .ui-field-addon · .compare-legend) — 화면 코드를 고치지 않고 옮김
  * ═════════════════════════════════════════════════════════════════════════ */
+/* 줄 수를 정한 표 .table_list--rows — 표 높이 = 머리 34 + 데이터 줄(30) × --table-rows(기본 3). 줄이 적어도 같은 높이, 넘치면 표 안에서 세로 스크롤 · 머리 고정.
+ * 결재선 역할 상자(합의 · 승인 · 수신)처럼 나란한 표 높이를 맞출 때 (TD-122, 10/20 세영님 「최소 3줄 · 스크롤 규칙」) */
+.table_list--rows > .list { height: calc(34px + var(--table-rows, 3) * 30px + 2px); overflow-y: auto; }
+.table_list--rows .grid-table th { position: sticky; top: 0; z-index: 1; }
+
 
 /* ── 입력칸 + 덧붙이는 선택 .ui-field-addon ── 품목 번호 칸 옆 버전 선택처럼 한 칸에 둘. 앞 = 남는 폭, 뒤 = 고정 폭 */
 .ui-field-addon { display: flex; align-items: center; gap: var(--spacing-8); }

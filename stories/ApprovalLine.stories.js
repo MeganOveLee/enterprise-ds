@@ -23,7 +23,8 @@ const tbl = (label, cols, head, rows, after = '', style = '') => '<div class="ta
 
 // ── 사람 · 결재선 (가상, Figma 블록과 같은 데이터) ──
 const USERS = [['김도윤', '설계1팀', true], ['정우진', '설계1팀'], ['이서연', '설계1팀', true], ['박지훈', '설계1팀'], ['최유진', '설계1팀'], ['윤서준', '설계1팀']];
-const LINE = { DISCUSS: [['설계1팀', '김도윤', 'dykim']], APPROVE: [['설계1팀', '정우진', 'wjjung']], RECEIVE: [] };
+// 조직 탭 견본 — 합의 2명 · 승인 4명(3줄 넘음 → 표 안 스크롤) · 수신 0명(빈 상태)
+const LINE = { DISCUSS: [['설계1팀', '김도윤', 'dykim'], ['품질팀', '박지훈', 'jhpark']], APPROVE: [['설계1팀', '정우진', 'wjjung'], ['설계1팀', '이서연', 'sylee'], ['기술연구소', '최유진', 'yjchoi'], ['생산본부', '윤서준', 'sjyoon']], RECEIVE: [] };
 const TPL_LINE = { DISCUSS: [['설계1팀', '김도윤', 'dykim']], APPROVE: [['설계1팀', '정우진', 'wjjung']], RECEIVE: [['설계1팀', '이서연', 'sylee']] };
 const ROLE = { DISCUSS: ['합의', '합의자'], APPROVE: ['승인', '승인자'], RECEIVE: ['수신', '수신자'] };
 
@@ -48,7 +49,7 @@ const left = () => '<div class="section-box" style="padding-top:16px;gap:8px;gri
 // ── 역할 상자 — 섹션 상자(헤더 h4) + 표(No. · 부서 · 이름 · ID · 빼기 ×). 비어 있으면 표 안 빈 상태(카드 크기) ──
 // 표 최소 높이 = 머리 34 + 데이터 3줄(30 × 3) — 세 상자는 줄 높이(1fr)가 같아 가장 큰 상자에 맞춰 같은 높이(세영님 설정 · TD-122)
 // add = 왼쪽에 이동 버튼을 붙인 견본(Do · Don't), blank = 빈 상태 안내(Do · Don't 견본만 끔)
-const ROW_MIN = 'flex:1;min-height:124px';
+const ROW_MIN = '';   // 높이는 .table_list--rows(머리 + 3줄, 넘치면 스크롤)
 // 빈 역할 상자 — 데이터 3줄 자리(90) 안에 들어가게 제목 + 설명만(그림 없음). 그림을 넣으면 이 상자만 커져 세 상자 높이가 같이 커짐
 const roleEmpty = (who, title) => '<div class="empty empty--card" role="status" style="padding:var(--spacing-16);gap:var(--spacing-4)"><p class="empty__title">지정한 ' + who + '가 없습니다</p>' +
   '<p class="empty__desc">담당자를 체크하고 [' + title + ' ›]' + (title === '합의' ? '를' : '을') + ' 누르거나 여기로 끌어다 놓아 주십시오.</p></div>';
@@ -60,7 +61,7 @@ const roleBox = (key, list, { blank = true } = {}) => {
   const rows = list.map(([d, n, id], i) => '<tr><td>' + (i + 1) + '</td><td>' + d + '</td><td>' + n + '</td><td>' + id + '</td>' +
     '<td style="padding:0;text-overflow:clip"><button type="button" class="btn btn--secondary btn--transparent btn--icon btn--sm" aria-label="' + n + ' 빼기">' + svg(I.x, 14) + '</button></td></tr>').join('');
   return '<div class="section-box">' + head + tbl(who, ['52px', '', '', '96px', '52px'], ['No.', '부서', '이름', 'ID', '<span class="sr-only">빼기</span>'], rows,
-    list.length || !blank ? '' : roleEmpty(who, title), ROW_MIN) + '</div>';
+    list.length || !blank ? '' : roleEmpty(who, title), ROW_MIN).replace('<div class="table_list"', '<div class="table_list table_list--rows"') + '</div>';
 };
 // 조직 탭 — 왼쪽 상자(3줄을 걸침) | 가운데 이동 버튼(상자마다 가운데) | 역할 상자 3개. 줄 3개 높이가 같아 버튼이 상자 가운데에 옴
 const ORDER = ['DISCUSS', 'APPROVE', 'RECEIVE'];
