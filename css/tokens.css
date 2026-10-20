@@ -103,6 +103,8 @@
   /* --- Transparent (shadow / overlay 용) ------------------------------------- */
   --transparent-12: rgba(0, 0, 0, 0.12);
   --transparent-08: rgba(0, 0, 0, 0.08);
+  --transparent-32: rgba(0, 0, 0, 0.32);   /* 덮개 라이트(--color-bg-overlay) — Figma transparent/32 */
+  --transparent-60: rgba(0, 0, 0, 0.6);    /* 덮개 다크 */
 
 
   /* ==========================================================================
@@ -242,6 +244,9 @@
   /* 선택됨 — '지금 이게 골라져 있다' 표시 전용(페이지네이션 현재 페이지, 열려있는 datepicker).
    * 호버는 --color-bg-muted, 눌림은 --color-bg-subtle, 뱃지는 --color-bg-info-subtle 로 각각 나눠 씀 */
   --color-bg-selected:        var(--brand-50);   /* 선택 상태(달력·현재 페이지) = 브랜드 역할 (DS-ADR-005) */
+
+  /* 덮개 — 확인 창(.modal) 뒤 화면을 가리는 반투명 층 (TD-108). 브랜드와 상관없이 검정 투명 */
+  --color-bg-overlay:         var(--transparent-32);
 
   /* Foreground (text) */
   --color-text-base:           var(--neutral-900);
@@ -490,6 +495,7 @@ body.dark-mode {
   --color-bg-warning-subtle: var(--yellow-900);
 
   --color-bg-selected:        var(--neutral-700);
+  --color-bg-overlay:         var(--transparent-60);   /* 어두운 화면 위 덮개 — 32%는 뒤 화면과 구분이 안 됨. 다크 그림자(--shadow-modal 0.6)와 같은 농도 */
 
   /* Foreground */
   --color-text-base:           var(--neutral-200);   /* components.css:2333 에 !important 로 중복돼 있던 값 흡수 (구 neutral-100) */

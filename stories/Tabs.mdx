@@ -6,12 +6,12 @@ import * as S from './Tabs.stories.js';
 
 <Unstyled>
 <div className="ds-page">
-<PageHead eyebrow="Navigation" title="Tabs" lead="같은 영역의 내용을 나누어 표시하는 탭입니다. 상세 창의 팝업 탭(Modal)과 LNB 서브 패널 탭(App Shell)이 있습니다." />
+<PageHead eyebrow="Navigation" title="Tabs" lead="같은 영역의 내용을 나누어 표시하는 탭입니다. 상세 창의 팝업 탭(Popup Window)과 LNB 서브 패널 탭(App Shell)이 있습니다." />
 <Section title="구성" en="Spec">
 <table className="ds-table ds-props">
 <thead><tr><th>구분</th><th>클래스 · 속성</th><th>설명</th></tr></thead>
 <tbody>
-<tr><td><b>팝업 탭</b></td><td><code>.pop .tab</code> › <code>ul</code> › <code>li</code><span className="ds-muted">.pop 안에서만</span></td><td>상세 창의 제목 줄 아래 탭 줄입니다(<a className="ds-link" href="./?path=/docs/overlay-modal--docs" target="_top">Modal</a>). 오른쪽에 창 버튼 <code>.tab-actions</code>(결재 요청 · 수정 · 삭제)를 둡니다.</td></tr>
+<tr><td><b>팝업 탭</b></td><td><code>.pop .tab</code> › <code>ul</code> › <code>li</code><span className="ds-muted">.pop 안에서만</span></td><td>상세 창의 제목 줄 아래 탭 줄입니다(<a className="ds-link" href="./?path=/docs/overlay-popup-window--docs" target="_top">Popup Window</a>). 오른쪽에 창 버튼 <code>.tab-actions</code>(결재 요청 · 수정 · 삭제)를 둡니다.</td></tr>
 <tr><td><b>패널 탭</b></td><td><code>.main-sub-tabs</code> › <code>.sub-tab</code><span className="ds-muted">button</span></td><td>LNB 서브 패널의 메뉴 · 폴더 전환입니다(<a className="ds-link" href="./?path=/docs/navigation-app-shell--docs" target="_top">App Shell</a>). 너비를 균등하게 나눕니다. 탭이 하나뿐이면 <code>.is-single</code>로 탭 줄을 숨깁니다.</td></tr>
 <tr><td><b>선택됨</b></td><td><code>.is-active</code> · <code>aria-selected="true"</code></td><td>선택된 탭입니다. 브랜드 글자 + 아래 3px 브랜드 선(패널 탭은 아래 선)으로 표시합니다. 모양은 클래스가, 스크린 리더 안내는 속성이 맡으므로 둘을 함께 바꿉니다.</td></tr>
 <tr><td><b>접근성</b></td><td><code>role="tablist"</code> · <code>role="tab"</code> · <code>tabindex</code></td><td>목록에 tablist, 탭마다 tab을 붙입니다. 선택된 탭만 <code>tabindex="0"</code>, 나머지는 <code>-1</code>입니다. <code>li</code>로 만든 탭도 이 속성이 있어야 키보드로 이동할 수 있습니다.</td></tr>
