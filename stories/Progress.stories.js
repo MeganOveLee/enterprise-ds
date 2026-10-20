@@ -62,28 +62,16 @@ export const 범례 = {
   render: () => box(legend(KEYS), '360px'),
 };
 
-// ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-102) ── 미리보기만, 코드는 위 예시 카드에
+// ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-108 15번 ①) ── 미리보기만, 코드는 위 예시 카드에
 const wide = (h) => '<div style="flex:1;min-width:0">' + h + '</div>';
-const keyHead = '<div style="display:flex;justify-content:flex-end;font-size:var(--body-sm);color:var(--color-text-muted);margin-bottom:6px"><span><span class="progress-plan-key" aria-hidden="true"></span>계획</span></div>';
-const PLAN = [['설계', 'done', 100, 100], ['시제품 제작', 'progress', 64, 70], ['시험 · 검증', 'delay', 32, 50]];
-const planRows = (keyEach = false) => '<div style="display:grid;gap:10px">' + PLAN.map(([n, k, p, pl]) =>
-  '<div style="display:grid;grid-template-columns:72px 1fr' + (keyEach ? ' auto' : '') + ';align-items:center;gap:12px;font-size:var(--body-sm);color:var(--color-text-base)"><span>' + n + '</span>' + bar(k, p, n, true, pl) +
-  (keyEach ? '<span style="color:var(--color-text-muted)"><span class="progress-plan-key" aria-hidden="true"></span>계획</span>' : '') + '</div>').join('') + '</div>';
 export const 사용_지침 = {
   parameters: { controls: { disable: true } },
   render: () => doDont([
-    // 근거: Progress 구성 「계획 표식」 — 실적은 채움, 계획은 표식이라 늦음이 막대에서 바로 보임(이전 버전은 「진행/적정(%)」 숫자만)
-    { title: '계획 대비는 막대 위 표식으로',
-      do: [wide(bar('delay', 58, '전체', true, 64)),
-        '실적은 채움, 계획은 막대 위 표식으로 그려 늦음이 바로 보입니다.'],
-      dont: [wide('<div style="font-size:var(--body-sm);color:var(--color-text-base)">진행/적정(%) 58 / 64</div>'),
-        '숫자만 두면 계획보다 늦었는지 따져 봐야 압니다.'] },
-    // 근거: Progress 구성 「계획 표식」 — 범례는 영역마다 한 번, 막대마다 붙이지 않음
-    { title: '계획 범례는 영역에 한 번',
-      do: [wide(keyHead + planRows()),
-        '영역 머리 오른쪽에 범례를 한 번 두고, 줄마다 같은 표식으로 읽습니다.'],
-      dont: [wide(planRows(true)),
-        '막대마다 범례를 붙이면 같은 글이 줄마다 반복됩니다.'] },
+    { title: '막대 옆에 % 숫자 함께',
+      do: [wide(bar('progress', 58, '전체')),
+        '막대 오른쪽에 % 숫자(.progress-bar__label)를 함께 두어 정확한 값을 읽게 합니다.'],
+      dont: [wide(bar('progress', 58, '전체', false)),
+        '막대만 두면 길이로 어림해야 해 58%와 64%를 구분하기 어렵습니다.'] },
   ]),
 };
 
@@ -104,7 +92,7 @@ export const Playground = {
     state: { control: 'inline-radio', options: KEYS, description: '상태 — `.progress-bar--{상태}` · `.status-block--{상태}`' },
     value: { control: { type: 'range', min: 0, max: 100, step: 1 }, description: '진행률 — `.pbar-fill` 너비 · `aria-valuenow`' },
     name: { control: 'text', description: '무엇의 진행률인지 — `aria-label="{이름} 진행률"`' },
-    label: { control: 'boolean', description: '가운데 % 글자 — `.progress-bar__label`' },
+    label: { control: 'boolean', description: '막대 오른쪽 % 글자 — `.progress-bar__label`' },
     withStatus: { control: 'boolean', description: '왼쪽 상태 표시 — `.status-block` (`.progress-row`로 묶음)' },
   },
   args: { state: 'progress', value: 58, name: '전체', label: true, withStatus: true },

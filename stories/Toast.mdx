@@ -12,10 +12,11 @@ import * as S from './Toast.stories.js';
 <thead><tr><th>구분</th><th>클래스 · 속성</th><th>설명</th></tr></thead>
 <tbody>
 <tr><td><b>영역</b></td><td><code>.toast-region</code> · <code>role="status"</code></td><td>화면 오른쪽 아래(24 · 24)에 고정되고, 새 토스트는 아래에 쌓입니다. 토스트가 없는 빈 자리는 아래 화면을 그대로 누를 수 있습니다.</td></tr>
-<tr><td><b>구조</b></td><td><code>.toast</code> › <code>.toast__icon</code> · <code>.toast__msg</code> · <code>.toast__action</code> · 닫기</td><td>어두운 바탕에 아이콘 → 문구 → 동작 버튼 → 닫기 순서입니다. 폭은 240 ~ 360이고, 글이 길면 줄을 바꿉니다.</td></tr>
-<tr><td><b>닫기</b></td><td><code>.btn.btn--secondary.btn--transparent.btn--icon.btn--sm</code> · <code>aria-label="알림 닫기"</code></td><td>작은 아이콘 버튼입니다. 별도 클래스 없이 Button을 그대로 씁니다.</td></tr>
+<tr><td><b>구조</b></td><td><code>.toast</code> › <code>.toast__icon</code> · <code>.toast__msg</code> · <code>.toast__action</code> · 닫기</td><td>어두운 바탕에 아이콘 → 문구 → 동작 버튼 → 닫기 순서이고 모두 위에 맞춥니다. 폭 360 · 안쪽 여백 16 · 모서리 8이고, 문구는 16px Medium입니다. 글이 길면 줄을 바꿉니다.</td></tr>
+<tr><td><b>제목</b></td><td><code>.toast__body</code> › <code>.toast__title</code> + <code>.toast__msg</code><span className="ds-muted">선택</span></td><td>결과를 한마디로 묶을 때만 20px SemiBold 제목을 문구 위에 둡니다(간격 4). 제목이 있으면 제목과 문구를 <code>.toast__body</code>로 감쌉니다.</td></tr>
+<tr><td><b>닫기</b></td><td><code>.btn.btn--secondary.btn--transparent.btn--icon</code> · <code>aria-label="알림 닫기"</code></td><td>아이콘 버튼(28)입니다. 별도 클래스 없이 Button을 그대로 쓰고, 어두운 바탕에 맞춰 글자색만 바뀝니다.</td></tr>
 <tr><td><b>상태</b></td><td><code>.toast--success</code> · <code>--warning</code> · <code>--danger</code><span className="ds-muted">클래스가 없는 것이 기본(정보)입니다</span></td><td>아이콘 색만 바뀝니다. 바탕 · 글자는 같습니다. 아이콘 색은 어두운 바탕 전용 상태 토큰(<code>--color-icon-on-inverse-*</code>)이라 라이트 · 다크 모두 잘 보입니다.</td></tr>
-<tr><td><b>동작 버튼</b></td><td><code>.toast__action</code></td><td>「보기」 「다시 시도」처럼 하나만 둡니다. 밑줄 글자 버튼이고 키보드로 이동할 수 있습니다.</td></tr>
+<tr><td><b>동작 버튼</b></td><td><code>.btn.btn--secondary.btn--transparent.toast__action</code></td><td>「보기」 「다시 시도」처럼 하나만 둡니다. 보조 · 투명 버튼(높이 28 · 좌우 여백 8)이고, 닫기와의 간격은 8입니다.</td></tr>
 <tr><td><b>사라짐</b></td><td><span className="ds-muted">화면 스크립트</span></td><td>4초 뒤 닫힙니다. 동작 버튼이 있거나 위험 알림이면 사용자가 닫을 때까지 유지합니다.</td></tr>
 <tr><td><b>접근성</b></td><td><code>role="status"</code> · 위험은 <code>role="alert"</code></td><td>영역의 <code>status</code>로 스크린 리더가 새 토스트를 읽습니다. 저장 실패 같은 위험 알림만 그 토스트에 <code>alert</code>를 붙여 즉시 읽게 합니다.</td></tr>
 </tbody>
@@ -25,12 +26,13 @@ import * as S from './Toast.stories.js';
 <Section title="예시" en="Examples" desc="회색 영역 = 화면. 제품에서는 브라우저 창 오른쪽 아래에 뜹니다.">
 <Card of={S.저장_완료} title="저장 완료" en="Saved" desc="가장 흔한 쓰임입니다. 문구는 짧게 씁니다." />
 <Card of={S.동작이_있는_알림} title="동작 버튼" en="With action" desc="결과를 바로 열거나, 실패한 작업을 다시 시도합니다." />
+<Card of={S.제목_줄} title="제목 줄" en="With title" desc="결과를 한마디로 묶는 제목(.toast__title)을 문구 위에 둡니다." />
 <Card of={S.쌓임} title="쌓임" en="Stack" desc="여러 개가 뜨면 먼저 뜬 것이 위, 새 토스트가 아래에 놓입니다." />
 </Section>
 <Section title="언제 쓰고 쓰지 말지" en="Do · Don't">
 <Card of={S.사용_지침} code={false} />
 </Section>
-<Section title="전체 상태" en="States" desc="상태 네 가지를 구성별로 모았습니다.">
+<Section title="전체 상태" en="States" desc="상태 네 가지를 구성별로 모았습니다. 상태는 아이콘 색만 바뀌고 바탕은 어두운 색 하나입니다.">
 <Card of={S.전체_상태} title="상태 × 구성" desc="행 = 상태, 열 = 구성" />
 </Section>
 <Section title="Playground" desc="아래 표에서 값을 바꾸면 미리보기와 「코드 보기」가 함께 바뀝니다.">

@@ -3753,23 +3753,36 @@ input.onKeySearch2 { display: block; flex: 1 1 auto; min-width: 0; }
  * 크기: --sm 16(버튼·셀 안) · 기본 24(영역) · --lg 40(페이지 · 팝업)
  * 색: 기본 = 브랜드 · .spinner--neutral = 보조(회색 면 위)
  * 접근성: 스피너 자체는 장식(aria-hidden). 알림은 감싸는 .loading 의 role="status" 글자가 맡는다
+ * 모양 = Figma Spinner segment: 트랙(bg-muted) 위에 144° 호, 호 끝은 둥글게 (TD-108 32번)
+ *   호 = conic-gradient 0 ~ 144°, 끝 = 선 두께 지름의 원 두 개(0° · 144° 자리), 고리 = 가운데를 비우는 mask
+ *   0.5878 · 0.809 = sin 144° · -cos 144° — 끝 원의 자리(선 가운데 반지름 위)
  */
 .spinner {
     --spinner-size: 24px;
     --spinner-line: 3px;
+    --spinner-arc: var(--color-icon-brand);
+    --spinner-track: var(--color-bg-muted);
+    --spinner-r: calc((var(--spinner-size) - var(--spinner-line)) / 2);   /* 선 가운데까지의 반지름 */
     display: inline-block;
     flex: none;
     width: var(--spinner-size);
     height: var(--spinner-size);
-    border: var(--spinner-line) solid var(--color-bg-muted);
-    border-top-color: var(--color-icon-brand);
     border-radius: 50%;
+    background:
+        radial-gradient(circle at 50% calc(var(--spinner-line) / 2), var(--spinner-arc) calc(var(--spinner-line) / 2 - .5px), transparent calc(var(--spinner-line) / 2 + .5px)),
+        radial-gradient(circle at calc(50% + var(--spinner-r) * .5878) calc(50% + var(--spinner-r) * .809), var(--spinner-arc) calc(var(--spinner-line) / 2 - .5px), transparent calc(var(--spinner-line) / 2 + .5px)),
+        conic-gradient(var(--spinner-arc) 0 144deg, var(--spinner-track) 0);
+    -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - var(--spinner-line) - .5px), #000 calc(100% - var(--spinner-line) + .5px));
+            mask: radial-gradient(farthest-side, transparent calc(100% - var(--spinner-line) - .5px), #000 calc(100% - var(--spinner-line) + .5px));
     animation: ds-spin 0.8s linear infinite;
 }
 .spinner--sm { --spinner-size: 16px; --spinner-line: 2px; }
 .spinner--lg { --spinner-size: 40px; --spinner-line: 4px; }
-.spinner--neutral { border-top-color: var(--color-icon-muted); }
+.spinner--neutral { --spinner-arc: var(--color-icon-muted); }
 @keyframes ds-spin { to { transform: rotate(360deg); } }
+@media (forced-colors: active) {   /* 바탕 그림은 강제 색 모드에서 지워짐 — 시스템 색으로 그대로 그림 */
+    .spinner { forced-color-adjust: none; --spinner-arc: CanvasText; --spinner-track: GrayText; }
+}
 
 /* ── 로딩 묶음 .loading ─────────────────────────────────────────────────────
  * 구성 3단계(D-1 Loading Composition): 스피너만 / + 문구(.loading__text) / + 문구 + 취소(.loading__actions)
@@ -3793,7 +3806,7 @@ input.onKeySearch2 { display: block; flex: 1 1 auto; min-width: 0; }
 .loading__text { margin: 0; }
 .loading__sub  { margin: 0; color: var(--color-text-muted); font-size: var(--body-sm); }
 .loading__actions { display: flex; gap: var(--spacing-8); margin-top: var(--spacing-4); }
-.loading--inline { flex-direction: row; padding: 0; gap: var(--spacing-8); }
+.loading--inline { display: inline-flex; flex-direction: row; padding: 0; gap: var(--spacing-8); vertical-align: middle; }   /* 글자 행 안 — 줄을 바꾸지 않고 글자 옆에 */
 .loading--overlay {
     position: absolute;
     inset: 0;
@@ -3889,7 +3902,7 @@ body.dark-mode :is(.skeleton-line, .skeleton-title, .skeleton-block) { --skeleto
     gap: var(--spacing-12) var(--spacing-16);
 }
 .skeleton-field { display: flex; flex-direction: column; gap: 6px; }
-.skeleton-field > .skeleton-line { width: 64px; height: 10px; margin: 0; }
+.skeleton-field > .skeleton-line { width: 80px; height: 12px; margin: 0; }   /* 라벨 자리 = Figma Skeleton Type=Form 라벨 조각 80 × 12 (TD-108 32번) */
 .skeleton-form .skeleton-block { height: var(--size-input); border-radius: var(--radius-input); }   /* 입력 필드 자리 = 입력 필드 모양 (DS-ADR-020) */
 .skeleton-card {
     padding: var(--spacing-16);
@@ -3921,8 +3934,9 @@ body.dark-mode :is(.skeleton-line, .skeleton-title, .skeleton-block) { --skeleto
     color: var(--color-icon-muted);
 }
 .empty__icon svg { width: 100%; height: 100%; }
-.empty__title { margin: 0; color: var(--color-text-base); font-size: var(--heading-xs); font-weight: 600; }
-.empty__desc  { margin: 0; max-width: 360px; font-size: var(--body-sm); word-break: keep-all; }
+/* 제목 · 설명 줄 높이 = Figma Empty(글 상자 17 · 14, 1.2) (TD-108 32번) */
+.empty__title { margin: 0; color: var(--color-text-base); font-size: var(--heading-xs); font-weight: 600; line-height: var(--line-height-tight); }
+.empty__desc  { margin: 0; max-width: 360px; font-size: var(--body-sm); line-height: var(--line-height-tight); word-break: keep-all; }
 .empty__code  { margin: 0; font-size: var(--body-sm); color: var(--color-text-muted); font-variant-numeric: tabular-nums; }
 .empty__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--spacing-8); margin-top: var(--spacing-8); }
 .empty--card { padding: var(--spacing-24) var(--spacing-16); }
@@ -3988,7 +4002,10 @@ body.dark-mode .empty-illo { --empty-illo-shadow: rgb(0 0 0 / .2); }
 /* ── Alert .alert ──────────────────────────────────────────────────────────
  * 기본 = 옅은 바탕 + 테두리(Figma Alert Style=Outlined). .alert--plain = 테두리 없음(Transparent)
  * 상태 = 아이콘 색 · 바탕 · 테두리만 바뀜. 글자는 늘 기본 글자색(대비 유지)
- * 접근성: 안내 = role="status", 입력 오류처럼 바로 알려야 하는 것 = role="alert". 닫기는 아이콘 버튼 + aria-label */
+ * 접근성: 안내 = role="status", 입력 오류처럼 바로 알려야 하는 것 = role="alert". 닫기는 아이콘 버튼 + aria-label
+ * 크기 · 글자 = Figma Alert (TD-108 32번): 모서리 8 · 제목 Body/lg/semibold 16 · 설명 Body/md/regular 14 · 제목 ↔ 설명 4 · 닫기 28
+ *   모서리는 카드 역할 토큰(--radius-card, 기본 8) — 브랜드가 카드 모서리를 바꾸면 같이 바뀜
+ * 여러 건을 알릴 때는 Alert를 쌓지 않고 하나의 설명 안에 목록(<ul>)으로 (TD-108 12번) */
 .alert {
     --alert-bg: var(--color-bg-info-subtle);
     --alert-bd: var(--color-border-info);
@@ -3999,23 +4016,32 @@ body.dark-mode .empty-illo { --empty-illo-shadow: rgb(0 0 0 / .2); }
     padding: var(--spacing-8) var(--spacing-12);
     background: var(--alert-bg);
     border: 1px solid var(--alert-bd);
-    border-radius: var(--radius-panel);
+    border-radius: var(--radius-card);
     color: var(--color-text-base);
     font-size: var(--body-md);
-    line-height: 1.5;
+    line-height: var(--line-height-base);
     text-align: start;   /* 가운데 정렬된 자리(표 칸 등)에 놓여도 글은 왼쪽부터 */
 }
-.alert__icon { flex: none; width: 16px; height: 16px; margin-top: 3px; color: var(--alert-ic); }   /* 위 3 = 첫 줄(14 × 1.5) 가운데 */
+.alert__icon { flex: none; width: 16px; height: 16px; margin-top: 5px; color: var(--alert-ic); }   /* 위 5 ≈ 첫 줄(제목 16 × 1.6 = 25.6) 가운데 */
 .alert__icon svg { display: block; width: 100%; height: 100%; }
-.alert__body { flex: 1; min-width: 0; }
-.alert__title { display: block; font-weight: var(--font-weight-semibold); }
-.alert__desc { display: block; font-size: var(--body-sm); }   /* 글자색 = 본문색(제목과는 굵기로 구분). muted 는 다크 경고 바탕 위 3.9:1 이라 안 씀 */
-.alert__close { flex: none; margin: -4px -6px -4px 0; }   /* 아이콘 버튼(.btn--icon.btn--sm)이 줄 높이를 키우지 않게 */
+.alert__body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: var(--spacing-4); }
+.alert__title { display: block; font-size: var(--body-lg); font-weight: var(--font-weight-semibold); }
+.alert__desc { display: block; font-size: var(--body-md); }   /* 글자색 = 본문색(제목과는 크기 · 굵기로 구분). muted 는 다크 경고 바탕 위 3.9:1 이라 안 씀 */
+.alert__desc > :is(ul, ol) { margin: 0; padding-inline-start: 1.25em; }
+/* 닫기 = 보조 · 투명 아이콘 버튼 28(.btn--icon). 아이콘 색 = icon-base (Figma Close button) */
+.alert__close {
+    --btn-fg: var(--color-icon-base);
+    --btn-fg-hover: var(--color-icon-base);
+    --btn-fg-pressed: var(--color-icon-base);
+    flex: none;
+    margin: -4px -6px -4px 0;   /* 아이콘 버튼이 줄 높이를 키우지 않게 */
+}
 .alert--success { --alert-bg: var(--color-bg-success-subtle); --alert-bd: var(--color-border-success); --alert-ic: var(--color-icon-success); }
 .alert--warning { --alert-bg: var(--color-bg-warning-subtle); --alert-bd: var(--color-border-warning); --alert-ic: var(--color-icon-warning); }
 .alert--danger  { --alert-bg: var(--color-bg-danger-subtle);  --alert-bd: var(--color-border-danger);  --alert-ic: var(--color-icon-danger); }
-.alert--brand   { --alert-bg: var(--color-bg-brand-subtle);   --alert-bd: var(--color-border-brand);   --alert-ic: var(--color-icon-brand); }
-.alert--neutral { --alert-bg: var(--color-bg-subtle);         --alert-bd: var(--color-border-base);    --alert-ic: var(--color-icon-muted); }
+/* 브랜드 · 중립 바탕 · 테두리 = Figma Alert 변수 (TD-108 32번) — 브랜드 = 선택 바탕(bg-selected), 중립 = 보조 버튼 면 · 테두리 */
+.alert--brand   { --alert-bg: var(--color-bg-selected);              --alert-bd: var(--color-border-brand);                 --alert-ic: var(--color-icon-brand); }
+.alert--neutral { --alert-bg: var(--color-bg-interactive-secondary); --alert-bd: var(--color-border-interactive-secondary); --alert-ic: var(--color-icon-muted); }
 .alert--plain { border-color: transparent; }
 
 /* ── Toast .toast ──────────────────────────────────────────────────────────
@@ -4033,42 +4059,39 @@ body.dark-mode .empty-illo { --empty-illo-shadow: rgb(0 0 0 / .2); }
     gap: var(--spacing-8);
     pointer-events: none;   /* 빈 자리는 아래 화면을 그대로 누를 수 있게 */
 }
+/* 크기 · 글자 = Figma Toast (TD-108 32번): 폭 360 · 여백 16 · 모서리 8 · 본문 Body/lg/medium 16 · 글 ↔ 버튼 4 · 위 맞춤
+ *   모서리는 카드 역할 토큰(--radius-card, 기본 8). 그림자는 Figma에 없지만 화면 위에 떠 있는 층이라 popover 그림자 유지
+ *   구조: 아이콘 → 글(.toast__msg, 제목이 있으면 .toast__body › .toast__title + .toast__msg) → 동작 버튼 → 닫기 */
 .toast {
     --toast-ic: var(--color-icon-inverse);
     pointer-events: auto;
     display: flex;
-    align-items: center;
-    gap: var(--spacing-8);
-    min-width: 240px;
-    max-width: 360px;
-    padding: var(--spacing-8) var(--spacing-8) var(--spacing-8) var(--spacing-12);
+    align-items: flex-start;
+    gap: var(--spacing-4);
+    width: 360px;
+    max-width: calc(100vw - 2 * var(--spacing-24));   /* 좁은 창에서는 화면 안까지만 */
+    padding: var(--spacing-16);
     background: var(--color-bg-inverse);
     color: var(--color-text-inverse);
-    border-radius: var(--radius-popover);
+    border-radius: var(--radius-card);
     box-shadow: var(--shadow-popover);
-    font-size: var(--body-md);
-    line-height: 1.5;
+    font-size: var(--body-lg);
+    font-weight: var(--font-weight-medium);
+    line-height: var(--line-height-base);
     text-align: start;
 }
-.toast__icon { flex: none; width: 16px; height: 16px; color: var(--toast-ic); }
+.toast__icon { flex: none; width: 16px; height: 16px; margin: 5px var(--spacing-4) 0 0; color: var(--toast-ic); }   /* 위 5 ≈ 첫 줄(16 × 1.6) 가운데 · 오른쪽 4 + 간격 4 = 글과 8 */
+.toast:has(.toast__title) .toast__icon { margin-top: 4px; }   /* 제목 줄(20 × 1.2 = 24) 가운데 */
 .toast__icon svg { display: block; width: 100%; height: 100%; }
-.toast__msg { flex: 1; min-width: 0; }
-.toast__action {
-    flex: none;
-    padding: 2px var(--spacing-4);
-    border: 0;
-    border-radius: var(--radius-btn);
-    background: none;
-    color: inherit;
-    font: inherit;
-    font-weight: var(--font-weight-semibold);
-    text-decoration: underline;
-    text-underline-offset: 2px;
-    cursor: pointer;
-}
-.toast__action:focus-visible { outline: 2px solid currentColor; outline-offset: 1px; }
-/* 닫기 = 보조 · 투명 아이콘 버튼을 어두운 바탕용으로 — 글자색은 바탕 위 글자, 올림 · 누름 바탕은 그 글자색을 옅게 */
-.toast .btn--icon {
+.toast__msg,
+.toast__body { flex: 1; min-width: 0; }
+.toast__body { display: flex; flex-direction: column; gap: var(--spacing-4); }   /* 제목 ↔ 문구 4 */
+.toast__title { display: block; font-size: var(--heading-md); font-weight: var(--font-weight-semibold); line-height: var(--line-height-tight); }   /* 선택 — Figma Heading/md 20 */
+/* 동작 버튼 = 보조 · 투명 버튼(.btn.btn--secondary.btn--transparent), Figma Action 52 × 28 · 좌우 여백 8 */
+.toast__action { flex: none; padding: 0 var(--spacing-8); }
+.toast__action + .btn--icon { margin-inline-start: var(--spacing-4); }   /* 동작 ↔ 닫기 8 (간격 4 + 4) */
+/* 동작 · 닫기 = 보조 · 투명 버튼을 어두운 바탕용으로 — 글자색은 바탕 위 글자, 올림 · 누름 바탕은 그 글자색을 옅게 */
+.toast .btn {
     --btn-fg: var(--color-text-inverse);
     --btn-fg-hover: var(--color-text-inverse);
     --btn-fg-pressed: var(--color-text-inverse);
@@ -4081,7 +4104,8 @@ body.dark-mode .empty-illo { --empty-illo-shadow: rgb(0 0 0 / .2); }
 .toast--warning { --toast-ic: var(--color-icon-on-inverse-warning); }
 
 /* ── Tooltip .tooltip ──────────────────────────────────────────────────────
- * 아이콘 버튼처럼 글자 없는 컨트롤의 짧은 설명. 어두운 바탕(bg-inverse) · 글자 12 medium · 화살표 6 (Figma Tooltip과 같은 까만 툴팁)
+ * 아이콘 버튼처럼 글자 없는 컨트롤의 짧은 설명. 어두운 바탕(bg-inverse) · 글자 12 medium · 여백 4 / 8 · 모서리 4 · 화살표 6
+ *   글자 · 여백 · 모서리는 이 값을 기준으로 둠 — Figma Tooltip(글자 16 · 여백 12 · 모서리 8)을 이 값으로 고침 (TD-108 32번)
  * 감싸는 .has-tooltip 에 마우스가 오거나 키보드 포커스가 오면 보임. 기본 = 위, .tooltip--bottom = 아래, 가로 맞춤 .tooltip--start · --end
  * 접근성: 툴팁에 role="tooltip" + id, 컨트롤에 aria-describedby. 아이콘 버튼 이름은 aria-label 이 따로 맡음
  *   마우스를 툴팁 위로 옮겨도 사라지지 않음(아래 다리) · Esc 로 닫기는 화면 스크립트(.is-hidden) — WCAG 1.4.13
