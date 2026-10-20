@@ -39,17 +39,19 @@ const users = () => '<div style="display:flex;flex-direction:column;gap:8px;min-
     USERS.map(([n, d, on]) => '<tr' + (on ? ' class="is-selected" aria-selected="true"' : '') + '><td>' + ck(n + ' 선택', !!on) + '</td><td>' + n + '</td><td>' + d + '</td></tr>').join(''), '', 'flex:1') + '</div>';
 
 // 왼쪽 상자 — 안내 + 조직도 | 담당자. 오른쪽 역할 상자 끝까지 늘어남
+const GUIDE = '담당자를 체크하고 역할 상자의 [추가]를 누르거나, 역할 상자로 끌어다 놓아 주십시오.';
 const left = () => '<div class="section-box" style="padding-top:16px;gap:8px">' +
-  '<p class="section-meta" style="margin:0">담당자를 체크하고 역할 상자의 [추가]를 누르거나, 역할 상자로 끌어다 놓습니다.</p>' +
+  '<p class="section-meta" style="margin:0">' + GUIDE + '</p>' +
   '<div style="flex:1;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px">' + org() + users() + '</div></div>';
 
 // ── 역할 상자 — 섹션 상자(헤더 h4 + [추가]) + 표(No. · 부서 · 이름 · ID). 비어 있으면 표 안 빈 상태 ──
-const roleBox = (key, list) => {
+// add = 헤더 [추가] 버튼(Do · Don't 견본만 끔), blank = 빈 상태 안내(Do · Don't 견본만 끔)
+const roleBox = (key, list, { add = true, blank = true } = {}) => {
   const [title, who] = ROLE[key];
-  const head = '<div class="seach_arm"><div class="leftbt"><h4>' + title + '</h4></div><div class="rightbt">' + btn('추가', 'btn--secondary btn--outlined', who + ' 추가') + '</div></div>';
+  const head = '<div class="seach_arm"><div class="leftbt"><h4>' + title + '</h4></div>' + (add ? '<div class="rightbt">' + btn('추가', 'btn--secondary btn--outlined', who + ' 추가') + '</div>' : '') + '</div>';
   const rows = list.map(([d, n, id], i) => '<tr><td>' + (i + 1) + '</td><td>' + d + '</td><td>' + n + '</td><td>' + id + '</td></tr>').join('');
   return '<div class="section-box">' + head + tbl(who, ['52px', '', '', '100px'], ['No.', '부서', '이름', 'ID'], rows,
-    list.length ? '' : empty('지정한 ' + who + '가 없어요', '담당자를 체크하고 [추가]를 누르거나, 여기로 끌어다 놓으세요.')) + '</div>';
+    list.length || !blank ? '' : empty('지정한 ' + who + '가 없습니다', '담당자를 체크하고 [추가]를 누르거나, 여기로 끌어다 놓아 주십시오.')) + '</div>';
 };
 const roles = (line) => '<div style="display:flex;flex-direction:column;gap:12px;min-width:0">' + ['DISCUSS', 'APPROVE', 'RECEIVE'].map((k) => roleBox(k, line[k])).join('') + '</div>';
 
@@ -116,20 +118,25 @@ export const 저장한_결재선_불러오기 = {
   render: () => shot(pop({ tab: 1 }), 1200, 640),
 };
 
-// ── 언제 쓰고 쓰지 말지 (Do · Don't) — 미리보기만 ──
-const mini = (inner) => '<div style="width:100%;padding:12px;border:1px solid var(--color-border-base);border-radius:var(--radius-card);background:var(--color-bg-base)">' + inner + '</div>';
+// ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-108 7번 ① ② ③) — 미리보기만 ──
+const mini = (inner) => '<div style="width:100%;display:flex;flex-direction:column;gap:8px;padding:12px;border:1px solid var(--color-border-base);border-radius:var(--radius-card);background:var(--color-bg-base)">' + inner + '</div>';
+const guide = (t) => '<p class="section-meta" style="margin:0">' + t + '</p>';
+const ONE = [['설계1팀', '정우진', 'wjjung']];
+// 결재선 지정 섹션 헤더 오른쪽 버튼 — 색만 바꿔 비교
+const lineBtns = (del) => '<div class="seach_arm" style="margin:0"><div class="leftbt"><h4>결재선 지정</h4></div><div class="rightbt">' +
+  btn('행 추가', 'btn--secondary btn--outlined') + btn('행 삭제', del) + btn('결재선 지정', 'btn--secondary btn--outlined') + '</div></div>';
 export const 사용_지침 = {
   parameters: { controls: { disable: true } },
   render: () => doDont([
-    { title: '끌어다 놓기만으로 지정하지 않기',
-      do: [mini(roleBox('APPROVE', [['설계1팀', '정우진', 'wjjung']])), '체크한 담당자를 [추가]로 넣습니다. 키보드로도 지정할 수 있습니다.'],
-      dont: [mini('<div class="section-box"><div class="seach_arm"><div class="leftbt"><h4>승인</h4></div></div>' +
-        tbl('승인자', ['52px', '', '', ''], ['No.', '부서', '이름', 'ID'], '', empty('여기로 끌어다 놓으세요', '')) + '</div>'),
-        '끌어다 놓기만 되면 마우스를 쓰지 못하는 사람은 결재선을 만들 수 없습니다.'] },
-    { title: '창의 primary는 하나',
-      do: [mini('<div class="sb-row" style="gap:8px">' + btn('결재선 적용', 'btn--primary btn--filled') + btn('Template 저장', 'btn--secondary btn--outlined') + btn('적용', 'btn--secondary btn--outlined btn--sm') + '</div>'),
-        '창을 닫으며 끝내는 [결재선 적용]만 primary입니다. Template 목록의 [적용]은 역할 상자만 채우므로 secondary입니다.'],
-      dont: [mini('<div class="sb-row" style="gap:8px">' + btn('결재선 적용', 'btn--primary btn--filled') + btn('Template 저장', 'btn--secondary btn--outlined') + btn('적용', 'btn--primary btn--filled btn--sm') + '</div>'),
-        '[적용]도 primary면 어느 버튼이 창을 끝내는지 알 수 없습니다.'] },
+    { title: '끌어다 놓기와 [추가] 버튼을 함께',
+      do: [mini(guide(GUIDE) + roleBox('APPROVE', ONE)), '역할 상자 헤더에 [추가]를 두어, 체크한 담당자를 버튼으로도 넣게 합니다. 키보드로도 결재선을 지정할 수 있습니다.'],
+      dont: [mini(guide('담당자를 역할 상자로 끌어다 놓아 주십시오.') + roleBox('APPROVE', ONE, { add: false })),
+        '끌어다 놓기만 되면 마우스를 쓰지 못하는 사용자는 결재선을 지정할 수 없습니다.'] },
+    { title: '빈 역할 상자에는 빈 상태 안내',
+      do: [mini(roleBox('RECEIVE', [])), '역할 상자가 비면 표 안에 빈 상태를 두어 무엇을 하면 되는지 안내합니다.'],
+      dont: [mini(roleBox('RECEIVE', [], { blank: false })), '헤더 행만 남기면 비어 있는 것인지 불러오는 중인지 알 수 없습니다.'] },
+    { title: '버튼 색은 업무 동작대로',
+      do: [mini(lineBtns('btn--destructive btn--outlined')), '[행 삭제]처럼 지우는 동작은 destructive로 구분하고, [행 추가] · [결재선 지정]은 secondary로 둡니다.'],
+      dont: [mini(lineBtns('btn--secondary btn--outlined')), '셋이 같은 색이면 지우는 버튼을 다른 버튼과 구분하기 어렵습니다.'] },
   ]),
 };

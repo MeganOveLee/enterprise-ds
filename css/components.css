@@ -123,7 +123,7 @@
     display: flex;                  /* searchLayout flex:1 이 main-content 의 남은 공간 차지하도록 */
     flex-direction: column;
     overflow-y: auto;
-    padding: 0 var(--spacing-24);  /* 위아래 0 — 이전 버전 본문 영역(검색 제목 줄은 자기 위 여백 8로 GNB 와 떨어짐). 구: 16 24 (TD-45 45-3 규칙대로) */
+    padding: 0 var(--spacing-24) var(--spacing-8);  /* 위 0 — 검색 제목 줄은 자기 위 여백 8로 GNB 와 떨어짐(TD-45). 아래 8 = Figma 템플릿 Main content — 결과 표 · 페이지네이션이 화면 바닥에 붙지 않게 (TD-108 31번 S4). 구: 0 24 */
     background: var(--color-bg-subtle);
     min-height: 0;
 }
@@ -182,7 +182,7 @@
 .gnb .nav-history {
     display: inline-flex;
     gap: var(--spacing-4);
-    margin-right: var(--spacing-8);
+    margin-right: var(--spacing-16);   /* 브레드크럼까지 16 = Figma GNB/Top bar 간격 (TD-108). 구: 8 */
 }
 .gnb .nav-history-btn {
     width: 22px;    /* 이전 버전 GNB 뒤로 · 앞으로 = 22 · 테두리 없음 · 투명 · 흐린 글자 (TD-45 45-3 규칙대로). 앱 틀 버튼이라 브랜드를 따라가지 않음 (DS-ADR-020 예외). 구: 28 · 1px 테두리 · 흰 상자 */
@@ -230,7 +230,7 @@
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
-    color: var(--color-icon-muted);   /* v1.0: 원천 회색 직접 참조 → 시맨틱 (다크 추종) */
+    color: var(--color-icon-base);   /* 아이콘 = Figma Rail item 아이콘 색 icon-base (TD-108, 구 icon-muted). 이름 색은 아래 span */
     border-right: 1px solid var(--color-border-base);
 }
 .main-menu nav {
@@ -243,16 +243,18 @@
  *   구조: .main-menu › .lnb-logo + nav › ul › li › (.menu_icon_box › .menu_icon › a) + span(이름). 아래쪽 묶음은 nav 안 마지막 ul
  *   아이콘 = mask 한 장을 글자색으로 칠함 — 메뉴마다 .menu_icon 에 --lnb-icon: url(아이콘 그림)을 제품이 넣음(DS에는 그림 경로 없음)
  *   누르는 자리 = li 전체(a 를 li 크기로 넓힘). a 에 이름(aria-label)과 지금 화면 표시(aria-current="page" 또는 이전 버전 .active)
- *   올림 = 옅은 브랜드 바탕 + 이름 브랜드색(아이콘은 그대로) · 선택 = 한 단계 진한 브랜드 바탕 + 아이콘 · 이름 브랜드색 + 반굵게 + 왼쪽 3px 선 */
+ *   올림 = 옅은 브랜드 바탕 + 이름 브랜드색(아이콘은 그대로) · 선택 = 한 단계 진한 브랜드 바탕 + 아이콘 · 이름 브랜드색 + 반굵게 + 왼쪽 3px 선
+ *   로고 칸 = 옅은 회색 바탕(bg-muted) + 마크 34 — Figma 「LNB/Rail」 › Logo · LNB/Mark (TD-108) */
 .main-menu .lnb-logo {
     display: flex; align-items: center; justify-content: center;
     width: 100%; height: 56px; flex-shrink: 0;
     padding: var(--spacing-4) 0;
     border-bottom: 1px solid var(--color-border-base);
+    background: var(--color-bg-muted);
     color: inherit;
 }
-.main-menu .lnb-logo:hover { background: var(--color-bg-muted); }
-.main-menu .lnb-logo img, .main-menu .lnb-logo svg { display: block; width: 36px; height: auto; }
+.main-menu .lnb-logo:hover { background: var(--color-bg-lnb-hover); }   /* 바탕이 이미 bg-muted 라 올림은 메뉴 항목 올림과 같은 옅은 브랜드 (구: 투명 → bg-muted) */
+.main-menu .lnb-logo img, .main-menu .lnb-logo svg { display: block; width: 34px; height: auto; }
 .main-menu > nav { display: flex; flex-direction: column; min-height: 0; width: 100%; }
 .main-menu > nav > ul { display: flex; flex-direction: column; width: 100%; }
 .main-menu > nav > ul:last-child:not(:first-child) { margin-top: auto; }   /* 아래쪽 묶음(관리자 등) = 바닥에 */
@@ -261,7 +263,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: var(--spacing-8) var(--spacing-4);
+    padding: var(--spacing-8) var(--spacing-4) var(--spacing-4);   /* 아래 4 — Figma Rail item(높이 58, 이름 줄 17.6)과 같은 자리. 이름이 두 줄이면 그만큼 늘어남 (TD-108, 구: 8) */
     cursor: pointer;
     transition: background-color var(--duration-fast), color var(--duration-fast);
 }
@@ -287,13 +289,19 @@
 .main-menu .menu_icon a { position: absolute; inset: 0; display: block; border-radius: 0; }
 .main-menu .menu_icon a:focus-visible { outline: 2px solid transparent; outline-offset: -2px; box-shadow: inset 0 0 0 1px var(--color-border-focus), inset 0 0 0 4px var(--color-focus-ring); }   /* 세로로 붙은 메뉴 줄 = 안쪽 글로우 */
 .main-menu > nav > ul > li > span {
-    display: block;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;   /* 이름은 두 줄까지 — 넘치면 말줄임, 레일 밖으로 나가지 않음 */
+    line-clamp: 2;
+    overflow: hidden;
+    max-width: 100%;
     margin-top: var(--spacing-4);
     font-size: var(--body-xs);   /* 11 — 이전 버전 값, 토큰 Body/xs (TD-44 10/17) */
-    line-height: 1.25;
+    line-height: var(--line-height-base);   /* 17.6 = Figma Rail item 이름 줄 (TD-108, 구 1.25) */
     text-align: center;
-    white-space: nowrap;   /* 메뉴 이름은 한 줄(띄어 쓴 「문서 관리」도 줄바꿈 없이) */
-    color: inherit;
+    word-break: keep-all;        /* 줄은 띄어쓰기에서 나눔 — 「벤치마킹 관리」 → 벤치마킹 / 관리 (TD-108 19번 ③, 구: 한 줄 고정 nowrap — 긴 이름이 레일 밖으로 넘침) */
+    overflow-wrap: anywhere;     /* 띄어쓰기 없이 레일 폭보다 긴 낱말만 글자 단위로 */
+    color: var(--color-text-base);   /* 이름 = Figma Rail item 이름 색 text-base (TD-108, 구 icon-muted 를 물려받음) */
 }
 @media (forced-colors: active) { .main-menu .menu_icon::before { background-color: CanvasText; } }
 /* ─── 폴더 탭 상단 컨트롤 (사업구분 select + 폴더 검색 input) ── */
@@ -306,8 +314,8 @@
 }
 
 .tree-section {
-    padding-left: var(--spacing-8);
-    padding-right: var(--spacing-8);
+    padding-left: 0;    /* 트리 위 선택 · 검색 · 트리 행 = 메뉴 항목과 같은 좌우 선 — Figma LNB/Sub panel › Controls 폭 198 (TD-108, 구: 좌우 8 안쪽) */
+    padding-right: 0;
 }
 .tree-controls {
     padding: var(--spacing-8) 0;
@@ -334,12 +342,14 @@
     display: flex;
     align-items: center;
     padding: 0 var(--spacing-8);
-    gap: var(--spacing-4);
+    gap: 6px;   /* 돋보기 ↔ 글자 6 = Figma LNB/Sub panel › Folder search (TD-108, 구 4. 간격 토큰에 6 없음) */
 }
 .tree-controls .tree-search-wrap .icon-search,
-.tree-controls .tree-search-wrap svg {   /* 아이콘 글꼴(.icon-search) · svg 둘 다 */
-    font-size: 14px;
-    color: var(--color-text-muted);
+.tree-controls .tree-search-wrap svg {   /* 아이콘 글꼴(.icon-search) · svg 둘 다. 돋보기 12 · icon-base = Figma (TD-108, 구 14 · text-muted) */
+    width: 12px;
+    height: 12px;
+    font-size: 12px;
+    color: var(--color-icon-base);
     flex-shrink: 0;
 }
 .tree-controls .tree-search-input {
@@ -353,6 +363,7 @@
     color: var(--color-text-base);
     outline: none;
 }
+.tree-controls .tree-search-input::placeholder { color: var(--color-text-muted); opacity: 1; }   /* 안내 글자 = 다른 입력 필드와 같은 text-muted (Figma 「폴더 검색」, TD-108 — 규칙이 없어 브라우저 기본색이었음) */
 .tree-controls .tree-search-wrap:focus-within {
     border-color: var(--color-border-focus);
     box-shadow: 0 0 0 3px var(--color-focus-ring);   /* 포커스 링 = 보더(브랜드 초록) + 옅은 브랜드 번짐 3px. overrides 404·537행과 동일 패턴 */
@@ -366,7 +377,7 @@
  *     <li class="tree__item" role="treeitem" aria-selected="true" style="--tree-level:1">…</li>
  *   단계 = --tree-level(0부터) × 16 들여쓰기. 끝 항목도 꺾쇠 칸(.tree__caret, 비워 둠)을 둬서 폴더 아이콘이 같은 줄에 선다(이전 버전 잎 왼쪽 여백 = 꺾쇠 폭)
  *   줄 26 = 이전 버전 폴더 트리 줄(그리드 위젯 기본 줄, 행 26). 꺾쇠 · 폴더 사이 4 = 이전 버전 아이콘 여백
- *   올림 = 옅은 회색, 고른 폴더 = 옅은 브랜드 + 반굵게 (Figma App Shell 「LNB/Sub panel」 › Folder tree) */
+ *   올림 = 옅은 회색, 고른 폴더 = 옅은 브랜드 + 반굵게, 펼친 폴더 = 반굵게, 행 아래 1px 선 · 모서리 0 (Figma App Shell 「LNB/Sub panel」 › Folder tree, TD-108) */
 .tree { list-style: none; margin: 0; padding: 0; font-size: var(--body-sm); color: var(--color-text-base); }
 .tree__item {
     display: flex;
@@ -375,14 +386,16 @@
     height: 26px;
     padding-left: calc(var(--spacing-8) + var(--tree-level, 0) * 16px);
     padding-right: var(--spacing-8);
-    border-radius: var(--radius-item);
+    border-bottom: 1px solid var(--color-border-subtle);   /* 행 구분선 = Figma Folder tree 행 (TD-108, 구 없음) */
+    border-radius: 0;   /* 선택 · 올림 바탕도 모서리 0 = Figma (TD-108, 구 --radius-item) */
     white-space: nowrap;
     cursor: pointer;
 }
 .tree__item:hover { background: var(--color-bg-muted); }
+.tree__item[aria-expanded="true"] { font-weight: var(--font-weight-semibold); }   /* 펼친 상위 폴더 = 반굵게 (Figma 「제품 문서」, TD-108) */
 .tree__item[aria-selected="true"] { background: var(--color-bg-brand-subtle); font-weight: var(--font-weight-semibold); }
 .tree__item:focus-visible { outline: 2px solid transparent; box-shadow: inset 0 0 0 1px var(--color-border-focus), inset 0 0 0 4px var(--color-focus-ring); }   /* 스크롤 상자 안 — 안쪽 글로우 (DS-ADR-023 예외와 같음) */
-.tree__caret { width: 12px; flex-shrink: 0; display: inline-flex; color: var(--color-icon-muted); }
+.tree__caret { width: 12px; flex-shrink: 0; display: inline-flex; color: var(--color-icon-base); }   /* 꺾쇠 = Figma icon-base (TD-108, 구 icon-muted) */
 .tree__icon { flex-shrink: 0; display: inline-flex; color: var(--color-icon-warning); }   /* 폴더 = 노란 채운 폴더(Figma solid/folder · folder-open) */
 
 /* ============================================================
@@ -401,14 +414,15 @@
 .gnb .logo-container {
     display: flex;
     align-items: center;
-    gap: var(--spacing-8);
+    gap: 10px;   /* 마크 ↔ 제품 이름 10 = Figma CI LOGO (TD-108, 구 8. 간격 토큰에 10 없음) */
 }
+/* 글자 마크 — 로고 그림이 없는 제품. 브랜드 바탕 + 흰 글자 + 모서리 2 = Figma CI LOGO 「On Light」 마크 (TD-108, 구 bg-inverse · 모서리 4) */
 .gnb .logo-mark {
     width: 28px;
     height: 28px;
-    background: var(--color-bg-inverse);
-    color: var(--color-text-inverse);
-    border-radius: var(--radius-md);   /* 로고 마크 = 브랜드 자산이라 형태 역할 없음 (DS-ADR-020) */
+    background: var(--color-bg-brand);
+    color: var(--color-text-on-color);
+    border-radius: var(--radius-sm);   /* 로고 마크 = 브랜드 자산이라 형태 역할 없음 (DS-ADR-020) */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -442,7 +456,7 @@
     padding: 0;
     display: flex;
     align-items: center;
-    gap: var(--spacing-4);
+    gap: var(--spacing-16);   /* 사용자 아이콘 · 결재업무 · 활동업무 간격 16 = Figma GNB/Top bar › Actions (TD-108). 구: 4 + .menu-container 좌우 6 */
     height: 100%;
 }
 .gnb .header-actions nav li { display: flex; align-items: center; height: 100%; }
@@ -482,13 +496,13 @@
     font-size: var(--body-md);
     white-space: nowrap;            /* 폰트 폭 차이로 줄바꿈 방지 */
 }
-/* 사용자 메뉴 버튼 — 사용자 아이콘 20, 흐린 아이콘 색(이전 버전 아이콘 #656565 자리) */
-.menu-toggle > svg { width: 20px; height: 20px; color: var(--color-icon-muted); }
-.menu-toggle:has(> :is(svg, img):only-child) { width: 32px; justify-content: center; }   /* 아이콘만 든 버튼 = 32 정사각 — 포커스 테두리가 세로로 길쭉해지지 않게 */
+/* 사용자 메뉴 버튼 — 사용자 아이콘 24 · icon-base = Figma GNB/Top bar › user (TD-108 31번 S2). 구: 20 · icon-muted(이전 버전 아이콘 #656565 자리) */
+.menu-toggle > svg { width: 24px; height: 24px; color: var(--color-icon-base); }
+.menu-toggle:has(> :is(svg, img):only-child) { width: 24px; height: 24px; justify-content: center; }   /* 아이콘만 든 버튼 = 아이콘 크기 24 정사각 — 오른쪽 묶음 간격 16이 아이콘에서 바로 잼, 포커스 테두리도 정사각 (구 32) */
 /* .menu-toggle hover 배경 제거 — 원래(styles.css) hover 배경 없었음, 우리가 추가한 것 되돌림 */
 .menu-toggle .title {
     margin: 0;
-    color: var(--color-text-muted);   /* 이전 버전 업무 개수 제목 = 흐린 글자 (TD-45) */
+    color: var(--color-text-base);   /* 결재업무 · 활동업무 제목 = Figma text-base (TD-108 31번 S2). 구: text-muted (TD-45) */
     font-weight: var(--font-weight-medium);
     line-height: 1;
     white-space: nowrap;
@@ -498,7 +512,7 @@
     background: var(--color-bg-inverse);
     color: var(--color-text-inverse);
     border-radius: var(--radius-rounded);
-    padding: 2px 8px;
+    padding: 0 var(--spacing-8);
     font-size: var(--body-xs);   /* 11 — 이전 버전 값, 토큰 Body/xs (TD-44 10/17) */
     line-height: 1;
     font-weight: var(--font-weight-semibold);
@@ -507,7 +521,7 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    height: 18px;                   /* count 박스 크기 고정 → 폰트 fallback 안전 */
+    height: 20px;                   /* 높이 고정 → 폰트 fallback 안전. 20 · 안쪽 0 8 · 모서리 10(알약) = Figma GNB/Top bar › Count (TD-108 31번 S2, 구 18 · 안쪽 2 8) */
     box-sizing: border-box;
 }
 
@@ -717,7 +731,7 @@
  *   풀 로고 가로 340px 한 박스로 표시. main-menu 의 K 심볼은 동시에 hidden.
  * ============================================================ */
 .main-sub {
-    width: 280px;
+    width: var(--size-sidebar);   /* 215 = Figma LNB/Sub panel · 템플릿 Side area (TD-108, 구 280px 고정값) */
     height: 100vh;
     background: var(--color-bg-base);
     border-right: 1px solid var(--color-border-base);
@@ -739,7 +753,7 @@
     position: absolute;
     top: 0;
     left: -60px;
-    width: 340px;
+    width: calc(60px + var(--size-sidebar));   /* 레일 60 + 패널 폭 */
     height: 56px;
     background: var(--color-bg-base);
     border-bottom: 1px solid var(--color-border-base);
@@ -775,12 +789,12 @@
 .main-sub-header .sub-close {
     width: var(--size-btn); height: var(--size-btn); padding: 0;   /* 높이 = 표준 아이콘 버튼 (DS-ADR-020) */
     border: none; background: transparent;
-    color: var(--color-text-muted); cursor: pointer;
+    color: var(--color-icon-base); cursor: pointer;   /* 닫기 아이콘 16 · icon-base = Figma LNB/Sub panel › x (TD-108, 구 14 · text-muted) */
     border-radius: var(--radius-btn);
     display: inline-flex; align-items: center; justify-content: center;
 }
-.main-sub-header .sub-close:hover { background: var(--color-bg-muted); color: var(--color-text-base); }
-.main-sub-header .sub-close svg { width: 14px; height: 14px; stroke-width: 2; }
+.main-sub-header .sub-close:hover { background: var(--color-bg-muted); }
+.main-sub-header .sub-close svg { width: 16px; height: 16px; stroke-width: 2; }
 
 /* 탭 — 메뉴 / 폴더 등. 1level 마다 조건부 (탭 1개면 안 표시) */
 .main-sub-tabs {
@@ -3169,8 +3183,7 @@ body.dark-mode .progress-bar {
 }
 .gnb .dropdown-content.show { display: flex; }
 /* ═══ GNB 헤더 잔여 이관 (styles.css 437~554 header-actions 블록) — 최종 리허설서 발견: menu-container 레이아웃 + 설정드롭다운(.dropdown-content-top) 기본 숨김·절대위치(없으면 컷 시 in-flow로 펼쳐져 menu-container 482 팽창) + 로고높이 ═══ */
-.gnb .header-actions .menu-container { display: inline-block; padding: 0 0.375rem; }
-.gnb .header-actions nav ul li:last-child .menu-container { padding-right: 0; }   /* 마지막 토글(활동업무) 우측 패딩 제거 → 검색박스 우측 라인과 정렬 */
+.gnb .header-actions .menu-container { display: inline-block; padding: 0; }   /* 항목 간격은 .header-actions gap 16 한 곳 (TD-108, 구: 좌우 6 — 마크업에 따라 28 · 16으로 갈림) */
 .gnb .header-actions .menu-container .menu-toggle { display: flex; align-items: center; }
 .gnb .dropdown-content-top { position: absolute; left: 50%; transform: translateX(-50%); display: none; flex-direction: column; min-width: 80px; margin-top: 0.25rem; z-index: 10; background-color: var(--color-bg-muted); box-shadow: var(--shadow-popover); border-radius: var(--radius-popover); width: max-content; }
 .gnb .dropdown-content-top.show { display: flex; }

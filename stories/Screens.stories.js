@@ -7,23 +7,18 @@
 import './_screens.css';
 import { wireSearchDetail, EXPAND_LABEL } from './_search.js';
 import { fileIcon, folderIcon } from './_fileicon.js';
+import { lnbMask, lnbSvg, lnbLogo } from './_lnbicons.js';
 
 const W = 1440;
 const H = 900;
 
-// ── 아이콘 (직접 그린 선 아이콘, currentColor) ──
+// ── 아이콘 (선 아이콘, currentColor). LNB 레일 · GNB 사용자 · 바로가기 · 검색 조건 헤더는 Figma 아이콘(./_lnbicons.js) ──
 const svg = (d, s = 20) => '<svg width="' + s + '" height="' + s + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + d + '</svg>';
 const I = {
-  work: '<rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 13h8M8 17h5"/>',
   doc: '<path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 12h6M9 16h6"/>',
-  drawing: '<path d="M4 20L20 4M4 20h16M4 20V4"/><path d="M9 20a5 5 0 0 0-5-5"/>',
-  part: '<circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/>',
   project: '<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 12h18"/>',
   change: '<circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M6 8.5v3a4 4 0 0 0 4 4h5.5"/><path d="M13 13l2.5 2.5L13 18"/>',
-  admin: '<rect x="5" y="3" width="14" height="18" rx="2"/><circle cx="12" cy="10" r="2.5"/><path d="M8 17a4 4 0 0 1 8 0"/>',
-  user: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="10" r="3"/><path d="M6.5 18.5a6 6 0 0 1 11 0"/>',
   search: '<circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/>',
-  filter: '<path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/>',
   list: '<path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/>',
   reset: '<circle cx="12" cy="12" r="9"/><path d="M9 9l6 6M15 9l-6 6"/>',
   moon: '<path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/>',
@@ -80,33 +75,26 @@ const field = (label, control, { req = false, span = 0, id = '', cls = '' } = {}
   '<label class="search-label"' + (id ? ' for="' + id + '"' : '') + '>' + label + (req ? '<span class="required" aria-hidden="true"></span>' : '') + '</label>' +
   '<div class="td">' + control + '</div></div>';
 
-// ── 아이콘 메뉴 + 두 번째 메뉴 패널 ──
+// ── LNB 레일 + LNB 서브 패널 ──
+// 메뉴 · 아이콘 = Figma 「LNB/Rail」과 같음(아이콘 · 로고 마크는 ./_lnbicons.js, App Shell 문서와 같음)
 const LNB = [['work', '업무 관리'], ['doc', '문서 관리'], ['drawing', '도면 관리'], ['part', '부품 관리'], ['project', '프로젝트'], ['change', '설계 변경']];
-// 가상 제품 로고(모든 브랜드 레일 · 로그인, TD-101 10/17). 브랜드 타일 위에 부품(육면체)과 그 둘레를 도는 수명 주기 궤도, 궤도 끝에 브랜드 포인트색 점.
-// 브랜드를 바꾸면 타일 · 점 색이 따라감. 로고 = 브랜드 자산이라 모서리는 고정이고, 점은 브랜드 파일의 포인트색(--accent-500)을 그대로 씀 — 화면 코드에서 원색을 쓰는 유일한 곳
-const LOGO =
-  '<svg class="scr-logo" width="34" height="34" viewBox="0 0 34 34" role="img" aria-label="Enterprise PLM">' +
-  '<rect width="34" height="34" rx="8" style="fill:var(--color-bg-brand)"/>' +
-  '<path d="M4.4 21.6A12.5 12.5 0 1 1 27.6 21.6" fill="none" stroke-width="1.6" stroke-linecap="round" style="stroke:var(--color-icon-on-color);opacity:.55"/>' +
-  '<g fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="stroke:var(--color-icon-on-color)">' +
-  '<path d="M16 10.2l6 3.45v6.9L16 24l-6-3.45v-6.9z"/><path d="M10 13.65l6 3.45 6-3.45M16 17.1V24"/></g>' +
-  '<circle cx="27.6" cy="21.6" r="2.9" stroke-width="1.6" style="fill:var(--accent-500);stroke:var(--color-bg-brand)"/></svg>';
+// 가상 제품 로고(모든 브랜드 레일 · 로그인, TD-101). 그림 설명은 ./_lnbicons.js
+const LOGO = lnbLogo('Enterprise PLM', 'scr-logo');
 // active = 지금 메뉴 이름. 홈(대시보드)은 로고가 홈이라 켜진 메뉴 없음
-// 아이콘 메뉴 = 이전 버전 개발 마크업 그대로(li › .menu_icon_box › .menu_icon › a + span). 아이콘은 mask 그림(--lnb-icon) 한 장을 글자색으로 칠함
+// LNB 레일 = 제품 마크업 그대로(li › .menu_icon_box › .menu_icon › a + span). 아이콘은 mask 그림(--lnb-icon) 한 장을 글자색으로 칠함
 // 링크 이름은 a 의 aria-label, 화면에 보이는 이름(span)은 읽기에서 뺌(두 번 읽지 않게)
-const lnbIcon = (d) => "url('data:image/svg+xml," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' + d + '</svg>') + "')";
-const lnbItem = ([ic, t], active) => '<li><div class="menu_icon_box"><div class="menu_icon" style="--lnb-icon:' + lnbIcon(I[ic]) + '"><a href="#" aria-label="' + t + '"' + (t === active ? ' aria-current="page"' : '') + '></a></div></div><span aria-hidden="true">' + t + '</span></li>';
+const lnbItem = ([ic, t], active) => '<li><div class="menu_icon_box"><div class="menu_icon" style="--lnb-icon:' + lnbMask(ic) + '"><a href="#" aria-label="' + t + '"' + (t === active ? ' aria-current="page"' : '') + '></a></div></div><span aria-hidden="true">' + t + '</span></li>';
 const lnb = (active = '문서 관리') =>
   '<aside class="main-menu"><a class="lnb-logo" href="#" aria-label="홈">' + LOGO + '</a>' +
-  '<nav aria-label="주 메뉴"><ul>' + LNB.map((x) => lnbItem(x, active)).join('') + '</ul><ul>' + lnbItem(['admin', '관리자'], active) + '</ul></nav></aside>';
+  '<nav aria-label="주 메뉴"><ul>' + LNB.map((x) => lnbItem(x, active)).join('') + '</ul><ul>' + lnbItem(['user', '관리자'], active) + '</ul></nav></aside>';
 
 const TREE = [[0, '제품 문서', true], [1, '설계 문서', true, true], [2, '사양서'], [2, '시험 성적서'], [2, '회의록'], [1, '품질 문서'], [1, '양식']];
 const sub = () =>
   '<aside class="main-sub" aria-label="문서 관리 메뉴"><div class="main-sub-header"><h3>문서 관리</h3>' +
-  '<button type="button" class="sub-close" aria-label="메뉴 닫기">' + svg(I.close, 14) + '</button></div>' +
+  '<button type="button" class="sub-close" aria-label="메뉴 닫기">' + svg(I.close, 16) + '</button></div>' +
   '<div class="main-sub-content"><div class="ui-submenu"><ul><li class="ui-submenu-flat"><a href="#" aria-current="page">문서 검색</a></li><li class="ui-submenu-flat"><a href="#">문서 등록</a></li></ul></div>' +
   '<div class="tree-section"><div class="tree-controls">' + sel('제품군', ['전체 제품군', '제동 부품', '전장 부품']) +
-  '<div class="tree-search-wrap">' + svg(I.search, 14) + '<input class="tree-search-input" aria-label="폴더 검색" placeholder="폴더 검색"></div></div>' +
+  '<div class="tree-search-wrap">' + svg(I.search, 12) + '<input class="tree-search-input" aria-label="폴더 검색" placeholder="폴더 검색"></div></div>' +
   '<ul class="tree" role="tree" aria-label="문서 폴더">' +
   TREE.map(([lv, t, open, on]) => '<li class="tree__item" role="treeitem"' + (open !== undefined ? ' aria-expanded="' + !!open + '"' : '') + (on ? ' aria-selected="true"' : '') +
     ' style="--tree-level:' + lv + '"><span class="tree__caret">' + (lv < 2 ? svg(open ? I.down : I.next, 12) : '') + '</span>' +
@@ -120,7 +108,7 @@ const gnb = (crumbs = ['Home', '문서 관리', '문서 검색']) =>
   '<button type="button" class="nav-history-btn" aria-label="앞으로">' + svg(I.next, 14) + '</button></div>' +
   '<div class="breadcrumb">' + crumbs.map((c, i) => i < crumbs.length - 1 ? '<span>' + c + '</span><span aria-hidden="true">&gt;</span>' : '<span class="crumb-current">' + c + '</span>').join('') + '</div></div>' +
   '<div class="header-actions">' +
-  '<div class="menu-container"><button type="button" class="menu-toggle" aria-label="사용자 메뉴" aria-haspopup="true" aria-expanded="false">' + svg(I.user, 20) + '</button></div>' +
+  '<div class="menu-container"><button type="button" class="menu-toggle" aria-label="사용자 메뉴" aria-haspopup="true" aria-expanded="false">' + lnbSvg('user', 24) + '</button></div>' +
   '<div class="menu-container"><button type="button" class="menu-toggle"><span class="title">결재업무</span><span class="count">2</span></button></div>' +
   '<div class="menu-container"><button type="button" class="menu-toggle"><span class="title">활동업무</span><span class="count">0</span></button></div>' +
   '</div></header>';
@@ -132,7 +120,7 @@ const gnb = (crumbs = ['Home', '문서 관리', '문서 검색']) =>
 let searchUid = 0;
 const searchForm = ({ open = false } = {}) => {
   const id = 'scr-search-detail-' + (++searchUid);
-  return '<div class="seach_arm"><div class="leftbt">' + svg(I.filter, 16) + '<h4>검색 조건</h4></div>' +
+  return '<div class="seach_arm"><div class="leftbt">' + lnbSvg('sliders', 18) + '<h4>검색 조건</h4></div>' +
   '<div class="rightbt">' + btn('검색', 'btn--primary btn--filled', I.search) +
   '<button type="button" class="btn btn--secondary btn--outlined btn--expand" aria-expanded="' + open + '" aria-controls="' + id + '">' + EXPAND_LABEL + '</button>' +
   btn('검색 조건 초기화', 'btn--secondary btn--transparent', I.reset) + '</div></div>' +
@@ -152,8 +140,8 @@ const searchForm = ({ open = false } = {}) => {
   '</div></div></div>';
 };
 
-// 페이지 이동 — 이전 버전 화면에는 없음(개발 요청: 쪽을 나누면 다음 페이지 데이터가 검색 조건 · 정렬에 걸리지 않아서). 기본 화면은 이전 버전대로 빼고,
-// 페이지 이동은 「시안 2」에만 둠 — 검색 · 정렬을 전체 결과에 먼저 하고 쪽을 나누는 경우의 DS 제안
+// 페이지네이션 — 기본 목록 화면에는 두지 않음(페이지를 나누면 다음 페이지 데이터가 검색 조건 · 정렬에 걸리지 않아서).
+// 「목록 — 페이지네이션」 화면에만 둠 — 검색 · 정렬을 전체 결과에 먼저 하고 페이지를 나누는 경우
 const pager = () =>
   '<nav class="ui-pagination" aria-label="페이지 이동">' +
   '<button type="button" class="ui-pagination__btn ui-pagination__btn--nav is-disabled" aria-label="이전 페이지">' + svg(I.prev, 14) + '</button>' +
@@ -181,10 +169,10 @@ const grid = ({ paging = false } = {}) =>
     '<td>' + r[4] + '</td><td>' + r[5] + '</td><td>' + r[6] + '</td><td>' + r[7] + '</td></tr>').join('') +
   '</tbody></table></div>' + (paging ? pager() : '') + '</div>';
 
-const listScreen = ({ paging = false } = {}) =>
+const listScreen = ({ paging = false, open = false } = {}) =>
   '<div style="display:flex;height:100%">' + lnb() + sub() +
   '<div class="main-layout"><div class="main-body"><div class="main-nav-layout"><div class="main-area">' + gnb() +
-  '<div class="main-content"><div class="searchLayout"><div class="product">' + searchForm() + grid({ paging }) + '</div></div></div>' +
+  '<div class="main-content"><div class="searchLayout"><div class="product">' + searchForm({ open }) + grid({ paging }) + '</div></div></div>' +
   '</div></div></div></div></div>';
 
 // ── 등록 창 — 제품에서는 새 창(.pop). 여기서는 목록 위에 띄운 창 ──
@@ -204,7 +192,7 @@ const uploader = () =>
   '<div class="resumable"><div class="resumable-bar">' +
   '<div class="resumable-label"><span class="resumable-label__name">' + FILES.length + '개 · 올리는 중 1개</span><a href="#" class="text-link no-arrow" download>(양식) 사양서 양식.docx</a></div>' +
   '<div class="resumable-bar__right">' + btn('파일 선택', 'btn--secondary btn--outlined') + '<button type="button" class="btn btn--destructive btn--transparent" data-role="clear-all">전체 삭제</button></div></div>' +
-  '<div class="resumable-drop" role="button" tabindex="0"><span class="drop-cta">파일을 여기로 끌어다 놓거나 눌러서 고르세요 · 한 파일 100 MB까지</span></div>' +
+  '<div class="resumable-drop" role="button" tabindex="0"><span class="drop-cta">파일을 여기로 끌어다 놓거나 눌러서 선택해 주십시오 · 한 파일 100 MB까지</span></div>' +
   '<ul class="fileList">' + FILES.map(([n, ext, size, pct]) =>
     '<li class="file-item">' + fileIcon(ext) +
     (pct === undefined ? '<a href="#" class="file-name">' + n + '</a>' : '<span class="file-name">' + n + '</span><progress max="100" value="' + pct + '" aria-label="' + n + ' 올리는 중">' + pct + '%</progress>') +
@@ -220,12 +208,12 @@ const registerPop = () =>
   field('문서 분류', '<div class="ff-readonly">/제품 문서/설계 문서/사양서</div>', { req: true }) +
   field('문서 번호', '<div class="ff-readonly">저장하면 자동으로 매겨집니다</div>') +
   field('문서 명', '<input class="input" id="scr-docname" aria-invalid="true" aria-describedby="scr-docname-err" placeholder="문서 명 입력">' +
-    '<span class="field-error-msg" id="scr-docname-err">문서 명을 입력해 주세요</span>', { req: true, id: 'scr-docname' }) +
+    '<span class="field-error-msg" id="scr-docname-err">문서 명을 입력해 주십시오</span>', { req: true, id: 'scr-docname' }) +
   field('작업현황', sel('작업현황', ['작업 중', '검토 중'])) +
   field('담당자', '<input class="input" aria-label="담당자" value="김도윤 · 설계1팀">', { req: true }) +
   field('완료 예정일', dp('완료 예정일', '2026-10-27'), { req: true }) +
   '<div class="ff-field col-2"><label class="search-label" for="scr-desc">설명</label><div class="td">' +
-  '<textarea class="textarea" id="scr-desc" rows="3" placeholder="문서의 목적 · 변경 내용을 적어 주세요"></textarea></div></div>' +
+  '<textarea class="textarea" id="scr-desc" rows="3" placeholder="문서의 목적 · 변경 내용 입력"></textarea></div></div>' +
   '</div></div>' +
   section('첨부 파일') + uploader() +
   '</div></div>';
@@ -242,7 +230,7 @@ const STATS = [
 ];
 const profile = () =>
   '<section class="card scr-profile" aria-label="내 정보"><div><p class="scr-profile__date">2026년 10월 13일 화요일</p>' +
-  '<h1 class="scr-profile__hello">김도윤 님, 좋은 오후예요</h1><p class="scr-profile__meta">설계1팀 · 선임연구원</p></div>' +
+  '<h1 class="scr-profile__hello">김도윤 님, 반갑습니다</h1><p class="scr-profile__meta">설계1팀 · 선임연구원</p></div>' +
   '<span class="scr-profile__avatar" aria-hidden="true">김</span></section>';
 const stat = ([icon, tone, label, n, unit]) =>
   '<section class="card scr-stat"><div class="scr-stat__body">' + tile(icon, tone) +
@@ -277,13 +265,13 @@ const homeBody = () =>
     APPROVALS.map(([k, label, t, d]) => li('<span class="status-chip status-chip--' + STATUS[k][0] + '">' + label + '</span>', t, d)).join('') + '</ul></section>' +
   '<section class="card">' + cardHead('활동 업무', 0) +
     '<div class="empty empty--card" role="status"><span class="empty__icon">' + svg(I.inbox, 32) + '</span>' +
-    '<p class="empty__title">진행 중인 활동 업무가 없어요</p><p class="empty__desc">배정된 활동이 생기면 여기에 보여요.</p></div></section>' +
+    '<p class="empty__title">진행 중인 활동 업무가 없습니다</p><p class="empty__desc">배정된 활동이 생기면 여기에 표시됩니다.</p></div></section>' +
   '<section class="card">' + cardHead('나의 태스크', TASKS.length, more()) + '<ul class="card-list">' +
     TASKS.map(([tone, label, t, d]) => li('<span class="status-chip status-chip--' + tone + '">' + label + '</span>', t, d)).join('') + '</ul></section>' +
   '<section class="card">' + cardHead('최근 작업 중인 데이터', undefined, more()) + '<ul class="card-list scr-recent">' +
     RECENT.map(([ext, t, d]) => li(fileIcon(ext), t, d)).join('') + '</ul></section>' +
   '<section class="card">' + cardHead('바로가기', undefined, '<button type="button" class="btn btn--secondary btn--transparent btn--sm">편집</button>') +
-    '<ul class="scr-shortcuts">' + SHORTCUTS.map(([ic, t]) => '<li><a href="#">' + tile(ic, 'brand') + '<span>' + t + '</span>' + svg(I.next, 14) + '</a></li>').join('') + '</ul></section>' +
+    '<ul class="scr-shortcuts">' + SHORTCUTS.map(([ic, t]) => '<li><a href="#"><span class="scr-tile scr-tile--brand">' + (ic === 'inbox' ? svg(I.inbox, 20) : lnbSvg(ic, 20)) + '</span><span>' + t + '</span>' + svg(I.next, 14) + '</a></li>').join('') + '</ul></section>' +
   '</div></div>';
 const homeScreen = () =>
   '<div style="display:flex;height:100%">' + lnb('') +
@@ -406,7 +394,7 @@ const loginScreen = () =>
   '</section>' +
   '<main class="scr-login__main"><div class="scr-login__box">' +
   '<div class="scr-login__logo">' + LOGO + '<b>Enterprise PLM</b></div>' +
-  '<h1>환영합니다</h1><p class="scr-login__lead">로그인 후 PLM 시스템을 이용해 주세요.</p>' +
+  '<h1>환영합니다</h1><p class="scr-login__lead">로그인 후 PLM 시스템을 이용해 주십시오.</p>' +
   '<div class="scr-login__form">' +
   '<div class="scr-login__field"><label for="scr-login-id">아이디</label><input class="input input--lg" id="scr-login-id" autocomplete="username" placeholder="사번 또는 ID 입력"></div>' +
   '<div class="scr-login__field"><label for="scr-login-pw">비밀번호</label><input class="input input--lg" id="scr-login-pw" type="password" autocomplete="current-password" placeholder="비밀번호 입력"></div>' +
@@ -465,7 +453,7 @@ const ANATOMY = [
   ['6', '인사 · 숫자 카드', c('.card') + mu('--color-bg-panel · --color-text-on-panel · -on-panel-2'), '인사 카드는 브랜드 패널 색이라 브랜드에 따라 바뀝니다.'],
   ['7', '카드 그리드', c('.card-grid') + ' · ' + c('.card-header') + ' · ' + c('.card-title-count') + ' · ' + c('.card-list') + ' · ' + c('.empty--card'), '3열 고정입니다(' + c('.card-grid') + '는 최소 폭 460이라 1440 화면에서 2열). 차트 색은 아이콘 신호색 토큰을 씁니다. ' + lk('Card', 'data-display-card--docs')],
   ['8', '검색 폼', c('.seach_arm') + ' · ' + c('.pro_table') + ' · ' + c('.form-grid--6') + ' · ' + c('.ff-field') + ' · ' + c('.search-label') + ' · ' + c('.search-detail'), lk('Search Form', 'blocks-search-form--docs') + ' 블록 그대로입니다.'],
-  ['9', '결과 표', c('.table_list') + ' · ' + c('.ui-pagination') + mu('--color-bg-grid-header · -row-hover · -row-selected · --color-bg-row-alt'), '제품에서는 그리드 라이브러리가 그리는 자리라 같은 그리드 토큰의 표로 구성했습니다. 페이지네이션은 시안 2에만 있습니다. ' + lk('Table', 'data-display-table--docs')],
+  ['9', '결과 표', c('.table_list') + ' · ' + c('.ui-pagination') + mu('--color-bg-grid-header · -row-hover · -row-selected · --color-bg-row-alt'), '제품에서는 그리드 라이브러리가 그리는 자리라 같은 그리드 토큰의 표로 구성했습니다. 페이지네이션은 「목록 — 페이지네이션」 화면에만 있습니다. ' + lk('Table', 'data-display-table--docs')],
   ['10', '창 제목 줄', c('.pop .top') + ' · ' + c('.top-btn-area'), '창 이름과 [임시 저장] · [등록] · 닫기입니다. ' + lk('Popup Window', 'overlay-popup-window--docs')],
   ['11', '접는 섹션 · 2열 폼', c('.seach_arm') + ' · ' + c('.section-toggle') + ' · ' + c('.pro_table') + ' · ' + c('.form-grid-2') + ' · ' + c('.ff-readonly') + ' · ' + c('.field-error-msg'), '섹션 헤더와 내용이 배경색이 있는 상자 하나입니다. 필수 표시(*) · 오류 필드 · 읽기 전용 필드를 함께 보여 줍니다. ' + lk('Accordion', 'data-display-accordion--docs')],
   ['12', '첨부', c('.resumable'), '끌어다 놓기 · 파일 형식 아이콘 · 올리는 중 막대입니다.'],
@@ -517,7 +505,13 @@ export const 문서_검색 = {
   render: () => wireSearchDetail(frame(listScreen())),
 };
 
-// 시안 2 — 페이지 이동을 넣은 DS 제안(이전 버전에는 없음, 위 pager 주석)
+// 목록 — 상세 검색을 펼친 모습(Figma 📄 Templates 「문서 검색 · 상세 검색 펼침」과 같은 정지 화면)
+export const 문서_검색_상세_펼침 = {
+  parameters: src(listScreen({ open: true })),
+  render: () => wireSearchDetail(frame(listScreen({ open: true }))),
+};
+
+// 목록 — 페이지네이션(위 pager 주석)
 export const 문서_검색_시안_2 = {
   parameters: src(listScreen({ paging: true })),
   render: () => wireSearchDetail(frame(listScreen({ paging: true }))),

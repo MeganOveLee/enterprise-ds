@@ -63,7 +63,7 @@ export const 팝업_탭 = {
 };
 export const 패널_탭 = {
   parameters: { docs: { source: { code: panelTabs() } } },
-  render: () => live(panelFrame(panelTabs()), '280px'),
+  render: () => live(panelFrame(panelTabs()), 'var(--size-sidebar)'),
 };
 // 탭이 많을 때 — 탭 10개 · 창 폭 720. 탭 이름은 한 줄, 넘치면 탭 목록 양 끝에 ◀ ▶ (js/tabs.js), 오른쪽 버튼은 그대로
 export const 탭이_많을_때 = {
@@ -104,7 +104,7 @@ export const Playground = {
   render: (a) => {
     const tabs = a.tabs && a.tabs.length ? a.tabs : POP_TABS;
     const i = Math.min(Math.max(0, a.active), tabs.length - 1);
-    return a.kind === '패널 탭' ? live(panelFrame(panelTabs(tabs, i)), '280px') : live(popFrame(popTabs(tabs, i, { actions: a.actions })));
+    return a.kind === '패널 탭' ? live(panelFrame(panelTabs(tabs, i)), 'var(--size-sidebar)') : live(popFrame(popTabs(tabs, i, { actions: a.actions })));
   },
 };
 

@@ -7,10 +7,10 @@
 // 배치 클래스 .ui-compare · .ui-field-addon · .compare-legend 는 components.css 「Blocks」(이전 버전과 같은 이름)
 import { flow, shot, MARK } from './_flow.js';
 import { doDont } from './_dodont.js';
+import { lnbSvg } from './_lnbicons.js';
 
 const svg = (d, s = 16) => '<svg width="' + s + '" height="' + s + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + d + '</svg>';
 const I = {
-  filter: '<path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/>',
   search: '<circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/>',
   reset: '<circle cx="12" cy="12" r="9"/><path d="M9 9l6 6M15 9l-6 6"/>',
   tree: '<rect x="3" y="3" width="7" height="5" rx="1"/><rect x="14" y="10" width="7" height="5" rx="1"/><rect x="14" y="17" width="7" height="4" rx="1"/><path d="M6.5 8v10.5H14M6.5 12.5H14"/>',
@@ -81,7 +81,7 @@ const screen = ({ show = [true, true, true] } = {}) => {
   const keep = ['identical', 'similar', 'unassigned'].filter((k, i) => show[i]);
   const pairs = PAIRS.filter((p) => keep.includes(p[2]));
   return '<div class="product">' +
-    '<div class="seach_arm"><div class="leftbt">' + svg(I.filter) + '<h4>검색 조건</h4></div><div class="rightbt">' + btn('검색', 'btn--primary btn--filled', I.search) + '</div></div>' +
+    '<div class="seach_arm"><div class="leftbt">' + lnbSvg('sliders', 18) + '<h4>검색 조건</h4></div><div class="rightbt">' + btn('검색', 'btn--primary btn--filled', I.search) + '</div></div>' +
     '<div class="ui-compare">' + col(0, { pairs, show }) + col(1, { pairs, show }) + '</div></div>';
 };
 const body = (inner) => '<div class="main-content"><div class="searchLayout">' + inner + '</div></div>';
@@ -106,7 +106,7 @@ export default {
 export const 두_BOM_비교 = {
   parameters: { docs: { source: { code: screen() } } },
   render: () => flow({
-    base: { html: menu(), w: 280, h: 300, where: '부품 관리 메뉴 패널' },
+    base: { html: menu(), w: 215, h: 300, where: '부품 관리 메뉴 패널' },
     open: { html: body(screen()), w: W, h: H, title: '열리는 화면', where: 'BOM 비교 — 본문 영역' },
     trigger: '[BOM 비교]', how: '본문이 비교 화면으로 바뀝니다(새 창 아님)',
   }),
@@ -117,29 +117,29 @@ export const 차이만_보기 = {
   render: () => shot(body(screen({ show: [false, true, true] })), W, 470),
 };
 
-// ── 언제 쓰고 쓰지 말지 (Do · Don't) — 미리보기만. 작은 표 3줄 ──
-const mini = (rows, { colorOnly = false, mismatch = false } = {}) => {
-  const lg = '<div style="margin-bottom:8px">' + legend() + '</div>';
-  const tr = ([no, q, s]) => {
-    const k = STATE[s][1];
-    const cls = mismatch && s === 'unassigned' ? 'compare-row--danger-demo' : k ? 'compare-row--' + k : '';
-    return '<tr' + (cls ? ' class="' + cls + '"' : '') + '><td>' + no + '</td><td>' + q + '</td>' + (colorOnly ? '' : '<td class="compare-cell">' + STATE[s][0] + '</td>') + '</tr>';
-  };
-  return '<div style="width:100%">' + lg + '<div class="table_list"><div class="list"><table class="grid-table"><thead><tr><th>품목 번호</th><th>수량</th>' + (colorOnly ? '' : '<th>비교</th>') + '</tr></thead><tbody>' +
-    rows.map(tr).join('') + '</tbody></table></div></div></div>';
-};
+// ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-108 5번 ① ②) — 미리보기만. 작은 표 3행 ──
+const miniTable = (label, rows, { result = true } = {}) => '<div class="table_list"><div class="list"><table class="grid-table" aria-label="' + label + '"><thead><tr><th>품목 번호</th><th>수량</th>' + (result ? '<th>비교</th>' : '') + '</tr></thead><tbody>' +
+  rows.map((r) => {
+    if (!r) return '<tr class="compare-row--unassigned"><td>&nbsp;</td><td></td>' + (result ? '<td></td>' : '') + '</tr>';   // 반대쪽 빈 행 — 본 화면과 같은 표시
+    const [no, q, st] = r;
+    const k = STATE[st][1];
+    return '<tr' + (k ? ' class="compare-row--' + k + '"' : '') + '><td>' + no + '</td><td' + (st === 'similar' ? ' class="compare-qty"' : '') + '>' + q + '</td>' + (result ? '<td class="compare-cell">' + STATE[st][0] + '</td>' : '') + '</tr>';
+  }).join('') + '</tbody></table></div></div>';
 const MINI = [['BRK-20417-02', 2, 'identical'], ['BRK-20417-03', 2, 'similar'], ['BRK-20417-05', 1, 'unassigned']];
+// 두 표 나란히 — 기준(왼쪽) · 비교(오른쪽). 05 는 기준에만 있음
+const LEFT = [['BRK-20417-02', 2, 'identical'], ['BRK-20417-05', 1, 'unassigned'], ['BRK-20417-06', 2, 'identical']];
+const RIGHT_ALIGNED = [['BRK-20417-02', 2, 'identical'], null, ['BRK-20417-06', 2, 'identical']];
+const RIGHT_PULLED = [['BRK-20417-02', 2, 'identical'], ['BRK-20417-06', 2, 'identical']];
+const pair = (right, name) => '<div style="width:100%;display:grid;grid-template-columns:1fr 1fr;gap:8px">' +
+  miniTable('기준 BOM — ' + name, LEFT, { result: false }) + miniTable('비교 BOM — ' + name, right, { result: false }) + '</div>';
 export const 사용_지침 = {
   parameters: { controls: { disable: true } },
-  render: () => {
-    const el = document.createElement('div');
-    el.innerHTML = doDont([
-      { title: '색만으로 알리지 않기',
-        do: [mini(MINI), '다른 행은 빨간 바탕 · 테두리와 함께 「비교」 열에 결과를 글자로 둡니다. 흑백으로 인쇄해도 결과가 보입니다.'],
-        dont: [mini(MINI, { colorOnly: true }), '줄 색만 있으면 색을 구분하기 어려운 사람과 흑백 인쇄에서 결과가 사라집니다.'] },
-    ]);
-    // Don't 견본 — 범례와 다른 색(빨강) 줄. 문서 견본 전용이라 DS 클래스가 아님
-    el.querySelectorAll('tr.compare-row--danger-demo td').forEach((td) => { td.style.background = 'var(--color-bg-danger-subtle)'; });
-    return el;
-  },
+  render: () => doDont([
+    { title: '다른 행은 색과 글자로 함께 표시',
+      do: ['<div style="width:100%">' + miniTable('결과 글자 함께', MINI) + '</div>', '다른 행은 빨간 바탕 · 테두리와 함께 「비교」 열에 결과를 글자로 둡니다. 흑백으로 인쇄해도 결과가 보입니다.'],
+      dont: ['<div style="width:100%">' + miniTable('색만', MINI, { result: false }) + '</div>', '행 색만으로 구분하면 색을 구분하기 어려운 사용자와 흑백 인쇄에서 결과가 보이지 않습니다.'] },
+    { title: '한쪽에만 있는 품목은 빈 행으로 맞춤',
+      do: [pair(RIGHT_ALIGNED, '빈 행'), '한쪽에만 있는 품목은 반대쪽에 빈 행을 두어, 같은 행 = 같은 품목으로 맞춥니다.'],
+      dont: [pair(RIGHT_PULLED, '당김'), '빈 행 없이 당기면 아래 행이 한 칸씩 어긋나 다른 품목끼리 나란히 놓입니다.'] },
+  ]),
 };
