@@ -26,9 +26,22 @@ const actions = (a = 2, b = 0) => '<div class="header-actions">' + userBtn() + c
 
 const gnb = ({ list = ['Home', '문서 관리', '문서 검색'], a = 2, b = 0 } = {}) =>
   '<header class="gnb"><div style="display:flex;align-items:center">' + history() + crumbs(list) + '</div>' + actions(a, b) + '</header>';
-// 로고형 GNB — 제품 로고 = LNB 레일 · 로그인과 같은 마크(.brand-logo, TD-101). 글자 마크(.logo-mark)를 쓰는 제품도 같은 자리
-const gnbLogo = () =>
-  '<header class="gnb"><div class="logo-container">' + lnbLogo('', 'brand-logo') + '<span class="logo-text">Enterprise PLM</span><span class="logo-version">v1.0</span></div>' + actions(3, 1) + '</header>';
+// 로고형 GNB — LNB 레일이 없는 화면 틀에서 GNB 왼쪽에 로고(TD-122). 세 가지:
+//   워드마크 = 제품 이름이 든 로고 그림 한 장(.brand-logo) + 버전 — 이전 버전 상단 바(top.jsp: 로고 그림 + 버전 + 뒤로 · 앞으로)와 같은 구성
+//   심볼 + 텍스트 = 마크 + 제품 이름 글자 + 버전 — 로고 그림이 마크뿐인 제품. 글자 마크(.logo-mark)를 쓰는 제품도 같은 자리
+//   심볼 = 마크만, 제품 이름은 마크의 이름(aria-label) — GNB 왼쪽 자리가 좁을 때(DS 제안, 이전 버전에 없음)
+// 워드마크 견본 그림 = 가상 제품 「Enterprise PLM」의 마크 + 글자를 한 장으로 그린 것(실제 회사 로고 아님)
+const wordmark = () => '<svg class="brand-logo" width="168" height="28" viewBox="0 0 168 28" role="img" aria-label="Enterprise PLM">' +
+  '<g transform="scale(.8235)">' + lnbLogo('', '').replace(/^<svg[^>]*>/, '').replace(/<\/svg>$/, '') + '</g>' +
+  '<text x="36" y="19.5" font-size="15" font-weight="700" letter-spacing=".4" style="fill:var(--color-text-base);font-family:var(--font-family-accent)">Enterprise</text>' +
+  '<text x="121" y="19.5" font-size="15" font-weight="700" letter-spacing=".4" style="fill:var(--color-text-brand);font-family:var(--font-family-accent)">PLM</text></svg>';
+const LOGO = {
+  wordmark: () => wordmark() + '<span class="logo-version">v1.0</span>',
+  symbolText: () => lnbLogo('', 'brand-logo') + '<span class="logo-text">Enterprise PLM</span><span class="logo-version">v1.0</span>',
+  symbol: () => lnbLogo('Enterprise PLM', 'brand-logo'),
+};
+const gnbLogo = (kind = 'symbolText') =>
+  '<header class="gnb"><div class="logo-container">' + LOGO[kind]() + '</div>' + actions(3, 1) + '</header>';
 const frame = (h, w = '100%') => '<div style="max-width:' + w + ';border:1px solid var(--color-border-base);border-radius:var(--radius-card);overflow:hidden">' + h + '</div>';
 
 export default {
@@ -40,6 +53,8 @@ export default {
 // ── 예시 ──
 export const 상단_바 = { parameters: { docs: { source: { code: gnb() } } }, render: () => frame(gnb()) };
 export const 상단_바_로고 = { parameters: { docs: { source: { code: gnbLogo() } } }, render: () => frame(gnbLogo()) };
+export const 상단_바_워드마크 = { parameters: { docs: { source: { code: gnbLogo('wordmark') } } }, render: () => frame(gnbLogo('wordmark')) };
+export const 상단_바_심볼 = { parameters: { docs: { source: { code: gnbLogo('symbol') } } }, render: () => frame(gnbLogo('symbol')) };
 export const 개수_배지 = {
   render: () => '<div style="display:flex;gap:24px;align-items:center">' + count('결재업무', 0) + count('결재업무', 3) + count('결재업무', 12) + count('결재업무', '99+') + '</div>',
 };

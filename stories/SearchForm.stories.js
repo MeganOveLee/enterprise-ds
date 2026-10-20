@@ -11,10 +11,10 @@ const RESET = '<circle cx="12" cy="12" r="9"/><path d="M9 9l6 6M15 9l-6 6"/>';
 const CAL = '<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/>';
 const field = (label, control, span, no) =>
   '<div class="ff-field' + (span ? ' span-' + span : '') + '"' + (no ? ' data-no="' + no + '"' : '') + '><label class="search-label">' + label + '</label><div class="td">' + control + '</div></div>';
-const input = (label, value = '', ro = false, ph = '') => '<input class="input" aria-label="' + label + '"' + (value ? ' value="' + value + '"' : '') + (ph ? ' placeholder="' + ph + '"' : '') + (ro ? ' readonly' : '') + '>';
+const input = (label, value = '', ro = false, ph = '') => '<input class="input" aria-label="' + label + '"' + (value ? ' value="' + value + '"' : '') + (ph ? ' placeholder="' + ph + '"' : '') + (ro ? ' readonly' : ' data-ds-clear') + '>';   // 조회 조건 칸 = 값이 있으면 지우기(×, DS-ADR-042)
 const select = (label, opts, pick) => '<select class="select" aria-label="' + label + '">' + opts.map((o) => '<option' + (o === pick ? ' selected' : '') + '>' + o + '</option>').join('') + '</select>';
 const dp = (label, value = '') => '<div class="ui-datepicker"><button type="button" class="ui-datepicker__icon" aria-label="' + label + ' 달력">' + ico(CAL) + '</button>' +
-  '<input class="ui-datepicker__input" aria-label="' + label + '" placeholder="YYYY-MM-DD" value="' + value + '"></div>';
+  '<input class="ui-datepicker__input" aria-label="' + label + '" placeholder="YYYY-MM-DD" value="' + value + '" data-ds-clear></div>';
 const range = (label, a = '', b = '') => '<div class="ui-datepicker-range">' + dp(label + ' 시작', a) + '<span class="ui-datepicker-range__sep">~</span>' + dp(label + ' 끝', b) + '</div>';
 
 export default {
@@ -25,16 +25,16 @@ export default {
 
 let uid = 0;
 // 문서 검색 — 조건이 한 줄(6칸)을 넘는 화면. 첫 줄 = 자주 쓰는 조건, 나머지 = 상세 검색
-const docFirst = (n = false) => field('문서 분류', input('문서 분류', '/제품 문서/설계 문서', true)) + field('문서 번호', input('문서 번호', '', false, '문서 번호 입력'), 0, n ? 4 : 0) + field('문서 명', input('문서 명', '', false, '문서 명 입력')) +
-  field('작업현황', select('작업현황', ['전체', '작업 중', '검토 중', '승인', '반려'])) + field('등록일', range('등록일'), 2, n ? 5 : 0);
-const docDetail = (id) => field('버전', '<div class="radio-group" role="radiogroup" aria-label="버전">' +
-    '<label class="radio"><input type="radio" name="' + id + '-v" checked><span class="radio__mark"></span>최신 버전</label>' +
-    '<label class="radio"><input type="radio" name="' + id + '-v"><span class="radio__mark"></span>모든 버전</label></div>', 2) +
-  field('등록자', select('등록자', ['전체', '김도윤', '이서연'])) + field('수정자', select('수정자', ['전체', '김도윤', '이서연'])) +
-  field('수정일', range('수정일'), 2);
+const docFirst = (n = false, v = false) => field('문서 분류', input('문서 분류', '/제품 문서/설계 문서', true)) + field('문서 번호', input('문서 번호', v ? 'DOC-2610' : '', false, '문서 번호 입력'), 0, n ? 4 : 0) + field('문서 명', input('문서 명', v ? '캘리퍼' : '', false, '문서 명 입력')) +
+  field('작업현황', select('작업현황', ['전체', '작업 중', '검토 중', '승인', '반려'], v ? '검토 중' : '')) + field('등록일', v ? range('등록일', '2026-09-01', '2026-09-30') : range('등록일'), 2, n ? 5 : 0);
+const docDetail = (id, v = false) => field('버전', '<div class="radio-group" role="radiogroup" aria-label="버전">' +
+    '<label class="radio"><input type="radio" name="' + id + '-v"' + (v ? '' : ' checked') + '><span class="radio__mark"></span>최신 버전</label>' +
+    '<label class="radio"><input type="radio" name="' + id + '-v"' + (v ? ' checked' : '') + '><span class="radio__mark"></span>모든 버전</label></div>', 2) +
+  field('등록자', select('등록자', ['전체', '김도윤', '이서연'], v ? '김도윤' : '')) + field('수정자', select('수정자', ['전체', '김도윤', '이서연'])) +
+  field('수정일', v ? range('수정일', '2026-10-01', '') : range('수정일'), 2);
 
 // all = 모두 보기(조건 전체를 한 격자에, 펼치기 버튼 없음) · 접고 펴기 = 첫 행 + 상세 조건(.search-detail). n = 번호 표시
-const searchForm = ({ all = false, open = false, n = false }) => {
+const searchForm = ({ all = false, open = false, n = false, v = false }) => {
   const id = 'sf-detail-' + (++uid);
   const btn = all ? '' : '<button type="button" class="btn btn--secondary btn--outlined btn--expand" aria-expanded="' + open + '" aria-controls="' + id + '">' + EXPAND_LABEL + '</button>';
   return '<section class="product" style="padding:0">' +
@@ -43,8 +43,8 @@ const searchForm = ({ all = false, open = false, n = false }) => {
       '<button type="button" class="btn btn--primary btn--filled">' + ico(SEARCH) + '검색</button>' + btn +
       '<button type="button" class="btn btn--secondary btn--transparent">' + ico(RESET) + '검색 조건 초기화</button>' +
     '</div></div>' +
-    '<div class="pro_table"' + (n ? ' data-no="2"' : '') + '><div class="form-grid-2 form-grid--6"' + (n ? ' data-no="3"' : '') + '>' + docFirst(n) + (all ? docDetail(id) : '') + '</div>' +
-    (all ? '' : '<div class="search-detail" id="' + id + '"' + (open ? '' : ' hidden') + '><div class="form-grid-2 form-grid--6"><div class="search-divider">상세 검색</div>' + docDetail(id) + '</div></div>') +
+    '<div class="pro_table"' + (n ? ' data-no="2"' : '') + '><div class="form-grid-2 form-grid--6"' + (n ? ' data-no="3"' : '') + '>' + docFirst(n, v) + (all ? docDetail(id, v) : '') + '</div>' +
+    (all ? '' : '<div class="search-detail" id="' + id + '"' + (open ? '' : ' hidden') + '><div class="form-grid-2 form-grid--6"><div class="search-divider">상세 검색</div>' + docDetail(id, v) + '</div></div>') +
     '</div></section>';
 };
 // 미리보기 바탕 = 목록 화면의 내용 영역(bg-subtle). 「코드 보기」에는 검색 영역만
@@ -56,4 +56,9 @@ export const 모두_보기 = {
 export const 접고_펴기 = {
   parameters: { docs: { source: { code: searchForm({}) } } },
   render: () => stage(searchForm({})),
+};
+// 펼치고 값을 넣은 모습 — 상세 검색을 펼치고 첫 줄 · 상세 조건에 값을 넣어 검색하기 직전(TD-122). 값이 있는 칸에는 지우기(×)
+export const 펼치고_값_넣기 = {
+  parameters: { docs: { source: { code: searchForm({ open: true, v: true }) } } },
+  render: () => stage(searchForm({ open: true, v: true })),
 };
