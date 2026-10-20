@@ -42,7 +42,7 @@ const uploader = (id, open, files, { one = false, err = '' } = {}) =>
   '<div class="resumable' + (err ? ' is-error' : '') + '" id="' + id + '"' + (open ? '' : ' hidden') + (err ? ' aria-describedby="' + id + '-err"' : '') + '><div class="resumable-bar">' +
   '<span class="resumable-help">' + (one ? '도면 파일 1개 · 100 MB까지(dwg · dxf · pdf)' : '여러 개 · 파일당 100 MB까지') + '</span>' +
   '<div class="resumable-bar__right">' + btn('파일 선택', 'btn--secondary btn--outlined') + (one ? '' : '<button type="button" class="btn btn--destructive btn--transparent" data-role="clear-all">전체 삭제</button>') + '</div></div>' +
-  '<div class="resumable-drop" role="button" tabindex="0"><span class="drop-cta">' + (one ? '도면 파일을 여기로 끌어다 놓거나 눌러서 선택하세요' : '파일을 여기로 끌어다 놓거나 눌러서 선택하세요') + '</span></div>' +
+  '<div class="resumable-drop" role="button" tabindex="0"><span class="drop-cta">' + (one ? '도면 파일을 여기로 끌어다 놓거나 눌러서 선택해 주십시오' : '파일을 여기로 끌어다 놓거나 눌러서 선택해 주십시오') + '</span></div>' +
   (files.length ? '<ul class="fileList">' + files.map(([n, ext, size]) => '<li class="file-item">' + fileIcon(ext) + '<a href="#" class="file-name">' + n + '</a><span class="file-size">' + size + '</span>' +
     '<button type="button" class="remove-btn" aria-label="' + n + ' 빼기">' + svg(I.close, 14) + '</button></li>').join('') + '</ul>' : '') +
   (err ? '<span class="field-error-msg" id="' + id + '-err">' + err + '</span>' : '') + '</div>';
@@ -52,7 +52,7 @@ const related = (what, head, rows) => (id, open) => '<div class="table_list" id=
   '<colgroup><col style="width:44px">' + head.map((h, i) => '<col' + (i === 1 ? '' : ' style="width:' + (i === 0 ? 150 : 90) + 'px"') + '>').join('') + '</colgroup>' +
   '<thead><tr><th>' + ck('전체 선택') + '</th>' + head.map((h) => '<th>' + h + '</th>').join('') + '</tr></thead><tbody>' +
   rows.map((r) => '<tr><td>' + ck(r[0] + ' 선택') + '</td><td><a href="#" class="grid-custom-rows-link">' + r[0] + '</a></td><td class="is-left">' + r[1] + '</td><td>' + r[2] + '</td></tr>').join('') + '</tbody></table>' +
-  (rows.length ? '' : '<div class="empty" role="status"><span class="empty__icon">' + INBOX + '</span><p class="empty__title">추가한 관련 ' + what + iga(what) + ' 없어요</p><p class="empty__desc">[추가]를 눌러 ' + what + '을 선택하세요.</p></div>') +
+  (rows.length ? '' : '<div class="empty" role="status"><span class="empty__icon">' + INBOX + '</span><p class="empty__title">추가한 관련 ' + what + iga(what) + ' 없습니다</p><p class="empty__desc">[추가]를 눌러 ' + what + '을 선택해 주십시오.</p></div>') +
   '</div></div>';
 const addDel = (what) => btn('추가', 'btn--secondary btn--outlined', { label: '관련 ' + what + ' 추가' }) + btn('삭제', 'btn--destructive btn--outlined', { label: '관련 ' + what + ' 삭제' });
 
@@ -65,20 +65,20 @@ const pop = ({ errors = false } = {}) => {
   const basic = (id, open) => '<div class="pro_table" id="' + id + '"' + (open ? '' : ' hidden') + '><div class="form-grid-2">' +
     field(u, 'path', '경로', (id2, a) => '<div class="ui-field-addon"><span class="ui-field-addon__main"><input class="input" id="' + id2 + '"' + a + ' value="/Drawing/제동 부품/캘리퍼" readonly></span>' +
       '<span class="ui-field-addon__addon">' + btn('선택', 'btn--secondary btn--outlined', { label: '경로 선택' }) + '</span></div>', { req: true, col2: true }) +
-    field(u, 'name', '도면 명(영문)', text(errors ? '' : 'CALIPER ASSY DRAWING', '영문 도면 명 입력'), { req: true, err: E('도면 명(영문)을 입력해 주세요') }) +
+    field(u, 'name', '도면 명(영문)', text(errors ? '' : 'CALIPER ASSY DRAWING', '영문 도면 명 입력'), { req: true, err: E('도면 명(영문)을 입력해 주십시오') }) +
     field(u, 'namek', '도면 명(한글)', text(errors ? '' : '캘리퍼 조립도', '한글 도면 명 입력')) +
-    field(u, 'cad', 'CAD 구분', pick(['2D', '3D'], errors ? '' : '2D'), { req: true, err: E('CAD 구분을 선택해 주세요') }) +
-    field(u, 'group', '제품군', pick(['제동 부품', '전장 부품'], errors ? '' : '제동 부품'), { req: true, err: E('제품군을 선택해 주세요') }) +
+    field(u, 'cad', 'CAD 구분', pick(['2D', '3D'], errors ? '' : '2D'), { req: true, err: E('CAD 구분을 선택해 주십시오') }) +
+    field(u, 'group', '제품군', pick(['제동 부품', '전장 부품'], errors ? '' : '제동 부품'), { req: true, err: E('제품군을 선택해 주십시오') }) +
     field(u, 'desc', '설명', (id2, a) => '<textarea class="textarea" id="' + id2 + '"' + a + ' rows="3" placeholder="도면의 목적 · 변경 내용 입력"></textarea>', { col2: true }) +
     '</div></div>';
   const alert = errors ? '<div class="alert alert--danger" role="alert"><span class="alert__icon">' + svg(I.danger) + '</span><div class="alert__body">' +
-    '<strong class="alert__title">필수 항목을 모두 입력해 주세요.</strong></div></div>' : '';
+    '<strong class="alert__title">필수 항목을 모두 입력해 주십시오.</strong></div></div>' : '';
   const closed = (key, title, right = '') => section(u, key, title, (id) => '<div class="pro_table" id="' + id + '" hidden></div>', { open: false, right });
   return '<div class="pop"><div class="top"><div class="top-title-area"><span class="doc-type-badge">' + svg(I.drawing) + '</span><h3>도면 등록</h3></div>' +
     '<div class="top-btn-area">' + btn('저장', 'btn--primary btn--filled') + '<button type="button" class="pop-close" aria-label="닫기">' + svg(I.close, 14) + '</button></div></div>' +
     '<div class="contents">' + alert +
     section(u, 'basic', '기본 정보', basic, { right: '<span class="section-meta">' + REQ + ' 필수</span>' }) +
-    section(u, 'main', '도면 파일', (id, open) => uploader(id, open, files, { one: true, err: E('도면 파일을 올려 주세요') }), { req: true }) +
+    section(u, 'main', '도면 파일', (id, open) => uploader(id, open, files, { one: true, err: E('도면 파일을 올려 주십시오') }), { req: true }) +
     (errors
       ? closed('sub', '부 첨부 파일') + closed('part', '관련 부품') + closed('epm', '관련 도면') + closed('pjt', '관련 프로젝트')
       : closed('sub', '부 첨부 파일') +
@@ -118,21 +118,22 @@ export const 필수_칸_비었을_때 = {
   render: () => wireSections(shot(pop({ errors: true }), 950, 1024)),
 };
 
-// ── 언제 쓰고 쓰지 말지 (Do · Don't) — 미리보기만 ──
+// ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-108 6번 ① ②) — 미리보기만 ──
 const mini = (inner) => '<div style="width:100%;overflow:hidden;border:1px solid var(--color-border-base);border-radius:var(--radius-card)"><div class="pop" style="height:auto;min-width:0"><div class="contents">' + inner + '</div></div></div>';
 const two = (a, b) => '<div class="pro_table"><div class="form-grid-2">' + a + b + '</div></div>';
+const ddAlert = '<div class="alert alert--danger" role="status"><span class="alert__icon">' + svg(I.danger) + '</span><div class="alert__body"><strong class="alert__title">필수 항목을 모두 입력해 주십시오.</strong></div></div>';
 let dd = 0;
 const ddField = (label, err, req = true) => { const id = 'dd-dr-' + (++dd); return '<div class="ff-field"><label class="search-label" for="' + id + '">' + label + (req ? REQ : '') + '</label><div class="td"><input class="input" id="' + id + '"' +
   (err ? ' aria-invalid="true" aria-describedby="' + id + '-e"' : '') + '>' + (err ? '<span class="field-error-msg" id="' + id + '-e">' + err + '</span>' : '') + '</div></div>'; };
 export const 사용_지침 = {
   parameters: { controls: { disable: true } },
   render: () => doDont([
-    { title: '빈 필수 칸은 한 번에 알리기',
-      do: [mini(two(ddField('도면 명(영문)', '도면 명(영문)을 입력해 주세요'), ddField('제품군', '제품군을 선택해 주세요'))), '[저장]을 누르면 빈 칸을 모두 한 번에 표시하고, 첫 빈 칸으로 포커스를 옮깁니다.'],
-      dont: [mini('<div class="alert alert--danger" role="status"><span class="alert__icon">' + svg(I.danger) + '</span><div class="alert__body"><strong class="alert__title">도면 명(영문)을 입력하세요.</strong></div></div>' + two(ddField('도면 명(영문)', ''), ddField('제품군', ''))),
-        '하나씩 알리면 칸마다 저장 → 알림 → 닫기를 되풀이합니다. 어느 칸인지도 칸에 남지 않습니다.'] },
-    { title: '검사하는 칸에는 필수 표시',
-      do: [mini(two(ddField('도면 명(영문)', ''), ddField('제품군', ''))), '[저장] 때 검사하는 칸에는 모두 필수 표시(*)를 둡니다.'],
-      dont: [mini(two(ddField('도면 명(영문)', ''), ddField('제품군', '', false))), '표시 없는 칸을 비웠다고 막으면 저장해 보기 전에는 알 수 없습니다.'] },
+    { title: '저장 오류는 Alert와 필드에 함께',
+      do: [mini(ddAlert + two(ddField('도면 명(영문)', '도면 명(영문)을 입력해 주십시오'), ddField('제품군', '제품군을 선택해 주십시오'))), '필수 필드가 비면 폼 위 Alert와 함께 빈 필드마다 빨간 테두리 · 오류 문구를 표시합니다. 포커스는 첫 빈 필드로 옮깁니다.'],
+      dont: [mini(ddAlert + two(ddField('도면 명(영문)', ''), ddField('제품군', ''))),
+        'Alert만 띄우면 어느 필드가 비었는지 필드에 남지 않습니다.'] },
+    { title: '검사하는 필드에는 모두 필수 표시',
+      do: [mini(two(ddField('도면 명(영문)', ''), ddField('제품군', ''))), '[저장] 때 검사하는 필드에는 모두 필수 표시(*)를 둡니다.'],
+      dont: [mini(two(ddField('도면 명(영문)', ''), ddField('제품군', '', false))), '일부 필드에만 표시하면 저장해 보기 전에는 무엇이 필수인지 알 수 없습니다.'] },
   ]),
 };

@@ -3,11 +3,11 @@
 // 첫 카드 그림에 번호 표시(data-no). 번호별 이름 · 클래스 표는 SearchForm.mdx 카드 아래 — 구성 표를 따로 두지 않음 (Figma 🧱 Blocks 「Search Form」과 같은 구성)
 import './_flow.css';
 import { wireSearchDetail, EXPAND_LABEL } from './_search.js';
+import { lnbSvg } from './_lnbicons.js';
 
 const ico = (d) => '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + d + '</svg>';
 const SEARCH = '<circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/>';
 const RESET = '<circle cx="12" cy="12" r="9"/><path d="M9 9l6 6M15 9l-6 6"/>';
-const FILTER = '<path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/>';
 const CAL = '<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/>';
 const field = (label, control, span, no) =>
   '<div class="ff-field' + (span ? ' span-' + span : '') + '"' + (no ? ' data-no="' + no + '"' : '') + '><label class="search-label">' + label + '</label><div class="td">' + control + '</div></div>';
@@ -38,7 +38,7 @@ const searchForm = ({ all = false, open = false, n = false }) => {
   const id = 'sf-detail-' + (++uid);
   const btn = all ? '' : '<button type="button" class="btn btn--secondary btn--outlined btn--expand" aria-expanded="' + open + '" aria-controls="' + id + '">' + EXPAND_LABEL + '</button>';
   return '<section class="product" style="padding:0">' +
-    '<div class="seach_arm" style="margin-top:0"' + (n ? ' data-no="1" data-mid' : '') + '><div class="leftbt">' + ico(FILTER) + '<h4>검색 조건</h4></div>' +
+    '<div class="seach_arm" style="margin-top:0"' + (n ? ' data-no="1" data-mid' : '') + '><div class="leftbt">' + lnbSvg('sliders', 18) + '<h4>검색 조건</h4></div>' +
     '<div class="rightbt">' +
       '<button type="button" class="btn btn--primary btn--filled">' + ico(SEARCH) + '검색</button>' + btn +
       '<button type="button" class="btn btn--secondary btn--transparent">' + ico(RESET) + '검색 조건 초기화</button>' +

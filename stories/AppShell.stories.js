@@ -4,6 +4,7 @@ import { matrix } from './_matrix.js';
 import { enablePseudo } from './_pseudo.js';
 import { folderIcon } from './_fileicon.js';
 import { doDont } from './_dodont.js';
+import { lnbMask, lnbSvg, lnbLogo } from './_lnbicons.js';
 
 const svg = (d, s = 16) => '<svg width="' + s + '" height="' + s + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + d + '</svg>';
 const I = {
@@ -19,14 +20,15 @@ const history = (x = '') =>
   '<button type="button" class="nav-history-btn" aria-label="앞으로">' + svg(I.next, 14) + '</button></div>';
 const crumbs = (list) => '<div class="breadcrumb">' + list.map((c, i) => i < list.length - 1 ? '<span>' + c + '</span><span aria-hidden="true">&gt;</span>' : '<span class="crumb-current" aria-current="page">' + c + '</span>').join('') + '</div>';
 const count = (title, n) => '<div class="menu-container"><button type="button" class="menu-toggle" aria-haspopup="true" aria-expanded="false"><span class="title">' + title + '</span><span class="count">' + n + '</span></button></div>';
-// 사용자 메뉴 버튼 = 사용자 아이콘만(이름 없음). 누르면 사용자 메뉴(화면 모드 · 로그아웃 포함)가 펼쳐짐
-const userBtn = (x = '') => '<div class="menu-container"><button type="button" class="menu-toggle' + x + '" aria-label="사용자 메뉴" aria-haspopup="true" aria-expanded="false">' + svg(I.user, 20) + '</button></div>';
+// 사용자 메뉴 버튼 = 사용자 아이콘 24(Figma GNB/Top bar › user — 원 없는 사람 윤곽)만, 이름 없음. 누르면 사용자 메뉴(화면 모드 · 로그아웃 포함)가 펼쳐짐
+const userBtn = (x = '') => '<div class="menu-container"><button type="button" class="menu-toggle' + x + '" aria-label="사용자 메뉴" aria-haspopup="true" aria-expanded="false">' + lnbSvg('user', 24) + '</button></div>';
 const actions = (a = 2, b = 0) => '<div class="header-actions">' + userBtn() + count('결재업무', a) + count('활동업무', b) + '</div>';   // GNB 오른쪽 = 사용자 아이콘 · 결재업무 · 활동업무
 
 const gnb = ({ list = ['Home', '문서 관리', '문서 검색'], a = 2, b = 0 } = {}) =>
   '<header class="gnb"><div style="display:flex;align-items:center">' + history() + crumbs(list) + '</div>' + actions(a, b) + '</header>';
+// 로고형 GNB — 제품 로고 = LNB 레일 · 로그인과 같은 마크(.brand-logo, TD-101). 글자 마크(.logo-mark)를 쓰는 제품도 같은 자리
 const gnbLogo = () =>
-  '<header class="gnb"><div class="logo-container"><span class="logo-mark" aria-hidden="true">E</span><span class="logo-text">Enterprise PLM</span><span class="logo-version">v1.0</span></div>' + actions(3, 1) + '</header>';
+  '<header class="gnb"><div class="logo-container">' + lnbLogo('', 'brand-logo') + '<span class="logo-text">Enterprise PLM</span><span class="logo-version">v1.0</span></div>' + actions(3, 1) + '</header>';
 const frame = (h, w = '100%') => '<div style="max-width:' + w + ';border:1px solid var(--color-border-base);border-radius:var(--radius-card);overflow:hidden">' + h + '</div>';
 
 export default {
@@ -54,33 +56,27 @@ const tree = () => '<ul class="tree" role="tree" aria-label="문서 폴더">' + 
   '<span class="tree__icon">' + folderIcon(!!open) + '</span>' + t + '</li>').join('') + '</ul>';
 const panel = (tabX = '') =>
   '<aside class="main-sub" aria-label="문서 관리 메뉴" style="height:360px">' +
-  '<div class="main-sub-header"><h3>문서 관리</h3><button type="button" class="sub-close" aria-label="메뉴 닫기">' + svg(I.close, 14) + '</button></div>' +
+  '<div class="main-sub-header"><h3>문서 관리</h3><button type="button" class="sub-close" aria-label="메뉴 닫기">' + svg(I.close, 16) + '</button></div>' +
   '<div class="main-sub-tabs" role="tablist"><button type="button" class="sub-tab" role="tab" aria-selected="false">메뉴</button><button type="button" class="sub-tab is-active' + tabX + '" role="tab" aria-selected="true">폴더</button></div>' +
   '<div class="main-sub-content"><div class="tree-section" style="margin-top:0;border-top:0"><div class="tree-controls">' +
   '<select class="select" aria-label="제품군"><option>전체 제품군</option><option>제동 부품</option></select>' +
-  '<div class="tree-search-wrap">' + svg(I.search, 14) + '<input class="tree-search-input" aria-label="폴더 검색" placeholder="폴더 검색"></div></div>' +
+  '<div class="tree-search-wrap">' + svg(I.search, 12) + '<input class="tree-search-input" aria-label="폴더 검색" placeholder="폴더 검색"></div></div>' +
   tree() +
   '</div></div></aside>';
 export const 보조_메뉴_패널 = { parameters: { docs: { source: { code: panel() } } }, render: () => '<div style="display:flex">' + panel() + '</div>' };
 export const 바닥 = { render: () => frame('<footer class="gnb-footer">© 2026 Enterprise PLM</footer>') };
 
 // ── LNB 레일 · 서브 메뉴 ──
-const RAIL = {
-  work: '<rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 13h8M8 17h5"/>',
-  doc: '<path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 12h6M9 16h6"/>',
-  drawing: '<path d="M4 20 20 4M4 20v-6M4 20h6"/>',
-  part: '<circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/>',
-  admin: '<rect x="5" y="3" width="14" height="18" rx="2"/><circle cx="12" cy="10" r="2.5"/><path d="M8 17a4 4 0 0 1 8 0"/>',
-};
-// 아이콘 = mask 그림 — 제품은 메뉴마다 그림 파일 경로를 --lnb-icon 에 넣음
+// 아이콘 = Figma 「LNB/Rail」 아이콘(./_lnbicons.js, Screens 와 같음). mask 그림 — 제품은 메뉴마다 그림 파일 경로를 --lnb-icon 에 넣음
+// 사용자 메뉴 행 아이콘도 같은 mask 방식(--row-icon)
 const railIcon = (d) => "url('data:image/svg+xml," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' + d + '</svg>') + "')";
-const railItem = (ic, t, { current = false, liX = '', aX = '' } = {}) =>
-  '<li class="' + liX.trim() + '"><div class="menu_icon_box"><div class="menu_icon" style="--lnb-icon:' + railIcon(RAIL[ic]) + '"><a href="#" class="' + aX.trim() + '" aria-label="' + t + '"' + (current ? ' aria-current="page"' : '') + '></a></div></div><span aria-hidden="true">' + t + '</span></li>';
-const LOGO_MARK = '<svg width="34" height="34" viewBox="0 0 34 34" role="img" aria-label="홈"><rect width="34" height="34" rx="8" style="fill:var(--color-bg-brand)"/><path d="M16 10.2l6 3.45v6.9L16 24l-6-3.45v-6.9z" fill="none" stroke-width="2" stroke-linejoin="round" style="stroke:var(--color-icon-on-color)"/></svg>';
+const railItem = (ic, t, { current = false, liX = '', aX = '', spanStyle = '' } = {}) =>
+  '<li class="' + liX.trim() + '"><div class="menu_icon_box"><div class="menu_icon" style="--lnb-icon:' + lnbMask(ic) + '"><a href="#" class="' + aX.trim() + '" aria-label="' + t + '"' + (current ? ' aria-current="page"' : '') + '></a></div></div><span aria-hidden="true"' + (spanStyle ? ' style="' + spanStyle + '"' : '') + '>' + t + '</span></li>';
+// 메뉴 이름이 길면 띄어쓰기에서 두 줄(「벤치마킹 관리」)
 const rail = () =>
-  '<aside class="main-menu" style="height:440px"><a class="lnb-logo" href="#">' + LOGO_MARK + '</a><nav aria-label="주 메뉴"><ul>' +
-  railItem('work', '업무 관리') + railItem('doc', '문서 관리', { current: true }) + railItem('drawing', '도면 관리') + railItem('part', '부품 관리') +
-  '</ul><ul>' + railItem('admin', '관리자') + '</ul></nav></aside>';
+  '<aside class="main-menu" style="height:520px"><a class="lnb-logo" href="#">' + lnbLogo('홈') + '</a><nav aria-label="주 메뉴"><ul>' +
+  railItem('work', '업무 관리') + railItem('doc', '문서 관리', { current: true }) + railItem('drawing', '도면 관리') + railItem('part', '부품 관리') + railItem('bench', '벤치마킹 관리') +
+  '</ul><ul>' + railItem('user', '관리자') + '</ul></nav></aside>';
 export const 아이콘_메뉴 = { parameters: { docs: { source: { code: rail() } } }, render: () => '<div style="display:flex">' + rail() + '</div>' };
 
 const subMenu = () =>
@@ -93,7 +89,7 @@ const subMenu = () =>
   '<ul class="ui-submenu-list" id="sm-tp" hidden><li><a href="#">문서 양식</a></li><li><a href="#">결재선 양식</a></li></ul></li>' +
   '</ul></div>';
 const subPanel = () =>
-  '<aside class="main-sub" aria-label="문서 관리 메뉴" style="height:440px"><div class="main-sub-header"><h3>문서 관리</h3><button type="button" class="sub-close" aria-label="메뉴 닫기">' + svg(I.close, 14) + '</button></div>' +
+  '<aside class="main-sub" aria-label="문서 관리 메뉴" style="height:440px"><div class="main-sub-header"><h3>문서 관리</h3><button type="button" class="sub-close" aria-label="메뉴 닫기">' + svg(I.close, 16) + '</button></div>' +
   '<div class="main-sub-content">' + subMenu() + '</div></aside>';
 export const 보조_메뉴 = { parameters: { docs: { source: { code: subMenu() } } }, render: () => '<div style="display:flex">' + subPanel() + '</div>' };
 
@@ -175,7 +171,7 @@ export const 전체_상태 = {
     enablePseudo();
     const nh = (x) => '<button type="button" class="nav-history-btn' + x + '" aria-label="뒤로">' + svg(I.prev, 14) + '</button>';
     const wrapGnb = (h) => '<div class="gnb" style="height:auto;padding:4px;border:0;background:transparent;display:inline-flex">' + h + '</div>';
-    const close = (x) => '<div class="main-sub-header" style="height:auto;padding:0;border:0"><button type="button" class="sub-close' + x + '" aria-label="메뉴 닫기">' + svg(I.close, 14) + '</button></div>';
+    const close = (x) => '<div class="main-sub-header" style="height:auto;padding:0;border:0"><button type="button" class="sub-close' + x + '" aria-label="메뉴 닫기">' + svg(I.close, 16) + '</button></div>';
     const tab = (x, on) => '<div class="main-sub-tabs" style="border:0;width:72px"><button type="button" class="sub-tab' + (on ? ' is-active' : '') + x + '">폴더</button></div>';
     const row = (x) => [wrapGnb('<div class="nav-history" style="margin:0">' + nh(x) + '</div>'), userBtn(x), close(x), tab(x, false)];
     return matrix(['뒤로 · 앞으로', '사용자 메뉴', '패널 닫기', '패널 탭'], [
@@ -184,7 +180,7 @@ export const 전체_상태 = {
       ['Pressed', [wrapGnb('<div class="nav-history" style="margin:0">' + nh(' ps-active') + '</div>'), '—', '—', '—']],
       ['Focused', row(' ps-focus-visible')],
       ['Selected', ['—', '—', '—', tab('', true)]],
-    ]) + '<p class="sb-note" style="margin:8px 0 0">Focused = 포커스 테두리(--color-border-focus) + 바깥 3px 링(--color-focus-ring), 입력 필드와 같은 표시입니다. 패널 탭은 옅은 브랜드 바탕입니다. 사용자 메뉴 · 업무 개수 버튼(.menu-toggle)은 Hovered 모양 없이 Focused만 있습니다.</p>';
+    ]) + '<p class="sb-note" style="margin:8px 0 0">Focused = 포커스 테두리(--color-border-focus) + 바깥 3px 링(--color-focus-ring), 입력 필드와 같은 표시입니다. 패널 탭의 상태는 Tabs 문서와 같습니다. 사용자 메뉴 · 업무 개수 버튼(.menu-toggle)은 Hovered 모양 없이 Focused만 있습니다.</p>';
   },
 };
 
@@ -200,23 +196,21 @@ export const Playground = {
   render: (a) => frame(gnb({ list: String(a.path).split(',').map((x) => x.trim()).filter(Boolean), a: a.approvals, b: a.activities })),
 };
 
-// ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-102) — 미리보기만, 코드는 위 예시 카드에 ──
-const ddBar = (h) => '<div style="width:100%;border:1px solid var(--color-border-base);border-radius:var(--radius-card);overflow:hidden"><header class="gnb">' + h + '</header></div>';
-const ddRight = (extra = '') => '<div></div><div class="header-actions">' + userBtn() + count('결재업무', 2) + count('활동업무', 0) + extra + '</div>';
-const ddLeft = '<div style="display:flex;align-items:center">' + history() + crumbs(['Home', '문서 관리', '문서 검색']) + '</div>';
-const ddHead = '<div style="padding:12px 16px;display:flow-root;background:var(--color-bg-subtle)"><div class="page-head" style="margin:0"><div class="page-title-area"><h1>문서 검색</h1></div>' +
-  crumbs(['Home', '문서 관리', '문서 검색']) + '</div></div>';
-const ddBody = '<div style="padding:16px;color:var(--color-text-muted);font-size:var(--body-sm)">화면 내용</div>';
+// ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-108 19번 ② ③) — 미리보기만, 코드는 위 예시 카드에 ──
+const ddBar = (h) => '<div style="width:100%;border:1px solid var(--color-border-base);border-radius:var(--radius-card);overflow:hidden"><header class="gnb"><div></div>' + h + '</header></div>';
+const ddCounts = (a) => '<div class="header-actions">' + userBtn() + count('결재업무', a) + count('활동업무', 3) + '</div>';
+// 레일 조각 — 같은 메뉴 셋, 가운데 긴 이름만 줄바꿈 ↔ 말줄임. 영역 이름은 미리보기마다 따로(접근성 검사 landmark-unique)
+const ddRail = (name, spanStyle = '') => '<div style="border:1px solid var(--color-border-base);border-radius:var(--radius-card);overflow:hidden">' +
+  '<aside class="main-menu" aria-label="LNB 레일 예시 — ' + name + '" style="height:auto;border:0"><nav aria-label="주 메뉴 예시 — ' + name + '"><ul>' +
+  railItem('doc', '문서 관리') + railItem('bench', '벤치마킹 관리', { spanStyle }) + railItem('drawing', '도면 관리') + '</ul></nav></aside></div>';
 export const 사용_지침 = {
   parameters: { controls: { disable: true } },
   render: () => doDont([
-    // 근거: AppShell.mdx 구성 「사용자 메뉴 버튼 — 화면 모드 · 로그아웃은 그 안에만, 상단 바 오른쪽은 사용자 아이콘 · 결재업무 · 활동업무 셋뿐」
-    { title: '상단 바 오른쪽은 세 가지',
-      do: [ddBar(ddRight()), '사용자 아이콘 · 결재업무 · 활동업무만 둡니다.'],
-      dont: [ddBar(ddRight('<button type="button" class="btn btn--secondary btn--outlined btn--sm">로그아웃</button>')), '로그아웃은 상단 바에 꺼내지 않고 사용자 메뉴 안에 둡니다.'] },
-    // 근거: AppShell.mdx 구성 「페이지 머리 — 상단 바에 위치가 없는 화면에서 씁니다」 · 예시 「위치가 페이지 제목을 대신합니다」
-    { title: '위치는 한 곳에만',
-      do: ['<div style="width:100%;border:1px solid var(--color-border-base);border-radius:var(--radius-card);overflow:hidden"><header class="gnb">' + ddLeft + '</header>' + ddBody + '</div>', '상단 바에 위치가 있으면 그 위치가 제목을 대신합니다.'],
-      dont: ['<div style="width:100%;border:1px solid var(--color-border-base);border-radius:var(--radius-card);overflow:hidden"><header class="gnb">' + ddLeft + '</header>' + ddHead + '</div>', '같은 위치를 페이지 머리에 한 번 더 쓰지 않습니다.'] },
+    { title: '카운트 배지는 99+까지',
+      do: [ddBar(ddCounts('99+')), '100 이상은 99+로 표시해 배지 폭을 일정하게 둡니다.'],
+      dont: [ddBar(ddCounts('1284')), '숫자를 그대로 쓰면 배지가 길어져 GNB 오른쪽 배치가 흔들립니다.'] },
+    { title: '긴 메뉴 이름은 두 줄로',
+      do: [ddRail('두 줄'), 'LNB 레일 메뉴 이름이 길면 띄어쓰기에서 두 줄로 나눕니다. 두 줄까지 표시합니다.'],
+      dont: [ddRail('말줄임', 'display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap'), '한 줄로 자르면 「벤치마…」처럼 이름 끝이 보이지 않아 메뉴를 구분하기 어렵습니다.'] },
   ]),
 };
