@@ -28,10 +28,10 @@ export const Card = ({ of, title, en, desc, code = true, children }) =>
     children ? h('div', { className: 'ds-card__extra' }, children) : null,
     of && code ? h('details', { className: 'ds-card__code' }, h('summary', null, '코드 보기'), h(Source, { of })) : null);
 
-// 문서 안 도구 막대 — 화면 맨 위 Storybook 도구 막대와 같은 모양 · 같은 아이콘 · 같은 글자 · 같은 열림 목록(10/15 08:17 피드백).
+// 문서 안 도구 막대 — 화면 맨 위 Storybook 도구 막대와 같은 모양 · 같은 아이콘 · 같은 글자 · 같은 열림 목록.
 // 값 = 실제 막대에서 잰 것(버튼 28 · 안쪽 0 7 · 모서리 4 · 바탕 rgba(0,109,235,.07) · 글자 12 굵게 rgb(0,85,184) · 아이콘 14,
 // 목록 180 · 안쪽 4 · 줄 32 · 모서리 6). 고르면 실제 막대 · 주소(URL)도 같이 바뀐다(updateGlobals)
-// 소개 한 곳에만 둔다 — 처음 온 사람에게 「여기를 눌러 보라」고 알리는 용도(10/15 08:37). 다른 문서는 맨 위 막대로 충분
+// 소개 한 곳에만 둔다 — 처음 온 사람에게 「여기를 눌러 보라」고 알리는 용도. 다른 문서는 맨 위 막대로 충분
 // 막대 전체 = 맨 위 막대와 같은 줄(10:17 피드백): 왼쪽 격자 · 배경 · 윤곽선 아이콘, Figma · 구분선 · 브랜드 · 화면 모드, 오른쪽 끝 전체 화면. 폭은 미리보기 카드 전체
 const FIGMA_URL = 'https://www.figma.com/design/99ff5JQYQPCdY3xRBWHHlO/?node-id=8111-5';
 const ICON = {   // Storybook 아이콘 paintbrush · mirror(.storybook/preview.js 도구 막대 icon 과 같음)

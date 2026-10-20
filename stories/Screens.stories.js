@@ -422,7 +422,7 @@ const frame = (inner) => {
 };
 const src = (code) => ({ controls: { disable: true }, docs: { source: { language: 'html', code } } });
 
-// ── 움직임 다시 보기 (TD-123 · 10/20 세영님 「잘 보이는 곳에」) ── 인터랙션(Foundation › Motion)을 화면 안에서 실제 쓰임으로
+// ── 움직임 다시 보기 (TD-123) ── 인터랙션(Foundation › Motion)을 화면 안에서 실제 쓰임으로
 // 화면이 처음 보일 때 한 번 저절로, 그 뒤에는 화면 위 [움직임 다시 보기] 또는 화면 안 버튼을 누르면 다시. 동작 줄이기 설정이면 결과만(motion.js)
 const busy = (b, text, after) => {   // 버튼 처리 중(스피너) → 끝나면 after — Motion 「처리 끝 체크」와 같은 순서
   if (b.classList.contains('is-loading') || b.classList.contains('is-done')) return;

@@ -656,7 +656,7 @@
 }
 .card-list li:hover { background: var(--color-bg-muted); }
 .card-list li:last-child { border-bottom: none; }
-/* 줄 전체 링크 (10/13 22:56 결정) — <li><a href>유형 · 제목 · 날짜</a></li>. 키보드로 닿고(Tab) 포커스 링이 보임, 글자는 링크색 없이 그대로.
+/* 줄 전체 링크 — <li><a href>유형 · 제목 · 날짜</a></li>. 키보드로 닿고(Tab) 포커스 링이 보임, 글자는 링크색 없이 그대로.
  * li 의 격자 · 여백 · hover 를 a 가 이어받는다. a 없는 옛 마크업(li 에 직접 click)은 위 규칙 그대로 */
 .card-list li:has(> a) { display: block; padding: 0; cursor: auto; }
 .card-list li:has(> a):hover { background: none; }
@@ -1144,7 +1144,7 @@
  * 폼 등록·수정 공통 — 필수 마크 / textarea / 파일 업로드 / 섹션
  * ============================================================ */
 
-/* 필수 표시 (라벨 뒤 별표) = 빨강(위험 글자색) · 라벨과 같은 굵기, 간격 4 — Figma Label Property 1=Required (TD-120, 10/20 세영님).
+/* 필수 표시 (라벨 뒤 별표) = 빨강(위험 글자색) · 라벨과 같은 굵기, 간격 4 — Figma Label Property 1=Required (TD-120).
  * 구(TD-108 ~ 10/20): 라벨과 같은 색. 이전 버전: 빨강 · 700 · 간격 2.
  * 필수 여부는 필드의 aria-required 가 알리고 별표는 aria-hidden — 색만으로 알리지 않음.
  * 회색 섹션 상자(bg-muted) 안 · 섹션 머리에서는 danger-bold — danger(red-600)는 bg-muted 위 4.37:1 로 AA 미달(오류 문구와 같은 규칙) */
@@ -1440,7 +1440,7 @@ body.dark-mode .pop .contents .pro_table:not(:has(.form-grid-2)):not(.seach_arm:
  * 형식 목록은 Figma Art/File(✨ Icons › 그림 자산)과 같다 (TD-108 40번).
  * 이전 버전도 확장자마다 다른 아이콘(PDF 빨강 · 엑셀 초록 …) — 그림 파일 대신 아이콘 토큰 색.
  * 그림 자산(.ds-art, DS-ADR-037): 솔리드 = 색 종이 + 흰 줄 + 아래 띠 흰 형식 글자(형식 색 = --art-file-<형식> · -band, 모드와 상관없음),
- *   라인 = 파일 윤곽 + 아래 형식 글자(글자색 = 아래 아이콘 토큰). 구(~ 10/20): 솔리드 = 흰 종이 + 색 띠 — Figma 모양과 달랐음 (TD-108 10/20 세영님 A안)
+ *   라인 = 파일 윤곽 + 아래 형식 글자(글자색 = 아래 아이콘 토큰). 구(~ 10/20): 솔리드 = 흰 종이 + 색 띠 — Figma 모양과 달랐음 (TD-108)
  * 상세 창 첨부 목록 · 등록 창 업로더 · 최근 문서가 같이 씀. 그 밖 형식(--file) = 회색 */
 .file-icon { --file-art: var(--art-file-file); --file-art-band: var(--art-file-file-band); }
 .file-icon.file-icon--pdf { color: var(--color-icon-danger);  --file-art: var(--art-file-pdf); --file-art-band: var(--art-file-pdf-band); }
@@ -2373,7 +2373,7 @@ body.dark-mode .select {   /* = --color-icon-muted 다크 값(neutral-300). 구:
 .btn--icon[aria-pressed="true"]        { background: var(--color-bg-brand-subtle); color: var(--color-text-on-brand-subtle); }
 .btn--icon[aria-pressed="true"]:hover  { background: var(--color-bg-interactive-primary-tint-pressed); color: var(--color-text-interactive-primary-hover); }
 .btn--icon[aria-pressed="true"]:active { background: var(--color-bg-interactive-primary-tint-pressed); color: var(--color-text-interactive-primary-pressed); }
-/* 즐겨찾기 별 .btn--favorite — 켜짐 = 별 안을 노랑(--color-icon-favorite)으로 채움, 바탕은 꺼짐과 같음(파랑 바탕 없음) · 꺼짐 = 진한 선 (TD-120, 10/20 세영님).
+/* 즐겨찾기 별 .btn--favorite — 켜짐 = 별 안을 노랑(--color-icon-favorite)으로 채움, 바탕은 꺼짐과 같음(파랑 바탕 없음) · 꺼짐 = 진한 선 (TD-120).
  * 노랑 면은 흰 바탕 대비 3:1 미만이라 진한 선(icon-base)을 그대로 두어 모양을 알아보게 함. 켜짐 여부는 aria-pressed 가 읽어 줌 */
 .btn--favorite { color: var(--color-icon-base); }
 .btn--favorite[aria-pressed="true"],
@@ -2840,7 +2840,7 @@ body.dark-mode .section-box { background: var(--color-bg-muted); }
 
 .progress-bar__label {
     position: absolute;
-    top: 50%; left: calc(100% + var(--spacing-8));   /* 막대 밖 오른쪽 (10/13 22:56 결정) — 구 가운데는 채움 5색 위 글자 대비 1.2~4.0 */
+    top: 50%; left: calc(100% + var(--spacing-8));   /* 막대 밖 오른쪽 — 구 가운데는 채움 5색 위 글자 대비 1.2~4.0 */
     transform: translateY(-50%);
     color: var(--color-text-base);
     font-size: var(--body-sm);
@@ -3008,7 +3008,7 @@ body.dark-mode .section-box { background: var(--color-bg-muted); }
     background: var(--color-bg-disabled);   /* 구 #D9D9D9 하드코딩 → 쿨그레이 토큰 */
 }
 .status-segments--delay .status-segments__bar { animation: statusPulse var(--duration-pulse) var(--ease-loop) infinite; }
-/* @keyframes statusPulse — 두근 · 두근 · 쉼(심장 박동). 막대 5개가 함께 커지며 진해졌다가 두 번째 박동 뒤 쉰다 (TD-123 B안, 10/20 세영님).
+/* @keyframes statusPulse — 두근 · 두근 · 쉼(심장 박동). 막대 5개가 함께 커지며 진해졌다가 두 번째 박동 뒤 쉰다 (TD-123).
  * 구(10/16 ~ 10/20): 이전 버전 값 그대로 진함 1 ↔ 흐림 .35를 1.6초에 부드럽게 + 막대마다 0.12초 늦게(물결) — 「너무 스무스해서 잘 안 보임」.
  * 박동 2번 / 1.2초 = 초당 1.7번이라 깜빡임 기준(초당 3번 미만, WCAG 2.3.1) 안. 상태는 옆 글자가 알려 주고 막대는 꾸밈 */
 @keyframes statusPulse {
@@ -4370,7 +4370,7 @@ body.dark-mode .empty-illo { --empty-illo-shadow: rgb(0 0 0 / .2); }
  * 이름은 이전 버전 화면 CSS와 같게(.ui-compare · .ui-field-addon · .compare-legend) — 화면 코드를 고치지 않고 옮김
  * ═════════════════════════════════════════════════════════════════════════ */
 /* 줄 수를 정한 표 .table_list--rows — 표 높이 = 머리 34 + 데이터 줄(30) × --table-rows(기본 3). 줄이 적어도 같은 높이, 넘치면 표 안에서 세로 스크롤 · 머리 고정.
- * 결재선 역할 상자(합의 · 승인 · 수신)처럼 나란한 표 높이를 맞출 때 (TD-122, 10/20 세영님 「최소 3줄 · 스크롤 규칙」) */
+ * 결재선 역할 상자(합의 · 승인 · 수신)처럼 나란한 표 높이를 맞출 때 (TD-122) */
 .table_list--rows > .list { height: calc(34px + var(--table-rows, 3) * 30px + 2px); overflow-y: auto; }
 .table_list--rows .grid-table th { position: sticky; top: 0; z-index: 1; }
 
