@@ -106,7 +106,7 @@ export default {
 export const 두_BOM_비교 = {
   parameters: { docs: { source: { code: screen() } } },
   render: () => flow({
-    base: { html: menu(), w: 280, h: 300, where: '부품 관리 메뉴 패널' },
+    base: { html: menu(), w: 215, h: 300, where: '부품 관리 메뉴 패널' },
     open: { html: body(screen()), w: W, h: H, title: '열리는 화면', where: 'BOM 비교 — 본문 영역' },
     trigger: '[BOM 비교]', how: '본문이 비교 화면으로 바뀝니다(새 창 아님)',
   }),
