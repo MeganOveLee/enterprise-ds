@@ -231,7 +231,7 @@
     flex-direction: column;
     flex-shrink: 0;
     color: var(--color-icon-base);   /* 아이콘 = Figma Rail item 아이콘 색 icon-base (TD-108, 구 icon-muted). 이름 색은 아래 span */
-    border-right: 1px solid var(--color-border-base);
+    border-right: 1px solid var(--color-border-lnb);   /* 라이트 base · 다크 strong (구: 다크 덮어쓰기 규칙) */
 }
 .main-menu nav {
     flex: 1;
@@ -733,7 +733,7 @@
     width: var(--size-sidebar);   /* 215 = Figma LNB/Sub panel · 템플릿 Side area (TD-108, 구 280px 고정값) */
     height: 100vh;
     background: var(--color-bg-base);
-    border-right: 1px solid var(--color-border-base);
+    border-right: 1px solid var(--color-border-lnb-sub);   /* 라이트 base · 다크 subtle */
     flex-shrink: 0;
     display: flex;
     flex-direction: column;
@@ -3092,13 +3092,7 @@ body.dark-mode .gnb {
     border-bottom: 1px solid var(--color-border-subtle) !important;
     box-shadow: none !important;
 }
-/* LNB 우측 구분선 (main-menu) + main-sub 우측 구분선 — 라이트 모드 동일 위치 */
-body.dark-mode .main-menu {
-    border-right: 1px solid var(--color-border-subtle) !important;
-}
-body.dark-mode .main-sub {
-    border-right: 1px solid var(--color-border-subtle) !important;
-}
+/* LNB 레일 · 서브 패널 오른쪽 선은 토큰 --color-border-lnb · --color-border-lnb-sub (다크 값은 tokens.css) */
 
 /* ── 검색조건 폼 박스 — 페이지보다 살짝만 밝은 어둠 (인풋이 도드라지게) ── */
 body.dark-mode .pro_table {
@@ -3153,10 +3147,6 @@ body.dark-mode :is(.datepicker, .pop-area, .pop-popup, .checkSelect .options) {
     --color-bg-interactive-secondary-hover:   var(--neutral-600);
     --color-bg-interactive-secondary-pressed: var(--neutral-500);
 }   /* 덮개 층 — 구 다크 묶음 값과 같음 */
-/* main-menu 우측 경계 — 다크에서 border-base 보다 한 단계 밝게 (LNB↔메인 구분) */
-body.dark-mode .main-menu {
-    border-right-color: var(--color-border-strong) !important;
-}
 /* AUI Grid 외곽 보더 — 래퍼 .table_list 만 (그리드 .aui-grid 보더는 AUIGrid_custom_style.css) */
 body.dark-mode .table_list {
     border-color: var(--color-border-grid-outer) !important;

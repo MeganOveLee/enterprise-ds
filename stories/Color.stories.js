@@ -128,6 +128,8 @@ export const Border = {
     ['color-border-base', '기본 구분선 · 카드 테두리'],
     ['color-border-subtle', '안쪽 가는 구분선'],
     ['color-border-strong', '강한 구분'],
+    ['color-border-lnb', 'LNB 레일 오른쪽 선 (다크 = strong)'],
+    ['color-border-lnb-sub', 'LNB 서브 패널 오른쪽 선 (다크 = subtle)'],
     ['color-border-input', '입력 필드 · 체크박스 (대비 3:1)'],
     ['color-border-input-hover', '입력 필드 Hovered'],
     ['color-border-brand', '브랜드 테두리'],

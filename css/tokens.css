@@ -271,6 +271,8 @@
   --color-border-base:    var(--neutral-300);        /* 진하게 (40-50대 대상 가독성) */
   --color-border-subtle:  var(--neutral-200);        /* 카드 안쪽 구분선. base 보다 한 단계 옅음 — 리스트 항목 사이처럼 '나누기만' 하는 선 */
   --color-border-strong:  var(--neutral-400);
+  --color-border-lnb:     var(--color-border-base);   /* LNB 레일 오른쪽 선 = Figma color/border/lnb. 다크는 strong(LNB ↔ 본문 구분) */
+  --color-border-lnb-sub: var(--color-border-base);   /* LNB 서브 패널 오른쪽 선 = Figma color/border/lnb-sub. 다크는 subtle */
   --color-border-disabled: var(--neutral-300);
   --color-border-input:       var(--neutral-500);   /* 입력칸·체크박스·라디오 테두리. 흰 바탕 4.77 — 비텍스트 대비 3:1 (WCAG 1.4.11). base(300)는 1.48이라 분리 (DS-ADR-013) */
   --color-border-input-hover: var(--neutral-700);   /* 입력칸 hover — 기본보다 한 단계 진하게 */
@@ -524,6 +526,8 @@ body.dark-mode {
 
   --color-border-subtle:  var(--neutral-750);       /* 다크는 반대로 배경보다 어둡게 */
   --color-border-strong:  var(--neutral-600);
+  --color-border-lnb:     var(--neutral-600);   /* = 다크 strong */
+  --color-border-lnb-sub: var(--neutral-750);   /* = 다크 subtle */
   --color-border-disabled: var(--neutral-750);
   --color-border-input:       var(--neutral-500);   /* 입력칸(900) 위 3.77 · 카드(800) 위 3.15 (DS-ADR-013) */
   --color-border-input-hover: var(--neutral-400);   /* 다크는 밝아지는 쪽이 강조 */
