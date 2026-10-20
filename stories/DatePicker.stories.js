@@ -62,20 +62,20 @@ export const 펼친_달력 = {
   },
 };
 
-// ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-102) — 미리보기만 ──
+// ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-108 24번 ① ②) — 미리보기만 ──
 const wide = (h) => '<div style="width:100%;max-width:360px">' + h + '</div>';
+const noHint = (h) => h.replace(' placeholder="YYYY-MM-DD"', '');
+// 기간 두 필드의 폭이 다른 잘못된 예 — 시작일 필드만 좁게
+const unequal = '<div class="ui-datepicker-range">' + dp('시작일', '2026-10-06', '', '" style="flex:0 0 120px') + '<span class="ui-datepicker-range__sep">~</span>' + dp('종료일', '2026-10-20') + '</div>';
 export const 사용_지침 = {
   parameters: { controls: { disable: true } },
   render: () => doDont([
-    // 근거: 구성 「기간」 · DS-ADR-016 — 두 칸이 서로 min/max를 잡아 기간이 뒤집히지 않음
-    { title: '기간은 기간 묶음으로',
-      do: [wide(range('2026-10-06', '2026-10-20')), '시작일 · 종료일은 .ui-datepicker-range로 묶어 기간이 뒤집히지 않게 합니다.'],
-      dont: [wide('<div class="sb-row" style="gap:8px;flex-wrap:nowrap">' + dp('시작일', '2026-10-20') + dp('종료일', '2026-10-06') + '</div>'),
-        '두 칸을 따로 두면 종료일이 시작일보다 앞서도 막지 못합니다.'] },
-    // 근거: DS-ADR-016 직접 입력 · 구성 「상태」 — 읽기 전용이면 달력이 열리지 않음
-    { title: '입력받는 칸은 직접 입력도 열어 두기',
-      do: ['<div style="width:200px">' + dp('납기일', '2026-10-06') + '</div>', '날짜를 직접 입력하거나 달력으로 고를 수 있게 둡니다.'],
-      dont: ['<div style="width:200px">' + dp('납기일', '2026-10-06', ST.readonly) + '</div>', '입력받을 칸에 readonly를 붙이면 입력도 달력도 막힙니다.'] },
+    { title: '입력 형식은 placeholder로 안내',
+      do: ['<div style="width:200px">' + dp('납기일') + '</div>', '빈 날짜 필드에는 placeholder로 입력 형식(YYYY-MM-DD)을 안내합니다.'],
+      dont: ['<div style="width:200px">' + noHint(dp('납기일')) + '</div>', '빈 칸으로 두면 어떤 형식으로 입력해야 하는지 알 수 없습니다.'] },
+    { title: '기간은 같은 폭의 두 필드와 「~」',
+      do: [wide(range('2026-10-06', '2026-10-20')), '시작일 · 종료일은 .ui-datepicker-range로 묶어 같은 폭으로 두고, 사이에 「~」를 둡니다.'],
+      dont: [wide(unequal), '두 필드의 폭이 다르면 시작일과 종료일이 한 쌍으로 보이지 않습니다.'] },
   ]),
 };
 

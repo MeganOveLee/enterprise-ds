@@ -247,14 +247,14 @@
             + '</div>'
             + '<div class="datepicker__header">'
             +   '<button type="button" class="datepicker__nav" data-act="prev" aria-label="이전 달">'
-            +     '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>'
+            +     '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15.5 4.5 8 12 15.5 19.5"/></svg>'   /* Figma caret-left 24 (TD-108) */
             +   '</button>'
             +   '<div class="datepicker__title-area" id="' + this.dialogId + '-title" aria-live="polite">'
             +     '<button type="button" class="datepicker__month-btn" data-act="month-toggle" aria-haspopup="listbox" aria-expanded="false" aria-label="월 선택, ' + (month + 1) + '월">' + MONTHS_EN[month] + '</button>'
             +     '<button type="button" class="datepicker__year-btn" data-act="year-toggle" aria-haspopup="listbox" aria-expanded="false" aria-label="연도 선택, ' + year + '년">' + year + '</button>'
             +   '</div>'
             +   '<button type="button" class="datepicker__nav" data-act="next" aria-label="다음 달">'
-            +     '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>'
+            +     '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="8.5 4.5 16 12 8.5 19.5"/></svg>'   /* Figma caret-right 24 */
             +   '</button>'
             + '</div>'
             + '<div role="grid" aria-labelledby="' + this.dialogId + '-title">'
@@ -447,7 +447,7 @@
         this.closeDropdown();
         var self = this;
         var dd = document.createElement('div');
-        dd.className = 'datepicker__dropdown is-open';
+        dd.className = 'datepicker__dropdown datepicker__dropdown--month is-open';   /* 폭 112 (Figma Month dropdown) */
         var html = '';
         for (var i = 0; i < 12; i++) {
             html += '<button type="button" role="option" aria-selected="' + (i === self.viewMonth) + '" class="datepicker__dropdown-item ' + (i === self.viewMonth ? 'is-selected' : '') + '" data-m="' + i + '">' + MONTHS_EN[i] + '</button>';
@@ -469,7 +469,7 @@
         this.closeDropdown();
         var self = this;
         var dd = document.createElement('div');
-        dd.className = 'datepicker__dropdown is-open';
+        dd.className = 'datepicker__dropdown datepicker__dropdown--year is-open';   /* 폭 68 (Figma Year dropdown) */
         var startYear = self.viewYear - 6;
         var html = '';
         for (var y = startYear; y < startYear + 12; y++) {

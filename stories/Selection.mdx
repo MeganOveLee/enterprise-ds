@@ -14,10 +14,10 @@ import * as S from './Selection.stories.js';
 <tr><td><b>체크박스</b></td><td><code>.checkbox</code><span className="ds-muted">label › input[type=checkbox]</span></td><td>여러 옵션을 0개 이상 독립적으로 선택하는 요소입니다. 하나만 있을 때는 포함 여부처럼 예 · 아니오를 받습니다.</td></tr>
 <tr><td><b>라디오 버튼</b></td><td><code>.radio</code> › input + <code>.radio__mark</code></td><td>여러 옵션 중 하나만 선택하는 요소입니다. 새로 선택하면 이전 선택이 해제됩니다. 같은 질문의 라디오는 같은 <code>name</code>으로 묶고, 기본값 하나를 미리 선택해 둡니다.</td></tr>
 <tr><td><b>토글 스위치</b></td><td><code>.switch</code><span className="ds-muted">input[type=checkbox] role="switch"</span></td><td>켜짐 · 꺼짐 두 상태를 즉시 전환하는 요소입니다. 누르는 즉시 적용될 때만 씁니다. 저장해야 적용되는 값은 체크박스로 받습니다.</td></tr>
-<tr><td><b>묶음</b></td><td><code>.checkbox-group</code> · <code>.radio-group</code><span className="ds-muted">role="group" · role="radiogroup" + aria-label</span></td><td>한 필드 안에 옵션을 가로로 배치합니다(높이 = 입력 필드 높이, 넘치면 줄바꿈). 묶음에 질문 이름을 붙입니다.</td></tr>
+<tr><td><b>묶음</b></td><td><code>.checkbox-group</code> · <code>.radio-group</code><span className="ds-muted">role="group" · role="radiogroup" + aria-label</span></td><td>한 필드 안에 옵션을 가로 한 줄로 배치합니다(높이 = 입력 필드 높이, 넘치면 줄바꿈). 묶음에 질문 이름을 붙입니다. 옵션은 4개까지 두고, 5개부터는 드롭다운(라디오 → <a className="ds-link" href="./?path=/docs/form-input--docs" target="_top">셀렉트</a>, 체크박스 → <a className="ds-link" href="./?path=/docs/form-multi-select--docs" target="_top">Multi Select</a>)을 씁니다.</td></tr>
 <tr><td><b>글자</b></td><td><span className="ds-muted">라벨</span></td><td>14px입니다. 검색 조건 · 등록 창 같은 폼 안에서는 옆 입력 필드와 같은 12px입니다.</td></tr>
 <tr><td><b>누름 영역</b></td><td><span className="ds-muted">라벨 전체</span></td><td>표식뿐 아니라 라벨 글자를 눌러도 선택됩니다. 누를 수 있는 높이는 24px 이상입니다(행 간격은 그대로).</td></tr>
-<tr><td><b>상태</b></td><td><code>checked</code> · <code>indeterminate</code> · <code>disabled</code></td><td>Checked = 선택됨, Indeterminate = 하위 항목 중 일부만 선택됨(HTML 속성이 없어 스크립트로 켬), Disabled = 지금 바꿀 수 없음. Checked · Disabled는 모두 같은 연회색입니다.</td></tr>
+<tr><td><b>상태</b></td><td><code>checked</code> · <code>indeterminate</code> · <code>disabled</code></td><td>Checked = 선택됨, Indeterminate = 하위 항목 중 일부만 선택됨(HTML 속성이 없어 스크립트로 켬), Disabled = 지금 바꿀 수 없음. Checked · Disabled는 모두 같은 연회색입니다. 표식 면이 브랜드색인 Checked · Indeterminate의 키보드 포커스는 흰 테두리 + 번짐입니다.</td></tr>
 <tr><td><b>접근성</b></td><td><span className="ds-muted">기본 input</span></td><td>기본 input을 그대로 쓰므로 키보드(Tab · Space · 화살표)와 스크린 리더가 별도 스크립트 없이 동작합니다.</td></tr>
 </tbody>
 </table>
@@ -33,7 +33,7 @@ import * as S from './Selection.stories.js';
 <Card of={S.사용_지침} code={false} />
 </Section>
 <Section title="전체 상태" en="States" desc="상태별 모습을 모았습니다. Hovered · Focused는 상호작용 상태를 고정해 표시한 것입니다.">
-<Card of={S.전체_상태} title="선택 컨트롤 종류별" desc="행 = 상태, 열 = 종류. 라디오 버튼 · 토글 스위치에는 Indeterminate가 없습니다." />
+<Card of={S.전체_상태} title="선택 컨트롤 종류별" desc="행 = 상태, 열 = 종류. Pressed는 Hovered와 같은 테두리이고, Checked의 Hovered · Pressed는 Checked와 같습니다. 라디오 버튼 · 토글 스위치에는 Indeterminate가 없습니다." />
 </Section>
 <Section title="Playground" desc="아래 표에서 값을 바꾸면 미리보기와 「코드 보기」가 함께 바뀝니다.">
 <Card of={S.Playground}>

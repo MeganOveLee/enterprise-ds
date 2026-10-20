@@ -6,18 +6,20 @@ import { doDont } from './_dodont.js';
 
 const STAR = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.6 6.6 19.5l1.2-6-4.5-4.2 6.1-.7z"/></svg>';
 const X = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
-const DOWN = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>';
-const SPIN = '<span class="spinner spinner--sm spinner--neutral" aria-hidden="true"></span>';
+// 엑셀 내려받기 아이콘 — Figma Button Type=Excel 의 엑셀 그림과 같은 구성(X 칸 + 표 줄)을 선 아이콘으로. 상표 로고는 그리지 않음 (TD-108)
+const SHEET = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9l4 6M11 9l-4 6M14.5 9H18M14.5 12H18M14.5 15H18"/></svg>';
+// 처리 중 스피너 — 크기 · 색은 버튼이 정함(글자색 14, 아이콘만 있는 버튼 16)
+const SPIN = '<span class="spinner" aria-hidden="true"></span>';
 
 // 글자 버튼 한 줄
 const btn = ({ label = '저장', emphasis = 'primary', shape = 'filled', disabled = false, loading = false, icon = false, extra = '', attrs = '' } = {}) =>
   '<button type="button" class="btn btn--' + emphasis + ' btn--' + shape + (loading ? ' is-loading' : '') + (extra ? ' ' + extra : '') + '"' +
   (disabled ? ' disabled' : '') + (loading ? ' aria-busy="true"' : '') + attrs + '>' +
   (loading ? SPIN : icon ? STAR : '') + (loading ? '처리 중' : label) + '</button>';
-// 아이콘만 있는 버튼
-const iconBtn = ({ shape = 'outlined', label = '닫기', glyph = X, extra = '', attrs = '', disabled = false } = {}) =>
-  '<button type="button" class="btn btn--secondary btn--' + shape + ' btn--icon' + (extra ? ' ' + extra : '') + '" aria-label="' + label + '"' +
-  attrs + (disabled ? ' disabled' : '') + '>' + glyph + '</button>';
+// 아이콘만 있는 버튼 — 처리 중이면 아이콘 자리에 스피너
+const iconBtn = ({ emphasis = 'secondary', shape = 'outlined', label = '닫기', glyph = X, extra = '', attrs = '', disabled = false, loading = false } = {}) =>
+  '<button type="button" class="btn btn--' + emphasis + ' btn--' + shape + ' btn--icon' + (loading ? ' is-loading' : '') + (extra ? ' ' + extra : '') + '" aria-label="' + label + '"' +
+  attrs + (disabled ? ' disabled' : '') + (loading ? ' aria-busy="true"' : '') + '>' + (loading ? SPIN : glyph) + '</button>';
 // 펼침 버튼
 const expandBtn = ({ open = false, extra = '', disabled = false } = {}) =>
   '<button type="button" class="btn btn--secondary btn--outlined btn--expand' + (extra ? ' ' + extra : '') + '" aria-expanded="' + open + '"' +
@@ -120,13 +122,13 @@ export const Toggle = {
   ], { full: true }),
 };
 
-const UTILITY = ['<button type="button" class="btn btn--excel">' + DOWN + '엑셀 다운로드</button>'];
+const UTILITY = ['<button type="button" class="btn btn--excel">' + SHEET + '엑셀 다운로드</button>'];
 export const Utility = {
   parameters: html(UTILITY),
   render: () => matrix(['엑셀 다운로드'], [
     ['미리보기', UTILITY],
     ['클래스', [code('.btn--excel')]],
-    ['쓰임', [note('엑셀 내려받기 전용. 브랜드와 상관없이 고정 초록')]],
+    ['쓰임', [note('엑셀 내려받기 전용. 브랜드와 상관없이 고정 초록<br>아이콘은 다른 버튼과 같은 14')]],
   ], { full: true }),
 };
 
@@ -201,6 +203,35 @@ export const AllStates = {
         rows.push([e + ' · ' + s, PS.map((p) => btn({ ...a, extra: p })).concat([btn({ ...a, disabled: true }), btn({ ...a, loading: true })])]);
       }
     }
+    // 엑셀 버튼 — 올림 · 누름은 전용 초록 단계, 포커스 · 비활성 · 처리 중은 다른 버튼과 같은 규칙
+    const xl = (cls = '', dis = false, load = false) => '<button type="button" class="btn btn--excel' + (load ? ' is-loading' : '') + (cls ? ' ' + cls : '') + '"' + (dis ? ' disabled' : '') + (load ? ' aria-busy="true"' : '') + '>' + (load ? SPIN + '처리 중' : SHEET + 'Excel') + '</button>';
+    rows.push(['excel', PS.map((p) => xl(p)).concat([xl('', true), xl('', false, true)])]);
+    return matrix(STATES.concat(['Loading']), rows, { full: true });
+  },
+};
+
+// 작은 버튼 · 큰 버튼 상태 — Figma Small Button(7가지 모양 × 6상태) · Button Size=Large(primary filled × 6상태)와 짝.
+// 작은 destructive 는 Figma에 filled 만 있지만 CSS는 세 모양 모두 됨 — 세 모양 모두 그림
+export const SizeStates = {
+  parameters: html([
+    btn({ emphasis: 'secondary', shape: 'outlined', label: '조회', extra: 'btn--sm' }),
+    btn({ label: '로그인', extra: 'btn--lg' }),
+    btn({ loading: true, extra: 'btn--sm' }),
+  ]),
+  render: () => {
+    enablePseudo();
+    const label = { primary: '저장', secondary: '조회', destructive: '삭제' };
+    const rows = [];
+    for (const e of ['primary', 'secondary', 'destructive']) {
+      for (const s of ['filled', 'outlined', 'transparent']) {
+        const a = { label: label[e], emphasis: e, shape: s };
+        const x = (p) => 'btn--sm' + (p ? ' ' + p : '');
+        rows.push(['작은 버튼<br>' + e + ' · ' + s, PS.map((p) => btn({ ...a, extra: x(p) })).concat([btn({ ...a, extra: x(''), disabled: true }), btn({ ...a, extra: x(''), loading: true })])]);
+      }
+    }
+    const lg = { label: '로그인' };
+    const y = (p) => 'btn--lg' + (p ? ' ' + p : '');
+    rows.push(['큰 버튼<br>primary · filled', PS.map((p) => btn({ ...lg, extra: y(p) })).concat([btn({ ...lg, extra: y(''), disabled: true }), btn({ ...lg, extra: y(''), loading: true })])]);
     return matrix(STATES.concat(['Loading']), rows, { full: true });
   },
 };
@@ -208,20 +239,26 @@ export const AllStates = {
 export const IconStates = {
   parameters: html([
     iconBtn({ label: '닫기' }),
+    iconBtn({ label: '닫기', loading: true }) + '   <!-- 처리 중 = 아이콘 자리에 스피너 16 -->',
     toggleBtn({ on: true }),
     expandBtn({ open: true }),
   ]),
   render: () => {
     enablePseudo();
-    const set = (make) => PS.map((p) => make({ extra: p })).concat([make({ disabled: true })]);
-    return matrix(STATES, [
-      ['아이콘만 · outlined', set((o) => iconBtn({ shape: 'outlined', ...o }))],
-      ['아이콘만 · transparent', set((o) => iconBtn({ shape: 'transparent', ...o }))],
+    const na = '<span class="sb-h">—</span>';
+    // 아이콘만 있는 버튼 = Figma Icon Button(중요도 × 모양 × 6상태). 토글 · 접고 펴기에는 처리 중이 없음
+    const set = (make, load = false) => PS.map((p) => make({ extra: p })).concat([make({ disabled: true }), load ? make({ loading: true }) : na]);
+    const icon = [['primary', 'filled'], ['primary', 'outlined'], ['primary', 'transparent'], ['secondary', 'filled'], ['secondary', 'outlined'], ['secondary', 'transparent']]
+      .map(([e, s]) => ['아이콘만<br>' + e + ' · ' + s, set((o) => iconBtn({ emphasis: e, shape: s, ...o }), true)]);
+    const set5 = (make) => PS.map((p) => make({ extra: p })).concat([make({ disabled: true })]);
+    // 글자가 있는 접고 펴기 버튼(최소 폭 150)은 칸이 넓은 별도 표로 — 처리 중 열이 없음
+    return matrix(STATES.concat(['Loading']), icon.concat([
       ['켜고 끄기 · 꺼짐', set((o) => toggleBtn({ on: false, ...o }))],
       ['켜고 끄기 · 켜짐', set((o) => toggleBtn({ on: true, ...o }))],
-      ['접고 펴기 · 접힘', set((o) => expandBtn({ open: false, ...o }))],
-      ['접고 펴기 · 펼침', set((o) => expandBtn({ open: true, ...o }))],
       ['아이콘 접고 펴기 · 펼침', set((o) => iconExpand({ open: true, ...o }))],
+    ]), { full: true }) + '<div style="height:16px"></div>' + matrix(STATES, [
+      ['접고 펴기 · 접힘', set5((o) => expandBtn({ open: false, ...o }))],
+      ['접고 펴기 · 펼침', set5((o) => expandBtn({ open: true, ...o }))],
     ], { full: true });
   },
 };

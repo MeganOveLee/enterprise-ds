@@ -940,7 +940,7 @@
     border-radius: 0;
 }
 .ui-datepicker__icon svg { width: 14px; height: 14px; }
-.ui-datepicker__icon:hover {
+.ui-datepicker__icon:hover:not(:disabled) {
     background: var(--color-bg-interactive-secondary-hover);   /* 기본(bg-subtle)과 같은 값이라 hover 가 안 보였음 */
     color: var(--color-text-base);
 }
@@ -949,6 +949,8 @@
     outline-offset: -2px;
     box-shadow: inset 0 0 0 1px var(--color-border-focus), inset 0 0 0 4px var(--color-focus-ring);
 }
+/* Focused · 달력 열림 = 아이콘 칸 옅은 선택 바탕 + 진한 아이콘 — Figma Date Field State=Focused (TD-108). 구: 달력이 열렸을 때(.is-active)만 */
+.ui-datepicker:focus-within .ui-datepicker__icon,
 .ui-datepicker.is-active .ui-datepicker__icon {
     background: var(--color-bg-selected);
     color: var(--color-text-base);
@@ -984,8 +986,11 @@
 }
 .ui-datepicker:has(.ui-datepicker__input[readonly]) .ui-datepicker__input { color: var(--color-text-muted); cursor: default; }
 .ui-datepicker:has(.ui-datepicker__input[readonly]:focus-visible) { box-shadow: 0 0 0 3px var(--color-focus-ring); }   /* 키보드 포커스만 링 */
-.ui-datepicker__icon:disabled { background: transparent; color: var(--color-icon-disabled); cursor: not-allowed; }
-.ui-datepicker:has(.ui-datepicker__input[readonly]) .ui-datepicker__icon:disabled { cursor: default; }
+/* 비활성 · 읽기 전용에서도 아이콘 칸은 회색 칸 그대로 — Figma Date Field Disabled · Readonly (TD-108). 구: 칸 바탕을 지워 필드 바탕과 같았음
+ * 비활성 = 흐린 아이콘 + 칸 오른쪽 선 border-disabled · 읽기 전용 = 보조 글자색 아이콘(값과 같은 색) */
+.ui-datepicker__icon:disabled { color: var(--color-icon-disabled); cursor: not-allowed; }
+.ui-datepicker:has(.ui-datepicker__input:disabled) .ui-datepicker__icon { border-right-color: var(--color-border-disabled); }
+.ui-datepicker:has(.ui-datepicker__input[readonly]) .ui-datepicker__icon { background: var(--color-bg-subtle); color: var(--color-text-muted); cursor: default; }
 
 .ui-datepicker-range {
     display: inline-flex;
@@ -1103,11 +1108,11 @@
  * 폼 등록·수정 공통 — 필수 마크 / textarea / 파일 업로드 / 섹션
  * ============================================================ */
 
-/* 필수 표시 (라벨 옆 빨간 별표) */
+/* 필수 표시 (라벨 뒤 별표) = 라벨과 같은 색 · 굵기, 간격 4 — Figma Label Property 1=Required (TD-108). 구: 빨강 · 700 · 간격 2 */
 .required {
-    color: var(--color-text-danger);
-    margin-left: var(--spacing-2);
-    font-weight: var(--font-weight-bold);
+    color: var(--color-text-label);
+    margin-left: var(--spacing-4);
+    font-weight: var(--font-weight-semibold);
 }
 .required::before { content: "*"; }
 
@@ -1120,7 +1125,7 @@
     color: var(--color-text-danger);
     font-size: var(--body-sm);
     font-weight: var(--font-weight-medium);
-    line-height: 1.4;
+    line-height: 1.6;   /* 12 × 1.6 = 19.2 — Figma Help message (TD-108). 구: 1.4 */
 }
 .field-error-msg::before {
     content: "";
@@ -1717,25 +1722,27 @@ body.dark-mode .resumable:not(.center) .fileList .file-item { background: var(--
 }
 .checkbox input[type="checkbox"]:checked::after,
 .checkSelect .option input[type="checkbox"]:checked::after {
+    /* 체크 = Figma Icons 「check」 선 아이콘(16 칸 안 9.9 × 7.1, 선 1) — Figma Checkbox Checked (TD-108).
+     * 구: 4×8 상자의 오른쪽 · 아래 테두리를 45° 돌린 세로로 긴 ㄴ자. 칸 전체(테두리 포함 16)에 그림 */
     content: '';
     position: absolute;
-    top: 1px;
-    left: 4px;
-    width: 4px;
-    height: 8px;
-    border: solid var(--color-icon-on-color);
-    border-width: 0 2px 2px 0;
-    transform: rotate(45deg);
+    inset: -1.5px;
+    background-color: var(--color-icon-on-color);
+    -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1' stroke-linecap='round' stroke-linejoin='round'><polyline points='3.6 7.7 6.7 10.8 12.5 4.8'/></svg>") center / 16px 16px no-repeat;
+            mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1' stroke-linecap='round' stroke-linejoin='round'><polyline points='3.6 7.7 6.7 10.8 12.5 4.8'/></svg>") center / 16px 16px no-repeat;
 }
+@media (forced-colors: active) { .checkbox input[type="checkbox"]:checked::after, .checkSelect .option input[type="checkbox"]:checked::after { background-color: CanvasText; } }
 .checkbox input[type="checkbox"]:focus-visible,
 .checkSelect .option input[type="checkbox"]:focus-visible {
     outline: 2px solid transparent;   /* 강제 색 모드(고대비)에서만 보임 — box-shadow 가 꺼지는 환경 대비 */
     border-color: var(--color-border-focus);
     box-shadow: 0 0 0 3px var(--color-focus-ring);
 }
-/* 켜진 체크 포커스 = 테두리 bg-base(라이트 흰 · 다크 면색) — 브랜드 테두리가 브랜드 면과 같아지는 것 피함 (10/14 결정 ①) */
+/* 켜진 체크 포커스 = 테두리 bg-base(라이트 흰 · 다크 면색) — 브랜드 테두리가 브랜드 면과 같아지는 것 피함 (10/14 결정 ①).
+ * 부분 선택도 같은 브랜드 면이라 같은 흰 테두리 — Figma Checkbox Checked=Partial · Focused (TD-108) */
 .checkbox input[type="checkbox"]:checked:focus-visible,
-.checkSelect .option input[type="checkbox"]:checked:focus-visible { border-color: var(--color-bg-base); }
+.checkSelect .option input[type="checkbox"]:checked:focus-visible,
+.checkbox input[type="checkbox"]:indeterminate:focus-visible { border-color: var(--color-bg-base); }
 /* 우리 디자인 체크박스 disabled 상태 추가
  * 꺼짐+비활성 = 연회색 칸(bg-disabled) + 같은 색 테두리(border-disabled) — 라디오 · 스위치 · 버튼 비활성과 같은 규칙 (10/14, DS-ADR-015 보완). 구: bg-subtle + border-base */
 .checkbox input[type="checkbox"]:disabled,
@@ -1746,7 +1753,8 @@ body.dark-mode .resumable:not(.center) .fileList .file-item { background: var(--
 }
 /* Selection Controls (2026-10-06) — 조합 상태 · 부분 선택 · hover · 포커스 (D-1 CombinedState, 명세 5항) */
 .checkbox input[type="checkbox"]:hover:not(:disabled):not(:checked):not(:indeterminate),
-.checkSelect .option input[type="checkbox"]:hover:not(:disabled):not(:checked):not(:indeterminate) { border-color: var(--color-border-input-hover); }
+.checkSelect .option input[type="checkbox"]:hover:not(:disabled):not(:checked):not(:indeterminate),
+.checkbox input[type="checkbox"]:active:not(:disabled):not(:checked):not(:indeterminate) { border-color: var(--color-border-input-hover); }   /* 누르는 동안 = 올림과 같은 테두리 (Figma Checkbox Pressed, TD-108) */
 /* 부분 선택 — JS 로 el.indeterminate = true. 스크린리더는 네이티브가 '혼합(mixed)'으로 읽음 */
 .checkbox input[type="checkbox"]:indeterminate,
 .checkSelect .option input[type="checkbox"]:indeterminate {
@@ -1772,7 +1780,7 @@ body.dark-mode .resumable:not(.center) .fileList .file-item { background: var(--
     border-color: var(--color-bg-disabled);
 }
 .checkbox input[type="checkbox"]:disabled:checked::after,
-.checkSelect .option input[type="checkbox"]:disabled:checked::after { border-color: var(--color-icon-disabled); }
+.checkSelect .option input[type="checkbox"]:disabled:checked::after { background-color: var(--color-icon-disabled); }
 .checkbox input[type="checkbox"]:disabled:indeterminate::after,
 .checkSelect .option input[type="checkbox"]:disabled:indeterminate::after { background: var(--color-icon-disabled); }
 .checkbox:has(input:disabled) { cursor: not-allowed; color: var(--color-text-muted); }
@@ -1792,14 +1800,13 @@ body.dark-mode .resumable:not(.center) .fileList .file-item { background: var(--
     background: var(--color-bg-checked) !important;
     border-color: var(--color-bg-checked) !important;
 }
-.aui-label .aui-checkbox:checked::after {
+.aui-label .aui-checkbox:checked::after {   /* .checkbox 와 같은 체크 모양 (TD-108) */
     content: '';
     position: absolute;
-    top: 1px; left: 4px;
-    width: 4px; height: 8px;
-    border: solid var(--color-icon-on-color);
-    border-width: 0 2px 2px 0;
-    transform: rotate(45deg);
+    inset: -1.5px;
+    background-color: var(--color-icon-on-color);
+    -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1' stroke-linecap='round' stroke-linejoin='round'><polyline points='3.6 7.7 6.7 10.8 12.5 4.8'/></svg>") center / 16px 16px no-repeat;
+            mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1' stroke-linecap='round' stroke-linejoin='round'><polyline points='3.6 7.7 6.7 10.8 12.5 4.8'/></svg>") center / 16px 16px no-repeat;
 }
 .aui-label .aui-checkbox:disabled {
     background: var(--color-bg-disabled) !important;   /* .checkbox 비활성과 같게 (10/14, DS-ADR-015 보완) */
@@ -1856,7 +1863,8 @@ body.dark-mode .resumable:not(.center) .fileList .file-item { background: var(--
     background: var(--color-icon-on-color);
 }
 /* hover · 포커스 — input 을 투명하게 숨기므로 포커스 링은 표식(.radio__mark)에 그린다. 없으면 키보드 위치가 안 보임 (2026-10-06) */
-.radio input[type="radio"]:hover:not(:disabled):not(:checked) + .radio__mark { border-color: var(--color-border-input-hover); }
+.radio input[type="radio"]:hover:not(:disabled):not(:checked) + .radio__mark,
+.radio input[type="radio"]:active:not(:disabled):not(:checked) + .radio__mark { border-color: var(--color-border-input-hover); }   /* 누르는 동안 = 올림과 같음 (Figma Radio Pressed, TD-108) */
 .radio input[type="radio"]:focus-visible + .radio__mark {
     outline: 2px solid transparent;   /* 강제 색 모드(고대비)에서만 보임 — box-shadow 가 꺼지는 환경 대비 */
     border-color: var(--color-border-focus);
@@ -1914,7 +1922,8 @@ body.dark-mode .resumable:not(.center) .fileList .file-item { background: var(--
     transform: translateY(-50%);
     transition: transform var(--duration-fast), background var(--duration-fast);
 }
-.switch input[type="checkbox"]:hover:not(:disabled):not(:checked) { border-color: var(--color-border-input-hover); }
+.switch input[type="checkbox"]:hover:not(:disabled):not(:checked),
+.switch input[type="checkbox"]:active:not(:disabled):not(:checked) { border-color: var(--color-border-input-hover); }   /* 누르는 동안 = 올림과 같음 (Figma Switch Pressed, TD-108) */
 .switch input[type="checkbox"]:checked {
     background: var(--color-bg-checked);
     border-color: var(--color-bg-checked);
@@ -2089,24 +2098,25 @@ body.dark-mode .resumable:not(.center) .fileList .file-item { background: var(--
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    padding-right: 32px;   /* 화살표 16 + 좌우 8 */
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23454A51' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+    padding-right: 34px;   /* 화살표 16 + 글자와 간격 10 + 오른쪽 8 — Figma Select placeholder itemSpacing 10 (TD-108). 구: 32 */
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%233F4348' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");   /* 화살표 = --color-icon-muted 라이트 값(neutral-700) — 배경 그림은 변수를 못 써서 값으로 (TD-108). 구: #454A51 */
     background-repeat: no-repeat;
     background-position: right var(--spacing-8) center;
     background-size: 16px 16px;
     cursor: pointer;
 }
-body.dark-mode .select {
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23E5E7EB' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+body.dark-mode .select {   /* = --color-icon-muted 다크 값(neutral-300). 구: #E5E7EB */
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23D2D4D8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
 }
 .select::-ms-expand { display: none; }
 .textarea {
-    min-height: 80px;
+    height: 180px;   /* 기본 높이 = Figma Part/Text area Field 180 (TD-108). 구: min-height 80 */
     padding: var(--spacing-8);
     font-size: var(--body-sm);   /* 여러 줄 칸 12 = 이전 버전 라벨 위 폼 값(표 모양 폼만 14). DS 폼은 라벨 위 폼이라 12 (TD-45 45-3 규칙대로). 구: 14 */
-    line-height: 1.5;
+    line-height: 1.6;   /* 12 × 1.6 = 19.2 — Figma (TD-108). 구: 1.5 */
     resize: vertical;
 }
+.textarea[rows] { height: auto; }   /* rows 를 주면 그 줄 수만큼 — 등록 창 설명 칸(rows="3")처럼 화면이 높이를 정할 때 */
 .input::placeholder,
 .textarea::placeholder { color: var(--color-text-muted); }
 
@@ -2267,6 +2277,10 @@ body.dark-mode .select {
 }
 .btn--outlined:disabled, .btn--outlined[aria-disabled="true"] { border-color: var(--color-border-disabled); }
 .btn.is-loading { cursor: progress; pointer-events: none; }
+/* 버튼 안 스피너 = 글자색 14 (아이콘만 있는 버튼 16) — Figma Button · Icon Button Loading 의 loader 와 같은 크기 · 색 (TD-108).
+ * 고리는 같은 글자색을 옅게. 채운 브랜드 · 위험 버튼 위에서도 흰 스피너. 구: 모든 버튼에 회색 .spinner--sm.spinner--neutral(16) */
+.btn .spinner { --spinner-size: 14px; --spinner-line: 2px; border-color: color-mix(in srgb, currentColor 25%, transparent); border-top-color: currentColor; }
+.btn--icon .spinner { --spinner-size: 16px; }
 
 /* 유틸리티 — 엑셀 (브랜드와 무관한 Excel 초록, 예외 1개) */
 .btn--excel {
@@ -2274,9 +2288,9 @@ body.dark-mode .select {
     color: var(--color-text-btn-excel);
     border-color: var(--color-border-btn-excel);
 }
-.btn--excel:hover  { background: var(--color-bg-btn-excel-hover); border-color: var(--color-border-btn-excel-hover); }
-.btn--excel:active { background: var(--color-bg-btn-excel-active); }
-.btn--excel img    { width: 16px; height: 16px; }
+.btn--excel:hover  { background: var(--color-bg-btn-excel-hover); border-color: var(--color-border-btn-excel-hover); color: var(--color-text-btn-excel-hover); }
+.btn--excel:active { background: var(--color-bg-btn-excel-active); color: var(--color-text-btn-excel-hover); }
+/* 아이콘은 다른 버튼과 같은 14 — Figma Button Type=Excel (TD-108). 구: img 16 */
 
 /* 아이콘만 있는 버튼 (.btn--icon) — 정사각형. 피그마 Icon Button 과 같은 역할. 접근성 이름은 aria-label 로
  * <button class="btn btn--secondary btn--transparent btn--icon" aria-label="닫기"><svg …/></button>
@@ -2383,7 +2397,7 @@ body.dark-mode .select {
     font-family: var(--font-family-base);
     font-size: var(--body-sm);
     color: var(--color-text-base);
-    padding: 12px;
+    padding: 8px 12px;   /* 세로 간격 = Figma Calendar (TD-108): Today 줄 위아래 8 · 머리줄 40 · 본문 위 12 · 요일 줄 30. 구: 여백 12 · Today 아래 6 · 머리줄 아래 10 */
     display: none;
 }
 .datepicker.is-open { display: block; }
@@ -2392,14 +2406,18 @@ body.dark-mode .select {
 .datepicker__topbar {
     display: flex;
     justify-content: flex-end;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
 }
 
 .datepicker__header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 10px;
+    gap: 4px;
+    height: 40px;   /* 위아래 2 + 내용 36 */
+    padding: 2px 0;
+    box-sizing: border-box;
+    margin-bottom: 12px;
 }
 /* prev/next 화살표 — 네모 박스 + 드롭 그림자 (피그마 시안 반영) */
 .datepicker__nav {
@@ -2411,9 +2429,11 @@ body.dark-mode .select {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    color: var(--color-text-base);
+    padding: 0;
+    color: var(--color-text-muted);   /* = Figma caret-left · right color/text/muted (TD-108). 구: text-base */
     box-shadow: var(--shadow-core);   /* 구 0 1px 2px 8% + 0 2px 4px 4% */
 }
+.datepicker__nav svg { width: 24px; height: 24px; flex: none; }   /* = Figma caret 24 (TD-108). 구: 16(버튼 기본 여백에 눌려 14) */
 /* ── 달력 내부 호버 = 옅은 브랜드색(--color-bg-brand-subtle). 회색(neutral-50)은 흰 배경 위에서 거의 안 보였음.
       구 --brand-100 직접 지정은 다크에서 안 뒤집혀 달력에 흰 조각으로 떴음 ── */
 .datepicker__nav:hover {
@@ -2422,61 +2442,67 @@ body.dark-mode .select {
 .datepicker__title-area {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 4px;
     flex: 1;
     justify-content: center;
 }
-/* Month / Year 버튼 — 밑줄로 인터랙티브성 표시 (피그마 시안 반영) */
+/* Month / Year 버튼 — 밑줄로 인터랙티브성 표시. 글자 · 밑줄 · 펼침 화살표 = 보조 글자색, 화살표 24 (Figma Calendar month · year, TD-108).
+ * 구: 글자 · 밑줄 text-base + 채운 삼각형 8×4 */
 .datepicker__month-btn, .datepicker__year-btn {
     background: transparent;
-    border: none;
     font-size: var(--body-md);
     font-weight: var(--font-weight-semibold);
-    color: var(--color-text-base);
+    color: var(--color-text-muted);
     cursor: pointer;
     border: 1px solid transparent;   /* 포커스 테두리 자리 — 없으면 글로우만 보이고 테두리 1px가 빠짐 (DS-ADR-023, TD-93 포커스 다시 보기) */
-    padding: 3px 5px;                /* 4 6 − 테두리 1 = 크기 그대로 */
+    height: 36px;
+    padding: 0 0 0 3px;              /* 글자 왼쪽 4 − 테두리 1 */
     border-radius: var(--radius-btn);
     display: inline-flex;
     align-items: center;
-    gap: 4px;
+    gap: 0;
     text-decoration: underline;
     text-decoration-thickness: 1px;
-    text-underline-offset: 3px;
+    text-underline-offset: 9px;      /* Figma 밑줄 = 글자 상자 아래 4 */
 }
 .datepicker__month-btn:hover, .datepicker__year-btn:hover { background: var(--color-bg-brand-subtle); }
 .datepicker__month-btn::after, .datepicker__year-btn::after {
     content: "";
-    width: 0; height: 0;
-    border-left: 4px solid transparent;
-    border-right: 4px solid transparent;
-    border-top: 4px solid var(--color-text-base);
-    margin-left: 2px;
+    flex: none;
+    width: 24px; height: 24px;
+    margin-left: 4px;                /* 글자 오른쪽 4 */
+    background-color: currentColor;
+    -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='4.5 9 12 16.5 19.5 9'/></svg>") center / contain no-repeat;
+            mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='4.5 9 12 16.5 19.5 9'/></svg>") center / contain no-repeat;
 }
+@media (forced-colors: active) { .datepicker__month-btn::after, .datepicker__year-btn::after { background-color: ButtonText; } }
 /* Today 버튼 = .btn .btn--secondary .btn--filled (모양은 버튼 체계, DS-ADR-016). 옛 전용 모양 삭제 */
 
 .datepicker__weekdays {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: 0;
-    margin-bottom: 4px;
+    gap: 2px;
+    margin-bottom: 3px;   /* 요일 줄 ↔ 날짜 칸 — Figma 그림 간격(줄 프레임 8 − 칸이 넘쳐 그려지는 5) */
 }
-/* 요일 라벨 — 피그마 시안 굵기 매칭 */
+/* 요일 라벨 = 진한 글자 12/SemiBold · 줄 높이 30 (Figma Calendar week days, TD-108). 구: text-muted · 위아래 여백 8 */
 .datepicker__weekday {
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 30px;
     font-size: var(--body-sm);
-    color: var(--color-text-muted);
-    padding: 8px 0;
+    color: var(--color-text-base);
     font-weight: var(--font-weight-semibold);
 }
 
+/* 날짜 칸 30 · 칸 사이 2 — Figma Days(줄 19.4 + 간격 12 안에 30 칸을 넘쳐 그림)와 같은 줄 간격. 구: 정사각형 30.6 */
 .datepicker__grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     gap: 2px;
 }
 .datepicker__day {
-    aspect-ratio: 1;
+    height: 30px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -2545,33 +2571,38 @@ body.dark-mode .select {
 
 /* 하단 Cancel/Apply(.datepicker__footer · __btn) 삭제 — 날짜를 누르면 바로 닫힘 (DS-ADR-016) */
 
-/* month / year dropdown 오버레이 */
+/* month / year dropdown 오버레이 — 12개를 스크롤 없이 모두 보임 · 위아래 여백 8 · 항목 높이 28(위아래 4 · 좌우 16) · 항목 모서리 없음 · 폭 월 112 · 연도 68
+ * (Figma Date Picker / Month dropdown · Year dropdown, TD-108). 구: 최대 높이 240 스크롤 · 여백 4 · 항목 31 · 모서리 2 · 폭 104 · 82 */
 .datepicker__dropdown {
     position: absolute;
+    box-sizing: border-box;
     background: var(--color-bg-base);
     border: 1px solid var(--color-border-base);
     border-radius: var(--radius-popover);
     box-shadow: var(--shadow-popover);   /* 구 0 8px 16px 12% */
     z-index: 1001;
-    max-height: 240px;
     overflow-y: auto;
-    padding: 4px;
+    padding: 8px 0;
     display: none;
 }
 .datepicker__dropdown.is-open { display: block; }
+.datepicker__dropdown--month { min-width: 112px; }
+.datepicker__dropdown--year  { min-width: 68px; }
 .datepicker__dropdown-item {
     display: block;          /* div → button (키보드 선택). 버튼 기본 모양 지움 */
     width: 100%;
+    height: 28px;
     border: none;
     background: transparent;
     font-family: var(--font-family-base);
-    padding: 8px 16px;
+    padding: 4px 16px;
     cursor: pointer;
-    border-radius: var(--radius-item);
+    border-radius: 0;
     font-size: var(--body-sm);
+    line-height: 20px;
     color: var(--color-text-base);
-    text-align: center;
-    min-width: 72px;
+    text-align: left;
+    white-space: nowrap;
 }
 .datepicker__dropdown-item:hover { background: var(--color-bg-brand-subtle); }
 .datepicker__dropdown-item.is-selected {
@@ -3442,6 +3473,7 @@ body.dark-mode .dropdown-content-top:has(.logoutBtn) .section-title > #theme-tog
 /* 드롭다운(.options)이 .td.over 의 overflow:hidden 에 잘리지 않게 해당 셀만 overflow 허용 */
 .mainTable .td.over:has(.checkSelect) { overflow: visible; }
 .checkSelect .selected-text {
+    position: relative;   /* 화살표(::after) 자리 */
     width: 100%;
     height: var(--size-input);
     padding: 0 32px 0 var(--spacing-8);   /* .select 와 같은 화살표 자리 */
@@ -3456,11 +3488,27 @@ body.dark-mode .dropdown-content-top:has(.logoutBtn) .section-title > #theme-tog
     overflow: hidden;
     text-overflow: ellipsis;
     cursor: pointer;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23454A51' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");   /* .select 와 같은 화살표 */
-    background-repeat: no-repeat;
-    background-position: right var(--spacing-8) center;
-    background-size: 16px 16px;
 }
+/* 화살표 = 셀렉트(.ui-select__chevron)와 같은 16 · --color-icon-muted, 펼치면 위 화살표 — Figma Select placeholder chevron-down · Focused chevron-up (TD-108).
+ * 구: 배경 그림에 고정 색(#454A51 · 다크 #E5E7EB)이라 토큰 색 · 회전을 못 씀 */
+.checkSelect .selected-text::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: var(--spacing-8);
+    width: 16px;
+    height: 16px;
+    margin-top: -8px;
+    background-color: var(--color-icon-muted);
+    -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>") center / contain no-repeat;
+            mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>") center / contain no-repeat;
+    transition: transform var(--duration-fast);
+}
+.checkSelect .selected-text[aria-expanded="true"]::after,
+.checkSelect:has(.options.show) .selected-text::after { transform: rotate(180deg); }
+.checkSelect .selected-text[aria-disabled="true"]::after { background-color: var(--color-icon-disabled); }
+@media (forced-colors: active) { .checkSelect .selected-text::after { background-color: CanvasText; } }
+@media (prefers-reduced-motion: reduce) { .checkSelect .selected-text::after { transition: none; } }
 .checkSelect .selected-text:hover { border-color: var(--color-border-input-hover); }
 .checkSelect .selected-text[aria-disabled="true"] {   /* 비활성 = .select:disabled 와 같은 모양 */
     background-color: var(--color-bg-disabled);
@@ -3486,9 +3534,6 @@ body.dark-mode .dropdown-content-top:has(.logoutBtn) .section-title > #theme-tog
     line-height: 1;
 }
 @media (forced-colors: active) { .checkSelect .selected-text__more { border: 1px solid CanvasText; } }
-body.dark-mode .checkSelect .selected-text {
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23E5E7EB' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
-}
 /* 열림 상태 · 키보드 포커스 = .select:focus 와 같은 보더 + 링 */
 .checkSelect .selected-text:focus-visible,
 .checkSelect:has(.options.show) .selected-text {
@@ -3505,10 +3550,10 @@ body.dark-mode .checkSelect .selected-text {
     z-index: 100;
     display: none;
     flex-direction: column;
-    gap: 2px;
+    gap: 0;   /* 옵션 행이 테두리에 붙음 — Figma Option group padding 0 · 행 간격 0 (TD-108). 구: 여백 4 · 간격 2 */
     width: 100%;
     max-height: 220px;
-    padding: var(--spacing-4);
+    padding: 0;
     box-sizing: border-box;
     background-color: var(--color-bg-base);
     border: 1px solid var(--color-border-focus);   /* 열린 동안 표시 상자(포커스 테두리)와 한 몸 — 이전 버전 덮어쓰기 「열린 드롭다운」 (TD-45 45-3 규칙대로) */
@@ -3534,13 +3579,13 @@ body.dark-mode .checkSelect .selected-text {
     border: none;
     border-bottom: 1px solid var(--color-border-subtle);
     border-radius: 0;
-    background: transparent url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23656D76' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='11' cy='11' r='8'/><line x1='21' y1='21' x2='16.65' y2='16.65'/></svg>") 10px center / 15px 15px no-repeat;
+    background: transparent url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%233F4348' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='11' cy='11' r='8'/><line x1='21' y1='21' x2='16.65' y2='16.65'/></svg>") 10px center / 15px 15px no-repeat;   /* 돋보기 = --color-icon-muted 라이트 값 — 배경 그림은 변수를 못 써서 값으로 (TD-108). 구: 토큰에 없는 #656D76 */
     color: var(--color-text-base);
     font-size: var(--body-sm);
     font-family: var(--font-family-base);
 }
-body.dark-mode .checkSelect .search-text {
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23A7ABB0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='11' cy='11' r='8'/><line x1='21' y1='21' x2='16.65' y2='16.65'/></svg>");
+body.dark-mode .checkSelect .search-text {   /* = --color-icon-muted 다크 값. 구: #A7ABB0 */
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23D2D4D8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='11' cy='11' r='8'/><line x1='21' y1='21' x2='16.65' y2='16.65'/></svg>");
 }
 .checkSelect .search-text::placeholder { color: var(--color-text-muted); }
 .checkSelect .search-text:focus {
@@ -3562,6 +3607,7 @@ body.dark-mode .checkSelect .search-text {
     padding: 0 var(--spacing-8);
     border-radius: var(--radius-item);
     font-size: var(--body-sm);
+    font-weight: var(--font-weight-medium);   /* = Figma Option 12/Medium (TD-108). 구: 400 */
     color: var(--color-text-base);
     white-space: nowrap;
     cursor: pointer;
@@ -3572,6 +3618,7 @@ body.dark-mode .checkSelect .search-text {
 .checkSelect .option input[type="checkbox"]:checked:focus-visible { border-color: var(--color-bg-checked); }
 /* 마우스 올림 = 옅은 브랜드 바탕 (10/15 결정 — 구: 회색 secondary-hover). 고른 항목 = 같은 옅은 브랜드 바탕 + 켠 체크박스 + 반굵게(Figma Option) */
 .checkSelect .option:hover { background-color: var(--color-bg-brand-subtle); }
+.checkSelect .option:active { background-color: var(--color-bg-interactive-secondary-pressed); color: var(--color-text-interactive-secondary-pressed); }   /* 누르는 동안 = Figma Option Pressed (TD-108). 글자는 바탕의 짝 토큰 — 다크 덮개 층(누름 500) 위에서도 4.5 */
 .checkSelect .option:has(input[type="checkbox"]:checked) { background-color: var(--color-bg-brand-subtle); font-weight: var(--font-weight-semibold, 600); }
 /* 키보드 포커스 = 줄 안쪽 글로우(스크롤 상자 안이라 바깥 번짐은 잘림, 10/14) */
 .checkSelect .option:has(input[type="checkbox"]:focus-visible) {
@@ -3580,7 +3627,8 @@ body.dark-mode .checkSelect .search-text {
     box-shadow: inset 0 0 0 1px var(--color-border-focus), inset 0 0 0 4px var(--color-focus-ring);
 }
 .checkSelect .option:has(input[type="checkbox"]:disabled) { color: var(--color-text-disabled); cursor: not-allowed; }
-.checkSelect .option:has(input[type="checkbox"]:disabled):hover { background-color: transparent; }
+.checkSelect .option:has(input[type="checkbox"]:disabled):is(:hover, :active),
+.checkSelect .option:has(input[type="checkbox"]:disabled:checked) { background-color: transparent; }   /* 고른 채 막힌 항목 = 바탕 없음 · 흐린 글자 · 회색 체크박스 (Figma Selected=True · Disabled, TD-108) */
 
 /* ── 선택 목록 .ui-select (js/select.js, TD-101 10/19) ──
  * 단일 select 를 화면 전체에서 같은 목록으로 바꾸는 위젯(브라우저 · 운영체제마다 다른 열린 목록을 통일). 이름은 이전 버전과 같음
@@ -3595,7 +3643,7 @@ body.dark-mode .checkSelect .search-text {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: var(--spacing-4);
+    gap: 10px;   /* 글자 ↔ 화살표 = Figma Select placeholder itemSpacing 10 (TD-108). 간격 토큰에 10 이 없어 값으로. 구: 4 */
     width: 100%;
     min-width: 64px;
     height: var(--size-input);
@@ -3612,7 +3660,7 @@ body.dark-mode .checkSelect .search-text {
 }
 .ui-select__value { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .ui-select__value.is-placeholder { color: var(--color-text-muted); }
-.ui-select__chevron { display: inline-flex; flex: none; color: var(--color-icon-interactive-secondary); transition: transform var(--duration-fast); }   /* .select 화살표와 같은 색 */
+.ui-select__chevron { display: inline-flex; flex: none; color: var(--color-icon-muted); transition: transform var(--duration-fast); }   /* = Figma Select chevron color/icon/muted · .select 화살표와 같은 색 (TD-108). 구: icon-interactive-secondary(다크에서 한 단계 밝음) */
 .ui-select__chevron svg { width: 16px; height: 16px; }
 .ui-select__trigger:hover { border-color: var(--color-border-input-hover); }
 .ui-select__trigger:focus,
@@ -3629,14 +3677,14 @@ body.dark-mode .checkSelect .search-text {
     z-index: 1000;
     display: none;
     flex-direction: column;
-    gap: 2px;
+    gap: 0;
     min-width: 100%;
     max-height: 240px;
-    padding: var(--spacing-4);
+    padding: 0;   /* 옵션 행이 테두리에 붙음 — Figma Option group padding 0 · 행 간격 0 (TD-108). 구: 여백 4 · 간격 2 */
     box-sizing: border-box;
     overflow-y: auto;
     background-color: var(--color-bg-base);
-    border: 1px solid var(--color-border-base);
+    border: 1px solid var(--color-border-strong);   /* = Figma Option group color/border/strong (TD-108). 구: border-base */
     border-radius: var(--radius-popover);
     box-shadow: var(--shadow-popover);
     font-family: var(--font-family-base);
@@ -3652,6 +3700,7 @@ body.dark-mode .checkSelect .search-text {
     padding: 0 var(--spacing-8);
     border-radius: var(--radius-item);
     font-size: var(--body-sm);
+    font-weight: var(--font-weight-medium);   /* = Figma Option 12/Medium (TD-108). 구: 400 */
     color: var(--color-text-base);
     white-space: nowrap;
     cursor: pointer;
@@ -3659,7 +3708,9 @@ body.dark-mode .checkSelect .search-text {
 .ui-select__option:hover,
 .ui-select__option.is-active { background-color: var(--color-bg-brand-subtle); }
 .ui-select__option.is-active { box-shadow: inset 0 0 0 1px var(--color-border-focus); }   /* 키보드로 옮긴 지금 항목 — 포커스는 상자에 있고 목록 안 위치만 표시 */
-.ui-select__option.is-selected { background-color: var(--color-bg-brand-subtle); font-weight: var(--font-weight-semibold); }
+.ui-select__option:active { background-color: var(--color-bg-interactive-secondary-pressed); color: var(--color-text-interactive-secondary-pressed); }   /* 누르는 동안 = Figma Option Pressed (TD-108). 글자는 바탕의 짝 토큰 — 다크 덮개 층(누름 500) 위에서도 4.5 */
+/* 고른 항목 = 옅은 브랜드 바탕 + 브랜드 반굵은 글자 + 오른쪽 ✓ — Figma Option Type=Text · Selected=True(text/brand) (TD-108). 구: 글자 text-base */
+.ui-select__option.is-selected { background-color: var(--color-bg-brand-subtle); color: var(--color-text-on-brand-subtle); font-weight: var(--font-weight-semibold); }   /* 글자 = 옅은 브랜드 바탕의 짝 토큰 — 라이트는 text-brand 와 같은 brand-500, 다크는 대비 4.5 넘는 brand-200 */
 .ui-select__option.is-selected::after {
     content: "";
     flex: none;
@@ -3670,7 +3721,8 @@ body.dark-mode .checkSelect .search-text {
             mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'/></svg>") center / contain no-repeat;
 }
 .ui-select__option[aria-disabled="true"] { color: var(--color-text-disabled); cursor: not-allowed; }
-.ui-select__option[aria-disabled="true"]:hover { background-color: transparent; }
+.ui-select__option[aria-disabled="true"]:is(:hover, :active, .is-selected) { background-color: transparent; }   /* 고른 채 막힌 항목 = 바탕 없음 · 흐린 글자 · 흐린 ✓ (Figma Selected=True · Disabled) */
+.ui-select__option.is-selected[aria-disabled="true"]::after { background-color: var(--color-icon-disabled); }
 @media (forced-colors: active) {
     .ui-select__menu { border-color: CanvasText; }
     .ui-select__option.is-active { outline: 2px solid Highlight; outline-offset: -2px; }

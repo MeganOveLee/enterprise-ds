@@ -41,6 +41,7 @@
         wrap.className = 'ui-select';
         // native select 의 너비 유틸(w10 ~ w95 = %)은 위젯에 물려줌 — 좁게 둔 셀렉트를 그대로
         (String(sel.className).match(/\bw\d+\b/g) || []).forEach(function (c) { wrap.classList.add(c); });
+        if (sel.style.width) wrap.style.width = sel.style.width;   // style="width:…" 로 폭을 정한 셀렉트도 그 폭 그대로 (TD-108 — 고르는 법 미리보기가 칸 폭 전체로 늘어나던 것)
 
         var trigger = document.createElement('div');
         trigger.className = 'ui-select__trigger';
