@@ -1,4 +1,4 @@
-// Foundation/Motion — 문서 화면은 Motion.mdx. 움직임 세 가지 견본: 빛(지금 처리 중) · 깜빡임(봐야 할 경고 = 지연) · 정지(저장된 값) + 인터랙션 12가지(아래)
+// Foundation/Motion — 문서 화면은 Motion.mdx. 움직임 세 가지 견본: 빛(지금 처리 중) · 깜빡임(봐야 할 경고 = 지연, 두근 박동) · 정지(저장된 값) + 인터랙션 12가지(아래)
 // TD-48 — 빛은 지금 처리 중일 때만, 첫 자리 = 첨부 업로더 올리는 중 막대. 값은 tokens.css 모션 토큰
 // 견본은 실제 컴포넌트 마크업 그대로(업로더 · 상태 표시 · 진행률 막대) — 화면에서 보는 움직임과 같음
 import { fileIcon } from './_fileicon.js';
@@ -17,9 +17,18 @@ const uploader = (rows) => '<div class="resumable"><ul class="fileList">' + rows
 const status = (k) =>
   '<div class="status-block status-block--' + k + '"><div class="status-segments status-segments--' + k + '" aria-hidden="true">' +
   '<span class="status-segments__bar"></span>'.repeat(5) + '</div><span class="status-text"></span></div>';
-const bar = (k, pct, name) =>
-  '<div class="progress-bar progress-bar--' + k + '" role="progressbar" aria-label="' + name + ' 진행률" aria-valuenow="' + pct + '" aria-valuemin="0" aria-valuemax="100">' +
-  '<div class="pbar-fill" style="width:' + pct + '%"></div><span class="progress-bar__label">' + pct + '%</span></div>';
+const planText = (pct, plan) => '진행률 ' + pct + '%, 계획 ' + plan + '%, ' + (plan > pct ? (plan - pct) + '%p 늦음' : plan < pct ? (pct - plan) + '%p 빠름' : '계획대로');
+const bar = (k, pct, name, plan) =>
+  '<div class="progress-bar progress-bar--' + k + '" role="progressbar" aria-label="' + name + ' 진행률" aria-valuenow="' + pct + '" aria-valuemin="0" aria-valuemax="100"' +
+  (plan === undefined ? '' : ' aria-valuetext="' + planText(pct, plan) + '"') + '>' +
+  '<div class="pbar-fill" style="width:' + pct + '%"></div><span class="progress-bar__label">' + pct + '%</span>' +
+  (plan === undefined ? '' : '<span class="progress-bar__plan" style="--plan:' + plan + '%" aria-hidden="true"></span>') + '</div>';
+// 진행 현황 한 줄 — Screens › 프로젝트 상세와 같은 마크업(상태 표시 + 「전체 진행률」 머리 + 계획 표식 막대). 머리 글자 배치만 화면 쪽 스타일이라 여기선 인라인
+const meta = (pct, plan) => '<div style="display:flex;align-items:baseline;gap:12px;font-size:var(--body-sm);color:var(--color-text-muted)">' +
+  '<b style="font-size:var(--body-md);font-weight:var(--font-weight-semibold);color:var(--color-text-base)">전체 진행률</b>' +
+  '<span>계획 ' + plan + '% · 실적 ' + pct + '%' + (plan > pct ? ' · <b style="font-weight:var(--font-weight-semibold);color:var(--color-text-danger-bold)">' + (plan - pct) + '%p 늦음</b>' : '') + '</span></div>';
+const summary = (k, pct, plan) => '<div class="progress-row" style="gap:var(--spacing-24)">' + status(k) +
+  '<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:6px">' + meta(pct, plan) + '<div class="progress-row">' + bar(k, pct, '전체', plan) + '</div></div></div>';
 
 export default {
   title: 'Foundation/Motion',
@@ -34,16 +43,17 @@ export const 빛 = {
   render: () => box(uploader(UP)),
 };
 
-// 깜빡임 — 지연 상태 표시의 막대 5개(statusPulse). 다른 상태는 정지. 상태는 옆 글자가 알려 주고 막대는 꾸밈(aria-hidden)
+// 깜빡임(Pulse) — 지연 상태 표시의 막대 5개가 두근 · 두근 · 쉼(statusPulse), 같은 줄 진행률 막대는 같은 박자로 붉은 번짐 + 빛(TD-123).
+// 다른 상태는 정지. 상태는 옆 글자가 알려 주고 막대는 꾸밈(aria-hidden). 마크업 = Screens › 프로젝트 상세 진행 현황과 같음
 export const 깜빡임 = {
-  parameters: html(status('delay')),
-  render: () => box('<div class="progress-row">' + status('delay') + bar('delay', 32, '시험 · 검증') + '</div>'),
+  parameters: html(summary('delay', 58, 64)),
+  render: () => box(summary('delay', 58, 64), '720px'),
 };
 
 // 정지 — 저장된 값(진행 상태 표시 + 진행률 막대). 지금 바뀌는 중이 아니라 움직이지 않음(값이 바뀔 때만 채움이 늘어남)
 export const 정지 = {
-  parameters: html('<div class="progress-row">' + status('progress') + bar('progress', 58, '전체') + '</div>'),
-  render: () => box('<div class="progress-row">' + status('progress') + bar('progress', 58, '전체') + '</div>'),
+  parameters: html(summary('progress', 72, 70)),
+  render: () => box(summary('progress', 72, 70), '720px'),
 };
 
 // ── 인터랙션 12가지 (DS-ADR-041, TD-108 44번) ── 견본마다 실제 컴포넌트 마크업 + 누르면 움직이는 짧은 스크립트(제품은 화면 스크립트가 dsMotion 을 부름)
@@ -55,8 +65,8 @@ const CHECK12 = '<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 6.2l2
 const GRIP = '<svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><circle cx="6" cy="4" r="1.2"/><circle cx="10" cy="4" r="1.2"/><circle cx="6" cy="8" r="1.2"/><circle cx="10" cy="8" r="1.2"/><circle cx="6" cy="12" r="1.2"/><circle cx="10" cy="12" r="1.2"/></svg>';
 const row = (h) => '<div class="sb-row">' + h + '</div>';
 
-// 1 처리 중 글자 — 몇 초 걸리는 처리의 안내 문구에 빛이 지나감(Shimmer 와 같은 뜻 · 같은 한 바퀴)
-const SHIMMER = '<div class="loading" role="status">\n  <p class="loading__text text-shimmer">BOM 두 판을 비교하는 중입니다</p>\n  <p class="loading__sub">BRK-20417 · 부품 214개</p>\n</div>';
+// 1 처리 중 글자 — 몇 초 걸리는 처리의 안내 문구에 빛이 지나감(Shimmer 와 같은 뜻 · 같은 한 바퀴). 문구 앞에 스피너(3 ~ 10초 = 스피너 + 안내 문구, Loading 시간 규칙)
+const SHIMMER = '<div class="loading" role="status">\n  <div class="loading loading--inline">\n    <span class="spinner spinner--sm" aria-hidden="true"></span>\n    <p class="loading__text text-shimmer">BOM 두 판을 비교하는 중입니다</p>\n  </div>\n  <p class="loading__sub">BRK-20417 · 부품 214개</p>\n</div>';
 export const 처리_중_글자 = {
   parameters: html(SHIMMER),
   render: () => el(SHIMMER),

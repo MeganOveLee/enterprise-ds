@@ -13,7 +13,7 @@ import * as S from './DatePicker.stories.js';
 <tbody>
 <tr><td><b>구조</b></td><td><code>.ui-datepicker</code> › <code>.ui-datepicker__icon</code> + <code>.ui-datepicker__input</code></td><td>달력 아이콘 버튼과 날짜 입력 필드입니다. 높이 · 테두리 · 모서리는 <a className="ds-link" href="./?path=/docs/form-input--docs" target="_top">Input</a>의 텍스트 필드와 같은 토큰입니다. 형식은 YYYY-MM-DD이고 placeholder로 형식을 안내합니다. 필드에 포커스가 있거나 달력이 열리면 아이콘 칸이 옅은 선택 바탕(<code>--color-bg-selected</code>)이 됩니다.</td></tr>
 <tr><td><b>기간</b></td><td><code>.ui-datepicker-range</code> › 필드 2개 + <code>.ui-datepicker-range__sep</code></td><td>시작일 · 종료일 필드를 「~」로 연결합니다. 두 필드가 서로의 선택 가능 범위가 되어 종료일이 시작일보다 앞설 수 없습니다. 달력에는 두 날짜 사이가 표시되고, 다른 쪽 끝 날짜도 고른 날과 같은 채움으로 표시됩니다.</td></tr>
-<tr><td><b>선택 가능 범위</b></td><td><code>min</code> · <code>max</code><span className="ds-muted">YYYY-MM-DD</span></td><td>범위 밖의 날짜는 달력에서 비활성(취소선)으로 표시되고 선택할 수 없습니다.</td></tr>
+<tr><td><b>선택 가능 범위</b></td><td><code>min</code> · <code>max</code><span className="ds-muted">YYYY-MM-DD</span></td><td>범위 밖의 날짜는 달력에서 비활성(취소선)으로 표시되고 선택할 수 없습니다. 연도 목록은 min · max 연도 사이만 보이고, 주지 않으면 30년 전 ~ 10년 뒤를 12개 높이에서 스크롤합니다.</td></tr>
 <tr><td><b>오류</b></td><td><code>aria-invalid="true"</code><span className="ds-muted">날짜 필드(input)에</span></td><td>형식이 맞지 않거나 검증을 통과하지 못한 상태입니다. 감싸는 상자의 테두리가 빨강이 됩니다.</td></tr>
 <tr><td><b>비활성 · 읽기 전용</b></td><td><code>disabled</code> · <code>readonly</code></td><td>입력할 수 없는 상태입니다. 달력이 열리지 않고 아이콘 버튼도 누를 수 없습니다. 정의는 Input과 같습니다. 아이콘 칸은 회색 칸 그대로이고, 아이콘은 비활성이면 흐린 색 · 읽기 전용이면 값과 같은 보조 글자색입니다.</td></tr>
 <tr><td><b>날짜 칸 상태</b></td><td><code>.datepicker__day</code><span className="ds-muted">.is-today · .is-selected · .is-in-range · .is-range-end · .is-disabled · .is-outside</span></td><td>오늘 · 고른 날 · 기간 사이 · 기간의 다른 쪽 끝 · 선택 가능 범위 밖 · 앞뒤 달 날짜입니다. 스크립트가 붙이며, 아래 「펼친 달력」에서 모습을 볼 수 있습니다.</td></tr>
@@ -39,7 +39,7 @@ import * as S from './DatePicker.stories.js';
 <Section title="예시" en="Examples">
 <Card of={S.하나} title="단일 날짜" en="Single" desc="납기일 · 희망일처럼 날짜 하나를 입력합니다." />
 <Card of={S.기간} title="기간" en="Range" desc="검색 기간처럼 시작일과 종료일을 입력합니다. 종료일은 시작일보다 앞 날짜를 선택할 수 없습니다." />
-<Card of={S.고를_수_있는_범위} title="선택 가능 범위" en="Min · Max" desc="달력을 열면 10월 10일 ~ 25일 밖의 날짜는 비활성입니다." />
+<Card of={S.고를_수_있는_범위} title="선택 가능 범위" en="Min · Max" desc="필드에 min · max를 주면 그 밖의 날짜는 달력에서 비활성이고, 연도 목록도 그 사이 해만 보입니다. 견본 값(min 2026-10-10 · max 2026-10-25)은 모양을 보이려고 정한 예시이고 업무 규칙이 아닙니다. 범위는 화면이 정합니다(예: 희망일은 오늘 이후)." />
 <Card of={S.펼친_달력} title="펼친 달력" en="Calendar" desc="왼쪽 시작일 필드의 달력을 연 모습입니다. 고른 날 · 기간 사이 · 다른 쪽 끝 · 선택 가능 범위 밖 · 앞뒤 달 날짜를 한 화면에 보여 줍니다." />
 </Section>
 <Section title="언제 쓰고 쓰지 말지" en="Do · Don't">

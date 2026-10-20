@@ -28,7 +28,7 @@ const CHEV = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke
 const iconExpand = ({ open = false, extra = '', disabled = false } = {}) =>
   iconBtn({ shape: 'transparent', label: '왼쪽 메뉴', glyph: CHEV, extra, attrs: ' aria-expanded="' + open + '"', disabled });
 const toggleBtn = ({ on = false, extra = '', disabled = false } = {}) =>
-  iconBtn({ shape: 'transparent', label: '즐겨찾기', glyph: STAR, extra, attrs: ' aria-pressed="' + on + '"', disabled });
+  iconBtn({ shape: 'transparent', label: '즐겨찾기', glyph: STAR, extra: 'btn--favorite' + (extra ? ' ' + extra : ''), attrs: ' aria-pressed="' + on + '"', disabled });   // 켜짐 = 노란 채움 별(TD-120)
 
 const note = (t) => '<span class="sb-note">' + t + '</span>';
 const code = (t) => '<code>' + t + '</code>';

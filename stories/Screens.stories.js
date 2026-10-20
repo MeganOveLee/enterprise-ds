@@ -6,6 +6,7 @@
 // 마크업은 문자열 이어 붙이기 — 스토리북 색인기가 여러 줄 HTML 템플릿을 MDX로 잘못 읽는 일을 피함
 import './_screens.css';
 import { wireSearchDetail, EXPAND_LABEL } from './_search.js';
+import './_flow.css';   // .flow-mark — 카드 제목이 가리키는 곳 점선
 import { fileIcon, folderIcon } from './_fileicon.js';
 import { emptyArt } from './_illustrations.js';
 import { lnbMask, lnbSvg, lnbLogo } from './_lnbicons.js';
@@ -120,11 +121,12 @@ const gnb = (crumbs = ['Home', '문서 관리', '문서 검색']) =>
 // 1줄 = 문서 분류 · 문서 번호 · 문서 명 · 작업현황 · 등록일(기간 2칸) — 6열 칸 폭에 5항목. 펼치면 버전 · 등록자 · 수정자 · 수정일
 // 접혀 있을 때 숨은 조건에 값이 있으면 버튼에 개수(이 화면은 등록자 · 수정일에 값 → 2)
 let searchUid = 0;
-const searchForm = ({ open = false } = {}) => {
+// mark = 문서 그림에서 카드 제목이 가리키는 곳에 점선(.flow-mark, Blocks 「누르는 곳 점선」과 같은 표기 · TD-122). 코드 보기에는 넣지 않음
+const searchForm = ({ open = false, mark = false } = {}) => {
   const id = 'scr-search-detail-' + (++searchUid);
   return '<div class="seach_arm"><div class="leftbt">' + lnbSvg('sliders', 18) + '<h4>검색 조건</h4></div>' +
   '<div class="rightbt">' + btn('검색', 'btn--primary btn--filled', I.search) +
-  '<button type="button" class="btn btn--secondary btn--outlined btn--expand" aria-expanded="' + open + '" aria-controls="' + id + '">' + EXPAND_LABEL + '</button>' +
+  '<button type="button" class="btn btn--secondary btn--outlined btn--expand' + (mark ? ' flow-mark' : '') + '" aria-expanded="' + open + '" aria-controls="' + id + '">' + EXPAND_LABEL + '</button>' +
   btn('검색 조건 초기화', 'btn--secondary btn--transparent', I.reset) + '</div></div>' +
   '<div class="pro_table"><div class="form-grid-2 form-grid--6">' +
   field('문서 분류', '<input class="input" aria-label="문서 분류" value="/제품 문서/설계 문서" readonly>') +
@@ -132,7 +134,7 @@ const searchForm = ({ open = false } = {}) => {
   field('문서 명', '<input class="input" aria-label="문서 명">') +
   field('작업현황', sel('작업현황', ['전체', '작업 중', '검토 중', '승인', '반려'])) +
   field('등록일', range('등록일', '2026-09-01', ''), { span: 2 }) +
-  '</div><div class="search-detail" id="' + id + '"' + (open ? '' : ' hidden') + '><div class="form-grid-2 form-grid--6"><div class="search-divider">상세 검색</div>' +
+  '</div><div class="search-detail' + (mark ? ' flow-mark' : '') + '" id="' + id + '"' + (open ? '' : ' hidden') + '><div class="form-grid-2 form-grid--6"><div class="search-divider">상세 검색</div>' +
   field('버전', '<div class="radio-group" role="radiogroup" aria-label="버전">' +
     '<label class="radio"><input type="radio" name="' + id + '-ver" checked><span class="radio__mark"></span>최신 버전</label>' +
     '<label class="radio"><input type="radio" name="' + id + '-ver"><span class="radio__mark"></span>모든 버전</label></div>', { span: 2 }) +
@@ -143,16 +145,16 @@ const searchForm = ({ open = false } = {}) => {
 };
 
 // 페이지네이션 — 기본 목록 화면에는 두지 않음(페이지를 나누면 다음 페이지 데이터가 검색 조건 · 정렬에 걸리지 않아서).
-// 「목록 — 페이지네이션」 화면에만 둠 — 검색 · 정렬을 전체 결과에 먼저 하고 페이지를 나누는 경우
-const pager = () =>
-  '<nav class="ui-pagination" aria-label="페이지 이동">' +
+// 「문서 검색 — 페이지네이션」 화면에만 둠 — 검색 · 정렬을 전체 결과에 먼저 하고 페이지를 나누는 경우
+const pager = (mark = false) =>
+  '<nav class="ui-pagination' + (mark ? ' flow-mark' : '') + '" aria-label="페이지 이동">' +
   '<button type="button" class="ui-pagination__btn ui-pagination__btn--nav is-disabled" aria-label="이전 페이지">' + svg(I.prev, 14) + '</button>' +
   '<button type="button" class="ui-pagination__btn is-active" aria-current="page">1</button>' +
   [2, 3, 4, 5].map((n) => '<button type="button" class="ui-pagination__btn">' + n + '</button>').join('') +
   '<span class="ui-pagination__ellipsis">…</span><button type="button" class="ui-pagination__btn">7</button>' +
   '<button type="button" class="ui-pagination__btn ui-pagination__btn--nav" aria-label="다음 페이지">' + svg(I.next, 14) + '</button></nav>';
 
-const grid = ({ paging = false } = {}) =>
+const grid = ({ paging = false, mark = false } = {}) =>
   '<div class="seach_arm"><div class="leftbt">' + svg(I.list, 16) + '<h4>검색 결과 (' + ROWS.length + '/' + (paging ? 128 : ROWS.length) + ')</h4>' +
   sel('한 페이지에 보일 개수', ['20', '50', '100']) + '</div>' +
   // [선택 일괄 결재] 아이콘 없음 — 이전 버전 캡처(03 · 06 · 07) 그대로. ✓ 아이콘은 근거 없이 넣었던 것(10/16 대조)
@@ -169,12 +171,12 @@ const grid = ({ paging = false } = {}) =>
     '<td><a href="#" class="grid-custom-rows-link">' + r[0] + '</a></td><td class="is-left">' + r[1] + '</td>' +
     '<td>' + fileIcon(FILE_EXT[i], { label: true }) + '</td><td>' + r[2] + '</td><td>' + chip(r[3]) + '</td>' +
     '<td>' + r[4] + '</td><td>' + r[5] + '</td><td>' + r[6] + '</td><td>' + r[7] + '</td></tr>').join('') +
-  '</tbody></table></div>' + (paging ? pager() : '') + '</div>';
+  '</tbody></table></div>' + (paging ? pager(mark) : '') + '</div>';
 
-const listScreen = ({ paging = false, open = false } = {}) =>
+const listScreen = ({ paging = false, open = false, mark = false } = {}) =>
   '<div style="display:flex;height:100%">' + lnb() + sub() +
   '<div class="main-layout"><div class="main-body"><div class="main-nav-layout"><div class="main-area">' + gnb() +
-  '<div class="main-content"><div class="searchLayout"><div class="product">' + searchForm({ open }) + grid({ paging }) + '</div></div></div>' +
+  '<div class="main-content"><div class="searchLayout"><div class="product">' + searchForm({ open, mark: mark && open }) + grid({ paging, mark: mark && paging }) + '</div></div></div>' +
   '</div></div></div></div></div>';
 
 // ── 등록 창 — 제품에서는 새 창(.pop). 여기서는 목록 위에 띄운 창 ──
@@ -344,10 +346,11 @@ const detailBody = () =>
   ro('계획 기간', '2026-07-01 ~ 2026-12-18', 2) + ro('실적 시작일', '2026-07-03') + ro('관리 등급', 'A · 중점 관리') +
   '</div></div>' +
   dsec('진행 현황', true, '<span class="section-meta"><span class="progress-plan-key" aria-hidden="true"></span>계획 · 기준 2026-10-13</span>') +
-  '<div class="pro_table scr-progress"><div class="scr-progress__top">' +
-  '<div class="status-block status-block--delay"><div class="status-segments status-segments--delay">' + '<span class="status-segments__bar"></span>'.repeat(5) + '</div><span class="status-text"></span></div>' +
+  // 상태 표시 + 전체 진행률을 DS .progress-row 하나로 — 지연이면 막대 5개와 진행률 막대가 같은 박자로 뜀(TD-123, Foundation › Motion 견본과 같은 마크업)
+  '<div class="pro_table scr-progress"><div class="scr-progress__top"><div class="progress-row scr-progress__lead">' +
+  '<div class="status-block status-block--delay"><div class="status-segments status-segments--delay" aria-hidden="true">' + '<span class="status-segments__bar"></span>'.repeat(5) + '</div><span class="status-text"></span></div>' +
   '<div class="scr-progress__main"><div class="scr-progress__meta"><b>전체 진행률</b><span>계획 64% · 실적 58% · <em>6%p 늦음</em></span></div>' +
-  '<div class="progress-row">' + pbar('delay', 58, '전체', true, 64) + '</div></div>' +
+  '<div class="progress-row">' + pbar('delay', 58, '전체', true, 64) + '</div></div></div>' +
   '<dl class="scr-kv"><div><dt>남은 기간</dt><dd>66일</dd></div><div><dt>지연 태스크</dt><dd class="is-danger">2건</dd></div><div><dt>완료 태스크</dt><dd>9 / 21</dd></div></dl></div>' +
   '<ul class="scr-phases">' + PHASES.map(([n, k, pct, d, plan]) =>
     '<li><span class="scr-phases__name">' + n + '</span>' + pbar(k, pct, n, true, plan > 0 ? plan : undefined) + '<span class="scr-phases__date">' + d + '</span>' + pchip(k) + '</li>').join('') + '</ul></div>' +
@@ -432,12 +435,12 @@ const MAPS = [
     R('panel', 4, '브랜드 패널', '서비스 소개 · 문의처', 'panel') + R('form', 5, '로그인 폼', 'Input · Checkbox · Button', 'focus')],
   ['대시보드', '로그인 뒤 첫 화면 — 할 일 요약', '"rail top" "rail info" "rail cards"', '16px 1fr', '16px auto 1fr',
     R('rail', 1, '', '', 'nav') + R('top', 3, 'GNB', '', 'bar') + R('info', 6, '인사 · 숫자 카드', 'Card') + R('cards', 7, '카드 그리드', 'Card · Empty', 'focus')],
-  ['목록 — 문서 검색', '조건으로 찾을 때', '"rail sub top" "rail sub search" "rail sub list"', '16px 24% 1fr', '16px auto 1fr',
+  ['문서 검색', '조건으로 찾을 때', '"rail sub top" "rail sub search" "rail sub list"', '16px 24% 1fr', '16px auto 1fr',
     R('rail', 1, '', '', 'nav') + R('sub', 2, 'LNB 서브 패널', '메뉴 · 폴더 트리', 'nav') + R('top', 3, 'GNB', '', 'bar') +
     R('search', 8, '검색 폼', 'Search Form', 'focus') + R('list', 9, '결과 표', 'Table · Status Chip', 'focus')],
-  ['등록 창 — 문서 등록', '새로 등록 · 수정할 때', '"title" "form" "file"', '1fr', '16px 1fr auto',
+  ['문서 등록', '새로 등록 · 수정할 때', '"title" "form" "file"', '1fr', '16px 1fr auto',
     R('title', 10, '창 제목 줄', '', 'bar') + R('form', 11, '접는 섹션 · 2열 폼', 'Accordion · Input · Date Picker', 'focus') + R('file', 12, '첨부', '업로더')],
-  ['상세 — 프로젝트', '하나를 열어 보고 관리할 때', '"rail tree top" "rail tree head" "rail tree sec"', '16px 24% 1fr', '16px auto 1fr',
+  ['프로젝트 상세', '하나를 열어 보고 관리할 때', '"rail tree top" "rail tree head" "rail tree sec"', '16px 24% 1fr', '16px auto 1fr',
     R('rail', 1, '', '', 'nav') + R('tree', 13, '산출물 패널', '트리 · 상태 점', 'nav') + R('top', 3, 'GNB', '', 'bar') +
     R('head', 14, '상세 헤더', 'Button · Status Chip') + R('sec', 15, '접는 섹션', 'Accordion · Progress · Table', 'focus')],
 ];
@@ -455,7 +458,7 @@ const ANATOMY = [
   ['6', '인사 · 숫자 카드', c('.card') + mu('--color-bg-panel · --color-text-on-panel · -on-panel-2'), '인사 카드는 브랜드 패널 색이라 브랜드에 따라 바뀝니다.'],
   ['7', '카드 그리드', c('.card-grid') + ' · ' + c('.card-header') + ' · ' + c('.card-title-count') + ' · ' + c('.card-list') + ' · ' + c('.empty--card'), '3열 고정입니다(' + c('.card-grid') + '는 최소 폭 460이라 1440 화면에서 2열). 차트 색은 아이콘 신호색 토큰을 씁니다. ' + lk('Card', 'data-display-card--docs')],
   ['8', '검색 폼', c('.seach_arm') + ' · ' + c('.pro_table') + ' · ' + c('.form-grid--6') + ' · ' + c('.ff-field') + ' · ' + c('.search-label') + ' · ' + c('.search-detail'), lk('Search Form', 'blocks-search-form--docs') + ' 블록 그대로입니다.'],
-  ['9', '결과 표', c('.table_list') + ' · ' + c('.ui-pagination') + mu('--color-bg-grid-header · -row-hover · -row-selected · --color-bg-row-alt'), '제품에서는 그리드 라이브러리가 그리는 자리라 같은 그리드 토큰의 표로 구성했습니다. 페이지네이션은 「목록 — 페이지네이션」 화면에만 있습니다. ' + lk('Table', 'data-display-table--docs')],
+  ['9', '결과 표', c('.table_list') + ' · ' + c('.ui-pagination') + mu('--color-bg-grid-header · -row-hover · -row-selected · --color-bg-row-alt'), '제품에서는 그리드 라이브러리가 그리는 자리라 같은 그리드 토큰의 표로 구성했습니다. 페이지네이션은 「문서 검색 — 페이지네이션」 화면에만 있습니다. ' + lk('Table', 'data-display-table--docs')],
   ['10', '창 제목 줄', c('.pop .top') + ' · ' + c('.top-btn-area'), '창 이름과 [임시 저장] · [등록] · 닫기입니다. ' + lk('Popup Window', 'overlay-popup-window--docs')],
   ['11', '접는 섹션 · 2열 폼', c('.seach_arm') + ' · ' + c('.section-toggle') + ' · ' + c('.pro_table') + ' · ' + c('.form-grid-2') + ' · ' + c('.ff-readonly') + ' · ' + c('.field-error-msg'), '섹션 헤더와 내용이 배경색이 있는 상자 하나입니다. 필수 표시(*) · 오류 필드 · 읽기 전용 필드를 함께 보여 줍니다. ' + lk('Accordion', 'data-display-accordion--docs')],
   ['12', '첨부', c('.resumable'), '끌어다 놓기 · 파일 형식 아이콘 · 올리는 중 막대입니다.'],
@@ -510,13 +513,13 @@ export const 문서_검색 = {
 // 목록 — 상세 검색을 펼친 모습(Figma 📄 Templates 「문서 검색 · 상세 검색 펼침」과 같은 정지 화면)
 export const 문서_검색_상세_펼침 = {
   parameters: src(listScreen({ open: true })),
-  render: () => wireSearchDetail(frame(listScreen({ open: true }))),
+  render: () => wireSearchDetail(frame(listScreen({ open: true, mark: true }))),
 };
 
-// 목록 — 페이지네이션(위 pager 주석)
+// 문서 검색 — 페이지네이션(위 pager 주석)
 export const 문서_검색_시안_2 = {
   parameters: src(listScreen({ paging: true })),
-  render: () => wireSearchDetail(frame(listScreen({ paging: true }))),
+  render: () => wireSearchDetail(frame(listScreen({ paging: true, mark: true }))),
 };
 
 export const 문서_등록 = {

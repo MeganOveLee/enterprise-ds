@@ -8,7 +8,7 @@ import * as S from './ApprovalLine.stories.js';
 <div className="ds-page">
 <PageHead eyebrow="Blocks" title="Approval Line" lead="등록 창의 결재선 지정 섹션과, 그 섹션의 [결재선 지정]으로 여는 결재선 지정 창입니다. 결재 받을 사람을 역할(합의 · 승인 · 수신)별로 지정합니다." />
 <Section title="예시" en="Examples">
-<Card of={S.결재선_지정} title="결재선 지정" en="Pick approvers" desc="조직도에서 부서를 선택하고 담당자를 체크한 뒤 역할 상자의 [추가]로 넣거나, 역할 상자로 끌어다 놓습니다." />
+<Card of={S.결재선_지정} title="결재선 지정" en="Pick approvers" desc="조직도에서 부서를 선택하고 담당자를 체크한 뒤 가운데 [합의 ›] · [승인 ›] · [수신 ›]로 넣거나, 역할 상자로 끌어다 놓습니다. 넣은 사람은 줄 끝 ×로 뺍니다." />
 <Card of={S.저장한_결재선_불러오기} title="저장한 결재선 불러오기" en="From a template" desc="같은 결재선을 자주 쓸 때. 결재선 Template 탭에서 선택하고 [적용]을 누르면 역할 상자가 한 번에 채워집니다." />
 </Section>
 <Section title="구성" en="Spec">
@@ -18,14 +18,15 @@ import * as S from './ApprovalLine.stories.js';
 <tr><td><b>결재선 지정 섹션</b></td><td><code>.seach_arm</code> + <code>.section-toggle</code> · <code>.grid-table</code></td><td>등록 · 결재 요청 창 안의 접는 섹션입니다. 헤더 오른쪽 = 결재선 Template 선택 · [행 추가] secondary · [행 삭제] destructive · [결재선 지정] secondary. 창의 primary는 [등록] 하나입니다.</td></tr>
 <tr><td><b>창</b></td><td><code>.pop</code> › <code>.tab</code> · <code>.tab-actions</code></td><td>탭 = 조직 · 결재선 Template. 탭 줄 오른쪽 = [결재선 적용] primary · [Template 저장]. 목록의 [선택 일괄 결재]로 열면 [결재선 적용] 자리가 [결재 요청]입니다.</td></tr>
 <tr><td><b>조직 · 담당자</b></td><td><code>.section-box</code> › <code>.tree</code> · <code>.left-search</code> · <code>.grid-table</code></td><td>왼쪽 상자에 안내 문구, 조직도 트리, 담당자 목록(이름 검색 · 체크)을 둡니다. 상자는 오른쪽 역할 상자 끝까지 늘어납니다.</td></tr>
-<tr><td><b>역할 상자</b></td><td><code>.section-box</code> › <code>.seach_arm</code> + <code>.grid-table</code> · <code>.empty</code></td><td>합의 · 승인 · 수신 세 상자입니다. 헤더 오른쪽 [추가]로 체크한 담당자를 넣고, 끌어다 놓아도 됩니다. 비어 있으면 표 안 빈 상태를 둡니다.</td></tr>
+<tr><td><b>이동 버튼</b></td><td><code>.btn--secondary</code> · <code>.btn--outlined</code></td><td>왼쪽 목록과 역할 상자 사이 가운데 열에 역할마다 하나씩 [합의 ›] · [승인 ›] · [수신 ›]를 둡니다. 버튼은 그 역할 상자의 세로 가운데에 놓이고, 체크한 담당자를 그 역할로 넣습니다. 끌어다 놓기와 같은 일을 키보드로도 할 수 있게 하는 버튼입니다.</td></tr>
+<tr><td><b>역할 상자</b></td><td><code>.section-box</code> › <code>.seach_arm</code> + <code>.grid-table</code> · <code>.empty--card</code></td><td>합의 · 승인 · 수신 세 상자입니다. 세 상자는 너비 · 높이가 같고, 표의 최소 높이는 머리 + 데이터 3줄입니다. 넣은 사람은 줄 끝 ×(<code>.btn--icon</code>, 「이름 빼기」)로 뺍니다. 비어 있으면 표 안에 빈 상태(카드 크기)를 둡니다.</td></tr>
 <tr><td><b>섹션 상자</b></td><td><code>.section-box</code></td><td>접지 않는 묶음의 상자입니다. 접는 섹션과 같은 바탕(bg-muted) · 테두리 · 모서리이고, 헤더(<code>.seach_arm</code>) 아래에 내용을 둡니다.</td></tr>
 <tr><td><b>결재선 Template</b></td><td><code>.section-box</code> · <code>.btn--destructive</code></td><td>저장해 둔 결재선 목록([삭제] destructive · [적용] secondary)과 선택한 Template의 상세입니다.</td></tr>
 <tr><td><b>표</b></td><td><code>.grid-table</code></td><td>모든 표는 짝수 행에 얼룩 바탕을 둡니다(<a className="ds-link" href="./?path=/docs/data-display-table--docs" target="_top">Table</a>).</td></tr>
-</tbody>
 <tr><td><b>순서</b></td><td><code>tbody[data-ds-reorder]</code> · <code>.reorder-handle</code></td><td>합의 · 승인 순서가 뜻인 역할 상자는 줄 앞 손잡이로 끌어 순서를 바꿉니다. 놓을 자리에 선이 생기고, 키보드는 손잡이에서 Alt + ↑ ↓입니다. 옮긴 줄은 한 번 표시되고 몇 번째로 옮겼는지 알림 자리로 읽힙니다. <a className="ds-link" href="./?path=/docs/foundation-motion--docs" target="_top">Foundation › Motion</a></td></tr>
+</tbody>
 </table>
-<p className="ds-sec__desc ds-after">끌어다 놓기와 함께 체크 + [추가] 버튼으로도 지정할 수 있어 키보드로도 쓸 수 있습니다. Figma UI Kit 🧱 Blocks 페이지의 「Approval Line」과 같은 구성입니다.</p>
+<p className="ds-sec__desc ds-after">끌어다 놓기와 함께 체크 + 가운데 이동 버튼으로도 지정할 수 있어 키보드로도 쓸 수 있습니다. Figma UI Kit 🧱 Blocks 페이지의 「Approval Line」과 같은 구성입니다.</p>
 </Section>
 <Section title="언제 쓰고 쓰지 말지" en="Do · Don't">
 <Card of={S.사용_지침} code={false} />

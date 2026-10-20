@@ -1,22 +1,22 @@
 // Blocks/Approval Line — 문서 화면은 ApprovalLine.mdx. 결재 받을 사람을 역할(합의 · 승인 · 수신)별로 지정하는 영역과 창 (Figma 🧱 Blocks 「Approval Line」과 같은 구성)
-// 등록 창 안 결재선 지정 섹션 → [결재선 지정] = 새 창(탭: 조직 · 결재선 Template). 담당자를 체크하고 역할 상자의 [추가]로 넣거나 끌어다 놓음
+// 등록 창 안 결재선 지정 섹션 → [결재선 지정] = 새 창(탭: 조직 · 결재선 Template). 담당자를 체크하고 가운데 열의 [합의 ›] · [승인 ›] · [수신 ›]로 넣거나 끌어다 놓음,
+// 넣은 사람은 줄 끝 ×로 뺌 (TD-122 — 이전 버전 캡처 「10_결재선 지정 조직 탭」처럼 가운데 이동 버튼. 구(10/19 ~ 10/20): 역할 상자 머리 [추가] — 다른 Template 목록이 뜰 것처럼 읽힘)
+// 역할 상자 세 개는 너비 · 높이가 같고, 표 최소 높이 = 머리 + 데이터 3줄
 // 상자 = 접는 섹션 상자 · 섹션 상자(.section-box, 접기 없음). 두 칸 배치(왼쪽 | 역할 상자)만 이 블록의 inline grid
 import { flow, shot, MARK, wireSections, toggleIcon } from './_flow.js';
 import { doDont } from './_dodont.js';
-import { emptyArt } from './_illustrations.js';
 
 const svg = (d, s = 16) => '<svg width="' + s + '" height="' + s + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + d + '</svg>';
 const I = {
   close: '<path d="M6 6l12 12M18 6L6 18"/>',
   down: '<path d="M6 9l6 6 6-6"/>',
   next: '<path d="M9 6l6 6-6 6"/>',
+  x: '<path d="M7 7l10 10M17 7L7 17"/>',
   doc: '<path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 12h6M9 16h6"/>',
   search: '<circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/>',
 };
 const btn = (t, cls, label = '') => '<button type="button" class="btn ' + cls + '"' + (label ? ' aria-label="' + label + '"' : '') + '>' + t + '</button>';
 const ck = (label, on = false) => '<label class="checkbox"><input type="checkbox" aria-label="' + label + '"' + (on ? ' checked' : '') + '></label>';
-// 빈 상태 일러스트 = 그림 자산(솔리드 · 라인, 브랜드 파일이 고름). 표 아래라 작은 크기(.grid-table + .empty)
-const empty = (title, desc) => '<div class="empty" role="status">' + emptyArt('empty') + '<p class="empty__title">' + title + '</p>' + (desc ? '<p class="empty__desc">' + desc + '</p>' : '') + '</div>';
 // 표 — after = 표 아래(.list 안)에 붙는 것(빈 상태). Table 「결과 0건」과 같은 자리
 const tbl = (label, cols, head, rows, after = '', style = '') => '<div class="table_list"' + (style ? ' style="' + style + '"' : '') + '><div class="list"><table class="grid-table" aria-label="' + label + '"><colgroup>' + cols.map((w) => '<col' + (w ? ' style="width:' + w + '"' : '') + '>').join('') + '</colgroup>' +
   '<thead><tr>' + head.map((h) => '<th>' + h + '</th>').join('') + '</tr></thead><tbody>' + rows + '</tbody></table>' + after + '</div></div>';
@@ -40,21 +40,34 @@ const users = () => '<div style="display:flex;flex-direction:column;gap:8px;min-
     USERS.map(([n, d, on]) => '<tr' + (on ? ' class="is-selected" aria-selected="true"' : '') + '><td>' + ck(n + ' 선택', !!on) + '</td><td>' + n + '</td><td>' + d + '</td></tr>').join(''), '', 'flex:1') + '</div>';
 
 // 왼쪽 상자 — 안내 + 조직도 | 담당자. 오른쪽 역할 상자 끝까지 늘어남
-const GUIDE = '담당자를 체크하고 역할 상자의 [추가]를 누르거나, 역할 상자로 끌어다 놓아 주십시오.';
-const left = () => '<div class="section-box" style="padding-top:16px;gap:8px">' +
+const GUIDE = '담당자를 체크하고 가운데 [합의 ›] · [승인 ›] · [수신 ›]를 누르거나, 역할 상자로 끌어다 놓아 주십시오.';
+const left = () => '<div class="section-box" style="padding-top:16px;gap:8px;grid-row:1 / span 3">' +
   '<p class="section-meta" style="margin:0">' + GUIDE + '</p>' +
   '<div style="flex:1;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px">' + org() + users() + '</div></div>';
 
-// ── 역할 상자 — 섹션 상자(헤더 h4 + [추가]) + 표(No. · 부서 · 이름 · ID). 비어 있으면 표 안 빈 상태 ──
-// add = 헤더 [추가] 버튼(Do · Don't 견본만 끔), blank = 빈 상태 안내(Do · Don't 견본만 끔)
-const roleBox = (key, list, { add = true, blank = true } = {}) => {
+// ── 역할 상자 — 섹션 상자(헤더 h4) + 표(No. · 부서 · 이름 · ID · 빼기 ×). 비어 있으면 표 안 빈 상태(카드 크기) ──
+// 표 최소 높이 = 머리 34 + 데이터 3줄(30 × 3) — 세 상자는 줄 높이(1fr)가 같아 가장 큰 상자에 맞춰 같은 높이(세영님 설정 · TD-122)
+// add = 왼쪽에 이동 버튼을 붙인 견본(Do · Don't), blank = 빈 상태 안내(Do · Don't 견본만 끔)
+const ROW_MIN = 'flex:1;min-height:124px';
+// 빈 역할 상자 — 데이터 3줄 자리(90) 안에 들어가게 제목 + 설명만(그림 없음). 그림을 넣으면 이 상자만 커져 세 상자 높이가 같이 커짐
+const roleEmpty = (who, title) => '<div class="empty empty--card" role="status" style="padding:var(--spacing-16);gap:var(--spacing-4)"><p class="empty__title">지정한 ' + who + '가 없습니다</p>' +
+  '<p class="empty__desc">담당자를 체크하고 [' + title + ' ›]' + (title === '합의' ? '를' : '을') + ' 누르거나 여기로 끌어다 놓아 주십시오.</p></div>';
+const moveBtn = (key) => { const [title, who] = ROLE[key]; return '<button type="button" class="btn btn--secondary btn--outlined" aria-label="체크한 담당자를 ' + who + '로 넣기">' + title + svg(I.next, 14) + '</button>'; };
+const roleBox = (key, list, { blank = true } = {}) => {
   const [title, who] = ROLE[key];
-  const head = '<div class="seach_arm"><div class="leftbt"><h4>' + title + '</h4></div>' + (add ? '<div class="rightbt">' + btn('추가', 'btn--secondary btn--outlined', who + ' 추가') + '</div>' : '') + '</div>';
-  const rows = list.map(([d, n, id], i) => '<tr><td>' + (i + 1) + '</td><td>' + d + '</td><td>' + n + '</td><td>' + id + '</td></tr>').join('');
-  return '<div class="section-box">' + head + tbl(who, ['52px', '', '', '100px'], ['No.', '부서', '이름', 'ID'], rows,
-    list.length || !blank ? '' : empty('지정한 ' + who + '가 없습니다', '담당자를 체크하고 [추가]를 누르거나, 여기로 끌어다 놓아 주십시오.')) + '</div>';
+  const head = '<div class="seach_arm"><div class="leftbt"><h4>' + title + '</h4></div></div>';
+  const rows = list.map(([d, n, id], i) => '<tr><td>' + (i + 1) + '</td><td>' + d + '</td><td>' + n + '</td><td>' + id + '</td>' +
+    '<td style="padding:0;text-overflow:clip"><button type="button" class="btn btn--secondary btn--transparent btn--icon btn--sm" aria-label="' + n + ' 빼기">' + svg(I.x, 14) + '</button></td></tr>').join('');
+  return '<div class="section-box">' + head + tbl(who, ['52px', '', '', '96px', '52px'], ['No.', '부서', '이름', 'ID', '<span class="sr-only">빼기</span>'], rows,
+    list.length || !blank ? '' : roleEmpty(who, title), ROW_MIN) + '</div>';
 };
-const roles = (line) => '<div style="display:flex;flex-direction:column;gap:12px;min-width:0">' + ['DISCUSS', 'APPROVE', 'RECEIVE'].map((k) => roleBox(k, line[k])).join('') + '</div>';
+// 조직 탭 — 왼쪽 상자(3줄을 걸침) | 가운데 이동 버튼(상자마다 가운데) | 역할 상자 3개. 줄 3개 높이가 같아 버튼이 상자 가운데에 옴
+const ORDER = ['DISCUSS', 'APPROVE', 'RECEIVE'];
+const pickGrid = (line) => '<div style="display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);grid-template-rows:repeat(3,1fr);gap:12px 16px;align-items:stretch">' +
+  left() + ORDER.map((k, r) => '<div style="grid-column:2;grid-row:' + (r + 1) + ';align-self:center">' + moveBtn(k) + '</div>' +
+    '<div style="grid-column:3;grid-row:' + (r + 1) + ';display:flex;min-width:0">' + roleBox(k, line[k]).replace('<div class="section-box">', '<div class="section-box" style="flex:1">') + '</div>').join('') + '</div>';
+// Template 탭 — 역할 상자 3개를 같은 높이로(1fr 줄)
+const roles = (line) => '<div style="display:grid;grid-auto-rows:1fr;gap:12px;min-width:0">' + ORDER.map((k) => roleBox(k, line[k])).join('') + '</div>';
 
 // ── 결재선 Template 탭 — 저장해 둔 결재선 목록([삭제] · [적용]) + 고른 Template 상세 ──
 const TPLS = [['설계 문서 기본', true], ['품질 검토 포함']];
@@ -73,8 +86,8 @@ const pop = ({ tab = 0 } = {}) =>
   '<div class="tab"><ul role="tablist" aria-label="결재선 지정">' +
   ['조직', '결재선 Template'].map((t, i) => '<li role="tab" tabindex="' + (i === tab ? 0 : -1) + '" aria-selected="' + (i === tab) + '"' + (i === tab ? ' class="is-active"' : '') + '>' + t + '</li>').join('') + '</ul>' +
   '<div class="tab-actions">' + btn('결재선 적용', 'btn--primary btn--filled') + btn('Template 저장', 'btn--secondary btn--outlined') + '</div></div>' +
-  '<div class="contents"><div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:stretch">' +
-  (tab === 0 ? left() + roles(LINE) : templates() + roles(TPL_LINE)) + '</div></div></div>';
+  '<div class="contents">' + (tab === 0 ? pickGrid(LINE)
+    : '<div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:stretch">' + templates() + roles(TPL_LINE) + '</div>') + '</div></div>';
 
 // 기본 화면 — 문서 등록 창 안 결재선 지정 섹션. 누르는 곳 = [결재선 지정]
 let uid = 0;
@@ -110,13 +123,13 @@ export const 결재선_지정 = {
   parameters: { docs: { source: { code: area() + '\n\n<!-- [결재선 지정]을 누르면 여는 창 -->\n' + pop() } } },
   render: () => wireSections(flow({
     base: { html: area(), w: 1000, h: 408, where: '문서 등록 창 — 결재선 지정 섹션(등록 · 결재 요청 화면 공통)' },
-    open: { html: pop(), w: 1200, h: 720, where: '결재선 지정 — 새 창' },
+    open: { html: pop(), w: 1200, h: 800, where: '결재선 지정 — 새 창' },
     trigger: '[결재선 지정]', how: '새 창이 열립니다. [결재선 적용]을 누르면 고른 사람이 등록 창 표에 들어갑니다',
   })),
 };
 export const 저장한_결재선_불러오기 = {
   parameters: { docs: { source: { code: pop({ tab: 1 }) } } },
-  render: () => shot(pop({ tab: 1 }), 1200, 640),
+  render: () => shot(pop({ tab: 1 }), 1200, 760),
 };
 
 // ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-108 7번 ① ② ③) — 미리보기만 ──
@@ -129,9 +142,10 @@ const lineBtns = (del) => '<div class="seach_arm" style="margin:0"><div class="l
 export const 사용_지침 = {
   parameters: { controls: { disable: true } },
   render: () => doDont([
-    { title: '끌어다 놓기와 [추가] 버튼을 함께',
-      do: [mini(guide(GUIDE) + roleBox('APPROVE', ONE)), '역할 상자 헤더에 [추가]를 두어, 체크한 담당자를 버튼으로도 넣게 합니다. 키보드로도 결재선을 지정할 수 있습니다.'],
-      dont: [mini(guide('담당자를 역할 상자로 끌어다 놓아 주십시오.') + roleBox('APPROVE', ONE, { add: false })),
+    { title: '끌어다 놓기와 이동 버튼을 함께',
+      do: [mini(guide(GUIDE) + '<div style="display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;align-items:center">' + moveBtn('APPROVE') + roleBox('APPROVE', ONE) + '</div>'),
+        '목록과 역할 상자 사이에 역할별 이동 버튼을 두어, 체크한 담당자를 버튼으로도 넣게 합니다. 키보드로도 결재선을 지정할 수 있습니다.'],
+      dont: [mini(guide('담당자를 역할 상자로 끌어다 놓아 주십시오.') + roleBox('APPROVE', ONE)),
         '끌어다 놓기만 되면 마우스를 쓰지 못하는 사용자는 결재선을 지정할 수 없습니다.'] },
     { title: '빈 역할 상자에는 빈 상태 안내',
       do: [mini(roleBox('RECEIVE', [])), '역할 상자가 비면 표 안에 빈 상태를 두어 무엇을 하면 되는지 안내합니다.'],

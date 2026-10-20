@@ -4,7 +4,7 @@
 // ── 첨부 파일 형식 아이콘 ── 파일 이름(또는 확장자)을 받아 형식마다 색 + 형식 글자
 // 상세 창 첨부 목록(.file-download-list) · 등록 창 업로더(.resumable) · 홈 최근 문서가 같이 씀
 // 색은 DS .file-icon--<형식>(components.css). 표에 없는 형식 = 흐린 회색 FILE
-//   솔리드 = 종이 + 색 띠, 띠 안 형식 글자는 종이색(--color-bg-base)으로 뚫음 — 다크에서 띠가 밝아져도 읽힘
+//   솔리드 = Figma 「solid/dwg · file · memo」와 같은 모양 — 색 종이(오른쪽 위 접힘) + 흰 줄 3개 + 아래 띠에 흰 형식 글자. 색 = --file-art · --file-art-band(형식별, components.css)
 //   라인   = Figma Icons 「file」 윤곽(아래는 열어 둠) + 아래에 형식 글자(형식 색)
 const TYPES = {
   pdf: ['pdf', 'PDF'],
@@ -16,12 +16,14 @@ const TYPES = {
   mp4: ['mp4', 'MP4'], mov: ['mp4', 'MP4'], avi: ['mp4', 'MP4'],
   txt: ['txt', 'TXT'], log: ['txt', 'TXT'],
 };
-const label = (text, x, y, fill) => '<text x="' + x + '" y="' + y + '" text-anchor="middle" font-size="5" font-weight="700" font-family="Arial, sans-serif" style="fill:' + fill + '">' + text + '</text>';
+const label = (text, x, y, fill, size = 5) => '<text x="' + x + '" y="' + y + '" text-anchor="middle" font-size="' + size + '" font-weight="700" font-family="Arial, sans-serif" style="fill:' + fill + '">' + text + '</text>';
+// 종이 · 띠 = Figma solid/file 벡터(20 격자)를 반올림. 줄 = 4.9 · 7.0 · 9.1 높이 0.85, 셋째 줄은 짧게
+const PAGE = 'M2.68 0h10.89c.21 0 .41.08.56.23l3.74 3.69c.15.15.24.35.24.57v14.7a.81.81 0 0 1-.81.81H2.68a.81.81 0 0 1-.81-.81V.81A.81.81 0 0 1 2.68 0z';
+const BAND = 'M1.87 13.66h16.26v5.53a.81.81 0 0 1-.81.81H2.68a.81.81 0 0 1-.81-.81z';
 const fileSolid = (text) => '<svg class="ds-art__solid" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false">' +
-  '<path d="M4.5 1.5h7.5l4 4v12.2a.8.8 0 0 1-.8.8H4.5a.8.8 0 0 1-.8-.8V2.3a.8.8 0 0 1 .8-.8z" stroke-width="1.2" style="fill:var(--color-bg-base);stroke:currentColor"/>' +
-  '<path d="M12 1.5v4h4" fill="none" stroke-width="1.2" style="stroke:currentColor"/>' +
-  '<rect x="1.5" y="9.6" width="13.6" height="6.4" rx="1.2" style="fill:currentColor"/>' +
-  label(text, 8.3, 14.5, 'var(--color-bg-base)') + '</svg>';
+  '<path d="' + PAGE + '" style="fill:var(--file-art)"/><path d="' + BAND + '" style="fill:var(--file-art-band)"/>' +
+  '<g style="fill:#fff"><rect x="5.45" y="4.88" width="9.1" height=".85" rx=".42"/><rect x="5.45" y="6.99" width="9.1" height=".85" rx=".42"/><rect x="5.45" y="9.11" width="6.5" height=".85" rx=".42"/></g>' +
+  label(text, 10, 18.25, '#fff', 4.2) + '</svg>';
 // 윤곽 = Figma Icons file(20 격자 · 선 1.25)의 가운데 선. 형식 글자 자리만큼 아래를 열어 둠
 const fileLine = (text) => '<svg class="ds-art__line" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false">' +
   '<path d="M4.44 12V4.44a1.39 1.39 0 0 1 1.39-1.39h4.86l4.87 4.87V12M10.69 3.05v4.87h4.87" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>' +

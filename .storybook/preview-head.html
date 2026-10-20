@@ -96,6 +96,9 @@
   .ds-props td:nth-child(2) { white-space: nowrap; }
   .ds-props--wrap td:nth-child(2) { white-space: normal; width: 34%; }   /* 클래스가 많은 자리(Screens 「쓰인 것」)는 줄바꿈 — 설명 칸이 좁아지지 않게 */
   .ds-after { margin-top: 12px; }
+  .ds-table + .ds-card { margin-top: 24px; }
+  .ds-uses { display: flex; flex-wrap: wrap; gap: 4px 20px; margin: 0 0 12px; font-size: 13px; color: #59636e; }   /* Screens 섹션 — 이 화면에 쓴 블록 · 컴포넌트 (TD-122, 10/20) */
+  .ds-uses b { margin-right: 8px; font-weight: 600; color: #1f2328; }   /* 표 바로 아래 예시 카드 — 붙어 보이던 것(Motion 인터랙션 표 → 처리 중 글자, 10/20) */
   .ds-subhead { margin: 24px 0 8px; font-size: 15px; font-weight: 600; color: #111418; }   /* 절 안 두 번째 · 세 번째 박스의 소제목 — 박스를 나눌 때는 박스마다 머리를 둔다 (TD-108) */
   .ds-sec > h2 + .ds-subhead, .ds-sec__desc + .ds-subhead { margin-top: 0; }
   /* 소개 */

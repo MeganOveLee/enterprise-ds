@@ -30,6 +30,7 @@ export const 기간 = {
 
 export const 고를_수_있는_범위 = {
   parameters: { docs: { description: { story: '`min` · `max` 밖의 날짜는 비활성(취소선)으로 보입니다.' } } },
+  // min · max 값은 모양을 보이려는 예시(업무 규칙 아님, TD-120). 범위는 화면이 정함
   render: () => `<div style="max-width:200px">${dp('희망일', '2026-10-15', ' min="2026-10-10" max="2026-10-25"')}</div>`,
 };
 

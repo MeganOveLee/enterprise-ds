@@ -196,7 +196,7 @@
   --duration-fast:    .12s;          /* 색 · 테두리 바뀜(메뉴 · 탭 · 입력 필드 포커스) · 툴팁 나타남 · 스위치 손잡이 */
   --duration-base:    .2s;           /* 펼침 화살표 회전 · 상세 검색 펼침 · 사용자 메뉴 안 바탕 · 화면 모드 스위치 */
   --duration-shimmer: 2.4s;          /* Shimmer 한 바퀴 = 지나감 1.8초 + 쉼 0.6초. 업로더 올리는 중 막대 · 스켈레톤 */
-  --duration-pulse:   1.6s;          /* Pulse 한 바퀴 — 지연 상태 표시 막대(statusPulse) */
+  --duration-pulse:   1.2s;          /* Pulse 한 바퀴 = 두근 · 두근 · 쉼 — 지연 상태 표시 막대(statusPulse)와 같은 줄 진행률 막대(ds-alert-bar). 구 1.6s 부드러운 진함 ↔ 흐림 (TD-123) */
   --duration-fill:    1.6s;          /* 진행률 막대 채움이 늘어나는 시간(값이 바뀔 때 한 번) */
   --ease-loop:        ease-in-out;   /* 반복 움직임 곡선 — 빛 · 깜빡임 · 스켈레톤 · 로고 로더 */
   /* 인터랙션 — 누른 결과 · 바뀐 곳을 알려 주는 한 번짜리 움직임 (DS-ADR-041, TD-108 44번) */
@@ -205,6 +205,19 @@
   --duration-undo:    5s;            /* 되돌리기 시간 — 삭제 뒤 [되돌리기]가 남아 있는 시간(마우스 · 포커스가 있으면 멈춤) */
   --ease-standard:    cubic-bezier(.2, 0, 0, 1);   /* 자리 이동 곡선 — 탭 밑줄 · 숫자 · 끌어 놓은 줄 · 누름. 빨리 출발해 부드럽게 멈춤 */
   --scale-press:      .96;           /* 누르는 동안 버튼 · 페이지 번호 크기 */
+
+  /* 그림 자산 — 솔리드 문서 아이콘의 형식 색(종이 · 아래 띠). Figma ✨ Icons › 솔리드 — 파일 형식과 같은 값 (TD-108, 10/20 세영님 A안).
+     모양 = 색 종이 + 흰 줄 3개 + 아래 띠에 흰 형식 글자 — 모든 형식이 같은 모양이고 색만 다름. 남의 로고(Office · Acrobat) 모양은 쓰지 않음.
+     형식을 알아보는 그림 색이라 브랜드 · 화면 모드와 상관없이 같음(다크에서도 흰 줄 · 글자가 읽히게). 띠 위 흰 글자 대비 4.5:1 이상(TXT만 3.4 — 옆 파일 이름이 뜻을 맡음) */
+  --art-file-pdf:  #E5484D;  --art-file-pdf-band:  #B42318;
+  --art-file-xls:  #1F9D55;  --art-file-xls-band:  #146C3A;
+  --art-file-doc:  #2F6FE4;  --art-file-doc-band:  #1D4FB0;
+  --art-file-ppt:  #E8663D;  --art-file-ppt-band:  #B4441F;
+  --art-file-dwg:  #4B5563;  --art-file-dwg-band:  #1F2937;
+  --art-file-zip:  #8B5CF6;  --art-file-zip-band:  #6D28D9;
+  --art-file-mp4:  #1A9BE6;  --art-file-mp4-band:  #0B6FAE;
+  --art-file-txt:  #F7B928;  --art-file-txt-band:  #B27506;
+  --art-file-file: #9AA1AB;  --art-file-file-band: #6F7682;
 
 
   /* ==========================================================================

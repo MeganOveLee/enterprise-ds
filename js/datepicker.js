@@ -432,7 +432,7 @@
         btn.setAttribute('aria-expanded', 'true');
         this.dropdownBtn = btn;
         var sel = dd.querySelector('.is-selected') || dd.querySelector('.datepicker__dropdown-item');
-        if (sel) { sel.focus(); if (sel.scrollIntoView) sel.scrollIntoView({ block: 'nearest' }); }
+        if (sel) { sel.focus({ preventScroll: true }); dd.scrollTop = Math.max(0, sel.offsetTop - (dd.clientHeight - sel.offsetHeight) / 2); }   /* 고른 항목을 목록 가운데로(연도 목록은 길어서 스크롤) */
     };
 
     Datepicker.prototype.closeDropdown = function(returnFocus) {
@@ -470,9 +470,13 @@
         var self = this;
         var dd = document.createElement('div');
         dd.className = 'datepicker__dropdown datepicker__dropdown--year is-open';   /* 폭 68 (Figma Year dropdown) */
-        var startYear = self.viewYear - 6;
+        /* 연도 범위 = input 의 min / max 연도. 없으면 보는 해 기준 30년 전 ~ 10년 뒤 — 목록은 12개 높이에서 스크롤 (TD-120).
+         * 구(~ 10/20): 보는 해 -6 ~ +5 고정 12개 — 2020년 이전을 고를 수 없었음. 이전 버전(AXISJ 달력)은 연도 화면에서 12년씩 넘겨 범위 제한 없음 */
+        var minD = parseDate(this.input.getAttribute('min')), maxD = parseDate(this.input.getAttribute('max'));
+        var startYear = minD ? minD.getFullYear() : Math.min(self.viewYear, self.today.getFullYear()) - 30;
+        var endYear = maxD ? maxD.getFullYear() : Math.max(self.viewYear, self.today.getFullYear()) + 10;
         var html = '';
-        for (var y = startYear; y < startYear + 12; y++) {
+        for (var y = startYear; y <= endYear; y++) {
             html += '<button type="button" role="option" aria-selected="' + (y === self.viewYear) + '" class="datepicker__dropdown-item ' + (y === self.viewYear ? 'is-selected' : '') + '" data-y="' + y + '">' + y + '</button>';
         }
         dd.innerHTML = html;

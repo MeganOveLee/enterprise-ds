@@ -1124,13 +1124,19 @@
  * 폼 등록·수정 공통 — 필수 마크 / textarea / 파일 업로드 / 섹션
  * ============================================================ */
 
-/* 필수 표시 (라벨 뒤 별표) = 라벨과 같은 색 · 굵기, 간격 4 — Figma Label Property 1=Required (TD-108). 구: 빨강 · 700 · 간격 2 */
+/* 필수 표시 (라벨 뒤 별표) = 빨강(위험 글자색) · 라벨과 같은 굵기, 간격 4 — Figma Label Property 1=Required (TD-120, 10/20 세영님).
+ * 구(TD-108 ~ 10/20): 라벨과 같은 색. 이전 버전: 빨강 · 700 · 간격 2.
+ * 필수 여부는 필드의 aria-required 가 알리고 별표는 aria-hidden — 색만으로 알리지 않음.
+ * 회색 섹션 상자(bg-muted) 안 · 섹션 머리에서는 danger-bold — danger(red-600)는 bg-muted 위 4.37:1 로 AA 미달(오류 문구와 같은 규칙) */
 .required {
-    color: var(--color-text-label);
+    color: var(--color-text-danger);
     margin-left: var(--spacing-4);
     font-weight: var(--font-weight-semibold);
 }
 .required::before { content: "*"; }
+.seach_arm:has(.section-toggle) .required,
+.seach_arm:has(.section-toggle) + :is(.pro_table, .table_list, .resumable) .required,
+.section-box .required { color: var(--color-text-danger-bold); }
 
 .field-error-msg {   /* Figma Part/Help message Error — 아이콘 16(x-circle, icon-danger) + 문구, 높이 24 */
     display: flex;
@@ -1413,17 +1419,20 @@ body.dark-mode .pop .contents .pro_table:not(:has(.form-grid-2)):not(.seach_arm:
 /* 첨부 파일 형식 아이콘 .file-icon--<형식> — 형식마다 색 + 형식 글자(PDF · XLS · DOC · PPT · DWG · ZIP · MP4 · TXT).
  * 형식 목록은 Figma Art/File(✨ Icons › 그림 자산)과 같다 (TD-108 40번).
  * 이전 버전도 확장자마다 다른 아이콘(PDF 빨강 · 엑셀 초록 …) — 그림 파일 대신 아이콘 토큰 색.
- * 그림 자산(.ds-art, DS-ADR-037): 솔리드 = 종이 + 색 띠, 라인 = 파일 윤곽 + 아래 형식 글자. 색은 두 모양 같음(아래 형식 색)
- * 상세 창 첨부 목록 · 등록 창 업로더 · 최근 문서가 같이 씀. 그 밖 형식(--file) = 흐린 회색 */
-.file-icon.file-icon--pdf { color: var(--color-icon-danger); }
-.file-icon.file-icon--xls { color: var(--color-icon-success); }
-.file-icon.file-icon--doc { color: var(--color-icon-info); }
-.file-icon.file-icon--ppt,
-.file-icon.file-icon--zip { color: var(--color-icon-warning); }
-.file-icon.file-icon--dwg { color: var(--color-icon-base); }
-.file-icon.file-icon--mp4,
-.file-icon.file-icon--txt,
-.file-icon.file-icon--file { color: var(--color-icon-muted); }   /* 형식 글자만 다름 — Figma Art/File Video · Memo · File 라인 색과 같음 */
+ * 그림 자산(.ds-art, DS-ADR-037): 솔리드 = 색 종이 + 흰 줄 + 아래 띠 흰 형식 글자(형식 색 = --art-file-<형식> · -band, 모드와 상관없음),
+ *   라인 = 파일 윤곽 + 아래 형식 글자(글자색 = 아래 아이콘 토큰). 구(~ 10/20): 솔리드 = 흰 종이 + 색 띠 — Figma 모양과 달랐음 (TD-108 10/20 세영님 A안)
+ * 상세 창 첨부 목록 · 등록 창 업로더 · 최근 문서가 같이 씀. 그 밖 형식(--file) = 회색 */
+.file-icon { --file-art: var(--art-file-file); --file-art-band: var(--art-file-file-band); }
+.file-icon.file-icon--pdf { color: var(--color-icon-danger);  --file-art: var(--art-file-pdf); --file-art-band: var(--art-file-pdf-band); }
+.file-icon.file-icon--xls { color: var(--color-icon-success); --file-art: var(--art-file-xls); --file-art-band: var(--art-file-xls-band); }
+.file-icon.file-icon--doc { color: var(--color-icon-info);    --file-art: var(--art-file-doc); --file-art-band: var(--art-file-doc-band); }
+.file-icon.file-icon--ppt { color: var(--color-icon-warning); --file-art: var(--art-file-ppt); --file-art-band: var(--art-file-ppt-band); }
+.file-icon.file-icon--zip { color: var(--color-icon-warning); --file-art: var(--art-file-zip); --file-art-band: var(--art-file-zip-band); }
+.file-icon.file-icon--dwg { color: var(--color-icon-base);    --file-art: var(--art-file-dwg); --file-art-band: var(--art-file-dwg-band); }
+.file-icon.file-icon--mp4 { color: var(--color-icon-muted);   --file-art: var(--art-file-mp4); --file-art-band: var(--art-file-mp4-band); }
+.file-icon.file-icon--txt { color: var(--color-icon-muted);   --file-art: var(--art-file-txt); --file-art-band: var(--art-file-txt-band); }
+.file-icon.file-icon--file { color: var(--color-icon-muted); }   /* 라인 글자색 — Figma Art/File Video · Memo · File 라인 색과 같음 */
+@media (forced-colors: active) { .file-icon .ds-art__solid { forced-color-adjust: none; } }   /* 그림 색 유지 — 뜻은 옆 파일 이름 */
 
 /* 검색/결과 헤더 (.seach_arm) — 원본 클래스명 그대로 (오타도 보존) */
 .seach_arm {
@@ -2344,6 +2353,17 @@ body.dark-mode .select {   /* = --color-icon-muted 다크 값(neutral-300). 구:
 .btn--icon[aria-pressed="true"]        { background: var(--color-bg-brand-subtle); color: var(--color-text-on-brand-subtle); }
 .btn--icon[aria-pressed="true"]:hover  { background: var(--color-bg-interactive-primary-tint-pressed); color: var(--color-text-interactive-primary-hover); }
 .btn--icon[aria-pressed="true"]:active { background: var(--color-bg-interactive-primary-tint-pressed); color: var(--color-text-interactive-primary-pressed); }
+/* 즐겨찾기 별 .btn--favorite — 켜짐 = 별 안을 노랑(--color-icon-favorite)으로 채움, 바탕은 꺼짐과 같음(파랑 바탕 없음) · 꺼짐 = 진한 선 (TD-120, 10/20 세영님).
+ * 노랑 면은 흰 바탕 대비 3:1 미만이라 진한 선(icon-base)을 그대로 두어 모양을 알아보게 함. 켜짐 여부는 aria-pressed 가 읽어 줌 */
+.btn--favorite { color: var(--color-icon-base); }
+.btn--favorite[aria-pressed="true"],
+.btn--favorite[aria-pressed="true"]:hover,
+.btn--favorite[aria-pressed="true"]:active { color: var(--color-icon-base); }
+.btn--favorite[aria-pressed="true"]                { background: transparent; }
+.btn--favorite[aria-pressed="true"]:hover          { background: var(--btn-tint-hover); }
+.btn--favorite[aria-pressed="true"] svg path,
+.favorite-icon[aria-pressed="true"] svg path { fill: var(--color-icon-favorite); }
+.favorite-icon[aria-pressed="true"] { color: var(--color-icon-base); }
 /* 아이콘만 있는 접고 펴기 (Button 제안 ⑭) — LNB 패널 · 섹션처럼 글자 없이 화살표만. 펼치면 화살표가 반 바퀴
  * <button class="btn btn--secondary btn--transparent btn--icon" aria-label="왼쪽 메뉴" aria-expanded="false"><svg …/></button> */
 .btn--icon[aria-expanded] svg { transition: transform var(--duration-base) ease; }
@@ -2609,7 +2629,7 @@ body.dark-mode .select {   /* = --color-icon-muted 다크 값(neutral-300). 구:
 
 /* 하단 Cancel/Apply(.datepicker__footer · __btn) 삭제 — 날짜를 누르면 바로 닫힘 (DS-ADR-016) */
 
-/* month / year dropdown 오버레이 — 12개를 스크롤 없이 모두 보임 · 위아래 여백 8 · 항목 높이 28(위아래 4 · 좌우 16) · 항목 모서리 없음 · 폭 월 112 · 연도 68
+/* month / year dropdown 오버레이 — 월 12개는 스크롤 없이 모두 보임(연도는 12개 높이 + 스크롤) · 위아래 여백 8 · 항목 높이 28(위아래 4 · 좌우 16) · 항목 모서리 없음 · 폭 월 112 · 연도 68
  * (Figma Date Picker / Month dropdown · Year dropdown, TD-108). 구: 최대 높이 240 스크롤 · 여백 4 · 항목 31 · 모서리 2 · 폭 104 · 82 */
 .datepicker__dropdown {
     position: absolute;
@@ -2625,7 +2645,7 @@ body.dark-mode .select {   /* = --color-icon-muted 다크 값(neutral-300). 구:
 }
 .datepicker__dropdown.is-open { display: block; }
 .datepicker__dropdown--month { min-width: 112px; }
-.datepicker__dropdown--year  { min-width: 68px; }
+.datepicker__dropdown--year  { min-width: 68px; max-height: calc(12 * 28px + 16px); }   /* 연도 = 12개 높이 + 스크롤(범위 = min · max 또는 30년 전 ~ 10년 뒤, TD-120) */
 .datepicker__dropdown-item {
     display: block;          /* div → button (키보드 선택). 버튼 기본 모양 지움 */
     width: 100%;
@@ -2968,18 +2988,42 @@ body.dark-mode .section-box { background: var(--color-bg-muted); }
     background: var(--color-bg-disabled);   /* 구 #D9D9D9 하드코딩 → 쿨그레이 토큰 */
 }
 .status-segments--delay .status-segments__bar { animation: statusPulse var(--duration-pulse) var(--ease-loop) infinite; }
-/* @keyframes statusPulse — 이전 버전 값 그대로 (DS만 불러와도 움직이게).
- * 이전 버전에는 같은 이름이 두 곳: components(0.25↔1) · overrides(1↔.35). 화면은 components 다음
- * overrides 를 불러 overrides 쪽만 살아 있었으므로 그 값을 옮김. 상태 SVG 배지(1.4초)는 DS에 없는 이미지라 안 옮김. */
-@keyframes statusPulse { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
-/* 5개 막대에 stagger delay — wave 효과 */
-.status-segments__bar:nth-child(1) { animation-delay: 0s;    }
-.status-segments__bar:nth-child(2) { animation-delay: 0.12s; }
-.status-segments__bar:nth-child(3) { animation-delay: 0.24s; }
-.status-segments__bar:nth-child(4) { animation-delay: 0.36s; }
-.status-segments__bar:nth-child(5) { animation-delay: 0.48s; }
-/* 모션 줄이기 = 멈춤(꾸밈 막대 · 상태는 옆 글자가 알려 줌). 멈추면 진한 쪽(opacity 1)으로 보임 */
-@media (prefers-reduced-motion: reduce) { .status-segments--delay .status-segments__bar { animation: none; } }
+/* @keyframes statusPulse — 두근 · 두근 · 쉼(심장 박동). 막대 5개가 함께 커지며 진해졌다가 두 번째 박동 뒤 쉰다 (TD-123 B안, 10/20 세영님).
+ * 구(10/16 ~ 10/20): 이전 버전 값 그대로 진함 1 ↔ 흐림 .35를 1.6초에 부드럽게 + 막대마다 0.12초 늦게(물결) — 「너무 스무스해서 잘 안 보임」.
+ * 박동 2번 / 1.2초 = 초당 1.7번이라 깜빡임 기준(초당 3번 미만, WCAG 2.3.1) 안. 상태는 옆 글자가 알려 주고 막대는 꾸밈 */
+@keyframes statusPulse {
+    0%        { transform: scaleY(1);   opacity: .5; }
+    12%       { transform: scaleY(1.3); opacity: 1; }
+    24%       { transform: scaleY(1);   opacity: .6; }
+    36%       { transform: scaleY(1.2); opacity: 1; }
+    56%, 100% { transform: scaleY(1);   opacity: .5; }
+}
+/* 지연 경고 빛 — 지연 상태 표시와 같은 줄(.progress-row)의 지연 진행률 막대. 막대 5개와 같은 박자(--duration-pulse)로
+ * 박동마다 붉은 번짐이 일고, 첫 박동에 흰 빛이 채움을 한 번 훑고 지나간다 (TD-123 B안).
+ * 처리 중 Shimmer(흰 띠가 천천히 지나가고 쉼)와 다른 점 = 박동에 붙은 빠른 빛 + 붉은 번짐. 표 안 지연 막대처럼 상태 표시가 옆에 없는 막대는 정지 —
+ * 경고가 화면 여러 곳에서 동시에 뛰지 않게 한 화면의 대표 막대 하나만 */
+.progress-row:has(.status-block--delay) .progress-bar--delay .pbar-fill {
+    background-image:
+        linear-gradient(90deg, transparent 0%, color-mix(in srgb, var(--white) 60%, transparent) 50%, transparent 100%),
+        linear-gradient(to right, var(--color-progress-delay-start), var(--color-progress-delay-end));
+    background-size: 35% 100%, 100% 100%;
+    background-repeat: no-repeat;
+    background-position: -60% 0, 0 0;
+    animation: ds-alert-bar var(--duration-pulse) var(--ease-loop) infinite;
+}
+@keyframes ds-alert-bar {
+    0%        { background-position: -60% 0, 0 0; box-shadow: 0 0 0 0 transparent; }
+    12%       { box-shadow: 0 0 10px 2px color-mix(in srgb, var(--color-progress-delay-end) 55%, transparent); }
+    24%       { box-shadow: 0 0 3px 0 color-mix(in srgb, var(--color-progress-delay-end) 35%, transparent); }
+    36%       { box-shadow: 0 0 8px 1px color-mix(in srgb, var(--color-progress-delay-end) 50%, transparent); }
+    48%       { background-position: 160% 0, 0 0; }
+    56%, 100% { background-position: 160% 0, 0 0; box-shadow: 0 0 0 0 transparent; }
+}
+/* 모션 줄이기 = 멈춤. 막대 5개는 진한 색, 진행률 막대는 빛 · 번짐 없이 채움만(상태는 옆 글자 「지연」) */
+@media (prefers-reduced-motion: reduce) {
+    .status-segments--delay .status-segments__bar { animation: none; }
+    .progress-row:has(.status-block--delay) .progress-bar--delay .pbar-fill { animation: none; background-image: linear-gradient(to right, var(--color-progress-delay-start), var(--color-progress-delay-end)); background-size: auto; }
+}
 
 /* status modifier 별 색 (배경 직접) */
 .status-segments--done    .status-segments__bar { background: var(--color-progress-done-end) !important; }
