@@ -262,3 +262,52 @@ export const 빈_상태_배지 = {
     return d;
   },
 };
+
+// ── 로고 로딩 시안 3가지 (TD-123) ── 같은 로고(가상 제품 마크) · 같은 크기 72 · 한 바퀴 2.4초. 고르면 .brand-loader 로 옮김
+// 마크 = stories/_lnbicons.js lnbLogo 와 같은 그림(브랜드 바탕 + 둥근 선 + 상자 세 면 + 강조 점). 실제 회사 로고 아님
+// 동작 줄이기 = 멈추지 않고 느리게만(스피너 · 로고 로더와 같은 규칙 — 멈추면 멈춘 화면으로 오해)
+const LOGO_CSS = `<style>
+.logo-draft { --ld: 2.4s; width: 72px; height: 72px; display: block; }
+.logo-draft .ld-bg { fill: var(--color-bg-brand); }
+.logo-draft .ld-ink { fill: none; stroke: var(--color-icon-on-color); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.logo-draft .ld-arc { fill: none; stroke: var(--color-icon-on-color); stroke-width: 1.6; stroke-linecap: round; opacity: .55; }
+.logo-draft .ld-dot { fill: var(--accent-500); stroke: var(--color-bg-brand); stroke-width: 1.6; }
+/* ① 빛이 지나가며 드러남 — 흐린 회색 마크 위로 원래 마크가 왼쪽부터 차오름(지금 .brand-loader 방식) */
+.logo-draft--reveal .ld-base { filter: grayscale(1); opacity: .22; }
+.logo-draft--reveal .ld-fill { animation: ld-reveal var(--ld) var(--ease-loop) infinite; }
+@keyframes ld-reveal { 0% { clip-path: inset(0 100% 0 0); } 70%, 100% { clip-path: inset(0 0 0 0); } }
+/* ② 획이 그려짐 — 둥근 선 → 상자 윤곽 → 안쪽 선 순서로 그려지고, 강조 점이 찍힌 뒤 잠깐 쉼 */
+.logo-draft--draw .ld-arc, .logo-draft--draw .ld-ink { stroke-dasharray: 1; stroke-dashoffset: 1; animation: ld-draw var(--ld) var(--ease-standard) infinite; }
+.logo-draft--draw .ld-ink.ld-hex { animation-delay: .15s; }
+.logo-draft--draw .ld-ink.ld-in { animation-delay: .35s; }
+.logo-draft--draw .ld-dot { transform-box: fill-box; transform-origin: center; animation: ld-dot var(--ld) var(--ease-standard) infinite; }
+@keyframes ld-draw { 0% { stroke-dashoffset: 1; opacity: 1; } 45%, 85% { stroke-dashoffset: 0; opacity: 1; } 100% { stroke-dashoffset: 0; opacity: 0; } }
+@keyframes ld-dot { 0%, 45% { transform: scale(0); opacity: 1; } 55% { transform: scale(1.25); opacity: 1; } 62%, 85% { transform: scale(1); opacity: 1; } 100% { transform: scale(1); opacity: 0; } }
+/* ③ 조각이 맞춰짐 — 상자 세 면이 위 · 왼쪽 아래 · 오른쪽 아래에서 들어와 맞물리고, 강조 점이 찍힘 */
+.logo-draft--build .ld-face { fill: var(--color-icon-on-color); transform-box: fill-box; animation: ld-in var(--ld) var(--ease-standard) infinite; }
+.logo-draft--build .ld-top { --ld-op: 1;   --ld-from: translate(0, -7px); }
+.logo-draft--build .ld-left { --ld-op: .72; --ld-from: translate(-7px, 5px); animation-delay: .12s; }
+.logo-draft--build .ld-right { --ld-op: .5; --ld-from: translate(7px, 5px); animation-delay: .24s; }
+.logo-draft--build .ld-dot { transform-box: fill-box; transform-origin: center; animation: ld-dot var(--ld) var(--ease-standard) infinite; }
+@keyframes ld-in { 0% { transform: var(--ld-from); opacity: 0; } 35%, 85% { transform: none; opacity: var(--ld-op); } 100% { transform: none; opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .logo-draft { --ld: 6s; } }
+.logo-drafts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.logo-drafts figure { margin: 0; display: grid; justify-items: center; gap: 10px; padding: 24px 12px; border: 1px solid var(--color-border-base); border-radius: var(--radius-card); background: var(--color-bg-base); text-align: center; }
+.logo-drafts figcaption { font-size: var(--body-sm); color: var(--color-text-muted); line-height: 1.5; }
+.logo-drafts figcaption b { display: block; color: var(--color-text-base); font-size: var(--body-md); font-weight: var(--font-weight-semibold); }
+</style>`;
+const ARC = '<path class="ld-arc" pathLength="1" d="M4.4 21.6A12.5 12.5 0 1 1 27.6 21.6"/>';
+const HEX = '<path class="ld-ink ld-hex" pathLength="1" d="M16 10.2l6 3.45v6.9L16 24l-6-3.45v-6.9z"/>';
+const INNER = '<path class="ld-ink ld-in" pathLength="1" d="M10 13.65l6 3.45 6-3.45M16 17.1V24"/>';
+const DOT = '<circle class="ld-dot" cx="27.6" cy="21.6" r="2.9"/>';
+const mark = () => '<rect class="ld-bg" width="34" height="34" rx="8"/>' + ARC + HEX + INNER + DOT;
+const LOGOS = [
+  ['reveal', '① 빛이 지나가며 드러남', '불러오는 중 — 진행률을 모르는 기다림이 왼쪽부터 차오름(지금 방식)', '<svg class="logo-draft logo-draft--reveal" viewBox="0 0 34 34" aria-hidden="true"><g class="ld-base">' + mark() + '</g><g class="ld-fill">' + mark() + '</g></svg>'],
+  ['draw', '② 획이 그려짐', '처음 여는 중 — 제품 화면이 그려지며 준비됨', '<svg class="logo-draft logo-draft--draw" viewBox="0 0 34 34" aria-hidden="true"><rect class="ld-bg" width="34" height="34" rx="8"/>' + ARC + HEX + INNER + DOT + '</svg>'],
+  ['build', '③ 조각이 맞춰짐', '여러 데이터를 모으는 중 — 흩어진 조각이 하나로 맞물림', '<svg class="logo-draft logo-draft--build" viewBox="0 0 34 34" aria-hidden="true"><rect class="ld-bg" width="34" height="34" rx="8"/>' + ARC +
+    '<path class="ld-face ld-top" d="M16 10.2l6 3.45-6 3.45-6-3.45z"/><path class="ld-face ld-left" d="M10 13.65l6 3.45V24l-6-3.45z"/><path class="ld-face ld-right" d="M16 17.1l6-3.45v6.9L16 24z"/>' + DOT + '</svg>'],
+];
+export const 로고_로딩_시안 = {
+  parameters: { controls: { disable: true }, docs: { source: { language: 'html', code: '<!-- 시안 — 고른 하나를 .brand-loader 로 옮김. 감싸는 .loading(role="status")의 글자가 알림을 맡고 그림은 aria-hidden -->\n' + LOGOS.map((l) => l[3]).join('\n') } } },
+  render: () => LOGO_CSS + '<div class="logo-drafts">' + LOGOS.map(([, t, d, svgH]) => '<figure>' + svgH + '<figcaption><b>' + t + '</b>' + d + '</figcaption></figure>').join('') + '</div>',
+};
