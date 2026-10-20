@@ -36,8 +36,14 @@ export default {
   parameters: { docs: { source: { language: 'html' } } },
 };
 
-// ── 예시 — 문서 검색 결과처럼. 두 번째 행 선택 ──
+// ── 예시 — 문서 검색 결과처럼. 섹션 헤더(.seach_arm) + 표, 두 번째 행 선택 ──
+const LIST = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/></svg>';
+const XLS = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>';
+// 결과 헤더 — 기본 · 0건 예시가 같은 헤더를 쓰고 결과 수 · 내보내기 가능 여부만 다름
+const resultHead = (n) => '<div class="seach_arm"><div class="leftbt">' + LIST + '<h4>검색 결과 (' + n + ')</h4></div>' +
+  '<div class="rightbt"><button type="button" class="btn btn--excel"' + (n ? '' : ' disabled') + '>' + XLS + 'Excel</button></div></div>';
 const SRC = [
+  '<div class="seach_arm"><div class="leftbt">…<h4>검색 결과 (5)</h4></div><div class="rightbt">…</div></div>',
   '<div class="table_list"><div class="list">',
   '  <table class="grid-table">',
   '    <colgroup>…</colgroup>',
@@ -53,19 +59,17 @@ const SRC = [
 ].join('\n');
 export const 기본 = {
   parameters: html(SRC),
-  render: () => wrap(table(ROWS.map((r, i) => row(r, i, { sel: i === 1 })).join(''))),
+  render: () => '<div style="max-width:760px">' + resultHead(ROWS.length) + '<div class="table_list"><div class="list">' + table(ROWS.map((r, i) => row(r, i, { sel: i === 1 })).join('')) + '</div></div></div>',
 };
 
 // ── 결과 0건 — 헤더 행은 그대로, 표 아래 빈 상태(검색 결과 없음 = 기본 .empty + [검색 조건 초기화]), 내보내기는 누를 수 없음 ──
-const LIST = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/></svg>';
-const XLS = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>';
 const NOHIT = '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="21" cy="21" r="12"/><path d="m30 30 10 10"/></svg>';
-const ZERO = '<div class="seach_arm"><div class="leftbt">' + LIST + '<h4>검색 결과 (0)</h4></div>' +
-  '<div class="rightbt"><button type="button" class="btn btn--excel" disabled>' + XLS + 'Excel</button></div></div>' +
+const EMPTY_HIT = (actions = true) => '<div class="empty" role="status"><span class="empty__icon">' + NOHIT + '</span><p class="empty__title">조건에 맞는 문서가 없습니다</p>' +
+  '<p class="empty__desc">기간을 넓히거나 작업현황을 \'전체\'로 바꿔 주십시오.</p>' +
+  (actions ? '<div class="empty__actions"><button type="button" class="btn btn--secondary btn--transparent">검색 조건 초기화</button></div>' : '') + '</div>';
+const ZERO = resultHead(0) +
   '<div class="table_list"><div class="list"><table class="grid-table">' + COLS + HEAD.replace('aria-label="전체 선택"', 'aria-label="전체 선택" disabled') + '<tbody></tbody></table>' +
-  '<div class="empty" role="status"><span class="empty__icon">' + NOHIT + '</span><p class="empty__title">조건에 맞는 문서가 없어요</p>' +
-  '<p class="empty__desc">기간을 넓히거나 작업현황을 \'전체\'로 바꿔 보세요.</p>' +
-  '<div class="empty__actions"><button type="button" class="btn btn--secondary btn--transparent">검색 조건 초기화</button></div></div></div></div>';
+  EMPTY_HIT() + '</div></div>';
 export const 결과_0건 = {
   parameters: html(ZERO),
   render: () => '<div style="max-width:760px">' + ZERO + '</div>',
@@ -78,7 +82,7 @@ const ECOLS = '<colgroup><col style="width:52px"><col style="width:44px"><col st
 const EHEAD = '<thead><tr><th>No.</th><th>' + ck('전체 선택') + '</th><th>문서 분류</th><th>문서 명</th><th>등록자</th></tr></thead>';
 const erow = (r, i, on = false) => '<tr' + (on ? ' class="is-selected" aria-selected="true"' : '') + '><td>' + (i + 1) + '</td><td>' + ck((i + 1) + '행 선택', on) + '</td>' +
   '<td>' + sel((i + 1) + '행 문서 분류', r[0]) + '</td>' +
-  '<td><input class="input" aria-label="' + (i + 1) + '행 문서 명" placeholder="문서 명을 입력하세요" value="' + r[1] + '"></td>' +
+  '<td><input class="input" aria-label="' + (i + 1) + '행 문서 명" placeholder="문서 명 입력" value="' + r[1] + '"></td>' +
   '<td><input class="input" aria-label="' + (i + 1) + '행 등록자" value="' + r[2] + '" readonly></td></tr>';
 const ESRC = [
   '<table class="grid-table grid-table--edit">',
@@ -86,7 +90,7 @@ const ESRC = [
   '  <tbody>',
   '    <tr><td>1</td><td><label class="checkbox"><input type="checkbox" aria-label="1행 선택"></label></td>',
   '        <td><select class="select" aria-label="1행 문서 분류">…</select></td>',
-  '        <td><input class="input" aria-label="1행 문서 명"></td>',
+  '        <td><input class="input" aria-label="1행 문서 명" placeholder="문서 명 입력"></td>',
   '        <td><input class="input" aria-label="1행 등록자" value="김도윤" readonly></td></tr>',
   '  </tbody>',
   '</table>',
@@ -94,6 +98,29 @@ const ESRC = [
 export const 편집 = {
   parameters: html(ESRC),
   render: () => wrap('<table class="grid-table grid-table--edit">' + ECOLS + EHEAD + '<tbody>' + EROWS.map((r, i) => erow(r, i, i === 2)).join('') + '</tbody></table>'),
+};
+
+// ── 셀 안 아이콘 버튼 — Figma Cell Type=Actions 짝. 행마다 같은 동작을 아이콘 버튼으로(.button_group 간격 8), 이름은 「식별자 + 동작」 ──
+const ico = (d) => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + d + '</svg>';
+const ACT = [['미리보기', '<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>'],
+  ['내려받기', '<path d="M12 4v11M7 10l5 5 5-5M5 20h14"/>'],
+  ['버전 이력', '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>']];
+const actions = (id) => '<div class="button_group">' + ACT.map(([t, d]) => '<button type="button" class="btn btn--secondary btn--transparent btn--icon" aria-label="' + id + ' ' + t + '">' + ico(d) + '</button>').join('') + '</div>';
+const ACOLS = '<colgroup><col style="width:52px"><col style="width:132px"><col><col style="width:84px"><col style="width:144px"></colgroup>';   // 동작 열 = 버튼 3 + 간격 8 × 2 + 셀 여백 12 × 2 (Precision 버튼 32도 들어가게)
+const AHEAD = '<thead><tr><th>No.</th><th>문서 번호</th><th>문서 명</th><th>버전</th><th>동작</th></tr></thead>';
+const arow = (r, i) => '<tr><td>' + (i + 1) + '</td><td><a href="#" class="grid-custom-rows-link">' + r[0] + '</a></td><td class="is-left">' + r[1] + '</td><td>' + r[2] + '</td><td>' + actions(r[0]) + '</td></tr>';
+const ASRC = [
+  '<td>',
+  '  <div class="button_group">',
+  '    <button type="button" class="btn btn--secondary btn--transparent btn--icon" aria-label="DOC-2610-0013 미리보기"><svg …/></button>',
+  '    <button type="button" class="btn btn--secondary btn--transparent btn--icon" aria-label="DOC-2610-0013 내려받기"><svg …/></button>',
+  '    <button type="button" class="btn btn--secondary btn--transparent btn--icon" aria-label="DOC-2610-0013 버전 이력"><svg …/></button>',
+  '  </div>',
+  '</td>',
+].join('\n');
+export const 셀_안_버튼 = {
+  parameters: html(ASRC),
+  render: () => wrap('<table class="grid-table">' + ACOLS + AHEAD + '<tbody>' + ROWS.slice(0, 3).map(arow).join('') + '</tbody></table>'),
 };
 
 // ── 전체 상태 — 행 상태. Hovered 는 마우스 상태를, 링크 Focused 는 키보드 상태를 정지 화면으로 ──
@@ -113,33 +140,18 @@ export const 전체_상태 = {
   },
 };
 
-// ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-102) — 미리보기만, 코드는 위 예시 카드에. 열 넷으로 줄인 표 ──
+// ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-108 11번 ①) — 미리보기만, 코드는 위 예시 카드에. 열 넷으로 줄인 표 ──
 const DCOLS = '<colgroup><col style="width:44px"><col style="width:120px"><col><col style="width:100px"></colgroup>';
 const DHEAD = '<thead><tr><th>' + ck('전체 선택') + '</th><th>문서 번호</th><th>문서 명</th><th>작업현황</th></tr></thead>';
-const drow = (r, { sel = false, mark = sel, left = false } = {}) => {
-  const L = left ? ' class="is-left"' : '';
-  return '<tr' + (sel ? ' class="is-selected" aria-selected="true"' : '') + '><td>' + ck(r[0] + ' 선택', mark) + '</td>' +
-    '<td' + L + '><a href="#" class="grid-custom-rows-link">' + r[0] + '</a></td><td class="is-left">' + r[1] + '</td><td' + L + '>' + chip(r[3]) + '</td></tr>';
-};
-const dtable = (rows) => '<div class="table_list" style="width:100%"><div class="list"><table class="grid-table">' + DCOLS + DHEAD + '<tbody>' + rows + '</tbody></table></div></div>';
-const DECOLS = '<colgroup><col style="width:44px"><col><col style="width:96px"></colgroup>';
-const DEHEAD = '<thead><tr><th>No.</th><th>문서 명</th><th>등록자</th></tr></thead>';
-const derow = (i, name) => '<tr><td>' + i + '</td><td><input class="input" aria-label="' + i + '행 문서 명" value="' + name + '"></td><td><input class="input" aria-label="' + i + '행 등록자" value="김도윤" readonly></td></tr>';
-const detable = (cls) => '<div class="table_list" style="width:100%"><div class="list"><table class="' + cls + '">' + DECOLS + DEHEAD + '<tbody>' + derow(1, '브레이크 캘리퍼 조립 사양서') + derow(2, '하우징 3D 모델') + '</tbody></table></div></div>';
+const ddZero = (withTable) => '<div style="width:100%;align-self:flex-start">' + resultHead(0) +
+  '<div class="table_list"><div class="list">' + (withTable ? '<table class="grid-table">' + DCOLS + DHEAD.replace('aria-label="전체 선택"', 'aria-label="전체 선택" disabled') + '<tbody></tbody></table>' : '') +
+  EMPTY_HIT(false) + '</div></div></div>';
 export const 사용_지침 = {
   parameters: { controls: { disable: true } },
   render: () => doDont([
-    // 근거: Table.mdx 구성 「긴 글 — 문서 명 · 태스크 이름처럼 길이가 제각각인 글만 왼쪽 정렬, 번호 · 날짜 · 상태는 가운데」
-    { title: '긴 글만 왼쪽 정렬',
-      do: [dtable(drow(ROWS[0]) + drow(ROWS[1])), '문서 명처럼 길이가 제각각인 글만 왼쪽 정렬합니다.'],
-      dont: [dtable(drow(ROWS[0], { left: true }) + drow(ROWS[1], { left: true })), '번호 · 상태처럼 짧은 값까지 왼쪽 정렬하지 않습니다.'] },
-    // 근거: Table.mdx 구성 「행 상태 — 선택한 행(체크한 행)은 한 단계 진한 브랜드 바탕」
-    { title: '체크한 행은 선택 바탕과 함께',
-      do: [dtable(drow(ROWS[0]) + drow(ROWS[1], { sel: true })), '체크한 행에 .is-selected · aria-selected를 함께 붙입니다.'],
-      dont: [dtable(drow(ROWS[0]) + drow(ROWS[1], { mark: true })), '체크만 하고 행 바탕을 그대로 두지 않습니다.'] },
-    // 근거: Table.mdx 구성 「편집 표 — 행 높이 40」 · DS-ADR-030 표 밀도(목록 표 행 30 · 편집 표 행 40)
-    { title: '셀 안에서 입력하면 편집 표',
-      do: [detable('grid-table grid-table--edit'), '셀 안에 입력 필드이 들어가면 .grid-table--edit(행 40)를 씁니다.'],
-      dont: [detable('grid-table'), '목록 표(행 30)에 입력 필드을 바로 넣지 않습니다.'] },
+    // 근거: TD-108 11번 ① (Carbon Data table · Atlassian Empty state) · 위 「결과 0건」 예시
+    { title: '0건이어도 헤더 행 유지',
+      do: [ddZero(true), '결과가 0건이어도 헤더 행을 두고 표 아래에 빈 상태를 둡니다. 어떤 열의 목록인지 알 수 있습니다.'],
+      dont: [ddZero(false), '0건일 때 표를 통째로 숨기고 빈 상태만 두지 않습니다.'] },
   ]),
 };

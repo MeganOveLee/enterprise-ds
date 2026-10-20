@@ -32,12 +32,15 @@ export default {
 
 // ── 예시 ──
 export const 기본 = { render: () => pager(5, 1) };
-export const 줄임표 = { parameters: { docs: { source: { code: pager(24, 12) } } }, render: () => '<div style="display:flex;flex-direction:column;gap:12px;align-items:flex-start">' + pager(24, 3, '페이지 이동 — 앞쪽 예시') + pager(24, 12, '페이지 이동 — 가운데 예시') + pager(24, 22, '페이지 이동 — 뒤쪽 예시') + '</div>' };
+export const 줄임표 = { parameters: { docs: { source: { code: pager(24, 12) } } }, render: () => '<div style="display:flex;flex-direction:column;gap:12px;align-items:center">' + pager(24, 3, '페이지 이동 — 앞쪽 예시') + pager(24, 12, '페이지 이동 — 가운데 예시') + pager(24, 22, '페이지 이동 — 뒤쪽 예시') + '</div>' };
+// 놓는 자리 — 검색 화면과 같은 구조(.searchLayout .table_list › .list + .ui-pagination). 간격은 CSS 그대로(목록과 8 · 아래 16)
+// 바깥 회색 틀 = 화면 영역(문서 미리보기 전용), 틀의 아래 선 = 화면 바닥
+const LIST_BOX = '<div class="list" style="min-height:96px;display:flex;align-items:center;justify-content:center;color:var(--color-text-muted);font-size:var(--body-sm)">목록(그리드)</div>';
+const screen = (nav, h = '') => '<div style="width:100%;' + h + 'display:flex;flex-direction:column;justify-content:flex-end;padding:16px 16px 0;box-sizing:border-box;background:var(--color-bg-subtle);border:1px solid var(--color-border-base);border-radius:var(--radius-panel)">' +
+  '<div class="searchLayout" style="flex:none"><div class="table_list">' + LIST_BOX + nav + '</div></div></div>';
 export const 목록_아래 = {
-  render: () =>
-    '<div style="max-width:560px;display:flex;flex-direction:column;gap:12px">' +
-    '<div style="height:96px;border:1px solid var(--color-border-base);border-radius:var(--radius-panel);display:flex;align-items:center;justify-content:center;color:var(--color-text-muted);font-size:var(--body-sm)">목록(그리드)</div>' +
-    pager(7, 1) + '</div>',
+  parameters: { docs: { source: { code: '<div class="searchLayout">\n  <div class="table_list">\n    <div class="list">…</div>\n    ' + pager(7, 1) + '\n  </div>\n</div>' } } },
+  render: () => '<div style="max-width:560px">' + screen(pager(7, 1)) + '</div>',
 };
 
 // ── 전체 상태 ── (Hovered · Pressed · Focused = 문서용 정지 화면, _pseudo.js)
@@ -46,18 +49,18 @@ export const 전체_상태 = {
     controls: { disable: true },
     docs: { source: { language: 'html', code: [
       '<!-- Hovered · Focused 는 마우스 · 키보드에 따라 CSS가 표시한다 (클래스 불필요) -->',
-      '<!-- 현재 페이지 = .is-active + aria-current="page" · 끝에 닿은 화살표 = disabled -->',
+      '<!-- 현재 페이지 = .is-active + aria-current="page" · 비활성 화살표 = disabled -->',
       num(3, 3), arrow('prev', true), ELLIPSIS,
     ].join('\n') } },
   },
   render: () => {
     enablePseudo();
     const PS = ['', ' ps-hover', ' ps-active', ' ps-focus-visible'];
-    return matrix(['번호', '현재 페이지', '화살표', '끝에 닿은 화살표'], [
+    return matrix(['번호', '현재 페이지', '화살표', '비활성 화살표'], [
       ['Default', [num(2, 1), num(1, 1), arrow('next', false), arrow('prev', true)]],
       ['Hovered', [num(2, 1, PS[1]), num(1, 1, PS[1]), arrow('next', false, PS[1]), arrow('prev', true, PS[1])]],
       ['Focused', [num(2, 1, PS[3]), num(1, 1, PS[3]), arrow('next', false, PS[3]), '—']],
-    ]) + '<p class="sb-note" style="margin:8px 0 0">끝에 닿은 화살표는 누를 수 없어 포커스가 가지 않습니다. 줄임표는 버튼이 아니라 글자입니다.</p>';
+    ]) + '<p class="sb-note" style="margin:8px 0 0">비활성 화살표(첫 페이지의 이전 · 마지막 페이지의 다음)는 누를 수 없어 포커스가 가지 않습니다. 줄임표는 버튼이 아니라 글자입니다.</p>';
   },
 };
 
@@ -71,21 +74,13 @@ export const Playground = {
   render: (a) => pager(a.total, Math.min(a.current, a.total)),
 };
 
-// ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-102) — 미리보기만, 코드는 위 예시 카드에. 페이지 이동이 여럿이라 이름을 따로(landmark-unique) ──
-const ddAll = (total, cur, label) => '<nav class="ui-pagination" aria-label="' + label + '">' + arrow('prev', cur === 1) +
-  Array.from({ length: total }, (_, i) => num(i + 1, cur)).join('') + arrow('next', cur === total) + '</nav>';
-const ddList = '<div style="height:56px;border:1px solid var(--color-border-base);border-radius:var(--radius-panel);display:flex;align-items:center;justify-content:center;color:var(--color-text-muted);font-size:var(--body-sm)">목록(그리드)</div>';
-const ddCol = (h) => '<div style="width:100%;display:flex;flex-direction:column;gap:12px">' + h + '</div>';
+// ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-108 21번 ①) — 미리보기만, 코드는 위 예시 카드에. 페이지 이동이 여럿이라 이름을 따로(landmark-unique) ──
 export const 사용_지침 = {
   parameters: { controls: { disable: true } },
   render: () => doDont([
-    // 근거: Pagination.mdx 구성 「줄임표 — 7페이지가 넘으면 처음 · 끝 · 현재 페이지 앞뒤만」 · 예시 「칸 수가 7개로 같아 화살표 자리가 흔들리지 않습니다」
-    { title: '7페이지가 넘으면 줄임표',
-      do: [pager(10, 5, '페이지 이동 — 지침 예시 1'), '처음 · 끝 · 현재 페이지 앞뒤만 남겨 칸 수를 7개로 유지합니다.'],
-      dont: [ddAll(10, 5, '페이지 이동 — 지침 예시 2'), '번호를 모두 늘어놓으면 페이지 수에 따라 화살표 자리가 바뀝니다.'] },
-    // 근거: Pagination.mdx 머리 설명 「목록 바로 아래 가운데에 둡니다」
-    { title: '목록 바로 아래 가운데',
-      do: [ddCol(ddList + pager(5, 1, '페이지 이동 — 지침 예시 3')), '목록 바로 아래 가운데에 둡니다.'],
-      dont: [ddCol(pager(5, 1, '페이지 이동 — 지침 예시 4') + ddList), '목록 위에 두지 않습니다.'] },
+    // 근거: TD-108 21번 ① (Carbon Pagination) · 위 「놓는 자리」 — 검색 화면 CSS(.searchLayout .table_list > .ui-pagination) 아래 16
+    { title: '목록 아래 가운데, 아래 여백 확보',
+      do: [screen(pager(5, 1, '페이지 이동 — 지침 예시 1'), 'height:200px;'), '목록 바로 아래 가운데에 두고 화면 아래와 16을 띄웁니다.'],
+      dont: [screen(pager(5, 1, '페이지 이동 — 지침 예시 2').replace('class="ui-pagination"', 'class="ui-pagination" style="margin-bottom:0"'), 'height:200px;'), '페이지 번호를 화면 바닥에 붙여 두지 않습니다.'] },
   ]),
 };

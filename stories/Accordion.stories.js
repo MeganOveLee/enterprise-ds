@@ -1,5 +1,5 @@
 // Data Display/Accordion — 문서 화면은 Accordion.mdx. 여기 스토리는 MDX 카드 안에 들어가는 예시 · 전체 상태
-// 접는 섹션 = 이전 버전 등록 창 · 상세 화면의 섹션 접기(제품 전체가 같은 토글, 10/14). DS 클래스: .seach_arm + .section-toggle + 내용(.pro_table · .table_list)
+// 접는 섹션 = 상세 화면 · 등록 창의 섹션 접기(제품 전체가 같은 토글, 10/14). DS 클래스: .seach_arm + .section-toggle + 내용(.pro_table · .table_list)
 // 예시는 눌러 볼 수 있게 토글을 이어 둔다(wire) — 제품에서는 화면 스크립트가 같은 일을 함
 import { matrix } from './_matrix.js';
 import { enablePseudo } from './_pseudo.js';
@@ -56,7 +56,7 @@ export default {
 };
 
 // ── 예시 ──
-// 상자형 — 상세 화면(.pop 밖). 머리 + 내용이 한 상자, 접으면 머리만 둥근 상자
+// 상자형 — 상세 화면(.pop 밖). 섹션 헤더 + 내용이 한 상자, 접으면 헤더만 둥근 상자
 const META = '<span class="section-meta"><b>2</b>건</span>';   // 헤더 오른쪽 글자 = .section-meta
 // 두 예시는 같은 섹션(기본 정보 · 변경 내용 펼침, 첨부 파일 접힘) — 놓이는 자리만 다름
 const BOX = () => section('기본 정보', INFO) + section('변경 내용', NOTE) + section('첨부 파일', '', { open: false, right: META });
@@ -73,7 +73,7 @@ export const 이어지는_형 = {
   render: () => wire('<div style="max-width:720px">' + POP() + '</div>'),
 };
 
-// ── 전체 상태 — 토글 하나의 모습. Hovered · Focused 는 마우스 · 키보드 상태를 정지 화면으로 ──
+// ── 전체 상태 — 토글 하나의 모습. Hovered · Focused 는 상호작용 상태를 고정해 표시(_pseudo.js) ──
 const PS = ['', 'ps-hover', 'ps-focus-visible'];
 export const 전체_상태 = {
   parameters: html(toggle('기본 정보', true) + '\n' + toggle('기본 정보', false)),
@@ -86,21 +86,26 @@ export const 전체_상태 = {
   },
 };
 
-// ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-102) — 미리보기만, 코드는 위 예시 카드에 ──
-const DINFO = '<div class="form-grid-2">' + ro('문서 번호', 'DOC-2610-0012') + ro('버전', 'A.3') + '</div>';
-// 상태와 다른 아이콘을 일부러 그린 토글(하지 않음 예시)
-const wrongHead = (title) => '<div class="seach_arm"><div class="leftbt"><button type="button" class="section-toggle" aria-expanded="false" aria-label="' + title + ' 펼치기">' + svg(MINUS) + '</button><h4>' + title + '</h4></div></div>';
-const ddWrap = (h) => '<div style="width:100%">' + h + '</div>';
+// ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-108 8번 ② ③) — 미리보기만, 코드는 위 예시 카드에 ──
+const ddWrap = (h) => '<div style="width:100%;align-self:flex-start">' + h + '</div>';   // 미리보기 위 정렬(TD-108 공통 · 간격)
+const sub = (t) => '<div class="ff-divider">' + t + '</div>';   // 섹션 안 소제목 = .form-grid-2 .ff-divider
+const CHANGE_SUB = '<div class="form-grid-2">' + sub('도면 변경') + ro('도면 번호', 'DWG-20417') + ro('개정', 'B') + sub('부품 변경') + ro('품번', 'BRK-20417') + ro('재질', '마그네슘') + '</div>';
+const CHANGE_NEST = section('도면 변경', '<div class="form-grid-2">' + ro('도면 번호', 'DWG-20417') + ro('개정', 'B') + '</div>', { h: 'h4' }) +
+  section('부품 변경', '<div class="form-grid-2">' + ro('품번', 'BRK-20417') + ro('재질', '마그네슘') + '</div>', { h: 'h4' });
+let ddf = 0;
+const reqIn = (label, ph) => { const id = 'acc-dd' + (++ddf); return '<div class="ff-field"><label class="search-label" for="' + id + '">' + label + '<span class="required" aria-hidden="true"></span></label><div class="td"><input class="input" id="' + id + '" aria-required="true" placeholder="' + ph + '"></div></div>'; };
+const REQ = () => '<div class="form-grid-2">' + reqIn('문서 명', '문서 명 입력') + reqIn('문서 분류', '문서 분류 입력') + '</div>';
+const NEED = '<span class="section-meta">필수</span>';
 export const 사용_지침 = {
   parameters: { controls: { disable: true } },
   render: () => doDont([
-    // 근거: Accordion.mdx 구성 「토글 — 펼침은 흰 네모 안 빼기, 접힘은 채운 네모 안 더하기」
-    { title: '아이콘은 지금 상태대로',
-      do: [ddWrap(section('기본 정보', DINFO) + section('첨부 파일', '', { open: false })), '펼친 섹션은 빼기, 접힌 섹션은 더하기로 표시합니다.'],
-      dont: [ddWrap(section('기본 정보', DINFO) + wrongHead('첨부 파일')), '접힌 섹션에 빼기 아이콘을 두지 않습니다.'] },
-    // 근거: Accordion.mdx 구성 「머리 오른쪽 글자 — 작은 흐린 글자, 숫자만 기본 글자 굵게」
-    { title: '머리 오른쪽은 숫자만 굵게',
-      do: [ddWrap(section('태스크', '', { open: false, right: '<span class="section-meta">전체 <b>21</b> · 지연 <b>2</b></span>' })), '안내는 흐린 작은 글자로 두고 숫자만 굵게 씁니다.'],
-      dont: [ddWrap(section('태스크', '', { open: false, right: '<span class="section-meta"><b>전체 21 · 지연 2</b></span>' })), '안내 글자까지 굵게 쓰지 않습니다.'] },
+    // 근거: TD-108 8번 ② (Carbon · Atlassian Accordion — 중첩하지 않음). 나눌 내용이 많으면 상세 창 탭으로
+    { title: '접는 섹션은 한 단계, 안쪽은 소제목',
+      do: [ddWrap(section('변경 내용', CHANGE_SUB)), '섹션 안을 더 나눌 때는 접는 섹션 대신 소제목(.ff-divider)을 둡니다. 내용이 길면 상세 창 탭으로 나눕니다.'],
+      dont: [ddWrap(section('변경 내용', CHANGE_NEST)), '접는 섹션 안에 접는 섹션을 다시 두지 않습니다.'] },
+    // 근거: TD-108 8번 ③ (필수 입력을 접힌 섹션에 숨기지 않음)
+    { title: '필수 입력이 있는 섹션은 펼친 채 시작',
+      do: [ddWrap(section('기본 정보', REQ(), { h: 'h4', right: NEED }) + section('첨부 파일', '', { open: false, h: 'h4' })), '필수 입력이 있는 섹션은 펼친 상태로 시작하고, 선택 입력만 있는 섹션을 접어 둡니다.'],
+      dont: [ddWrap(section('기본 정보', REQ(), { open: false, h: 'h4', right: NEED }) + section('첨부 파일', '', { open: false, h: 'h4' })), '필수 입력이 있는 섹션을 접힌 채로 시작하지 않습니다.'] },
   ]),
 };

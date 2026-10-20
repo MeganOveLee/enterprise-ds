@@ -12,10 +12,10 @@ import * as S from './Pagination.stories.js';
 <thead><tr><th>구분</th><th>클래스 · 속성</th><th>설명</th></tr></thead>
 <tbody>
 <tr><td><b>컨테이너</b></td><td><code>{'<nav class="ui-pagination">'}</code><span className="ds-muted">aria-label="페이지 이동"</span></td><td>번호 · 화살표를 가운데 정렬로 한 줄에 둡니다. 화면에 목록이 둘이면 이름을 다르게 붙입니다.</td></tr>
-<tr><td><b>번호 · 화살표</b></td><td><code>.ui-pagination__btn</code><span className="ds-muted">button · 높이 --size-btn</span></td><td>번호 버튼과 이전 · 다음 화살표가 같은 버튼입니다. 흰 바탕에 1px 테두리이고, 화살표 버튼은 <code>.ui-pagination__btn--nav</code>를 더해 회색 바탕입니다. 화살표는 글자가 없어 <code>aria-label</code>로 이름을 붙입니다. 모서리는 버튼 역할(<code>--radius-btn</code>)이라 브랜드를 따릅니다.</td></tr>
-<tr><td><b>현재 페이지</b></td><td><code>.is-active</code> · <code>aria-current="page"</code></td><td>채운 브랜드 버튼과 같은 색(<code>--color-bg-btn-primary</code>)에 흰 굵은 글자입니다. 스크린 리더가 「현재 페이지」으로 읽도록 속성을 함께 붙입니다.</td></tr>
+<tr><td><b>번호 · 화살표</b></td><td><code>.ui-pagination__btn</code><span className="ds-muted">button · 높이 --size-btn</span></td><td>번호 버튼과 이전 · 다음 화살표가 같은 버튼입니다. 흰 바탕에 1px 테두리이고, 번호 글자는 14입니다. 화살표 버튼은 <code>.ui-pagination__btn--nav</code>를 더해 회색 바탕의 정사각형(높이 = 너비 = <code>--size-btn</code>)이고, 아이콘은 보조 아이콘색(<code>--color-icon-interactive-secondary</code>)입니다. 화살표는 글자가 없어 <code>aria-label</code>로 이름을 붙입니다. 모서리는 버튼 역할(<code>--radius-btn</code>)이라 브랜드를 따릅니다.</td></tr>
+<tr><td><b>현재 페이지</b></td><td><code>.is-active</code> · <code>aria-current="page"</code></td><td>채운 브랜드 버튼과 같은 색(<code>--color-bg-btn-primary</code>)에 흰 굵은 글자입니다. 스크린 리더가 「현재 페이지」로 읽도록 속성을 함께 붙입니다.</td></tr>
 <tr><td><b>비활성</b></td><td><code>disabled</code><span className="ds-muted">버튼이 아닐 때 .is-disabled</span></td><td>이동할 페이지가 없는 화살표입니다(첫 페이지의 이전 · 마지막 페이지의 다음). 흐리게 표시하고 누를 수도 포커스할 수도 없습니다.</td></tr>
-<tr><td><b>간격</b></td><td><span className="ds-muted">위 8 · 아래 16</span></td><td>목록과 8, 화면 아래와 16을 둡니다(검색 화면 <code>{'.searchLayout .table_list > .ui-pagination'}</code>).</td></tr>
+<tr><td><b>간격</b></td><td><span className="ds-muted">위 8 · 아래 16 · 사이 6</span></td><td>목록과 8, 화면 아래와 16을 둡니다(검색 화면 <code>{'.searchLayout .table_list > .ui-pagination'}</code>). 화면 바닥에 붙이지 않습니다. 번호 · 화살표 사이는 6입니다.</td></tr>
 <tr><td><b>줄임표</b></td><td><code>.ui-pagination__ellipsis</code><span className="ds-muted">aria-hidden="true"</span></td><td>7페이지가 넘으면 처음 · 끝 · 현재 페이지 앞뒤만 남기고 사이를 줄입니다. 버튼이 아닌 글자입니다.</td></tr>
 </tbody>
 </table>
@@ -23,8 +23,8 @@ import * as S from './Pagination.stories.js';
 </Section>
 <Section title="예시" en="Examples">
 <Card of={S.기본} title="번호 모두 보기" en="All pages" desc="페이지가 7개 이하면 번호를 모두 보여 줍니다." />
-<Card of={S.줄임표} title="줄임표" en="Ellipsis" desc="현재 페이지가 앞 · 가운데 · 뒤에 있을 때. 처음 · 끝 · 현재 페이지 앞뒤만 남겨 칸 수를 7개로 유지합니다." />
-<Card of={S.목록_아래} title="놓는 자리" en="Placement" desc="목록 바로 아래 가운데. 검색 화면에서는 목록 상자 밖 회색 바탕 위에 둡니다." />
+<Card of={S.줄임표} title="줄임표" en="Ellipsis" desc="현재 페이지가 앞 · 가운데 · 뒤에 있을 때. 처음 · 끝 · 현재 페이지 앞뒤만 남겨 번호 · 줄임표를 7개로 유지합니다." />
+<Card of={S.목록_아래} title="놓는 자리" en="Placement" desc="목록 바로 아래 가운데. 검색 화면 구조(.searchLayout .table_list)에서 목록 상자 밖에 두고, 목록과 8 · 화면 아래와 16을 띄웁니다. 회색 틀은 화면 영역입니다." />
 </Section>
 <Section title="언제 쓰고 쓰지 말지" en="Do · Don't">
 <Card of={S.사용_지침} code={false} />
