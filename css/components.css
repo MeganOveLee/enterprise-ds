@@ -4193,3 +4193,81 @@ body.dark-mode .empty-illo { --empty-illo-shadow: rgb(0 0 0 / .2); }
 .compare-legend__swatch--diff,
 .compare-legend__swatch--similar,
 .compare-legend__swatch--unassigned { background: var(--color-bg-danger-subtle); border-color: var(--color-border-danger); }
+
+/* ═════════════════════════════════════════════════════════════════════════
+ * 확인 창 — Modal .modal (TD-108, DS-ADR-028 예외)
+ *   같은 페이지 위에 떠서, 계속하기 전에 선택을 받는 창. 첫 쓰임 = 저장하지 않고 나가기([저장 안 함] [취소] [저장])
+ *   등록 · 상세처럼 화면 한 장이 필요한 내용은 새 창(.pop — Popup Window)
+ *   모양 = Figma 🗣️ Feedback Components 「Modal」(4060:886) — 덮개 + 창(테두리 1px border/subtle · shadow/modal),
+ *   헤더(제목 + 닫기) · 본문 · 푸터(버튼). 안쪽 위아래 32 · 좌우 24, 영역 사이 16, 푸터 위 24, 버튼 사이 8(.button_group 과 같음)
+ *   열고 닫기 · 포커스 가두기 · Esc = js/modal.js
+ *   <div class="modal" id="unsaved-modal" hidden>
+ *     <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="unsaved-modal-title" aria-describedby="unsaved-modal-desc">
+ *       <div class="modal__header">
+ *         <h2 class="modal__title" id="unsaved-modal-title">저장하지 않은 내용이 있습니다</h2>
+ *         <button type="button" class="btn btn--secondary btn--transparent btn--icon" data-modal-close="cancel" aria-label="닫기"><svg …/></button>
+ *       </div>
+ *       <div class="modal__body"><p id="unsaved-modal-desc">저장하지 않고 나가면 바뀐 내용이 사라집니다.</p></div>
+ *       <div class="modal__footer">
+ *         <button type="button" class="btn btn--destructive btn--outlined" data-modal-close="discard">저장 안 함</button>
+ *         <button type="button" class="btn btn--secondary btn--transparent" data-modal-close="cancel" data-modal-initial>취소</button>
+ *         <button type="button" class="btn btn--primary btn--filled" data-modal-close="save">저장</button>
+ *       </div>
+ *     </div>
+ *   </div>
+ * ═════════════════════════════════════════════════════════════════════════ */
+.modal {
+    position: fixed;
+    inset: 0;
+    z-index: 900;   /* GNB 메뉴(100) · 창 제목 줄(20) 위, 창 안에서 여는 달력 · 선택 목록(1000) · 토스트(1100) · 툴팁(1200) 아래 */
+    display: flex;
+    padding: var(--spacing-16);
+    box-sizing: border-box;
+    overflow-y: auto;   /* 창이 화면보다 길면 덮개 안에서 스크롤 */
+    overscroll-behavior: contain;
+    background: var(--color-bg-overlay);
+}
+.modal[hidden] { display: none; }
+.modal__dialog {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-16);
+    box-sizing: border-box;
+    width: 480px;   /* 확인 창 = 문장 한두 줄 + 버튼 3개. Figma Modal 664 는 슬롯이 든 일반 창 폭 */
+    max-width: 100%;
+    margin: auto;   /* 가운데. align-items: center 와 달리 창이 화면보다 길어도 위가 잘리지 않음 */
+    padding: var(--spacing-32) var(--spacing-24);
+    background: var(--color-bg-base);
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--radius-popover);   /* 떠 있는 층 역할 — 브랜드가 바꿈(Default 4 · Fashion 8 · Precision 0, DS-ADR-020) */
+    box-shadow: var(--shadow-modal);
+    color: var(--color-text-base);
+}
+.modal__dialog:focus { outline: none; }   /* 창 자체(tabindex="-1", modal.js 가 붙임)는 창 안 빈 곳을 눌렀을 때 · 버튼이 없을 때만 포커스를 받음 — 표시는 하지 않음 */
+.modal__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-16);
+}
+.modal__title {
+    margin: 0;
+    font-size: var(--heading-md);   /* 20 SemiBold = Figma Heading/md. Figma Modal 제목(Heading/lg 24)은 상세 화면 제목 단계라 짧은 확인 창에는 큼 — 페이지 제목(20)과 같은 단계 */
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--line-height-tight);
+    color: var(--color-text-base);
+}
+.modal__header .btn--icon { flex-shrink: 0; }   /* 닫기 = .btn--secondary.btn--transparent.btn--icon (DS-ADR-009 4-1 「닫기」) */
+.modal__body {
+    font-size: var(--body-lg);   /* 16 = Figma Description(Body/lg/regular) */
+    line-height: var(--line-height-base);
+    color: var(--color-text-muted);
+}
+.modal__body > p { margin: 0; }
+.modal__footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;   /* Figma Button stack Type=End — 주 동작이 맨 오른쪽 */
+    gap: var(--spacing-8);
+    padding-top: var(--spacing-24);   /* 본문 ↔ 버튼 = 영역 사이 16 + 24 (Figma Footer). Figma Footer 좌우 · 아래 4(포커스 링 자리)는 CSS가 자르지 않아 0 — 닫기 버튼과 오른쪽 끝이 맞음 */
+}

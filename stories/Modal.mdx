@@ -1,0 +1,64 @@
+import { Meta, Unstyled, Controls } from '@storybook/addon-docs/blocks';
+import { PageHead, Section, Card } from './_blocks.js';
+import * as S from './Modal.stories.js';
+
+<Meta of={S} />
+
+<Unstyled>
+<div className="ds-page">
+<PageHead eyebrow="Overlay" title="Modal" lead="같은 페이지 위에 떠서, 계속하기 전에 사용자의 선택을 받는 확인 창입니다. 저장하지 않은 내용이 있는 창을 닫을 때처럼 확인이 필요한 순간에만 엽니다." />
+<Section title="구성" en="Spec">
+<table className="ds-table ds-props">
+<thead><tr><th>구분</th><th>클래스 · 속성</th><th>설명</th></tr></thead>
+<tbody>
+<tr><td><b>덮개</b></td><td><code>.modal</code> · <code>hidden</code></td><td>화면 전체를 반투명 층(<code>--color-bg-overlay</code>)으로 덮고 가운데에 창을 둡니다. 닫힌 동안은 <code>hidden</code>입니다. 덮개를 눌러도 닫히지 않습니다(선택을 받는 창). 마크업은 <code>{'<body>'}</code> 바로 아래에 둡니다.</td></tr>
+<tr><td><b>창</b></td><td><code>.modal__dialog</code><span className="ds-muted">role="dialog" · aria-modal="true"</span></td><td>폭 480, 안쪽 여백 위아래 32 · 좌우 24, 헤더 · 본문 · 푸터 사이 16입니다. 스크린 리더는 창 밖을 읽지 않습니다. 테두리 1px <code>--color-border-subtle</code> · 그림자 <code>--shadow-modal</code> · 모서리 <code>--radius-popover</code>(브랜드가 정함)입니다. 창이 화면보다 길면 덮개 안에서 스크롤합니다.</td></tr>
+<tr><td><b>헤더</b></td><td><code>.modal__header</code> › <code>.modal__title</code> · 닫기<span className="ds-muted">제목 = h2</span></td><td>제목은 20 SemiBold(<code>--heading-md</code>)로, 상태를 짧게 적거나 질문으로 씁니다. 창의 <code>aria-labelledby</code>가 제목 id를 가리킵니다.</td></tr>
+<tr><td><b>닫기</b></td><td><code>.btn--icon</code> · <code>aria-label="닫기"</code><span className="ds-muted">data-modal-close="cancel"</span></td><td>아이콘 버튼 <code>.btn.btn--secondary.btn--transparent.btn--icon</code>(아이콘 16)입니다. 누르면 [취소]와 같이 창만 닫습니다. 별도 클래스 없이 Button을 그대로 씁니다.</td></tr>
+<tr><td><b>본문</b></td><td><code>.modal__body</code> › <code>p</code></td><td>16 · 보조 글자색(<code>--color-text-muted</code>)으로 한두 문장을 씁니다. 창의 <code>aria-describedby</code>가 본문 id를 가리켜, 스크린 리더가 제목에 이어 읽습니다.</td></tr>
+<tr><td><b>푸터</b></td><td><code>.modal__footer</code></td><td>본문 아래 24를 띄우고 버튼을 오른쪽 끝에 붙입니다. 버튼 사이 8(<code>.button_group</code>과 같음)입니다.</td></tr>
+<tr><td><b>버튼</b></td><td><span className="ds-muted">[저장 안 함] · [취소] · [저장]</span></td><td>저장하지 않고 나가기 확인 창의 버튼입니다. [저장 안 함] = <code>.btn--destructive.btn--outlined</code>(바뀐 내용이 사라짐), [취소] = <code>.btn--secondary.btn--transparent</code>, [저장] = <code>.btn--primary.btn--filled</code>로, <a className="ds-link" href="./?path=/docs/form-button--docs" target="_top">Button</a> 「업무 동작별 버튼」과 같습니다.</td></tr>
+<tr><td><b>스크립트</b></td><td><code>js/modal.js</code><span className="ds-muted">페이지에 한 번</span><span className="ds-muted">data-modal-open · data-modal-close · data-modal-initial</span></td><td>여는 버튼에 <code>data-modal-open="창 id"</code>를 두거나 화면 스크립트에서 <code>modalOpen(창 id, 연 버튼)</code>을 부릅니다. <code>data-modal-close="값"</code> 버튼을 누르면 창을 닫고 <code>modal:close</code> 이벤트(<code>detail.action</code> = discard · cancel · save)를 보냅니다.</td></tr>
+<tr><td><b>여는 때</b></td><td><span className="ds-muted">화면 스크립트</span></td><td>바뀐 내용이 있을 때만, 바뀐 양과 관계없이 엽니다. 바뀐 내용이 없으면 확인 없이 닫습니다. 브라우저 창 닫기 · 새로고침은 브라우저 기본 경고(<code>beforeunload</code>)가 맡습니다.</td></tr>
+</tbody>
+</table>
+<p className="ds-sec__desc ds-after">Figma UI Kit의 Modal과 짝입니다. 등록 · 상세처럼 화면 한 장이 필요한 내용은 새 창 <a className="ds-link" href="./?path=/docs/overlay-popup-window--docs" target="_top">Popup Window</a>를 씁니다.</p>
+</Section>
+<Section title="버튼 배치" en="Button order" desc="[저장 안 함] [취소] [저장] 순서로 푸터 오른쪽 끝에 둡니다.">
+<table className="ds-table">
+<thead><tr><th>기준</th><th>내용</th></tr></thead>
+<tbody>
+<tr><td><b>주 동작은 맨 오른쪽</b></td><td>Figma Modal 푸터(Button stack Type=End)와 DS의 버튼 묶음은 주 동작(primary)을 오른쪽 끝에 둡니다. Carbon · Polaris · Cloudscape의 모달도 주 동작을 맨 오른쪽에 둡니다.</td></tr>
+<tr><td><b>위험한 동작은 주 동작과 떨어뜨림</b></td><td>[저장 안 함]과 [저장]은 이름이 비슷하고 결과는 반대입니다. 사이에 [취소]를 두어 잘못 누르기 쉬운 두 버튼이 붙지 않게 합니다. 색으로도 구분합니다(위험 테두리 · 채운 브랜드).</td></tr>
+<tr><td><b>그만두는 동작은 가운데</b></td><td>[취소]는 버튼 모양이 가장 약한 secondary transparent입니다. 열 때 포커스가 [취소]에 있어 Enter를 바로 눌러도 내용이 사라지거나 저장되지 않습니다.</td></tr>
+</tbody>
+</table>
+</Section>
+<Section title="키보드" en="Keyboard" desc="WAI-ARIA APG의 Dialog (Modal) 패턴을 따릅니다.">
+<table className="ds-table ds-props">
+<thead><tr><th>키 · 때</th><th>동작</th></tr></thead>
+<tbody>
+<tr><td><span className="ds-muted">열 때</span></td><td>포커스가 안전한 버튼 [취소](<code>data-modal-initial</code>)로 옮겨 갑니다.</td></tr>
+<tr><td><code>Tab</code> · <code>Shift</code> + <code>Tab</code></td><td>창 안의 닫기 → [저장 안 함] → [취소] → [저장]을 차례로 돌고, 창 밖으로 나가지 않습니다.</td></tr>
+<tr><td><code>Esc</code></td><td>[취소]와 같습니다. 창만 닫고 연 화면으로 돌아갑니다.</td></tr>
+<tr><td><span className="ds-muted">닫을 때</span></td><td>포커스가 창을 연 버튼으로 돌아갑니다.</td></tr>
+</tbody>
+</table>
+</Section>
+<Section title="예시" en="Examples" desc="제품의 창 한 장을 정해진 크기의 프레임에 그렸습니다. 덮개는 프레임 안만 덮습니다.">
+<Card of={S.저장하지_않고_나가기} title="저장하지 않고 나가기" en="Unsaved changes" desc="바뀐 내용이 있는 등록 창에서 닫기를 누르면 엽니다. 열린 직후라 포커스가 [취소]에 있습니다." />
+<Card of={S.직접_열어_보기} title="직접 열어 보기" en="Interactive" desc="등록 창 오른쪽 위 닫기(✕)를 눌러 엽니다. 문서 명 · 설명을 모두 지우고 닫으면 확인 창 없이 닫힙니다." />
+</Section>
+<Section title="언제 쓰고 쓰지 말지" en="Do · Don't">
+<Card of={S.사용_지침} code={false} />
+</Section>
+<Section title="전체 상태" en="States" desc="창 안에서 상태가 바뀌는 것은 버튼입니다. 모양 · 상태는 Button과 같습니다. Hovered · Pressed · Focused는 상호작용 상태를 고정해 표시한 것입니다.">
+<Card of={S.전체_상태} title="닫기 · 푸터 버튼" desc="행 = 상태, 열 = 버튼" />
+</Section>
+<Section title="Playground" desc="아래 표에서 값을 바꾸면 미리보기와 「코드 보기」가 함께 바뀝니다.">
+<Card of={S.Playground}>
+<Controls of={S.Playground} />
+</Card>
+</Section>
+</div>
+</Unstyled>

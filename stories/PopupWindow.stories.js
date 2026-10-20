@@ -96,8 +96,8 @@ export const 등록_창 = {
 // ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-108 23번 ①) — 미리보기만. 작은 틀이라 .pop 최소 폭(600)만 풀어 둠 ──
 // 근거: Primer Saving 패턴(저장 버튼은 한 곳) · 구성 「제목 줄」(sticky — 스크롤해도 창 위에 남음)
 const mini = (inner) =>
-  '<div style="width:100%;overflow:hidden;border:1px solid var(--color-border-base);border-radius:var(--radius-card)">' +
-  '<div class="pop" style="height:auto;min-width:0">' + inner + '</div></div>';
+  '<div style="width:100%;align-self:flex-start;overflow:hidden;border:1px solid var(--color-border-base);border-radius:var(--radius-card)">' +
+  '<div class="pop" style="height:auto;min-width:0">' + inner + '</div></div>';   // 위 정렬 — 두 칸 높이가 달라도 창 위치가 맞게
 const SAVE_BTNS = () => btn('임시 저장', 'btn--secondary btn--outlined') + btn('등록', 'btn--primary btn--filled');
 const ddForm = (bottom = '') => {
   const u = 'pw' + (++uid);
