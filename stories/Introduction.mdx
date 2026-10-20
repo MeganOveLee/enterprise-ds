@@ -5,7 +5,7 @@ import notionIcon from '../assets/links/notion.svg';
 
 <Meta title="소개" />
 
-{/* 소개 = 이 디자인 시스템이 무엇인가 — 무엇 · 누가 → 바로 가기 → 구성(층) → 적용 환경 · 원칙 (TD-50).
+{/* 소개 = 이 디자인 시스템이 무엇인가 — 무엇 · 누가 → 목표 · 결과 · 내 기여 → 어려웠던 점(TD-117) → 바로 가기 → 구성(층) → 적용 환경 · 원칙 (TD-50).
     스토리북 보는 법(미리보기 · 도구 막대) · 설치 · 참고 자료는 「시작하기」 한 곳에만 — 같은 설명을 두 번 쓰지 않는다 */}
 
 <Unstyled>
@@ -13,6 +13,27 @@ import notionIcon from '../assets/links/notion.svg';
 <PageHead eyebrow="Design System v1.0" title="Enterprise Design System" lead="엔터프라이즈 백오피스 화면을 위한 디자인 시스템입니다.">
 <ul className="ds-meta"><li>프레임워크 비의존</li><li>멀티 브랜드</li><li>라이트 · 다크 모드</li><li>WCAG 2.1 AA</li></ul>
 </PageHead>
+<section className="ds-brief" aria-label="목표 · 결과 · 내 기여">
+<div className="ds-brief__item">
+<p className="ds-brief__label">목표<span>Goal</span></p>
+<p>같은 업무 화면을 여러 브랜드에 공급하는 PLM 웹 솔루션에서, 브랜드마다 화면을 다시 만들지 않고 하나의 컴포넌트 · 토큰 체계로 색 · 모서리 · 높이와 라이트 · 다크 모드를 바꿔 적용합니다. 이전 버전 화면의 마크업은 그대로 두고 클래스와 토큰으로 입힙니다.</p>
+</div>
+<div className="ds-brief__item">
+<p className="ds-brief__label">결과<span>Outcome</span></p>
+<p>기본 요소 → 컴포넌트 → 블록 → 화면이 한 체계로 이어지고, 브랜드와 화면 모드는 같은 마크업 그대로 맨 위 도구 막대에서 전환됩니다. Figma 변수와 CSS 토큰은 같은 이름 · 같은 값이며, 결정마다 근거를 남겼습니다. <a className="ds-link" href="https://app.notion.com/p/3eda8196682d8126967fcc86f796fcb4" target="_blank" rel="noreferrer">결정 기록 ↗</a></p>
+</div>
+<div className="ds-brief__item">
+<p className="ds-brief__label">내 기여<span>My role</span></p>
+<p>기준 · 규칙 · 결정은 디자이너가 정하고, 코드는 AI와 나눠 씁니다. 적용 · 확인 · 커밋은 디자이너가 합니다. 토큰 구조 · Figma 컴포넌트 · 결정 기록이 디자이너의 몫이고, 단계별 역할은 아래 「운영 방식」에 있습니다.</p>
+</div>
+</section>
+<Section title="어려웠던 점" en="Challenges">
+<dl className="ds-dl">
+<div><dt>레거시 위에 얹기</dt><dd>마크업을 바꿀 수 없는 기존 화면이 많아, 태그 기본값부터 화면 전체를 대신하는 CSS로 입히고 기존 화면은 단계를 나눠 옮깁니다. <a className="ds-link" href="https://app.notion.com/p/3fea8196682d81a68e89e1b3cbfb8194" target="_blank" rel="noreferrer">DS-ADR-032 ↗</a></dd></div>
+<div><dt>일관성과 유연성</dt><dd>화면마다 생기는 예외를 모두 컴포넌트로 만들지 않고, 만든 것은 묶고 새로 늘리지 않습니다. 디자인 파일과 코드가 다를 때는 다르게 둔 이유가 기록돼 있는지로 정합니다. <a className="ds-link" href="https://app.notion.com/p/3fca8196682d81fa89aaf20f87e86732" target="_blank" rel="noreferrer">DS-ADR-028 ↗</a> · <a className="ds-link" href="https://app.notion.com/p/3ffa8196682d81faae5cdf9867c03238" target="_blank" rel="noreferrer">038 ↗</a></dd></div>
+<div><dt>변화 관리</dt><dd>개발자의 화면 코드는 건드리지 않습니다. CSS로 바꿀 수 없는 선택 목록 같은 부분만 스크립트를 불러오면 같은 모양이 되게 하고, 서버와 묶인 스크립트는 넣지 않습니다. <a className="ds-link" href="https://app.notion.com/p/3fea8196682d8130928dc7e0c7dcad6e" target="_blank" rel="noreferrer">DS-ADR-033 ↗</a></dd></div>
+</dl>
+</Section>
 <nav className="ds-doors" aria-label="바로 가기">
 <a className="ds-door" href="./?path=/docs/screens-plm-화면--docs" target="_top"><span className="ds-hero__dot" aria-hidden="true"></span><b>화면 보기</b><span>디자인 시스템의 클래스와 토큰으로 구성한 업무 화면 예시</span><em>보기 →</em></a>
 <a className="ds-door" href="https://app.notion.com/p/3eda8196682d8126967fcc86f796fcb4" target="_blank" rel="noreferrer"><img className="ds-res-icon--light" src={notionIcon} alt="" width="32" height="32" /><b>결정 기록 보기</b><span>디자인 시스템을 기획 · 설계하며 내린 결정과 그 근거</span><em>열기 ↗</em></a>

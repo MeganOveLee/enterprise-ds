@@ -181,6 +181,13 @@
   .ds-hero__note { margin: 10px 0 0; font-size: 12px; color: #57606a; }
   @media (max-width: 720px) { .ds-hero__mains, .ds-hero__subs { grid-template-columns: 1fr; } .ds-hero__go { display: none; } }
   /* 소개 — 문 세 개 · 결정 과정 카드 · 적용 환경 / 원칙 · 운영 흐름 (TD-50 두 페이지 안) */
+  /* 소개 첫머리 목표 · 결과 · 내 기여 세 칸 (TD-117) — 바로 가기보다 먼저 읽히게 위 선 강조 */
+  .ds-brief { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 24px 0 8px; }
+  .ds-brief__item { padding: 16px 18px; border: 1px solid #d0d7de; border-top: 3px solid #0969da; border-radius: 6px; background: #fff; }
+  .ds-brief__item p { margin: 0; font-size: 14px; line-height: 1.7; color: #1f2328; }
+  .ds-page .ds-brief__item .ds-brief__label { margin: 0 0 8px; font-size: 16px; font-weight: 700; color: #111418; }
+  .ds-brief__label span { margin-left: 6px; font-size: 12px; font-weight: 500; color: #656d76; }
+  @media (max-width: 900px) { .ds-brief { grid-template-columns: minmax(0, 1fr); } }
   .ds-doors { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 24px 0 8px; }
   .ds-page a.ds-door { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; padding: 18px 20px; border-radius: 10px; background: #fff; color: #1f2328; text-decoration: none; box-shadow: inset 0 0 0 1px #d0d7de; }
   .ds-page a.ds-door:hover { background: #f6f8fa; box-shadow: inset 0 0 0 1px #0550ae; }
