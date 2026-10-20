@@ -2064,6 +2064,8 @@ body.dark-mode .resumable:not(.center) .fileList .file-item { background: var(--
 .grid-table tbody tr:hover td { background: var(--color-bg-grid-row-hover); }
 .grid-table tbody :is(tr.is-selected, tr[aria-selected="true"]) td { background: var(--color-bg-grid-row-selected); }
 .grid-table .checkbox { margin: 0; gap: 0; vertical-align: middle; }   /* 칸 가운데 체크만 — 글자 없는 체크박스 */
+.grid-table td .btn { height: min(var(--size-btn), 28px); }   /* 셀 안 버튼은 행 높이 30(DS-ADR-030) 안에 — Precision 버튼 32가 행을 33으로 늘리던 것 */
+.grid-table td .btn--icon { width: min(var(--size-btn), 28px); }
 .grid-table td > svg { vertical-align: middle; color: var(--color-icon-muted); }   /* 칸 안 아이콘(첨부 있음 등) — 글줄 가운데 · 흐린 아이콘색 (TD-75, 구 Screens .scr-file) */
 /* 바깥 틀 안에서 목록이 길면 머리는 위에 붙어 있음(그리드 라이브러리와 같게) */
 .table_list .list .grid-table th { position: sticky; top: 0; z-index: 1; }
