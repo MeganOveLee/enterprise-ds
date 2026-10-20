@@ -185,8 +185,14 @@
   .ds-hero__note { margin: 10px 0 0; font-size: 12px; color: #57606a; }
   @media (max-width: 720px) { .ds-hero__mains, .ds-hero__subs { grid-template-columns: 1fr; } .ds-hero__go { display: none; } }
   /* 소개 — 문 세 개 · 결정 과정 카드 · 적용 환경 / 원칙 · 운영 흐름 (TD-50 두 페이지 안) */
-  /* 소개 첫머리 키워드 (TD-117) — 다른 문서와 같은 밝은 톤, 한 줄 네 칸. 문서 화면 색이라 토큰이 아닌 고정 값 */
-  .ds-keys { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 20px 0 8px; padding: 0; list-style: none; }
+  /* 소개 첫머리 (TD-117) — 목표 · 결과 · 내 기여 이름표 + 결과 = 키워드 한 줄 네 칸. 다른 문서와 같은 밝은 톤, 문서 화면 색이라 토큰이 아닌 고정 값 */
+  .ds-page .ds-brief { display: grid; gap: 16px; margin: 24px 0 8px; padding: 0 0 24px; border-bottom: 1px solid #d8dee4; }
+  .ds-brief__row { display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: 16px; align-items: start; }
+  .ds-page .ds-brief dt { margin: 0; padding-top: 2px; font-size: 13px; font-weight: 700; color: #57606a; }
+  .ds-page .ds-brief dd { margin: 0; }
+  .ds-page .ds-brief dd > p { margin: 0; font-size: 14px; line-height: 1.7; color: #1f2328; }
+  .ds-page .ds-brief .ds-brief__goal { font-size: 16px; font-weight: 600; line-height: 1.6; }
+  .ds-keys { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 0; padding: 0; list-style: none; }
   .ds-keys li { display: flex; flex-direction: column; gap: 4px; padding: 14px 16px 12px; border: 1px solid #d0d7de; border-radius: 8px; background: #fff; }
   .ds-keys li b { font-size: 15px; line-height: 1.4; color: #1f2328; }
   .ds-keys__en { font-size: 11px; color: #57606a; }
@@ -194,7 +200,7 @@
   .ds-page a.ds-keys__link { align-self: flex-start; margin-top: 4px; font-size: 12px; font-weight: 600; color: #0550ae; text-decoration: none; }
   .ds-page a.ds-keys__link:hover { text-decoration: underline; }
   @media (max-width: 1000px) { .ds-keys { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-  @media (max-width: 720px) { .ds-keys { grid-template-columns: minmax(0, 1fr); } }
+  @media (max-width: 720px) { .ds-keys { grid-template-columns: minmax(0, 1fr); } .ds-brief__row { grid-template-columns: minmax(0, 1fr); gap: 6px; } }
   .ds-doors { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 24px 0 8px; }
   .ds-page a.ds-door { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; padding: 18px 20px; border-radius: 10px; background: #fff; color: #1f2328; text-decoration: none; box-shadow: inset 0 0 0 1px #d0d7de; }
   .ds-page a.ds-door:hover { background: #f6f8fa; box-shadow: inset 0 0 0 1px #0550ae; }

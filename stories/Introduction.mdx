@@ -5,21 +5,31 @@ import notionIcon from '../assets/links/notion.svg';
 
 <Meta title="소개" />
 
-{/* 소개 = 이 디자인 시스템이 무엇인가 — 한 줄 소개 · 키워드 네 장 → 어려웠던 점(TD-117) → 바로 가기 → 구성(층) → 적용 환경 → 운영 방식 (TD-50).
+{/* 소개 = 이 디자인 시스템이 무엇인가 — 목표 · 결과(키워드 네 칸) · 내 기여 → 어려웠던 점(TD-117) → 바로 가기 → 구성(층) → 적용 환경 → 운영 방식 (TD-50).
     스토리북 보는 법(미리보기 · 도구 막대) · 설치 · 참고 자료는 「시작하기」 한 곳에만 — 같은 설명을 두 번 쓰지 않는다 */}
 
 <Unstyled>
 <div className="ds-page">
-<PageHead eyebrow="Design System v1.0" title="Enterprise Design System" lead="레거시 PLM 화면 위에, 개발 코드를 건드리지 않고 얹는 멀티 브랜드 디자인 시스템입니다.">
+<PageHead eyebrow="Design System v1.0" title="Enterprise Design System" lead="엔터프라이즈 PLM 웹 화면을 위한 멀티 브랜드 디자인 시스템입니다.">
 <ul className="ds-meta"><li>PLM 웹 솔루션</li><li>서버 렌더링(JSP)</li><li>프레임워크 비의존</li><li>Figma · Storybook</li></ul>
 </PageHead>
-{/* 첫머리 키워드 (TD-117) — 다른 문서와 같은 밝은 톤으로 한 줄. 키워드 네 개와 차례는 결정 기록 근거가 있는 것 */}
-<ul className="ds-keys" aria-label="핵심 키워드">
-<li><b>레거시 위에 얹기</b><span className="ds-keys__en">Non-invasive</span><p>마크업 · 서버 코드는 그대로 두고 CSS 토큰과 클래스만 얹어 이전 버전 화면을 바꿉니다.</p><a className="ds-keys__link" href="https://app.notion.com/p/3fea8196682d81a68e89e1b3cbfb8194" target="_blank" rel="noreferrer">DS-ADR-032 ↗</a></li>
-<li><b>멀티 브랜드</b><span className="ds-keys__en">Multi-brand</span><p>컴포넌트는 한 벌이고, 브랜드 파일 하나가 색 · 모서리 · 높이 · 그림 자산을 바꿉니다.</p><a className="ds-keys__link" href="https://app.notion.com/p/3f8a8196682d8140b3e6fa865faa6fb8" target="_blank" rel="noreferrer">DS-ADR-020 ↗</a></li>
-<li><b>Figma = CSS 한 기준</b><span className="ds-keys__en">Single source</span><p>Figma 변수와 CSS 토큰이 같은 이름 · 같은 값이고, 다르게 둔 곳은 이유를 결정 기록에 남깁니다.</p><a className="ds-keys__link" href="https://app.notion.com/p/3ffa8196682d81faae5cdf9867c03238" target="_blank" rel="noreferrer">DS-ADR-038 ↗</a></li>
-<li><b>계산으로 지키는 접근성</b><span className="ds-keys__en">Measured a11y</span><p>WCAG 2.1 AA를 눈대중이 아니라 대비 계산과 자동 검사로 브랜드 × 모드마다 확인합니다.</p><a className="ds-keys__link" href="https://app.notion.com/p/3f1a8196682d813e88aac97cf15d7267" target="_blank" rel="noreferrer">DS-ADR-013 ↗</a></li>
+{/* 첫머리 (TD-117) — 목표 · 결과 · 내 기여를 이름표로 나눈다. 결과 = 키워드 네 칸(근거 결정 기록 링크). 다른 문서와 같은 밝은 톤.
+    역할 분담 문장은 규칙 (현행) 4장 표현 — 「직접 수정 · 자체 구현」 같은 혼자 쓴 것으로 읽히는 말은 쓰지 않는다 */}
+<dl className="ds-brief" aria-label="목표 · 결과 · 내 기여">
+<div className="ds-brief__row"><dt>목표</dt><dd><p className="ds-brief__goal">여러 브랜드에 공급하는 레거시 PLM 화면을, 개발 코드를 건드리지 않고 컴포넌트 · 토큰 한 벌로 브랜드마다 바꿔 입힙니다.</p></dd></div>
+<div className="ds-brief__row">
+<dt>결과</dt>
+<dd>
+<ul className="ds-keys" aria-label="결과 — 핵심 키워드">
+<li><b>레거시 위에 얹기</b><span className="ds-keys__en">Non-invasive</span><p>마크업 · 서버 코드는 그대로이고, CSS 토큰과 클래스만으로 이전 버전 화면이 바뀝니다.</p><a className="ds-keys__link" href="https://app.notion.com/p/3fea8196682d81a68e89e1b3cbfb8194" target="_blank" rel="noreferrer">DS-ADR-032 ↗</a></li>
+<li><b>멀티 브랜드</b><span className="ds-keys__en">Multi-brand</span><p>모든 브랜드가 컴포넌트 한 벌을 같이 쓰고, 브랜드 파일 하나만 바꾸면 색 · 모서리 · 높이 · 그림 자산이 바뀝니다.</p><a className="ds-keys__link" href="https://app.notion.com/p/3f8a8196682d8140b3e6fa865faa6fb8" target="_blank" rel="noreferrer">DS-ADR-020 ↗</a></li>
+<li><b>Figma = CSS 한 기준</b><span className="ds-keys__en">Single source</span><p>Figma 변수와 CSS 토큰이 같은 이름 · 같은 값이고, 다르게 둔 곳은 이유가 결정 기록에 있습니다.</p><a className="ds-keys__link" href="https://app.notion.com/p/3ffa8196682d81faae5cdf9867c03238" target="_blank" rel="noreferrer">DS-ADR-038 ↗</a></li>
+<li><b>계산으로 지키는 접근성</b><span className="ds-keys__en">Measured a11y</span><p>WCAG 2.1 AA를 눈대중이 아니라 대비 계산과 자동 검사로, 모든 브랜드 × 라이트 · 다크에서 확인합니다.</p><a className="ds-keys__link" href="https://app.notion.com/p/3f1a8196682d813e88aac97cf15d7267" target="_blank" rel="noreferrer">DS-ADR-013 ↗</a></li>
 </ul>
+</dd>
+</div>
+<div className="ds-brief__row"><dt>내 기여</dt><dd><p>토큰 구조 설계 · Figma 컴포넌트 디자인 · 노션 결정 기록 작성은 디자이너가 하고, 코드는 AI와 나눠 씁니다. 적용 · 확인 · 커밋도 디자이너가 합니다.</p></dd></div>
+</dl>
 <Section title="어려웠던 점" en="Challenges">
 <dl className="ds-dl">
 <div><dt>레거시 위에 얹기</dt><dd>마크업을 바꿀 수 없는 기존 화면이 많아, 태그 기본값부터 화면 전체를 대신하는 CSS로 입히고 기존 화면은 단계를 나눠 옮깁니다. <a className="ds-link" href="https://app.notion.com/p/3fea8196682d81a68e89e1b3cbfb8194" target="_blank" rel="noreferrer">DS-ADR-032 ↗</a></dd></div>
@@ -72,7 +82,7 @@ import notionIcon from '../assets/links/notion.svg';
 <div><dt>기술</dt><dd>프레임워크 없이 CSS 토큰과 클래스로 구현해 JSP 등 서버 렌더링 화면에도 그대로 적용할 수 있습니다. 적용 방법은 <a className="ds-link" href="./?path=/docs/시작하기--docs" target="_top">시작하기</a>에 있습니다.</dd></div>
 </dl>
 </Section>
-<Section title="운영 방식" en="How we work" desc="단계마다 디자이너와 AI가 맡은 일입니다. 반복 작업과 검사는 AI가, 판단과 최종 확인은 디자이너가 맡습니다.">
+<Section title="운영 방식" en="How we work" desc="단계별로 디자이너와 AI의 역할을 나눴습니다. 반복 작업과 검사는 AI에게 맡기고, 판단과 최종 확인은 디자이너가 합니다.">
 <div className="ds-tl-wrap"><div className="ds-tl" aria-label="운영 방식 7단계"><div className="ds-tl__start">START →</div><div className="ds-tl__head"><div className="ds-tl__no-circle">1</div><div className="ds-tl__num">01</div><div className="ds-tl__title">사용자 분석</div></div><div className="ds-tl__head"><div className="ds-tl__no-circle">2</div><div className="ds-tl__num">02</div><div className="ds-tl__title">기준 수립</div></div><div className="ds-tl__head"><div className="ds-tl__no-circle">3</div><div className="ds-tl__num">03</div><div className="ds-tl__title">파운데이션</div></div><div className="ds-tl__head"><div className="ds-tl__no-circle">4</div><div className="ds-tl__num">04</div><div className="ds-tl__title">UI Kit · 화면 목업</div></div><div className="ds-tl__head"><div className="ds-tl__no-circle">5</div><div className="ds-tl__num">05</div><div className="ds-tl__title">퍼블리싱</div></div><div className="ds-tl__head"><div className="ds-tl__no-circle">6</div><div className="ds-tl__num">06</div><div className="ds-tl__title">접근성 · 검증</div></div><div className="ds-tl__head"><div className="ds-tl__no-circle">7</div><div className="ds-tl__num">07</div><div className="ds-tl__title">문서화 · 기록</div></div><div className="ds-tl__lg">디자이너<span>방향 · 기획 · 적용 · 확인</span></div><div className="ds-tl__card ds-tl__card--human">레퍼런스 조사, 사용자 인터뷰, 요청 기록 정리</div><div className="ds-tl__card ds-tl__card--human">디자인 원칙 확정</div><div className="ds-tl__card ds-tl__card--human">토큰 구조 · 명명 규칙 결정</div><div className="ds-tl__card ds-tl__card--human">Figma 컴포넌트 제작, 상태 정의, 화면 흐름 설계</div><div className="ds-tl__card ds-tl__card--human">코드 적용, 화면 검수</div><div className="ds-tl__card ds-tl__card--human">위반 판단, 예외 결정</div><div className="ds-tl__card ds-tl__card--human">TD 검토 · 승인<small>TD: 의사결정이 필요한 작업 항목</small></div><div className="ds-tl__lg">AI<span>조사 · 초안 · 검증 · 관리</span></div><div className="ds-tl__card ds-tl__card--ai">레퍼런스별 비교표 작성</div><div className="ds-tl__card ds-tl__card--ai">원칙 초안 작성</div><div className="ds-tl__card ds-tl__card--ai">대비 계산, Figma 변수 · CSS 대조</div><div className="ds-tl__card ds-tl__card--ai">파운데이션 · 컴포넌트 연결 관리</div><div className="ds-tl__card ds-tl__card--ai">Figma 목업 기반 코드 초안, 커스텀 JS 작성</div><div className="ds-tl__card ds-tl__card--ai">접근성 자동 검사, 계산값 비교</div><div className="ds-tl__card ds-tl__card--ai">TD · ADR 작성, 점검 보고<small>ADR: 설계 결정 기록</small></div></div></div>
 {/* 이 방식으로 달라진 것 (TD-80) — PLM 화면 디자인 프로젝트 두 번 비교. 숫자 원본은 노션 산출-1 케이스 #1(비공개).
     스토리북 문구에 숫자를 쓰지 않는 규칙의 예외 — 링크할 공개 문서가 없어서. 제품명 · 고객사 이름은 쓰지 않는다 */}
