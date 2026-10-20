@@ -45,34 +45,27 @@ export const Radio = {
 
 export const Switch = { args: { label: '자동 저장' }, render: (a) => sw(a.label, opt(a)) };
 
-// ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-102) — 미리보기만 ──
+// ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-108 27번 ① ② ③) — 미리보기만 ──
 const saveForm = (ctl) => '<div class="sb-row" style="gap:12px">' + ctl + '<button type="button" class="btn btn--primary btn--filled">저장</button></div>';
-const stack = (h) => '<div style="display:grid;gap:8px">' + h + '</div>';
+// 폼 한 행 = 라디오 묶음 필드 + 옆 텍스트 필드. stack = 라디오를 세로로 쌓은 잘못된 예
+const formRow = (name, stack) => '<div class="form-grid-2" style="width:460px;text-align:left">' +
+  '<div class="ff-field"><span class="search-label" id="' + name + '-lb">결재 방식</span><div class="radio-group" role="radiogroup" aria-labelledby="' + name + '-lb"' + (stack ? ' style="flex-direction:column;align-items:flex-start;row-gap:8px"' : '') + '>' +
+  rd(name, '순차', ' checked') + rd(name, '병렬') + rd(name, '합의') + '</div></div>' +
+  '<div class="ff-field"><label class="search-label" for="' + name + '-t">문서 명</label><div class="td"><input class="input" id="' + name + '-t" placeholder="문서 명 입력"></div></div></div>';
 export const 사용_지침 = {
   parameters: { controls: { disable: true } },
-  render: () => {
-    const el = document.createElement('div');
-    el.innerHTML = doDont([
-      // 근거: 구성 「스위치」 — 누르는 즉시 적용되는 설정에만, 저장해야 적용되는 값은 체크박스
-      { title: '저장해야 적용되는 값은 체크박스',
-        do: [saveForm(ck('결재 포함')), '저장을 눌러야 적용되는 값은 체크박스로 받습니다.'],
-        dont: [saveForm(sw('결재 포함')), '스위치는 누르는 즉시 적용되는 것으로 읽힙니다.'] },
-      // 근거: 예시 「체크박스 · 라디오」 — 여러 개는 체크박스, 하나만은 라디오
-      { title: '하나만 고르는 값은 라디오',
-        do: ['<div class="radio-group" role="radiogroup" aria-label="처리 구분">' + rd('dd-sel-g1', '정규', ' checked') + rd('dd-sel-g1', '긴급') + '</div>',
-          '둘 중 하나만 고르는 값은 라디오로 묶습니다.'],
-        dont: ['<div class="checkbox-group" role="group" aria-label="처리 구분">' + ck('정규', ' checked') + ck('긴급', ' checked') + '</div>',
-          '체크박스로 두면 서로 맞지 않는 값을 함께 고를 수 있습니다.'] },
-      // 근거: 예시 「부분 선택」 — 「전체 선택」 아래 항목 중 일부만 골랐을 때
-      { title: '일부만 골랐을 때는 부분 선택',
-        do: [stack(ck('전체 선택', ' data-ind') + ck('사양서', ' checked') + ck('도면', ' checked') + ck('시험 성적서')),
-          '아래 항목 중 일부만 고르면 「전체 선택」을 부분 선택으로 표시합니다.'],
-        dont: [stack(ck('전체 선택') + ck('사양서', ' checked') + ck('도면', ' checked') + ck('시험 성적서')),
-          '꺼진 채로 두면 아무것도 고르지 않은 것처럼 보입니다.'] },
-    ]);
-    el.querySelectorAll('[data-ind]').forEach((i) => { i.indeterminate = true; });
-    return el;
-  },
+  render: () => doDont([
+    { title: '라벨은 긍정형으로',
+      do: [ck('메일 알림 받기', ' checked'), '라벨은 선택했을 때 일어나는 일을 긍정형으로 씁니다.'],
+      dont: [ck('메일 알림 받지 않기'), '부정형 라벨은 선택하면 꺼지는 것이라, 뜻을 한 번 더 뒤집어 읽어야 합니다.'] },
+    { title: '라디오 · 체크박스는 가로 한 줄',
+      do: [formRow('dd-sel-a', false), '옵션은 필드 안에 가로 한 줄로 둡니다. 옵션이 5개부터는 드롭다운(라디오 → 셀렉트, 체크박스 → 다중 선택)을 씁니다.'],
+      dont: [formRow('dd-sel-b', true), '세로로 쌓으면 폼 행 높이가 늘어나 옆 필드와 줄이 맞지 않습니다.'] },
+    // 근거: 구성 「토글 스위치」 — 누르는 즉시 적용되는 설정에만, 저장해야 적용되는 값은 체크박스
+    { title: '저장 버튼이 있는 폼에는 체크박스',
+      do: [saveForm(ck('결재 포함')), '저장을 눌러야 적용되는 값은 체크박스로 받습니다.'],
+      dont: [saveForm(sw('결재 포함')), '토글 스위치는 누르는 즉시 적용되는 것으로 읽힙니다.'] },
+  ]),
 };
 
 // ── 전체 상태 ──
@@ -87,14 +80,21 @@ export const 전체_상태 = {
   render: () => {
     enablePseudo();
     const na = '<span class="sb-h">—</span>';
+    // 라디오는 행마다 name 을 따로 — 같은 name 이면 켠 라디오가 서로를 끔
+    const row = (name, n, o) => [name, [ck('결재 포함', o), rd('st-' + n, '정규', o), sw('자동 저장', o)]];
     const rows = [
-      ['Default', [ck('결재 포함'), rd('a', '정규'), sw('자동 저장')]],
-      ['Hovered', [ck('결재 포함', ' class="ps-hover"'), rd('h', '정규', ' class="ps-hover"'), sw('자동 저장', ' class="ps-hover"')]],
-      ['Focused', [ck('결재 포함', ' class="ps-focus-visible"'), rd('f', '정규', ' class="ps-focus-visible"'), sw('자동 저장', ' class="ps-focus-visible"')]],
-      ['Checked', [ck('결재 포함', ' checked'), rd('b', '정규', ' checked'), sw('자동 저장', ' checked')]],
+      row('Default', 'a', ''),
+      row('Hovered', 'h', ' class="ps-hover"'),
+      row('Pressed', 'p', ' class="ps-active"'),
+      row('Focused', 'f', ' class="ps-focus-visible"'),
+      row('Checked', 'b', ' checked'),
+      row('Checked · Hovered', 'bh', ' checked class="ps-hover"'),
+      row('Checked · Pressed', 'bp', ' checked class="ps-active"'),
+      row('Checked · Focused', 'bf', ' checked class="ps-focus-visible"'),
       ['Indeterminate', [ck('결재 포함', ' data-ind'), na, na]],
-      ['Disabled', [ck('결재 포함', ' disabled'), rd('c', '정규', ' disabled'), sw('자동 저장', ' disabled')]],
-      ['Checked · Disabled', [ck('결재 포함', ' disabled checked'), rd('d', '정규', ' disabled checked'), sw('자동 저장', ' disabled checked')]],
+      ['Indeterminate · Focused', [ck('결재 포함', ' data-ind class="ps-focus-visible"'), na, na]],
+      row('Disabled', 'c', ' disabled'),
+      row('Checked · Disabled', 'd', ' disabled checked'),
     ];
     const el = document.createElement('div');
     el.innerHTML = matrix(['.checkbox', '.radio', '.switch'], rows, { full: true });

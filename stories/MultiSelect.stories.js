@@ -78,35 +78,29 @@ export const 펼친_모습 = {
   parameters: { docs: { source: { code: box({ picked: ['작업 중'], open: true }) } } },
   render: () => live(box({ picked: ['작업 중'], open: true }), 250),
 };
-const KINDS = ['설계 사양서', '시험 성적서', '도면', '회의록'];
+const KINDS = ['설계 사양서', '시험 성적서', '도면', '회의록', '검토 보고서'];   // 다중 선택은 옵션 5개부터 (4개까지는 체크박스 그룹, TD-108 26번)
 export const 검색_없이 = {
   parameters: { docs: { source: { code: box({ name: '문서 분류', items: KINDS, picked: ['설계 사양서', '도면'], open: true, search: false }) } } },
-  render: () => live(box({ name: '문서 분류', items: KINDS, picked: ['설계 사양서', '도면'], open: true, search: false }), 180),
+  render: () => live(box({ name: '문서 분류', items: KINDS, picked: ['설계 사양서', '도면'], open: true, search: false }), 210),
 };
 
-// ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-102) — 미리보기만. 펼친 목록은 틀 높이를 잡아 미리보기 안에 둠 ──
+// ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-108 26번 ① ②) — 미리보기만. 펼친 목록은 틀 높이를 잡아 미리보기 안에 둠 ──
 const fit = (h, w = 200, ht = 0) => '<div style="width:' + w + 'px' + (ht ? ';height:' + ht + 'px' : '') + '">' + h + '</div>';
-const noCheck = (h) => h.replace(/<input type="checkbox"[^>]*>/g, '');
+const KIND3 = ['사양서', '도면', '시험 성적서'];
+const group = '<div class="form-grid-2" style="grid-template-columns:1fr;width:240px;text-align:left"><div class="ff-field"><span class="search-label" id="dd-ms-kind">문서 분류</span>' +
+  '<div class="checkbox-group" role="group" aria-labelledby="dd-ms-kind">' + KIND3.map((t, i) => '<label class="checkbox"><input type="checkbox"' + (i === 1 ? ' checked' : '') + '>' + t + '</label>').join('') + '</div></div></div>';
 export const 사용_지침 = {
   parameters: { controls: { disable: true } },
   render: () => doDont([
-    // 근거: 문서 머리 — 하나만 고를 때는 Input의 .select
-    { title: '하나만 고르는 값은 선택',
-      do: [fit('<select class="select" aria-label="담당 부서"><option>설계1팀</option><option>설계2팀</option><option>품질팀</option></select>', 200, 140),
-        '하나만 고르는 값은 선택(.select)으로 받습니다.'],
-      dont: [fit(box({ name: '담당 부서', items: ['설계1팀', '설계2팀', '품질팀'], picked: ['설계1팀'], open: true, search: false }), 200, 140),
-        '체크박스 목록으로 받으면 여러 개를 골라도 되는 값으로 읽힙니다.'] },
-    // 근거: DS-ADR-022 — 두 개 이상이면 「첫 값 외 N」(이전 버전은 쉼표로 이어 씀)
-    { title: '여러 개를 고르면 「첫 값 외 N」',
-      do: [fit(box({ picked: ['작업 중', '검토 중', '승인'] }), 150), '두 개 이상 고르면 첫 값과 「외 N」으로 줄여 보여 줍니다.'],
-      dont: [fit('<div class="checkSelect"><div class="selected-text" role="button" tabindex="0" aria-haspopup="true" aria-expanded="false" aria-label="작업현황: 작업 중, 검토 중, 승인">작업 중, 검토 중, 승인</div></div>', 150),
-        '쉼표로 이어 쓰면 칸 끝에서 잘려 몇 개를 골랐는지 알 수 없습니다.'] },
-    // 근거: DS-ADR-022 — 옵션에 체크박스를 보임
-    { title: '옵션에는 체크박스',
-      do: [fit(box({ name: '분류', items: ['사양서', '도면', '시험 성적서'], picked: ['사양서', '도면'], open: true, search: false }), 200, 140),
-        '옵션마다 체크박스를 보여 여러 개를 고를 수 있음을 알립니다.'],
-      dont: [fit(noCheck(box({ name: '분류', items: ['사양서', '도면', '시험 성적서'], picked: ['사양서', '도면'], open: true, search: false })), 200, 140),
-        '글자만 두면 하나만 고르는 목록과 구분되지 않습니다.'] },
+    { title: '「전체」 옵션은 따로 두지 않음',
+      do: [fit(box({ picked: [], open: true, search: false }), 200, 180),
+        '아무것도 선택하지 않으면 트리거가 「전체」로 표시되므로, 「전체」 옵션은 따로 두지 않습니다.'],
+      dont: [fit(box({ items: ['전체'].concat(STATUS), picked: ['전체', '검토 중'], open: true, search: false }), 200, 208),
+        '「전체」 체크박스를 두면 다른 옵션과 함께 선택되어, 무엇을 고른 것인지 알 수 없습니다.'] },
+    { title: '옵션이 4개까지면 체크박스 그룹',
+      do: [group, '옵션이 4개까지면 체크박스 그룹(.checkbox-group)으로 펼쳐 둡니다. 다중 선택은 옵션 5개부터 씁니다.'],
+      dont: [fit(box({ name: '문서 분류', items: KIND3, picked: ['도면'], open: true, search: false }), 200, 124),
+        '옵션 3개를 드롭다운에 넣으면 열어 봐야 무엇을 고를 수 있는지 알 수 있습니다.'] },
   ]),
 };
 
@@ -128,13 +122,15 @@ export const 전체_상태 = {
     return matrix(['트리거', '옵션 행'], [
       ['Default', [cell(box({ picked: [] })), opt('작업 중', false)]],
       ['Hovered', [cell(box({ picked: [], extraBox: ' ps-hover' })), opt('작업 중', false, ' ps-hover')]],
+      ['Pressed', ['—', opt('작업 중', false, ' ps-active')]],
       ['고른 값 하나 · 고른 항목', [cell(box({ picked: ['작업 중'] })), opt('작업 중', true)]],
       ['고른 값 여럿', [cell(box({ picked: ['작업 중', '검토 중', '승인'] })), '—']],
       ['긴 값 여럿', [cell(box({ name: '분류', items: ['설계 변경 요청서', '부품 승인 원', '검사 성적서'], picked: ['설계 변경 요청서', '부품 승인 원'] })), '—']],
       ['Focused', [cell(box({ picked: ['작업 중'], extraBox: ' ps-focus-visible' })), '<div class="checkSelect" style="width:200px;text-align:left"><div class="options show" style="position:static;box-shadow:none"><div><label class="option"><input type="checkbox" class="ps-focus-visible"><span>작업 중</span></label></div></div></div>']],
       ['Disabled', [cell(box({ picked: [], disabled: true })), '<div class="checkSelect" style="width:200px;text-align:left"><div class="options show" style="position:static;box-shadow:none"><div><label class="option"><input type="checkbox" disabled><span>폐기</span></label></div></div></div>']],
+      ['Disabled · 고른 항목', ['—', '<div class="checkSelect" style="width:200px;text-align:left"><div class="options show" style="position:static;box-shadow:none"><div><label class="option"><input type="checkbox" checked disabled><span>폐기</span></label></div></div></div>']],
       ['펼침', [cell('<div class="checkSelect"><div class="selected-text" role="button" tabindex="0" aria-haspopup="true" aria-expanded="true" aria-label="작업현황: 작업 중">작업 중</div><div class="options show" style="display:none"></div></div>'), '—']],
-    ]) + '<p class="sb-note" style="margin:8px 0 0">트리거 비활성 = 원래 select에 disabled → 스크립트가 aria-disabled="true"를 붙이고 열리지 않습니다. 옵션 행 비활성 = 체크박스 비활성 + 흐린 글자입니다.</p>';
+    ]) + '<p class="sb-note" style="margin:8px 0 0">트리거 비활성 = 원래 select에 disabled → 스크립트가 aria-disabled="true"를 붙이고 열리지 않습니다. 옵션 행 비활성 = 체크박스 비활성 + 흐린 글자이고, 고른 채 막힌 항목은 옅은 브랜드 바탕 없이 표시합니다. 펼치면 트리거 화살표가 위를 향합니다.</p>';
   },
 };
 

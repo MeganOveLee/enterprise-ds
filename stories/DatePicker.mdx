@@ -11,11 +11,11 @@ import * as S from './DatePicker.stories.js';
 <table className="ds-table ds-props">
 <thead><tr><th>구분</th><th>클래스 · 속성</th><th>설명</th></tr></thead>
 <tbody>
-<tr><td><b>구조</b></td><td><code>.ui-datepicker</code> › <code>.ui-datepicker__icon</code> + <code>.ui-datepicker__input</code></td><td>달력 아이콘 버튼과 날짜 입력 필드입니다. 높이 · 테두리 · 모서리는 <a className="ds-link" href="./?path=/docs/form-input--docs" target="_top">Input</a>의 텍스트 필드와 같은 토큰입니다. 형식은 YYYY-MM-DD이고 placeholder로 형식을 안내합니다.</td></tr>
+<tr><td><b>구조</b></td><td><code>.ui-datepicker</code> › <code>.ui-datepicker__icon</code> + <code>.ui-datepicker__input</code></td><td>달력 아이콘 버튼과 날짜 입력 필드입니다. 높이 · 테두리 · 모서리는 <a className="ds-link" href="./?path=/docs/form-input--docs" target="_top">Input</a>의 텍스트 필드와 같은 토큰입니다. 형식은 YYYY-MM-DD이고 placeholder로 형식을 안내합니다. 필드에 포커스가 있거나 달력이 열리면 아이콘 칸이 옅은 선택 바탕(<code>--color-bg-selected</code>)이 됩니다.</td></tr>
 <tr><td><b>기간</b></td><td><code>.ui-datepicker-range</code> › 필드 2개 + <code>.ui-datepicker-range__sep</code></td><td>시작일 · 종료일 필드를 「~」로 연결합니다. 두 필드가 서로의 선택 가능 범위가 되어 종료일이 시작일보다 앞설 수 없습니다. 달력에는 두 날짜 사이가 표시되고, 다른 쪽 끝 날짜도 고른 날과 같은 채움으로 표시됩니다.</td></tr>
 <tr><td><b>선택 가능 범위</b></td><td><code>min</code> · <code>max</code><span className="ds-muted">YYYY-MM-DD</span></td><td>범위 밖의 날짜는 달력에서 비활성(취소선)으로 표시되고 선택할 수 없습니다.</td></tr>
 <tr><td><b>오류</b></td><td><code>aria-invalid="true"</code><span className="ds-muted">날짜 필드(input)에</span></td><td>형식이 맞지 않거나 검증을 통과하지 못한 상태입니다. 감싸는 상자의 테두리가 빨강이 됩니다.</td></tr>
-<tr><td><b>비활성 · 읽기 전용</b></td><td><code>disabled</code> · <code>readonly</code></td><td>입력할 수 없는 상태입니다. 달력이 열리지 않고 아이콘 버튼도 누를 수 없습니다. 정의는 Input과 같습니다.</td></tr>
+<tr><td><b>비활성 · 읽기 전용</b></td><td><code>disabled</code> · <code>readonly</code></td><td>입력할 수 없는 상태입니다. 달력이 열리지 않고 아이콘 버튼도 누를 수 없습니다. 정의는 Input과 같습니다. 아이콘 칸은 회색 칸 그대로이고, 아이콘은 비활성이면 흐린 색 · 읽기 전용이면 값과 같은 보조 글자색입니다.</td></tr>
 <tr><td><b>날짜 칸 상태</b></td><td><code>.datepicker__day</code><span className="ds-muted">.is-today · .is-selected · .is-in-range · .is-range-end · .is-disabled · .is-outside</span></td><td>오늘 · 고른 날 · 기간 사이 · 기간의 다른 쪽 끝 · 선택 가능 범위 밖 · 앞뒤 달 날짜입니다. 스크립트가 붙이며, 아래 「펼친 달력」에서 모습을 볼 수 있습니다.</td></tr>
 <tr><td><b>스크립트</b></td><td><code>js/datepicker.js</code><span className="ds-muted">페이지에 한 번</span></td><td>불러오면 <code>.ui-datepicker__input</code>마다 달력이 연결됩니다. 화면을 나중에 그렸다면 <code>datepickerInit()</code>을 다시 호출합니다.</td></tr>
 <tr><td><b>동작</b></td><td><span className="ds-muted">열기 · 선택 · 닫기</span></td><td>필드를 누르면 달력이 열리고 포커스는 필드에 남아 바로 입력할 수 있습니다. 날짜를 누르면 값이 입력되고 달력이 닫힙니다(취소 · 적용 버튼 없음).</td></tr>
