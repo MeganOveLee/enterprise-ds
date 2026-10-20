@@ -45,33 +45,27 @@ export const 아래쪽 = {
   render: () => stage(tip({ icon: 'down', label: '첨부 받기', text: '첨부 받기', bottom: true, open: true }), 80, 'start'),
 };
 
-// ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-102) ── 미리보기만, 코드는 위 예시 카드에
-const ddStage = (inner) => '<div style="flex:1;display:flex;align-items:end;justify-content:center;gap:8px;min-height:96px">' + inner + '</div>';   // 가운데 — 긴 툴팁도 판 안에
-// 점선 = 셀 경계. 왼쪽을 비워 둬 셀 밖으로 넘친 툴팁도 보이게
-const ddEdge = (inner) => '<div style="display:flex;align-items:end;min-height:112px;margin-left:112px;padding:8px 0;border-inline:1px dashed var(--color-border-strong);width:260px">' + inner + '</div>';
-const textTip = (t) => { const id = 'tt' + (++uid); return '<span class="has-tooltip"><button type="button" class="btn btn--secondary btn--transparent" aria-describedby="' + id + '">' + t + '</button><span class="tooltip is-open" role="tooltip" id="' + id + '">' + t + '</span></span>'; };
-const HELP = '편집 셀이 있는 그리드만 행 높이 40입니다.';
+// ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-108 18번 ① ②) ── 미리보기만, 코드는 위 예시 카드에
+const ddStage = (inner) => '<div style="flex:1;display:flex;align-items:end;justify-content:center;gap:8px;min-height:104px">' + inner + '</div>';   // 가운데 — 긴 툴팁도 판 안에
+const textTip = (t) => { const id = 'tt' + (++uid); return '<span class="has-tooltip"><button type="button" class="btn btn--secondary btn--outlined" aria-describedby="' + id + '">' + svg(I.print) + t + '</button><span class="tooltip is-open" role="tooltip" id="' + id + '">' + t + '</span></span>'; };
+// 툴팁 안 링크 — Don't 그림용. 어두운 바탕 위라 글자색은 툴팁 글자색 그대로, 밑줄로 링크임을 표시
+const linkTip = () => { const id = 'tt' + (++uid); return '<span class="has-tooltip"><button type="button" class="btn btn--secondary btn--transparent btn--icon" aria-label="행 높이 도움말" aria-describedby="' + id + '">' + svg(I.help) + '</button>' +
+  '<span class="tooltip is-open" role="tooltip" id="' + id + '">편집 그리드의 행 높이는 40입니다. <a href="#" style="color:inherit;text-decoration:underline;white-space:nowrap">기준 보기</a></span></span>'; };
 export const 사용_지침 = {
   parameters: { controls: { disable: true } },
   render: () => doDont([
-    // 근거: Tooltip 구성 아래 — 툴팁에는 꼭 알아야 할 내용을 넣지 않음(마우스를 올려야만 보임)
-    { title: '꼭 알아야 할 내용은 툴팁 밖에',
+    // ① 라벨 없는 아이콘 버튼 ↔ 글자가 있는 버튼에 같은 글자
+    { title: '라벨 없는 아이콘 버튼에',
       do: [ddStage(tip({ icon: 'print', label: '인쇄', text: '인쇄', open: true })),
-        '아이콘 버튼이 무엇을 하는지만 짧게 적습니다.'],
-      dont: [ddStage(tip({ icon: 'help', label: '수정 안내', text: '결재 중인 문서는 수정할 수 없습니다.', open: true })),
-        '수정할 수 없는 조건처럼 꼭 알아야 할 내용은 마우스를 올려야만 보여 놓칩니다.'] },
-    // 근거: Tooltip 머리 설명 — 아이콘 버튼처럼 글자가 없는 컨트롤에 씀
-    { title: '글자가 있는 버튼에는 쓰지 않음',
-      do: [ddStage(tip({ icon: 'reset', label: '검색 조건 초기화', text: '검색 조건 초기화', open: true })),
-        '글자가 없는 아이콘 버튼에만 붙입니다.'],
-      dont: [ddStage(textTip('초기화')),
-        '보이는 글자를 툴팁으로 한 번 더 보여 주지 않습니다.'] },
-    // 근거: Tooltip 구성 「가로 맞춤」 — 셀 왼쪽 끝 컨트롤은 .tooltip--start (TD-93)
-    { title: '셀 끝에서는 툴팁도 끝에 맞춤',
-      do: [ddEdge(tip({ icon: 'help', label: '행 높이 도움말', text: HELP, open: true, side: 'start' })),
-        '점선 = 셀 경계. 셀 왼쪽 끝 컨트롤은 .tooltip--start로 툴팁 왼쪽 끝을 맞춥니다.'],
-      dont: [ddEdge(tip({ icon: 'help', label: '행 높이 도움말', text: HELP, open: true })),
-        '가운데 맞춤 그대로 두면 툴팁이 셀 밖으로 넘칩니다.'] },
+        '글자가 없는 아이콘 버튼에 이름을 툴팁으로 보여 줍니다.'],
+      dont: [ddStage(textTip('인쇄')),
+        '보이는 글자를 툴팁으로 되풀이하면 읽을 것만 늘어납니다.'] },
+    // ② 짧은 한 줄 ↔ 링크 · 버튼이 든 툴팁
+    { title: '짧은 한 줄로',
+      do: [ddStage(tip({ icon: 'help', label: '행 높이 도움말', text: '편집 그리드의 행 높이는 40입니다.', open: true })),
+        '툴팁에는 짧은 설명 한 줄만 둡니다.'],
+      dont: [ddStage(linkTip()),
+        '툴팁 안 링크 · 버튼은 스크린 리더가 설명 글로만 읽어 누를 수 없습니다.'] },
   ]),
 };
 
