@@ -41,6 +41,7 @@ const I = {
   task: '<rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 12l3 3 5-6"/>',
   clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
   plus: '<path d="M12 5v14M5 12h14"/>',
+  replay: '<path d="M4 12a8 8 0 1 0 2.3-5.6"/><path d="M4 4v4h4"/>',
 };
 
 // ── 데이터 (가상) ──
@@ -421,6 +422,48 @@ const frame = (inner) => {
 };
 const src = (code) => ({ controls: { disable: true }, docs: { source: { language: 'html', code } } });
 
+// ── 움직임 다시 보기 (TD-123 · 10/20 세영님 「잘 보이는 곳에」) ── 인터랙션(Foundation › Motion)을 화면 안에서 실제 쓰임으로
+// 화면이 처음 보일 때 한 번 저절로, 그 뒤에는 화면 위 [움직임 다시 보기] 또는 화면 안 버튼을 누르면 다시. 동작 줄이기 설정이면 결과만(motion.js)
+const busy = (b, text, after) => {   // 버튼 처리 중(스피너) → 끝나면 after — Motion 「처리 끝 체크」와 같은 순서
+  if (b.classList.contains('is-loading') || b.classList.contains('is-done')) return;
+  const html = b.innerHTML;
+  b.style.minWidth = b.offsetWidth + 'px';
+  b.classList.add('is-loading'); b.setAttribute('aria-busy', 'true');
+  b.innerHTML = '<span class="spinner" aria-hidden="true"></span>' + text;
+  setTimeout(() => { b.innerHTML = html; after(); }, window.dsMotion && window.dsMotion.reducedMotion() ? 0 : 900);
+};
+const byText = (root, text) => [...root.querySelectorAll('.btn')].find((x) => x.textContent.trim() === text);
+// 문서 검색 — 체크한 문서(둘째 줄)를 [선택 일괄 결재] → 처리 중 → 상태 칩 검토 → 승인(상태 칩 바뀜) + 그 줄 한 번 표시(방금 바뀐 행) + 버튼 「✓ 결재됨」
+const playApprove = (root) => {
+  const M = window.dsMotion, b = byText(root, '선택 일괄 결재'), tr = root.querySelectorAll('.grid-table tbody tr')[1];
+  if (!M || !b || !tr) return;
+  const c = tr.querySelector('.status-chip');
+  const set = (k) => { c.className = 'status-chip status-chip--' + STATUS[k][0]; c.textContent = STATUS[k][1]; };
+  set('검토');
+  busy(b, '결재 중', () => { set('승인'); M.pop(c); M.flash(tr); M.done(b, { text: '결재됨', message: 'DOC-2610-0012 1건을 승인했습니다.' }); });
+};
+// 문서 등록 — [임시 저장] → 처리 중 → 「✓ 저장됨」(처리 끝 체크)
+const playSave = (root) => {
+  const M = window.dsMotion, b = byText(root, '임시 저장');
+  if (!M || !b) return;
+  busy(b, '저장 중', () => M.done(b, { text: '저장됨', message: '임시 저장되었습니다.' }));
+};
+const playable = (el, play, trigger, note) => {
+  const wrap = document.createElement('div');
+  wrap.className = 'scr-play';
+  wrap.innerHTML = '<div class="scr-play__bar"><span class="scr-play__note">' + note + '</span>' +
+    '<button type="button" class="btn btn--secondary btn--outlined btn--sm">' + svg(I.replay, 14) + '움직임 다시 보기</button></div>';
+  wrap.appendChild(el);
+  wrap.querySelector('.scr-play__bar .btn').addEventListener('click', () => play(el));
+  el.addEventListener('click', (e) => { const b = e.target.closest('.btn'); if (b && b.textContent.trim() === trigger) play(el); });
+  if (window.IntersectionObserver) {
+    const io = new IntersectionObserver((es) => { if (es.some((x) => x.isIntersecting)) { io.disconnect(); setTimeout(() => play(el), 500); } }, { threshold: 0.6 });
+    io.observe(el);
+  }
+  return wrap;
+};
+
+
 export default {
   title: 'Screens/PLM 화면',
   tags: ['!dev', '!autodocs'],   // 메뉴에는 문서 한 장만, 문서는 Screens.mdx
@@ -508,7 +551,7 @@ export const 홈 = {
 
 export const 문서_검색 = {
   parameters: src(listScreen()),
-  render: () => wireSearchDetail(frame(listScreen())),
+  render: () => playable(wireSearchDetail(frame(listScreen())), playApprove, '선택 일괄 결재', '[선택 일괄 결재] → 처리 중 → 상태 칩 바뀜 · 방금 바뀐 행 · ✓ 결재됨'),
 };
 
 // 목록 — 상세 검색을 펼친 모습(Figma 📄 Templates 「문서 검색 · 상세 검색 펼침」과 같은 정지 화면)
@@ -525,7 +568,7 @@ export const 문서_검색_시안_2 = {
 
 export const 문서_등록 = {
   parameters: src(registerPop()),
-  render: () => wireSearchDetail(frame(listScreen() + '<div class="scr-dim"></div><div class="scr-window">' + registerPop() + '</div>')),
+  render: () => playable(wireSearchDetail(frame(listScreen() + '<div class="scr-dim"></div><div class="scr-window">' + registerPop() + '</div>')), playSave, '임시 저장', '[임시 저장] → 처리 중 → ✓ 저장됨'),
 };
 
 export const 프로젝트_상세 = {

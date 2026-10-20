@@ -5,7 +5,7 @@ import notionIcon from '../assets/links/notion.svg';
 
 <Meta title="소개" />
 
-{/* 소개 = 이 디자인 시스템이 무엇인가 — 목표 · 결과(키워드 네 칸) · 내 기여 → 어려웠던 점(TD-117) → 바로 가기 → 구성(층) → 적용 환경 → 운영 방식 (TD-50).
+{/* 소개 = 이 디자인 시스템이 무엇인가 — 목표 · 결과(키워드 네 칸) · 내 기여 → 어려웠던 점(TD-117) → 바로 가기 문 넷(화면 · 인터랙션 · 결정 기록 · Figma, TD-123) → 바로 가기 → 구성(층) → 적용 환경 → 운영 방식 (TD-50).
     스토리북 보는 법(미리보기 · 도구 막대) · 설치 · 참고 자료는 「시작하기」 한 곳에만 — 같은 설명을 두 번 쓰지 않는다 */}
 
 <Unstyled>
@@ -16,7 +16,7 @@ import notionIcon from '../assets/links/notion.svg';
 {/* 첫머리 (TD-117) — 목표 · 결과 · 내 기여를 이름표로 나눈다. 결과 = 키워드 네 칸(근거 결정 기록 링크). 다른 문서와 같은 밝은 톤.
     역할 분담 문장은 규칙 (현행) 4장 표현 — 「직접 수정 · 자체 구현」 같은 혼자 쓴 것으로 읽히는 말은 쓰지 않는다 */}
 <dl className="ds-brief" aria-label="목표 · 결과 · 내 기여">
-<div className="ds-brief__row"><dt>목표</dt><dd><p className="ds-brief__goal">여러 브랜드에 공급하는 레거시 PLM 화면을, 개발 코드를 건드리지 않고 컴포넌트 · 토큰 한 벌로 브랜드마다 바꿔 입힙니다.</p></dd></div>
+<div className="ds-brief__row"><dt>목표</dt><dd><p className="ds-brief__goal">여러 브랜드에 공급하는 레거시 PLM 화면에, 개발 코드를 건드리지 않고 컴포넌트 · 토큰 한 벌로 브랜드별 디자인을 적용합니다.</p></dd></div>
 <div className="ds-brief__row">
 <dt>결과</dt>
 <dd>
@@ -39,6 +39,7 @@ import notionIcon from '../assets/links/notion.svg';
 </Section>
 <nav className="ds-doors" aria-label="바로 가기">
 <a className="ds-door" href="./?path=/docs/screens-plm-화면--docs" target="_top"><span className="ds-hero__dot" aria-hidden="true"></span><b>화면 보기</b><span>디자인 시스템의 클래스와 토큰으로 구성한 업무 화면 예시</span><em>보기 →</em></a>
+<a className="ds-door" href="./?path=/docs/foundation-motion--docs" target="_top"><span className="ds-door__demo" aria-hidden="true"><span className="btn btn--primary btn--filled btn--sm"><i>저장</i><i><span className="spinner"></span>저장 중</i><i><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12l4 4 10-10"/></svg>저장됨</i></span></span><b>인터랙션 보기</b><span>처리 중 · 처리 끝 · 방금 바뀐 행 · 지연 박동처럼 상태를 알려 주는 움직임</span><em>보기 →</em></a>
 <a className="ds-door" href="https://app.notion.com/p/3eda8196682d8126967fcc86f796fcb4" target="_blank" rel="noreferrer"><img className="ds-res-icon--light" src={notionIcon} alt="" width="32" height="32" /><b>결정 기록 보기</b><span>디자인 시스템을 기획 · 설계하며 내린 결정과 그 근거</span><em>열기 ↗</em></a>
 <a className="ds-door ds-door--dark" href="https://www.figma.com/design/99ff5JQYQPCdY3xRBWHHlO/?node-id=8111-5" target="_blank" rel="noreferrer"><img src={figmaIcon} alt="" width="32" height="32" /><b>Figma에서 보기</b><span>컴포넌트 원본입니다. 브랜드와 라이트 · 다크 모드를 변수 모드로 전환할 수 있습니다.</span><em>열기 ↗</em></a>
 </nav>

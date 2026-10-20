@@ -54,8 +54,8 @@ import * as S from './Motion.stories.js';
 <Card of={S.되돌리기_시간} title="되돌리기 시간" en="Undo" desc="[삭제]를 누르면 줄이 바로 사라지고 [되돌리기] 토스트가 5초 동안 남습니다. 마우스 · 키보드 포커스가 토스트에 있으면 시간이 멈추고, 시간이 끝나면 삭제가 확정됩니다." />
 <Card of={S.빈_상태_배지} title="빈 상태 배지" en="Empty badge" desc="클래스를 더하지 않습니다. 솔리드 일러스트(Default 브랜드)의 이유 배지만 나타날 때 한 번 흔들리고, 배지가 없는 「아직 없음」과 라인 모양(Fashion · Precision)은 움직이지 않습니다." />
 </Section>
-<Section title="로고 로딩 시안" en="Logo loader drafts" desc="페이지 전체를 처음 불러올 때 쓰는 로고 로더(Loading › 로고 로더)의 움직임 시안 세 가지입니다. 같은 마크 · 같은 크기 · 한 바퀴 2.4초이고, 동작 줄이기 설정에서는 멈추지 않고 느리게만 돕니다. 마크는 가상 제품의 그림입니다.">
-<Card of={S.로고_로딩_시안} title="세 가지 시안" en="Drafts" desc="① 지금 방식 ② 획 ③ 조각. 무엇을 알려 주는 움직임인지는 그림 아래 한 줄입니다." />
+<Section title="로고 로더" en="Logo loader" desc="페이지 전체를 처음 불러올 때(로그인 직후 · 화면 전환)만 쓰는 로고 로더의 움직임입니다. 한 바퀴 2.4초이고, 동작 줄이기 설정에서는 멈추지 않고 6초로 느리게 돕니다. 마크는 가상 제품의 그림입니다. 쓰는 곳은 Feedback › Loading에 있습니다.">
+<Card of={S.로고_로더} title="조각이 맞춰짐 · 그림 한 장 로고" en="Pieces · Image" desc="마크가 조각으로 나뉜 SVG면 조각 셋이 차례로 들어와 하나로 맞물립니다. 로고가 그림 파일 한 장뿐이면 흐린 로고 위로 원래 로고가 왼쪽부터 채워집니다(DS-ADR-043)." />
 </Section>
 <Section title="토큰" en="Tokens">
 <table className="ds-table ds-props">
@@ -66,11 +66,11 @@ import * as S from './Motion.stories.js';
 <tr><td><code>--duration-shimmer</code></td><td>2.4s</td><td>Shimmer 한 바퀴 — 지나감 1.8초 + 쉼 0.6초. 업로더의 올리는 중 막대 · 스켈레톤</td></tr>
 <tr><td><code>--duration-pulse</code></td><td>1.2s</td><td>Pulse 한 바퀴 — 두근(크게 · 진하게) → 두근 → 쉼. 지연 상태 표시와 같은 줄 진행률 막대에만. 박동은 초당 2번이 안 됩니다</td></tr>
 <tr><td><code>--duration-fill</code></td><td>1.6s</td><td>진행률 막대 채움이 늘어나는 시간(값이 바뀔 때 한 번)</td></tr>
-<tr><td><code>--ease-loop</code></td><td>ease-in-out</td><td>반복 움직임 곡선 — Shimmer · Pulse · 스켈레톤 · 로고 로더</td></tr>
+<tr><td><code>--ease-loop</code></td><td>ease-in-out</td><td>반복 움직임 곡선 — Shimmer · Pulse · 스켈레톤 · 그림 한 장 로고 로더</td></tr>
 <tr><td><code>--duration-slow</code></td><td>.4s</td><td>숫자 굴러가기 · 상태 칩 바뀜</td></tr>
 <tr><td><code>--duration-once</code></td><td>1.6s</td><td>한 번 일어나고 끝나는 알림 — 방금 바뀐 행이 옅어짐 · 다음 차이 테두리 · 빈 상태 배지</td></tr>
 <tr><td><code>--duration-undo</code></td><td>5s</td><td>되돌리기 시간 — 삭제 뒤 [되돌리기]가 남아 있는 시간</td></tr>
-<tr><td><code>--ease-standard</code></td><td>cubic-bezier(.2, 0, 0, 1)</td><td>자리 이동 곡선 — 탭 밑줄 · 숫자 · 끌어 놓은 줄 · 누름. 빨리 출발해 부드럽게 멈춥니다</td></tr>
+<tr><td><code>--ease-standard</code></td><td>cubic-bezier(.2, 0, 0, 1)</td><td>자리 이동 곡선 — 탭 밑줄 · 숫자 · 끌어 놓은 줄 · 누름 · 로고 로더 조각. 빨리 출발해 부드럽게 멈춥니다</td></tr>
 <tr><td><code>--scale-press</code></td><td>.96</td><td>누르는 동안 버튼 · 페이지 번호 크기</td></tr>
 </tbody>
 </table>

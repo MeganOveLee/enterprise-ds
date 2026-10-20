@@ -3960,21 +3960,57 @@ input.onKeySearch2 { display: block; flex: 1 1 auto; min-width: 0; }
 
 /* ── 브랜드 로더 .brand-loader ──────────────────────────────────────────────
  * 페이지 전체를 처음 불러올 때(화면 전환 덮개 · 로그인 직후)만. 영역 · 버튼 안은 언제나 스피너
- * 로고 원본 이미지 두 장: 아래 = 회색으로 흐리게, 위 = 원본을 왼쪽부터 채움(마스크). 이미지 파일은 손대지 않음 (10/8)
+ * 움직임 = 조각이 맞춰짐(DS-ADR-043, TD-123) — 흩어진 마크 조각 셋이 차례로 들어와 하나로 맞물리고, 점이 마지막에 찍힌 뒤 흐려지며 되풀이.
+ * 마크는 조각으로 나뉜 SVG(아래 마크업). 로고가 그림 한 장(PNG 등)뿐인 브랜드는 .brand-loader--image(왼쪽부터 채워짐)
  * 브랜드 선택은 제품 설정: Default = 로고 로더 · Fashion · Precision(공개 시연) = 스피너 --lg. 고객사 화면은 기존 로딩 이미지 유지
  *   <div class="loading loading--overlay" role="status" aria-live="polite">
  *     <span class="brand-loader" aria-hidden="true">
- *       <img class="brand-loader__base" src="logo.png" alt=""><img class="brand-loader__fill" src="logo.png" alt="">
+ *       <svg viewBox="0 0 34 34"><rect class="brand-loader__bg" width="34" height="34" rx="8"/><path class="brand-loader__arc" d="…"/>
+ *         <path class="brand-loader__piece brand-loader__piece--top" d="…"/> … --left · --right … <circle class="brand-loader__dot" …/></svg>
  *     </span>
  *     <p class="loading__text">화면을 불러오는 중입니다</p>
  *   </div>
+ * 그림 한 장 로고:  <span class="brand-loader brand-loader--image" aria-hidden="true"><img class="brand-loader__base" src="logo.png" alt=""><img class="brand-loader__fill" src="logo.png" alt=""></span>
  */
 .brand-loader {
+    --brand-loader-duration: 2.4s;
     position: relative;
     display: inline-block;
-    width: var(--brand-loader-width, 160px);
+    width: var(--brand-loader-width, 72px);
     line-height: 0;
 }
+.brand-loader svg { display: block; width: 100%; height: auto; overflow: visible; }
+.brand-loader__bg { fill: var(--color-bg-brand); }
+.brand-loader__arc { fill: none; stroke: var(--color-icon-on-color); stroke-width: 1.6; stroke-linecap: round; opacity: .55; }
+.brand-loader__piece {
+    fill: var(--color-icon-on-color);
+    transform-box: fill-box;
+    animation: ds-brand-piece var(--brand-loader-duration) var(--ease-standard) infinite;
+}
+.brand-loader__piece--top   { --piece-opacity: 1;   --piece-from: translate(0, -7px); }
+.brand-loader__piece--left  { --piece-opacity: .72; --piece-from: translate(-7px, 5px); animation-delay: .12s; }
+.brand-loader__piece--right { --piece-opacity: .5;  --piece-from: translate(7px, 5px);  animation-delay: .24s; }
+.brand-loader__dot {
+    fill: var(--accent-500);
+    stroke: var(--color-bg-brand);
+    stroke-width: 1.6;
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: ds-brand-dot var(--brand-loader-duration) var(--ease-standard) infinite;
+}
+@keyframes ds-brand-piece {
+    0%       { transform: var(--piece-from); opacity: 0; }
+    35%, 85% { transform: none; opacity: var(--piece-opacity); }
+    100%     { transform: none; opacity: 0; }
+}
+@keyframes ds-brand-dot {
+    0%, 45%  { transform: scale(0);    opacity: 1; }
+    55%      { transform: scale(1.25); opacity: 1; }
+    62%, 85% { transform: scale(1);    opacity: 1; }
+    100%     { transform: scale(1);    opacity: 0; }
+}
+/* 그림 한 장 로고 — 아래 = 회색으로 흐리게, 위 = 원본을 왼쪽부터 채움(마스크). 이미지 파일은 손대지 않음 (10/8) */
+.brand-loader--image { width: var(--brand-loader-width, 160px); }
 .brand-loader img { display: block; width: 100%; height: auto; }
 .brand-loader__base { filter: grayscale(1); opacity: .22; }
 .brand-loader__fill {
@@ -3986,7 +4022,7 @@ input.onKeySearch2 { display: block; flex: 1 1 auto; min-width: 0; }
             mask-size: 250% 100%;
     -webkit-mask-repeat: no-repeat;
             mask-repeat: no-repeat;
-    animation: ds-brand-fill 2.4s var(--ease-loop) infinite;
+    animation: ds-brand-fill var(--brand-loader-duration) var(--ease-loop) infinite;
 }
 @keyframes ds-brand-fill {
     0%   { -webkit-mask-position: 100% 0; mask-position: 100% 0; opacity: 1; }
@@ -4326,7 +4362,7 @@ body.dark-mode .empty-illo { --empty-illo-shadow: rgb(0 0 0 / .2); }
 @media (prefers-reduced-motion: reduce) {
     .spinner { animation-duration: 2.4s; }   /* 완전히 멈추면 '멈춘 화면'으로 오해 — 느리게만 */
     .skeleton-line, .skeleton-title, .skeleton-block { animation: none; }
-    .brand-loader__fill { animation-duration: 4.8s; }   /* 스피너와 같은 이유로 멈추지 않고 느리게만 */
+    .brand-loader { --brand-loader-duration: 6s; }   /* 스피너와 같은 이유로 멈추지 않고 느리게만 — 조각 · 점 · 채움 모두 */
 }
 
 /* ═════════════════════════════════════════════════════════════════════════

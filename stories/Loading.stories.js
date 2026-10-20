@@ -1,8 +1,14 @@
 // Feedback/Loading — 문서 화면은 Loading.mdx. 여기 스토리는 MDX 카드 안에 들어가는 예시 · Playground
-// 브랜드 로더 로고 — 브랜드(제품)에 로고 로더가 있으면 로고, 없으면 스피너 --lg (Fashion · Precision)
-const LOGO = { default: new URL('../assets/brand/default-logo.svg', import.meta.url).href };   // 가상 제품 마크 (Screens 레일과 같은 모양)
-const brandLoader = (src) =>
-  `<span class="brand-loader" style="--brand-loader-width:72px" aria-hidden="true"><img class="brand-loader__base" src="${src}" alt=""><img class="brand-loader__fill" src="${src}" alt=""></span>`;
+// 브랜드 로더 — 브랜드(제품)에 로고 로더가 있으면 마크 조각이 맞춰지는 로더(DS-ADR-043), 없으면 스피너 --lg (Fashion · Precision)
+// 마크 = 가상 제품 마크(Screens 레일과 같은 모양)를 조각 셋(윗면 · 왼면 · 오른면)으로 나눈 SVG
+const MARK_PIECES = '<svg viewBox="0 0 34 34"><rect class="brand-loader__bg" width="34" height="34" rx="8"/>' +
+  '<path class="brand-loader__arc" d="M4.4 21.6A12.5 12.5 0 1 1 27.6 21.6"/>' +
+  '<path class="brand-loader__piece brand-loader__piece--top" d="M16 10.2l6 3.45-6 3.45-6-3.45z"/>' +
+  '<path class="brand-loader__piece brand-loader__piece--left" d="M10 13.65l6 3.45V24l-6-3.45z"/>' +
+  '<path class="brand-loader__piece brand-loader__piece--right" d="M16 17.1l6-3.45v6.9L16 24z"/>' +
+  '<circle class="brand-loader__dot" cx="27.6" cy="21.6" r="2.9"/></svg>';
+const LOGO = { default: true };
+const brandLoader = () => '<span class="brand-loader" aria-hidden="true">' + MARK_PIECES + '</span>';
 
 import { doDont } from './_dodont.js';
 
@@ -58,7 +64,7 @@ export const 스피너와_로고_로더 = {
   render: () => `<div style="display:flex;flex-wrap:wrap;gap:24px;max-width:760px">
     ${fig(`<div style="position:relative">${table()}<div class="loading loading--overlay" role="status" aria-live="polite">${spin()}<p class="loading__text">다시 불러오는 중</p></div></div>`,
       '스피너 <code>.spinner</code>', '표 · 카드 · 창 본문 같은 영역, 버튼 · 셀 안. 처리 중임만 알립니다.')}
-    ${fig(`<div style="position:relative;height:124px;border:1px solid var(--color-border-base);border-radius:var(--radius-card);overflow:hidden"><div class="loading loading--overlay" role="status" aria-live="polite">${brandLoader(LOGO.default)}<p class="loading__text">화면을 불러오는 중입니다</p></div></div>`,
+    ${fig(`<div style="position:relative;height:124px;border:1px solid var(--color-border-base);border-radius:var(--radius-card);overflow:hidden"><div class="loading loading--overlay" role="status" aria-live="polite">${brandLoader()}<p class="loading__text">화면을 불러오는 중입니다</p></div></div>`,
       '로고 로더 <code>.brand-loader</code>', '페이지 전체를 처음 불러올 때(로그인 직후 · 화면 전환)만. 로고 로더가 없는 브랜드는 스피너 lg를 씁니다.')}
   </div>`,
 };
@@ -67,12 +73,12 @@ export const 페이지_로딩 = {
   render: (_, { globals }) => {
     const logo = LOGO[globals.brand];
     return `<div style="position:relative;height:240px;max-width:640px;border:1px solid var(--color-border-base);border-radius:var(--radius-card);overflow:hidden">
-      <div class="loading loading--overlay" role="status" aria-live="polite">${logo ? brandLoader(logo) : spin('lg')}<p class="loading__text">화면을 불러오는 중입니다</p></div>
+      <div class="loading loading--overlay" role="status" aria-live="polite">${logo ? brandLoader() : spin('lg')}<p class="loading__text">화면을 불러오는 중입니다</p></div>
     </div>`;
   },
   parameters: { docs: { description: { story:
-    '페이지 전체를 처음 불러올 때만 — 브랜드에 로고 로더가 있으면 로고가 왼쪽부터 채워지고(Default), 없으면 스피너 `--lg`(Fashion · Precision). ' +
-    '영역 · 버튼 안은 언제나 스피너. 로고 이미지는 원본 그대로 두 장 겹쳐 쓰고(아래 회색 · 위 원본), 모션 줄이기 설정이면 느리게.' } } },
+    '페이지 전체를 처음 불러올 때만 — 브랜드에 로고 로더가 있으면 마크 조각이 하나로 맞물리고(Default), 없으면 스피너 `--lg`(Fashion · Precision). ' +
+    '영역 · 버튼 안은 언제나 스피너. 모션 줄이기 설정이면 멈추지 않고 느리게.' } } },
 };
 
 export const 버튼_안 = {
@@ -114,7 +120,7 @@ export const 사용_지침 = {
     { title: '로고 로더는 페이지 전체 첫 로딩에만',
       do: [ddCard(`${spin()}<span class="sr-only">불러오는 중</span>`),
         '표 · 카드 안 로딩은 스피너로 표시합니다.'],
-      dont: [ddCard(`${brandLoader(LOGO.default)}<span class="sr-only">불러오는 중</span>`),
+      dont: [ddCard(`${brandLoader()}<span class="sr-only">불러오는 중</span>`),
         '표 · 카드 안에 로고를 두면 페이지 전체를 다시 불러오는 것처럼 보입니다.'] },
   ]),
 };

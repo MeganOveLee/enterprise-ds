@@ -220,3 +220,8 @@
 .scr-map__r--panel span { color: var(--color-text-on-panel-2); }
 .scr-map__r--focus { background: var(--color-bg-brand-subtle); color: var(--color-text-on-brand-subtle); }
 .scr-map__r--focus span { color: var(--color-text-on-brand-subtle); }
+
+/* 움직임 다시 보기 (TD-123) — 화면 그림 위 오른쪽. 무엇이 움직이는지 한 줄 + 버튼 */
+.scr-play { display: grid; gap: var(--spacing-8); }
+.scr-play__bar { display: flex; align-items: center; justify-content: flex-end; gap: var(--spacing-12); }
+.scr-play__note { font-size: var(--body-sm); color: var(--color-text-muted); }

@@ -201,14 +201,26 @@
   .ds-page a.ds-keys__link:hover { text-decoration: underline; }
   @media (max-width: 1000px) { .ds-keys { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
   @media (max-width: 720px) { .ds-keys { grid-template-columns: minmax(0, 1fr); } .ds-brief__row { grid-template-columns: minmax(0, 1fr); gap: 6px; } }
-  .ds-doors { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 24px 0 8px; }
+  .ds-doors { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 24px 0 8px; }
+  @media (max-width: 1000px) { .ds-doors { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  /* 인터랙션 문 — 문 안에서 「저장 → 처리 중 → ✓ 저장됨」이 작게 되풀이(꾸밈, aria-hidden). 동작 줄이기면 결과만 (TD-123) */
+  .ds-door__demo { display: flex; align-items: center; height: 32px; }
+  .ds-door__demo .btn { display: inline-grid; pointer-events: none; }
+  .ds-door__demo i { grid-area: 1 / 1; display: inline-flex; align-items: center; justify-content: center; gap: 6px; font-style: normal; opacity: 0; animation: 3.6s ease-in-out infinite; }
+  .ds-door__demo i:nth-child(1) { animation-name: ds-door-1; }
+  .ds-door__demo i:nth-child(2) { animation-name: ds-door-2; }
+  .ds-door__demo i:nth-child(3) { animation-name: ds-door-3; }
+  @keyframes ds-door-1 { 0%, 26% { opacity: 1; } 31%, 100% { opacity: 0; } }
+  @keyframes ds-door-2 { 0%, 28% { opacity: 0; } 33%, 58% { opacity: 1; } 63%, 100% { opacity: 0; } }
+  @keyframes ds-door-3 { 0%, 60% { opacity: 0; } 65%, 94% { opacity: 1; } 100% { opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) { .ds-door__demo i { animation: none; } .ds-door__demo i:nth-child(3) { opacity: 1; } }
   .ds-page a.ds-door { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; padding: 18px 20px; border-radius: 10px; background: #fff; color: #1f2328; text-decoration: none; box-shadow: inset 0 0 0 1px #d0d7de; }
   .ds-page a.ds-door:hover { background: #f6f8fa; box-shadow: inset 0 0 0 1px #0550ae; }
   .ds-page a.ds-door--dark { background: #161616; color: #fff; box-shadow: none; }
   .ds-page a.ds-door--dark:hover { background: #2c2c2c; box-shadow: none; }
   .ds-door b { margin-top: 6px; font-size: 18px; line-height: 1.4; }
-  .ds-door span { font-size: 13px; color: #57606a; }
-  .ds-door--dark span { color: #c9ced6; }
+  .ds-door > span:not(.ds-door__demo):not(.ds-hero__dot) { font-size: 13px; color: #57606a; }
+  .ds-door--dark > span:not(.ds-door__demo):not(.ds-hero__dot) { color: #c9ced6; }
   .ds-door em { margin-top: auto; padding-top: 8px; font-style: normal; font-size: 13px; font-weight: 700; }
   .ds-door img, .ds-door .ds-hero__dot { width: 32px !important; height: 32px !important; border-radius: 8px !important; }
   .ds-cases { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
