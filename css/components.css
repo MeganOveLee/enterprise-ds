@@ -1052,7 +1052,7 @@
     font-size: var(--body-md);   /* 번호 14 = Figma Pagination page(14 Medium)와 같음 (TD-108 32번). 구: 12 */
     font-weight: var(--font-weight-medium);
     cursor: pointer;
-    transition: background var(--duration-fast), color var(--duration-fast), border-color var(--duration-fast);
+    transition: background var(--duration-fast), color var(--duration-fast), border-color var(--duration-fast), transform var(--duration-fast) var(--ease-standard);   /* transform = 누름 축소(DS-ADR-041) */
 }
 .ui-pagination__btn:hover {
     background: var(--color-bg-muted);
@@ -4385,4 +4385,153 @@ body.dark-mode .empty-illo { --empty-illo-shadow: rgb(0 0 0 / .2); }
     justify-content: flex-end;   /* Figma Button stack Type=End — 주 동작이 맨 오른쪽 */
     gap: var(--spacing-8);
     padding-top: var(--spacing-24);   /* 본문 ↔ 버튼 = 영역 사이 16 + 24 (Figma Footer). Figma Footer 좌우 · 아래 4(포커스 링 자리)는 CSS가 자르지 않아 0 — 닫기 버튼과 오른쪽 끝이 맞음 */
+}
+
+/* ═════════════════════════════════════════════════════════════════════════
+ * 인터랙션 — 뜻이 있는 한 번짜리 움직임 (DS-ADR-041, TD-108 44번)
+ *   움직임 하나가 알려 주는 것은 하나: 기다림(처리 중 글자 · 단계 목록) / 바뀐 곳(숫자 · 방금 바뀐 행 · 상태 칩) /
+ *   손맛(누름 · 탭 밑줄 · 완료 체크) / 길 안내(다음 차이 · 끌어 순서 바꾸기 · 되돌리기 시간) / 빈 상태 배지
+ *   시간 · 곡선 = 모션 토큰(tokens.css). 스크립트가 필요한 것은 js/motion.js(window.dsMotion), 탭 밑줄은 js/tabs.js
+ *   동작 줄이기(prefers-reduced-motion) = 움직이지 않고 결과만 — 이 절 끝에서 한 번에. 무엇을 언제 쓰는지는 스토리북 Foundation › Motion
+ * ═════════════════════════════════════════════════════════════════════════ */
+
+/* 1 처리 중 글자 .text-shimmer — 몇 초 걸리는 처리의 안내 문구(.loading__text 등)에 빛이 지나감. 뜻 = Shimmer(지금 처리 중)
+ *   바탕 글자 = 보조 글자색, 지나가는 빛 = 본문 글자색 — 어느 순간에도 글자 대비 4.5:1 이상. 한 바퀴 = Shimmer 토큰(지나감 + 쉼) */
+.text-shimmer {
+    color: var(--color-text-muted);
+    background: linear-gradient(90deg, var(--color-text-muted) 0 40%, var(--color-text-base) 50%, var(--color-text-muted) 60% 100%);
+    background-size: 250% 100%;
+    -webkit-background-clip: text;
+            background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: ds-text-shimmer var(--duration-shimmer) linear infinite;
+}
+@keyframes ds-text-shimmer { from { background-position: 100% 0; } 75%, to { background-position: 0 0; } }
+
+/* 2 단계 목록 .steps — 여러 단계 처리에서 어디까지 왔는지(일괄 등록 · BOM 비교 · 배포). 화면 스크립트가 단계마다 클래스를 바꿈
+ *   끝난 단계 .is-done = 성공 원 + 체크가 한 번 그려짐 · 지금 단계 .is-current(aria-current="step") = 도는 고리 · 남은 단계 = 빈 원
+ *   글자로도 알림: 끝난 단계 끝에 <span class="sr-only"> 완료</span>. 감싸는 .loading(role="status")이 바뀐 단계를 읽음 */
+.steps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--spacing-8); font-size: var(--body-md); line-height: var(--line-height-base); color: var(--color-text-muted); text-align: start; }
+.steps__item { display: flex; align-items: center; gap: var(--spacing-8); }
+.steps__mark {
+    flex: none;
+    display: inline-grid;
+    place-items: center;
+    width: 18px;
+    height: 18px;
+    box-sizing: border-box;
+    border: 1.5px solid var(--color-border-strong);
+    border-radius: 50%;
+    transition: background-color var(--duration-base), border-color var(--duration-base);
+}
+.steps__mark svg { width: 12px; height: 12px; fill: none; stroke: var(--color-bg-base); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; opacity: 0; }
+.steps__item.is-current { color: var(--color-text-base); font-weight: var(--font-weight-semibold); }
+.steps__item.is-current .steps__mark { border-color: var(--color-icon-brand); border-top-color: transparent; animation: ds-spin .8s linear infinite; }
+.steps__item.is-done { color: var(--color-text-base); }
+.steps__item.is-done .steps__mark { background: var(--color-icon-success); border-color: var(--color-icon-success); }
+.steps__item.is-done .steps__mark svg { opacity: 1; stroke-dasharray: 16; stroke-dashoffset: 16; animation: ds-draw var(--duration-base) var(--ease-standard) forwards; }
+@keyframes ds-draw { to { stroke-dashoffset: 0; } }
+
+/* 3 숫자 굴러가기 .ds-roll — 업무 개수(대시보드 카드 · 결재 배지 · 검색 결과 건수)가 바뀌는 순간 자릿수가 굴러감
+ *   마크업은 dsMotion.roll(요소, 값)이 만든다: 읽는 값 = 안의 .sr-only 글자, 굴러가는 자릿수 줄은 aria-hidden */
+.ds-roll { display: inline-flex; height: 1.2em; line-height: 1.2; overflow: hidden; font-variant-numeric: tabular-nums; vertical-align: bottom; }
+.ds-roll__digits { display: inline-flex; }
+.ds-roll__col { display: flex; flex-direction: column; transition: transform var(--duration-slow) var(--ease-standard); }
+.ds-roll__col > span { display: block; height: 1.2em; }
+
+/* 4 방금 바뀐 행 .is-flash — 저장 · 추가 직후 그 행(또는 줄)이 옅은 브랜드 바탕으로 떴다가 원래 바탕으로 돌아감(dsMotion.flash). 한 번만 */
+.grid-table tbody tr.is-flash td,
+.is-flash:not(tr) { animation: ds-flash var(--duration-once) ease-out; }
+@keyframes ds-flash { 0%, 25% { background-color: var(--color-bg-brand-subtle); } }
+
+/* 5 상태 칩이 바뀜 .status-chip.is-changed — 결재 · 승인 · 반려 직후 칩이 한 번 튀며 새 색으로(dsMotion.pop). 글자가 상태를 알리고 움직임은 시선만 */
+.status-chip { transition: background-color var(--duration-base), color var(--duration-base); }
+.status-chip.is-changed { animation: ds-pop var(--duration-slow) var(--ease-standard); }
+@keyframes ds-pop { 40% { transform: scale(1.12); } }
+
+/* 6 누르면 살짝 들어감 — 누르는 동안 버튼 · 페이지 번호가 --scale-press 로 작아짐. 비활성 · 처리 중은 그대로 */
+.btn { transition: transform var(--duration-fast) var(--ease-standard); }
+.btn:active:not(:disabled):not([aria-disabled="true"]):not(.is-loading):not(.is-done),
+.ui-pagination__btn:active:not(:disabled):not(.is-disabled):not(.is-active) { transform: scale(var(--scale-press)); }
+
+/* 7 탭 밑줄이 미끄러짐 .tab-indicator — js/tabs.js 가 탭 목록(팝업 탭 · 패널 탭) 안에 밑줄 하나를 두고 고른 탭 아래로 옮김.
+ *   스크립트가 없으면 위 탭 규칙대로 고른 탭마다 밑줄. 처음 자리 잡을 때는 움직이지 않음(.is-ready 뒤부터) */
+.pop .tab ul.has-indicator,
+.main-sub-tabs.has-indicator { position: relative; }
+.pop .tab ul.has-indicator > li.is-active,
+.main-sub-tabs.has-indicator > .sub-tab.is-active { border-bottom-color: transparent; }
+.tab-indicator { position: absolute; left: 0; bottom: 0; width: 0; height: 3px; background: var(--color-border-brand); pointer-events: none; }
+.tab-indicator.is-ready { transition: transform var(--duration-base) var(--ease-standard), width var(--duration-base) var(--ease-standard); }
+
+/* 8 저장 버튼이 체크로 .btn.is-done — 처리 중(스피너) 뒤 같은 버튼 자리에서 「✓ 저장됨」을 잠깐 보이고 원래 글자로(dsMotion.done).
+ *   결과는 화면 읽기 프로그램에도 알림(dsMotion 알림 자리). 색은 버튼 그대로 — 체크와 글자가 결과를 알림 */
+.btn.is-done { cursor: default; }
+.btn .ds-check path { stroke-dasharray: 16; stroke-dashoffset: 16; animation: ds-draw var(--duration-base) var(--ease-standard) forwards; }
+
+/* 9 다음 차이로 .is-hit — [다음 차이]로 내려간 비교 행이 한 번 위험 테두리로 깜빡임(dsMotion.nextDiff). 포커스는 그 행의 식별자 링크로 */
+.grid-table tbody tr.is-hit td { animation: ds-hit var(--duration-once) ease-out; }
+@keyframes ds-hit { 0%, 30% { box-shadow: inset 0 2px 0 var(--color-border-danger), inset 0 -2px 0 var(--color-border-danger); } }
+
+/* 10 끌어 순서 바꾸기 [data-ds-reorder] — 결재선 · 편집 표처럼 순서가 뜻인 목록. 줄을 끌면 놓을 자리에 브랜드 선이 생기고
+ *   나머지 줄이 비켜 줌. 키보드 = 줄의 손잡이(.reorder-handle)에서 Alt + ↑ ↓. 옮긴 줄은 「방금 바뀐 행」으로 한 번 표시(dsMotion, 자동)
+ *   손잡이 = 글자 없는 버튼(aria-label 「○○ 순서 바꾸기」) — 끄는 곳 · 키보드 자리가 하나 */
+.reorder-handle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--color-icon-muted);
+    cursor: grab;
+    touch-action: none;
+}
+.reorder-handle svg { width: 16px; height: 16px; }
+.grid-table td:has(> .reorder-handle) { padding: 0 var(--spacing-4); text-overflow: clip; }   /* 표 손잡이 칸 — 말줄임표 없이 손잡이만 */
+.grid-table td > .reorder-handle { vertical-align: middle; }
+.reorder-handle:hover { background: var(--color-bg-muted); color: var(--color-icon-base); }
+.reorder-handle:focus-visible { outline: 2px solid var(--color-border-focus); outline-offset: 1px; }
+[data-ds-reorder] > .is-dragging { position: relative; z-index: 2; outline: 1px solid var(--color-border-brand); box-shadow: var(--shadow-popover); cursor: grabbing; }
+[data-ds-reorder] > .is-dragging > td { background: var(--color-bg-base); }
+.reorder-drop { position: fixed; z-index: 1100; height: 2px; background: var(--color-border-brand); border-radius: 1px; pointer-events: none; }
+.reorder-drop::before { content: ""; position: absolute; left: -4px; top: -3px; width: 8px; height: 8px; box-sizing: border-box; border: 2px solid var(--color-border-brand); border-radius: 50%; background: var(--color-bg-base); }
+
+/* 11 되돌리기 시간 막대 .toast--undo — 삭제 뒤 확인 창 대신 [되돌리기]가 든 토스트를 --duration-undo 동안 두고, 아래 막대로 남은 시간을 보임.
+ *   마우스 · 키보드 포커스가 토스트에 있으면 시간이 멈춤(.is-paused). 시간이 끝나면 삭제가 확정되고 토스트가 닫힘(dsMotion.undoToast) */
+.toast--undo { position: relative; overflow: hidden; }
+.toast__timer { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: var(--color-text-inverse); transform-origin: left center; animation: ds-timer var(--duration-undo) linear forwards; }
+.toast--undo.is-paused .toast__timer { animation-play-state: paused; }
+@keyframes ds-timer { to { transform: scaleX(0); } }
+
+/* 12 빈 상태 배지가 한 번 움직임 — 솔리드 일러스트의 이유 배지(검색 · 네트워크 · 오류)만 나타날 때 한 번 흔들림. 글을 읽기 전에 빈 이유를 먼저 봄
+ *   배지가 없는 「아직 없음」과 라인 모양(Fashion · Precision)은 움직이지 않음 */
+.empty-illo__mark { animation: ds-badge-nudge var(--duration-once) var(--ease-standard) .3s 1 both; }
+@keyframes ds-badge-nudge {
+    0%, 100% { rotate: 0deg; translate: 0 0; }
+    25% { rotate: -12deg; translate: -3px -2px; }
+    55% { rotate: 8deg; translate: 2px -1px; }
+}
+
+/* 강제 색 모드(고대비) — 바탕 · 글자 그림이 시스템 색으로 바뀌어도 보이게 */
+@media (forced-colors: active) {
+    .text-shimmer { background: none; -webkit-text-fill-color: CanvasText; animation: none; }
+    .tab-indicator, .reorder-drop { forced-color-adjust: none; background: Highlight; }
+    .steps__item.is-done .steps__mark { forced-color-adjust: none; background: CanvasText; border-color: CanvasText; }
+    .steps__mark svg { stroke: Canvas; }
+}
+
+/* 동작 줄이기 — 움직이지 않고 결과만. 도는 고리는 스피너와 같은 이유로 느리게만(완전히 멈추면 멈춘 화면으로 오해) */
+@media (prefers-reduced-motion: reduce) {
+    .text-shimmer { animation: none; background: none; -webkit-text-fill-color: currentColor; color: var(--color-text-base); }
+    .steps__item.is-current .steps__mark { animation-duration: 2.4s; }
+    .steps__item.is-done .steps__mark svg,
+    .btn .ds-check path { animation: none; stroke-dashoffset: 0; }
+    .steps__mark, .ds-roll__col, .status-chip, .tab-indicator.is-ready, .btn, .ui-pagination__btn { transition: none; }
+    .grid-table tbody tr.is-flash td, .is-flash:not(tr), .grid-table tbody tr.is-hit td, .status-chip.is-changed, .empty-illo__mark { animation: none; }
+    .btn, .ui-pagination__btn { --scale-press: 1; }   /* 누름 축소 끔 */
+    .toast__timer { display: none; }   /* 시간은 그대로 흐르고(스크립트) 줄어드는 막대만 안 보임 */
 }

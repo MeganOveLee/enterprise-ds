@@ -21,6 +21,7 @@ import * as S from './Table.stories.js';
 <tr><td><b>편집 표</b></td><td><code>table.grid-table.grid-table--edit</code><span className="ds-muted">행 높이 40</span></td><td>일괄 등록처럼 셀 안에서 값을 넣는 표입니다. 셀 바탕은 회색 판이고, 입력 필드(<code>.input</code> · <code>.select</code>)는 셀 너비를 채우는 흰 상자입니다. 바꿀 수 없는 값은 읽기 전용 입력 필드(<code>readonly</code>)로 둡니다. 입력 필드에는 placeholder(「문서 명 입력」)를 둡니다. 셀마다 무엇을 넣는 셀인지 <code>aria-label</code>로 이름을 붙입니다(「1행 문서 명」).</td></tr>
 <tr><td><b>행 상태</b></td><td><code>tr.is-selected</code> · <code>tr[aria-selected="true"]</code></td><td>짝수 행은 얼룩 바탕, 마우스를 올리면 옅은 브랜드 바탕, 선택한 행(체크한 행)은 한 단계 진한 브랜드 바탕입니다. 선택이 얼룩 · 마우스 올림을 이깁니다. 바탕은 모두 그리드 토큰(<code>--color-bg-row-alt</code> · <code>--color-bg-grid-row-hover</code> · <code>--color-bg-grid-row-selected</code>)이라 브랜드 · 화면 모드를 따라갑니다.</td></tr>
 </tbody>
+<tr><td><b>움직임</b></td><td><code>tr.is-flash</code> · <code>tbody[data-ds-reorder]</code><span className="ds-muted">js/motion.js</span></td><td>저장 · 추가 직후 그 행이 옅은 브랜드 바탕으로 한 번 떴다 사라집니다(<code>dsMotion.flash</code>). 순서가 뜻인 편집 표는 행 앞 손잡이로 끌어 순서를 바꾸고, 키보드는 손잡이에서 Alt + ↑ ↓입니다. <a className="ds-link" href="./?path=/docs/foundation-motion--docs" target="_top">Foundation › Motion</a></td></tr>
 </table>
 <p className="ds-sec__desc ds-after">Figma UI Kit의 Table component · Header · Cell과 짝입니다. 제품의 목록 그리드는 그리드 라이브러리가 그리고, DS는 바깥 컨테이너와 그리드 토큰을 줍니다. 이 표는 같은 토큰을 쓰므로 라이브러리 그리드와 같이 바뀝니다. 화면 안 모습은 <a className="ds-link" href="./?path=/docs/screens-plm-화면--docs" target="_top">Screens › PLM 화면</a>의 문서 검색 · 프로젝트 상세에 있습니다.</p>
 </Section>

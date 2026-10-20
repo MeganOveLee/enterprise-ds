@@ -18,6 +18,7 @@ import * as S from './Tabs.stories.js';
 <tr><td><b>접근성</b></td><td><code>role="tablist"</code> · <code>role="tab"</code> · <code>tabindex</code></td><td>목록에 tablist, 탭마다 tab을 붙입니다. 선택된 탭만 <code>tabindex="0"</code>, 나머지는 <code>-1</code>입니다. <code>li</code>로 만든 탭도 이 속성이 있어야 키보드로 이동할 수 있습니다.</td></tr>
 <tr><td><b>키보드</b></td><td><span className="ds-muted">← → · Home · End</span></td><td>Tab으로 탭 줄에 들어와 ← →로 옆 탭, Home · End로 처음 · 끝 탭을 선택합니다(WAI-ARIA APG Tabs, 자동 선택).</td></tr>
 </tbody>
+<tr><td><b>밑줄 이동</b></td><td><code>.tab-indicator</code><span className="ds-muted">js/tabs.js</span></td><td>다른 탭을 고르면 밑줄 하나가 그 탭 아래로 미끄러집니다. 어느 탭에서 어느 탭으로 왔는지 이어 보입니다. 스크립트가 없으면 고른 탭마다 밑줄이 그려집니다. 움직임 규칙은 <a className="ds-link" href="./?path=/docs/foundation-motion--docs" target="_top">Foundation › Motion</a>에 있습니다.</td></tr>
 </table>
 <p className="ds-sec__desc ds-after">Figma UI Kit의 Tabs와 짝입니다.</p>
 </Section>

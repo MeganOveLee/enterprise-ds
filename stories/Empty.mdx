@@ -17,6 +17,7 @@ import * as S from './Empty.stories.js';
 <tr><td><b>배치</b></td><td><code>.empty--card</code> · <code>.empty--page</code><span className="ds-muted">클래스가 없는 것이 기본(영역 · 표 아래)입니다</span></td><td>배치가 일러스트 크기를 정합니다. 표 헤더 행 바로 아래(<code>.grid-table + .empty</code>)는 영역보다 작게, 카드 안은 더 작게 하고 액션을 두지 않습니다. 페이지 전체는 크게 둡니다.</td></tr>
 <tr><td><b>일러스트</b></td><td><code>.empty__icon.ds-art</code> › <code>.ds-art__solid</code> · <code>.ds-art__line</code><span className="ds-muted">솔리드 · 라인</span></td><td>그림 자산입니다. 마크업에 솔리드(폴더 + 유형 배지)와 라인(선 픽토그램)을 함께 두고, 브랜드 파일의 토큰(<code>--art-solid</code> · <code>--art-line</code>)이 하나만 보이게 합니다. Default = 솔리드, Fashion · Precision = 라인입니다. 브랜드 파일 한 곳만 바꾸면 빈 상태 · 폴더 · 파일 형식 아이콘이 함께 바뀝니다. 두 svg 모두 <code>aria-hidden</code>이고 뜻은 제목이 전달합니다. 색은 모두 토큰이라 다크 모드에서도 따라 바뀝니다.</td></tr>
 </tbody>
+<tr><td><b>배지 움직임</b></td><td><span className="ds-muted">클래스 추가 없음</span></td><td>솔리드 일러스트의 이유 배지(검색 · 네트워크 · 오류)가 나타날 때 한 번 흔들립니다. 글을 읽기 전에 빈 이유를 먼저 봅니다. 배지가 없는 「아직 없음」과 라인 모양은 움직이지 않습니다. <a className="ds-link" href="./?path=/docs/foundation-motion--docs" target="_top">Foundation › Motion</a></td></tr>
 </table>
 </Section>
 <Section title="예시" en="Examples" desc="도구 막대에서 브랜드를 바꾸면 일러스트가 솔리드(Default) ↔ 라인(Fashion · Precision)으로 바뀝니다. 마크업은 그대로입니다.">

@@ -23,6 +23,7 @@ import * as S from './BomCompare.stories.js';
 <tr><td><b>표</b></td><td><code>.grid-table</code> · <code>.compare-row--similar</code> · <code>.compare-row--unassigned</code> · <code>.compare-cell</code></td><td>같은 행 = 같은 품목입니다. 한쪽에만 있는 품목은 반대쪽에 빈 행을 둡니다. 「비교」 열에 결과를 글자로 두고, 수량이 다른 셀(<code>.compare-qty</code>)은 진한 위험 글자입니다.</td></tr>
 <tr><td><b>비교 결과</b></td><td><code>--color-bg-danger-subtle</code> · <code>--color-border-danger</code></td><td>같음 = 품목 번호 · 버전 · 수량이 같음(표시 없음). 수량 다름 = 같은 품목 번호 · 버전에 수량이 다름, 한쪽에만 있음 = 다른 쪽에 같은 품목 번호 · 버전이 없음 — 두 결과 모두 위험 옅은 바탕 + 위험 테두리 행입니다. 범례는 같음 · 다름 두 가지입니다.</td></tr>
 </tbody>
+<tr><td><b>이동 표시</b></td><td><code>[data-ds-next-diff]</code> · <code>dsMotion.nextDiff</code></td><td>[찾기]로 찾은 줄 · [다음 차이]로 내려간 줄은 한 번 위험 테두리로 깜빡이고, 포커스가 그 줄의 품목 번호 링크로 갑니다. 위치(차이 2 / 3)는 글자로 보입니다. <a className="ds-link" href="./?path=/docs/foundation-motion--docs" target="_top">Foundation › Motion</a></td></tr>
 </table>
 <p className="ds-sec__desc ds-after">그리드 위젯으로 그리는 화면은 행 스타일 함수가 같은 클래스 이름(<code>compare-row--similar</code> · <code>compare-row--unassigned</code>)을 돌려주면 같은 표시가 됩니다. Figma UI Kit 🧱 Blocks 페이지의 「BOM Compare」와 같은 구성입니다.</p>
 </Section>

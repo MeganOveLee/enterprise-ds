@@ -1,6 +1,7 @@
 /* =====================================================================
- * tabs.js - 팝업 탭 넘침 ◀ ▶
+ * tabs.js - 팝업 탭 넘침 ◀ ▶ · 탭 밑줄
  * 상세 창(.pop)의 탭 목록(.tab > ul)이 탭 줄보다 길면 목록 양 끝에 화살표 버튼을 두고 목록을 옆으로 민다.
+ * 팝업 탭 · 패널 탭(.main-sub-tabs)의 고른 탭 밑줄을 하나로 두고, 다른 탭을 고르면 그 탭 아래로 미끄러지게 옮긴다(DS-ADR-041).
  *
  * 사용:
  *   불러오기만 하면 화면의 .pop .tab 이 모두 대상(select.js 와 같은 방식). 이미 붙은 탭 줄은 건너뜀
@@ -48,6 +49,8 @@
         }
         if (!list) return;
         bar.setAttribute('data-ds-tabs', 'on');
+
+        initIndicator(list);
 
         var prev = makeButton('prev');
         var next = makeButton('next');
@@ -120,12 +123,45 @@
         reveal(selectedTab(), true);
     }
 
+    /* 탭 밑줄 — 목록 안에 .tab-indicator 하나. 고른 탭(aria-selected="true" · .is-active)의 왼쪽 · 폭으로 옮김.
+     * 처음 자리는 움직이지 않고 놓고(.is-ready 전), 그 뒤 고른 탭이 바뀌면 CSS transition 으로 미끄러짐. 탭 이름 · 폭이 바뀌어도 다시 잼 */
+    function initIndicator(list) {
+        if (!list || list.getAttribute('data-ds-indicator') === 'on') return;
+        list.setAttribute('data-ds-indicator', 'on');
+        var bar = document.createElement('span');
+        bar.className = 'tab-indicator';
+        bar.setAttribute('aria-hidden', 'true');
+        list.appendChild(bar);
+        list.classList.add('has-indicator');
+        function picked() {
+            return list.querySelector('[aria-selected="true"]') || list.querySelector('.is-active');
+        }
+        function place() {
+            var t = picked();
+            if (!t || t === bar) { bar.style.width = '0'; return; }
+            bar.style.width = t.offsetWidth + 'px';
+            bar.style.transform = 'translateX(' + t.offsetLeft + 'px)';
+        }
+        place();
+        requestAnimationFrame(function () { requestAnimationFrame(function () { bar.classList.add('is-ready'); }); });
+        if (window.MutationObserver) {
+            new MutationObserver(place).observe(list, { subtree: true, attributes: true, attributeFilter: ['aria-selected', 'class'], childList: true, characterData: true });
+        }
+        if (window.ResizeObserver) new ResizeObserver(place).observe(list);
+        else window.addEventListener('resize', place);
+        if (document.fonts && document.fonts.ready) document.fonts.ready.then(place);
+    }
+
     function dsTabsInit(root) {
         root = root || document;
         var bars = [];
         if (root.matches && root.matches('.pop .tab')) bars.push(root);
         Array.prototype.push.apply(bars, root.querySelectorAll ? root.querySelectorAll('.pop .tab') : []);
         bars.forEach(initTabBar);
+        var panels = [];
+        if (root.matches && root.matches('.main-sub-tabs')) panels.push(root);
+        Array.prototype.push.apply(panels, root.querySelectorAll ? root.querySelectorAll('.main-sub-tabs') : []);
+        panels.forEach(initIndicator);
     }
 
     window.dsTabsInit = dsTabsInit;
