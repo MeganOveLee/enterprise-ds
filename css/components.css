@@ -3007,37 +3007,45 @@ body.dark-mode .section-box { background: var(--color-bg-muted); }
     border-radius: var(--radius-sm);
     background: var(--color-bg-disabled);   /* 구 #D9D9D9 하드코딩 → 쿨그레이 토큰 */
 }
-.status-segments--delay .status-segments__bar { animation: statusPulse var(--duration-pulse) var(--ease-loop) infinite; }
-/* @keyframes statusPulse — 두근 · 두근 · 쉼(심장 박동). 막대 5개가 함께 커지며 진해졌다가 두 번째 박동 뒤 쉰다 (TD-123).
- * 구(10/16 ~ 10/20): 이전 버전 값 그대로 진함 1 ↔ 흐림 .35를 1.6초에 부드럽게 + 막대마다 0.12초 늦게(물결) — 「너무 스무스해서 잘 안 보임」.
+.status-segments--delay .status-segments__bar { animation: statusPulse var(--duration-pulse) var(--ease-loop) infinite backwards; }
+.status-segments--delay .status-segments__bar:nth-child(2) { animation-delay: .05s; }
+.status-segments--delay .status-segments__bar:nth-child(3) { animation-delay: .1s; }
+.status-segments--delay .status-segments__bar:nth-child(4) { animation-delay: .15s; }
+.status-segments--delay .status-segments__bar:nth-child(5) { animation-delay: .2s; }
+/* @keyframes statusPulse — 두근 · 두근 · 쉼. 크기는 그대로 두고 밝기만 — 박동마다 진해지며 왼쪽 → 오른쪽으로 반짝임이 번진다(막대마다 0.05초) (TD-108 46).
+ * 구(10/20 ~ 10/21): 막대가 세로로 1.3배까지 커지며 진해짐 — 「너무 튐」. 구(10/16 ~ 10/20): 진함 ↔ 흐림을 1.6초에 부드럽게 — 「잘 안 보임」.
  * 박동 2번 / 1.2초 = 초당 1.7번이라 깜빡임 기준(초당 3번 미만, WCAG 2.3.1) 안. 상태는 옆 글자가 알려 주고 막대는 꾸밈 */
 @keyframes statusPulse {
-    0%        { transform: scaleY(1);   opacity: .5; }
-    12%       { transform: scaleY(1.3); opacity: 1; }
-    24%       { transform: scaleY(1);   opacity: .6; }
-    36%       { transform: scaleY(1.2); opacity: 1; }
-    56%, 100% { transform: scaleY(1);   opacity: .5; }
+    0%        { opacity: .45; }
+    12%       { opacity: 1; }
+    24%       { opacity: .6; }
+    36%       { opacity: 1; }
+    56%, 100% { opacity: .45; }
 }
 /* 지연 경고 빛 — 지연 상태 표시와 같은 줄(.progress-row)의 지연 진행률 막대. 막대 5개와 같은 박자(--duration-pulse)로
- * 박동마다 붉은 번짐이 일고, 첫 박동에 흰 빛이 채움을 한 번 훑고 지나간다 (TD-123 B안).
- * 처리 중 Shimmer(흰 띠가 천천히 지나가고 쉼)와 다른 점 = 박동에 붙은 빠른 빛 + 붉은 번짐. 표 안 지연 막대처럼 상태 표시가 옆에 없는 막대는 정지 —
+ * 박동마다 붉은 번짐이 일고, 박동 두 번에 한 번 옅은 흰 빛이 채움을 천천히 훑는다(1.7초 지나감 + 쉼, TD-108 46 — 구 0.6초 「너무 빨라 눈에 띔」).
+ * 처리 중 Shimmer와 다른 점 = 박동에 맞춘 붉은 번짐. 표 안 지연 막대처럼 상태 표시가 옆에 없는 막대는 정지 —
  * 경고가 화면 여러 곳에서 동시에 뛰지 않게 한 화면의 대표 막대 하나만 */
 .progress-row:has(.status-block--delay) .progress-bar--delay .pbar-fill {
     background-image:
-        linear-gradient(90deg, transparent 0%, color-mix(in srgb, var(--white) 60%, transparent) 50%, transparent 100%),
+        linear-gradient(90deg, transparent 0%, color-mix(in srgb, var(--white) 40%, transparent) 50%, transparent 100%),
         linear-gradient(to right, var(--color-progress-delay-start), var(--color-progress-delay-end));
     background-size: 35% 100%, 100% 100%;
     background-repeat: no-repeat;
     background-position: -60% 0, 0 0;
-    animation: ds-alert-bar var(--duration-pulse) var(--ease-loop) infinite;
+    animation: ds-alert-glow var(--duration-pulse) var(--ease-loop) infinite,
+               ds-alert-sweep calc(var(--duration-pulse) * 2) var(--ease-loop) infinite;
 }
-@keyframes ds-alert-bar {
-    0%        { background-position: -60% 0, 0 0; box-shadow: 0 0 0 0 transparent; }
+@keyframes ds-alert-glow {
+    0%        { box-shadow: 0 0 0 0 transparent; }
     12%       { box-shadow: 0 0 10px 2px color-mix(in srgb, var(--color-progress-delay-end) 55%, transparent); }
     24%       { box-shadow: 0 0 3px 0 color-mix(in srgb, var(--color-progress-delay-end) 35%, transparent); }
     36%       { box-shadow: 0 0 8px 1px color-mix(in srgb, var(--color-progress-delay-end) 50%, transparent); }
-    48%       { background-position: 160% 0, 0 0; }
-    56%, 100% { background-position: 160% 0, 0 0; box-shadow: 0 0 0 0 transparent; }
+    56%, 100% { box-shadow: 0 0 0 0 transparent; }
+}
+@keyframes ds-alert-sweep {
+    0%        { background-position: -60% 0, 0 0; }
+    70%, 100% { background-position: 160% 0, 0 0; }
 }
 /* 모션 줄이기 = 멈춤. 막대 5개는 진한 색, 진행률 막대는 빛 · 번짐 없이 채움만(상태는 옆 글자 「지연」) */
 @media (prefers-reduced-motion: reduce) {
@@ -3960,12 +3968,13 @@ input.onKeySearch2 { display: block; flex: 1 1 auto; min-width: 0; }
 
 /* ── 브랜드 로더 .brand-loader ──────────────────────────────────────────────
  * 페이지 전체를 처음 불러올 때(화면 전환 덮개 · 로그인 직후)만. 영역 · 버튼 안은 언제나 스피너
- * 움직임 = 조각이 맞춰짐(DS-ADR-043, TD-123) — 흩어진 마크 조각 셋이 차례로 들어와 하나로 맞물리고, 점이 마지막에 찍힌 뒤 흐려지며 되풀이.
+ * 움직임 = 조각이 맞춰짐(DS-ADR-043, TD-123) — 흩어진 마크 조각 셋이 차례로 들어와 하나로 맞물리고, 고리가 그려진 끝에 점이 찍힌 뒤 흐려지며 되풀이.
+ * 배경 네모 없이 마크만(10/21, TD-108 46) — 조각 · 고리는 브랜드색(--color-bg-brand), 점은 accent. 라이트 · 다크 모두 같은 토큰
  * 마크는 조각으로 나뉜 SVG(아래 마크업). 로고가 그림 한 장(PNG 등)뿐인 브랜드는 .brand-loader--image(왼쪽부터 채워짐)
  * 브랜드 선택은 제품 설정: Default = 로고 로더 · Fashion · Precision(공개 시연) = 스피너 --lg. 고객사 화면은 기존 로딩 이미지 유지
  *   <div class="loading loading--overlay" role="status" aria-live="polite">
  *     <span class="brand-loader" aria-hidden="true">
- *       <svg viewBox="0 0 34 34"><rect class="brand-loader__bg" width="34" height="34" rx="8"/><path class="brand-loader__arc" d="…"/>
+ *       <svg viewBox="0 0 34 34"><path class="brand-loader__arc" pathLength="1" d="…"/>
  *         <path class="brand-loader__piece brand-loader__piece--top" d="…"/> … --left · --right … <circle class="brand-loader__dot" …/></svg>
  *     </span>
  *     <p class="loading__text">화면을 불러오는 중입니다</p>
@@ -3980,20 +3989,24 @@ input.onKeySearch2 { display: block; flex: 1 1 auto; min-width: 0; }
     line-height: 0;
 }
 .brand-loader svg { display: block; width: 100%; height: auto; overflow: visible; }
-.brand-loader__bg { fill: var(--color-bg-brand); }
-.brand-loader__arc { fill: none; stroke: var(--color-icon-on-color); stroke-width: 1.6; stroke-linecap: round; opacity: .55; }
+.brand-loader__arc {
+    fill: none;
+    stroke: var(--color-bg-brand);
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-dasharray: 1;              /* 마크업 pathLength="1" — 길이를 1로 두고 0 → 1 그려짐 */
+    animation: ds-brand-arc var(--brand-loader-duration) var(--ease-standard) infinite;
+}
 .brand-loader__piece {
-    fill: var(--color-icon-on-color);
+    fill: var(--color-bg-brand);
     transform-box: fill-box;
-    animation: ds-brand-piece var(--brand-loader-duration) var(--ease-standard) infinite;
+    animation: ds-brand-piece var(--brand-loader-duration) var(--ease-standard) infinite backwards;   /* backwards = 늦게 출발하는 조각이 기다리는 동안 숨어 있음 */
 }
 .brand-loader__piece--top   { --piece-opacity: 1;   --piece-from: translate(0, -7px); }
 .brand-loader__piece--left  { --piece-opacity: .72; --piece-from: translate(-7px, 5px); animation-delay: .12s; }
 .brand-loader__piece--right { --piece-opacity: .5;  --piece-from: translate(7px, 5px);  animation-delay: .24s; }
 .brand-loader__dot {
     fill: var(--accent-500);
-    stroke: var(--color-bg-brand);
-    stroke-width: 1.6;
     transform-box: fill-box;
     transform-origin: center;
     animation: ds-brand-dot var(--brand-loader-duration) var(--ease-standard) infinite;
@@ -4002,6 +4015,12 @@ input.onKeySearch2 { display: block; flex: 1 1 auto; min-width: 0; }
     0%       { transform: var(--piece-from); opacity: 0; }
     35%, 85% { transform: none; opacity: var(--piece-opacity); }
     100%     { transform: none; opacity: 0; }
+}
+@keyframes ds-brand-arc {
+    0%, 10%  { stroke-dashoffset: 1; opacity: 0; }    /* 그리기 전에는 숨김 — 둥근 끝이 점으로 남지 않게 */
+    14%      { opacity: .35; }
+    45%, 85% { stroke-dashoffset: 0; opacity: .35; }
+    100%     { stroke-dashoffset: 0; opacity: 0; }
 }
 @keyframes ds-brand-dot {
     0%, 45%  { transform: scale(0);    opacity: 1; }

@@ -12,7 +12,7 @@ import * as S from './Motion.stories.js';
 <thead><tr><th>구분</th><th>무엇을 알려 주는 움직임인가</th><th>사용처</th><th>토큰</th></tr></thead>
 <tbody>
 <tr><td><b>Shimmer</b><span className="ds-muted">지나가는 띠</span></td><td>시스템이 지금 처리 중이고 곧 끝납니다. 채운 부분 안에서만 흰 띠가 왼쪽에서 오른쪽으로 지나가고, 한 번 지나간 뒤 잠깐 쉽니다.</td><td>첨부 업로더의 올리는 중 막대. 스켈레톤도 같은 뜻(불러오는 중)의 Shimmer입니다.</td><td><code>--duration-shimmer</code><br/><code>--ease-loop</code></td></tr>
-<tr><td><b>Pulse</b><span className="ds-muted">두근 · 두근 · 쉼</span></td><td>확인이 필요한 경고입니다. 일정이 늦어진 곳으로 시선을 모읍니다. 심장 박동처럼 두 번 뛰고 쉽니다. 상태 자체는 옆 글자가 알려 주고, 움직임은 꾸밈입니다.</td><td>지연 상태 표시의 막대 5개(<code>statusPulse</code>)가 함께 커지며 진해지고, 같은 줄의 지연 진행률 막대는 같은 박자로 붉게 번지며 빛이 한 번 지나갑니다(<code>ds-alert-bar</code>).</td><td><code>--duration-pulse</code><br/><code>--ease-loop</code></td></tr>
+<tr><td><b>Pulse</b><span className="ds-muted">두근 · 두근 · 쉼</span></td><td>확인이 필요한 경고입니다. 일정이 늦어진 곳으로 시선을 모읍니다. 심장 박동처럼 두 번 뛰고 쉽니다. 상태 자체는 옆 글자가 알려 주고, 움직임은 꾸밈입니다.</td><td>지연 상태 표시의 막대 5개(<code>statusPulse</code>)가 크기는 그대로 둔 채 박동마다 진해지며 왼쪽부터 반짝이고, 같은 줄의 지연 진행률 막대는 같은 박자로 붉게 번집니다(<code>ds-alert-glow</code>). 옅은 빛은 박동 두 번에 한 번 천천히 지나갑니다(<code>ds-alert-sweep</code>).</td><td><code>--duration-pulse</code><br/><code>--ease-loop</code></td></tr>
 <tr><td><b>Static</b><span className="ds-muted">정지</span></td><td>저장된 값입니다. 지금 바뀌는 중이 아니므로 움직이지 않습니다.</td><td>진행률 막대(지연 상태 표시와 같은 줄의 막대는 빼고), 지연이 아닌 상태 표시(완료 · 진행 중 · 예정 · 보류), 상태 칩. 값이 바뀔 때만 막대 채움이 늘어납니다.</td><td>—</td></tr>
 </tbody>
 </table>
@@ -20,7 +20,7 @@ import * as S from './Motion.stories.js';
 </Section>
 <Section title="견본" en="Samples" desc="실제 컴포넌트 마크업입니다. 화면에서 보는 움직임과 같습니다.">
 <Card of={S.빛} title="Shimmer" en="In progress" desc="지금 처리 중 — 첨부 파일을 올리는 중입니다. 올린 파일 줄에는 막대가 없습니다." />
-<Card of={S.깜빡임} title="Pulse" en="Warning" desc="경고 — 지연일 때만 막대 5개가 두근 · 두근 뛰고, 같은 줄 진행률 막대가 같은 박자로 붉게 번지며 빛이 지나갑니다. 상태는 옆 글자가 알려 줍니다. 프로젝트 상세 화면의 진행 현황과 같은 마크업입니다." />
+<Card of={S.깜빡임} title="Pulse" en="Warning" desc="경고 — 지연일 때만 막대 5개가 두근 · 두근 반짝이고(크기 변화 없음), 같은 줄 진행률 막대가 같은 박자로 붉게 번지며 옅은 빛이 천천히 지나갑니다. 상태는 옆 글자가 알려 줍니다. 프로젝트 상세 화면의 진행 현황과 같은 마크업입니다." />
 <Card of={S.정지} title="Static" en="Saved value" desc="저장된 값 — 지연이 아닌 상태 표시와 그 줄의 진행률 막대는 움직이지 않습니다." />
 </Section>
 <Section title="인터랙션" en="Interactions" desc="누른 결과나 바뀐 곳을 알려 주는 한 번짜리 움직임입니다. 움직임 하나가 알려 주는 것은 하나이고, 뜻은 글자로도 전달합니다. 스크립트가 필요한 것은 js/motion.js(window.dsMotion), 탭 밑줄은 js/tabs.js가 맡습니다.">
@@ -54,7 +54,7 @@ import * as S from './Motion.stories.js';
 <Card of={S.되돌리기_시간} title="되돌리기 시간" en="Undo" desc="[삭제]를 누르면 줄이 바로 사라지고 [되돌리기] 토스트가 5초 동안 남습니다. 마우스 · 키보드 포커스가 토스트에 있으면 시간이 멈추고, 시간이 끝나면 삭제가 확정됩니다." />
 <Card of={S.빈_상태_배지} title="빈 상태 배지" en="Empty badge" desc="클래스를 더하지 않습니다. 솔리드 일러스트(Default 브랜드)의 이유 배지만 나타날 때 한 번 흔들리고, 배지가 없는 「아직 없음」과 라인 모양(Fashion · Precision)은 움직이지 않습니다." />
 </Section>
-<Section title="로고 로더" en="Logo loader" desc="페이지 전체를 처음 불러올 때(로그인 직후 · 화면 전환)만 쓰는 로고 로더의 움직임입니다. 한 바퀴 2.4초이고, 동작 줄이기 설정에서는 멈추지 않고 6초로 느리게 돕니다. 마크는 가상 제품의 그림입니다. 쓰는 곳은 Feedback › Loading에 있습니다.">
+<Section title="로고 로더" en="Logo loader" desc="페이지 전체를 처음 불러올 때(로그인 직후 · 화면 전환)만 쓰는 로고 로더의 움직임입니다. 한 바퀴 2.4초이고, 동작 줄이기 설정에서는 멈추지 않고 6초로 느리게 돕니다. 마크는 가상 제품의 그림이고, 배경 네모 없이 조각과 고리만 브랜드색으로 그립니다. 쓰는 곳은 Feedback › Loading에 있습니다.">
 <Card of={S.로고_로더} title="조각이 맞춰짐 · 그림 한 장 로고" en="Pieces · Image" desc="마크가 조각으로 나뉜 SVG면 조각 셋이 차례로 들어와 하나로 맞물립니다. 로고가 그림 파일 한 장뿐이면 흐린 로고 위로 원래 로고가 왼쪽부터 채워집니다(DS-ADR-043)." />
 </Section>
 <Section title="토큰" en="Tokens">
@@ -64,7 +64,7 @@ import * as S from './Motion.stories.js';
 <tr><td><code>--duration-fast</code></td><td>.12s</td><td>색 · 테두리 바뀜(메뉴 · 탭 · 페이지 번호 · 입력 필드 포커스), 툴팁 나타남, 스위치 손잡이</td></tr>
 <tr><td><code>--duration-base</code></td><td>.2s</td><td>펼침 화살표 회전, 상세 검색 펼침, 사용자 메뉴 안 바탕 · 화면 모드 스위치</td></tr>
 <tr><td><code>--duration-shimmer</code></td><td>2.4s</td><td>Shimmer 한 바퀴 — 지나감 1.8초 + 쉼 0.6초. 업로더의 올리는 중 막대 · 스켈레톤</td></tr>
-<tr><td><code>--duration-pulse</code></td><td>1.2s</td><td>Pulse 한 바퀴 — 두근(크게 · 진하게) → 두근 → 쉼. 지연 상태 표시와 같은 줄 진행률 막대에만. 박동은 초당 2번이 안 됩니다</td></tr>
+<tr><td><code>--duration-pulse</code></td><td>1.2s</td><td>Pulse 한 바퀴 — 두근(진하게) → 두근 → 쉼. 지연 상태 표시와 같은 줄 진행률 막대에만. 박동은 초당 2번이 안 됩니다</td></tr>
 <tr><td><code>--duration-fill</code></td><td>1.6s</td><td>진행률 막대 채움이 늘어나는 시간(값이 바뀔 때 한 번)</td></tr>
 <tr><td><code>--ease-loop</code></td><td>ease-in-out</td><td>반복 움직임 곡선 — Shimmer · Pulse · 스켈레톤 · 그림 한 장 로고 로더</td></tr>
 <tr><td><code>--duration-slow</code></td><td>.4s</td><td>숫자 굴러가기 · 상태 칩 바뀜</td></tr>
@@ -82,7 +82,7 @@ import * as S from './Motion.stories.js';
 <tbody>
 <tr><td><b>한 자리에 박자 하나</b></td><td>같은 곳에서 두 가지가 따로 움직이지 않게 합니다. 지연 상태 표시와 같은 줄의 진행률 막대는 Pulse와 같은 박자로만 움직입니다. 경고는 화면의 대표 막대 한 곳에서만 뛰고, 표 안 지연 막대 · 단계 막대는 정지입니다(상태는 칩 글자가 알림).</td></tr>
 <tr><td><b>느리고 옅게</b></td><td>Shimmer는 흰색 낮은 투명도라 막대 옆 글자 · 숫자 대비를 해치지 않습니다. 한 바퀴 사이에 쉼이 있습니다.</td></tr>
-<tr><td><b>Shimmer는 처리 중에만</b></td><td>진행률이 있는 처리의 채움(파일 올리기)과 몇 초 걸리는 처리의 안내 문구(<code>.text-shimmer</code>)에만 씁니다. 지연 막대의 빛은 Shimmer가 아니라 Pulse 박동에 붙은 경고 빛입니다 — 박동과 함께 빠르게 지나가고 붉은 번짐이 같이 뜁니다. 버튼 · 영역의 처리 중 표시는 스피너(<a className="ds-link" href="./?path=/docs/feedback-loading--docs" target="_top">Loading</a>)이고, 저장된 상태 값(완료 · 진행 중 · 예정 · 보류)에는 쓰지 않습니다.</td></tr>
+<tr><td><b>Shimmer는 처리 중에만</b></td><td>진행률이 있는 처리의 채움(파일 올리기)과 몇 초 걸리는 처리의 안내 문구(<code>.text-shimmer</code>)에만 씁니다. 지연 막대의 빛은 Shimmer가 아니라 Pulse 박자에 맞춘 경고 빛입니다 — 박동 두 번에 한 번 지나가고, 박동마다 붉은 번짐이 같이 뜁니다. 버튼 · 영역의 처리 중 표시는 스피너(<a className="ds-link" href="./?path=/docs/feedback-loading--docs" target="_top">Loading</a>)이고, 저장된 상태 값(완료 · 진행 중 · 예정 · 보류)에는 쓰지 않습니다.</td></tr>
 <tr><td><b>인터랙션은 한 번</b></td><td>누른 결과 · 바뀐 곳을 알리는 움직임은 한 번 일어나고 멈춥니다. 반복하는 움직임은 Shimmer · Pulse · 스피너뿐입니다.</td></tr>
 <tr><td><b>뜻은 글자가</b></td><td>움직임은 시선을 모으는 꾸밈입니다. 바뀐 숫자 · 상태 · 처리 결과 · 옮긴 순서는 글자나 알림 자리(<code>dsMotion.announce</code>)로도 전달합니다.</td></tr>
 <tr><td><b>모션 줄이기</b></td><td>운영체제의 「동작 줄이기」 설정(<code>prefers-reduced-motion</code>)이면 Shimmer · Pulse는 멈춥니다. Shimmer는 띠 없이 채움만, Pulse는 진한 막대와 빛 · 번짐 없는 진행률 막대로 표시합니다. 스피너 · 로고 로더 · 단계 목록의 도는 고리는 멈추면 멈춘 화면으로 오해할 수 있어 느리게만 돕니다. 인터랙션은 움직이지 않고 결과만 보입니다 — 숫자는 바로 바뀌고, 줄은 바로 자리를 바꾸고, 되돌리기 시간은 막대 없이 그대로 흐릅니다. 스크린 리더가 읽는 이름은 그대로입니다.</td></tr>

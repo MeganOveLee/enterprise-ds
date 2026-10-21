@@ -43,7 +43,7 @@ export const 빛 = {
   render: () => box(uploader(UP)),
 };
 
-// 깜빡임(Pulse) — 지연 상태 표시의 막대 5개가 두근 · 두근 · 쉼(statusPulse), 같은 줄 진행률 막대는 같은 박자로 붉은 번짐 + 빛(TD-123).
+// 깜빡임(Pulse) — 지연 상태 표시의 막대 5개가 두근 · 두근 · 쉼(statusPulse, 밝기만), 같은 줄 진행률 막대는 같은 박자로 붉은 번짐 + 두 박동에 한 번 옅은 빛(TD-123 · TD-108 46).
 // 다른 상태는 정지. 상태는 옆 글자가 알려 주고 막대는 꾸밈(aria-hidden). 마크업 = Screens › 프로젝트 상세 진행 현황과 같음
 export const 깜빡임 = {
   parameters: html(summary('delay', 58, 64)),
@@ -265,8 +265,8 @@ export const 빈_상태_배지 = {
 
 // ── 로고 로더 (DS-ADR-043, TD-123) ── 페이지 전체 첫 로딩. 마크 조각 셋이 차례로 들어와 맞물림 · 그림 한 장 로고는 왼쪽부터 채움
 const IMG_LOGO = new URL('../assets/brand/default-logo.svg', import.meta.url).href;   // 가상 제품 마크(그림 한 장으로 쓸 때의 견본)
-const LOADER_PIECES = '<span class="brand-loader" aria-hidden="true"><svg viewBox="0 0 34 34"><rect class="brand-loader__bg" width="34" height="34" rx="8"/>' +
-  '<path class="brand-loader__arc" d="M4.4 21.6A12.5 12.5 0 1 1 27.6 21.6"/>' +
+const LOADER_PIECES = '<span class="brand-loader" aria-hidden="true"><svg viewBox="0 0 34 34">' +
+  '<path class="brand-loader__arc" pathLength="1" d="M4.4 21.6A12.5 12.5 0 1 1 27.6 21.6"/>' +
   '<path class="brand-loader__piece brand-loader__piece--top" d="M16 10.2l6 3.45-6 3.45-6-3.45z"/>' +
   '<path class="brand-loader__piece brand-loader__piece--left" d="M10 13.65l6 3.45V24l-6-3.45z"/>' +
   '<path class="brand-loader__piece brand-loader__piece--right" d="M16 17.1l6-3.45v6.9L16 24z"/>' +
@@ -278,6 +278,6 @@ export const 로고_로더 = {
   parameters: { controls: { disable: true }, docs: { source: { language: 'html', code:
     '<div class="loading loading--overlay" role="status" aria-live="polite">\n  ' + LOADER_PIECES + '\n  <p class="loading__text">화면을 불러오는 중입니다</p>\n</div>\n\n<!-- 로고가 그림 한 장뿐인 브랜드 -->\n' + LOADER_IMAGE('logo.png') } } },
   render: () => '<div style="display:grid;grid-template-columns:repeat(2,minmax(0,240px));gap:16px">' +
-    loaderFig(LOADER_PIECES, '조각이 맞춰짐 .brand-loader', '흩어진 정보가 한 화면으로 모이는 중 — 마크 조각 셋이 차례로 맞물리고 점이 찍힘') +
+    loaderFig(LOADER_PIECES, '조각이 맞춰짐 .brand-loader', '흩어진 정보가 한 화면으로 모이는 중 — 마크 조각 셋이 차례로 맞물리고, 고리가 그려진 끝에 점이 찍힘') +
     loaderFig(LOADER_IMAGE(IMG_LOGO), '그림 한 장 로고 .brand-loader--image', '로고가 그림 파일 한 장뿐인 브랜드 — 흐린 로고 위로 원래 로고가 왼쪽부터 채워짐') + '</div>',
 };
