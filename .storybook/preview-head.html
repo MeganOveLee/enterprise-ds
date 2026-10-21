@@ -212,28 +212,39 @@
   .ds-page a.ds-keys__link:hover { text-decoration: underline; }
   @media (max-width: 1000px) { .ds-keys { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
   @media (max-width: 720px) { .ds-keys { grid-template-columns: minmax(0, 1fr); } .ds-brief__row { grid-template-columns: minmax(0, 1fr); gap: 6px; } }
-  .ds-doors { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 24px 0 8px; }
-  @media (max-width: 1000px) { .ds-doors { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-  /* 인터랙션 문 — 문 안에서 「저장 → 처리 중 → ✓ 저장됨」이 작게 되풀이(꾸밈, aria-hidden). 동작 줄이기면 결과만 (TD-123) */
-  .ds-door__demo { display: flex; align-items: center; height: 32px; }
-  .ds-door__demo .btn { display: inline-grid; pointer-events: none; }
-  .ds-door__demo i { grid-area: 1 / 1; display: inline-flex; align-items: center; justify-content: center; gap: 6px; font-style: normal; opacity: 0; animation: 3.6s ease-in-out infinite; }
-  .ds-door__demo i:nth-child(1) { animation-name: ds-door-1; }
-  .ds-door__demo i:nth-child(2) { animation-name: ds-door-2; }
-  .ds-door__demo i:nth-child(3) { animation-name: ds-door-3; }
-  @keyframes ds-door-1 { 0%, 26% { opacity: 1; } 31%, 100% { opacity: 0; } }
-  @keyframes ds-door-2 { 0%, 28% { opacity: 0; } 33%, 58% { opacity: 1; } 63%, 100% { opacity: 0; } }
-  @keyframes ds-door-3 { 0%, 60% { opacity: 0; } 65%, 94% { opacity: 1; } 100% { opacity: 0; } }
-  @media (prefers-reduced-motion: reduce) { .ds-door__demo i { animation: none; } .ds-door__demo i:nth-child(3) { opacity: 1; } }
-  .ds-page a.ds-door { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; padding: 18px 20px; border-radius: 10px; background: #fff; color: #1f2328; text-decoration: none; box-shadow: inset 0 0 0 1px #d0d7de; }
-  .ds-page a.ds-door:hover { background: #f6f8fa; box-shadow: inset 0 0 0 1px #0550ae; }
-  .ds-page a.ds-door--dark { background: #161616; color: #fff; box-shadow: none; }
-  .ds-page a.ds-door--dark:hover { background: #2c2c2c; box-shadow: none; }
-  .ds-door b { margin-top: 6px; font-size: 18px; line-height: 1.4; }
-  .ds-door > span:not(.ds-door__demo):not(.ds-hero__dot) { font-size: 13px; color: #57606a; }
-  .ds-door--dark > span:not(.ds-door__demo):not(.ds-hero__dot) { color: #c9ced6; }
-  .ds-door em { margin-top: auto; padding-top: 8px; font-style: normal; font-size: 13px; font-weight: 700; }
-  .ds-door img, .ds-door .ds-hero__dot { width: 32px !important; height: 32px !important; border-radius: 8px !important; }
+  /* 소개 · 시작하기 (10/21 세영님 피드백) — 절 내용을 한 상자로 묶고, 꼭 봐야 하는 것은 꼬리표 · 강조로 구분 */
+  .ds-box { padding: 20px 24px; border: 1px solid #e1e4e8; border-radius: 10px; background: #f6f8fa; }
+  .ds-page .ds-brief.ds-box { margin: 24px 0 0; padding: 20px 24px; border-bottom: 1px solid #e1e4e8; }
+  .ds-box .ds-layer__label { margin-top: 14px; }
+  .ds-box .ds-tl-wrap { margin: 0 0 16px; }
+  .ds-box .ds-tl__no-circle { background: #f6f8fa; }
+  .ds-quick { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 0; padding: 0; list-style: none; }
+  .ds-page a.ds-quick__a { display: inline-flex; align-items: center; gap: 8px; padding: 5px 14px 5px 6px; border: 1px solid #d0d7de; border-radius: 999px; background: #fff; font-size: 13px; font-weight: 600; color: #1f2328; text-decoration: none; }
+  .ds-page a.ds-quick__a:hover { border-color: #0550ae; color: #0550ae; }
+  .ds-quick__a img, .ds-quick__a .ds-hero__dot, .ds-quick__ico { flex-shrink: 0; width: 20px !important; height: 20px !important; border-radius: 5px !important; }
+  .ds-hard { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 0; padding: 0; list-style: none; }
+  .ds-hard > li { display: flex; flex-direction: column; gap: 8px; padding: 18px 20px; border: 1px solid #e1e4e8; border-radius: 10px; background: #fff; }
+  .ds-hard__no { font-size: 12px; font-weight: 700; letter-spacing: .04em; color: #3f56a8; }
+  .ds-hard h3 { margin: 0; font-size: 16px; line-height: 1.4; color: #111418; }
+  .ds-page .ds-hard__q { margin: 0; font-size: 13px; line-height: 1.65; color: #57606a; }
+  .ds-page .ds-hard__a { flex: 1; margin: 4px 0 0; padding: 10px 12px; border-left: 3px solid #3f56a8; border-radius: 0 6px 6px 0; background: #f2f5fc; font-size: 13px; line-height: 1.65; color: #1f2328; }
+  .ds-hard__a::before { content: "이렇게 풀었습니다"; display: block; margin-bottom: 2px; font-size: 12px; font-weight: 700; color: #3f56a8; }
+  .ds-hard > li > a, .ds-hard > li > span:last-child { font-size: 12px; }
+  @media (max-width: 1000px) { .ds-hard { grid-template-columns: minmax(0, 1fr); } }
+  .ds-compare .is-now th, .ds-compare .is-now td { background: #f2f5fc; }
+  .ds-compare .is-now th { box-shadow: inset 3px 0 0 #3f56a8; color: #111418; }
+  .ds-compare .ds-compare__key { border-left: 1px solid #e1e4e8; border-right: 1px solid #e1e4e8; text-align: center; }
+  .ds-compare td.ds-compare__key { font-size: 15px; }
+  .ds-compare .is-now td.ds-compare__key b { color: #3f56a8; }
+  .ds-tag { display: inline-block; padding: 1px 8px; border-radius: 999px; font-size: 12px; font-weight: 600; white-space: nowrap; }
+  .ds-tag--ok { background: #dafbe1; color: #116329; }
+  .ds-tag--warn { background: #fff1e5; color: #953800; }
+  .ds-scope { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 16px 0 0; }
+  .ds-scope > div { display: flex; flex-direction: column; gap: 8px; padding: 16px; border: 1px solid #e1e4e8; border-radius: 10px; background: #fff; }
+  .ds-scope .ds-tag { align-self: flex-start; }
+  .ds-scope h4 { margin: 0; font-size: 14px; line-height: 1.4; color: #111418; }
+  .ds-scope ul { margin: 0; padding-left: 18px; font-size: 13px; line-height: 1.7; color: #424a53; }
+  @media (max-width: 1000px) { .ds-scope { grid-template-columns: minmax(0, 1fr); } }
   .ds-cases { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
   .ds-case { display: flex; flex-direction: column; gap: 6px; padding: 16px; border: 1px solid #e1e4e8; border-radius: 8px; background: #fff; }
   .ds-case__kind { align-self: flex-start; padding: 1px 8px; border-radius: 999px; background: #eef4ff; color: #0550ae; font-size: 12px; font-weight: 600; }
@@ -250,7 +261,7 @@
   .ds-note + .ds-dl { margin-top: 16px; }
   .ds-flow li + li { margin-left: 22px; }
   .ds-flow li + li::before { content: '→'; position: absolute; left: -23px; top: 50%; transform: translateY(-50%); color: #656d76; font-weight: 400; }
-  @media (max-width: 720px) { .ds-doors, .ds-cases, .ds-two { grid-template-columns: 1fr; } }
+  @media (max-width: 720px) { .ds-cases, .ds-two { grid-template-columns: 1fr; } }
   /* 좁은 화면(휴대폰) — 표가 페이지 밖으로 밀어 가로 스크롤이 생기던 것 → 표 안에서만 가로로 밀리게, 칸 패딩도 줄임 (10/13) */
   @media (max-width: 720px) { .ds-page .ds-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; } .ds-table th, .ds-table td { padding: 8px 10px; } }
   /* 글 속 링크 = 색 + 밑줄(색만으로 구분하지 않음 — WCAG 1.4.1). 문서 틀 회색 #656d76 = 흰 바탕 5.2 · 회색 머리 #f6f8fa 4.9 */
@@ -276,4 +287,9 @@
   .ds-tl__card small { display: block; margin-top: 8px; font-size: 11px; line-height: 1.4; color: #656d76; }
   .ds-tl__card--ai small { color: #fff; }   /* 흰 글자 그대로 4.52:1 — 투명도 0.85면 3.75:1로 AA 미달이었음 (10/17) */
   @media (max-width: 760px) { .ds-tl { grid-template-columns: minmax(0, 1fr); } .ds-tl::before, .ds-tl::after, .ds-tl__start, .ds-tl__lg { display: none; } .ds-tl__head { flex-direction: row; text-align: left; } .ds-tl__title { min-height: 0; } }
+  /* 운영 방식 시작 · 끝 강조 (10/21) — START는 테두리 알약, 마지막 단계는 채운 원 + 「v1.0 완료」 알약(제목 아래). 오른쪽 끝 END 글자는 없앰 */
+  .ds-tl::after { content: none; }
+  .ds-tl__start { justify-self: start; margin-top: 12px; padding: 3px 10px; border: 1px solid #c9d2e3; border-radius: 999px; background: #fff; font-weight: 600; }
+  .ds-tl__head:nth-child(8) .ds-tl__no-circle { background: #3f56a8; border-color: #3f56a8; color: #fff; }
+  .ds-tl__head:nth-child(8)::after { content: "v1.0 완료"; margin-top: -4px; padding: 2px 10px; border-radius: 999px; background: #3f56a8; color: #fff; font-size: 12px; font-weight: 700; }
 </style>

@@ -7,7 +7,8 @@ import notionIcon from '../assets/links/notion.svg';
 
 <Meta title="시작하기" />
 
-{/* 시작하기 = 이 스토리북을 보고 가져다 쓰는 법 — 미리보기(도구 막대 직접 눌러 보기) · 디자이너 · 개발자 · 참고 자료 (TD-50). 도구 막대 · 테마 전환 설명은 여기 한 곳에만 */}
+{/* 시작하기 = 가져다 쓰는 사람(디자이너 · 개발자)이 읽는다 — 스토리북 사용법 · 개발 화면에 적용하는 법 · 지원 범위 · 참고 자료 (TD-50).
+    이 디자인 시스템이 무엇이고 어떻게 만들었나(이전 버전과 비교 포함)는 「소개」. 도구 막대 · 테마 전환 설명은 여기 한 곳에만 */}
 
 export const LOAD = [
   '<!-- 기존 전역 CSS는 빼고 아래 순서로 불러옵니다 -->',
@@ -42,7 +43,7 @@ export const AFTER = [
 
 <Unstyled>
 <div className="ds-page">
-<PageHead eyebrow="Design System v1.0" title="시작하기" lead="스토리북 사용 방법과 디자이너 · 개발자별 적용 방법을 안내합니다." />
+<PageHead eyebrow="Design System v1.0" title="시작하기" lead="스토리북 사용 방법과, 개발 화면에 디자인 시스템을 적용하는 방법을 안내합니다." />
 <Section title="스토리북 사용 방법" en="Using this Storybook" desc="상단 도구 막대에서 Figma를 열거나 브랜드와 화면 모드를 전환할 수 있습니다. 아래 미리보기에서 직접 확인할 수 있습니다. 선택한 값은 모든 문서의 미리보기에 동일하게 적용됩니다.">
 <Toolbar figmaIcon={figmaIcon} />
 <Card of={P.Sample} />
@@ -59,14 +60,6 @@ export const AFTER = [
 <div><dt>Playground</dt><dd>컴포넌트 문서 하단 표에서 텍스트 · 중요도 · 스타일 · 상태를 변경하면 미리보기와 코드가 함께 갱신됩니다.</dd></div>
 <div><dt>링크 공유</dt><dd>선택한 브랜드와 화면 모드는 URL에 저장되어, 링크를 공유하면 같은 설정으로 열립니다.</dd></div>
 </dl>
-</Section>
-<Section title="디자이너" en="Designers" desc="Figma가 디자인 원본이며, 스토리북은 같은 값을 실제 CSS로 구현한 견본입니다.">
-<table className="ds-table">
-<tbody>
-<tr><td><img className="ds-res-icon" src={figmaIcon} alt="" width="20" height="20" /><b>UI Kit</b></td><td>컴포넌트 원본입니다. 첫 페이지에 전체 요약이 있습니다.</td><td><a className="ds-link" href="https://www.figma.com/design/99ff5JQYQPCdY3xRBWHHlO/?node-id=8111-5" target="_blank" rel="noreferrer">Figma — UI Kit ↗</a></td></tr>
-<tr><td><img className="ds-res-icon" src={figmaIcon} alt="" width="20" height="20" /><b>Foundation</b></td><td>토큰(변수)과 글자 스타일 원본입니다. 브랜드와 라이트 · 다크 모드는 변수 모드로 전환해 확인합니다.</td><td><a className="ds-link" href="https://www.figma.com/design/Mf4XTC6dNUOH0anjOMcRPi" target="_blank" rel="noreferrer">Figma — Foundation ↗</a></td></tr>
-</tbody>
-</table>
 </Section>
 <Section title="개발자" en="Developers" desc="서버 렌더링 화면(JSP · HTML)에 세 단계로 적용합니다.">
 <table className="ds-table">
@@ -85,51 +78,48 @@ export const AFTER = [
 <table className="ds-table">
 <thead><tr><th>단계</th><th>할 일</th><th>화면 코드 수정</th></tr></thead>
 <tbody>
-<tr><td><b>1. 교체</b></td><td>기존 전역 CSS를 빼고 네 파일을 불러옵니다.</td><td>없음</td></tr>
-<tr><td><b>2. 화면 단위 전환</b></td><td>새 화면은 처음부터 새 클래스로 만들고, 기존 화면은 옛 클래스를 대응표에 따라 하나씩 바꿉니다. <a className="ds-link" href="https://app.notion.com/p/3efa8196682d8190a8eaf1c60196737f" target="_blank" rel="noreferrer">버튼 클래스 대응표(DS-ADR-009) ↗</a></td><td>화면마다</td></tr>
-<tr><td><b>3. 화면 CSS 정리</b></td><td>화면 CSS에 남은 색상 코드를 시맨틱 토큰(<code>--color-*</code>)으로 바꿉니다.</td><td>화면 CSS</td></tr>
-<tr><td><b>4. 브랜드 · 다크 모드</b></td><td>브랜드 파일과 클래스를 적용하고 다크 모드를 켭니다.</td><td>없음</td></tr>
+<tr><td><b>1. 교체</b></td><td>기존 전역 CSS를 빼고 네 파일을 불러옵니다.</td><td><span className="ds-tag ds-tag--ok">없음</span></td></tr>
+<tr><td><b>2. 화면 단위 전환</b></td><td>새 화면은 처음부터 새 클래스로 만들고, 기존 화면은 옛 클래스를 대응표에 따라 하나씩 바꿉니다. <a className="ds-link" href="https://app.notion.com/p/3efa8196682d8190a8eaf1c60196737f" target="_blank" rel="noreferrer">버튼 클래스 대응표(DS-ADR-009) ↗</a></td><td><span className="ds-tag ds-tag--warn">화면마다</span></td></tr>
+<tr><td><b>3. 화면 CSS 정리</b></td><td>화면 CSS에 남은 색상 코드를 시맨틱 토큰(<code>--color-*</code>)으로 바꿉니다.</td><td><span className="ds-tag ds-tag--warn">화면 CSS</span></td></tr>
+<tr><td><b>4. 브랜드 · 다크 모드</b></td><td>브랜드 파일과 클래스를 적용하고 다크 모드를 켭니다.</td><td><span className="ds-tag ds-tag--ok">없음</span></td></tr>
 </tbody>
 </table>
 <h3 className="ds-subhead">바뀌는 범위</h3>
-<p className="ds-sec__desc">화면 코드의 동작 — <code>id</code> · <code>name</code> · 이벤트 · 서버 주소 — 은 그대로 두고, 클래스와 토큰만 더해 화면을 바꿉니다. 아래는 이전 버전 문서 검색 화면의 「문서 번호」 칸입니다.</p>
+<p className="ds-sec__desc">화면 코드의 동작 — <code>id</code> · <code>name</code> · 이벤트 · 서버 주소 — 은 그대로 두고, 클래스를 더하거나 감싸는 태그를 넣어 화면을 바꿉니다. 아래는 이전 버전 문서 검색 화면의 「문서 번호」 칸입니다.</p>
 <div className="ds-pair">
 <div><p className="ds-pair__label">이전 버전</p><Source language="html" code={BEFORE} /></div>
 <div><p className="ds-pair__label">디자인 시스템 적용 — <code>input</code> 클래스만 더함</p><Source language="html" code={AFTER} /></div>
 </div>
+<div className="ds-scope">
+<div><span className="ds-tag ds-tag--ok">화면 코드 수정 없음</span><h4>불러오기만 해도 바뀌는 것</h4><ul><li>글꼴 · 글자색</li><li>제목 <code>h1</code>~<code>h6</code></li><li>입력 필드 높이 <code>input</code> · <code>select</code></li><li>체크박스 색</li><li><code>select.js</code>를 함께 불러오면 화면의 모든 선택 목록</li></ul></div>
+<div><span className="ds-tag ds-tag--ok">화면 코드 수정 없음</span><h4>이전 버전과 같은 이름이라 그대로 바뀌는 것</h4><ul><li>목록 표 <code>.table_list</code></li><li>등록 창 섹션 <code>.pro_table</code></li><li>다중 선택 <code>.checkSelect</code></li><li>첨부 <code>.resumable</code></li></ul></div>
+<div><span className="ds-tag ds-tag--warn">화면마다 클래스 수정</span><h4>새 클래스로 바꿔야 하는 것</h4><ul><li>버튼 <code>{'.btn_*'}</code> → <code>{'.btn--*'}</code></li><li>입력 필드 → <code>.input</code> · <code>.select</code> · <code>.textarea</code></li><li>체크박스 · 라디오 → <code>.checkbox</code> · <code>.radio</code></li></ul></div>
+</div>
+</Section>
+{/* 지원 범위 (10/21) — 「마크업을 바꿀 수 없는 곳」과 「포함하지 않는 JS」가 같은 말을 하던 것을 한 표로: 디자인 시스템이 맡는 것 / 각 시스템이 맡는 것.
+    그리드 사용자 스타일 파일 이름은 그리드 라이브러리(AUIGrid)가 정한 이름 */}
+<Section title="지원 범위" en="What the system covers" desc="디자인 시스템은 화면의 모양(CSS 토큰 · 클래스)과 모양에 필요한 스크립트만 제공합니다. 마크업을 디자인 시스템이 정할 수 없는 곳은 아래처럼 나눠 맡습니다.">
 <table className="ds-table ds-table--wrap">
-<thead><tr><th>불러오기만 해도 바뀌는 것</th><th>기존 화면과 같은 이름으로 적용되는 것</th><th>새 클래스로 바꿔야 하는 것</th></tr></thead>
+<thead><tr><th>자리</th><th>디자인 시스템이 맡는 것</th><th>각 시스템이 맡는 것</th></tr></thead>
 <tbody>
-<tr><td>글꼴 · 글자색 · 제목(<code>h1</code>~<code>h6</code>) · 입력 필드 높이(<code>input</code> · <code>select</code>) · 체크박스 색 · <code>select.js</code>를 함께 불러오면 화면의 모든 선택 목록</td><td>목록 표 <code>.table_list</code> · 등록 창 섹션 <code>.pro_table</code> · 다중 선택 <code>.checkSelect</code> · 첨부 <code>.resumable</code></td><td>버튼 <code>{'.btn_*'}</code> → <code>{'.btn--*'}</code> · 입력 필드 → <code>.input</code> · <code>.select</code> · <code>.textarea</code> · 체크박스 · 라디오 → <code>.checkbox</code> · <code>.radio</code></td></tr>
+<tr><td><b>그리드 라이브러리가 그리는 표</b></td><td>바깥 틀(<code>.table_list</code> › <code>.list</code>) · 그리드 토큰(<code>--color-bg-grid-header</code> 등) · 선택 체크박스 모양</td><td>라이브러리가 만드는 마크업은 그대로 두고, 그리드 사용자 스타일 파일(<code>AUIGrid_custom_style.css</code>)에서 그리드 토큰으로 덮어씁니다.</td></tr>
+<tr><td><b>선택 목록 · 날짜</b></td><td><code>select.js</code> · <code>datepicker.js</code>가 원래 요소 위에 디자인 시스템 목록 · 달력을 만듭니다. <a className="ds-link" href="https://app.notion.com/p/3fea8196682d8130928dc7e0c7dcad6e" target="_blank" rel="noreferrer">DS-ADR-033 ↗</a> · <a className="ds-link" href="https://app.notion.com/p/3f1a8196682d81798072f56cec921405" target="_blank" rel="noreferrer">016 ↗</a></td><td>값 · 이름 · 제출은 원래 <code>select</code> · <code>input</code>이 그대로 맡습니다.</td></tr>
+<tr><td><b>첨부 · 사람 검색</b></td><td>모양(CSS) — 첨부 <code>.resumable</code> · 다중 선택 <code>.checkSelect</code></td><td>파일 올리기, 서버에 물어 옵션을 채우는 사람 검색처럼 서버와 묶인 스크립트</td></tr>
+<tr><td><b>CSS 밖에서 색을 그리는 곳</b></td><td>—</td><td>그리드의 엑셀 내보내기처럼 브라우저 밖에서 만드는 파일은 CSS 변수를 읽지 못하므로, 토큰 이름이 아니라 계산된 값(<code>getComputedStyle</code>)을 넘깁니다.</td></tr>
 </tbody>
 </table>
-<h3 className="ds-subhead">이전 버전과 비교</h3>
-<p className="ds-sec__desc">문서 검색 화면 기준입니다. 지금 화면은 <a className="ds-link" href="./?path=/docs/screens-plm-화면--docs" target="_top">PLM 화면</a>에 있습니다.</p>
-<table className="ds-table">
-<tbody>
-<tr><td><b>다시 생각한 것</b></td><td>모든 조건을 펼친 두 줄 검색 조건 → 자주 쓰는 조건 한 줄 + [상세 검색 펼치기]. 모든 상태가 같은 빨간 글자이던 작업현황 → 상태마다 색이 다른 상태 칩. 같은 그림이던 파일 열 → 형식별 아이콘.</td></tr>
-<tr><td><b>지킨 것</b></td><td>화면 배치(LNB 레일 · 서브 패널 · 검색 조건 · 결과 표)와 마크업 · 클래스 이름(<code>.mainTable</code> · <code>.seach_arm</code> · <code>.table_list</code>), 표 밀도(머리 34 · 줄 30, 이전 버전 그리드 값). <a className="ds-link" href="https://app.notion.com/p/3fca8196682d812c989fcaa39abcef25" target="_blank" rel="noreferrer">DS-ADR-030 ↗</a></td></tr>
-<tr><td><b>잘라낸 것</b></td><td>화면마다 따로 쓰던 버튼 클래스와 옛 이름 별칭 — 버튼은 <code>.btn</code> 하나에 중요도 × 모양으로 정리했습니다. <a className="ds-link" href="https://app.notion.com/p/3efa8196682d8190a8eaf1c60196737f" target="_blank" rel="noreferrer">DS-ADR-009 ↗</a> · <a className="ds-link" href="https://app.notion.com/p/3eda8196682d81de90ebe6eae0a32d30" target="_blank" rel="noreferrer">002 ↗</a></td></tr>
-<tr><td><b>규칙을 굽힌 곳</b></td><td>조회 버튼은 보조(secondary)가 규칙이지만, 검색 조건 영역의 [검색]만 그 영역의 핵심 동작이라 주 버튼(primary)으로 둡니다. <a className="ds-link" href="https://app.notion.com/p/3efa8196682d8190a8eaf1c60196737f" target="_blank" rel="noreferrer">DS-ADR-009 ↗</a></td></tr>
-</tbody>
-</table>
-<h3 className="ds-subhead">마크업을 바꿀 수 없는 곳</h3>
-<dl className="ds-dl">
-<div><dt>그리드 라이브러리가 그리는 표</dt><dd>라이브러리가 만드는 마크업은 그대로 두고, 그리드 토큰(<code>--color-bg-grid-header</code> 등)과 덮어쓰기 CSS로 맞춥니다. 디자인 시스템은 바깥 틀(<code>.table_list</code> › <code>.list</code>) · 그리드 토큰 · 선택 체크박스 모양을 제공하고, 그리드 안쪽 규칙은 그리드 전용 CSS 파일에 둡니다.</dd></div>
-<div><dt>선택 목록 · 날짜</dt><dd>브라우저 기본 선택 목록과 날짜 입력은 CSS로 열린 목록을 바꿀 수 없습니다. <code>select.js</code> · <code>datepicker.js</code>가 같은 마크업 위에 디자인 시스템 목록을 만들고, 값 · 이름 · 제출은 원래 요소가 그대로 맡습니다. <a className="ds-link" href="https://app.notion.com/p/3fea8196682d8130928dc7e0c7dcad6e" target="_blank" rel="noreferrer">DS-ADR-033 ↗</a> · <a className="ds-link" href="https://app.notion.com/p/3f1a8196682d81798072f56cec921405" target="_blank" rel="noreferrer">016 ↗</a></dd></div>
-<div><dt>CSS 밖에서 색을 그리는 곳</dt><dd>그리드의 엑셀 내보내기처럼 브라우저 밖에서 만드는 파일은 CSS 변수를 읽지 못합니다. 색을 넘겨야 하면 토큰 이름이 아니라 계산된 값(<code>getComputedStyle</code>)을 넘깁니다.</dd></div>
-</dl>
-<h3 className="ds-subhead">지원 범위</h3>
+<h3 className="ds-subhead">적용 단위</h3>
 <dl className="ds-dl">
 <div><dt>적용 범위</dt><dd>태그 기본값까지 화면 전체에 적용됩니다.</dd></div>
 <div><dt>브랜드 · 모드</dt><dd>페이지 단위로 적용됩니다(<code>html</code> · <code>body</code> 클래스). 화면 일부만 다른 브랜드로 표시할 수 없습니다.</dd></div>
-<div><dt>포함하지 않는 JS</dt><dd>첨부(<code>.resumable</code>)의 파일 올리기, 다중 선택의 사람 검색(서버에 물어 옵션 채우기), 목록 그리드 라이브러리는 서버 · 라이브러리와 묶여 있어 각 시스템이 맡습니다. 디자인 시스템은 그 자리의 모양(CSS)만 제공합니다.</dd></div>
 <div><dt>함께 쓰지 않는 것</dt><dd><code>.btn</code> · <code>.card</code> · <code>.alert</code>처럼 같은 클래스 이름을 쓰는 CSS 라이브러리와 함께 쓰지 않습니다. 이름이 겹쳐 스타일이 섞입니다.</dd></div>
 </dl>
 </Section>
 <Section title="참고 자료 · 문의" en="Resources">
 <table className="ds-table">
 <tbody>
+<tr><td><img className="ds-res-icon" src={figmaIcon} alt="" width="20" height="20" /><b>Figma UI Kit</b></td><td>컴포넌트 원본입니다. 첫 페이지에 전체 요약이 있습니다.</td><td><a className="ds-link" href="https://www.figma.com/design/99ff5JQYQPCdY3xRBWHHlO/?node-id=8111-5" target="_blank" rel="noreferrer">Figma — UI Kit ↗</a></td></tr>
+<tr><td><img className="ds-res-icon" src={figmaIcon} alt="" width="20" height="20" /><b>Figma Foundation</b></td><td>토큰(변수)과 글자 스타일 원본입니다. 브랜드와 라이트 · 다크 모드는 변수 모드로 전환합니다.</td><td><a className="ds-link" href="https://www.figma.com/design/Mf4XTC6dNUOH0anjOMcRPi" target="_blank" rel="noreferrer">Figma — Foundation ↗</a></td></tr>
 <tr><td><img className="ds-res-icon" src={githubIcon} alt="" width="20" height="20" /><b>저장소</b></td><td>소스 코드와 변경 이력</td><td><a className="ds-link" href="https://github.com/MeganOveLee/enterprise-ds" target="_blank" rel="noreferrer">github.com/MeganOveLee/enterprise-ds</a></td></tr>
 
 <tr><td><img className="ds-res-icon ds-res-icon--light" src={notionIcon} alt="" width="20" height="20" /><b>결정 기록 (ADR)</b></td><td>디자인 시스템을 기획 · 설계하며 검토한 선택지와 결정 근거</td><td><a className="ds-link" href="https://app.notion.com/p/3eda8196682d8126967fcc86f796fcb4" target="_blank" rel="noreferrer">Notion — 결정 기록 (ADR)</a></td></tr>

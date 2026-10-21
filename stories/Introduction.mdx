@@ -1,49 +1,77 @@
 import { Meta, Unstyled } from '@storybook/addon-docs/blocks';
 import { PageHead, Section } from './_blocks.js';
 import figmaIcon from '../assets/links/figma.svg';
-import notionIcon from '../assets/links/notion.svg';
+import githubIcon from '../assets/links/github.svg';
 
 <Meta title="소개" />
 
-{/* 소개 = 이 디자인 시스템이 무엇인가 — 목표 · 결과(키워드 네 칸) · 내 기여 → 어려웠던 점(TD-117) → 바로 가기 문 넷(화면 · 인터랙션 · 결정 기록 · Figma, TD-123) → 바로 가기 → 구성(층) → 적용 환경 → 운영 방식 (TD-50).
-    스토리북 보는 법(미리보기 · 도구 막대) · 설치 · 참고 자료는 「시작하기」 한 곳에만 — 같은 설명을 두 번 쓰지 않는다 */}
+{/* 소개 = 이 디자인 시스템이 무엇이고 어떻게 만들었나 — 처음 보는 사람 · 평가하는 사람이 읽는다. 쓰는 법(설치 · 클래스 · 지원 범위)은 「시작하기」 한 곳에만.
+    흐름 (10/21 세영님 피드백): 바로 가기 → 목표 · 결과 · 내 기여 → 어려웠던 점과 푼 방법 → 이전 버전과 비교 → 운영 방식 → 구성 → 적용 환경 */}
 
 <Unstyled>
 <div className="ds-page">
 <PageHead eyebrow="Design System v1.0" title="Enterprise Design System" lead="엔터프라이즈 PLM 웹 화면을 위한 멀티 브랜드 디자인 시스템입니다.">
-<ul className="ds-meta"><li>PLM 웹 솔루션</li><li>서버 렌더링(JSP)</li><li>프레임워크 비의존</li><li>Figma · Storybook</li></ul>
+<ul className="ds-quick" aria-label="바로 가기">
+<li><a className="ds-quick__a" href="./?path=/docs/screens-plm-화면--docs" target="_top"><span className="ds-hero__dot" aria-hidden="true"></span>화면 보기</a></li>
+<li><a className="ds-quick__a" href="./?path=/docs/foundation-motion--docs" target="_top"><svg className="ds-quick__ico" viewBox="0 0 20 20" aria-hidden="true"><rect width="20" height="20" rx="4" fill="#0064e0"/><path d="M6 10.4l2.6 2.6L14 7.6" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>인터랙션 보기</a></li>
+<li><a className="ds-quick__a" href="https://www.figma.com/design/99ff5JQYQPCdY3xRBWHHlO/?node-id=8111-5" target="_blank" rel="noreferrer"><img src={figmaIcon} alt="" width="18" height="18" />Figma ↗</a></li>
+<li><a className="ds-quick__a" href="https://github.com/MeganOveLee/enterprise-ds" target="_blank" rel="noreferrer"><img src={githubIcon} alt="" width="18" height="18" />GitHub ↗</a></li>
+</ul>
 </PageHead>
-{/* 첫머리 (TD-117) — 목표 · 결과 · 내 기여를 이름표로 나눈다. 결과 = 키워드 네 칸(근거 결정 기록 링크). 다른 문서와 같은 밝은 톤.
-    역할 분담 문장은 규칙 (현행) 4장 표현 — 「직접 수정 · 자체 구현」 같은 혼자 쓴 것으로 읽히는 말은 쓰지 않는다 */}
-<dl className="ds-brief" aria-label="목표 · 결과 · 내 기여">
-<div className="ds-brief__row"><dt>목표</dt><dd><p className="ds-brief__goal">여러 브랜드에 공급하는 레거시 PLM 화면에, 개발 코드를 건드리지 않고 컴포넌트 · 토큰 한 벌로 브랜드별 디자인을 적용합니다.</p></dd></div>
+{/* 첫머리 (TD-117 · 10/21) — 목표 · 결과 · 내 기여를 한 상자에. 결과 = 키워드 네 칸(근거 결정 기록 링크).
+    「개발 코드를 건드리지 않고」 → 서버 로직은 그대로, 화면 층(마크업 클래스 · CSS)만 — JSP 마크업은 클래스를 더하고 감싸는 태그를 넣었으므로.
+    내 기여 = 세영님 몫만(AI와 나눈 방식은 「운영 방식」). 「직접 수정 · 자체 구현」 같은 혼자 쓴 것으로 읽히는 말은 쓰지 않는다 */}
+<dl className="ds-brief ds-box" aria-label="목표 · 결과 · 내 기여">
+<div className="ds-brief__row"><dt>목표</dt><dd><p className="ds-brief__goal">여러 브랜드에 공급하는 레거시 PLM 화면에, 서버 로직은 그대로 두고 화면 층(마크업의 클래스 · CSS)만 바꿔 컴포넌트 · 토큰 한 벌로 브랜드별 디자인을 적용합니다.</p></dd></div>
 <div className="ds-brief__row">
 <dt>결과</dt>
 <dd>
 <ul className="ds-keys" aria-label="결과 — 핵심 키워드">
-<li><b>레거시 위에 얹기</b><span className="ds-keys__en">Non-invasive</span><p>마크업 · 서버 코드는 그대로이고, CSS 토큰과 클래스만으로 이전 버전 화면이 바뀝니다.</p><a className="ds-keys__link" href="https://app.notion.com/p/3fea8196682d81a68e89e1b3cbfb8194" target="_blank" rel="noreferrer">DS-ADR-032 ↗</a></li>
-<li><b>멀티 브랜드</b><span className="ds-keys__en">Multi-brand</span><p>모든 브랜드가 컴포넌트 한 벌을 같이 쓰고, 브랜드 파일 하나만 바꾸면 색 · 모서리 · 높이 · 그림 자산이 바뀝니다.</p><a className="ds-keys__link" href="https://app.notion.com/p/3f8a8196682d8140b3e6fa865faa6fb8" target="_blank" rel="noreferrer">DS-ADR-020 ↗</a></li>
-<li><b>Figma = CSS 한 기준</b><span className="ds-keys__en">Single source</span><p>Figma 변수와 CSS 토큰이 같은 이름 · 같은 값이고, 다르게 둔 곳은 이유가 결정 기록에 있습니다.</p><a className="ds-keys__link" href="https://app.notion.com/p/3ffa8196682d81faae5cdf9867c03238" target="_blank" rel="noreferrer">DS-ADR-038 ↗</a></li>
-<li><b>계산으로 지키는 접근성</b><span className="ds-keys__en">Measured a11y</span><p>WCAG 2.1 AA를 눈대중이 아니라 대비 계산과 자동 검사로, 모든 브랜드 × 라이트 · 다크에서 확인합니다.</p><a className="ds-keys__link" href="https://app.notion.com/p/3f1a8196682d813e88aac97cf15d7267" target="_blank" rel="noreferrer">DS-ADR-013 ↗</a></li>
+<li><b>레거시 위에 얹기</b><span className="ds-keys__en">Non-invasive</span><p>서버 코드와 화면 동작(<code>id</code> · <code>name</code> · 이벤트)은 그대로 두고, 마크업에는 클래스를 더하거나 감싸는 태그만 넣어 이전 버전 화면을 바꿉니다.</p><a className="ds-keys__link" href="https://app.notion.com/p/3fea8196682d81a68e89e1b3cbfb8194" target="_blank" rel="noreferrer">DS-ADR-032 ↗</a></li>
+<li><b>멀티 브랜드</b><span className="ds-keys__en">Multi-brand</span><p>모든 브랜드가 컴포넌트 한 벌을 같이 쓰고, 브랜드 파일 하나(<code>css/brands/fashion.css</code> 등)만 바꾸면 색 · 모서리 · 높이 · 그림 자산 등이 바뀝니다.</p><a className="ds-keys__link" href="https://app.notion.com/p/3f8a8196682d8140b3e6fa865faa6fb8" target="_blank" rel="noreferrer">DS-ADR-020 ↗</a></li>
+<li><b>Figma = CSS 한 기준</b><span className="ds-keys__en">Single source</span><p>Figma 변수와 CSS 토큰은 같은 이름 · 같은 값을 쓰고, 다르게 둔 곳은 그 이유를 결정 기록에 남겼습니다.</p><a className="ds-keys__link" href="https://app.notion.com/p/3ffa8196682d81faae5cdf9867c03238" target="_blank" rel="noreferrer">DS-ADR-038 ↗</a></li>
+<li><b>계산으로 지키는 접근성</b><span className="ds-keys__en">Accessibility by calculation</span><p>WCAG 2.1 AA를 눈대중이 아니라 대비 계산과 자동 검사로, 모든 브랜드 × 라이트 · 다크에서 확인합니다.</p><a className="ds-keys__link" href="https://app.notion.com/p/3f1a8196682d813e88aac97cf15d7267" target="_blank" rel="noreferrer">DS-ADR-013 ↗</a></li>
 </ul>
 </dd>
 </div>
-<div className="ds-brief__row"><dt>내 기여</dt><dd><p>토큰 구조 설계 · Figma 컴포넌트 디자인 · 노션 결정 기록 작성은 디자이너가 하고, 코드는 AI와 나눠 씁니다. 적용 · 확인 · 커밋도 디자이너가 합니다.</p></dd></div>
+<div className="ds-brief__row"><dt>내 기여</dt><dd><p>사용자 인터뷰와 요청 기록에서 불편을 찾고, Figma로 화면 프로토타입과 컴포넌트를 만들었습니다. 토큰 구조를 설계해 화면에 적용(퍼블리싱)하고 확인 · 커밋까지 맡았으며, 결정은 근거와 함께 기록했습니다.</p></dd></div>
 </dl>
-<Section title="어려웠던 점" en="Challenges">
-<dl className="ds-dl">
-<div><dt>레거시 위에 얹기</dt><dd>마크업을 바꿀 수 없는 기존 화면이 많아, 태그 기본값부터 화면 전체를 대신하는 CSS로 입히고 기존 화면은 단계를 나눠 옮깁니다. <a className="ds-link" href="https://app.notion.com/p/3fea8196682d81a68e89e1b3cbfb8194" target="_blank" rel="noreferrer">DS-ADR-032 ↗</a></dd></div>
-<div><dt>일관성과 유연성</dt><dd>화면마다 생기는 예외를 모두 컴포넌트로 만들지 않고, 만든 것은 묶고 새로 늘리지 않습니다. 디자인 파일과 코드가 다를 때는 다르게 둔 이유가 기록돼 있는지로 정합니다. <a className="ds-link" href="https://app.notion.com/p/3fca8196682d81fa89aaf20f87e86732" target="_blank" rel="noreferrer">DS-ADR-028 ↗</a> · <a className="ds-link" href="https://app.notion.com/p/3ffa8196682d81faae5cdf9867c03238" target="_blank" rel="noreferrer">038 ↗</a></dd></div>
-<div><dt>변화 관리</dt><dd>개발자의 화면 코드는 건드리지 않습니다. CSS로 바꿀 수 없는 선택 목록 같은 부분만 스크립트를 불러오면 같은 모양이 되게 하고, 서버와 묶인 스크립트는 넣지 않습니다. <a className="ds-link" href="https://app.notion.com/p/3fea8196682d8130928dc7e0c7dcad6e" target="_blank" rel="noreferrer">DS-ADR-033 ↗</a></dd></div>
-</dl>
+{/* 어려웠던 점 (10/21 세영님) — 실제로 겪은 세 가지와 푼 방법. 고객사 · 제품 이름은 쓰지 않는다 */}
+<Section title="어려웠던 점" en="Challenges" desc="이전 버전 화면을 다시 디자인하며 실제로 부딪힌 세 가지와, 그것을 푼 방법입니다.">
+<ol className="ds-hard">
+<li><span className="ds-hard__no">01</span><h3>화면 목록을 미리 알 수 없음</h3><p className="ds-hard__q">버튼을 누를 때마다 새 창이 열리는 구조라 전체 화면 목록을 미리 파악하기 어려웠고, 그만큼 일정을 가늠하기 힘들었습니다.</p><p className="ds-hard__a">화면 단위가 아니라 태그 기본값과 공통 클래스 단위로 적용 범위를 잡아, 새 창이 더 나와도 불러오기만 하면 같은 모양이 되게 했습니다.</p><a className="ds-link" href="https://app.notion.com/p/3fea8196682d81a68e89e1b3cbfb8194" target="_blank" rel="noreferrer">DS-ADR-032 ↗</a></li>
+<li><span className="ds-hard__no">02</span><h3>개편을 거치며 쌓인 예외</h3><p className="ds-hard__q">두 번의 개편을 거치며 화면마다 생긴 예외(버튼 · 입력 칸 모양)를 하나로 묶기 어려웠습니다.</p><p className="ds-hard__a">버튼은 중요도 × 모양 한 체계로, 입력 칸은 클래스 하나로 묶었습니다. 만든 것은 지우지 않고 묶되, 새 컴포넌트는 늘리지 않는다는 기준을 세웠습니다.</p><span><a className="ds-link" href="https://app.notion.com/p/3efa8196682d8190a8eaf1c60196737f" target="_blank" rel="noreferrer">DS-ADR-009 ↗</a> · <a className="ds-link" href="https://app.notion.com/p/3fca8196682d81fa89aaf20f87e86732" target="_blank" rel="noreferrer">028 ↗</a></span></li>
+<li><span className="ds-hard__no">03</span><h3>개발과 디자인의 동시 진행</h3><p className="ds-hard__q">개발과 디자인이 동시에 진행되어, 같은 파일을 서로 덮어쓰는 사고를 막기 어려웠습니다.</p><p className="ds-hard__a">화면 층(마크업의 클래스 · CSS)은 디자인 브랜치에서 디자이너가, 로직은 개발자가 맡도록 경계를 나누고, 바뀐 범위를 기록으로 공유했습니다.</p></li>
+</ol>
 </Section>
-<nav className="ds-doors" aria-label="바로 가기">
-<a className="ds-door" href="./?path=/docs/screens-plm-화면--docs" target="_top"><span className="ds-hero__dot" aria-hidden="true"></span><b>화면 보기</b><span>디자인 시스템의 클래스와 토큰으로 구성한 업무 화면 예시</span><em>보기 →</em></a>
-<a className="ds-door" href="./?path=/docs/foundation-motion--docs" target="_top"><span className="ds-door__demo" aria-hidden="true"><span className="btn btn--primary btn--filled btn--sm"><i>저장</i><i><span className="spinner"></span>저장 중</i><i><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12l4 4 10-10"/></svg>저장됨</i></span></span><b>인터랙션 보기</b><span>처리 중 · 처리 끝 · 방금 바뀐 행 · 지연 박동처럼 상태를 알려 주는 움직임</span><em>보기 →</em></a>
-<a className="ds-door" href="https://app.notion.com/p/3eda8196682d8126967fcc86f796fcb4" target="_blank" rel="noreferrer"><img className="ds-res-icon--light" src={notionIcon} alt="" width="32" height="32" /><b>결정 기록 보기</b><span>디자인 시스템을 기획 · 설계하며 내린 결정과 그 근거</span><em>열기 ↗</em></a>
-<a className="ds-door ds-door--dark" href="https://www.figma.com/design/99ff5JQYQPCdY3xRBWHHlO/?node-id=8111-5" target="_blank" rel="noreferrer"><img src={figmaIcon} alt="" width="32" height="32" /><b>Figma에서 보기</b><span>컴포넌트 원본입니다. 브랜드와 라이트 · 다크 모드를 변수 모드로 전환할 수 있습니다.</span><em>열기 ↗</em></a>
-</nav>
+{/* 이전 버전과 비교 (TD-118, 10/21 「시작하기」에서 옮김 — 쓰는 법이 아니라 바뀐 결과라서). 캡처는 공개 저장소에 올리지 않는 파일이라 표만 */}
+<Section title="이전 버전과 비교" en="Before and after" desc={<>문서 검색 화면 기준입니다. 지금 화면은 <a className="ds-link" href="./?path=/docs/screens-plm-화면--docs" target="_top">PLM 화면</a>에 있습니다.</>}>
+<table className="ds-table">
+<tbody>
+<tr><td><b>다시 생각한 것</b></td><td>모든 조건을 펼친 두 줄 검색 조건 → 자주 쓰는 조건 한 줄 + [상세 검색 펼치기]. 모든 상태가 같은 빨간 글자이던 작업현황 → 상태마다 색이 다른 상태 칩. 같은 그림이던 파일 열 → 형식별 아이콘.</td></tr>
+<tr><td><b>지킨 것</b></td><td>화면 배치(LNB 레일 · 서브 패널 · 검색 조건 · 결과 표)와 클래스 이름(<code>.mainTable</code> · <code>.seach_arm</code> · <code>.table_list</code>), 표 밀도(머리 34 · 줄 30, 이전 버전 그리드 값). <a className="ds-link" href="https://app.notion.com/p/3fca8196682d812c989fcaa39abcef25" target="_blank" rel="noreferrer">DS-ADR-030 ↗</a></td></tr>
+<tr><td><b>잘라낸 것</b></td><td>화면마다 따로 쓰던 버튼 클래스와 옛 이름 별칭 — 버튼은 <code>.btn</code> 하나에 중요도 × 모양으로 정리했습니다. <a className="ds-link" href="https://app.notion.com/p/3efa8196682d8190a8eaf1c60196737f" target="_blank" rel="noreferrer">DS-ADR-009 ↗</a> · <a className="ds-link" href="https://app.notion.com/p/3eda8196682d81de90ebe6eae0a32d30" target="_blank" rel="noreferrer">002 ↗</a></td></tr>
+<tr><td><b>규칙을 굽힌 곳</b></td><td>조회 버튼은 보조(secondary)가 규칙이지만, 검색 조건 영역의 [검색]만 그 영역의 핵심 동작이라 주 버튼(primary)으로 둡니다. <a className="ds-link" href="https://app.notion.com/p/3efa8196682d8190a8eaf1c60196737f" target="_blank" rel="noreferrer">DS-ADR-009 ↗</a></td></tr>
+</tbody>
+</table>
+</Section>
+<Section title="운영 방식" en="How we work" desc="단계별로 디자이너와 AI의 역할을 나눴습니다. 반복 작업과 검사는 AI에게 맡기고, 판단과 최종 확인은 디자이너가 합니다.">
+<div className="ds-box">
+<div className="ds-tl-wrap"><div className="ds-tl" aria-label="운영 방식 7단계"><div className="ds-tl__start">START →</div><div className="ds-tl__head"><div className="ds-tl__no-circle">1</div><div className="ds-tl__num">01</div><div className="ds-tl__title">사용자 분석</div></div><div className="ds-tl__head"><div className="ds-tl__no-circle">2</div><div className="ds-tl__num">02</div><div className="ds-tl__title">기준 수립</div></div><div className="ds-tl__head"><div className="ds-tl__no-circle">3</div><div className="ds-tl__num">03</div><div className="ds-tl__title">파운데이션</div></div><div className="ds-tl__head"><div className="ds-tl__no-circle">4</div><div className="ds-tl__num">04</div><div className="ds-tl__title">UI Kit · 화면 목업</div></div><div className="ds-tl__head"><div className="ds-tl__no-circle">5</div><div className="ds-tl__num">05</div><div className="ds-tl__title">퍼블리싱</div></div><div className="ds-tl__head"><div className="ds-tl__no-circle">6</div><div className="ds-tl__num">06</div><div className="ds-tl__title">접근성 · 검증</div></div><div className="ds-tl__head"><div className="ds-tl__no-circle">7</div><div className="ds-tl__num">07</div><div className="ds-tl__title">문서화 · 기록</div></div><div className="ds-tl__lg">디자이너<span>방향 · 기획 · 적용 · 확인</span></div><div className="ds-tl__card ds-tl__card--human">레퍼런스 조사, 사용자 인터뷰, 요청 기록 정리</div><div className="ds-tl__card ds-tl__card--human">디자인 원칙 확정</div><div className="ds-tl__card ds-tl__card--human">토큰 구조 · 명명 규칙 결정</div><div className="ds-tl__card ds-tl__card--human">Figma 컴포넌트 제작, 상태 정의, 화면 흐름 설계</div><div className="ds-tl__card ds-tl__card--human">코드 적용, 화면 검수</div><div className="ds-tl__card ds-tl__card--human">위반 판단, 예외 결정</div><div className="ds-tl__card ds-tl__card--human">TD 검토 · 승인<small>TD: 의사결정이 필요한 작업 항목</small></div><div className="ds-tl__lg">AI<span>조사 · 초안 · 검증 · 관리</span></div><div className="ds-tl__card ds-tl__card--ai">레퍼런스별 비교표 작성</div><div className="ds-tl__card ds-tl__card--ai">원칙 초안 작성</div><div className="ds-tl__card ds-tl__card--ai">대비 계산, Figma 변수 · CSS 대조</div><div className="ds-tl__card ds-tl__card--ai">파운데이션 · 컴포넌트 연결 관리</div><div className="ds-tl__card ds-tl__card--ai">Figma 목업 기반 코드 초안, 커스텀 JS 작성</div><div className="ds-tl__card ds-tl__card--ai">접근성 자동 검사, 계산값 비교</div><div className="ds-tl__card ds-tl__card--ai">TD · ADR 작성, 점검 보고<small>ADR: 설계 결정 기록</small></div></div></div>
+{/* 이 방식으로 달라진 것 (TD-80) — PLM 화면 디자인 프로젝트 두 번 비교. 적용 방식 열 = 구현 가능성(TD-105 6). 숫자 원본은 노션 산출-1 케이스 #1(비공개).
+    스토리북 문구에 숫자를 쓰지 않는 규칙의 예외 — 링크할 공개 문서가 없어서. 제품명 · 고객사 이름은 쓰지 않는다. 두 번째 개편 줄 · 기간 칸 강조(10/21) */}
+<table className="ds-table ds-after ds-compare">
+<caption className="sr-only">이 방식으로 달라진 것 — PLM 화면 디자인 프로젝트 두 번 비교</caption>
+<thead><tr><th scope="col">PLM 화면 디자인 프로젝트</th><th scope="col">투입 인원</th><th scope="col">적용 방식</th><th scope="col" className="ds-compare__key">기간</th><th scope="col">다크 모드 적용</th></tr></thead>
+<tbody>
+<tr><th scope="row">첫 개편 (2025)</th><td>디자이너 1명 + 개발자 다수</td><td>디자이너 시안 → 개발자 적용</td><td className="ds-compare__key">6개월</td><td>일부 화면</td></tr>
+<tr className="is-now"><th scope="row">두 번째 개편 (2026)</th><td><b>디자이너 1명 + AI</b></td><td><b>디자이너가 적용 · 커밋</b> (개발 로직 수정 없음)</td><td className="ds-compare__key"><b>7주</b></td><td><b>전 화면</b></td></tr>
+</tbody>
+</table>
+</div>
+</Section>
 <Section title="구성" en="Categories" desc="기본 요소(Foundation)의 토큰 → 컴포넌트 → 블록(Blocks) → 화면(Screens) 순서로 쌓입니다. 각 층은 아래층의 요소만 사용합니다.">
+<div className="ds-box">
 <div className="ds-layer">
 <p className="ds-layer__label">화면 예시<span>Screens</span></p>
 <div className="ds-cats ds-cats--wide">
@@ -75,26 +103,14 @@ import notionIcon from '../assets/links/notion.svg';
 <div className="ds-cat"><h3>Foundation<span>기본 요소</span></h3><p>색상 · 타이포그래피 · 간격 · 모서리 · 그림자 등 모든 컴포넌트가 공통으로 사용하는 값을 토큰으로 정의했습니다.</p><ul><li><a href="./?path=/docs/foundation-color--docs" target="_top">Color</a></li><li><a href="./?path=/docs/foundation-typography--docs" target="_top">Typography</a></li><li><a href="./?path=/docs/foundation-spacing-·-radius-·-size--docs" target="_top">Spacing · Radius · Size</a></li><li><a href="./?path=/docs/foundation-shadow--docs" target="_top">Shadow</a></li><li><a href="./?path=/docs/foundation-motion--docs" target="_top">Motion</a></li><li><a href="./?path=/docs/foundation-state--docs" target="_top">State</a></li></ul></div>
 </div>
 </div>
+</div>
 </Section>
 <Section title="적용 환경" en="Scope">
 <dl className="ds-dl">
-<div><dt>대상</dt><dd>웹 기반 업무 시스템의 데스크톱 브라우저 화면입니다. 장시간 쓰는 업무 화면이라 유행보다 가독성과 정보 밀도를 우선합니다.</dd></div>
-<div><dt>창 너비</dt><dd>본문 최소 폭은 1024px이며, 창이 이보다 좁아지면 레이아웃은 고정되고 가로 스크롤이 생깁니다.</dd></div>
-<div><dt>기술</dt><dd>프레임워크 없이 CSS 토큰과 클래스로 구현해 JSP 등 서버 렌더링 화면에도 그대로 적용할 수 있습니다. 적용 방법은 <a className="ds-link" href="./?path=/docs/시작하기--docs" target="_top">시작하기</a>에 있습니다.</dd></div>
+<div><dt>사용자</dt><dd>문서 · 도면 · 결재를 하루 종일 다루는 PLM 업무 사용자입니다. 오래 보는 화면이라 유행보다 가독성과 정보 밀도를 우선합니다.</dd></div>
+<div><dt>기기 · 창 너비</dt><dd>데스크톱 브라우저 기준입니다. 본문 최소 폭은 1024px이며, 창이 이보다 좁아지면 레이아웃은 고정되고 가로 스크롤이 생깁니다.</dd></div>
+<div><dt>기술</dt><dd>PLM 웹 솔루션의 서버 렌더링(JSP) 화면에 맞춰, 프레임워크 없이 CSS 토큰과 클래스로 구현했습니다. 적용 방법은 <a className="ds-link" href="./?path=/docs/시작하기--docs" target="_top">시작하기</a>에 있습니다.</dd></div>
 </dl>
-</Section>
-<Section title="운영 방식" en="How we work" desc="단계별로 디자이너와 AI의 역할을 나눴습니다. 반복 작업과 검사는 AI에게 맡기고, 판단과 최종 확인은 디자이너가 합니다.">
-<div className="ds-tl-wrap"><div className="ds-tl" aria-label="운영 방식 7단계"><div className="ds-tl__start">START →</div><div className="ds-tl__head"><div className="ds-tl__no-circle">1</div><div className="ds-tl__num">01</div><div className="ds-tl__title">사용자 분석</div></div><div className="ds-tl__head"><div className="ds-tl__no-circle">2</div><div className="ds-tl__num">02</div><div className="ds-tl__title">기준 수립</div></div><div className="ds-tl__head"><div className="ds-tl__no-circle">3</div><div className="ds-tl__num">03</div><div className="ds-tl__title">파운데이션</div></div><div className="ds-tl__head"><div className="ds-tl__no-circle">4</div><div className="ds-tl__num">04</div><div className="ds-tl__title">UI Kit · 화면 목업</div></div><div className="ds-tl__head"><div className="ds-tl__no-circle">5</div><div className="ds-tl__num">05</div><div className="ds-tl__title">퍼블리싱</div></div><div className="ds-tl__head"><div className="ds-tl__no-circle">6</div><div className="ds-tl__num">06</div><div className="ds-tl__title">접근성 · 검증</div></div><div className="ds-tl__head"><div className="ds-tl__no-circle">7</div><div className="ds-tl__num">07</div><div className="ds-tl__title">문서화 · 기록</div></div><div className="ds-tl__lg">디자이너<span>방향 · 기획 · 적용 · 확인</span></div><div className="ds-tl__card ds-tl__card--human">레퍼런스 조사, 사용자 인터뷰, 요청 기록 정리</div><div className="ds-tl__card ds-tl__card--human">디자인 원칙 확정</div><div className="ds-tl__card ds-tl__card--human">토큰 구조 · 명명 규칙 결정</div><div className="ds-tl__card ds-tl__card--human">Figma 컴포넌트 제작, 상태 정의, 화면 흐름 설계</div><div className="ds-tl__card ds-tl__card--human">코드 적용, 화면 검수</div><div className="ds-tl__card ds-tl__card--human">위반 판단, 예외 결정</div><div className="ds-tl__card ds-tl__card--human">TD 검토 · 승인<small>TD: 의사결정이 필요한 작업 항목</small></div><div className="ds-tl__lg">AI<span>조사 · 초안 · 검증 · 관리</span></div><div className="ds-tl__card ds-tl__card--ai">레퍼런스별 비교표 작성</div><div className="ds-tl__card ds-tl__card--ai">원칙 초안 작성</div><div className="ds-tl__card ds-tl__card--ai">대비 계산, Figma 변수 · CSS 대조</div><div className="ds-tl__card ds-tl__card--ai">파운데이션 · 컴포넌트 연결 관리</div><div className="ds-tl__card ds-tl__card--ai">Figma 목업 기반 코드 초안, 커스텀 JS 작성</div><div className="ds-tl__card ds-tl__card--ai">접근성 자동 검사, 계산값 비교</div><div className="ds-tl__card ds-tl__card--ai">TD · ADR 작성, 점검 보고<small>ADR: 설계 결정 기록</small></div></div></div>
-{/* 이 방식으로 달라진 것 (TD-80) — PLM 화면 디자인 프로젝트 두 번 비교. 적용 방식 열 = 구현 가능성(TD-105 6). 숫자 원본은 노션 산출-1 케이스 #1(비공개).
-    스토리북 문구에 숫자를 쓰지 않는 규칙의 예외 — 링크할 공개 문서가 없어서. 제품명 · 고객사 이름은 쓰지 않는다 */}
-<table className="ds-table ds-after">
-<caption className="sr-only">이 방식으로 달라진 것 — PLM 화면 디자인 프로젝트 두 번 비교</caption>
-<thead><tr><th scope="col">PLM 화면 디자인 프로젝트</th><th scope="col">투입 인원</th><th scope="col">적용 방식</th><th scope="col">기간</th><th scope="col">다크 모드 적용</th></tr></thead>
-<tbody>
-<tr><th scope="row">첫 개편 (2025)</th><td>디자이너 1명 + 개발자 다수</td><td>디자이너 시안 → 개발자 적용</td><td>6개월</td><td>일부 화면</td></tr>
-<tr><th scope="row">두 번째 개편 (2026)</th><td><b>디자이너 1명 + AI</b></td><td><b>디자이너가 적용 · 커밋</b> (개발 로직 수정 없음)</td><td><b>7주</b></td><td><b>전 화면</b></td></tr>
-</tbody>
-</table>
 </Section>
 <p className="ds-note">© 2026 이세영 (MeganOveLee). All rights reserved. 포트폴리오 열람 목적으로 공개합니다. 사전 허락 없이 복제 · 수정 · 배포 · 상업적 이용을 할 수 없습니다. 글꼴 Pretendard(SIL Open Font License 1.1). GitHub · Figma · Notion 로고는 각 사의 상표입니다.</p>
 </div>
