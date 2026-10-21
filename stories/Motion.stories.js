@@ -43,7 +43,7 @@ export const 빛 = {
   render: () => box(uploader(UP)),
 };
 
-// 깜빡임(Pulse) — 지연 상태 표시의 막대 5개가 두근 · 두근 · 쉼(statusPulse, 밝기만), 같은 줄 진행률 막대는 같은 박자로 붉은 번짐 + 두 박동에 한 번 옅은 빛(TD-123 · TD-108 46).
+// 깜빡임(Pulse) — 지연 상태 표시의 막대 5개가 두근 · 두근 · 쉼(statusPulse, 밝기만), 같은 줄 진행률 막대는 두 박동에 한 번 옅은 빛 + 붉은 번짐(TD-123 · TD-108 46).
 // 다른 상태는 정지. 상태는 옆 글자가 알려 주고 막대는 꾸밈(aria-hidden). 마크업 = Screens › 프로젝트 상세 진행 현황과 같음
 export const 깜빡임 = {
   parameters: html(summary('delay', 58, 64)),

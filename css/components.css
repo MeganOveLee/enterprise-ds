@@ -3023,8 +3023,8 @@ body.dark-mode .section-box { background: var(--color-bg-muted); }
     56%, 100% { opacity: .45; }
 }
 /* 지연 경고 빛 — 지연 상태 표시와 같은 줄(.progress-row)의 지연 진행률 막대. 막대 5개와 같은 박자(--duration-pulse)로
- * 박동마다 붉은 번짐이 일고, 박동 두 번에 한 번 옅은 흰 빛이 채움을 천천히 훑는다(1.7초 지나감 + 쉼, TD-108 46 — 구 0.6초 「너무 빨라 눈에 띔」).
- * 처리 중 Shimmer와 다른 점 = 박동에 맞춘 붉은 번짐. 표 안 지연 막대처럼 상태 표시가 옆에 없는 막대는 정지 —
+ * 박동 두 번(2.4초)에 한 번 — 옅은 흰 빛이 채움을 천천히 훑고(1.7초 지나감 + 쉼), 그동안 붉은 번짐이 한 번 차올랐다 가라앉는다
+ * (TD-108 46 — 구: 빛 0.6초 · 번짐 박동마다 「너무 빠름」). 처리 중 Shimmer와 다른 점 = 붉은 번짐. 표 안 지연 막대처럼 상태 표시가 옆에 없는 막대는 정지 —
  * 경고가 화면 여러 곳에서 동시에 뛰지 않게 한 화면의 대표 막대 하나만 */
 .progress-row:has(.status-block--delay) .progress-bar--delay .pbar-fill {
     background-image:
@@ -3033,15 +3033,14 @@ body.dark-mode .section-box { background: var(--color-bg-muted); }
     background-size: 35% 100%, 100% 100%;
     background-repeat: no-repeat;
     background-position: -60% 0, 0 0;
-    animation: ds-alert-glow var(--duration-pulse) var(--ease-loop) infinite,
+    animation: ds-alert-glow calc(var(--duration-pulse) * 2) var(--ease-loop) infinite,
                ds-alert-sweep calc(var(--duration-pulse) * 2) var(--ease-loop) infinite;
 }
+/* 붉은 번짐 = 2.4초에 한 번 천천히 숨 쉬듯(빛이 지나가는 동안 차올랐다 가라앉음). 구: 박동마다 두 번 — 「너무 빨리 뜀」(10/21 TD-108 46) */
 @keyframes ds-alert-glow {
     0%        { box-shadow: 0 0 0 0 transparent; }
-    12%       { box-shadow: 0 0 10px 2px color-mix(in srgb, var(--color-progress-delay-end) 55%, transparent); }
-    24%       { box-shadow: 0 0 3px 0 color-mix(in srgb, var(--color-progress-delay-end) 35%, transparent); }
-    36%       { box-shadow: 0 0 8px 1px color-mix(in srgb, var(--color-progress-delay-end) 50%, transparent); }
-    56%, 100% { box-shadow: 0 0 0 0 transparent; }
+    35%       { box-shadow: 0 0 9px 1px color-mix(in srgb, var(--color-progress-delay-end) 50%, transparent); }
+    75%, 100% { box-shadow: 0 0 0 0 transparent; }
 }
 @keyframes ds-alert-sweep {
     0%        { background-position: -60% 0, 0 0; }
