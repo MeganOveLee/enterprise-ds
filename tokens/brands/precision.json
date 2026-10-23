@@ -1,0 +1,140 @@
+{
+  "$description": "/* ============================================================================\n * 브랜드 — Precision · 자동차 부품 (가상 산업 브랜드 · 청록)  ← 공개용 데모 브랜드\n * 사용자: 부품 설계자 (옛 이름 「샤프형 시안」 · sharp.css → 10/13 「정밀기계」 → 10/14 「자동차 부품」)\n *\n * 선택자: :root.theme-precision  →  <html class=\"theme-precision\">\n * 정체성: 자동차 부품 산업(부품 설계) — 직각 모서리 · 컨트롤 높이 32 · 청록(틸) 한 계열.\n *   색 · 모서리만 바뀌는 Fashion(fashion.css)과 달리 컨트롤 높이까지 바뀌는 것을 보여 주는 브랜드 (DS-ADR-020).\n *   색은 레퍼런스 회사 값을 쓰지 않고 「브랜드 램프 설계」 2-5 순서로 새로 지음 (2026-10-13):\n *   색상 186° 하나 · 채도 100%(400~900) · 밝기만 내림(2-1). 900도 같은 색상(남색 아님).\n *   accent 는 반대편 쪽 베리(색상 326°) — 신호색과 색상이 겹치지 않게(warning 74° · danger 24° 떨어짐, 분홍이라 빨강과 구분) (2-3 · 2-4).\n *\n * 이 파일이 여는 토큰 (DS-ADR-003 · 020)\n *   색(필수)   --brand-50~900 · --accent-500   (목록은 _template.css)\n *   형태(선택) --radius-{btn · input · checkbox · chip · item · card · panel · popover · skeleton}\n *                   --size-input · --size-btn · --size-btn-sm\n *   그림(선택) --art-solid · --art-line — 빈 상태 일러스트 · 폴더 · 파일 형식 아이콘의 모양. 이 브랜드는 라인 (DS-ADR-037)\n *   그 밖(단계 --radius-sm/md/lg, 간격, 글자, 신호색)은 덮지 않는다 — 스태틱.\n *\n * 대비 (2026-10-13 계산, WCAG)\n *   라이트: 500 글자/흰 5.58 · 600 버튼/흰 글자 6.78 · 800 라벨/흰 12.51 · 500 글자/50 5.19 · 500 글자/100(LNB 활성) 4.72\n *   다크:   300 글자/카드 7.97 · 400 보더·아이콘/카드 4.61 · 500 바탕/흰 글자 5.58 · 50 글자/700(LNB 활성) 9.29\n *   패널:   50/900 14.41 · 200/900 10.29 · 200/700 6.64\n * ============================================================================ */",
+  "$extensions": {
+    "eds": {
+      "selector": ":root.theme-precision"
+    }
+  },
+  "brand-50": {
+    "$value": "#EDF9FA",
+    "$type": "color",
+    "$extensions": {
+      "eds": {
+        "before": [
+          "/* --- 색 (색상 186° · 2-5 순서: 500 → 700 → 900 → 800 → 400 → 50·100·200 → accent) --- */"
+        ]
+      }
+    },
+    "$description": "LNB 호버 · 옅은 브랜드 바탕 · 선택"
+  },
+  "brand-100": {
+    "$value": "#D7F1F4",
+    "$type": "color",
+    "$description": "LNB 활성 · 행 선택"
+  },
+  "brand-200": {
+    "$value": "#A0DDE3",
+    "$type": "color",
+    "$description": "패널 위 보조 글자 · 다크 글자 hover"
+  },
+  "brand-300": {
+    "$value": "#2FCFE1",
+    "$type": "color",
+    "$description": "다크 브랜드 글자 · 차트 2"
+  },
+  "brand-400": {
+    "$value": "#009DAE",
+    "$type": "color",
+    "$description": "다크 브랜드 보더 · 아이콘 · 포커스"
+  },
+  "brand-500": {
+    "$value": "#007380",
+    "$type": "color",
+    "$description": "메인 — 브랜드 글자 · 포커스 링 · 차트 1"
+  },
+  "brand-600": {
+    "$value": "#006570",
+    "$type": "color",
+    "$description": "주요 버튼 채움 · 체크"
+  },
+  "brand-700": {
+    "$value": "#004A52",
+    "$type": "color",
+    "$description": "면 · 주요 버튼 hover · 다크 LNB 활성"
+  },
+  "brand-800": {
+    "$value": "#003A40",
+    "$type": "color",
+    "$description": "Ink — 램프의 진한 끝 (500 이 중간 밝기라 따로 어둡게, 2-2)"
+  },
+  "brand-900": {
+    "$value": "#00292D",
+    "$type": "color",
+    "$description": "딥 패널 · pressed — 700 과 같은 색상, 한 단계 더 어둡게"
+  },
+  "accent-500": {
+    "$value": "#D369A5",
+    "$type": "color",
+    "$description": "포인트 — 아이콘 · 테두리 · 작은 점만 (짙은 면 위 글자 금지, 2-3). 900 위 4.67 · 흰 바탕 3.32"
+  },
+  "radius-btn": {
+    "$value": "0",
+    "$type": "dimension",
+    "$extensions": {
+      "eds": {
+        "before": [
+          "/* --- 형태 ---------------------------------------------------------------- */"
+        ]
+      }
+    }
+  },
+  "radius-input": {
+    "$value": "0",
+    "$type": "dimension"
+  },
+  "radius-checkbox": {
+    "$value": "0",
+    "$type": "dimension"
+  },
+  "radius-chip": {
+    "$value": "0",
+    "$type": "dimension"
+  },
+  "radius-item": {
+    "$value": "0",
+    "$type": "dimension"
+  },
+  "radius-card": {
+    "$value": "0",
+    "$type": "dimension"
+  },
+  "radius-panel": {
+    "$value": "0",
+    "$type": "dimension"
+  },
+  "radius-popover": {
+    "$value": "0",
+    "$type": "dimension"
+  },
+  "radius-skeleton": {
+    "$value": "0",
+    "$type": "dimension"
+  },
+  "size-input": {
+    "$value": "32px",
+    "$type": "dimension",
+    "$description": "28 → 32. 버튼과 같은 줄이라 같은 값"
+  },
+  "size-btn": {
+    "$value": "32px",
+    "$type": "dimension"
+  },
+  "size-btn-sm": {
+    "$value": "28px",
+    "$type": "dimension",
+    "$description": "작은 버튼도 한 단계 위로 (26 → 28)"
+  },
+  "art-solid": {
+    "$value": "none",
+    "$extensions": {
+      "eds": {
+        "before": [
+          "/* --- 그림 자산 (DS-ADR-037) — 하나만 block -------------------------------- */"
+        ]
+      }
+    }
+  },
+  "art-line": {
+    "$value": "block"
+  }
+}

@@ -6,6 +6,9 @@
   "license": "UNLICENSED",
   "type": "module",
   "scripts": {
+    "tokens": "node scripts/tokens/build.mjs",
+    "tokens:check": "node scripts/tokens/build.mjs --check && node scripts/tokens/check-vars.mjs",
+    "tokens:figma": "node scripts/tokens/compare-figma.mjs",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
@@ -13,7 +16,9 @@
     "@storybook/addon-a11y": "^10.0.0",
     "@storybook/addon-docs": "^10.0.0",
     "@storybook/html-vite": "^10.0.0",
+    "postcss": "^8.5.31",
     "storybook": "^10.0.0",
+    "style-dictionary": "^5.7.0",
     "vite": "^7.0.0"
   }
 }

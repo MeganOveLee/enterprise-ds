@@ -18,8 +18,9 @@ v1.0 · 설계 · 퍼블리싱 이세영
 
 | 경로 | 내용 |
 |---|---|
-| `css/tokens.css` | 공통 토큰 (원천 램프 → 시맨틱 → 다크) |
-| `css/brands/` | 브랜드 값 파일. 브랜드가 여는 토큰(색 · 형태 · 그림 자산) 목록은 `_template.css`(새 브랜드 양식)에 있고, 지금 값은 스토리북 Foundation › Color(색) · Spacing · Radius · Size(형태 · 그림 자산)에서 브랜드를 바꿔 볼 수 있습니다. `default.css` = 기본 브랜드(그림 자산 솔리드), `fashion.css` · `precision.css` = 시연용 가상 산업 브랜드(Fashion · 패션 리테일 = 색 + 둥근 모서리 / Precision · 자동차 부품 = 색 + 직각 · 높이 32, 둘 다 그림 자산 라인) |
+| `tokens/` | **토큰 값의 원본** (DTCG JSON). `core.json` 원천 램프 · 시맨틱 · `vendor.json` 벤더 이름 · `dark.json` 다크 · `brands/*.json` 브랜드. 값을 고치는 곳은 여기뿐입니다 |
+| `css/tokens.css` | 공통 토큰 (원천 램프 → 시맨틱 → 다크) — `tokens/`에서 만드는 생성 파일 |
+| `css/brands/` | 브랜드 값 파일 — `tokens/brands/`에서 만드는 생성 파일. 브랜드가 여는 토큰(색 · 형태 · 그림 자산) 목록은 `tokens/brands/_template.json`(새 브랜드 양식)에 있고, 지금 값은 스토리북 Foundation › Color(색) · Spacing · Radius · Size(형태 · 그림 자산)에서 브랜드를 바꿔 볼 수 있습니다. `default.css` = 기본 브랜드(그림 자산 솔리드), `fashion.css` · `precision.css` = 시연용 가상 산업 브랜드(Fashion · 패션 리테일 = 색 + 둥근 모서리 / Precision · 자동차 부품 = 색 + 직각 · 높이 32, 둘 다 그림 자산 라인) |
 | `css/globals.css` · `components.css` | 전역 · 컴포넌트. 브랜드를 모릅니다 |
 | `js/select.js` | 선택 목록 — 화면의 단일 select를 같은 목록(`.ui-select`)으로 (APG Select-Only Combobox 패턴) |
 | `js/multiselect.js` | 다중 선택 — `select.checkSelect[multiple]`을 표시 상자 + 체크박스 목록으로 |
@@ -29,6 +30,8 @@ v1.0 · 설계 · 퍼블리싱 이세영
 | `js/clear.js` | 조회 조건 입력 · 날짜 칸의 지우기(×) 버튼 — `data-ds-clear` 또는 검색 조건 영역(`.mainTable`) 안 칸에 붙음 |
 | `js/modal.js` | 확인 창 — `.modal` 열기 · 닫기 · 포커스 가두기 · Esc (APG Dialog (Modal) 패턴) |
 | `stories/` · `.storybook/` | Storybook (HTML 프레임워크) |
+| `scripts/tokens/` | 토큰 만들기(`build.mjs`, Style Dictionary) · 정의되지 않은 변수 검사 · Figma 변수 대조 · CSS → JSON 옮기기 |
+| `figma-plugin/token-export/` | Figma 개발 플러그인 — Foundation 변수를 `tokens/figma/export.json`으로 내보냄 |
 
 ## 불러오는 순서
 
@@ -50,7 +53,8 @@ v1.0 · 설계 · 퍼블리싱 이세영
 ## 규칙
 
 - 화면 CSS는 `--color-*` 시맨틱만 씁니다. 원천 램프(`--neutral-N`, `--brand-N`) 직접 참조 금지
-- 브랜드 값은 `css/brands/` 파일에만 둡니다
+- 토큰 값은 `tokens/`의 JSON에서만 고칩니다. `css/tokens.css` · `css/brands/*.css`는 생성 파일이라 직접 고치지 않습니다
+- 브랜드 값은 `tokens/brands/` 파일에만 둡니다
 - 결정마다 ADR(결정 기록)을 남깁니다 — 코드 주석의 `DS-ADR-0NN`
 
 ## 로컬 실행
@@ -60,9 +64,23 @@ npm install
 npm run storybook
 ```
 
+## 토큰 고치기
+
+```
+# 1. tokens/*.json 에서 값을 고친다 (참조는 {이름}, 설명은 $description)
+npm run tokens          # 2. css/tokens.css · css/brands/*.css 를 다시 만든다
+npm run tokens:check    # 3. 생성 파일 · 정의되지 않은 변수 검사 (CI 와 같음)
+```
+
+- JSON과 생성 CSS를 함께 커밋합니다. 둘이 다르면 CI(토큰 검사)가 실패합니다.
+- 참조가 끊기면(없는 이름을 가리키면) 만들기에서 실패합니다.
+- Figma 변수는 `figma-plugin/token-export`로 내보내 `tokens/figma/export.json`에 넣으면, CI가 브랜드 × 라이트 · 다크 최종 값(`tokens/build/resolved.json`)과 대조해 다른 곳을 표로 남깁니다. 로컬에서는 `npm run tokens:figma`.
+- 결정 기록: DS-ADR-045 「토큰 원본 = tokens.json」
+
 ## 다음 버전
 
-- Figma 변수와 CSS 토큰을 하나의 JSON 파일에서 생성해, 한쪽을 고치면 다른 쪽이 따라가도록 할 계획입니다.
+- Figma 가져오기 — 같은 JSON을 Figma 변수에 반영하는 플러그인 버튼. 지금은 내보내기 · 대조까지입니다.
+- 같은 JSON에서 리액트용 JS 토큰을 함께 만듭니다.
 
 ---
 

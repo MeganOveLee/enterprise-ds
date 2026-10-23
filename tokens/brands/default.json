@@ -1,0 +1,71 @@
+{
+  "$description": "/* ============================================================================\n * 브랜드 — Default (기본 브랜드)\n *\n * 선택자: :root (클래스 없음 = 기본값) + :root.theme-default\n * 이 파일이 여는 토큰 = 색(--brand-50~900 · --accent-500) + 그림 자산 모양(--art-solid · --art-line = 솔리드, DS-ADR-037).\n *   형태는 덮지 않음 = tokens.css 기본값 (DS-ADR-003 · 020). 목록은 _template.css\n * 50~600 은 tokens.css 의 --blue-* 램프를 참조 — 블루 램프를 고치면 브랜드도 따라옴.\n *   (주석의 hex 는 참조 당시 값. 기록용)\n * 700~900 · accent 는 블루 램프에 없는 값이라 hex 그대로.\n * 출처: POC (2026-08-24) — 일괄결재·생성 버튼(btn--primary)이 쓰던 파랑. 시스템 안에서 검증된 색이고,\n *       또렷하지만 채도가 튀지 않음\n * ============================================================================ */",
+  "$extensions": {
+    "eds": {
+      "selector": ":root,\n:root.theme-default"
+    }
+  },
+  "brand-50": {
+    "$value": "{blue-50}",
+    "$description": "#E6F1FB LNB 호버 배경"
+  },
+  "brand-100": {
+    "$value": "{blue-100}",
+    "$description": "#CCE3F7 LNB 활성 메뉴 배경"
+  },
+  "brand-200": {
+    "$value": "{blue-200}",
+    "$description": "#9BC6EE 선택칩·구분선"
+  },
+  "brand-300": {
+    "$value": "{blue-300}",
+    "$description": "#5CA3DD 옅은 강조 (배지·tag 배경 등)"
+  },
+  "brand-400": {
+    "$value": "{blue-400}",
+    "$description": "#1876F2 다크모드 brand"
+  },
+  "brand-500": {
+    "$value": "{blue-600}",
+    "$description": "#0064E0 메인 — 일괄결재/생성 버튼과 같은 파랑"
+  },
+  "brand-600": {
+    "$value": "{blue-700}",
+    "$description": "#0457CB 호버"
+  },
+  "brand-700": {
+    "$value": "#00347F",
+    "$type": "color",
+    "$description": "Deep — 홈 프로필카드·공지배너 같은 '면' + pressed.\n구 #1A4A8F 는 채도 70 이라 s100 인 아이콘상자·버튼과 다른 파랑으로 보였음\n→ 채도를 100으로 맞추고 명도를 34→25 로 내려 면/액션을 분리"
+  },
+  "brand-800": {
+    "$value": "#0A2C66",
+    "$type": "color",
+    "$description": "Ink — 폼 라벨. 브랜드색이되 값(#171717)보다는 밝고 액션(500)보다는 훨씬 어두워야\n'읽는 색'이 아니라 '찾는 색'이 됨. 파랑은 500 이 l43 이라 라벨로 쓰면 링크로 읽혀서\n이 단계가 필요했음 — 초록은 500 이 이미 l22 라 같은 값을 넣으면 됨"
+  },
+  "brand-900": {
+    "$value": "#00265E",
+    "$type": "color",
+    "$description": "GNB 드롭다운 딥 패널. 700 보다 한 단계 더 깊게"
+  },
+  "accent-500": {
+    "$value": "#3FBAEC",
+    "$type": "color",
+    "$description": "브랜드 반대편 포인트색 — 브랜드색만으로 안 되는 '작은 강조' 자리.\n고객사 A는 골드(#cbb86a), Default 는 스카이. 팔레트마다 값이 달라짐.\n⚠️ 짙은 브랜드 면 위에서 '글자'로 쓰지 말 것 — 포인트색과 면색이 둘 다 고채도면\n경계에서 진동해 눈이 아픔. 아이콘·테두리·작은 점만.\n패널 위 글자는 --color-text-on-panel / -2 사용.\n(구 --gold-500 — 값이 시안인데 이름이 골드라 팔레트가 바뀌면 거짓말이 됨)"
+  },
+  "art-solid": {
+    "$value": "block",
+    "$extensions": {
+      "eds": {
+        "before": [
+          "/* --- 그림 자산 (DS-ADR-037) — 빈 상태 일러스트 · 폴더 · 파일 형식 아이콘의 모양. 하나만 block ---------- */"
+        ]
+      }
+    },
+    "$description": "솔리드 = 채운 일러스트 · 채운 폴더 · 색 종이 파일"
+  },
+  "art-line": {
+    "$value": "none",
+    "$description": "라인   = 선 픽토그램 · 선 폴더 · 파일 윤곽"
+  }
+}

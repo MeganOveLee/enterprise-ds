@@ -1,4 +1,5 @@
 @charset "UTF-8";
+/* ⚙️ 생성 파일 — 고치지 말 것. 원본은 tokens/brands/fashion.json, 만들기는 npm run tokens (DS-ADR-045) */
 /* ============================================================================
  * 브랜드 — Fashion · 패션 리테일 (가상 산업 브랜드 · 바이올렛)  ← 공개용 데모 브랜드
  * 사용자: MD · 디자이너
@@ -13,30 +14,30 @@
  * ============================================================================ */
 
 :root.theme-fashion {
-  --brand-50:   #F3F0FE;
-  --brand-100:  #E4DCFD;
-  --brand-200:  #C9B9FA;
-  --brand-300:  #A68CF5;
-  --brand-400:  #8B6CEE;
-  --brand-500:  #6D4ADB;
-  --brand-600:  #5A38C4;
-  --brand-700:  #47299F;
-  --brand-800:  #3B2585;
-  --brand-900:  #261754;
+  --brand-50: #F3F0FE;
+  --brand-100: #E4DCFD;
+  --brand-200: #C9B9FA;
+  --brand-300: #A68CF5;
+  --brand-400: #8B6CEE;
+  --brand-500: #6D4ADB;
+  --brand-600: #5A38C4;
+  --brand-700: #47299F;
+  --brand-800: #3B2585;
+  --brand-900: #261754;
   --accent-500: #F2A93B;
 
   /* --- 형태 (모서리 역할 → 단계, DS-ADR-020) ------------------------------- */
-  --radius-btn:      var(--radius-rounded);
-  --radius-input:    var(--radius-lg);
+  --radius-btn: var(--radius-rounded);
+  --radius-input: var(--radius-lg);
   --radius-checkbox: var(--radius-md);
-  --radius-chip:     var(--radius-rounded);
-  --radius-item:     var(--radius-md);
-  --radius-card:     var(--radius-lg);
-  --radius-panel:    var(--radius-lg);
-  --radius-popover:  var(--radius-lg);
+  --radius-chip: var(--radius-rounded);
+  --radius-item: var(--radius-md);
+  --radius-card: var(--radius-lg);
+  --radius-panel: var(--radius-lg);
+  --radius-popover: var(--radius-lg);
   --radius-skeleton: var(--radius-md);
 
   /* --- 그림 자산 (DS-ADR-037) — 하나만 block -------------------------------- */
   --art-solid: none;
-  --art-line:  block;
+  --art-line: block;
 }

@@ -1,0 +1,506 @@
+{
+  "$description": "/* ============================================================================\n * DARK MODE — body.dark-mode 토글 시 Layer 4 Semantic Aliases override\n *\n * 디자인 정책 — 라이트 모드의 위계 의미를 유지:\n *   subtle (페이지 바닥, 가장 가라앉음) → base (카드, 약간 들림) → muted (호버, 더 들림)\n *\n *   - 페이지 바닥(subtle):   neutral-950\n *   - 카드(base):            neutral-800\n *   - 호버/elevation(muted): neutral-750\n *   - 섹션 헤더·그리드 헤더: neutral-850\n *   - 브랜드:                brand-400  (다크 배경에 살아남도록 한 단계 옅게) — 보더·아이콘. 글자는 300(AA 4.5, DS-ADR-014). 흰 글자를 얹는 채색 면(bg-brand)은 500 (DS-ADR-004)\n *   Vendor Bridge(Layer 5)는 body 에 선언돼 있어 여기서 다시 쓸 필요 없음.\n * ============================================================================ */",
+  "$extensions": {
+    "eds": {
+      "selector": "body.dark-mode"
+    }
+  },
+  "color-bg-base": {
+    "$value": "{neutral-800}",
+    "$extensions": {
+      "eds": {
+        "before": [
+          "/* ⚠️ 여기는 '값'을 만들지 않는다 — Layer 1 팔레트(--neutral-* / --brand-* / 신호색)를 참조만.\n *   토큰 이름은 라이트와 동일. 이름은 그대로 두고 가리키는 팔레트 단계만 바꾸는 게 이 층의 역할.\n *   ⚠️ Halation(어두운 배경 위 흰 글자 번짐) 방지로 subtle(바닥)↔base(카드) 명도차를 일부러 벌려 뒀음. */",
+          "/* Background — 라이트 모드와 동일 위계 의미 (subtle 가장 가라앉음 → muted 가장 들림) */"
+        ]
+      }
+    }
+  },
+  "color-bg-muted": {
+    "$value": "{neutral-750}"
+  },
+  "color-bg-subtle": {
+    "$value": "{neutral-950}",
+    "$description": "페이지 바닥. 입력칸(neutral-900)과 한 단계 벌려야 함 —\n같은 값이면 편집그리드에서 '회색 판 위 입력칸'이 안 보임"
+  },
+  "color-bg-header": {
+    "$value": "{neutral-850}"
+  },
+  "color-bg-disabled": {
+    "$value": "{neutral-750}"
+  },
+  "color-bg-input": {
+    "$value": "{neutral-900}",
+    "$extensions": {
+      "eds": {
+        "before": [
+          "/* 라이트와 반전 관계 — 라이트: 입력=흰색 / 읽기전용=회색(어둡게).\n *                      다크 : 입력=파인 어두운 칸 / 읽기전용=떠 있는 밝은 칸.\n * 어느 쪽이든 '입력 가능한 칸'이 배경에서 더 멀어지는 방향 */"
+        ]
+      }
+    },
+    "$description": "입력칸 — 카드보다 확실히 파이게"
+  },
+  "color-bg-readonly": {
+    "$value": "{neutral-750}",
+    "$description": "읽기전용 — 카드보다 밝게 떠서 '건드릴 수 없는 칸'"
+  },
+  "color-bg-inverse": {
+    "$value": "{neutral-100}"
+  },
+  "color-bg-inverse-soft": {
+    "$value": "{neutral-200}"
+  },
+  "color-bg-brand": {
+    "$value": "{brand-500}",
+    "$description": "다크도 500 — 채색 면 위에 흰 글자(on-color)가 올라감. 400 은 흰 글자 대비 Default 4.27 · 고객사 A 3.91 로 AA 미달.\n'다크 브랜드 = 400' 은 다크 바탕 위 글자·보더용 (DS-ADR-004)"
+  },
+  "color-bg-brand-subtle": {
+    "$value": "color-mix(in srgb, {brand-500} 30%, transparent)"
+  },
+  "color-text-on-brand-subtle": {
+    "$value": "{brand-200}",
+    "$description": "300(#5CA3DD)은 옅은 브랜드 칩 위에서 어두워 뱃지 글씨가 묻힘"
+  },
+  "color-bg-danger": {
+    "$value": "{red-500}"
+  },
+  "color-bg-danger-subtle": {
+    "$value": "{red-900}"
+  },
+  "color-bg-info": {
+    "$value": "{blue-500}"
+  },
+  "color-bg-info-subtle": {
+    "$value": "{blue-900}"
+  },
+  "color-bg-success": {
+    "$value": "{green-500}"
+  },
+  "color-bg-success-subtle": {
+    "$value": "{green-900}"
+  },
+  "color-bg-warning": {
+    "$value": "{yellow-400}"
+  },
+  "color-bg-warning-subtle": {
+    "$value": "{yellow-900}"
+  },
+  "color-bg-selected": {
+    "$value": "{neutral-700}"
+  },
+  "color-bg-overlay": {
+    "$value": "{transparent-60}",
+    "$description": "어두운 화면 위 덮개 — 32%는 뒤 화면과 구분이 안 됨. 다크 그림자(--shadow-modal 0.6)와 같은 농도"
+  },
+  "color-text-base": {
+    "$value": "{neutral-200}",
+    "$extensions": {
+      "eds": {
+        "before": [
+          "/* Foreground */"
+        ]
+      }
+    },
+    "$description": "components.css:2333 에 !important 로 중복돼 있던 값 흡수 (구 neutral-100)"
+  },
+  "color-text-muted": {
+    "$value": "{neutral-400}",
+    "$description": "구 text-subtle 다크값. 구 muted(300)와 subtle(400)은 한 단계 차이라 구분되지 않았음 — 이전 버전 다크에서는 대비 1.01 (DS-ADR-001 · 008)"
+  },
+  "color-text-disabled": {
+    "$value": "{neutral-600}"
+  },
+  "color-text-inverse": {
+    "$value": "{neutral-900}"
+  },
+  "color-text-label": {
+    "$value": "{brand-300}",
+    "$description": "다크는 brand-800(잉크)이 배경에 묻혀서 밝은 단계로. 400은 카드 위 3.5 → 300 (5.5, DS-ADR-014)"
+  },
+  "color-text-brand": {
+    "$value": "{brand-300}",
+    "$description": "다크 브랜드 글자 = 300. 400은 카드(800) 위 Default 3.52 · 고객사 A 3.84로 AA 미달 (DS-ADR-014). 보더·아이콘은 400 유지"
+  },
+  "color-text-link-visited": {
+    "$value": "{neutral-400}"
+  },
+  "color-text-danger": {
+    "$value": "{red-300}",
+    "$description": "400은 카드 위 4.05 → 300 (5.91, DS-ADR-014)"
+  },
+  "color-text-danger-bold": {
+    "$value": "{red-200}"
+  },
+  "color-text-info": {
+    "$value": "{blue-300}",
+    "$description": "400은 카드 위 3.52 → 300 (5.54, DS-ADR-014)"
+  },
+  "color-text-info-bold": {
+    "$value": "{blue-200}"
+  },
+  "color-text-success": {
+    "$value": "{green-400}"
+  },
+  "color-text-success-bold": {
+    "$value": "{green-300}"
+  },
+  "color-text-warning": {
+    "$value": "{yellow-400}"
+  },
+  "color-text-warning-bold": {
+    "$value": "{yellow-300}"
+  },
+  "color-progress-plan-start": {
+    "$value": "{neutral-500}",
+    "$extensions": {
+      "eds": {
+        "before": [
+          "/* 진행 상태 「예정」 — 라이트 값(#111827 → 거의 검정)이 다크 바탕에 묻힘(1.18) → 중립 밝은 단계 (제안 B). 나머지 4색은 다크 바탕 위 3:1 근처라 그대로 */"
+        ]
+      }
+    }
+  },
+  "color-progress-plan-end": {
+    "$value": "{neutral-400}",
+    "$description": "다크 카드 위 6.51"
+  },
+  "color-border-base": {
+    "$value": "{neutral-700}",
+    "$extensions": {
+      "eds": {
+        "before": [
+          "/* Border */"
+        ]
+      }
+    }
+  },
+  "color-border-subtle": {
+    "$value": "{neutral-750}",
+    "$description": "다크는 반대로 배경보다 어둡게"
+  },
+  "color-border-strong": {
+    "$value": "{neutral-600}"
+  },
+  "color-border-lnb": {
+    "$value": "{neutral-600}",
+    "$description": "= 다크 strong"
+  },
+  "color-border-lnb-sub": {
+    "$value": "{neutral-750}",
+    "$description": "= 다크 subtle"
+  },
+  "color-border-disabled": {
+    "$value": "{neutral-750}"
+  },
+  "color-border-input": {
+    "$value": "{neutral-500}",
+    "$description": "입력칸(900) 위 3.77 · 카드(800) 위 3.15 (DS-ADR-013)"
+  },
+  "color-border-input-hover": {
+    "$value": "{neutral-400}",
+    "$description": "다크는 밝아지는 쪽이 강조"
+  },
+  "color-border-brand": {
+    "$value": "{brand-400}",
+    "$description": "다크모드 브랜드 보더"
+  },
+  "color-border-focus": {
+    "$value": "{brand-400}"
+  },
+  "color-focus-ring": {
+    "$value": "color-mix(in srgb, {brand-400} 35%, transparent)",
+    "$description": "다크 번짐 — 바탕 위 1.5~1.7:1(22%는 1.2). 표시는 테두리가 맡고 번짐은 보조"
+  },
+  "color-border-danger": {
+    "$value": "{red-500}"
+  },
+  "color-border-info": {
+    "$value": "{blue-400}"
+  },
+  "color-border-success": {
+    "$value": "{green-500}"
+  },
+  "color-border-warning": {
+    "$value": "{yellow-400}"
+  },
+  "color-icon-base": {
+    "$value": "{neutral-100}",
+    "$extensions": {
+      "eds": {
+        "before": [
+          "/* Icon */"
+        ]
+      }
+    }
+  },
+  "color-icon-muted": {
+    "$value": "{neutral-300}"
+  },
+  "color-icon-disabled": {
+    "$value": "{neutral-600}"
+  },
+  "color-icon-inverse": {
+    "$value": "{neutral-900}"
+  },
+  "color-icon-brand": {
+    "$value": "{brand-400}"
+  },
+  "color-icon-link-visited": {
+    "$value": "{neutral-500}"
+  },
+  "color-icon-danger": {
+    "$value": "{red-400}"
+  },
+  "color-icon-info": {
+    "$value": "{blue-400}"
+  },
+  "color-icon-success": {
+    "$value": "{green-400}"
+  },
+  "color-icon-warning": {
+    "$value": "{yellow-400}"
+  },
+  "color-icon-on-inverse-success": {
+    "$value": "{green-700}"
+  },
+  "color-icon-on-inverse-warning": {
+    "$value": "{yellow-700}"
+  },
+  "color-icon-on-inverse-danger": {
+    "$value": "{red-700}"
+  },
+  "color-bg-grid-header": {
+    "$value": "{neutral-850}",
+    "$extensions": {
+      "eds": {
+        "before": [
+          "/* AUI Grid */"
+        ]
+      }
+    }
+  },
+  "color-bg-row-alt": {
+    "$value": "{neutral-850}",
+    "$description": "짝수행 — 카드보다 살짝 가라앉게.\n구 #15151A 는 줄무늬가 너무 셌고, 실제로는 components.css 가\n#1E2822(옅은 그린)로 덮고 있어 트리 짝수행이 초록으로 떴음"
+  },
+  "color-border-grid-outer": {
+    "$value": "{color-border-base}"
+  },
+  "color-bg-grid-row-hover": {
+    "$value": "{neutral-750}",
+    "$description": "다크는 명도차만으로 구분 — 어두운 배경이 채도를 먹어서 틴트를 줘도 잘 안 보임"
+  },
+  "color-bg-grid-row-selected": {
+    "$value": "color-mix(in srgb, {brand-500} 14%, {neutral-800})",
+    "$description": "선택만 브랜드 틴트 — 호버와 구분되고 인풋과도 분리.\n구 #243044 하드코딩 → 브랜드 추종 (DS-ADR-003). Default 에서 rgb(30,48,68) ≈ 구 값 rgb(36,48,68)"
+  },
+  "color-bg-lnb-hover": {
+    "$value": "{neutral-750}",
+    "$extensions": {
+      "eds": {
+        "before": [
+          "/* LNB hover / active — 다크 위 옅은 브랜드 반투명. 옛 브랜드(빨강) 하드코딩 rgba(239,0,16,…) 이었던 것 → 브랜드 추종 */",
+          "/* 다크 LNB — 사이드바가 순검정(#000)이라 반투명 브랜드색은 다 먹힘.\n * 호버 = 명도만, 활성 = 채도 100 짜리 진한 파랑 블록 + 흰 글자 */"
+        ]
+      }
+    }
+  },
+  "color-bg-lnb-active": {
+    "$value": "{brand-700}",
+    "$description": "#00347F — s100 딥블루"
+  },
+  "color-text-lnb-active": {
+    "$value": "{brand-50}",
+    "$description": "딥 브랜드 면 위 글자 = --color-text-on-panel 과 같은 처지라 같은 단계로.\n흰색으로 두면 이 토큰만 브랜드 계열을 벗어남"
+  },
+  "color-bg-btn-primary": {
+    "$value": "color-mix(in srgb, {brand-500} 35%, transparent)",
+    "$extensions": {
+      "eds": {
+        "before": [
+          "/* 버튼 — primary(등록 · 저장) */"
+        ]
+      }
+    },
+    "$description": "구 rgba(21,93,252,.35) 하드코딩 → 브랜드 추종 (DS-ADR-005)"
+  },
+  "color-text-btn-primary": {
+    "$value": "{white}"
+  },
+  "color-border-btn-primary": {
+    "$value": "{brand-400}",
+    "$description": "다크 브랜드 = 400 (다크 머리말 규칙). 500 은 고객사 A 그린에서 바탕에 묻힘"
+  },
+  "color-bg-btn-primary-hover": {
+    "$value": "color-mix(in srgb, {brand-500} 45%, transparent)"
+  },
+  "color-border-btn-primary-hover": {
+    "$value": "{brand-300}"
+  },
+  "color-bg-interactive-primary-pressed": {
+    "$value": "color-mix(in srgb, {brand-500} 55%, transparent)",
+    "$extensions": {
+      "eds": {
+        "before": [
+          "/* 버튼 상태·역할 — 다크 (P2 Button). 다크 브랜드 글자·보더 = 400 → hover 300 → pressed 200 */"
+        ]
+      }
+    }
+  },
+  "color-text-interactive-primary-hover": {
+    "$value": "{brand-200}",
+    "$description": "기본 글자가 300으로 올라가 한 칸씩 (DS-ADR-014)"
+  },
+  "color-text-interactive-primary-pressed": {
+    "$value": "{brand-100}"
+  },
+  "color-border-interactive-primary-hover": {
+    "$value": "{brand-300}"
+  },
+  "color-border-interactive-primary-pressed": {
+    "$value": "{brand-200}"
+  },
+  "color-bg-interactive-secondary": {
+    "$value": "{neutral-750}"
+  },
+  "color-bg-interactive-secondary-hover": {
+    "$value": "{neutral-700}"
+  },
+  "color-bg-interactive-secondary-pressed": {
+    "$value": "{neutral-600}"
+  },
+  "color-text-interactive-secondary": {
+    "$value": "{neutral-200}"
+  },
+  "color-text-interactive-secondary-hover": {
+    "$value": "{neutral-100}"
+  },
+  "color-text-interactive-secondary-pressed": {
+    "$value": "{neutral-50}"
+  },
+  "color-icon-interactive-secondary": {
+    "$value": "{neutral-200}"
+  },
+  "color-icon-interactive-secondary-hover": {
+    "$value": "{neutral-100}"
+  },
+  "color-icon-interactive-secondary-pressed": {
+    "$value": "{neutral-50}"
+  },
+  "color-border-interactive-secondary": {
+    "$value": "{neutral-600}"
+  },
+  "color-border-interactive-secondary-hover": {
+    "$value": "{neutral-500}"
+  },
+  "color-border-interactive-secondary-pressed": {
+    "$value": "{neutral-400}"
+  },
+  "color-bg-interactive-danger": {
+    "$value": "{red-600}"
+  },
+  "color-bg-interactive-danger-hover": {
+    "$value": "{red-700}",
+    "$description": "흰 글자 대비 유지 — 밝게 가면 4.5 아래로 떨어짐"
+  },
+  "color-bg-interactive-danger-pressed": {
+    "$value": "{red-800}"
+  },
+  "color-border-interactive-danger": {
+    "$value": "{red-400}"
+  },
+  "color-border-interactive-danger-hover": {
+    "$value": "{red-300}"
+  },
+  "color-border-interactive-danger-pressed": {
+    "$value": "{red-200}"
+  },
+  "color-text-interactive-danger": {
+    "$value": "{red-300}",
+    "$description": "다크 = text-danger 와 같은 단계(카드 위 5.91, DS-ADR-014)"
+  },
+  "color-bg-interactive-selected-hover": {
+    "$value": "{neutral-600}",
+    "$description": "다크 bg-selected(700)보다 한 단계 밝게"
+  },
+  "color-bg-interactive-selected-pressed": {
+    "$value": "{neutral-500}"
+  },
+  "color-bg-interactive-primary-tint-pressed": {
+    "$value": "color-mix(in srgb, {brand-500} 45%, transparent)",
+    "$description": "다크 = hover(bg-brand-subtle 30%)보다 진한 브랜드. selected-hover(회색)를 쓰면 누를 때 회색이 됨 (Button 제안 ⑫)"
+  },
+  "color-bg-btn-excel": {
+    "$value": "rgba(34, 197, 94, 0.20)",
+    "$type": "color",
+    "$extensions": {
+      "eds": {
+        "before": [
+          "/* 버튼 — Excel (.btn_excel) Soft Green + 컬러 보더 */"
+        ]
+      }
+    }
+  },
+  "color-text-btn-excel": {
+    "$value": "{green-300}"
+  },
+  "color-text-btn-excel-hover": {
+    "$value": "{green-100}",
+    "$description": "올림 30% · 누름 40% 바탕 위 green-300 = 4.14 · 3.36(AA 미달) → green-100 6.69 · 5.43 (TD-108)"
+  },
+  "color-bg-btn-excel-hover": {
+    "$value": "rgba(34, 197, 94, 0.30)",
+    "$type": "color"
+  },
+  "color-bg-btn-excel-active": {
+    "$value": "rgba(34, 197, 94, 0.40)",
+    "$type": "color"
+  },
+  "color-border-btn-excel": {
+    "$value": "#22C55E",
+    "$type": "color"
+  },
+  "color-border-btn-excel-hover": {
+    "$value": "#3DD773",
+    "$type": "color"
+  },
+  "color-bg-checked": {
+    "$value": "{brand-400}",
+    "$extensions": {
+      "eds": {
+        "before": [
+          "/* 체크박스 체크 컬러 */"
+        ]
+      }
+    }
+  },
+  "color-border-grid-cell": {
+    "$value": "{neutral-750}",
+    "$extensions": {
+      "eds": {
+        "before": [
+          "/* 그리드 셀 보더 (다크 = 카드와 alt 사이 톤) */"
+        ]
+      }
+    }
+  },
+  "color-border-grid-header-bottom": {
+    "$value": "{neutral-950}"
+  },
+  "shadow-core": {
+    "$value": "0 1px 2px  rgba(0, 0, 0, 0.4)",
+    "$extensions": {
+      "eds": {
+        "before": [
+          "/* Shadow — 다크에선 더 진하게 (modal = 구 다크 떠 있는 층 묶음 값) */"
+        ]
+      }
+    }
+  },
+  "shadow-popover": {
+    "$value": "0 4px 16px rgba(0, 0, 0, 0.5)"
+  },
+  "shadow-modal": {
+    "$value": "0 16px 48px rgba(0, 0, 0, 0.6), 0 4px 12px rgba(0, 0, 0, 0.4)"
+  }
+}

@@ -1,0 +1,99 @@
+{
+  "$description": "/* ============================================================================\n * 브랜드 — Fashion · 패션 리테일 (가상 산업 브랜드 · 바이올렛)  ← 공개용 데모 브랜드\n * 사용자: MD · 디자이너\n *\n * 선택자: :root.theme-fashion  →  <html class=\"theme-fashion\">\n * 멀티 브랜드가 \"브랜드 파일 하나 + html 클래스 하나\"로 바뀌는 것을 보여주는 가상 브랜드.\n * 이 파일이 여는 토큰 = 색 + 모서리 역할 + 그림 자산 모양 (DS-ADR-003 · 020 · 037, 목록은 _template.css). 높이는 기본값(28 · 28 · 26).\n * 형태: 둥근 모서리 — 버튼 · 칩 알약, 입력칸 · 카드 · 영역 · 떠 있는 층 8, 체크박스 · 행 · 스켈레톤 4 (10/13 적용 후 피드백).\n *   반대쪽 끝은 precision.css(직각 · 높이 32).\n * 그림 자산: 라인 — 빈 상태 일러스트 · 폴더 · 파일 형식 아이콘을 선 모양으로 (DS-ADR-037)\n * 대비 (2026-10-06 계산): 500/흰 5.75 · 600/흰 7.51 · 800/흰 11.74 · 다크 300 글자 5.62\n * ============================================================================ */",
+  "$extensions": {
+    "eds": {
+      "selector": ":root.theme-fashion"
+    }
+  },
+  "brand-50": {
+    "$value": "#F3F0FE",
+    "$type": "color"
+  },
+  "brand-100": {
+    "$value": "#E4DCFD",
+    "$type": "color"
+  },
+  "brand-200": {
+    "$value": "#C9B9FA",
+    "$type": "color"
+  },
+  "brand-300": {
+    "$value": "#A68CF5",
+    "$type": "color"
+  },
+  "brand-400": {
+    "$value": "#8B6CEE",
+    "$type": "color"
+  },
+  "brand-500": {
+    "$value": "#6D4ADB",
+    "$type": "color"
+  },
+  "brand-600": {
+    "$value": "#5A38C4",
+    "$type": "color"
+  },
+  "brand-700": {
+    "$value": "#47299F",
+    "$type": "color"
+  },
+  "brand-800": {
+    "$value": "#3B2585",
+    "$type": "color"
+  },
+  "brand-900": {
+    "$value": "#261754",
+    "$type": "color"
+  },
+  "accent-500": {
+    "$value": "#F2A93B",
+    "$type": "color"
+  },
+  "radius-btn": {
+    "$value": "{radius-rounded}",
+    "$extensions": {
+      "eds": {
+        "before": [
+          "/* --- 형태 (모서리 역할 → 단계, DS-ADR-020) ------------------------------- */"
+        ]
+      }
+    }
+  },
+  "radius-input": {
+    "$value": "{radius-lg}"
+  },
+  "radius-checkbox": {
+    "$value": "{radius-md}"
+  },
+  "radius-chip": {
+    "$value": "{radius-rounded}"
+  },
+  "radius-item": {
+    "$value": "{radius-md}"
+  },
+  "radius-card": {
+    "$value": "{radius-lg}"
+  },
+  "radius-panel": {
+    "$value": "{radius-lg}"
+  },
+  "radius-popover": {
+    "$value": "{radius-lg}"
+  },
+  "radius-skeleton": {
+    "$value": "{radius-md}"
+  },
+  "art-solid": {
+    "$value": "none",
+    "$extensions": {
+      "eds": {
+        "before": [
+          "/* --- 그림 자산 (DS-ADR-037) — 하나만 block -------------------------------- */"
+        ]
+      }
+    }
+  },
+  "art-line": {
+    "$value": "block"
+  }
+}

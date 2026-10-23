@@ -1,0 +1,29 @@
+# 토큰 검사 — main 이 아닌 브랜치에 올리거나 PR 을 열면 돈다 (DS-ADR-045)
+#   ① tokens/*.json 과 생성 CSS 가 같은지 (JSON 을 고치고 npm run tokens 를 안 돌렸으면 실패)
+#   ② 정의되지 않은 CSS 변수가 없는지
+#   ③ Figma 변수 내보내기(tokens/figma/export.json)가 있으면 최종 값과 대조해 요약에 표로 남김
+#   ④ 스토리북이 빌드되는지
+name: 토큰 검사
+on:
+  push:
+    branches-ignore: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  tokens:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: 생성 파일 · 정의되지 않은 변수
+        run: npm run tokens:check
+      - name: Figma 변수 대조
+        run: npm run tokens:figma
+      - name: 스토리북 빌드
+        run: npm run build-storybook

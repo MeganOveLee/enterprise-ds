@@ -5,10 +5,14 @@ storybook-static/
 # 공개하지 않는 것 (고객사 원본 · 내부 도구 · 내부 문서)
 source-*/
 css/brands/*
-!css/brands/_template.css
 !css/brands/default.css
 !css/brands/fashion.css
 !css/brands/precision.css
+tokens/brands/*
+!tokens/brands/_template.json
+!tokens/brands/default.json
+!tokens/brands/fashion.json
+!tokens/brands/precision.json
 tools/
 README.internal.md
 *.png

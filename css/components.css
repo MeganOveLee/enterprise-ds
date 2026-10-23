@@ -336,14 +336,12 @@
     font-size: var(--body-sm);
     color: var(--color-text-base);
     box-sizing: border-box;
-}
-.tree-controls .select { font-size: var(--body-sm); }   /* 높이는 .select 기본(--size-input) = 폴더 검색칸과 같음 (구 32, DS-ADR-020). 모양은 .select (DS-ADR-010) */
-.tree-controls .tree-search-wrap {
     display: flex;
     align-items: center;
     padding: 0 var(--spacing-8);
     gap: 6px;   /* 돋보기 ↔ 글자 6 = Figma LNB/Sub panel › Folder search (TD-108, 구 4. 간격 토큰에 6 없음) */
 }
+.tree-controls .select { font-size: var(--body-sm); }   /* 높이는 .select 기본(--size-input) = 폴더 검색칸과 같음 (구 32, DS-ADR-020). 모양은 .select (DS-ADR-010) */
 .tree-controls .tree-search-wrap .icon-search,
 .tree-controls .tree-search-wrap svg {   /* 아이콘 글꼴(.icon-search) · svg 둘 다. 돋보기 12 · icon-base = Figma (TD-108, 구 14 · text-muted) */
     width: 12px;
