@@ -6,7 +6,7 @@ import * as S from './DrawingRegister.stories.js';
 
 <Unstyled>
 <div className="ds-page">
-<PageHead eyebrow="Blocks" title="Drawing Register" lead="도면 검색 결과의 [등록]으로 여는 등록 창입니다. 접는 섹션(기본 정보 · 도면 파일 · 부 첨부 파일 · 관련 객체)으로 구성합니다." />
+<PageHead eyebrow="Screens" title="Drawing Register" lead="도면 검색 결과의 [등록]으로 여는 등록 창입니다. 접는 섹션(기본 정보 · 도면 파일 · 부 첨부 파일 · 관련 객체)으로 구성합니다." />
 <Section title="예시" en="Examples">
 <Card of={S.도면_등록_창} title="도면 등록 창" en="Register window" desc="도면 검색 결과의 [등록]으로 열고, LNB 서브 패널에서 고른 폴더가 경로에 들어갑니다. 도면 상세의 [수정]도 같은 창입니다." />
 <Card of={S.필수_칸_비었을_때} title="필수 항목이 비었을 때" en="Validation" desc="[저장]을 눌렀는데 필수 항목이 비었으면 폼 위 Alert(위험)와 필드 아래 오류 문구를 함께 표시합니다." />
@@ -24,7 +24,7 @@ import * as S from './DrawingRegister.stories.js';
 <tr><td><b>입력 확인</b></td><td><code>.alert--danger</code> · <code>aria-invalid="true"</code> · <code>.field-error-msg</code></td><td>폼 위 Alert 「필수 항목을 모두 입력해 주십시오.」 + 빈 필드마다 오류 문구(<code>aria-describedby</code>). 포커스는 첫 빈 필드로 옮깁니다.</td></tr>
 </tbody>
 </table>
-<p className="ds-sec__desc ds-after">Figma UI Kit 🧱 Blocks 페이지의 「Drawing Register」와 같은 구성입니다.</p>
+<p className="ds-sec__desc ds-after">Figma UI Kit 「Drawing Register」와 같은 구성입니다.</p>
 </Section>
 <Section title="언제 쓰고 쓰지 말지" en="Do · Don't">
 <Card of={S.사용_지침} code={false} />

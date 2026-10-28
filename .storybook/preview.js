@@ -40,7 +40,7 @@ export default {
   parameters: {
     layout: 'fullscreen',
     // 왼쪽 메뉴 순서 — 문서(소개 · 시작하기) → 화면 → 조합(Blocks) → 컴포넌트 분류 → 기본 요소(Foundation, 맨 아래). 「디자인이 먼저, 토큰은 밑」
-    options: { storySort: { order: ['소개', '시작하기', 'Screens', 'Blocks', ['SearchForm', 'BomCompare', 'DrawingRegister', 'ApprovalLine', '*'], 'Form', ['고르는 법', '*'], 'Navigation', 'Overlay', 'Data Display', 'Feedback', ['고르는 법', '*'], 'Foundation', ['Color', 'Typography', 'Spacing · Radius · Size', 'Shadow', 'Motion', 'State']] } },
+    options: { storySort: { order: ['소개', '시작하기', 'Screens', 'Blocks', ['SearchForm', 'BomCompare', 'ApprovalLine', '*'], 'Form', ['고르는 법', '*'], 'Navigation', 'Overlay', 'Data Display', 'Feedback', ['고르는 법', '*'], 'Foundation', ['Color', 'Typography', 'Spacing · Radius · Size', 'Shadow', 'Motion', 'State']] } },
     controls: { expanded: true },
     a11y: { test: 'todo' },
   },

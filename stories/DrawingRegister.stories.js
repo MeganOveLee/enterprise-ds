@@ -1,4 +1,4 @@
-// Blocks/Drawing Register — 문서 화면은 DrawingRegister.mdx. 도면 검색에서 여는 도면 등록 창 (Figma 🧱 Blocks 「Drawing Register」와 같은 구성)
+// Screens/Drawing Register — 문서 화면은 DrawingRegister.mdx. 도면 검색에서 여는 도면 등록 창 (Figma 🧱 Blocks 「Drawing Register」와 같은 구성)
 // 섹션 = 접는 섹션 상자(Accordion), 첨부 = 업로더(.resumable), 경로 = .ui-field-addon(읽기 전용 필드 + [선택])
 // 필드는 보여 주기용으로 5개만(경로 · 도면 명 영문/한글 · CAD 구분 · 제품군 + 설명)
 import { flow, shot, MARK, wireSections, toggleIcon } from './_flow.js';
@@ -100,7 +100,7 @@ const list = () => '<div class="main-content"><div class="searchLayout"><div cla
   '</tbody></table></div></div></div></div></div>';
 
 export default {
-  title: 'Blocks/Drawing Register',
+  title: 'Screens/Drawing Register',   // 10/28 블록이 아니라 화면(등록 창) — 블록 이름은 UI 기능으로(검색 조건 · 결재선 · BOM 비교 표)
   tags: ['!dev', '!autodocs'],   // 메뉴에는 문서 한 장만, 문서는 DrawingRegister.mdx
   parameters: { controls: { disable: true }, docs: { source: { language: 'html' } } },
 };
