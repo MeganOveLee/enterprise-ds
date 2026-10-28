@@ -1,0 +1,14 @@
+{
+  "_설명": "Figma 변수 ↔ CSS 이름 연결의 예외 (compare-figma.mjs). null = 대조하지 않음. 브랜드 투명 변형(brand/500-a30 등)은 Figma 에서 의미 색이 가리키는 도우미라 CSS 이름이 따로 없고, 그 값은 의미 색(color-mix) 대조로 확인됨",
+  "names": {
+    "Brand/brand/500-a20": null,
+    "Brand/brand/500-a22": null,
+    "Brand/brand/500-a30": null,
+    "Brand/brand/500-a32": null,
+    "Brand/brand/500-a35": null,
+    "Brand/brand/500-a45": null,
+    "Brand/brand/500-a55": null,
+    "Brand/brand/400-a35": null,
+    "Brand/brand/500-on-dark-14": null
+  }
+}

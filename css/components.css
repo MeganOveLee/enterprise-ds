@@ -3965,14 +3965,13 @@ input.onKeySearch2 { display: block; flex: 1 1 auto; min-width: 0; }
 
 /* ── 브랜드 로더 .brand-loader ──────────────────────────────────────────────
  * 페이지 전체를 처음 불러올 때(화면 전환 덮개 · 로그인 직후)만. 영역 · 버튼 안은 언제나 스피너
- * 움직임 = 조각이 맞춰짐(DS-ADR-043, TD-123) — 흩어진 마크 조각 셋이 차례로 들어와 하나로 맞물리고, 고리가 그려진 끝에 점이 찍힌 뒤 흐려지며 되풀이.
- * 배경 네모 없이 마크만(10/21, TD-108 46) — 조각 · 고리는 브랜드색(--color-bg-brand), 점은 accent. 라이트 · 다크 모두 같은 토큰
+ * 움직임 = 조각이 맞춰짐(DS-ADR-043, TD-123) — 흩어진 심볼 조각 다섯이 바깥에서 차례로 모여 하나로 맞물린 뒤 흐려지며 되풀이(10/28 새 로고).
+ * 배경 네모 없이 마크만(10/21, TD-108 46) — 조각은 브랜드색(--color-bg-brand). 라이트 · 다크 모두 같은 토큰
  * 마크는 조각으로 나뉜 SVG(아래 마크업). 로고가 그림 한 장(PNG 등)뿐인 브랜드는 .brand-loader--image(왼쪽부터 채워짐)
  * 브랜드 선택은 제품 설정: Default = 로고 로더 · Fashion · Precision(공개 시연) = 스피너 --lg. 고객사 화면은 기존 로딩 이미지 유지
  *   <div class="loading loading--overlay" role="status" aria-live="polite">
  *     <span class="brand-loader" aria-hidden="true">
- *       <svg viewBox="0 0 34 34"><path class="brand-loader__arc" pathLength="1" d="…"/>
- *         <path class="brand-loader__piece brand-loader__piece--top" d="…"/> … --left · --right … <circle class="brand-loader__dot" …/></svg>
+ *       <svg viewBox="0 0 130 129"><path class="brand-loader__piece brand-loader__piece--1" d="…"/> … --2 · --3 · --4 · --5</svg>
  *     </span>
  *     <p class="loading__text">화면을 불러오는 중입니다</p>
  *   </div>
@@ -3986,44 +3985,21 @@ input.onKeySearch2 { display: block; flex: 1 1 auto; min-width: 0; }
     line-height: 0;
 }
 .brand-loader svg { display: block; width: 100%; height: auto; overflow: visible; }
-.brand-loader__arc {
-    fill: none;
-    stroke: var(--color-bg-brand);
-    stroke-width: 1.6;
-    stroke-linecap: round;
-    stroke-dasharray: 1;              /* 마크업 pathLength="1" — 길이를 1로 두고 0 → 1 그려짐 */
-    animation: ds-brand-arc var(--brand-loader-duration) var(--ease-standard) infinite;
-}
 .brand-loader__piece {
     fill: var(--color-bg-brand);
     transform-box: fill-box;
     animation: ds-brand-piece var(--brand-loader-duration) var(--ease-standard) infinite backwards;   /* backwards = 늦게 출발하는 조각이 기다리는 동안 숨어 있음 */
 }
-.brand-loader__piece--top   { --piece-opacity: 1;   --piece-from: translate(0, -7px); }
-.brand-loader__piece--left  { --piece-opacity: .72; --piece-from: translate(-7px, 5px); animation-delay: .12s; }
-.brand-loader__piece--right { --piece-opacity: .5;  --piece-from: translate(7px, 5px);  animation-delay: .24s; }
-.brand-loader__dot {
-    fill: var(--accent-500);
-    transform-box: fill-box;
-    transform-origin: center;
-    animation: ds-brand-dot var(--brand-loader-duration) var(--ease-standard) infinite;
-}
+/* 조각마다 마크 가운데에서 바깥쪽으로 떨어진 자리에서 출발(viewBox 130 기준 약 26 = 마크의 1/5) · 위에서부터 시계 방향으로 0.08초씩 차례로 */
+.brand-loader__piece--2 { --piece-from: translate(-13px, -22px); }
+.brand-loader__piece--4 { --piece-from: translate(18px, -18px); animation-delay: .08s; }
+.brand-loader__piece--5 { --piece-from: translate(25px, 5px);   animation-delay: .16s; }
+.brand-loader__piece--3 { --piece-from: translate(12px, 23px);  animation-delay: .24s; }
+.brand-loader__piece--1 { --piece-from: translate(-20px, 16px); animation-delay: .32s; }
 @keyframes ds-brand-piece {
     0%       { transform: var(--piece-from); opacity: 0; }
-    35%, 85% { transform: none; opacity: var(--piece-opacity); }
+    35%, 85% { transform: none; opacity: 1; }
     100%     { transform: none; opacity: 0; }
-}
-@keyframes ds-brand-arc {
-    0%, 10%  { stroke-dashoffset: 1; opacity: 0; }    /* 그리기 전에는 숨김 — 둥근 끝이 점으로 남지 않게 */
-    14%      { opacity: .35; }
-    45%, 85% { stroke-dashoffset: 0; opacity: .35; }
-    100%     { stroke-dashoffset: 0; opacity: 0; }
-}
-@keyframes ds-brand-dot {
-    0%, 45%  { transform: scale(0);    opacity: 1; }
-    55%      { transform: scale(1.25); opacity: 1; }
-    62%, 85% { transform: scale(1);    opacity: 1; }
-    100%     { transform: scale(1);    opacity: 0; }
 }
 /* 그림 한 장 로고 — 아래 = 회색으로 흐리게, 위 = 원본을 왼쪽부터 채움(마스크). 이미지 파일은 손대지 않음 (10/8) */
 .brand-loader--image { width: var(--brand-loader-width, 160px); }
@@ -4169,6 +4145,13 @@ body.dark-mode .empty-illo { --empty-illo-shadow: rgb(0 0 0 / .2); }
 .empty-illo__mark   { transform-origin: 98px 77px; transform: scale(var(--empty-badge-scale, 1)); }   /* 배지 가운데(98, 77) 기준 */
 .empty-illo__badge  { fill: var(--color-bg-base); stroke: var(--empty-illo-edge); stroke-width: 1.5; }
 .empty-illo__glyph  { fill: none; stroke: currentColor; stroke-width: 4.2; stroke-linecap: round; stroke-linejoin: round; }
+/* 다크 — 폴더를 bg-base(=카드와 같은 색) + 옅은 브랜드로 칠해 카드보다 어둡게 보이던 것(폴더 1.2:1 · 종이 1.5:1)을 카드보다 밝은 면으로 (10/28).
+ * 폴더 약 3:1 · 종이 2.1:1 · 종이 줄은 카드색으로 찍음. 라이트는 그대로 */
+body.dark-mode .empty-illo__paper  { fill: var(--color-border-strong); }
+body.dark-mode .empty-illo__line   { stroke: var(--color-bg-base); }
+body.dark-mode .empty-illo__folder { fill: color-mix(in srgb, var(--color-text-brand) 50%, var(--color-border-base)); fill-opacity: 1; }
+body.dark-mode .empty-illo__tint   { fill-opacity: 0; }
+body.dark-mode .empty-illo__badge  { fill: var(--color-bg-muted); }
 
 /* ── 상태 칩 .status-chip ─────────────────────────────────────────────────
  * 작업현황 · 진행 상태를 글자 + 색으로 보여 주는 칩(모서리 --radius-chip — Default · Fashion 알약, Precision 직각). 이전 버전 값 그대로(덮어쓰기 1072 ~ 1079줄, TD-45 45-3 남은 넷)
@@ -4378,7 +4361,7 @@ body.dark-mode .empty-illo { --empty-illo-shadow: rgb(0 0 0 / .2); }
 @media (prefers-reduced-motion: reduce) {
     .spinner { animation-duration: 2.4s; }   /* 완전히 멈추면 '멈춘 화면'으로 오해 — 느리게만 */
     .skeleton-line, .skeleton-title, .skeleton-block { animation: none; }
-    .brand-loader { --brand-loader-duration: 6s; }   /* 스피너와 같은 이유로 멈추지 않고 느리게만 — 조각 · 점 · 채움 모두 */
+    .brand-loader { --brand-loader-duration: 6s; }   /* 스피너와 같은 이유로 멈추지 않고 느리게만 — 조각 · 채움 모두 */
 }
 
 /* ═════════════════════════════════════════════════════════════════════════

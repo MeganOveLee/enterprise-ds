@@ -1,12 +1,8 @@
 // Feedback/Loading — 문서 화면은 Loading.mdx. 여기 스토리는 MDX 카드 안에 들어가는 예시 · Playground
 // 브랜드 로더 — 브랜드(제품)에 로고 로더가 있으면 마크 조각이 맞춰지는 로더(DS-ADR-043), 없으면 스피너 --lg (Fashion · Precision)
-// 마크 = 가상 제품 마크(Screens 레일과 같은 모양)를 조각 셋(윗면 · 왼면 · 오른면)으로 나눈 SVG
-const MARK_PIECES = '<svg viewBox="0 0 34 34">' +
-  '<path class="brand-loader__arc" pathLength="1" d="M4.4 21.6A12.5 12.5 0 1 1 27.6 21.6"/>' +
-  '<path class="brand-loader__piece brand-loader__piece--top" d="M16 10.2l6 3.45-6 3.45-6-3.45z"/>' +
-  '<path class="brand-loader__piece brand-loader__piece--left" d="M10 13.65l6 3.45V24l-6-3.45z"/>' +
-  '<path class="brand-loader__piece brand-loader__piece--right" d="M16 17.1l6-3.45v6.9L16 24z"/>' +
-  '<circle class="brand-loader__dot" cx="27.6" cy="21.6" r="2.9"/></svg>';
+// 마크 = 가상 제품 마크(Screens 레일과 같은 모양)의 심볼 조각 다섯(_lnbicons.js MARK_PATHS, 10/28 새 로고)
+import { MARK_PATHS } from './_lnbicons.js';
+const MARK_PIECES = '<svg viewBox="0 0 130 129">' + MARK_PATHS.map((d, i) => '<path class="brand-loader__piece brand-loader__piece--' + (i + 1) + '" d="' + d + '"/>').join('') + '</svg>';
 const LOGO = { default: true };
 const brandLoader = () => '<span class="brand-loader" aria-hidden="true">' + MARK_PIECES + '</span>';
 

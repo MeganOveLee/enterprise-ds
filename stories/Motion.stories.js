@@ -3,6 +3,7 @@
 // 견본은 실제 컴포넌트 마크업 그대로(업로더 · 상태 표시 · 진행률 막대) — 화면에서 보는 움직임과 같음
 import { fileIcon } from './_fileicon.js';
 import { emptyArt } from './_illustrations.js';
+import { MARK_PATHS } from './_lnbicons.js';
 
 const html = (code) => ({ docs: { source: { language: 'html', code } } });
 const box = (h, w = '560px') => '<div style="max-width:' + w + '">' + h + '</div>';
@@ -263,14 +264,10 @@ export const 빈_상태_배지 = {
   },
 };
 
-// ── 로고 로더 (DS-ADR-043, TD-123) ── 페이지 전체 첫 로딩. 마크 조각 셋이 차례로 들어와 맞물림 · 그림 한 장 로고는 왼쪽부터 채움
+// ── 로고 로더 (DS-ADR-043, TD-123) ── 페이지 전체 첫 로딩. 심볼 조각 다섯이 바깥에서 차례로 모여 맞물림(10/28 새 로고) · 그림 한 장 로고는 왼쪽부터 채움
 const IMG_LOGO = new URL('../assets/brand/default-logo.svg', import.meta.url).href;   // 가상 제품 마크(그림 한 장으로 쓸 때의 견본)
-const LOADER_PIECES = '<span class="brand-loader" aria-hidden="true"><svg viewBox="0 0 34 34">' +
-  '<path class="brand-loader__arc" pathLength="1" d="M4.4 21.6A12.5 12.5 0 1 1 27.6 21.6"/>' +
-  '<path class="brand-loader__piece brand-loader__piece--top" d="M16 10.2l6 3.45-6 3.45-6-3.45z"/>' +
-  '<path class="brand-loader__piece brand-loader__piece--left" d="M10 13.65l6 3.45V24l-6-3.45z"/>' +
-  '<path class="brand-loader__piece brand-loader__piece--right" d="M16 17.1l6-3.45v6.9L16 24z"/>' +
-  '<circle class="brand-loader__dot" cx="27.6" cy="21.6" r="2.9"/></svg></span>';
+const LOADER_PIECES = '<span class="brand-loader" aria-hidden="true">' + '<svg viewBox="0 0 130 129">' + MARK_PATHS.map((d, i) => '<path class="brand-loader__piece brand-loader__piece--' + (i + 1) + '" d="' + d + '"/>').join('') + '</svg>' + '</span>';
+const LOADER_CODE = '<span class="brand-loader" aria-hidden="true">\n    <svg viewBox="0 0 130 129">\n' + [1, 2, 3, 4, 5].map((n) => '      <path class="brand-loader__piece brand-loader__piece--' + n + '" d="…"/>').join('\n') + '\n    </svg>\n  </span>';   // 코드 보기 — 조각 좌표는 줄임
 const LOADER_IMAGE = (src) => '<span class="brand-loader brand-loader--image" style="--brand-loader-width:72px" aria-hidden="true"><img class="brand-loader__base" src="' + src + '" alt=""><img class="brand-loader__fill" src="' + src + '" alt=""></span>';
 const loaderFig = (inner, t, d) => '<figure style="margin:0;display:grid;justify-items:center;gap:10px;padding:24px 12px;border:1px solid var(--color-border-base);border-radius:var(--radius-card);background:var(--color-bg-base);text-align:center">' +
   inner + '<figcaption style="font-size:var(--body-sm);color:var(--color-text-muted);line-height:1.5"><b style="display:block;color:var(--color-text-base);font-size:var(--body-md);font-weight:var(--font-weight-semibold)">' + t + '</b>' + d + '</figcaption></figure>';
@@ -278,6 +275,6 @@ export const 로고_로더 = {
   parameters: { controls: { disable: true }, docs: { source: { language: 'html', code:
     '<div class="loading loading--overlay" role="status" aria-live="polite">\n  ' + LOADER_PIECES + '\n  <p class="loading__text">화면을 불러오는 중입니다</p>\n</div>\n\n<!-- 로고가 그림 한 장뿐인 브랜드 -->\n' + LOADER_IMAGE('logo.png') } } },
   render: () => '<div style="display:grid;grid-template-columns:repeat(2,minmax(0,240px));gap:16px">' +
-    loaderFig(LOADER_PIECES, '조각이 맞춰짐 .brand-loader', '흩어진 정보가 한 화면으로 모이는 중 — 마크 조각 셋이 차례로 맞물리고, 고리가 그려진 끝에 점이 찍힘') +
+    loaderFig(LOADER_PIECES, '조각이 맞춰짐 .brand-loader', '흩어진 정보가 한 화면으로 모이는 중 — 심볼 조각 다섯이 바깥에서 차례로 모여 하나로 맞물림') +
     loaderFig(LOADER_IMAGE(IMG_LOGO), '그림 한 장 로고 .brand-loader--image', '로고가 그림 파일 한 장뿐인 브랜드 — 흐린 로고 위로 원래 로고가 왼쪽부터 채워짐') + '</div>',
 };
