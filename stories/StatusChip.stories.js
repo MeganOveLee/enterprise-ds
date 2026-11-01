@@ -38,7 +38,7 @@ export const Playground = {
   render: (a) => chip(a.tone, a.label),
 };
 
-// ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-108 10번 ① ②) — 미리보기만, 코드는 위 예시 카드에 ──
+// ── Do · Don't (TD-108 10번 ① ②) — 미리보기만, 코드는 위 예시 카드에 ──
 // ① 두 화면(검색 결과 · 홈 카드)에 같은 상태를 놓고 색만 비교
 const place = (name, chips) => '<div style="display:flex;align-items:center;gap:8px"><span class="sb-note" style="width:64px">' + name + '</span>' + chips.join('') + '</div>';
 const twoPlaces = (home) => '<div style="display:grid;gap:8px">' + place('검색 결과', [chip('success', '승인'), chip('danger', '반려'), chip('warning', '검토 중')]) + place('홈 카드', home) + '</div>';

@@ -45,7 +45,7 @@ export const Radio = {
 
 export const Switch = { args: { label: '자동 저장' }, render: (a) => sw(a.label, opt(a)) };
 
-// ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-108 27번 ① ② ③) — 미리보기만 ──
+// ── Do · Don't (TD-108 27번 ① ② ③) — 미리보기만 ──
 const saveForm = (ctl) => '<div class="sb-row" style="gap:12px">' + ctl + '<button type="button" class="btn btn--primary btn--filled">저장</button></div>';
 // 폼 한 행 = 라디오 묶음 필드 + 옆 텍스트 필드. stack = 라디오를 세로로 쌓은 잘못된 예
 const formRow = (name, stack) => '<div class="form-grid-2" style="width:460px;text-align:left">' +

@@ -155,7 +155,7 @@ export const 업무_동작 = {
 const STATES = ['Default', 'Hovered', 'Pressed', 'Focused', 'Disabled'];
 const PS = ['', 'ps-hover', 'ps-active', 'ps-focus-visible'];
 
-// ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-70) ── 미리보기만, 코드는 위 예시 카드에
+// ── Do · Don't (TD-70) ── 미리보기만, 코드는 위 예시 카드에
 const grp = (h) => '<div class="button_group">' + h + '</div>';
 const box = (h) => '<div style="width:140px;padding:6px 0;outline:1px dashed var(--color-border-strong);outline-offset:4px">' + h + '</div>';
 export const 사용_지침 = {

@@ -131,7 +131,7 @@ export const 선택_목록 = {
   },
 };
 
-// ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-108 25번 ① ~ ④) ──
+// ── Do · Don't (TD-108 25번 ① ~ ④) ──
 const ff = (label, ctl, id, req = false) => '<div class="form-grid-2" style="grid-template-columns:1fr;width:220px;text-align:left"><div class="ff-field"><label class="search-label" for="' + id + '">' + label + (req ? '<span class="required" aria-hidden="true"></span>' : '') + '</label><div class="td">' + ctl + '</div></div></div>';
 const one = (ctl) => '<div style="width:220px">' + ctl + '</div>';
 const pair = (a, b) => '<div style="display:grid;gap:12px">' + a + b + '</div>';

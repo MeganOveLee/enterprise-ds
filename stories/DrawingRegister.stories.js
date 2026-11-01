@@ -118,7 +118,7 @@ export const 필수_칸_비었을_때 = {
   render: () => wireSections(shot(pop({ errors: true }), 950, 1024)),
 };
 
-// ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-108 6번 ① ②) — 미리보기만 ──
+// ── Do · Don't (TD-108 6번 ① ②) — 미리보기만 ──
 const mini = (inner) => '<div style="width:100%;overflow:hidden;border:1px solid var(--color-border-base);border-radius:var(--radius-card)"><div class="pop" style="height:auto;min-width:0"><div class="contents">' + inner + '</div></div></div>';
 const two = (a, b) => '<div class="pro_table"><div class="form-grid-2">' + a + b + '</div></div>';
 const ddAlert = '<div class="alert alert--danger" role="status"><span class="alert__icon">' + svg(I.danger) + '</span><div class="alert__body"><strong class="alert__title">필수 항목을 모두 입력해 주십시오.</strong></div></div>';

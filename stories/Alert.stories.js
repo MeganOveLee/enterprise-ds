@@ -49,7 +49,7 @@ export const 공지 = {
   render: () => stack([alert({ status: 'brand', title: '결재선을 저장해 두고 다시 쓸 수 있습니다', close: true })]),
 };
 
-// ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-108 12번 ① ② ③) ── 미리보기만, 코드는 위 예시 카드에
+// ── Do · Don't (TD-108 12번 ① ② ③) ── 미리보기만, 코드는 위 예시 카드에
 const col = (items) => '<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:8px">' + items.join('') + '</div>';
 export const 사용_지침 = {
   parameters: { controls: { disable: true } },

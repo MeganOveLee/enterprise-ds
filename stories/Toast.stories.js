@@ -53,7 +53,7 @@ export const 쌓임 = {
   ], 260),
 };
 
-// ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-108 17번 ① ② ③) ── 미리보기만, 코드는 위 예시 카드에
+// ── Do · Don't (TD-108 17번 ① ② ③) ── 미리보기만, 코드는 위 예시 카드에
 const col = (items) => '<div style="flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-end;gap:8px">' + items.join('') + '</div>';
 const field = (id, err = '') => '<div class="form-grid-2" style="grid-template-columns:1fr;align-self:stretch"><div class="ff-field"><label class="search-label" for="' + id + '">문서 명</label><div class="td">' +
   '<input class="input" id="' + id + '"' + (err ? ' aria-invalid="true" aria-describedby="' + id + '-err"' : '') + '>' + (err ? '<span class="field-error-msg" id="' + id + '-err">' + err + '</span>' : '') + '</div></div></div>';

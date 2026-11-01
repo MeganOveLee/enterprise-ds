@@ -86,7 +86,7 @@ export const 전체_상태 = {
   },
 };
 
-// ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-108 8번 ② ③) — 미리보기만, 코드는 위 예시 카드에 ──
+// ── Do · Don't (TD-108 8번 ② ③) — 미리보기만, 코드는 위 예시 카드에 ──
 const ddWrap = (h) => '<div style="width:100%;align-self:flex-start">' + h + '</div>';   // 미리보기 위 정렬(TD-108 공통 · 간격)
 const sub = (t) => '<div class="ff-divider">' + t + '</div>';   // 섹션 안 소제목 = .form-grid-2 .ff-divider
 const CHANGE_SUB = '<div class="form-grid-2">' + sub('도면 변경') + ro('도면 번호', 'DWG-20417') + ro('개정', 'B') + sub('부품 변경') + ro('품번', 'BRK-20417') + ro('재질', '마그네슘') + '</div>';

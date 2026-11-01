@@ -84,7 +84,7 @@ export const Playground = {
   render: (a) => box(card(a)),
 };
 
-// ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-108 9번 ① ② — 홈 화면 카드 안 목록 행 기준) — 미리보기만, 코드는 위 예시 카드에 ──
+// ── Do · Don't (TD-108 9번 ① ② — 홈 화면 카드 안 목록 행 기준) — 미리보기만, 코드는 위 예시 카드에 ──
 const ddBox = (h) => '<div style="width:100%;align-self:flex-start">' + h + '</div>';   // 미리보기 위 정렬(TD-108 공통 · 간격)
 const ddCard = (rows) => '<section class="card">' + head('결재 업무', 2, more()) + '<ul class="card-list">' + rows + '</ul></section>';
 // 한 행 안에 링크 여러 곳(하지 않음 예시) — 제목 링크 + 「보기」 링크

@@ -117,7 +117,7 @@ export const 차이만_보기 = {
   render: () => shot(body(screen({ show: [false, true, true] })), W, 470),
 };
 
-// ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-108 5번 ① ②) — 미리보기만. 작은 표 3행 ──
+// ── Do · Don't (TD-108 5번 ① ②) — 미리보기만. 작은 표 3행 ──
 const miniTable = (label, rows, { result = true } = {}) => '<div class="table_list"><div class="list"><table class="grid-table" aria-label="' + label + '"><thead><tr><th>품목 번호</th><th>수량</th>' + (result ? '<th>비교</th>' : '') + '</tr></thead><tbody>' +
   rows.map((r) => {
     if (!r) return '<tr class="compare-row--unassigned"><td>&nbsp;</td><td></td>' + (result ? '<td></td>' : '') + '</tr>';   // 반대쪽 빈 행 — 본 화면과 같은 표시

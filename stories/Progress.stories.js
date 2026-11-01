@@ -62,7 +62,7 @@ export const 범례 = {
   render: () => box(legend(KEYS), '360px'),
 };
 
-// ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-108 15번 ①) ── 미리보기만, 코드는 위 예시 카드에
+// ── Do · Don't (TD-108 15번 ①) ── 미리보기만, 코드는 위 예시 카드에
 const wide = (h) => '<div style="flex:1;min-width:0">' + h + '</div>';
 export const 사용_지침 = {
   parameters: { controls: { disable: true } },

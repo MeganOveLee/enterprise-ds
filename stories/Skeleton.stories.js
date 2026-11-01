@@ -33,7 +33,7 @@ export const 카드 = {
     busy(`<div class="skeleton-card"><span class="skeleton-title" aria-hidden="true"></span>${block('80px', '28px')}<div style="height:12px"></div>${block('100%', '64px')}</div>`, 'width:220px')).join('')}</div>`,
 };
 
-// ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-108 16번 ①) ── 미리보기만, 코드는 위 예시 카드에
+// ── Do · Don't (TD-108 16번 ①) ── 미리보기만, 코드는 위 예시 카드에
 const gridRow = () => `<div class="skeleton-grid-row">${block('16px', '16px')}${block()}${block()}${block()}${block()}</div>`;
 export const 사용_지침 = {
   parameters: { controls: { disable: true } },

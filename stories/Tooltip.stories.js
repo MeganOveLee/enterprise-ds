@@ -45,7 +45,7 @@ export const 아래쪽 = {
   render: () => stage(tip({ icon: 'down', label: '첨부 받기', text: '첨부 받기', bottom: true, open: true }), 80, 'start'),
 };
 
-// ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-108 18번 ① ②) ── 미리보기만, 코드는 위 예시 카드에
+// ── Do · Don't (TD-108 18번 ① ②) ── 미리보기만, 코드는 위 예시 카드에
 const ddStage = (inner) => '<div style="flex:1;display:flex;align-items:end;justify-content:center;gap:8px;min-height:104px">' + inner + '</div>';   // 가운데 — 긴 툴팁도 판 안에
 const textTip = (t) => { const id = 'tt' + (++uid); return '<span class="has-tooltip"><button type="button" class="btn btn--secondary btn--outlined" aria-describedby="' + id + '">' + svg(I.print) + t + '</button><span class="tooltip is-open" role="tooltip" id="' + id + '">' + t + '</span></span>'; };
 // 툴팁 안 링크 — Don't 그림용. 어두운 바탕 위라 글자색은 툴팁 글자색 그대로, 밑줄로 링크임을 표시

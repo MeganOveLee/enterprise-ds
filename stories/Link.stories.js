@@ -77,7 +77,7 @@ export const 본문_링크_상태 = {
   },
 };
 
-// ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-102) — 미리보기만, 코드는 위 예시 카드에 ──
+// ── Do · Don't (TD-102) — 미리보기만, 코드는 위 예시 카드에 ──
 const ddTable = (first, second) => '<div class="table_list" style="width:100%"><div class="list"><table class="grid-table"><colgroup><col style="width:132px"><col></colgroup>' +
   '<thead><tr><th>문서 번호</th><th>문서 명</th></tr></thead><tbody>' +
   '<tr><td>' + first('DOC-2610-0013') + '</td><td class="is-left">' + second('브레이크 캘리퍼 조립 사양서') + '</td></tr>' +

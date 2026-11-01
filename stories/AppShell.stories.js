@@ -211,7 +211,7 @@ export const Playground = {
   render: (a) => frame(gnb({ list: String(a.path).split(',').map((x) => x.trim()).filter(Boolean), a: a.approvals, b: a.activities })),
 };
 
-// ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-108 19번 ② ③) — 미리보기만, 코드는 위 예시 카드에 ──
+// ── Do · Don't (TD-108 19번 ② ③) — 미리보기만, 코드는 위 예시 카드에 ──
 const ddBar = (h) => '<div style="width:100%;border:1px solid var(--color-border-base);border-radius:var(--radius-card);overflow:hidden"><header class="gnb"><div></div>' + h + '</header></div>';
 const ddCounts = (a) => '<div class="header-actions">' + userBtn() + count('결재업무', a) + count('활동업무', 3) + '</div>';
 // 레일 조각 — 같은 메뉴 셋, 가운데 긴 이름만 줄바꿈 ↔ 말줄임. 영역 이름은 미리보기마다 따로(접근성 검사 landmark-unique)

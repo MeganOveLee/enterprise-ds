@@ -128,7 +128,7 @@ export const 직접_열어_보기 = {
   },
 };
 
-// ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-108) — 미리보기만. 창만 그림(덮개 없이) ──
+// ── Do · Don't (TD-108) — 미리보기만. 창만 그림(덮개 없이) ──
 const mini = (o) => dialog({ id: next(), style: 'width:100%;margin:0;align-self:flex-start;box-shadow:none', ...o });   // 위 정렬(가운데 맞춤 margin:auto 를 풂) — 두 칸 높이가 달라도 창 위치가 맞게
 export const 사용_지침 = {
   parameters: { controls: { disable: true } },

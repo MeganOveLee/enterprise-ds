@@ -68,7 +68,7 @@ export const 펼친_달력 = {
   },
 };
 
-// ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-108 24번 ① ②) — 미리보기만 ──
+// ── Do · Don't (TD-108 24번 ① ②) — 미리보기만 ──
 const wide = (h) => '<div style="width:100%;max-width:360px">' + h + '</div>';
 const noHint = (h) => h.replace(' placeholder="YYYY-MM-DD"', '');
 // 기간 두 필드의 폭이 다른 잘못된 예 — 시작일 필드만 좁게

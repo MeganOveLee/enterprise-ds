@@ -1,9 +1,9 @@
-// 「언제 쓰고 쓰지 말지」(Do · Don't) — 한 줄 = 상황 하나. 왼쪽 ✓ 올바른 예 · 오른쪽 ✕ 잘못된 예 (TD-70, 10/17)
+// Do · Don't — 한 줄 = 상황 하나. 왼쪽 ✓ Do · 오른쪽 ✕ Don't (TD-70, 10/17)
 // 미리보기는 DS 클래스 그대로라 도구 막대의 브랜드 · 화면 모드를 따른다. 틀 모양은 .storybook/preview-head.html 의 .sb-dd
 // 색만으로 구분하지 않도록 머리에 ✓ · ✕ 와 글자를 같이 둔다
 const pane = (kind, [view, text]) =>
   '<div class="sb-dd__pane sb-dd__pane--' + kind + '"><div class="sb-dd__view">' + view + '</div>' +
-  '<p class="sb-dd__text"><b>' + (kind === 'do' ? '✓ 올바른 예' : '✕ 잘못된 예') + '</b>' + text + '</p></div>';
+  '<p class="sb-dd__text"><b>' + (kind === 'do' ? '✓ Do' : "✕ Don't") + '</b>' + text + '</p></div>';
 
 export const doDont = (rows) =>
   '<div class="sb-dd">' + rows.map((r) =>

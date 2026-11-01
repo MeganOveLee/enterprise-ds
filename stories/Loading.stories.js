@@ -84,7 +84,7 @@ export const 인라인 = {
   render: () => `<p style="margin:0;font-size:var(--body-sm)">문서 번호 중복 <span class="loading loading--inline" role="status">${spin('sm')}<span class="loading__text">확인 중</span></span></p>`,
 };
 
-// ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-108 14번 ① ② ③) ── 미리보기만, 코드는 위 예시 카드에
+// ── Do · Don't (TD-108 14번 ① ② ③) ── 미리보기만, 코드는 위 예시 카드에
 const ddArea = (inner, style = '') => `<div style="position:relative;flex:1;min-width:0;border:1px solid var(--color-border-base);border-radius:var(--radius-card);overflow:hidden;background:var(--color-bg-base)${style ? ';' + style : ''}">${inner}</div>`;
 // 작은 목록 화면 — 검색 조건 행 + 표. over = 'table'(표만 덮음) · 'page'(화면 전체를 덮음)
 const miniPage = (over) => {

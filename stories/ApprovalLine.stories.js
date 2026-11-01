@@ -134,7 +134,7 @@ export const 저장한_결재선_불러오기 = {
   render: () => shot(pop({ tab: 1 }), 1200, 760),
 };
 
-// ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-108 7번 ① ② ③) — 미리보기만 ──
+// ── Do · Don't (TD-108 7번 ① ② ③) — 미리보기만 ──
 const mini = (inner) => '<div style="width:100%;display:flex;flex-direction:column;gap:8px;padding:12px;border:1px solid var(--color-border-base);border-radius:var(--radius-card);background:var(--color-bg-base)">' + inner + '</div>';
 const guide = (t) => '<p class="section-meta" style="margin:0">' + t + '</p>';
 const ONE = [['설계1팀', '정우진', 'wjjung']];

@@ -84,7 +84,7 @@ export const 검색_없이 = {
   render: () => live(box({ name: '문서 분류', items: KINDS, picked: ['설계 사양서', '도면'], open: true, search: false }), 210),
 };
 
-// ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-108 26번 ① ②) — 미리보기만. 펼친 목록은 틀 높이를 잡아 미리보기 안에 둠 ──
+// ── Do · Don't (TD-108 26번 ① ②) — 미리보기만. 펼친 목록은 틀 높이를 잡아 미리보기 안에 둠 ──
 const fit = (h, w = 200, ht = 0) => '<div style="width:' + w + 'px' + (ht ? ';height:' + ht + 'px' : '') + '">' + h + '</div>';
 const KIND3 = ['사양서', '도면', '시험 성적서'];
 const group = '<div class="form-grid-2" style="grid-template-columns:1fr;width:240px;text-align:left"><div class="ff-field"><span class="search-label" id="dd-ms-kind">문서 분류</span>' +

@@ -108,7 +108,7 @@ export const Playground = {
   },
 };
 
-// ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-108 22번 ① · ⓐ · ⓑ, ⓑ 그림 = 30번) — 미리보기만, 코드는 위 예시 카드에 ──
+// ── Do · Don't (TD-108 22번 ① · ⓐ · ⓑ, ⓑ 그림 = 30번) — 미리보기만, 코드는 위 예시 카드에 ──
 const ddPanel = (tabs) => '<div class="main-sub" style="align-self:flex-start;height:auto;width:240px;border:1px solid var(--color-border-base);border-radius:var(--radius-card);overflow:hidden"><div class="main-sub-header"><h3>문서 관리</h3></div>' + tabs +
   '<div style="padding:16px;color:var(--color-text-muted);font-size:var(--body-sm)">패널 내용</div></div>';
 const ddPop = (tabs) => '<div class="pop" style="align-self:flex-start;height:auto;min-width:0;width:100%;overflow:visible">' + popTabs(tabs, 0, { actions: false }) + '</div>';

@@ -141,7 +141,7 @@ export const 전체_상태 = {
   },
 };
 
-// ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-108 11번 ①) — 미리보기만, 코드는 위 예시 카드에. 열 넷으로 줄인 표 ──
+// ── Do · Don't (TD-108 11번 ①) — 미리보기만, 코드는 위 예시 카드에. 열 넷으로 줄인 표 ──
 const DCOLS = '<colgroup><col style="width:44px"><col style="width:120px"><col><col style="width:100px"></colgroup>';
 const DHEAD = '<thead><tr><th>' + ck('전체 선택') + '</th><th>문서 번호</th><th>문서 명</th><th>작업현황</th></tr></thead>';
 const ddZero = (withTable) => '<div style="width:100%;align-self:flex-start">' + resultHead(0) +

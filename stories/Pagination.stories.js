@@ -74,7 +74,7 @@ export const Playground = {
   render: (a) => pager(a.total, Math.min(a.current, a.total)),
 };
 
-// ── 언제 쓰고 쓰지 말지 (Do · Don't, TD-108 21번 ①) — 미리보기만, 코드는 위 예시 카드에. 페이지 이동이 여럿이라 이름을 따로(landmark-unique) ──
+// ── Do · Don't (TD-108 21번 ①) — 미리보기만, 코드는 위 예시 카드에. 페이지 이동이 여럿이라 이름을 따로(landmark-unique) ──
 export const 사용_지침 = {
   parameters: { controls: { disable: true } },
   render: () => doDont([
