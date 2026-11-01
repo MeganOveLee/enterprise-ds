@@ -124,8 +124,8 @@ export default {
 export const 결재선_지정 = {
   parameters: { docs: { source: { code: area() + '\n\n<!-- [결재선 지정]을 누르면 여는 창 -->\n' + pop() } } },
   render: () => wireSections(flow({
-    base: { html: area(), w: 1000, h: 408, where: '문서 등록 창 — 결재선 지정 섹션(등록 · 결재 요청 화면 공통)' },
-    open: { html: pop(), w: 1200, h: 800, where: '결재선 지정 — 새 창' },
+    base: { html: area(), w: 1000, h: 408, where: '문서 등록 창 › 결재선 지정 섹션(등록 · 결재 요청 화면 공통)' },
+    open: { html: pop(), w: 1200, h: 800, where: '결재선 지정 새 창' },
     trigger: '[결재선 지정]', how: '새 창이 열립니다. [결재선 적용]을 누르면 고른 사람이 등록 창 표에 들어갑니다',
   })),
 };
@@ -144,16 +144,16 @@ const lineBtns = (del) => '<div class="seach_arm" style="margin:0"><div class="l
 export const 사용_지침 = {
   parameters: { controls: { disable: true } },
   render: () => doDont([
-    { title: '끌어다 놓기와 이동 버튼을 함께',
+    { title: '끌어다 놓기와 이동 버튼을 함께 둡니다',
       do: [mini(guide(GUIDE) + '<div style="display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;align-items:center">' + moveBtn('APPROVE') + roleBox('APPROVE', ONE) + '</div>'),
         '목록과 역할 상자 사이에 역할별 이동 버튼을 두어, 체크한 담당자를 버튼으로도 넣게 합니다. 키보드로도 결재선을 지정할 수 있습니다.'],
       dont: [mini(guide('담당자를 역할 상자로 끌어다 놓아 주십시오.') + roleBox('APPROVE', ONE)),
         '끌어다 놓기만 되면 마우스를 쓰지 못하는 사용자는 결재선을 지정할 수 없습니다.'] },
-    { title: '빈 역할 상자에는 빈 상태 안내',
+    { title: '빈 역할 상자에는 빈 상태 안내를 둡니다',
       do: [mini(roleBox('RECEIVE', [])), '역할 상자가 비면 표 안에 빈 상태를 두어 무엇을 하면 되는지 안내합니다.'],
       dont: [mini(roleBox('RECEIVE', [], { blank: false })), '헤더 행만 남기면 비어 있는 것인지 불러오는 중인지 알 수 없습니다.'] },
-    { title: '버튼 색은 업무 동작대로',
-      do: [mini(lineBtns('btn--destructive btn--outlined')), '[행 삭제]처럼 지우는 동작은 destructive로 구분하고, [행 추가] · [결재선 지정]은 secondary로 둡니다.'],
+    { title: '버튼 색은 업무 동작에 맞춰 정합니다',
+      do: [mini(lineBtns('btn--destructive btn--outlined')), '지우는 동작([행 삭제])은 destructive로 구분하고, [행 추가] · [결재선 지정]은 secondary로 둡니다.'],
       dont: [mini(lineBtns('btn--secondary btn--outlined')), '셋이 같은 색이면 지우는 버튼을 다른 버튼과 구분하기 어렵습니다.'] },
   ]),
 };

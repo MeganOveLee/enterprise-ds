@@ -67,7 +67,7 @@ const wide = (h) => '<div style="flex:1;min-width:0">' + h + '</div>';
 export const 사용_지침 = {
   parameters: { controls: { disable: true } },
   render: () => doDont([
-    { title: '막대 옆에 % 숫자 함께',
+    { title: '막대 옆에 % 숫자를 함께 둡니다',
       do: [wide(bar('progress', 58, '전체')),
         '막대 오른쪽에 % 숫자(.progress-bar__label)를 함께 두어 정확한 값을 읽게 합니다.'],
       dont: [wide(bar('progress', 58, '전체', false)),
@@ -93,7 +93,7 @@ export const Playground = {
     value: { control: { type: 'range', min: 0, max: 100, step: 1 }, description: '진행률 — `.pbar-fill` 너비 · `aria-valuenow`' },
     name: { control: 'text', description: '무엇의 진행률인지 — `aria-label="{이름} 진행률"`' },
     label: { control: 'boolean', description: '막대 오른쪽 % 글자 — `.progress-bar__label`' },
-    withStatus: { control: 'boolean', description: '왼쪽 상태 표시 — `.status-block` (`.progress-row`로 묶음)' },
+    withStatus: { control: 'boolean', description: '왼쪽 상태 표시 — `.status-block`(`.progress-row`로 묶습니다)' },
   },
   args: { state: 'progress', value: 58, name: '전체', label: true, withStatus: true },
   parameters: { docs: { source: { transform: (_, { args: a }) => (a.withStatus ? row(a.state, a.value, a.name, a.label) : bar(a.state, a.value, a.name, a.label)) } } },

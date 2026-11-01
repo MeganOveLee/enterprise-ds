@@ -46,12 +46,12 @@ export const 사용_지침 = {
   parameters: { controls: { disable: true } },
   render: () => doDont([
     // 근거: TD-108 10번 ① · StatusChip.mdx 「상태 색」 (Carbon Tag · Atlassian Lozenge)
-    { title: '같은 상태는 모든 화면에서 같은 색',
+    { title: '같은 상태는 모든 화면에서 같은 색으로 표시합니다',
       do: [twoPlaces([chip('success', '승인'), chip('danger', '반려'), chip('warning', '검토 중')]), '같은 상태 이름은 어느 화면에서나 같은 상태 색(승인 = success)을 씁니다.'],
       dont: [twoPlaces([chip('info', '승인'), chip('warning', '반려'), chip('neutral', '검토 중')]), '화면마다 같은 상태를 다른 색으로 표시하지 않습니다.'] },
     // 근거: TD-108 10번 ② · Playground 「글자 — 짧은 상태 이름」
-    { title: '상태 이름은 짧게(2~4자)',
-      do: [row([chip('warning', '검토 중'), chip('success', '승인')]), '상태 이름은 「검토 중」 「승인」처럼 2~4자로 씁니다.'],
+    { title: '상태 이름은 2~4자로 짧게 짓습니다',
+      do: [row([chip('warning', '검토 중'), chip('success', '승인')]), '상태 이름은 2~4자로 짓습니다(예: 「검토 중」 「승인」).'],
       dont: [row([chip('warning', '검토 의견 반영 후 재상신 대기'), chip('success', '승인')]), '「검토 의견 반영 후 재상신 대기」처럼 문장형 글자를 칩에 넣지 않습니다.'] },
   ]),
 };

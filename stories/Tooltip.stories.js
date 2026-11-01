@@ -55,13 +55,13 @@ export const 사용_지침 = {
   parameters: { controls: { disable: true } },
   render: () => doDont([
     // ① 라벨 없는 아이콘 버튼 ↔ 글자가 있는 버튼에 같은 글자
-    { title: '라벨 없는 아이콘 버튼에',
+    { title: '라벨 없는 아이콘 버튼에 사용합니다',
       do: [ddStage(tip({ icon: 'print', label: '인쇄', text: '인쇄', open: true })),
         '글자가 없는 아이콘 버튼에 이름을 툴팁으로 보여 줍니다.'],
       dont: [ddStage(textTip('인쇄')),
         '보이는 글자를 툴팁으로 되풀이하면 읽을 것만 늘어납니다.'] },
     // ② 짧은 한 줄 ↔ 링크 · 버튼이 든 툴팁
-    { title: '짧은 한 줄로',
+    { title: '툴팁은 짧은 한 줄로 적습니다',
       do: [ddStage(tip({ icon: 'help', label: '행 높이 도움말', text: '편집 그리드의 행 높이는 40입니다.', open: true })),
         '툴팁에는 짧은 설명 한 줄만 둡니다.'],
       dont: [ddStage(linkTip()),
@@ -86,7 +86,7 @@ export const Playground = {
     text: { control: 'text', description: '설명 — `.tooltip` (role="tooltip", 폭 240까지)' },
     bottom: { control: 'boolean', description: '아래쪽 — `.tooltip--bottom` (위가 좁을 때)' },
     side: { control: 'inline-radio', options: ['center', 'start', 'end'], description: '가로 맞춤 — center = 클래스 없음(기본) · `.tooltip--start` · `.tooltip--end` (셀 끝 컨트롤)' },
-    open: { control: 'boolean', description: '열어 두기 — `.is-open` (문서용. 제품은 마우스 · 포커스로 열림)' },
+    open: { control: 'boolean', description: '열어 두기 — `.is-open`(문서용입니다. 제품에서는 마우스 · 포커스로 열립니다)' },
   },
   args: { text: '첨부 받기', bottom: false, side: 'center', open: true },
   render: (a) => cell(tip({ icon: 'down', label: '첨부 받기', text: a.text, bottom: a.bottom, side: a.side === 'center' ? '' : a.side, open: a.open }), a.side === 'start' ? 'flex-start' : a.side === 'end' ? 'flex-end' : 'center', a.bottom),

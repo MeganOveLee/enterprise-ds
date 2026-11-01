@@ -62,19 +62,19 @@ export const 사용_지침 = {
   parameters: { controls: { disable: true } },
   render: () => doDont([
     // ① 입력 오류 = 필드에 빨간 테두리 + 오류 문구(Input 문서와 같은 표시)
-    { title: '입력 오류는 필드에 표시',
+    { title: '입력 오류는 필드에 표시합니다',
       do: [col([field('dd-ts-nm', '문서 명을 입력해 주십시오')]),
-        '입력 오류는 그 필드에 빨간 테두리와 오류 문구를 함께 표시합니다.'],
+        '입력 오류는 해당 필드에 빨간 테두리와 오류 문구를 함께 표시합니다.'],
       dont: [col([field('dd-ts-nm2'), toast({ status: 'danger', msg: '문서 명을 입력해 주십시오.' })]),
         '토스트는 사라지고 어느 필드인지 가리키지 않아 고칠 곳을 찾기 어렵습니다.'] },
     // ② 일괄 처리 = 건수를 적은 토스트 하나
-    { title: '일괄 처리 결과는 토스트 하나',
+    { title: '일괄 처리 결과는 토스트 하나로 알립니다',
       do: [col([toast({ status: 'success', msg: '문서 3건이 결재 요청되었습니다.' })]),
         '여러 건을 한 번에 처리한 결과는 건수를 적은 토스트 하나로 알립니다.'],
       dont: [col(DOCS.map((n) => toast({ status: 'success', msg: n + ' 문서가 결재 요청되었습니다.' }))),
         '건마다 토스트를 띄우면 쌓여서 화면을 가리고 결과를 세기 어렵습니다.'] },
     // ③ 한두 줄 — 사라지기 전에 읽을 수 있는 길이
-    { title: '문장은 한두 줄',
+    { title: '문장은 한두 줄로 적습니다',
       do: [col([toast({ status: 'success', msg: '저장되었습니다.' })]),
         '방금 한 동작의 결과만 한두 줄로 적습니다.'],
       dont: [col([toast({ status: 'success', msg: '저장되었습니다. 결재선은 팀장 → 부서장 순서이고 첨부 파일 2개가 함께 저장되었으며, 결재 요청은 목록 화면의 [결재 요청]에서 할 수 있습니다.' })]),
@@ -95,10 +95,10 @@ export const 전체_상태 = {
 // ── Playground ──
 export const Playground = {
   argTypes: {
-    status: { control: 'inline-radio', options: ['info', 'success', 'warning', 'danger'], description: '상태 — `.toast--{상태}` (info 는 기본이라 클래스 없음). 아이콘 색만 바뀜' },
-    title: { control: 'text', description: '제목 — `.toast__title` (선택, 비우면 없음. 있으면 `.toast__body`로 문구와 묶음)' },
+    status: { control: 'inline-radio', options: ['info', 'success', 'warning', 'danger'], description: '상태 — `.toast--{상태}`(info는 기본이라 클래스가 없습니다). 아이콘 색만 바뀝니다' },
+    title: { control: 'text', description: '제목 — `.toast__title`(선택 사항입니다. 비우면 표시하지 않고, 있으면 `.toast__body`로 문구와 묶습니다)' },
     msg: { control: 'text', description: '문구 — `.toast__msg`' },
-    action: { control: 'text', description: '동작 버튼 — `.btn.btn--secondary.btn--transparent.toast__action` (비우면 없음)' },
+    action: { control: 'text', description: '동작 버튼 — `.btn.btn--secondary.btn--transparent.toast__action` (비우면 표시하지 않습니다)' },
     close: { control: 'boolean', description: '닫기 버튼 (아이콘 버튼 28 + aria-label)' },
   },
   args: { status: 'success', title: '', msg: '저장되었습니다.', action: '', close: true },

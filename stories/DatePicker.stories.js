@@ -24,7 +24,7 @@ export const 하나 = {
 };
 
 export const 기간 = {
-  parameters: { docs: { description: { story: '`.ui-datepicker-range` 안의 두 칸은 서로 min/max가 걸립니다. 종료일은 시작일보다 앞 날짜를 못 고릅니다.' } } },
+  parameters: { docs: { description: { story: '`.ui-datepicker-range` 안의 두 칸은 서로 min/max가 걸립니다. 종료일에는 시작일보다 앞 날짜를 선택할 수 없습니다.' } } },
   render: () => `<div style="max-width:420px"><div class="ui-datepicker-range">${dp('시작일', '2026-10-06')}<span class="ui-datepicker-range__sep">~</span>${dp('종료일', '2026-10-20')}</div></div>`,
 };
 
@@ -76,10 +76,10 @@ const unequal = '<div class="ui-datepicker-range">' + dp('시작일', '2026-10-0
 export const 사용_지침 = {
   parameters: { controls: { disable: true } },
   render: () => doDont([
-    { title: '입력 형식은 placeholder로 안내',
+    { title: '입력 형식은 placeholder로 안내합니다',
       do: ['<div style="width:200px">' + dp('납기일') + '</div>', '빈 날짜 필드에는 placeholder로 입력 형식(YYYY-MM-DD)을 안내합니다.'],
       dont: ['<div style="width:200px">' + noHint(dp('납기일')) + '</div>', '빈 칸으로 두면 어떤 형식으로 입력해야 하는지 알 수 없습니다.'] },
-    { title: '기간은 같은 폭의 두 필드와 「~」',
+    { title: '기간은 같은 폭의 두 필드를 「~」로 잇습니다',
       do: [wide(range('2026-10-06', '2026-10-20')), '시작일 · 종료일은 .ui-datepicker-range로 묶어 같은 폭으로 두고, 사이에 「~」를 둡니다.'],
       dont: [wide(unequal), '두 필드의 폭이 다르면 시작일과 종료일이 한 쌍으로 보이지 않습니다.'] },
   ]),

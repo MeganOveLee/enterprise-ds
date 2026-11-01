@@ -92,12 +92,12 @@ const group = '<div class="form-grid-2" style="grid-template-columns:1fr;width:2
 export const 사용_지침 = {
   parameters: { controls: { disable: true } },
   render: () => doDont([
-    { title: '「전체」 옵션은 따로 두지 않음',
+    { title: '「전체」 옵션은 따로 두지 않습니다',
       do: [fit(box({ picked: [], open: true, search: false }), 200, 180),
         '아무것도 선택하지 않으면 트리거가 「전체」로 표시되므로, 「전체」 옵션은 따로 두지 않습니다.'],
       dont: [fit(box({ items: ['전체'].concat(STATUS), picked: ['전체', '검토 중'], open: true, search: false }), 200, 208),
         '「전체」 체크박스를 두면 다른 옵션과 함께 선택되어, 무엇을 고른 것인지 알 수 없습니다.'] },
-    { title: '옵션이 4개까지면 체크박스 그룹',
+    { title: '옵션이 4개까지면 체크박스 그룹을 씁니다',
       do: [group, '옵션이 4개까지면 체크박스 그룹(.checkbox-group)으로 펼쳐 둡니다. 다중 선택은 옵션 5개부터 씁니다.'],
       dont: [fit(box({ name: '문서 분류', items: KIND3, picked: ['도면'], open: true, search: false }), 200, 124),
         '옵션 3개를 드롭다운에 넣으면 열어 봐야 무엇을 고를 수 있는지 알 수 있습니다.'] },
@@ -130,7 +130,7 @@ export const 전체_상태 = {
       ['Disabled', [cell(box({ picked: [], disabled: true })), '<div class="checkSelect" style="width:200px;text-align:left"><div class="options show" style="position:static;box-shadow:none"><div><label class="option"><input type="checkbox" disabled><span>폐기</span></label></div></div></div>']],
       ['Disabled · 고른 항목', ['—', '<div class="checkSelect" style="width:200px;text-align:left"><div class="options show" style="position:static;box-shadow:none"><div><label class="option"><input type="checkbox" checked disabled><span>폐기</span></label></div></div></div>']],
       ['펼침', [cell('<div class="checkSelect"><div class="selected-text" role="button" tabindex="0" aria-haspopup="true" aria-expanded="true" aria-label="작업현황: 작업 중">작업 중</div><div class="options show" style="display:none"></div></div>'), '—']],
-    ]) + '<p class="sb-note" style="margin:8px 0 0">트리거 비활성 = 원래 select에 disabled → 스크립트가 aria-disabled="true"를 붙이고 열리지 않습니다. 옵션 행 비활성 = 체크박스 비활성 + 흐린 글자이고, 고른 채 막힌 항목은 옅은 브랜드 바탕 없이 표시합니다. 펼치면 트리거 화살표가 위를 향합니다.</p>';
+    ]) + '<p class="sb-note" style="margin:8px 0 0">트리거 비활성 = 원래 select에 disabled를 붙이면 스크립트가 aria-disabled="true"를 붙이고, 트리거가 열리지 않습니다. 옵션 행 비활성 = 체크박스 비활성 + 흐린 글자이고, 고른 채 막힌 항목은 옅은 브랜드 바탕 없이 표시합니다. 펼치면 트리거 화살표가 위를 향합니다.</p>';
   },
 };
 

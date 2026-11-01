@@ -67,7 +67,7 @@ export const 전체_상태 = {
 // ── Playground ──
 export const Playground = {
   argTypes: {
-    total: { control: { type: 'range', min: 1, max: 40, step: 1 }, description: '전체 페이지 수 — 7페이지가 넘으면 줄임표' },
+    total: { control: { type: 'range', min: 1, max: 40, step: 1 }, description: '전체 페이지 수 — 7페이지가 넘으면 줄임표로 줄입니다' },
     current: { control: { type: 'range', min: 1, max: 40, step: 1 }, description: '현재 페이지 — `.is-active` + `aria-current="page"`' },
   },
   args: { total: 12, current: 5 },
@@ -79,7 +79,7 @@ export const 사용_지침 = {
   parameters: { controls: { disable: true } },
   render: () => doDont([
     // 근거: TD-108 21번 ① (Carbon Pagination) · 위 「놓는 자리」 — 검색 화면 CSS(.searchLayout .table_list > .ui-pagination) 아래 16
-    { title: '목록 아래 가운데, 아래 여백 확보',
+    { title: '목록 아래 가운데에 두고 아래 여백을 띄웁니다',
       do: [screen(pager(5, 1, '페이지 이동 — 지침 예시 1'), 'height:200px;'), '목록 바로 아래 가운데에 두고 화면 아래와 16을 띄웁니다.'],
       dont: [screen(pager(5, 1, '페이지 이동 — 지침 예시 2').replace('class="ui-pagination"', 'class="ui-pagination" style="margin-bottom:0"'), 'height:200px;'), '페이지 번호를 화면 바닥에 붙여 두지 않습니다.'] },
   ]),

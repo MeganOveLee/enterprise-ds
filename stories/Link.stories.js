@@ -28,7 +28,7 @@ export const 그리드_링크 = {
     ['선택한 행 위', ['<table class="grid-table" style="width:auto"><tbody><tr class="is-selected" aria-selected="true"><td>' + idLink('DOC-2610-0012') + '</td></tr></tbody></table>',
       '<table class="grid-table" style="width:auto"><tbody><tr class="is-selected" aria-selected="true"><td>' + link('하우징 재질 변경 검토 보고서', 'ps-hover') + '</td></tr></tbody></table>']],
     ['클래스', ['<code>.grid-custom-rows-link</code>', '<code>.grid-link</code>']],
-    ['쓰임', [note('문서 번호 · 품번처럼 행마다 하나<br>늘 밑줄 · 브랜드 글자'), note('이름 · 버전 이력 같은 그 밖의 링크<br>마우스 · 키보드가 올 때만 밑줄')]],
+    ['쓰임', [note('행마다 하나(문서 번호 · 품번)<br>늘 밑줄 · 브랜드 글자'), note('식별자가 아닌 링크(이름 · 버전 이력)<br>마우스 · 키보드가 올 때만 밑줄')]],
   ], { full: true }); },
 };
 
@@ -37,7 +37,7 @@ export const 본문_링크 = {
   render: () => matrix(['다른 창으로 열기', '내려받기'], [
     ['미리보기', [tlink('PJT-2026-014 브레이크 캘리퍼 경량화 개발'), tlink('(양식) 사양서 양식.docx', 'no-arrow')]],
     ['클래스', ['<code>.text-link</code>', '<code>.text-link.no-arrow</code>']],
-    ['쓰임', [note('상세 정보 칸의 관련 문서 · 품목<br>끝 「↗」 = 다른 창으로 열림'), note('양식 · 첨부 내려받기<br>창이 열리지 않아 화살표 없음')]],
+    ['쓰임', [note('상세 정보 칸의 관련 문서 · 품목<br>끝 「↗」 = 다른 창으로 엽니다'), note('양식 · 첨부 내려받기<br>창이 열리지 않아 화살표를 붙이지 않습니다')]],
   ], { full: true }),
 };
 
@@ -47,7 +47,7 @@ export const 위치_표시 = {
   parameters: html([crumbs(['Home', '문서 관리', '문서 검색'])]),
   render: () => matrix(['GNB 안', '페이지 헤더 안'], [
     ['미리보기', ['<div style="border:1px solid var(--color-border-base);border-radius:var(--radius-card);overflow:hidden">' + GNB + '</div>', '<div style="padding:12px 16px;background:var(--color-bg-subtle)">' + HEAD + '</div>']],
-    ['쓰임', [note('항목이 모두 같은 글자 — 현재 화면은 aria-current 로 읽힘'), note('흐린 글자, 현재 화면만 진하게')]],
+    ['쓰임', [note('항목이 모두 같은 글자이고, 현재 화면은 aria-current로 알립니다'), note('흐린 글자, 현재 화면만 진하게')]],
   ], { full: true }),
 };
 
@@ -87,12 +87,12 @@ export const 사용_지침 = {
   parameters: { controls: { disable: true } },
   render: () => doDont([
     // 근거: Link.mdx 구성 「식별자 링크 · 일반 링크」 (그리드 링크 결정) — TD-108 20번 지금 두 개 그대로
-    { title: '늘 밑줄인 링크는 행마다 하나',
+    { title: '늘 밑줄인 링크는 행마다 하나만 둡니다',
       do: [ddTable((t) => idLink(t), (t) => link(t)), '식별자 열 하나만 늘 밑줄이고, 나머지는 마우스 · 키보드가 올 때만 밑줄입니다.'],
       dont: [ddTable((t) => idLink(t), (t) => idLink(t)), '모든 링크가 늘 밑줄이면 마우스를 올린 것처럼 보입니다.'] },
     // 근거: Link.mdx 구성 「본문 링크 — 끝의 「↗」는 다른 창으로 열린다는 표시, 창이 열리지 않는 링크는 .no-arrow」
-    { title: '↗는 다른 창으로 열 때만',
-      do: [ddStack(tlink('PJT-2026-014 브레이크 캘리퍼 경량화 개발') + tlink('(양식) 사양서 양식.docx', 'no-arrow')), '내려받기처럼 창이 열리지 않는 링크는 .no-arrow로 화살표를 뺍니다.'],
+    { title: '↗는 다른 창으로 열 때만 붙입니다',
+      do: [ddStack(tlink('PJT-2026-014 브레이크 캘리퍼 경량화 개발') + tlink('(양식) 사양서 양식.docx', 'no-arrow')), '창이 열리지 않는 링크(예: 내려받기)는 .no-arrow로 화살표를 뺍니다.'],
       dont: [ddStack(tlink('PJT-2026-014 브레이크 캘리퍼 경량화 개발') + tlink('(양식) 사양서 양식.docx')), '내려받기 링크에 「↗」를 붙이지 않습니다.'] },
   ]),
 };

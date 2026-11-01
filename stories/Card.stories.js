@@ -74,7 +74,7 @@ export const 전체_상태 = {
 export const Playground = {
   argTypes: {
     title: { control: 'text', description: '카드 제목 — `.card-title`' },
-    count: { control: 'text', description: '개수 — `.card-title-count` (비우면 없음)' },
+    count: { control: 'text', description: '개수 — `.card-title-count` (비우면 표시하지 않습니다)' },
     rows: { control: { type: 'range', min: 0, max: 8, step: 1 }, description: '목록 행 수 — `.card-list li` (0이면 빈 상태 `.empty--card`)' },
     withMore: { control: 'boolean', description: '헤더 오른쪽 이동 링크 — `.card-more`' },
     visited: { control: { type: 'number', min: -1, max: 7 }, description: '읽은 줄(0부터, -1 = 없음) — `.item-title.is-visited`' },
@@ -98,11 +98,11 @@ export const 사용_지침 = {
   parameters: { controls: { disable: true } },
   render: () => { enablePseudo(); return doDont([
     // 근거: TD-108 9번 ① (Carbon Tile · Atlassian — 누르는 곳 하나)
-    { title: '행마다 링크 한 곳',
+    { title: '행마다 링크는 한 곳만 둡니다',
       do: [ddBox(ddCard(row(ROWS[0]) + row(ROWS[1], ' ps-hover') + row(ROWS[2]))), '행 전체를 링크 하나(&lt;li&gt;&lt;a href&gt;)로 두어 어디를 눌러도 같은 상세로 이동합니다.'],
-      dont: [ddBox(ddCard(ROWS.slice(0, 3).map(splitRow).join(''))), '한 행 안에 제목 · 「보기」처럼 같은 곳으로 가는 링크를 여러 개 두지 않습니다.'] },
+      dont: [ddBox(ddCard(ROWS.slice(0, 3).map(splitRow).join(''))), '한 행 안에 같은 곳으로 가는 링크(제목 · 「보기」)를 여러 개 두지 않습니다.'] },
     // 근거: TD-108 9번 ② · Card.mdx 구성 「목록 — 제목(.item-title, 길면 말줄임)」
-    { title: '긴 이름은 말줄임 + title',
+    { title: '긴 이름은 말줄임하고 전체 이름을 title 속성에 둡니다',
       do: [ddBox(ddCard(LONG.map((r) => row(r)).join(''))), '긴 이름은 한 줄로 줄이고(말줄임) 전체 이름은 title 속성으로 둡니다.'],
       dont: [ddBox(ddCard(LONG.map(wrapRow).join(''))), '긴 이름을 줄바꿈해 행 높이가 제각각이 되게 두지 않습니다.'] },
   ]); },

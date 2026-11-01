@@ -221,10 +221,10 @@ const ddRail = (name, spanStyle = '') => '<div style="border:1px solid var(--col
 export const 사용_지침 = {
   parameters: { controls: { disable: true } },
   render: () => doDont([
-    { title: '카운트 배지는 99+까지',
+    { title: '카운트 배지는 99+까지 표시합니다',
       do: [ddBar(ddCounts('99+')), '100 이상은 99+로 표시해 배지 폭을 일정하게 둡니다.'],
       dont: [ddBar(ddCounts('1284')), '숫자를 그대로 쓰면 배지가 길어져 GNB 오른쪽 배치가 흔들립니다.'] },
-    { title: '긴 메뉴 이름은 두 줄로',
+    { title: '긴 메뉴 이름은 두 줄로 나눕니다',
       do: [ddRail('두 줄'), 'LNB 레일 메뉴 이름이 길면 띄어쓰기에서 두 줄로 나눕니다. 두 줄까지 표시합니다.'],
       dont: [ddRail('말줄임', 'display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap'), '한 줄로 자르면 「벤치마…」처럼 이름 끝이 보이지 않아 메뉴를 구분하기 어렵습니다.'] },
   ]),

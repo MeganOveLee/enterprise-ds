@@ -108,8 +108,8 @@ export default {
 export const 도면_등록_창 = {
   parameters: { docs: { source: { code: pop() } } },
   render: () => wireSections(flow({
-    base: { html: list(), w: 960, h: 210, where: '도면 검색 — 검색 결과' },
-    open: { html: pop(), w: 950, h: 1396, where: '도면 등록 — 새 창 950 × 650 (스크롤 없이 전체를 펼친 모습)' },
+    base: { html: list(), w: 960, h: 210, where: '도면 검색 › 검색 결과' },
+    open: { html: pop(), w: 950, h: 1396, where: '도면 등록 새 창 950 × 650(스크롤 없이 전체를 펼친 모습)' },
     trigger: '[등록]', how: '새 창이 열리고, 메뉴 패널에서 고른 폴더가 경로에 들어갑니다',
   })),
 };
@@ -128,11 +128,11 @@ const ddField = (label, err, req = true) => { const id = 'dd-dr-' + (++dd); retu
 export const 사용_지침 = {
   parameters: { controls: { disable: true } },
   render: () => doDont([
-    { title: '저장 오류는 Alert와 필드에 함께',
+    { title: '저장 오류는 Alert와 필드에 함께 표시합니다',
       do: [mini(ddAlert + two(ddField('도면 명(영문)', '도면 명(영문)을 입력해 주십시오'), ddField('제품군', '제품군을 선택해 주십시오'))), '필수 필드가 비면 폼 위 Alert와 함께 빈 필드마다 빨간 테두리 · 오류 문구를 표시합니다. 포커스는 첫 빈 필드로 옮깁니다.'],
       dont: [mini(ddAlert + two(ddField('도면 명(영문)', ''), ddField('제품군', ''))),
         'Alert만 띄우면 어느 필드가 비었는지 필드에 남지 않습니다.'] },
-    { title: '검사하는 필드에는 모두 필수 표시',
+    { title: '검사하는 필드에는 모두 필수 표시를 둡니다',
       do: [mini(two(ddField('도면 명(영문)', ''), ddField('제품군', ''))), '[저장] 때 검사하는 필드에는 모두 필수 표시(*)를 둡니다.'],
       dont: [mini(two(ddField('도면 명(영문)', ''), ddField('제품군', '', false))), '일부 필드에만 표시하면 저장해 보기 전에는 무엇이 필수인지 알 수 없습니다.'] },
   ]),

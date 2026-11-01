@@ -108,7 +108,7 @@ const ddForm = (bottom = '') => {
 export const 사용_지침 = {
   parameters: { controls: { disable: true } },
   render: () => doDont([
-    { title: '저장 버튼은 제목 줄 한 곳에',
+    { title: '저장 버튼은 제목 줄 한 곳에만 둡니다',
       do: [mini(top({ title: '문서 등록', buttons: SAVE_BTNS() }) + ddForm()),
         '[임시 저장] · [등록]은 제목 줄 오른쪽 한 곳에 둡니다. 제목 줄은 스크롤해도 창 위에 남아 늘 보입니다.'],
       dont: [mini(top({ title: '문서 등록', buttons: SAVE_BTNS() }) + ddForm('<div class="button_group" style="justify-content:flex-end;margin-top:12px">' + SAVE_BTNS() + '</div>')),
@@ -136,9 +136,9 @@ export const Playground = {
   argTypes: {
     kind: { control: 'inline-radio', options: ['상세', '등록'], description: '창 종류 — 상세 = 버튼이 탭 줄 오른쪽, 등록 = 버튼이 제목 줄' },
     title: { control: 'text', description: '창 제목 — `.top-title-area h3`' },
-    version: { control: 'text', description: '버전 표시 — `.version` (비우면 없음). 제목에 버전을 적었으면 비워 둡니다' },
+    version: { control: 'text', description: '버전 표시 — `.version` (비우면 표시하지 않습니다). 제목에 버전을 적었으면 비워 둡니다' },
     withTabs: { control: 'boolean', description: '탭 줄 — `.tab` (상세 창만)' },
-    height: { control: { type: 'range', min: 280, max: 640, step: 20 }, description: '틀 높이 — 내용이 넘치면 창 안에서 스크롤, 제목 줄은 위에 붙어 있음' },
+    height: { control: { type: 'range', min: 280, max: 640, step: 20 }, description: '틀 높이 — 내용이 넘치면 창 안에서 스크롤하고, 제목 줄은 위에 붙어 있습니다' },
   },
   args: { kind: '상세', title: '문서 - DOC-2610-0013, 브레이크 캘리퍼 조립 사양서, A.2', version: '', withTabs: true, height: 520 },
   parameters: { docs: { source: { transform: (_, { args }) => '<div class="pop">\n  ' + (args.kind === '등록' ? registerPop(args) : viewPop(args)) + '\n</div>' } } },

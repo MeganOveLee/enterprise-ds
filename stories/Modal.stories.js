@@ -134,12 +134,12 @@ export const 사용_지침 = {
   parameters: { controls: { disable: true } },
   render: () => doDont([
     // 근거: Polaris Modal · KRDS 모달 · Cloudscape Unsaved changes — 버튼 이름은 「확인 · 예」 대신 동작 이름
-    { title: '버튼 이름은 누르면 일어나는 동작으로',
-      do: [mini({}), '[저장 안 함] · [저장]처럼 누르면 일어나는 일을 버튼 이름으로 씁니다. 제목을 다시 읽지 않아도 고를 수 있습니다.'],
+    { title: '버튼 이름은 누르면 일어나는 동작으로 짓습니다',
+      do: [mini({}), '누르면 일어나는 일을 버튼 이름으로 짓습니다(예: [저장 안 함] · [저장]). 제목을 다시 읽지 않아도 고를 수 있습니다.'],
       dont: [mini({ foot: btn('아니요', 'btn--destructive btn--outlined') + btn('취소', 'btn--secondary btn--transparent') + btn('예', 'btn--primary btn--filled') }),
         '[예] · [아니요]는 제목이 질문이 아니면 무엇에 답하는지 알 수 없습니다.'] },
     // 근거: 구성 「본문」 · Popup Window(등록 · 상세 = 새 창) · js/modal.js(Esc = 취소)
-    { title: '확인 창에는 확인할 문장과 버튼만',
+    { title: '확인 창에는 확인할 문장과 버튼만 둡니다',
       do: [mini({ title: '문서를 삭제하시겠습니까?', desc: '삭제한 문서는 되돌릴 수 없습니다.', foot: btn('취소', 'btn--secondary btn--transparent') + btn('삭제', 'btn--destructive btn--outlined') }),
         '본문은 한두 문장으로 씁니다. 입력이 필요한 등록 · 수정은 Popup Window로 엽니다.'],
       dont: [mini({ title: '문서를 삭제하시겠습니까?', desc: '<label class="search-label" style="display:block;margin-bottom:4px">삭제 사유</label><textarea class="textarea" rows="2" aria-label="삭제 사유" style="width:100%"></textarea>',
@@ -168,7 +168,7 @@ export const Playground = {
   argTypes: {
     title: { control: 'text', description: '제목 — `.modal__title` (aria-labelledby). 짧은 상태 문장 또는 질문' },
     description: { control: 'text', description: '본문 — `.modal__body p` (aria-describedby). 한두 문장' },
-    close: { control: 'boolean', description: '닫기 버튼(✕) — `.btn--icon` · `data-modal-close="cancel"`. 누르면 [취소]와 같음' },
+    close: { control: 'boolean', description: '닫기 버튼(✕) — `.btn--icon` · `data-modal-close="cancel"`. 누르면 [취소]와 같습니다' },
   },
   args: { title: TEXT.title, description: TEXT.desc, close: true },
   parameters: { docs: { source: { transform: (_, { args }) => CODE({ title: args.title, desc: args.description, close: args.close }) } } },

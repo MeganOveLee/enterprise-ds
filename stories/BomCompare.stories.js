@@ -107,8 +107,8 @@ export const 두_BOM_비교 = {
   parameters: { docs: { source: { code: screen() } } },
   render: () => flow({
     base: { html: menu(), w: 215, h: 300, where: '부품 관리 메뉴 패널' },
-    open: { html: body(screen()), w: W, h: H, title: '열리는 화면', where: 'BOM 비교 — 본문 영역' },
-    trigger: '[BOM 비교]', how: '본문이 비교 화면으로 바뀝니다(새 창 아님)',
+    open: { html: body(screen()), w: W, h: H, title: '열리는 화면', where: 'BOM 비교 › 본문 영역' },
+    trigger: '[BOM 비교]', how: '본문이 비교 화면으로 바뀝니다(새 창으로 열지 않습니다)',
   }),
 };
 // 조회 옵션에서 「같음」을 끔 — 차이 줄만 남음
@@ -135,10 +135,10 @@ const pair = (right, name) => '<div style="width:100%;display:grid;grid-template
 export const 사용_지침 = {
   parameters: { controls: { disable: true } },
   render: () => doDont([
-    { title: '다른 행은 색과 글자로 함께 표시',
+    { title: '다른 행은 색과 글자로 함께 표시합니다',
       do: ['<div style="width:100%">' + miniTable('결과 글자 함께', MINI) + '</div>', '다른 행은 빨간 바탕 · 테두리와 함께 「비교」 열에 결과를 글자로 둡니다. 흑백으로 인쇄해도 결과가 보입니다.'],
       dont: ['<div style="width:100%">' + miniTable('색만', MINI, { result: false }) + '</div>', '행 색만으로 구분하면 색을 구분하기 어려운 사용자와 흑백 인쇄에서 결과가 보이지 않습니다.'] },
-    { title: '한쪽에만 있는 품목은 빈 행으로 맞춤',
+    { title: '한쪽에만 있는 품목은 빈 행으로 맞춥니다',
       do: [pair(RIGHT_ALIGNED, '빈 행'), '한쪽에만 있는 품목은 반대쪽에 빈 행을 두어, 같은 행 = 같은 품목으로 맞춥니다.'],
       dont: [pair(RIGHT_PULLED, '당김'), '빈 행 없이 당기면 아래 행이 한 칸씩 어긋나 다른 품목끼리 나란히 놓입니다.'] },
   ]),

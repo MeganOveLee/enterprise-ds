@@ -13,16 +13,17 @@ export const PageHead = ({ eyebrow, title, lead, children }) =>
     lead ? h('p', { className: 'ds-lead' }, lead) : null,
     children);
 
-export const Section = ({ title, en, desc, children }) =>
+// 제목 옆 영어 라벨(en)은 그리지 않는다 — 제목을 영어로 되풀이하는 부연 설명이라서(TD-140). mdx의 en 속성은 남겨 둔다
+export const Section = ({ title, desc, children }) =>
   h('section', { className: 'ds-sec' },
-    h('h2', null, title, en ? h('span', { className: 'ds-en' }, en) : null),
+    h('h2', null, title),
     desc ? h('p', { className: 'ds-sec__desc' }, desc) : null,
     children);
 
-export const Card = ({ of, title, en, desc, code = true, children }) =>
+export const Card = ({ of, title, desc, code = true, children }) =>
   h('section', { className: 'ds-card' },
     title ? h('header', { className: 'ds-card__head' },
-      h('h3', { className: 'ds-card__title' }, title, en ? h('span', { className: 'ds-en' }, en) : null),
+      h('h3', { className: 'ds-card__title' }, title),
       desc ? h('p', { className: 'ds-card__desc' }, desc) : null) : null,
     of ? h('div', { className: 'ds-card__body' }, h(Story, { of })) : null,
     children ? h('div', { className: 'ds-card__extra' }, children) : null,

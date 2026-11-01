@@ -59,9 +59,9 @@ const fig = (inner, name, use) => `<div style="flex:1 1 280px;min-width:0;displa
 export const 스피너와_로고_로더 = {
   render: () => `<div style="display:flex;flex-wrap:wrap;gap:24px;max-width:760px">
     ${fig(`<div style="position:relative">${table()}<div class="loading loading--overlay" role="status" aria-live="polite">${spin()}<p class="loading__text">다시 불러오는 중</p></div></div>`,
-      '스피너 <code>.spinner</code>', '표 · 카드 · 창 본문 같은 영역, 버튼 · 셀 안. 처리 중임만 알립니다.')}
+      '스피너 <code>.spinner</code>', '영역(표 · 카드 · 창 본문)과 버튼 · 셀 안에 둡니다. 처리 중임만 알립니다.')}
     ${fig(`<div style="position:relative;height:124px;border:1px solid var(--color-border-base);border-radius:var(--radius-card);overflow:hidden"><div class="loading loading--overlay" role="status" aria-live="polite">${brandLoader()}<p class="loading__text">화면을 불러오는 중입니다</p></div></div>`,
-      '로고 로더 <code>.brand-loader</code>', '페이지 전체를 처음 불러올 때(로그인 직후 · 화면 전환)만. 로고 로더가 없는 브랜드는 스피너 lg를 씁니다.')}
+      '로고 로더 <code>.brand-loader</code>', '페이지 전체를 처음 불러올 때(로그인 직후 · 화면 전환)에만 사용합니다. 로고 로더가 없는 브랜드는 스피너 lg를 씁니다.')}
   </div>`,
 };
 
@@ -73,8 +73,8 @@ export const 페이지_로딩 = {
     </div>`;
   },
   parameters: { docs: { description: { story:
-    '페이지 전체를 처음 불러올 때만 — 브랜드에 로고 로더가 있으면 마크 조각이 하나로 맞물리고(Default), 없으면 스피너 `--lg`(Fashion · Precision). ' +
-    '영역 · 버튼 안은 언제나 스피너. 모션 줄이기 설정이면 멈추지 않고 느리게.' } } },
+    '페이지 전체를 처음 불러올 때만 사용합니다. 브랜드에 로고 로더가 있으면 마크 조각이 하나로 맞물리고(Default), 없으면 스피너 `--lg`(Fashion · Precision). ' +
+    '영역 · 버튼 안은 언제나 스피너를 사용합니다. 모션 줄이기 설정이면 멈추지 않고 느리게 돕니다.' } } },
 };
 
 export const 버튼_안 = {
@@ -101,19 +101,19 @@ export const 사용_지침 = {
   parameters: { controls: { disable: true } },
   render: () => doDont([
     // ① 영역 로딩 = 그 영역에만 덮개
-    { title: '영역 로딩은 그 영역에만 덮개',
+    { title: '영역 로딩은 해당 영역에만 덮개를 둡니다',
       do: [miniPage('table'),
         '표를 다시 불러올 때는 표 영역에만 덮개를 둡니다. 검색 조건은 그대로 쓸 수 있습니다.'],
       dont: [miniPage('page'),
         '화면 전체를 덮으면 다시 불러오지 않는 검색 조건까지 막힙니다.'] },
     // ② 버튼 처리 중 = 버튼 안 스피너(.is-loading)
-    { title: '버튼 처리 중은 버튼 안 스피너',
+    { title: '버튼 처리 중에는 버튼 안에 스피너를 둡니다',
       do: [`<button type="button" class="btn btn--secondary btn--transparent">취소</button><button type="button" class="btn btn--primary btn--filled is-loading" aria-busy="true">${spin('sm', 'neutral')}저장 중</button>`,
         '누른 버튼의 처리 중 상태(.is-loading)로 버튼 안에 스피너를 둡니다.'],
       dont: [`<button type="button" class="btn btn--secondary btn--transparent">취소</button><button type="button" class="btn btn--primary btn--filled">저장</button>${spin('sm')}`,
         '버튼 옆에 따로 스피너를 두면 어느 동작이 처리 중인지 알기 어렵고, 버튼을 다시 누를 수 있습니다.'] },
     // ③ 로고 로더 = 페이지 전체 첫 로딩에만
-    { title: '로고 로더는 페이지 전체 첫 로딩에만',
+    { title: '로고 로더는 페이지 전체 첫 로딩에만 사용합니다',
       do: [ddCard(`${spin()}<span class="sr-only">불러오는 중</span>`),
         '표 · 카드 안 로딩은 스피너로 표시합니다.'],
       dont: [ddCard(`${brandLoader()}<span class="sr-only">불러오는 중</span>`),
@@ -126,7 +126,7 @@ export const Playground = {
   argTypes: {
     size: { control: 'inline-radio', options: ['sm', '기본', 'lg'], description: '스피너 크기 — `.spinner--sm` 16 · 기본 24 · `.spinner--lg` 40' },
     tone: { control: 'inline-radio', options: ['브랜드', 'neutral'], description: '색 — 기본 브랜드 · `.spinner--neutral` 회색' },
-    text: { control: 'text', description: '안내 문구 `.loading__text` (비우면 스피너만 + 숨김 글자)' },
+    text: { control: 'text', description: '안내 문구 `.loading__text`(비우면 스피너와 화면 읽기용 숨김 글자만 둡니다)' },
     cancel: { control: 'boolean', description: '취소 버튼 `.loading__actions` — 10초가 넘을 것 같을 때' },
   },
   args: { size: '기본', tone: '브랜드', text: '문서 목록을 불러오는 중입니다', cancel: false },

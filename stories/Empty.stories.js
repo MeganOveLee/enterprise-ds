@@ -39,19 +39,19 @@ export const 사용_지침 = {
   parameters: { controls: { disable: true } },
   render: () => doDont([
     // ① 아직 없음에는 다음 동작 — 사용자가 만들 수 있는 것이 비었으면 [등록] (TD-121: 예전 Don't는 「검색 결과 없음」 자리에 아직 없음 문구를 둔 것이었는데 검색 맥락이 그림에 없어 맞는 예처럼 보였음)
-    { title: '아직 없음에는 다음 동작을',
+    { title: '「아직 없음」에는 다음 동작을 둡니다',
       do: [ddFrame(empty({ type: 'empty', title: '등록된 문서가 없습니다', desc: '새 문서를 등록하면 이 목록에 표시됩니다.', actions: btn('문서 등록', 'primary', 'filled') })),
         '사용자가 만들 수 있는 것이 비어 있으면 [등록]을 둡니다.'],
       dont: [ddFrame(empty({ type: 'empty', title: '데이터가 없습니다' })),
         '이유와 다음 동작이 없으면 기다려야 하는지 직접 만들어야 하는지 알 수 없습니다.'] },
     // ①-2 검색한 뒤 비었으면 검색 결과 없음 — 조건을 넓히는 안내 + [검색 조건 초기화]. 그림 위 줄 = 검색 조건(맥락)
-    { title: '검색한 뒤에는 검색 결과 없음',
+    { title: '검색한 뒤에는 「검색 결과 없음」을 표시합니다',
       do: [ddFrame(searchCtx + empty({ type: 'search', title: '조건에 맞는 문서가 없습니다', desc: '기간을 넓히거나 작업현황을 \'전체\'로 바꿔 주십시오.', actions: btn('검색 조건 초기화', 'secondary', 'transparent') })),
         '검색 결과가 비면 조건을 넓히도록 안내하고 [검색 조건 초기화]를 둡니다.'],
       dont: [ddFrame(searchCtx + empty({ type: 'empty', title: '등록된 문서가 없습니다', desc: '새 문서를 등록하면 이 목록에 표시됩니다.', actions: btn('문서 등록', 'primary', 'filled') })),
-        '검색 결과 자리에 아직 없음 문구 · [등록]을 두면 조건 때문에 비었는지, 정말 없는지 알 수 없습니다.'] },
+        '검색 결과 자리에 아직 없음 문구 · [등록]을 두면 조건 때문에 비었는지, 실제로 없는지 알 수 없습니다.'] },
     // ② 배치에 맞는 크기 — 영역 · 표 안 = 기본, 카드 안 = .empty--card, 페이지 = .empty--page
-    { title: '배치에 맞는 크기',
+    { title: '배치에 맞는 크기로 둡니다',
       do: [ddCard(empty({ mod: 'empty--card', type: 'empty', title: '결재할 문서가 없습니다', desc: '새로 상신된 문서가 이 목록에 표시됩니다.' })),
         '카드 안은 .empty--card로 일러스트를 작게 둡니다. 영역 · 표 안은 기본, 페이지 전체는 .empty--page입니다.'],
       dont: [ddCard(empty({ mod: 'empty--page', type: 'empty', title: '결재할 문서가 없습니다', desc: '새로 상신된 문서가 이 목록에 표시됩니다.' }).replace('class="empty empty--page"', 'class="empty empty--page" style="min-height:0"')),
@@ -89,9 +89,9 @@ const PG = {
 };
 export const Playground = {
   argTypes: {
-    reason: { control: 'inline-radio', options: Object.keys(PG), description: '유형 — 일러스트 · 액션이 따라 바뀜' },
+    reason: { control: 'inline-radio', options: Object.keys(PG), description: '유형 — 일러스트 · 액션이 함께 바뀝니다' },
     place: { control: 'inline-radio', options: ['영역', '카드 안', '페이지'], description: '배치 — 기본(영역 · 표 아래) · `.empty--card` · `.empty--page`' },
-    title: { control: 'text', description: '제목 (비우면 유형의 기본 문구)' },
+    title: { control: 'text', description: '제목(비우면 유형의 기본 문구를 표시합니다)' },
   },
   args: { reason: '데이터 없음', place: '영역', title: '' },
   render: (a) => {

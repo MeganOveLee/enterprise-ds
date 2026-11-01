@@ -607,7 +607,7 @@
         ]
       }
     },
-    "$description": "숫자 굴러가기 · 상태 칩 바뀜"
+    "$description": "숫자 굴러가기 · 상태 칩 전환"
   },
   "duration-once": {
     "$value": "1.6s",

@@ -151,7 +151,7 @@ export const 사용_지침 = {
   parameters: { controls: { disable: true } },
   render: () => doDont([
     // 근거: TD-108 11번 ① (Carbon Data table · Atlassian Empty state) · 위 「결과 0건」 예시
-    { title: '0건이어도 헤더 행 유지',
+    { title: '0건이어도 헤더 행을 유지합니다',
       do: [ddZero(true), '결과가 0건이어도 헤더 행을 두고 표 아래에 빈 상태를 둡니다. 어떤 열의 목록인지 알 수 있습니다.'],
       dont: [ddZero(false), '0건일 때 표를 통째로 숨기고 빈 상태만 두지 않습니다.'] },
   ]),

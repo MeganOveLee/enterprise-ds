@@ -147,7 +147,7 @@ const searchForm = ({ open = false, mark = false } = {}) => {
 };
 
 // 페이지네이션 — 기본 목록 화면에는 두지 않음(페이지를 나누면 다음 페이지 데이터가 검색 조건 · 정렬에 걸리지 않아서).
-// 「문서 검색 — 페이지네이션」 화면에만 둠 — 검색 · 정렬을 전체 결과에 먼저 하고 페이지를 나누는 경우
+// 「페이지네이션을 둔 문서 검색」 화면에만 둠 — 검색 · 정렬을 전체 결과에 먼저 하고 페이지를 나누는 경우
 const pager = (mark = false) =>
   '<nav class="ui-pagination' + (mark ? ' flow-mark' : '') + '" aria-label="페이지 이동">' +
   '<button type="button" class="ui-pagination__btn ui-pagination__btn--nav is-disabled" aria-label="이전 페이지">' + svg(I.prev, 14) + '</button>' +
@@ -433,7 +433,7 @@ const busy = (b, text, after) => {   // 버튼 처리 중(스피너) → 끝나�
   setTimeout(() => { b.innerHTML = html; after(); }, window.dsMotion && window.dsMotion.reducedMotion() ? 0 : 900);
 };
 const byText = (root, text) => [...root.querySelectorAll('.btn')].find((x) => x.textContent.trim() === text);
-// 문서 검색 — 체크한 문서(둘째 줄)를 [선택 일괄 결재] → 처리 중 → 상태 칩 검토 → 승인(상태 칩 바뀜) + 그 줄 한 번 표시(방금 바뀐 행) + 버튼 「✓ 결재됨」
+// 문서 검색 — 체크한 문서(둘째 줄)를 [선택 일괄 결재] → 처리 중 → 상태 칩 검토 → 승인(상태 칩 전환) + 그 줄 한 번 표시(방금 바뀐 행) + 버튼 「✓ 결재됨」
 const playApprove = (root) => {
   const M = window.dsMotion, b = byText(root, '선택 일괄 결재'), tr = root.querySelectorAll('.grid-table tbody tr')[1];
   if (!M || !b || !tr) return;
@@ -477,7 +477,7 @@ const R = (area, no, name, uses = '', kind = '') => '<div class="scr-map__r' + (
 const MAPS = [
   ['로그인', '로그인할 때', '"panel form"', '1fr 1fr', '1fr',
     R('panel', 4, '브랜드 패널', '서비스 소개 · 문의처', 'panel') + R('form', 5, '로그인 폼', 'Input · Checkbox · Button', 'focus')],
-  ['대시보드', '로그인 뒤 첫 화면 — 할 일 요약', '"rail top" "rail info" "rail cards"', '16px 1fr', '16px auto 1fr',
+  ['대시보드', '로그인한 뒤 할 일을 한눈에 볼 때', '"rail top" "rail info" "rail cards"', '16px 1fr', '16px auto 1fr',
     R('rail', 1, '', '', 'nav') + R('top', 3, 'GNB', '', 'bar') + R('info', 6, '인사 · 숫자 카드', 'Card') + R('cards', 7, '카드 그리드', 'Card · Empty', 'focus')],
   ['문서 검색', '조건으로 찾을 때', '"rail sub top" "rail sub search" "rail sub list"', '16px 24% 1fr', '16px auto 1fr',
     R('rail', 1, '', '', 'nav') + R('sub', 2, 'LNB 서브 패널', '메뉴 · 폴더 트리', 'nav') + R('top', 3, 'GNB', '', 'bar') +
@@ -498,11 +498,11 @@ const ANATOMY = [
   ['2', 'LNB 서브 패널', c('.main-sub') + ' · ' + c('.tree-controls'), '고른 메뉴의 하위 메뉴와 폴더 트리입니다.'],
   ['3', 'GNB', c('.gnb') + ' · ' + c('.nav-history') + ' · ' + c('.breadcrumb') + ' · ' + c('.menu-toggle'), '뒤로 · 앞으로, 브레드크럼, 사용자 메뉴, 결재업무 · 활동업무 개수입니다.'],
   ['4', '브랜드 패널', mu('--color-bg-panel · --color-text-on-panel'), '패널 일러스트는 패널 위 글자 토큰을 옅게 쓴 SVG라 브랜드 · 화면 모드를 따릅니다.'],
-  ['5', '로그인 폼', c('.input--lg') + ' · ' + c('.checkbox') + ' · ' + c('.btn--lg'), '필드 · 체크박스 · 버튼은 DS 그대로이고, 높이 44는 큰 필드 · 큰 버튼입니다.'],
+  ['5', '로그인 폼', c('.input--lg') + ' · ' + c('.checkbox') + ' · ' + c('.btn--lg'), '필드 · 체크박스 · 버튼은 디자인 시스템 그대로이고, 높이 44는 큰 필드 · 큰 버튼입니다.'],
   ['6', '인사 · 숫자 카드', c('.card') + mu('--color-bg-panel · --color-text-on-panel · -on-panel-2'), '인사 카드는 브랜드 패널 색이라 브랜드에 따라 바뀝니다.'],
   ['7', '카드 그리드', c('.card-grid') + ' · ' + c('.card-header') + ' · ' + c('.card-title-count') + ' · ' + c('.card-list') + ' · ' + c('.empty--card'), '3열 고정입니다(' + c('.card-grid') + '는 최소 폭 460이라 1440 화면에서 2열). 차트 색은 아이콘 신호색 토큰을 씁니다. ' + lk('Card', 'data-display-card--docs')],
   ['8', '검색 폼', c('.seach_arm') + ' · ' + c('.pro_table') + ' · ' + c('.form-grid--6') + ' · ' + c('.ff-field') + ' · ' + c('.search-label') + ' · ' + c('.search-detail'), lk('Search Form', 'blocks-search-form--docs') + ' 블록 그대로입니다.'],
-  ['9', '결과 표', c('.table_list') + ' · ' + c('.ui-pagination') + mu('--color-bg-grid-header · -row-hover · -row-selected · --color-bg-row-alt'), '제품에서는 그리드 라이브러리가 그리는 자리라 같은 그리드 토큰의 표로 구성했습니다. 페이지네이션은 「문서 검색 — 페이지네이션」 화면에만 있습니다. ' + lk('Table', 'data-display-table--docs')],
+  ['9', '결과 표', c('.table_list') + ' · ' + c('.ui-pagination') + mu('--color-bg-grid-header · -row-hover · -row-selected · --color-bg-row-alt'), '제품에서는 그리드 라이브러리가 그리는 자리라 같은 그리드 토큰의 표로 구성했습니다. 페이지네이션은 「페이지네이션을 둔 문서 검색」 화면에만 있습니다. ' + lk('Table', 'data-display-table--docs')],
   ['10', '창 제목 줄', c('.pop .top') + ' · ' + c('.top-btn-area'), '창 이름과 [임시 저장] · [등록] · 닫기입니다. ' + lk('Popup Window', 'overlay-popup-window--docs')],
   ['11', '접는 섹션 · 2열 폼', c('.seach_arm') + ' · ' + c('.section-toggle') + ' · ' + c('.pro_table') + ' · ' + c('.form-grid-2') + ' · ' + c('.ff-readonly') + ' · ' + c('.field-error-msg'), '섹션 헤더와 내용이 배경색이 있는 상자 하나입니다. 필수 표시(*) · 오류 필드 · 읽기 전용 필드를 함께 보여 줍니다. ' + lk('Accordion', 'data-display-accordion--docs')],
   ['12', '첨부', c('.resumable'), '끌어다 놓기 · 파일 형식 아이콘 · 올리는 중 막대입니다.'],
@@ -536,7 +536,7 @@ const headLocked = () => '<div class="detail-header">' +
 const headStage = (label, inner) => '<div class="scr-state"><p class="scr-state__label">' + label + '</p><div class="scr-detail scr-state__box">' + inner + '</div></div>';
 export const 상세_머리_상태 = {
   parameters: src([headView(), headEdit(), headLocked()].join('\n')),
-  render: () => '<div class="scr-states">' + headStage('보기', headView()) + headStage('편집 중', headEdit()) + headStage('잠김 — 다른 사람이 수정 중', headLocked()) + '</div>',
+  render: () => '<div class="scr-states">' + headStage('보기', headView()) + headStage('편집 중', headEdit()) + headStage('잠김(다른 사람이 수정 중)', headLocked()) + '</div>',
 };
 
 export const 로그인 = {
@@ -551,7 +551,7 @@ export const 홈 = {
 
 export const 문서_검색 = {
   parameters: src(listScreen()),
-  render: () => playable(wireSearchDetail(frame(listScreen())), playApprove, '선택 일괄 결재', '[선택 일괄 결재] → 처리 중 → 상태 칩 바뀜 · 방금 바뀐 행 · ✓ 결재됨'),
+  render: () => playable(wireSearchDetail(frame(listScreen())), playApprove, '선택 일괄 결재', '[선택 일괄 결재]를 누르면 처리 중을 거쳐 「✓ 결재됨」으로 바뀌고, 상태 칩과 방금 바뀐 행이 표시됩니다'),
 };
 
 // 목록 — 상세 검색을 펼친 모습(Figma 📄 Templates 「문서 검색 · 상세 검색 펼침」과 같은 정지 화면)
@@ -560,7 +560,7 @@ export const 문서_검색_상세_펼침 = {
   render: () => wireSearchDetail(frame(listScreen({ open: true, mark: true }))),
 };
 
-// 문서 검색 — 페이지네이션(위 pager 주석)
+// 페이지네이션을 둔 문서 검색(위 pager 주석)
 export const 문서_검색_시안_2 = {
   parameters: src(listScreen({ paging: true })),
   render: () => wireSearchDetail(frame(listScreen({ paging: true, mark: true }))),
@@ -568,7 +568,7 @@ export const 문서_검색_시안_2 = {
 
 export const 문서_등록 = {
   parameters: src(registerPop()),
-  render: () => playable(wireSearchDetail(frame(listScreen() + '<div class="scr-dim"></div><div class="scr-window">' + registerPop() + '</div>')), playSave, '임시 저장', '[임시 저장] → 처리 중 → ✓ 저장됨'),
+  render: () => playable(wireSearchDetail(frame(listScreen() + '<div class="scr-dim"></div><div class="scr-window">' + registerPop() + '</div>')), playSave, '임시 저장', '[임시 저장]을 누르면 처리 중을 거쳐 「✓ 저장됨」으로 바뀝니다'),
 };
 
 export const 프로젝트_상세 = {

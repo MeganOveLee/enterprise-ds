@@ -133,15 +133,15 @@ export const 사용_지침 = {
     const el = document.createElement('div');
     el.innerHTML = doDont([
       // 근거: TD-108 22번 ① (Carbon · Atlassian Tabs — 탭 이름은 짧게)
-      { title: '탭 이름은 짧은 명사',
-        do: [ddPop(['기본 정보', '첨부 파일', '결재 이력']), '탭 이름은 「기본 정보」 「첨부 파일」처럼 짧은 명사로 씁니다.'],
+      { title: '탭 이름은 짧은 명사로 짓습니다',
+        do: [ddPop(['기본 정보', '첨부 파일', '결재 이력']), '탭 이름은 짧은 명사로 짓습니다(예: 「기본 정보」 「첨부 파일」).'],
         dont: [ddPop(['문서 기본 정보 보기', '첨부된 파일 목록', '결재 진행 이력 확인']), '「첨부된 파일 목록」처럼 문장형 이름을 쓰지 않습니다. 탭 줄이 길어져 넘칩니다.'] },
       // 근거: Tabs.mdx 구성 「패널 탭 — 탭이 하나뿐이면 .is-single로 탭 줄을 숨깁니다」
-      { title: '탭이 하나면 탭 줄을 숨김',
+      { title: '탭이 하나면 탭 줄을 숨깁니다',
         do: [ddPanel(panelTabs(['메뉴']).replace('class="main-sub-tabs"', 'class="main-sub-tabs is-single"')), '탭이 하나뿐이면 .is-single로 탭 줄을 숨깁니다.'],
         dont: [ddPanel(panelTabs(['메뉴'])), '고를 것이 없는 탭 한 칸을 남겨 두지 않습니다.'] },
       // 근거: Tabs.mdx 머리 설명 「같은 영역의 내용을 나누어 표시」 · 화면 이동은 LNB 서브 패널의 서브 메뉴(.ui-submenu) — 그림 = TD-108 30번 B
-      { title: '같은 창 안의 내용 전환에만',
+      { title: '같은 창 안의 내용을 바꿀 때만 사용합니다',
         do: [ddDetail(), '한 문서 안의 내용을 나눌 때 씁니다. 상세 창 제목 아래에 둡니다.'],
         dont: [ddScreen(), 'LNB 서브 메뉴에 있는 화면 이동 메뉴를 화면 안 탭으로 또 두지 않습니다.'] },
     ]);

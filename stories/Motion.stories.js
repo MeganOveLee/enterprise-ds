@@ -275,6 +275,6 @@ export const 로고_로더 = {
   parameters: { controls: { disable: true }, docs: { source: { language: 'html', code:
     '<div class="loading loading--overlay" role="status" aria-live="polite">\n  ' + LOADER_PIECES + '\n  <p class="loading__text">화면을 불러오는 중입니다</p>\n</div>\n\n<!-- 로고가 그림 한 장뿐인 브랜드 -->\n' + LOADER_IMAGE('logo.png') } } },
   render: () => '<div style="display:grid;grid-template-columns:repeat(2,minmax(0,240px));gap:16px">' +
-    loaderFig(LOADER_PIECES, '조각이 맞춰짐 .brand-loader', '흩어진 정보가 한 화면으로 모이는 중 — 심볼 조각 다섯이 바깥에서 차례로 모여 하나로 맞물림') +
-    loaderFig(LOADER_IMAGE(IMG_LOGO), '그림 한 장 로고 .brand-loader--image', '로고가 그림 파일 한 장뿐인 브랜드 — 흐린 로고 위로 원래 로고가 왼쪽부터 채워짐') + '</div>',
+    loaderFig(LOADER_PIECES, '조각이 맞물리는 로고 .brand-loader', '심볼 조각 다섯이 바깥에서 차례로 모여 하나로 맞물립니다. 흩어진 정보가 한 화면으로 모이는 모습입니다.') +
+    loaderFig(LOADER_IMAGE(IMG_LOGO), '그림 한 장 로고 .brand-loader--image', '로고가 그림 파일 한 장뿐인 브랜드는 흐린 로고 위로 원래 로고가 왼쪽부터 채워집니다.') + '</div>',
 };

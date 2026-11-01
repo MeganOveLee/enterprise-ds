@@ -37,7 +37,7 @@ export const 모서리 = {
         <span class="fd-name">--radius-${n}</span><span class="fd-val" data-read="radius"></span>
         <span class="fd-val">${use}</span>
       </div>`).join('')}</div>
-    <p class="fd-lead" style="margin-top:32px">역할 — 컴포넌트는 이 이름을 씁니다. 브랜드가 값을 바꿀 수 있습니다.</p>
+    <p class="fd-lead" style="margin-top:32px">역할 — 컴포넌트는 역할 토큰 이름을 씁니다. 브랜드가 값을 바꿀 수 있습니다.</p>
     <div class="fd-row fd-head" style="padding-top:0;align-items:center"><span>토큰 · 기본 단계</span><span>지금 값</span><span>쓰는 곳</span></div>
     ${[
       ['btn', 'md', '모든 버튼 — 표준 · 아이콘(닫기 · 페이지 번호 · 달력 화살표) · 작은 버튼'],
@@ -63,8 +63,8 @@ export const 모서리 = {
 export const 높이 = {
   parameters: css(['.input, .select { height: var(--size-input); }', '.btn { height: var(--size-btn); }', '.btn--sm { height: var(--size-btn-sm); }', ':root.theme-precision { --size-input: 32px; --size-btn: 32px; --size-btn-sm: 28px; }']),
   render: () => mount([
-    ['size-input', '입력칸 · 셀렉트 · 날짜 선택 — 브랜드가 바꿀 수 있음'],
-    ['size-btn', '버튼 (입력칸과 같은 줄에 맞춤) · 아이콘 버튼은 가로세로 — 브랜드가 바꿀 수 있음'],
+    ['size-input', '입력칸 · 셀렉트 · 날짜 선택입니다. 브랜드가 바꿀 수 있습니다'],
+    ['size-btn', '버튼(입력칸과 같은 줄에 맞춥니다)과 아이콘 버튼의 가로세로입니다. 브랜드가 바꿀 수 있습니다'],
     ['size-btn-sm', '작은 버튼 (Figma Small Button) — 섹션 접기 · 첨부 삭제'],
   ].map(([n, use]) => `
     <div class="fd-row fd-item">

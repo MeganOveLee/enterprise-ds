@@ -16,19 +16,19 @@ export const 조각 = {
 };
 
 export const 그리드_행 = {
-  parameters: { docs: { description: { story: '목록 화면 — 실제 그리드와 같은 열 비율로' } } },
+  parameters: { docs: { description: { story: '목록 화면의 자리 표시자입니다. 실제 그리드와 같은 열 비율로 그립니다.' } } },
   render: () => busy([1, 2, 3, 4, 5].map(() =>
     `<div class="skeleton-grid-row">${block('16px', '16px')}${block()}${block()}${block()}${block()}</div>`).join(''), 'max-width:720px'),
 };
 
 const field = () => `<div class="skeleton-field">${line()}${block()}</div>`;
 export const 상세_폼 = {
-  parameters: { docs: { description: { story: '등록 창 — 라벨 위 · 입력 필드 2열' } } },
+  parameters: { docs: { description: { story: '등록 창의 자리 표시자입니다(라벨 위 · 입력 필드 2열).' } } },
   render: () => busy(`<div class="skeleton-form">${[1, 2, 3, 4].map(field).join('')}</div>`, 'max-width:560px'),
 };
 
 export const 카드 = {
-  parameters: { docs: { description: { story: '대시보드 — 제목 · 숫자 · 차트 자리' } } },
+  parameters: { docs: { description: { story: '대시보드 카드의 자리 표시자입니다(제목 · 숫자 · 차트 자리).' } } },
   render: () => `<div style="display:flex;flex-wrap:wrap;gap:16px">${[1, 2, 3].map(() =>
     busy(`<div class="skeleton-card"><span class="skeleton-title" aria-hidden="true"></span>${block('80px', '28px')}<div style="height:12px"></div>${block('100%', '64px')}</div>`, 'width:220px')).join('')}</div>`,
 };
@@ -38,10 +38,10 @@ const gridRow = () => `<div class="skeleton-grid-row">${block('16px', '16px')}${
 export const 사용_지침 = {
   parameters: { controls: { disable: true } },
   render: () => doDont([
-    { title: '실제 크기 · 모양에 맞춤',
+    { title: '실제 크기 · 모양에 맞춥니다',
       do: [busy([1, 2, 3].map(gridRow).join(''), 'flex:1;min-width:0'),
         '실제 목록과 같은 열 비율 · 행 높이로 그려, 내용이 들어와도 배치가 바뀌지 않습니다.'],
       dont: [busy(`${line()}${line()}${line('60%')}`, 'flex:1;min-width:0'),
-        '아무 회색 막대를 두면 내용이 들어올 때 배치가 바뀌어 화면이 흔들립니다.'] },
+        '실제 배치와 다른 회색 막대를 두면 내용이 들어올 때 배치가 바뀌어 화면이 흔들립니다.'] },
   ]),
 };

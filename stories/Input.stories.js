@@ -28,7 +28,7 @@ export default {
   render: (args) => `<div style="max-width:280px">${field(args)}</div>`,
   argTypes: {
     kind: { control: 'inline-radio', options: ['input', 'select', 'textarea'], description: '종류 — `.input` · `.select` · `.textarea`' },
-    state: { control: 'inline-radio', options: ['default', 'error', 'disabled', 'readonly'], description: '상태 — 오류 = `aria-invalid="true"`. 셀렉트에서 readonly를 고르면 readonly 텍스트 필드로 그림(셀렉트는 readonly가 없음)' },
+    state: { control: 'inline-radio', options: ['default', 'error', 'disabled', 'readonly'], description: '상태 — 오류 = `aria-invalid="true"`. 셀렉트에서 readonly를 고르면 readonly 텍스트 필드로 그립니다(셀렉트에는 readonly가 없습니다)' },
     value: { control: 'text', description: '값' },
     placeholder: { control: 'text', description: 'placeholder — 입력 전 안내 글자' },
   },
@@ -47,7 +47,7 @@ export const Kind = {
   render: () => matrix(['한 줄 입력', '선택', '여러 줄 입력'], [
     ['미리보기', KIND],
     ['클래스', [code('.input'), code('.select'), code('.textarea')]],
-    ['쓰임', [note('글자 · 숫자를 직접 입력<br>부품 번호 · 이름 · 검색어'), note('정해진 목록에서 하나 선택<br>구분 · 상태'), note('여러 줄을 입력 — 사유 · 비고<br>기본 높이 180, rows를 주면 그 줄 수만큼<br>높이는 세로로만 늘릴 수 있음')]],
+    ['쓰임', [note('글자 · 숫자를 직접 입력<br>부품 번호 · 이름 · 검색어'), note('정해진 목록에서 하나 선택<br>구분 · 상태'), note('여러 줄을 입력 — 사유 · 비고<br>기본 높이 180, rows를 주면 rows 값의 줄 수만큼 높아집니다<br>높이는 세로로만 늘릴 수 있습니다')]],
   ], { full: true }),
 };
 
@@ -85,8 +85,8 @@ export const Locked = {
     ['미리보기', LOCKED],
     ['속성', [code('disabled'), code('readonly')]],
     ['쓰임', [
-      note('지금 입력할 수 없는 필드 — 조건이 맞으면 활성<br>Tab 순서에서 빠지고, 값은 제출되지 않음'),
-      note('값을 표시만 하는 필드 — 상세 화면 · 결재가 끝난 문서<br>Tab으로 이동해 값을 복사할 수 있고, 값은 제출됨'),
+      note('지금 입력할 수 없는 필드 — 조건이 맞으면 활성<br>Tab 순서에서 빠지고, 값은 제출되지 않습니다'),
+      note('값을 표시만 하는 필드 — 상세 화면 · 결재가 끝난 문서<br>Tab으로 이동해 값을 복사할 수 있고, 값은 제출됩니다'),
     ]],
   ], { full: true }),
 };
@@ -124,7 +124,7 @@ export const 선택_목록 = {
       ['미리보기', ['<div class="form-grid-2" style="grid-template-columns:1fr;width:220px;text-align:left"><div class="ff-field"><label class="search-label" for="in-sel-live">작업현황</label><div class="td">' +
         '<select class="select" id="in-sel-live">' + SEL_OPTS.map((o) => '<option>' + o + '</option>').join('') + '</select></div></div></div>',
         '<div class="form-grid-2" style="grid-template-columns:1fr;width:220px;min-height:208px;text-align:left"><div class="ff-field"><span class="search-label" id="in-sel-open-lb">작업현황</span><div class="td">' + openList('in-sel-open', 2, 3) + '</div></div></div>']],
-      ['쓰임', [note('누르거나 ↓ · Enter로 열고, ↑↓로 옮겨 Enter로 고릅니다<br>Esc = 고르지 않고 닫기 · 글자 입력 = 그 글자로 시작하는 항목'), note('고른 항목 = 옅은 브랜드 바탕 + 브랜드 글자 + 오른쪽 ✓<br>키보드로 옮긴 항목 = 테두리(포커스는 상자에 둠)')]],
+      ['쓰임', [note('누르거나 ↓ · Enter로 열고, ↑↓로 옮겨 Enter로 고릅니다<br>Esc = 고르지 않고 닫기 · 글자 입력 = 입력한 글자로 시작하는 항목'), note('고른 항목 = 옅은 브랜드 바탕 + 브랜드 글자 + 오른쪽 ✓<br>키보드로 옮긴 항목 = 테두리(포커스는 상자에 둡니다)')]],
     ], { full: true });
     setTimeout(() => { const sel = el.querySelector('#in-sel-live'); if (sel && window.buildCustomSelect) window.buildCustomSelect(sel); }, 0);
     return el;
@@ -140,22 +140,22 @@ const rawLabel = (label, ctl, id) => '<div class="form-grid-2" style="grid-templ
 export const 사용_지침 = {
   parameters: { controls: { disable: true } },
   render: () => doDont([
-    { title: '라벨은 필드 위에',
+    { title: '라벨은 필드 위에 둡니다',
       do: [ff('문서 번호', '<input class="input" id="dd-no" placeholder="예: DOC-2610-0013">', 'dd-no'),
         '라벨(.search-label)을 필드 위에 두고 for · id로 연결합니다. placeholder는 입력 예시에만 씁니다.'],
       dont: [one('<input class="input" aria-label="문서 번호" placeholder="문서 번호">'),
         'placeholder를 라벨 대신 쓰면 입력을 시작하는 순간 사라져, 무엇을 입력하는 필드인지 알 수 없습니다.'] },
-    { title: '필수 표시는 .required 한 가지로',
+    { title: '필수 표시는 .required 한 가지로 통일합니다',
       do: [pair(ff('문서 명', '<input class="input" id="dd-rq1" aria-required="true">', 'dd-rq1', true), ff('문서 분류', '<input class="input" id="dd-rq2" aria-required="true">', 'dd-rq2', true)),
         '필수 필드는 모두 라벨 뒤 .required로 표시하고, 필드에는 aria-required를 붙입니다.'],
       dont: [pair(rawLabel('문서 명 *', '<input class="input" id="dd-rq3">', 'dd-rq3'), rawLabel('문서 분류 (필수)', '<input class="input" id="dd-rq4">', 'dd-rq4')),
-        '별표와 「(필수)」를 섞어 쓰면 같은 뜻이 서로 다른 표시로 보입니다.'] },
-    { title: '여러 줄 입력은 텍스트 영역',
+        '별표와 「(필수)」를 섞어 사용하면 같은 뜻이 서로 다른 표시로 보입니다.'] },
+    { title: '여러 줄 입력은 텍스트 영역으로 받습니다',
       do: [ff('변경 사유', '<textarea class="textarea" id="dd-why" rows="3">고객 요청으로 브래킷 홀 위치를 2mm 옮기고, 도면 주석을 함께 고칩니다.</textarea>', 'dd-why'),
-        '사유 · 설명처럼 길이가 정해지지 않은 입력은 텍스트 영역(.textarea)으로 받습니다.'],
+        '길이가 정해지지 않은 입력(사유 · 설명)은 텍스트 영역(.textarea)으로 받습니다.'],
       dont: [ff('변경 사유', '<input class="input" id="dd-why2" value="고객 요청으로 브래킷 홀 위치를 2mm 옮기고, 도면 주석을 함께 고칩니다.">', 'dd-why2'),
         '한 줄 필드에 긴 글을 넣으면 앞뒤가 가려져, 입력한 내용을 한눈에 확인할 수 없습니다.'] },
-    { title: '오류는 빨간 테두리와 오류 문구를 함께',
+    { title: '오류는 빨간 테두리와 오류 문구로 함께 표시합니다',
       do: [ff('문서 명', '<input class="input" id="dd-nm" aria-invalid="true" aria-describedby="dd-nm-err"><span class="field-error-msg" id="dd-nm-err">문서 명을 입력해 주십시오.</span>', 'dd-nm'),
         '필드에 aria-invalid를 붙여 빨간 테두리로 표시하고, 아래에 오류 문구(.field-error-msg)를 aria-describedby로 연결해 함께 둡니다.'],
       dont: [pair(ff('문서 명', '<input class="input" id="dd-nm2" aria-invalid="true">', 'dd-nm2'),
@@ -192,7 +192,7 @@ export const 전체_상태 = {
         : k === 'lg' ? field({ kind: 'input', state, value: v ? val.lg : '', placeholder: ph.lg, cls: 'input--lg' + (cls ? ' ' + cls : '') })
         : field({ kind: k, state, value: v ? val[k] : '', placeholder: ph[k] || name, cls })))]);
     return matrix(kinds.map((k) => head[k]), rows, { full: true }) +
-      '<p class="sb-note" style="margin:8px 0 0">셀렉트에는 Readonly가 없습니다(네이티브 select는 readonly가 되지 않음). 값만 표시할 때는 readonly 텍스트 필드를 씁니다.</p>';
+      '<p class="sb-note" style="margin:8px 0 0">셀렉트에는 Readonly가 없습니다(네이티브 select에는 readonly가 적용되지 않습니다). 값만 표시할 때는 readonly 텍스트 필드를 씁니다.</p>';
   },
 };
 
