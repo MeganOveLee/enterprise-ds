@@ -362,7 +362,7 @@
   /* LNB hover / active */
   --color-bg-lnb-hover: var(--brand-50);
   --color-bg-lnb-active: var(--brand-100);
-  --color-text-lnb-active: var(--brand-600);  /* 활성 메뉴 글자 — 600(바탕 100 위 Default 4.92 · Fashion 5.70 · Precision 5.74, 500은 Default 4.08 미달, 10/13). 다크는 흰색 — 아이콘(흰 마스크)과 톤을 맞춰야 함 */
+  --color-text-lnb-active: var(--brand-600);  /* 활성 메뉴 글자 — 600(바탕 100 위 Default 4.92 · Precision 5.74 · Mobility는 색 확정 뒤 다시 잰다, 500은 Default 4.08 미달, 10/13). 다크는 흰색 — 아이콘(흰 마스크)과 톤을 맞춰야 함 */
 
   /* 버튼 — primary(등록 · 저장)
    * primary = 그 영역의 마무리 동작 1개 = 브랜드색. 동작 종류(CRUD)로 색을 정하지 않는다 (DS-ADR-005).

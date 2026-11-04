@@ -593,7 +593,7 @@
     "yellow-800": "#8F5B00",
     "yellow-900": "#664100"
   },
-  "fashion/light": {
+  "mobility/light": {
     "accent-500": "#F2A93B",
     "art-file-doc": "#2F6FE4",
     "art-file-doc-band": "#1D4FB0",
@@ -890,7 +890,7 @@
     "yellow-800": "#8F5B00",
     "yellow-900": "#664100"
   },
-  "fashion/dark": {
+  "mobility/dark": {
     "accent-500": "#F2A93B",
     "art-file-doc": "#2F6FE4",
     "art-file-doc-band": "#1D4FB0",

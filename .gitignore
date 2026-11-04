@@ -6,12 +6,12 @@ storybook-static/
 source-*/
 css/brands/*
 !css/brands/default.css
-!css/brands/fashion.css
+!css/brands/mobility.css
 !css/brands/precision.css
 tokens/brands/*
 !tokens/brands/_template.json
 !tokens/brands/default.json
-!tokens/brands/fashion.json
+!tokens/brands/mobility.json
 !tokens/brands/precision.json
 tools/
 README.internal.md
