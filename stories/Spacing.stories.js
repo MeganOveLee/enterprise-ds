@@ -26,7 +26,7 @@ export const 간격 = {
 };
 
 export const 모서리 = {
-  parameters: css(['/* 컴포넌트는 역할 이름을 쓴다 — 값은 단계를 가리키고, 브랜드 파일이 바꿀 수 있다 */', '.btn   { border-radius: var(--radius-btn); }    /* 기본 = var(--radius-md) */', '.input { border-radius: var(--radius-input); }  /* 기본 = var(--radius-sm) */', ':root.theme-precision { --radius-btn: var(--radius-none); --radius-input: var(--radius-none); }']),
+  parameters: css(['/* 컴포넌트는 역할 이름을 쓴다 — 값은 단계를 가리키고, 브랜드 파일이 바꿀 수 있다 */', '.btn   { border-radius: var(--radius-btn); }    /* 기본 = var(--radius-md) */', '.input { border-radius: var(--radius-input); }  /* 기본 = var(--radius-sm) */', ':root.theme-ootb { --radius-btn: var(--radius-none); --radius-input: var(--radius-none); }']),
   render: () => mount(`
     <p class="fd-lead">단계 — 값 사전입니다. 모든 브랜드가 같은 값을 씁니다.</p>
     <div class="fd-boxes">${[
@@ -61,7 +61,7 @@ export const 모서리 = {
 };
 
 export const 높이 = {
-  parameters: css(['.input, .select { height: var(--size-input); }', '.btn { height: var(--size-btn); }', '.btn--sm { height: var(--size-btn-sm); }', ':root.theme-precision { --size-input: 32px; --size-btn: 32px; --size-btn-sm: 28px; }']),
+  parameters: css(['.input, .select { height: var(--size-input); }', '.btn { height: var(--size-btn); }', '.btn--sm { height: var(--size-btn-sm); }', ':root.theme-ootb { --size-input: 32px; --size-btn: 32px; --size-btn-sm: 28px; }']),
   render: () => mount([
     ['size-input', '입력칸 · 셀렉트 · 날짜 선택입니다. 브랜드가 바꿀 수 있습니다'],
     ['size-btn', '버튼(입력칸과 같은 줄에 맞춥니다)과 아이콘 버튼의 가로세로입니다. 브랜드가 바꿀 수 있습니다'],

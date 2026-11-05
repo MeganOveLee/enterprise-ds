@@ -697,7 +697,7 @@
       "modes": [
         "Default",
         "Mobility",
-        "Precision"
+        "OOTB"
       ],
       "variables": [
         {
@@ -712,7 +712,7 @@
               "hex": "#F3F0FE",
               "alpha": 1
             },
-            "Precision": {
+            "OOTB": {
               "hex": "#EDF9FA",
               "alpha": 1
             }
@@ -730,7 +730,7 @@
               "hex": "#E4DCFD",
               "alpha": 1
             },
-            "Precision": {
+            "OOTB": {
               "hex": "#D7F1F4",
               "alpha": 1
             }
@@ -748,7 +748,7 @@
               "hex": "#C9B9FA",
               "alpha": 1
             },
-            "Precision": {
+            "OOTB": {
               "hex": "#A0DDE3",
               "alpha": 1
             }
@@ -766,7 +766,7 @@
               "hex": "#A68CF5",
               "alpha": 1
             },
-            "Precision": {
+            "OOTB": {
               "hex": "#2FCFE1",
               "alpha": 1
             }
@@ -784,7 +784,7 @@
               "hex": "#8B6CEE",
               "alpha": 1
             },
-            "Precision": {
+            "OOTB": {
               "hex": "#009DAE",
               "alpha": 1
             }
@@ -802,7 +802,7 @@
               "hex": "#6D4ADB",
               "alpha": 1
             },
-            "Precision": {
+            "OOTB": {
               "hex": "#007380",
               "alpha": 1
             }
@@ -820,7 +820,7 @@
               "hex": "#5A38C4",
               "alpha": 1
             },
-            "Precision": {
+            "OOTB": {
               "hex": "#006570",
               "alpha": 1
             }
@@ -839,7 +839,7 @@
               "hex": "#47299F",
               "alpha": 1
             },
-            "Precision": {
+            "OOTB": {
               "hex": "#004A52",
               "alpha": 1
             }
@@ -858,7 +858,7 @@
               "hex": "#3B2585",
               "alpha": 1
             },
-            "Precision": {
+            "OOTB": {
               "hex": "#003A40",
               "alpha": 1
             }
@@ -877,7 +877,7 @@
               "hex": "#261754",
               "alpha": 1
             },
-            "Precision": {
+            "OOTB": {
               "hex": "#00292D",
               "alpha": 1
             }
@@ -896,7 +896,7 @@
               "hex": "#F2A93B",
               "alpha": 1
             },
-            "Precision": {
+            "OOTB": {
               "hex": "#D369A5",
               "alpha": 1
             }
@@ -915,7 +915,7 @@
               "hex": "#6D4ADB",
               "alpha": 0.3
             },
-            "Precision": {
+            "OOTB": {
               "hex": "#007380",
               "alpha": 0.3
             }
@@ -934,7 +934,7 @@
               "hex": "#6D4ADB",
               "alpha": 0.22
             },
-            "Precision": {
+            "OOTB": {
               "hex": "#007380",
               "alpha": 0.22
             }
@@ -953,7 +953,7 @@
               "hex": "#2D2D44",
               "alpha": 1
             },
-            "Precision": {
+            "OOTB": {
               "hex": "#1E3237",
               "alpha": 1
             }
@@ -972,7 +972,7 @@
               "hex": "#6D4ADB",
               "alpha": 0.2
             },
-            "Precision": {
+            "OOTB": {
               "hex": "#007380",
               "alpha": 0.2
             }
@@ -991,7 +991,7 @@
               "hex": "#6D4ADB",
               "alpha": 0.32
             },
-            "Precision": {
+            "OOTB": {
               "hex": "#007380",
               "alpha": 0.32
             }
@@ -1010,7 +1010,7 @@
               "hex": "#6D4ADB",
               "alpha": 0.35
             },
-            "Precision": {
+            "OOTB": {
               "hex": "#007380",
               "alpha": 0.35
             }
@@ -1029,7 +1029,7 @@
               "hex": "#6D4ADB",
               "alpha": 0.45
             },
-            "Precision": {
+            "OOTB": {
               "hex": "#007380",
               "alpha": 0.45
             }
@@ -1048,7 +1048,7 @@
               "hex": "#6D4ADB",
               "alpha": 0.55
             },
-            "Precision": {
+            "OOTB": {
               "hex": "#007380",
               "alpha": 0.55
             }
@@ -1065,7 +1065,7 @@
             "Mobility": {
               "alias": "Semantic : Measurement/radius/rounded"
             },
-            "Precision": {
+            "OOTB": {
               "alias": "Semantic : Measurement/radius/none"
             }
           }
@@ -1081,7 +1081,7 @@
             "Mobility": {
               "alias": "Semantic : Measurement/radius/lg"
             },
-            "Precision": {
+            "OOTB": {
               "alias": "Semantic : Measurement/radius/none"
             }
           }
@@ -1097,7 +1097,7 @@
             "Mobility": {
               "alias": "Semantic : Measurement/radius/md"
             },
-            "Precision": {
+            "OOTB": {
               "alias": "Semantic : Measurement/radius/none"
             }
           }
@@ -1113,7 +1113,7 @@
             "Mobility": {
               "alias": "Semantic : Measurement/radius/rounded"
             },
-            "Precision": {
+            "OOTB": {
               "alias": "Semantic : Measurement/radius/none"
             }
           }
@@ -1129,7 +1129,7 @@
             "Mobility": {
               "alias": "Semantic : Measurement/radius/md"
             },
-            "Precision": {
+            "OOTB": {
               "alias": "Semantic : Measurement/radius/none"
             }
           }
@@ -1145,7 +1145,7 @@
             "Mobility": {
               "alias": "Semantic : Measurement/radius/lg"
             },
-            "Precision": {
+            "OOTB": {
               "alias": "Semantic : Measurement/radius/none"
             }
           }
@@ -1161,7 +1161,7 @@
             "Mobility": {
               "alias": "Semantic : Measurement/radius/lg"
             },
-            "Precision": {
+            "OOTB": {
               "alias": "Semantic : Measurement/radius/none"
             }
           }
@@ -1177,7 +1177,7 @@
             "Mobility": {
               "alias": "Semantic : Measurement/radius/lg"
             },
-            "Precision": {
+            "OOTB": {
               "alias": "Semantic : Measurement/radius/none"
             }
           }
@@ -1193,7 +1193,7 @@
             "Mobility": {
               "alias": "Semantic : Measurement/radius/md"
             },
-            "Precision": {
+            "OOTB": {
               "alias": "Semantic : Measurement/radius/none"
             }
           }
@@ -1209,7 +1209,7 @@
             "Mobility": {
               "alias": ".Primitive : Measurement/unit/28"
             },
-            "Precision": {
+            "OOTB": {
               "alias": ".Primitive : Measurement/unit/32"
             }
           }
@@ -1225,7 +1225,7 @@
             "Mobility": {
               "alias": ".Primitive : Measurement/unit/28"
             },
-            "Precision": {
+            "OOTB": {
               "alias": ".Primitive : Measurement/unit/32"
             }
           }
@@ -1241,7 +1241,7 @@
             "Mobility": {
               "alias": ".Primitive : Measurement/unit/26"
             },
-            "Precision": {
+            "OOTB": {
               "alias": ".Primitive : Measurement/unit/28"
             }
           }
@@ -1253,7 +1253,7 @@
           "values": {
             "Default": 34,
             "Mobility": 34,
-            "Precision": 34
+            "OOTB": 34
           }
         },
         {
@@ -1263,7 +1263,7 @@
           "values": {
             "Default": 30,
             "Mobility": 30,
-            "Precision": 30
+            "OOTB": 30
           }
         },
         {
@@ -1273,7 +1273,7 @@
           "values": {
             "Default": 40,
             "Mobility": 40,
-            "Precision": 40
+            "OOTB": 40
           }
         },
         {
@@ -1289,7 +1289,7 @@
               "hex": "#8B6CEE",
               "alpha": 0.35
             },
-            "Precision": {
+            "OOTB": {
               "hex": "#009DAE",
               "alpha": 0.35
             }
@@ -1302,7 +1302,7 @@
           "values": {
             "Default": true,
             "Mobility": false,
-            "Precision": false
+            "OOTB": false
           }
         },
         {
@@ -1312,7 +1312,7 @@
           "values": {
             "Default": false,
             "Mobility": true,
-            "Precision": true
+            "OOTB": true
           }
         }
       ]

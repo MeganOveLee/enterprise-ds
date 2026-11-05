@@ -107,7 +107,7 @@ const ACT = [['미리보기', '<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 
   ['내려받기', '<path d="M12 4v11M7 10l5 5 5-5M5 20h14"/>'],
   ['버전 이력', '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>']];
 const actions = (id) => '<div class="button_group">' + ACT.map(([t, d]) => '<button type="button" class="btn btn--secondary btn--transparent btn--icon" aria-label="' + id + ' ' + t + '">' + ico(d) + '</button>').join('') + '</div>';
-const ACOLS = '<colgroup><col style="width:52px"><col style="width:132px"><col><col style="width:84px"><col style="width:144px"></colgroup>';   // 동작 열 = 버튼 3 + 간격 8 × 2 + 셀 여백 12 × 2 (Precision 버튼 32도 들어가게)
+const ACOLS = '<colgroup><col style="width:52px"><col style="width:132px"><col><col style="width:84px"><col style="width:144px"></colgroup>';   // 동작 열 = 버튼 3 + 간격 8 × 2 + 셀 여백 12 × 2 (OOTB 버튼 32도 들어가게)
 const AHEAD = '<thead><tr><th>No.</th><th>문서 번호</th><th>문서 명</th><th>버전</th><th>동작</th></tr></thead>';
 const arow = (r, i) => '<tr><td>' + (i + 1) + '</td><td><a href="#" class="grid-custom-rows-link">' + r[0] + '</a></td><td class="is-left">' + r[1] + '</td><td>' + r[2] + '</td><td>' + actions(r[0]) + '</td></tr>';
 const ASRC = [

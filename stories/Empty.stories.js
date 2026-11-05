@@ -66,7 +66,7 @@ export const 두_모양 = {
   parameters: { controls: { disable: true }, docs: { source: { code: '<!-- 마크업은 늘 두 모양을 함께 둠 — 브랜드 파일이 하나만 보이게 함 -->\n<span class="empty__icon ds-art">\n  <svg class="ds-art__solid empty-illo" …>…</svg>   <!-- 솔리드: 폴더 + 유형 배지 -->\n  <svg class="ds-art__line" …>…</svg>              <!-- 라인: 선 픽토그램 -->\n</span>' } } },
   render: () => matrix(TYPES.map(([, label]) => label), [
     ['솔리드<span class="sb-note" style="display:block">Default</span>', TYPES.map(([k, , mod]) => cell(mod, emptyIllo(k)))],
-    ['라인<span class="sb-note" style="display:block">Mobility · Precision</span>', TYPES.map(([k, , mod]) => cell(mod, emptyLine(k)))],
+    ['라인<span class="sb-note" style="display:block">Mobility · OOTB</span>', TYPES.map(([k, , mod]) => cell(mod, emptyLine(k)))],
   ]),
 };
 // 배치별 크기 — 실제 배치 클래스 그대로(표 아래 = 숨긴 표 바로 뒤 .empty)

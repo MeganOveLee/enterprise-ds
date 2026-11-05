@@ -2109,7 +2109,7 @@ body.dark-mode .resumable:not(.center) .fileList .file-item { background: var(--
 .grid-table tbody tr:hover td { background: var(--color-bg-grid-row-hover); }
 .grid-table tbody :is(tr.is-selected, tr[aria-selected="true"]) td { background: var(--color-bg-grid-row-selected); }
 .grid-table .checkbox { margin: 0; gap: 0; vertical-align: middle; }   /* 칸 가운데 체크만 — 글자 없는 체크박스 */
-.grid-table td .btn { height: min(var(--size-btn), calc(var(--size-grid-row) - 2px)); }   /* 셀 안 버튼은 줄 높이 − 2 안에(기본 28, DS-ADR-030 · 047) — Precision 버튼 32가 행을 33으로 늘리던 것 */
+.grid-table td .btn { height: min(var(--size-btn), calc(var(--size-grid-row) - 2px)); }   /* 셀 안 버튼은 줄 높이 − 2 안에(기본 28, DS-ADR-030 · 047) — OOTB 버튼 32가 행을 33으로 늘리던 것 */
 .grid-table td .btn--icon { width: min(var(--size-btn), calc(var(--size-grid-row) - 2px)); }
 .grid-table td > svg { vertical-align: middle; color: var(--color-icon-muted); }   /* 칸 안 아이콘 — 글줄 가운데 · 흐린 아이콘색 (TD-75) */
 .grid-table td > .file-icon { vertical-align: middle; }   /* 「파일」 열 = 파일 형식 그림 자산(형식 색 · 브랜드 따라 솔리드 ↔ 라인, DS-ADR-026 · 037, TD-108 38번) */
@@ -3982,7 +3982,7 @@ input.onKeySearch2 { display: block; flex: 1 1 auto; min-width: 0; }
  * 움직임 = 조각이 맞춰짐(DS-ADR-043, TD-123) — 흩어진 심볼 조각 다섯이 바깥에서 차례로 모여 하나로 맞물린 뒤 흐려지며 되풀이(10/28 새 로고).
  * 배경 네모 없이 마크만(10/21, TD-108 46) — 조각은 브랜드색(--color-bg-brand). 라이트 · 다크 모두 같은 토큰
  * 마크는 조각으로 나뉜 SVG(아래 마크업). 로고가 그림 한 장(PNG 등)뿐인 브랜드는 .brand-loader--image(왼쪽부터 채워짐)
- * 브랜드 선택은 제품 설정: Default = 로고 로더 · Mobility · Precision(공개 시연) = 스피너 --lg. 고객사 화면은 기존 로딩 이미지 유지
+ * 브랜드 선택은 제품 설정: Default = 로고 로더 · Mobility · OOTB(공개 시연) = 스피너 --lg. 고객사 화면은 기존 로딩 이미지 유지
  *   <div class="loading loading--overlay" role="status" aria-live="polite">
  *     <span class="brand-loader" aria-hidden="true">
  *       <svg viewBox="0 0 130 129"><path class="brand-loader__piece brand-loader__piece--1" d="…"/> … --2 · --3 · --4 · --5</svg>
@@ -4168,7 +4168,7 @@ body.dark-mode .empty-illo__tint   { fill-opacity: 0; }
 body.dark-mode .empty-illo__badge  { fill: var(--color-bg-muted); }
 
 /* ── 상태 칩 .status-chip ─────────────────────────────────────────────────
- * 작업현황 · 진행 상태를 글자 + 색으로 보여 주는 칩(모서리 --radius-chip — Default · Mobility 알약, Precision 직각). 이전 버전 값 그대로(덮어쓰기 1072 ~ 1079줄, TD-45 45-3 남은 넷)
+ * 작업현황 · 진행 상태를 글자 + 색으로 보여 주는 칩(모서리 --radius-chip — Default · Mobility 알약, OOTB 직각). 이전 버전 값 그대로(덮어쓰기 1072 ~ 1079줄, TD-45 45-3 남은 넷)
  *   높이 20 · 안쪽 0 8(이전 9) · 글자 12 반굵게 · 앞에 6 점(글자색) · 옅은 바탕 + 진한 글자
  *   색 = 상태 토큰(bg-*-subtle + text-*-bold). 이전 버전은 고정 색 · 성공 = 브랜드색 → DS 는 성공 토큰
  *   상태 이름: --neutral · --info · --success · --warning · --danger (이전 버전 --error 도 받음) */
@@ -4472,7 +4472,7 @@ body.dark-mode .empty-illo__badge  { fill: var(--color-bg-muted); }
     padding: var(--spacing-32) var(--spacing-24);
     background: var(--color-bg-base);
     border: 1px solid var(--color-border-subtle);
-    border-radius: var(--radius-popover);   /* 떠 있는 층 역할 — 브랜드가 바꿈(Default 4 · Mobility 8 · Precision 0, DS-ADR-020) */
+    border-radius: var(--radius-popover);   /* 떠 있는 층 역할 — 브랜드가 바꿈(Default 4 · Mobility 8 · OOTB 0, DS-ADR-020) */
     box-shadow: var(--shadow-modal);
     color: var(--color-text-base);
 }
@@ -4626,7 +4626,7 @@ body.dark-mode .empty-illo__badge  { fill: var(--color-bg-muted); }
 @keyframes ds-timer { to { transform: scaleX(0); } }
 
 /* 12 빈 상태 배지가 한 번 움직임 — 솔리드 일러스트의 이유 배지(검색 · 네트워크 · 오류)만 나타날 때 한 번 흔들림. 글을 읽기 전에 빈 이유를 먼저 봄
- *   배지가 없는 「아직 없음」과 라인 모양(Mobility · Precision)은 움직이지 않음 */
+ *   배지가 없는 「아직 없음」과 라인 모양(Mobility · OOTB)은 움직이지 않음 */
 .empty-illo__mark { animation: ds-badge-nudge var(--duration-once) var(--ease-standard) .3s 1 both; }
 @keyframes ds-badge-nudge {
     0%, 100% { rotate: 0deg; translate: 0 0; }

@@ -1,5 +1,5 @@
 // Feedback/Loading — 문서 화면은 Loading.mdx. 여기 스토리는 MDX 카드 안에 들어가는 예시 · Playground
-// 브랜드 로더 — 브랜드(제품)에 로고 로더가 있으면 마크 조각이 맞춰지는 로더(DS-ADR-043), 없으면 스피너 --lg (Mobility · Precision)
+// 브랜드 로더 — 브랜드(제품)에 로고 로더가 있으면 마크 조각이 맞춰지는 로더(DS-ADR-043), 없으면 스피너 --lg (Mobility · OOTB)
 // 마크 = 가상 제품 마크(Screens 레일과 같은 모양)의 심볼 조각 다섯(_lnbicons.js MARK_PATHS, 10/28 새 로고)
 import { MARK_PATHS } from './_lnbicons.js';
 const MARK_PIECES = '<svg viewBox="0 0 130 129">' + MARK_PATHS.map((d, i) => '<path class="brand-loader__piece brand-loader__piece--' + (i + 1) + '" d="' + d + '"/>').join('') + '</svg>';
@@ -73,7 +73,7 @@ export const 페이지_로딩 = {
     </div>`;
   },
   parameters: { docs: { description: { story:
-    '페이지 전체를 처음 불러올 때만 사용합니다. 브랜드에 로고 로더가 있으면 마크 조각이 하나로 맞물리고(Default), 없으면 스피너 `--lg`(Mobility · Precision). ' +
+    '페이지 전체를 처음 불러올 때만 사용합니다. 브랜드에 로고 로더가 있으면 마크 조각이 하나로 맞물리고(Default), 없으면 스피너 `--lg`(Mobility · OOTB). ' +
     '영역 · 버튼 안은 언제나 스피너를 사용합니다. 모션 줄이기 설정이면 멈추지 않고 느리게 돕니다.' } } },
 };
 

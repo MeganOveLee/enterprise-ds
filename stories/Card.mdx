@@ -11,7 +11,7 @@ import * as S from './Card.stories.js';
 <table className="ds-table ds-props">
 <thead><tr><th>구분</th><th>클래스 · 속성</th><th>설명</th></tr></thead>
 <tbody>
-<tr><td><b>카드</b></td><td><code>.card</code></td><td>바탕 bg-base · 테두리 · 모서리 <code>--radius-card</code> · 여백 24 · 그림자 <code>--shadow-core</code>. 모서리는 브랜드를 따릅니다(Default · Mobility 8, Precision 0).</td></tr>
+<tr><td><b>카드</b></td><td><code>.card</code></td><td>바탕 bg-base · 테두리 · 모서리 <code>--radius-card</code> · 여백 24 · 그림자 <code>--shadow-core</code>. 모서리는 브랜드를 따릅니다(Default · Mobility 8, OOTB 0).</td></tr>
 <tr><td><b>헤더</b></td><td><code>.card-header</code> › <code>.card-title</code></td><td>제목은 화면의 제목 단계에 맞는 h 태그(<code>h2</code> · <code>h3</code>)로 표시합니다. 오른쪽에는 목록 화면으로 이동하는 링크 <code>.card-more</code>(「전체 보기」)를 둡니다. 이동이라 버튼이 아니라 링크입니다.</td></tr>
 <tr><td><b>개수</b></td><td><code>.card-title-count</code></td><td>제목 옆 개수 배지입니다. 0도 그대로 표시합니다(GNB 업무 개수와 같은 숫자).</td></tr>
 <tr><td><b>목록</b></td><td><code>.card-list</code> › <code>li</code> › <code>a</code></td><td>행 전체가 링크(<code>&lt;li&gt;&lt;a href&gt;</code>)입니다. Tab으로 이동하고 포커스는 안쪽 이중 링, 글자는 링크색 없이 그대로입니다. 세 열 — 앞(90, 상태는 <a className="ds-link" href="./?path=/docs/data-display-status-chip--docs" target="_top">Status Chip</a> · 파일은 형식 아이콘) · 제목(<code>.item-title</code>, 길면 말줄임 + <code>title</code> 속성에 전체 이름) · 날짜(<code>.item-date</code>, 숫자 폭 고정).</td></tr>

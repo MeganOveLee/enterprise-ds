@@ -2,7 +2,7 @@
 import '../css/tokens.css';
 import '../css/brands/default.css';
 import '../css/brands/mobility.css';
-import '../css/brands/precision.css';
+import '../css/brands/ootb.css';
 import '../css/globals.css';
 import '../css/components.css';
 import './fonts.css';
@@ -11,7 +11,7 @@ import './fonts.css';
 const withTheme = (Story, ctx) => {
   const { brand, mode } = ctx.globals;
   document.documentElement.classList.toggle('theme-mobility', brand === 'mobility');
-  document.documentElement.classList.toggle('theme-precision', brand === 'precision');
+  document.documentElement.classList.toggle('theme-ootb', brand === 'ootb');
   document.body.classList.toggle('dark-mode', mode === 'dark');
   const out = Story();
   const wrap = document.createElement('div');
@@ -27,7 +27,7 @@ export default {
     brand: {
       description: '브랜드',
       toolbar: { title: '브랜드', icon: 'paintbrush', dynamicTitle: true,
-        items: [{ value: 'default', title: 'Default' }, { value: 'mobility', title: 'Mobility · 모빌리티 서비스' }, { value: 'precision', title: 'Precision · 자동차 부품' }] },
+        items: [{ value: 'default', title: 'Default' }, { value: 'mobility', title: 'Mobility · 모빌리티 서비스' }, { value: 'ootb', title: 'OOTB · Windchill 화면 리디자인' }] },
     },
     mode: {
       description: '화면 모드 (라이트 / 다크)',
