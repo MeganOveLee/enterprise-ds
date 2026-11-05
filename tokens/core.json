@@ -552,6 +552,28 @@
     "$type": "dimension",
     "$description": "작은 버튼 = Figma 「Small Button」 — .btn--sm · 첨부 삭제. 최소 누름 영역 24 이상 (DS-ADR-020)"
   },
+  "size-grid-header": {
+    "$value": "34px",
+    "$type": "dimension",
+    "$extensions": {
+      "eds": {
+        "before": [
+          "/* 표 높이 역할 — 브랜드 파일이 덮을 수 있음(DS-ADR-047). 값 = DS-ADR-030(머리 34 · 줄 30 · 편집 줄 40).\n   조건: 줄 높이 ≥ 작은 버튼(--size-btn-sm) + 2 — 칸 안 버튼 상한이 줄 높이 − 2 */"
+        ]
+      }
+    },
+    "$description": "표 머리 높이 (.grid-table th)"
+  },
+  "size-grid-row": {
+    "$value": "30px",
+    "$type": "dimension",
+    "$description": "표 줄 높이 (.grid-table td) · 편집 줄 안 입력칸 높이 · 칸 안 버튼 상한(이 값 − 2)"
+  },
+  "size-grid-row-edit": {
+    "$value": "40px",
+    "$type": "dimension",
+    "$description": "편집 표 줄 높이 (.grid-table--edit td)"
+  },
   "size-sidebar-toggle": {
     "$value": "0.4375rem",
     "$type": "dimension",
@@ -982,6 +1004,10 @@
   },
   "color-text-on-color": {
     "$value": "{white}"
+  },
+  "color-text-grid-header": {
+    "$value": "{color-text-on-color}",
+    "$description": "표 머리 글자 — 머리 바탕(--color-bg-grid-header) 위 4.5:1 이상 (DS-ADR-047)"
   },
   "color-icon-on-color": {
     "$value": "{white}"

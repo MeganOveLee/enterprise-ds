@@ -20,7 +20,7 @@ v1.0 · 설계 · 퍼블리싱 이세영
 |---|---|
 | `tokens/` | **토큰 값의 원본** (DTCG JSON). `core.json` 원천 램프 · 시맨틱 · `vendor.json` 벤더 이름 · `dark.json` 다크 · `brands/*.json` 브랜드. 값은 `tokens/`에서만 고칩니다 |
 | `css/tokens.css` | 공통 토큰 (원천 램프 → 시맨틱 → 다크) — `tokens/`에서 만드는 생성 파일 |
-| `css/brands/` | 브랜드 값 파일 — `tokens/brands/`에서 만드는 생성 파일. 브랜드가 여는 토큰(색 · 형태 · 그림 자산 · 글자 크기) 목록은 `tokens/brands/_template.json`(새 브랜드 양식)에 있고, 지금 값은 스토리북 Foundation › Color(색) · Spacing · Radius · Size(형태 · 그림 자산)에서 브랜드를 바꿔 볼 수 있습니다. `default.css` = 기본 브랜드(그림 자산 솔리드), `mobility.css` · `precision.css` = 시연용 가상 산업 브랜드(Mobility · 패션 리테일 = 색 + 둥근 모서리 / Precision · 자동차 부품 = 색 + 직각 · 높이 32, 둘 다 그림 자산 라인) |
+| `css/brands/` | 브랜드 값 파일 — `tokens/brands/`에서 만드는 생성 파일. 브랜드가 여는 토큰(색 · 형태 · 그림 자산 · 글자 크기 · 글꼴 · 회색 · 표 · 그림자) 목록은 `tokens/brands/_template.json`(새 브랜드 양식)에 있고, 지금 값은 스토리북 Foundation › Color(색) · Spacing · Radius · Size(형태 · 그림 자산)에서 브랜드를 바꿔 볼 수 있습니다. `default.css` = 기본 브랜드(그림 자산 솔리드), `mobility.css` · `precision.css` = 시연용 가상 산업 브랜드(Mobility · 모빌리티 서비스 앱 = 색 + 둥근 모서리 / Precision · 업무 시스템 기본 화면 리디자인 = 색 + 직각 · 높이 32, 둘 다 그림 자산 라인) |
 | `css/globals.css` · `components.css` | 전역 · 컴포넌트 스타일입니다. 브랜드마다 다른 코드를 두지 않습니다 |
 | `js/select.js` | 선택 목록 — 화면의 단일 select를 모두 같은 모양의 목록(`.ui-select`)으로 바꿉니다 (APG Select-Only Combobox 패턴) |
 | `js/multiselect.js` | 다중 선택 — `select.checkSelect[multiple]`을 표시 상자 + 체크박스 목록으로 바꿉니다 |

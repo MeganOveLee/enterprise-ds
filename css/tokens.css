@@ -194,6 +194,12 @@
   --size-input-lg: 44px;                      /* 큰 칸 — 화면에 폼 하나만 있는 단독 폼(로그인 · 임시 비밀번호 발급 — 이전 버전 login.css 큰 칸 · 큰 버튼을 쓰던 두 화면, TD-120) (제안 E). 브랜드가 바꾸지 않음(스태틱) */
   --size-btn-lg: 44px;                        /* 큰 버튼 — 큰 칸과 같은 높이의 주 동작 */
   --size-btn-sm: 26px;                        /* 작은 버튼 = Figma 「Small Button」 — .btn--sm · 첨부 삭제. 최소 누름 영역 24 이상 (DS-ADR-020) */
+
+  /* 표 높이 역할 — 브랜드 파일이 덮을 수 있음(DS-ADR-047). 값 = DS-ADR-030(머리 34 · 줄 30 · 편집 줄 40).
+     조건: 줄 높이 ≥ 작은 버튼(--size-btn-sm) + 2 — 칸 안 버튼 상한이 줄 높이 − 2 */
+  --size-grid-header: 34px;                   /* 표 머리 높이 (.grid-table th) */
+  --size-grid-row: 30px;                      /* 표 줄 높이 (.grid-table td) · 편집 줄 안 입력칸 높이 · 칸 안 버튼 상한(이 값 − 2) */
+  --size-grid-row-edit: 40px;                 /* 편집 표 줄 높이 (.grid-table--edit td) */
   --size-sidebar-toggle: 0.4375rem;           /* LNB 오른쪽 리사이즈 손잡이 폭 */
   --size-sidebar: calc(13.875rem - var(--size-sidebar-toggle)); /* LNB 폭 = 사이드 영역 222px − 손잡이.
                                                                    구 Layer 5 --sidebar-width/-toggle-width 를 치수 층으로 올림 — 이름만 있고 아무도 안 쓰고
@@ -338,6 +344,7 @@
    * favorite    — 즐겨찾기 별. 경고(warning)와 의미가 달라 따로 둠 */
   --color-focus-ring: color-mix(in srgb, var(--brand-500) 22%, transparent);
   --color-text-on-color: var(--white);
+  --color-text-grid-header: var(--color-text-on-color); /* 표 머리 글자 — 머리 바탕(--color-bg-grid-header) 위 4.5:1 이상 (DS-ADR-047) */
   --color-icon-on-color: var(--white);
   --color-icon-favorite: var(--yellow-500);
   --color-icon-link-visited: var(--neutral-500);

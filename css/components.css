@@ -2068,10 +2068,10 @@ body.dark-mode .resumable:not(.center) .fileList .file-item { background: var(--
     background: var(--color-bg-base);   /* 숫자 글꼴 특성은 그대로(tabular-nums 를 걸면 Pretendard 고정폭 숫자가 넓어 식별자 링크가 벌어져 보임 — 이전 버전도 안 씀) */
 }
 .grid-table th {
-    height: 34px;
+    height: var(--size-grid-header);   /* 표 높이 역할(DS-ADR-047) — 기본 34 (DS-ADR-030) */
     padding: 0 var(--spacing-12);
     background: var(--color-bg-grid-header);
-    color: var(--color-text-on-color);
+    color: var(--color-text-grid-header);
     font-weight: var(--font-weight-semibold);
     text-align: center;
     white-space: nowrap;
@@ -2079,7 +2079,7 @@ body.dark-mode .resumable:not(.center) .fileList .file-item { background: var(--
     border-bottom: 2px solid var(--color-border-grid-header-bottom);   /* 머리 아래선 2 = Figma Header(B2)와 같음 (TD-108 32번). 구: 1 */
 }
 .grid-table td {
-    height: 30px;
+    height: var(--size-grid-row);   /* 기본 30 (DS-ADR-030 · 047) */
     padding: 0 var(--spacing-12);
     text-align: center;
     background: var(--color-bg-base);
@@ -2095,8 +2095,8 @@ body.dark-mode .resumable:not(.center) .fileList .file-item { background: var(--
 .grid-table tbody tr:hover td { background: var(--color-bg-grid-row-hover); }
 .grid-table tbody :is(tr.is-selected, tr[aria-selected="true"]) td { background: var(--color-bg-grid-row-selected); }
 .grid-table .checkbox { margin: 0; gap: 0; vertical-align: middle; }   /* 칸 가운데 체크만 — 글자 없는 체크박스 */
-.grid-table td .btn { height: min(var(--size-btn), 28px); }   /* 셀 안 버튼은 행 높이 30(DS-ADR-030) 안에 — Precision 버튼 32가 행을 33으로 늘리던 것 */
-.grid-table td .btn--icon { width: min(var(--size-btn), 28px); }
+.grid-table td .btn { height: min(var(--size-btn), calc(var(--size-grid-row) - 2px)); }   /* 셀 안 버튼은 줄 높이 − 2 안에(기본 28, DS-ADR-030 · 047) — Precision 버튼 32가 행을 33으로 늘리던 것 */
+.grid-table td .btn--icon { width: min(var(--size-btn), calc(var(--size-grid-row) - 2px)); }
 .grid-table td > svg { vertical-align: middle; color: var(--color-icon-muted); }   /* 칸 안 아이콘 — 글줄 가운데 · 흐린 아이콘색 (TD-75) */
 .grid-table td > .file-icon { vertical-align: middle; }   /* 「파일」 열 = 파일 형식 그림 자산(형식 색 · 브랜드 따라 솔리드 ↔ 라인, DS-ADR-026 · 037, TD-108 38번) */
 /* 바깥 틀 안에서 목록이 길면 머리는 위에 붙어 있음(그리드 라이브러리와 같게) */
@@ -2106,11 +2106,11 @@ body.dark-mode .resumable:not(.center) .fileList .file-item { background: var(--
  *   입력칸 = DS .input · .select 를 칸 너비로, 높이 30(이전 버전 편집 칸 상자) · 읽기 전용 값은 .input[readonly](DS 읽기 전용 모양)
  *   번호 · 체크 칸은 상자 없이 가운데. 마우스 올림 · 선택 바탕은 읽기 표와 같음(입력칸은 흰 상자 그대로) */
 .grid-table--edit td {
-    height: 40px;
+    height: var(--size-grid-row-edit);   /* 기본 40 (DS-ADR-047) */
     padding: 0 var(--spacing-4);
     background: var(--color-bg-subtle);
 }
-.grid-table--edit td > :is(.input, .select) { height: 30px; }
+.grid-table--edit td > :is(.input, .select) { height: var(--size-grid-row); }   /* 편집 칸 상자 = 읽기 줄 높이(기본 30, DS-ADR-047) */
 /* 검색 페이지에서만 .list 가 .table_list 의 남은 공간 차지 (그리드 화면 가득) */
 .searchLayout .table_list .list {
     flex: 1;
@@ -4368,9 +4368,9 @@ body.dark-mode .empty-illo__badge  { fill: var(--color-bg-muted); }
  * Blocks — 여러 컴포넌트를 묶는 자리에만 필요한 배치 · 표시 (TD-103)
  * 이름은 이전 버전 화면 CSS와 같게(.ui-compare · .ui-field-addon · .compare-legend) — 화면 코드를 고치지 않고 옮김
  * ═════════════════════════════════════════════════════════════════════════ */
-/* 줄 수를 정한 표 .table_list--rows — 표 높이 = 머리 34 + 데이터 줄(30) × --table-rows(기본 3). 줄이 적어도 같은 높이, 넘치면 표 안에서 세로 스크롤 · 머리 고정.
+/* 줄 수를 정한 표 .table_list--rows — 표 높이 = 머리(--size-grid-header) + 데이터 줄(--size-grid-row) × --table-rows(기본 3) + 머리 아래선 2. 줄이 적어도 같은 높이, 넘치면 표 안에서 세로 스크롤 · 머리 고정.
  * 결재선 역할 상자(합의 · 승인 · 수신)처럼 나란한 표 높이를 맞출 때 (TD-122) */
-.table_list--rows > .list { height: calc(34px + var(--table-rows, 3) * 30px + 2px); overflow-y: auto; }
+.table_list--rows > .list { height: calc(var(--size-grid-header) + var(--table-rows, 3) * var(--size-grid-row) + 2px); overflow-y: auto; }
 .table_list--rows .grid-table th { position: sticky; top: 0; z-index: 1; }
 
 
