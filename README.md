@@ -12,7 +12,7 @@ v1.0 · 설계 · 퍼블리싱 이세영
 - **결정 기록(ADR)**: [Notion — 결정 기록](https://app.notion.com/p/3eda8196682d8126967fcc86f796fcb4) — 토큰 · 컴포넌트를 정할 때의 배경 · 선택지 · 근거
 - 스타일은 CSS에서만 정합니다 — 토큰(`--color-*` …) → 컴포넌트 클래스(`.btn`, `.input` …). 서버 렌더링 화면(JSP)에도 그대로 씁니다.
 - 브랜드는 `<html class="theme-*">`, 다크 모드는 `<body class="dark-mode">` 하나로 바뀝니다.
-- 데스크톱 브라우저 기준입니다. 창이 좁아지면 카드는 한 줄 개수가 줄고, 검색 조건은 칸 수를 그대로 둔 채 칸이 좁아지며, 목록 표는 열을 줄이지 않고 가로로 스크롤합니다. 왼쪽 메뉴를 뺀 본문 최소 폭은 1024px입니다.
+- 최소 폭은 창 틀에만 있습니다. 업무 화면 틀(`.main-layout`)은 1024px, 새 창(`.pop`)은 600px이고, 창이 더 좁으면 화면 전체가 가로로 스크롤합니다. 컴포넌트는 폭을 정하지 않고 놓인 칸에 맞춥니다. 카드는 한 줄 개수가 줄고, 검색 조건은 놓인 칸이 좁으면(480px 미만) 칸 수를 줄이며, 목록 표는 열을 줄이지 않고 가로로 스크롤합니다.
 
 ## 구조
 
@@ -20,7 +20,7 @@ v1.0 · 설계 · 퍼블리싱 이세영
 |---|---|
 | `tokens/` | **토큰 값의 원본** (DTCG JSON). `core.json` 원천 램프 · 시맨틱 · `vendor.json` 벤더 이름 · `dark.json` 다크 · `brands/*.json` 브랜드. 값은 `tokens/`에서만 고칩니다 |
 | `css/tokens.css` | 공통 토큰 (원천 램프 → 시맨틱 → 다크) — `tokens/`에서 만드는 생성 파일 |
-| `css/brands/` | 브랜드 값 파일 — `tokens/brands/`에서 만드는 생성 파일. 브랜드가 여는 토큰(색 · 형태 · 그림 자산 · 글자 크기 · 글꼴 · 회색 · 표 · 그림자) 목록은 `tokens/brands/_template.json`(새 브랜드 양식)에 있고, 지금 값은 스토리북 Foundation › Color(색) · Spacing · Radius · Size(형태 · 그림 자산)에서 브랜드를 바꿔 볼 수 있습니다. `default.css` = 기본 브랜드(그림 자산 솔리드), `mobility.css` · `precision.css` = 시연용 가상 산업 브랜드(Mobility · 모빌리티 서비스 앱 = 색 + 둥근 모서리 / Precision · 업무 시스템 기본 화면 리디자인 = 색 + 직각 · 높이 32, 둘 다 그림 자산 라인) |
+| `css/brands/` | 브랜드 값 파일 — `tokens/brands/`에서 만드는 생성 파일. 브랜드가 여는 토큰(색 · 형태 · 그림 자산 · 글자 크기 · 글꼴 · 회색 · 표 · 그림자) 목록은 `tokens/brands/_template.json`(새 브랜드 양식)에 있고, 지금 값은 스토리북 Foundation › Color(색) · Spacing · Radius · Size(형태 · 그림 자산)에서 브랜드를 바꿔 볼 수 있습니다. `default.css` = 기본 브랜드(그림 자산 솔리드), `mobility.css` · `precision.css` = 시연용 가상 산업 브랜드(Mobility · 모빌리티 서비스 앱 = 색 + 둥근 모서리 / Precision · Windchill OOTB 화면 비공식 리디자인 = 색 + 직각 · 높이 32, 둘 다 그림 자산 라인) |
 | `css/globals.css` · `components.css` | 전역 · 컴포넌트 스타일입니다. 브랜드마다 다른 코드를 두지 않습니다 |
 | `js/select.js` | 선택 목록 — 화면의 단일 select를 모두 같은 모양의 목록(`.ui-select`)으로 바꿉니다 (APG Select-Only Combobox 패턴) |
 | `js/multiselect.js` | 다중 선택 — `select.checkSelect[multiple]`을 표시 상자 + 체크박스 목록으로 바꿉니다 |

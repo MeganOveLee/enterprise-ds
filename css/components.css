@@ -47,7 +47,8 @@
     flex-direction: column;
     height: 100vh;
     min-height: 0;
-    min-width: 1024px;   /* 화면 최소 폭 — 이전 버전과 같음. 창이 더 좁으면 화면 전체가 가로로 스크롤 */
+    min-width: 1024px;   /* 화면 최소 폭 — 이전 버전과 같음. 창이 더 좁으면 화면 전체가 가로로 스크롤.
+                            최소 폭은 창 틀(.main-layout · .pop)에만 두고 컴포넌트는 폭을 정하지 않음 (DS-ADR-048) */
     overflow: hidden;
     background: var(--color-bg-subtle);
 }
@@ -1189,7 +1190,7 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    min-width: 600px;
+    min-width: 600px;   /* 창 틀 최소 폭 — .main-layout 1024와 같은 층(창 틀)이라 여기 둔다. 안의 컴포넌트는 폭을 정하지 않음 (DS-ADR-048) */
     height: 100vh;
     overflow-y: auto;
     background: var(--color-bg-base);
@@ -1455,6 +1456,8 @@ body.dark-mode .pop .contents .pro_table:not(:has(.form-grid-2)):not(.seach_arm:
 /* 검색/결과 헤더 (.seach_arm) — 원본 클래스명 그대로 (오타도 보존) */
 .seach_arm {
     display: flex;
+    flex-wrap: wrap;   /* 칸이 좁아 제목 · 버튼이 한 줄에 안 들어가면 버튼 묶음을 다음 줄로 (DS-ADR-048). 넓은 화면은 한 줄 그대로 */
+    row-gap: var(--spacing-8);
     align-items: center;
     justify-content: space-between;
     flex-shrink: 0;
@@ -1494,6 +1497,7 @@ body.dark-mode .pop .contents .pro_table:not(:has(.form-grid-2)):not(.seach_arm:
 
 .seach_arm .rightbt {
     display: flex;
+    flex-wrap: wrap;   /* 버튼 묶음도 칸보다 길면 줄을 바꿈 (DS-ADR-048) */
     align-items: center;
     gap: var(--spacing-8);
 }
@@ -1539,7 +1543,17 @@ body.dark-mode .pop .contents .pro_table:not(:has(.form-grid-2)):not(.seach_arm:
 .form-grid-2.form-grid--6 { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: var(--spacing-12) var(--spacing-24); }   /* 열 간격 24 = 이전 버전 검색 폼(TD-45 45-3 규칙대로). 구: 16 */
 .form-grid-2.form-grid--6 .ff-field { gap: var(--spacing-8); }   /* 검색 라벨 ↔ 칸 8 = 이전 버전(라벨 아래 칸 위 여백 8). 등록 폼(.form-grid-2)은 6 그대로 */
 .form-grid-2 .ff-field.span-2 { grid-column: span 2; }
-/* 창이 좁아져도 6칸 그대로 = 이전 버전(표라서 칸 수가 바뀌지 않음). 칸이 좁아지고, 화면 최소 폭(1024)보다 좁으면 화면 전체가 가로 스크롤 (TD-45 45-3 규칙대로). 구: 1200 미만 3칸(10/13 제안 H) */
+/* 창이 좁아져도 6칸 그대로 = 이전 버전(표라서 칸 수가 바뀌지 않음). 칸이 좁아지고, 화면 최소 폭(1024)보다 좁으면 화면 전체가 가로 스크롤 (TD-45 45-3 규칙대로). 구: 1200 미만 3칸(10/13 제안 H)
+ * 예외 — 검색 조건이 놓인 칸(.pro_table)이 480 미만이면 2칸, 280 미만이면 1칸 (DS-ADR-048). 창 너비가 아니라 놓인 칸 너비로 정한다(컨테이너 쿼리).
+ *   Default 화면 틀 최소 폭(1024)에서 이 칸은 480보다 넓어 6칸 그대로. 480 = 6칸이면 한 칸 60(날짜 칸이 안 들어감) · 280 = 2칸이면 한 칸 128(선택 목록 최소) */
+.pro_table:has(.form-grid--6) { container: search-form / inline-size; }
+@container search-form (max-width: 479px) {
+    .form-grid-2.form-grid--6 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@container search-form (max-width: 279px) {
+    .form-grid-2.form-grid--6 { grid-template-columns: minmax(0, 1fr); }
+    .form-grid-2.form-grid--6 .ff-field.span-2 { grid-column: 1 / -1; }   /* 1칸에서 span 2 는 없는 열을 만들므로 한 줄 전체로 */
+}
 .form-grid-2 .ff-field > .search-label { margin: 0; display: block; font-size: var(--body-sm); font-weight: var(--font-weight-semibold); color: var(--color-text-label); }   /* 라벨 = 작은 브랜드색 굵은 글자(이전 버전 검색 라벨 값). 구: Screens 에만 있던 값(medium)을 DS 로 (10/14) */
 .form-grid-2 .ff-field .td { width: 100%; display: block; padding: 0; }
 .form-grid-2 .ff-field .checkSelect { width: 100%; }
