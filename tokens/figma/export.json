@@ -1247,6 +1247,36 @@
           }
         },
         {
+          "name": "size/grid-header",
+          "type": "FLOAT",
+          "web": "var(--size-grid-header)",
+          "values": {
+            "Default": 34,
+            "Mobility": 34,
+            "Precision": 34
+          }
+        },
+        {
+          "name": "size/grid-row",
+          "type": "FLOAT",
+          "web": "var(--size-grid-row)",
+          "values": {
+            "Default": 30,
+            "Mobility": 30,
+            "Precision": 30
+          }
+        },
+        {
+          "name": "size/grid-row-edit",
+          "type": "FLOAT",
+          "web": "var(--size-grid-row-edit)",
+          "values": {
+            "Default": 40,
+            "Mobility": 40,
+            "Precision": 40
+          }
+        },
+        {
           "name": "brand/400-a35",
           "type": "COLOR",
           "web": "color-mix(in srgb, var(--brand-400) 35%, transparent)",
@@ -1538,6 +1568,19 @@
             },
             "Dark": {
               "alias": ".Primitive : Colors/base/white"
+            }
+          }
+        },
+        {
+          "name": "color/text/grid-header",
+          "type": "COLOR",
+          "web": "var(--color-text-grid-header)",
+          "values": {
+            "Light": {
+              "alias": "Semantic : Colors/color/text/on-color"
+            },
+            "Dark": {
+              "alias": "Semantic : Colors/color/text/on-color"
             }
           }
         },
