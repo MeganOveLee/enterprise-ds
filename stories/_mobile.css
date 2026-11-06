@@ -14,7 +14,7 @@
   font-family: var(--font-family-base);
 }
 .sb-phone--tall { height: 600px; }
-.sb-phone__body { flex: 1; padding: 16px; overflow-y: auto; }
+.sb-phone__body { flex: 1; min-height: 0; padding: 16px; overflow-y: auto; }   /* min-height 0 = 틀 높이 안에서 내려가게(큰 제목 줄어듦 견본) */
 .sb-phone__body--flush { padding: 0; background: var(--color-bg-base); }
 .sb-phone__map { flex: 1; position: relative; min-height: 320px; background: var(--color-bg-muted); }
 .sb-phone__map > .fab { position: absolute; }

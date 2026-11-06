@@ -4724,6 +4724,23 @@ body.dark-mode .empty-illo__badge  { fill: var(--color-bg-muted); }
 .app-bar--center { display: grid; grid-template-columns: 1fr auto 1fr; }
 .app-bar--center .app-bar__end { justify-content: flex-end; }
 .app-bar--center .app-bar__title { text-align: center; }
+/* 시안 C · 큰 제목 — 첫 단계 화면에서 제목을 크게, 내리면 작은 제목으로 줄어듦(js/app-bar.js 가 .is-collapsed)
+ *   <header class="app-bar app-bar--large" data-app-bar-scroll="#목록영역">  앞 칸 · 제목 · 뒤 칸 (마크업은 기본과 같음)
+ *   data-app-bar-scroll = 내려가는 영역(없으면 화면). 움직임 줄이기 설정이면 바로 바뀜 */
+.app-bar--large {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas: "start . end" "title title title";
+    row-gap: var(--spacing-4);
+    padding-bottom: var(--spacing-12);
+    border-bottom-color: transparent;
+}
+.app-bar--large .app-bar__start { grid-area: start; }
+.app-bar--large .app-bar__end { grid-area: end; }
+.app-bar--large .app-bar__title { grid-area: title; padding-inline: var(--spacing-8); font-size: var(--heading-lg); white-space: normal; transition: font-size var(--duration-fast) var(--ease-standard); }
+.app-bar--large.is-collapsed { grid-template-areas: "start title end"; padding-bottom: var(--spacing-4); border-bottom-color: var(--color-border-subtle); }
+.app-bar--large.is-collapsed .app-bar__title { padding-inline: var(--spacing-4); font-size: var(--heading-sm); white-space: nowrap; }
+@media (prefers-reduced-motion: reduce) { .app-bar--large .app-bar__title { transition: none; } }
 :is(.app-bar, .bottom-nav, .btn-bar, .list-item) .btn--icon { width: auto; min-width: var(--size-touch); min-height: var(--size-touch); }
 
 /* 하단 탭 — 앱의 첫 단계 화면 사이를 오감. 항목 셋~다섯, 아이콘 + 글자(글자를 빼지 않음)

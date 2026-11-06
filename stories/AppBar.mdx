@@ -13,18 +13,21 @@ import * as S from './AppBar.stories.js';
 <tbody>
 <tr><td><b>막대</b></td><td><code>.app-bar</code></td><td>앞 칸 · 제목 · 뒤 칸 세 자리입니다. 높이는 누름 기준(<code>--size-touch</code>)에 위아래 여백을 더한 값 이상입니다.</td></tr>
 <tr><td><b>앞 칸</b></td><td><code>.app-bar__start</code></td><td>뒤로 가기 아이콘 버튼 하나입니다. 첫 단계 화면에서는 비워 둡니다.</td></tr>
-<tr><td><b>제목</b></td><td><code>.app-bar__title</code> · <code>h1</code></td><td>화면 이름입니다. 한 줄이 넘으면 말줄임합니다.</td></tr>
+<tr><td><b>제목</b></td><td><code>.app-bar__title</code> · <code>h1</code></td><td>짧은 고정 화면 이름입니다(「이용 내역 상세」). 경로 · 장소 이름처럼 길어지는 내용은 제목에 넣지 않고 본문 첫 카드(Blocks › Route Summary)에 둡니다. 한 줄이 넘으면 말줄임합니다.</td></tr>
 <tr><td><b>뒤 칸</b></td><td><code>.app-bar__end</code></td><td>화면 전체에 걸리는 동작 하나(더 보기 · 닫기)입니다. 아이콘 버튼에는 <code>aria-label</code>을 둡니다.</td></tr>
 <tr><td><b>제목 가운데</b></td><td><code>.app-bar--center</code></td><td>앞뒤 칸을 같은 폭으로 두어 제목을 가운데에 놓습니다.</td></tr>
-<tr><td><b>브랜드가 바꾸는 것</b></td><td><code>--size-touch</code> · <code>--heading-sm</code> · 색 토큰</td><td>누름 높이 · 제목 글자 크기 · 바탕과 글자 색입니다. 세 자리 구성은 바꾸지 않습니다.</td></tr>
+<tr><td><b>큰 제목</b></td><td><code>.app-bar--large</code> · <code>data-app-bar-scroll</code> · <code>js/app-bar.js</code></td><td>첫 단계 화면에서 제목을 크게 두고, 내용을 내리면 작은 제목 한 줄로 줄어듭니다. 큰 제목은 줄을 바꿔 다 보입니다.</td></tr>
+<tr><td><b>브랜드가 바꾸는 것</b></td><td><code>--size-touch</code> · <code>--heading-sm</code> · <code>--heading-lg</code> · <code>--font-weight-emphasis</code> · 색 토큰</td><td>누름 높이 · 제목 글자 크기 · 굵기 · 바탕과 글자 색입니다. 세 자리 구성은 바꾸지 않습니다. 시안은 Mobility = A(첫 단계 화면은 C), Default · OOTB = A입니다.</td></tr>
 </tbody>
 </table>
 </Section>
+<Section title="시안" en="Options">
+<Card of={S.왼쪽_제목} title="A · 왼쪽 제목" tag="추천" desc="둘째 단계 이하 화면에서 사용합니다. 경로는 본문 첫 카드에 둡니다." basis="Apple HIG는 제목을 짧게(15자 안쪽), Mozilla Acorn은 제목을 자르지 않게 권합니다. 200% 확대에서 글자가 잘리면 WCAG 1.4.4 실패라 긴 내용은 본문으로 옮겼습니다(조사-8 2-1)." />
+<Card of={S.가운데_제목} title="B · 가운데 제목" desc="기본보다 뒤로 가기 없이 닫는 화면(아래에서 올라온 전체 화면)에서 사용합니다." basis="앞뒤 칸을 같은 폭으로 두어 제목이 화면 가운데에 옵니다. 닫기만 있는 화면에서 제목이 한쪽으로 쏠리지 않습니다." />
+<Card of={S.큰_제목} title="C · 큰 제목" desc="기본보다 앱의 첫 단계 화면에서 지금 어디인지 크게 알릴 때 사용합니다. 목록을 내리면 작은 제목으로 줄어듭니다." basis="Material 3 Large top app bar · Apple 큰 제목과 같은 방식입니다. 큰 글씨가 필요한 이용자에게 화면 이름을 먼저 보여 줍니다." />
+</Section>
 <Section title="예시" en="Examples">
-<Card of={S.뒤로와_제목} title="뒤로와 제목" desc="둘째 단계 이하 화면에서 사용합니다." />
-<Card of={S.동작_하나} title="동작 하나" desc="기본보다 화면 전체에 걸리는 동작이 있을 때 사용합니다." />
-<Card of={S.제목_가운데} title="제목 가운데" desc="기본보다 뒤로 가기 없이 닫는 화면(아래에서 올라온 전체 화면)에서 사용합니다." />
-<Card of={S.긴_제목} title="긴 제목은 말줄임" desc="기본보다 제목이 한 줄을 넘을 때 사용합니다." />
+<Card of={S.뒤로와_제목} title="뒤로와 제목" desc="동작 없이 뒤로 가기만 있는 화면에서 사용합니다." />
 </Section>
 </div>
 </Unstyled>

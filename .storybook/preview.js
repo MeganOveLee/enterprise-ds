@@ -5,6 +5,7 @@ import '../css/brands/mobility.css';
 import '../css/brands/ootb.css';
 import '../css/globals.css';
 import '../css/components.css';
+import '../css/blocks/mobility.css';   // 모바일 앱 전용 Blocks — PLM 화면은 링크하지 않음 (TD-172)
 import './fonts.css';
 
 /** 브랜드 = <html class="theme-*">, 다크 = <body class="dark-mode"> — 실제 화면과 같은 스위치 */
@@ -18,7 +19,7 @@ const withTheme = (Story, ctx) => {
   wrap.className = 'sb-ds';
   if (typeof out === 'string') wrap.innerHTML = out; else wrap.appendChild(out);
   // 날짜 선택은 그려진 뒤 초기화 (이미 붙은 칸은 건너뜀)
-  requestAnimationFrame(() => { window.datepickerInit && window.datepickerInit(); window.dsClearInit && window.dsClearInit(); window.dsChipsInit && window.dsChipsInit(); window.dsNumberInputInit && window.dsNumberInputInit(); });   // 지우기(×)는 날짜 칸이 그려진 뒤
+  requestAnimationFrame(() => { window.datepickerInit && window.datepickerInit(); window.dsClearInit && window.dsClearInit(); window.dsChipsInit && window.dsChipsInit(); window.dsNumberInputInit && window.dsNumberInputInit(); window.dsAppBarInit && window.dsAppBarInit(); });   // 지우기(×)는 날짜 칸이 그려진 뒤
   return wrap;
 };
 

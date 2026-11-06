@@ -20,6 +20,7 @@ v1.0 · 설계 · 퍼블리싱 이세영
 |---|---|
 | `tokens/` | **토큰 값의 원본** (DTCG JSON). `core.json` 원천 램프 · 시맨틱 · `vendor.json` 벤더 이름 · `dark.json` 다크 · `brands/*.json` 브랜드. 값은 `tokens/`에서만 고칩니다 |
 | `css/tokens.css` | 공통 토큰 (원천 램프 → 시맨틱 → 다크) — `tokens/`에서 만드는 생성 파일 |
+| `css/blocks/mobility.css` | 모바일 앱 전용 Blocks(경로 요약) — 모바일 앱 화면에서만 `components.css` 다음에 링크합니다 |
 | `css/brands/` | 브랜드 값 파일 — `tokens/brands/`에서 만드는 생성 파일. 브랜드가 여는 토큰(색 · 형태 · 그림 자산 · 글자 크기 · 글꼴 · 회색 · 표 · 그림자) 목록은 `tokens/brands/_template.json`(새 브랜드 양식)에 있고, 지금 값은 스토리북 Foundation › Color(색) · Spacing · Radius · Size(형태 · 그림 자산)에서 브랜드를 바꿔 볼 수 있습니다. `default.css` = 기본 브랜드(그림 자산 솔리드), `mobility.css` · `ootb.css` = 시연용 가상 산업 브랜드(Mobility · 모바일 앱(모빌리티 서비스) 앱 = 색 + 둥근 모서리 / OOTB · Windchill OOTB 화면 비공식 리디자인 = 색 + 직각 · 높이 32, 둘 다 그림 자산 라인) |
 | `css/globals.css` · `components.css` | 전역 · 컴포넌트 스타일입니다. 브랜드마다 다른 코드를 두지 않습니다 |
 | `js/select.js` | 선택 목록 — 화면의 단일 select를 모두 같은 모양의 목록(`.ui-select`)으로 바꿉니다 (APG Select-Only Combobox 패턴) |
@@ -31,6 +32,7 @@ v1.0 · 설계 · 퍼블리싱 이세영
 | `js/modal.js` | 확인 창 — `.modal` 열기 · 닫기 · 포커스 가두기 · Esc (APG Dialog (Modal) 패턴) |
 | `js/chips.js` | 고르기 · 가로 넘김 — 칩 · 목록 행 · 나란한 칸의 하나 고르기(`role="radiogroup"`, 방향키) · 여럿 고르기(`aria-pressed`), 고른 값을 버튼 글자에(`data-choice-for`), 한 줄 칩 줄의 넘김 신호(흐림 · 있는 쪽 화살표) |
 | `js/number-input.js` | 숫자 버튼 — `.number-input`의 − · + 로 범위 안에서 하나씩, 끝에 닿은 버튼은 꺼짐 |
+| `js/app-bar.js` | 큰 제목 앱 상단 바 — `.app-bar--large`를 내용을 내리면 작은 제목으로 줄입니다 |
 | `stories/` · `.storybook/` | Storybook (HTML 프레임워크) |
 | `scripts/tokens/` | 토큰 만들기(`build.mjs`, Style Dictionary) · 정의되지 않은 변수 검사 · Figma 변수 대조 · CSS → JSON 옮기기 |
 | `figma-plugin/token-export/` | Figma 개발 플러그인 — Foundation 변수를 `tokens/figma/export.json`으로 내보냅니다 |

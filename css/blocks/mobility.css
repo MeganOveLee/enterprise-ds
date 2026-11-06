@@ -1,0 +1,40 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+ * 모바일 앱 전용 Blocks (DS-ADR-049, TD-172)
+ *   모바일 앱 화면에서만 쓰는 조합. PLM 화면은 이 파일을 링크하지 않음
+ *   불러오는 순서: tokens → brands → globals → components → blocks/mobility.css
+ *   공통 토큰만 읽음 — 이 파일에 숫자 · 색상 값을 두지 않음
+ * ═══════════════════════════════════════════════════════════════════════════ */
+
+/* 경로 요약 — 출발 · 경유 · 도착을 세로로. 앱 상단 바 제목에 경로를 쓰지 않고 본문 첫 카드에 둠(조사-8 2-1)
+ *   <ol class="route-summary" aria-label="이동 경로">
+ *     <li class="route-summary__stop route-summary__stop--start"><span class="route-summary__mark"></span><span class="route-summary__label">출발</span>
+ *       <span class="route-summary__place">이천터미널</span><span class="route-summary__time">오전 9:12</span></li>
+ *     <li class="route-summary__stop route-summary__stop--via"> … 경유 하나</li>
+ *     <li class="route-summary__stop route-summary__stop--via"> … 경유 둘 이상 = <details class="route-summary__vias"><summary>관고전통시장 외 1곳</summary> 장소 줄 </details></li>
+ *     <li class="route-summary__stop route-summary__stop--end"> … 도착</li>
+ *   </ol>
+ *   「출발 · 경유 · 도착」은 글자로도 적음(점 색만으로 구분하지 않음). 「에서 · 거쳐」 같은 문장으로 잇지 않음 */
+.route-summary { position: relative; display: grid; gap: var(--spacing-12); margin: 0; padding: var(--spacing-16); list-style: none; border: 1px solid var(--color-border-base); border-radius: var(--radius-card); background: var(--color-bg-base); color: var(--color-text-base); font-size: var(--body-md); }
+.route-summary__stop { position: relative; display: grid; grid-template-columns: 1.25em 2.75em 1fr auto; align-items: start; column-gap: var(--spacing-8); line-height: var(--line-height-tight); }
+.route-summary__stop:not(:last-child)::after {   /* 다음 점까지 잇는 선 */
+    content: '';
+    position: absolute;
+    left: calc(0.625em - 1px);
+    top: 1.15em;
+    bottom: calc(var(--spacing-12) * -1);
+    border-left: 2px solid var(--color-border-base);
+}
+.route-summary__mark { position: relative; z-index: 1; width: 0.875em; height: 0.875em; margin: 0.1em auto 0; box-sizing: border-box; border-radius: var(--radius-rounded); background: var(--color-bg-base); }
+.route-summary__stop--start .route-summary__mark { border: 3px solid var(--color-border-brand); }
+.route-summary__stop--via .route-summary__mark { width: 0.625em; height: 0.625em; margin-top: 0.2em; background: var(--color-icon-muted); }
+.route-summary__stop--end .route-summary__mark { background: var(--color-bg-map-pin); }   /* 도착 = 지도 핀 색 (DS-ADR-051) */
+.route-summary__label { color: var(--color-text-muted); font-size: var(--body-sm); padding-top: 0.1em; }
+.route-summary__place { min-width: 0; font-weight: var(--font-weight-medium); overflow-wrap: anywhere; }   /* 긴 장소 이름은 줄바꿈 — 자르지 않음 */
+.route-summary__time { color: var(--color-text-muted); font-size: var(--body-sm); white-space: nowrap; }
+.route-summary__vias { min-width: 0; }
+.route-summary__vias > summary { display: inline-flex; align-items: center; gap: var(--spacing-4); min-height: 1.5em; color: var(--color-text-base); font-weight: var(--font-weight-medium); cursor: pointer; list-style: none; }
+.route-summary__vias > summary::-webkit-details-marker { display: none; }
+.route-summary__vias > summary::after { content: ''; width: 0.4em; height: 0.4em; margin-left: var(--spacing-4); border-right: 2px solid var(--color-icon-muted); border-bottom: 2px solid var(--color-icon-muted); transform: rotate(45deg) translateY(-25%); }
+.route-summary__vias[open] > summary::after { transform: rotate(-135deg) translateY(-25%); }
+.route-summary__vias > summary:focus-visible { outline: 2px solid transparent; border-radius: var(--radius-item); box-shadow: 0 0 0 2px var(--color-border-focus), 0 0 0 5px var(--color-focus-ring); }
+.route-summary__vias > .route-summary__place { display: block; margin-top: var(--spacing-8); }
