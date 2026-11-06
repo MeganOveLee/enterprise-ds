@@ -283,6 +283,148 @@
     "$value": "#664100",
     "$type": "color"
   },
+  "orange-50": {
+    "$value": "#FFF0E8",
+    "$type": "color",
+    "$extensions": {
+      "eds": {
+        "before": [
+          "/* --- 장소 색 원천 램프 — 상태 색(빨강 · 노랑 · 초록 · 파랑)과 별개인 분류용 색. 장소 종류 역할만 읽고 화면 CSS는 직접 쓰지 않는다\n *     명도 단계는 green 램프와 같게(OKLCH), 색상각만 다르게 만듦 (DS-ADR-050) */",
+          "/* --- Orange (장소 색 — 시장 · 마트, DS-ADR-050) ------------------------------------- */"
+        ]
+      }
+    }
+  },
+  "orange-100": {
+    "$value": "#FEDDCB",
+    "$type": "color"
+  },
+  "orange-200": {
+    "$value": "#FDBE9A",
+    "$type": "color"
+  },
+  "orange-300": {
+    "$value": "#F69760",
+    "$type": "color"
+  },
+  "orange-400": {
+    "$value": "#EC7829",
+    "$type": "color"
+  },
+  "orange-500": {
+    "$value": "#D56405",
+    "$type": "color"
+  },
+  "orange-600": {
+    "$value": "#B65401",
+    "$type": "color"
+  },
+  "orange-700": {
+    "$value": "#934200",
+    "$type": "color"
+  },
+  "orange-800": {
+    "$value": "#723202",
+    "$type": "color"
+  },
+  "orange-900": {
+    "$value": "#522200",
+    "$type": "color"
+  },
+  "purple-50": {
+    "$value": "#F6F1FE",
+    "$type": "color",
+    "$extensions": {
+      "eds": {
+        "before": [
+          "/* --- Purple (장소 색 — 복지관 · 경로당, DS-ADR-050) ----------------------------------- */"
+        ]
+      }
+    }
+  },
+  "purple-100": {
+    "$value": "#ECDDFF",
+    "$type": "color"
+  },
+  "purple-200": {
+    "$value": "#DBBFFE",
+    "$type": "color"
+  },
+  "purple-300": {
+    "$value": "#C899FD",
+    "$type": "color"
+  },
+  "purple-400": {
+    "$value": "#B77BF5",
+    "$type": "color"
+  },
+  "purple-500": {
+    "$value": "#A464E3",
+    "$type": "color"
+  },
+  "purple-600": {
+    "$value": "#8C54C3",
+    "$type": "color"
+  },
+  "purple-700": {
+    "$value": "#71419F",
+    "$type": "color"
+  },
+  "purple-800": {
+    "$value": "#57327B",
+    "$type": "color"
+  },
+  "purple-900": {
+    "$value": "#3D2257",
+    "$type": "color"
+  },
+  "teal-50": {
+    "$value": "#E9F7F5",
+    "$type": "color",
+    "$extensions": {
+      "eds": {
+        "before": [
+          "/* --- Teal (장소 색 — 관공서 · 은행, DS-ADR-050) -------------------------------------- */"
+        ]
+      }
+    }
+  },
+  "teal-100": {
+    "$value": "#CEECE7",
+    "$type": "color"
+  },
+  "teal-200": {
+    "$value": "#9DDCD3",
+    "$type": "color"
+  },
+  "teal-300": {
+    "$value": "#5DC7BB",
+    "$type": "color"
+  },
+  "teal-400": {
+    "$value": "#08B5A7",
+    "$type": "color"
+  },
+  "teal-500": {
+    "$value": "#079E92",
+    "$type": "color"
+  },
+  "teal-600": {
+    "$value": "#09877C",
+    "$type": "color"
+  },
+  "teal-700": {
+    "$value": "#036C63",
+    "$type": "color"
+  },
+  "teal-800": {
+    "$value": "#03534C",
+    "$type": "color"
+  },
+  "teal-900": {
+    "$value": "#013A35",
+    "$type": "color"
+  },
   "transparent-12": {
     "$value": "rgba(0, 0, 0, 0.12)",
     "$type": "color",
@@ -343,6 +485,11 @@
     "$value": "{font-weight-semibold}",
     "$type": "number",
     "$description": "강조 굵기 — 큰 버튼 · 떠 있는 버튼 · 앱 상단 바 제목 · 아래 시트 제목. 기본 = SemiBold, 브랜드 파일이 덮을 수 있음(플렉시블, DS-ADR-049)"
+  },
+  "icon-stroke": {
+    "$value": "1.8",
+    "$description": "아이콘 선 굵기(24 기준 그리기 칸에서). 모바일 앱 컴포넌트의 선 아이콘이 읽음. 브랜드 파일이 덮을 수 있음 (TD-172)",
+    "$type": "number"
   },
   "heading-2xl": {
     "$value": "2.25rem",
@@ -858,6 +1005,23 @@
     },
     "$description": "선택 상태(달력·현재 페이지) = 브랜드 역할 (DS-ADR-005)"
   },
+  "color-bg-selected-strong": {
+    "$value": "{color-bg-brand}",
+    "$description": "선택 면 — 고른 칩 · 떠 있는 버튼의 채운 바탕. 기본 = 브랜드 면 (DS-ADR-051)",
+    "$extensions": {
+      "eds": {
+        "before": [
+          "/* 선택 면 (DS-ADR-051) — 행동(주 버튼 = 브랜드 면)과 선택(고른 칩 · 떠 있는 버튼)을 다른 색으로 쓸 수 있게.\n * 기본값 = 브랜드 면 · 브랜드 면 위 글자라 브랜드 파일이 덮지 않으면 지금과 같다. 하단 탭 지금 화면 표시는 쓰지 않는다 */"
+        ]
+      }
+    }
+  },
+  "color-text-on-selected-strong": {
+    "$value": "{color-text-on-color}"
+  },
+  "color-icon-on-selected-strong": {
+    "$value": "{color-icon-on-color}"
+  },
   "color-bg-overlay": {
     "$value": "{transparent-32}",
     "$extensions": {
@@ -1322,6 +1486,229 @@
   "chart-track": {
     "$value": "{brand-50}",
     "$description": "링 바닥(빈 구간)"
+  },
+  "color-bg-place-home-subtle": {
+    "$value": "{yellow-50}",
+    "$extensions": {
+      "eds": {
+        "before": [
+          "/* 장소 종류 색 (DS-ADR-050) — 장소 칩 · 장소 아이콘 전용. 상태 색(danger · warning · success · info)을 빌려 쓰지 않는다\n *   종류 = home 집 · medical 병원 · 약국 · market 시장 · 마트 · welfare 복지관 · 경로당 · public 관공서 · 은행\n *   역할 = -subtle 옅은 바탕 · (없음) 채움 · border 테두리 · icon 아이콘 · text-on 채움 위 글자\n *   대비: 테두리 · 채움 ↔ 화면 바탕 3:1, 채움 위 글자 · 옅은 바탕 위 글자 4.5:1 (라이트 · 다크)\n *   다크 값 = 같은 이름 + -dark 칸. 브랜드 파일이 둘 다 덮을 수 있다 (다크 방식이 브랜드마다 다를 수 있어서) */\n/* 집 */"
+        ]
+      }
+    }
+  },
+  "color-bg-place-home": {
+    "$value": "{yellow-700}"
+  },
+  "color-border-place-home": {
+    "$value": "{yellow-700}"
+  },
+  "color-icon-place-home": {
+    "$value": "{yellow-700}"
+  },
+  "color-text-on-place-home": {
+    "$value": "{neutral-950}"
+  },
+  "color-bg-place-medical-subtle": {
+    "$value": "{green-50}",
+    "$extensions": {
+      "eds": {
+        "before": [
+          "/* 병원 · 약국 */"
+        ]
+      }
+    }
+  },
+  "color-bg-place-medical": {
+    "$value": "{green-700}"
+  },
+  "color-border-place-medical": {
+    "$value": "{green-600}"
+  },
+  "color-icon-place-medical": {
+    "$value": "{green-600}"
+  },
+  "color-text-on-place-medical": {
+    "$value": "{white}"
+  },
+  "color-bg-place-market-subtle": {
+    "$value": "{orange-50}",
+    "$extensions": {
+      "eds": {
+        "before": [
+          "/* 시장 · 마트 */"
+        ]
+      }
+    }
+  },
+  "color-bg-place-market": {
+    "$value": "{orange-600}"
+  },
+  "color-border-place-market": {
+    "$value": "{orange-600}"
+  },
+  "color-icon-place-market": {
+    "$value": "{orange-600}"
+  },
+  "color-text-on-place-market": {
+    "$value": "{white}"
+  },
+  "color-bg-place-welfare-subtle": {
+    "$value": "{purple-50}",
+    "$extensions": {
+      "eds": {
+        "before": [
+          "/* 복지관 · 경로당 */"
+        ]
+      }
+    }
+  },
+  "color-bg-place-welfare": {
+    "$value": "{purple-600}"
+  },
+  "color-border-place-welfare": {
+    "$value": "{purple-600}"
+  },
+  "color-icon-place-welfare": {
+    "$value": "{purple-600}"
+  },
+  "color-text-on-place-welfare": {
+    "$value": "{white}"
+  },
+  "color-bg-place-public-subtle": {
+    "$value": "{teal-50}",
+    "$extensions": {
+      "eds": {
+        "before": [
+          "/* 관공서 · 은행 */"
+        ]
+      }
+    }
+  },
+  "color-bg-place-public": {
+    "$value": "{teal-700}"
+  },
+  "color-border-place-public": {
+    "$value": "{teal-600}"
+  },
+  "color-icon-place-public": {
+    "$value": "{teal-600}"
+  },
+  "color-text-on-place-public": {
+    "$value": "{white}"
+  },
+  "color-bg-place-home-subtle-dark": {
+    "$value": "{yellow-900}",
+    "$extensions": {
+      "eds": {
+        "before": [
+          "/* 다크 칸 — body.dark-mode 가 읽는 값. :root 에 두어 브랜드 파일이 다크 값도 덮을 수 있게 (DS-ADR-050 · 051) */"
+        ]
+      }
+    }
+  },
+  "color-bg-place-home-dark": {
+    "$value": "{yellow-300}"
+  },
+  "color-border-place-home-dark": {
+    "$value": "{yellow-400}"
+  },
+  "color-icon-place-home-dark": {
+    "$value": "{yellow-300}"
+  },
+  "color-text-on-place-home-dark": {
+    "$value": "{neutral-950}"
+  },
+  "color-bg-place-medical-subtle-dark": {
+    "$value": "{green-900}"
+  },
+  "color-bg-place-medical-dark": {
+    "$value": "{green-300}"
+  },
+  "color-border-place-medical-dark": {
+    "$value": "{green-400}"
+  },
+  "color-icon-place-medical-dark": {
+    "$value": "{green-300}"
+  },
+  "color-text-on-place-medical-dark": {
+    "$value": "{neutral-950}"
+  },
+  "color-bg-place-market-subtle-dark": {
+    "$value": "{orange-900}"
+  },
+  "color-bg-place-market-dark": {
+    "$value": "{orange-300}"
+  },
+  "color-border-place-market-dark": {
+    "$value": "{orange-400}"
+  },
+  "color-icon-place-market-dark": {
+    "$value": "{orange-300}"
+  },
+  "color-text-on-place-market-dark": {
+    "$value": "{neutral-950}"
+  },
+  "color-bg-place-welfare-subtle-dark": {
+    "$value": "{purple-900}"
+  },
+  "color-bg-place-welfare-dark": {
+    "$value": "{purple-300}"
+  },
+  "color-border-place-welfare-dark": {
+    "$value": "{purple-400}"
+  },
+  "color-icon-place-welfare-dark": {
+    "$value": "{purple-300}"
+  },
+  "color-text-on-place-welfare-dark": {
+    "$value": "{neutral-950}"
+  },
+  "color-bg-place-public-subtle-dark": {
+    "$value": "{teal-900}"
+  },
+  "color-bg-place-public-dark": {
+    "$value": "{teal-300}"
+  },
+  "color-border-place-public-dark": {
+    "$value": "{teal-400}"
+  },
+  "color-icon-place-public-dark": {
+    "$value": "{teal-300}"
+  },
+  "color-text-on-place-public-dark": {
+    "$value": "{neutral-950}"
+  },
+  "color-bg-selected-strong-dark": {
+    "$value": "{brand-300}",
+    "$description": "다크 칸 — 밝은 브랜드 단계로 채워 카드 · 바닥과 3:1 (브랜드 면 500은 다크 카드와 2.8:1)",
+    "$extensions": {
+      "eds": {
+        "before": [
+          "/* 선택 면 다크 칸 (DS-ADR-051) — 다크에서는 면을 밝게 채우고 글자를 진하게. 브랜드 파일이 단계를 덮을 수 있다 */"
+        ]
+      }
+    }
+  },
+  "color-text-on-selected-strong-dark": {
+    "$value": "{neutral-950}"
+  },
+  "color-icon-on-selected-strong-dark": {
+    "$value": "{neutral-950}"
+  },
+  "color-bg-map-pin": {
+    "$value": "{red-600}",
+    "$description": "지도 위 고른 위치 핀 · 이름표. 오류 색(--color-bg-danger)과 따로 (DS-ADR-051, 모바일 앱 Blocks)",
+    "$extensions": {
+      "eds": {
+        "before": [
+          "/* 지도 핀 (DS-ADR-051) — 모바일 앱 Blocks 전용. 지도 그림 위에 놓이므로 다크도 같은 값 */"
+        ]
+      }
+    }
+  },
+  "color-text-on-map-pin": {
+    "$value": "{white}"
   },
   "color-progress-done-start": {
     "$value": "#34D399",
