@@ -4693,6 +4693,14 @@ body.dark-mode .empty-illo__badge  { fill: var(--color-bg-muted); }
 .sheet .modal__body .list-item[role="radio"] { padding-inline: var(--spacing-12); border-radius: var(--radius-item); }   /* 고른 줄 바탕이 글자에 붙지 않게 */
 .sheet .modal__footer { flex-direction: column; padding-top: var(--spacing-0); }
 .sheet .modal__footer > .btn { width: 100%; }
+/* 시안 B · 손잡이 — 위 가운데 짧은 막대로 「끌 수 있는 층」임을 보임. 닫기 버튼은 그대로 둠(끌기만으로 닫지 않음, WCAG 2.5.7)
+ *   <div class="modal__dialog sheet sheet--handle"><span class="sheet__handle" aria-hidden="true"></span> 머리 · 본문 · 아래 </div>
+ *   끌어서 높이 바꾸기는 앱(네이티브)이 맡음 — 웹 마크업은 모양만 */
+.sheet--handle { padding-top: var(--spacing-8); }
+.sheet__handle { align-self: center; width: 2.5em; height: 0.3em; flex: none; border-radius: var(--radius-rounded); background: var(--color-border-base); }
+/* 시안 C · 화면 가득 — 고를 것이 많아 위 덮개를 남길 자리가 없을 때. 머리에 닫기, 위 모서리 없음 */
+.modal--sheet > .sheet--full { height: 100%; max-height: none; border-radius: 0; }
+.sheet--full .modal__body { flex: 1; overflow-y: auto; }
 
 /* 앱 상단 바 — 뒤로(앞) · 제목 · 동작 하나(뒤)
  *   <header class="app-bar"><div class="app-bar__start">뒤로 .btn--icon</div><h1 class="app-bar__title">…</h1><div class="app-bar__end">동작</div></header>
@@ -4773,6 +4781,27 @@ body.dark-mode .empty-illo__badge  { fill: var(--color-bg-muted); }
 .bottom-nav__item:hover { color: var(--color-text-base); }
 .bottom-nav__item[aria-current="page"] { color: var(--color-text-brand); font-weight: var(--font-weight-semibold); }
 .bottom-nav__item:focus-visible { outline: 2px solid transparent; box-shadow: inset 0 0 0 2px var(--color-border-focus); }
+/* 아이콘 짝 — 선 아이콘(.bottom-nav__icon) + 같은 모양 채운 아이콘(.bottom-nav__icon--on). 지금 화면만 채운 아이콘(조사-8 2-2)
+ *   <a class="bottom-nav__item" aria-current="page"><span class="bottom-nav__icons"><svg class="bottom-nav__icon"/><svg class="bottom-nav__icon--on"/></span>호출</a> */
+.bottom-nav__icons { position: relative; display: inline-flex; align-items: center; justify-content: center; }
+.bottom-nav__icon--on { display: none; }
+.bottom-nav__item[aria-current="page"] .bottom-nav__icon { display: none; }
+.bottom-nav__item[aria-current="page"] .bottom-nav__icon--on { display: block; }
+/* 시안 B · 알약 표시 — 지금 화면 아이콘 뒤에 옅은 알약 바탕(Material 3 active indicator) */
+.bottom-nav--indicator .bottom-nav__icons { padding: var(--spacing-2) var(--spacing-16); border-radius: var(--radius-rounded); }
+.bottom-nav--indicator .bottom-nav__item[aria-current="page"] .bottom-nav__icons { background: var(--color-bg-brand-subtle); }
+.bottom-nav--indicator .bottom-nav__item[aria-current="page"] { color: var(--color-text-base); }
+.bottom-nav--indicator .bottom-nav__item[aria-current="page"] svg { color: var(--color-icon-brand); }
+/* 시안 C · 떠 있는 알약 — 바닥에서 띄운 둥근 막대(지도 화면 위). 지금 화면 = 글자 색 채운 아이콘 + 굵은 글자(선택 면을 쓰지 않음, DS-ADR-051) */
+.bottom-nav--floating {
+    margin: 0 var(--spacing-16) calc(var(--spacing-12) + env(safe-area-inset-bottom, 0px));
+    padding: var(--spacing-0) var(--spacing-8);
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--radius-rounded);
+    box-shadow: var(--shadow-popover);
+}
+.bottom-nav--floating .bottom-nav__item { min-height: var(--size-touch); padding-block: var(--spacing-8); }
+.bottom-nav--floating .bottom-nav__item[aria-current="page"] { color: var(--color-text-base); font-weight: var(--font-weight-emphasis); }
 
 /* 목록 행 — 앞 아이콘 · 제목 + 보조 글자 · 뒤 값 · 화살표. 누르는 행은 a · button 으로(행 전체가 누르는 곳)
  *   <ul class="list-items"><li><a class="list-item" href="…"><span class="list-item__icon">svg</span>
@@ -4802,11 +4831,38 @@ body.dark-mode .empty-illo__badge  { fill: var(--color-bg-muted); }
 :is(a, button).list-item:focus-visible { outline: 2px solid transparent; box-shadow: inset 0 0 0 2px var(--color-border-focus); }
 .list-item__icon { display: flex; flex: none; color: var(--color-icon-muted); }
 .list-item__icon svg { width: 1.5em; height: 1.5em; }
+.list-item__icon[class*="place--"] { color: var(--place-icon); }   /* 장소 아이콘 = 장소 색 채운 모양 (DS-ADR-050) */
 .list-item__text { display: flex; flex: 1; min-width: 0; flex-direction: column; gap: var(--spacing-2); }
 .list-item__title { font-size: var(--body-md); font-weight: var(--font-weight-medium); line-height: var(--line-height-tight); }
 .list-item__desc { font-size: var(--body-sm); color: var(--color-text-muted); line-height: var(--line-height-base); }
 .list-item__end { display: flex; flex: none; align-items: center; gap: var(--spacing-4); font-size: var(--body-sm); color: var(--color-text-muted); }
 .list-item__end svg { width: 1.25em; height: 1.25em; color: var(--color-icon-muted); }
+/* 시안 B · 묶음 카드 — 행을 둥근 상자 하나에 담음(설정 · 즐겨찾기처럼 몇 줄 안 되는 목록) */
+.list-items--grouped { overflow: hidden; border: 1px solid var(--color-border-base); border-radius: var(--radius-card); background: var(--color-bg-base); }
+/* 시안 C · 행마다 카드 + 뒤 원형 동작 버튼 — 줄마다 따로 하는 일이 있을 때(다시 부르기). 행 누르기와 동작 버튼은 따로 둠(버튼 안에 버튼 금지)
+ *   <ul class="list-items list-items--cards"><li><a class="list-item" href="…">…</a><button type="button" class="list-item__action" aria-label="이천시청 다시 부르기">svg</button></li></ul> */
+.list-items--cards { display: grid; gap: var(--spacing-8); }
+.list-items--cards > li { display: flex; align-items: center; overflow: hidden; border: 1px solid var(--color-border-base); border-radius: var(--radius-card); background: var(--color-bg-base); }
+.list-items--cards > li > .list-item { flex: 1; min-width: 0; border-bottom: none; }
+.list-item__action {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: var(--size-touch);
+    height: var(--size-touch);
+    margin-right: var(--spacing-12);
+    padding: 0;
+    border: 1px solid var(--color-border-input);
+    border-radius: var(--radius-rounded);
+    background: var(--color-bg-base);
+    color: var(--color-icon-base);
+    font: inherit;
+    cursor: pointer;
+}
+.list-item__action svg { width: 1.25em; height: 1.25em; stroke-width: var(--icon-stroke); }
+.list-item__action:hover { background: var(--color-bg-muted); }
+.list-item__action:focus-visible { outline: 2px solid transparent; box-shadow: 0 0 0 2px var(--color-border-focus), 0 0 0 5px var(--color-focus-ring); }
 
 /* 장소 종류 (DS-ADR-050) — 장소 칩 · 장소 타일 · 장소 아이콘이 함께 쓰는 종류 클래스. 색은 장소 종류 토큰만 읽음(상태 색 아님)
  *   .place--home 집 · .place--medical 병원 · 약국 · .place--market 시장 · 마트 · .place--welfare 복지관 · 경로당 · .place--public 관공서 · 은행
@@ -4961,8 +5017,21 @@ body.dark-mode .empty-illo__badge  { fill: var(--color-bg-muted); }
     font-size: var(--body-md);
     font-weight: var(--font-weight-emphasis);   /* 강조 굵기 — 브랜드가 바꿈(Mobility 700, DS-ADR-049) */
 }
+.fab.btn--primary {   /* 떠 있는 버튼 = 선택 면 — 주 버튼(브랜드 면)과 다른 색을 쓰는 브랜드가 있음 (DS-ADR-051) */
+    --btn-solid:         var(--color-bg-selected-strong);
+    --btn-solid-hover:   color-mix(in srgb, var(--color-bg-selected-strong) 88%, var(--color-text-base));
+    --btn-solid-pressed: color-mix(in srgb, var(--color-bg-selected-strong) 76%, var(--color-text-base));
+    --btn-on-solid:      var(--color-text-on-selected-strong);
+}
 .fab svg { width: 1.43em; height: 1.43em; }
 .fab--icon { width: var(--size-btn-lg); padding: 0; }
+/* 시안 C · 펼침 — 아이콘 + 글자로 떠 있다가, 목록을 내리는 동안 아이콘만으로 줄고 멈추면 글자가 다시 보임(js/app-bar.js, Material 3 Extended FAB)
+ *   <button class="btn btn--primary btn--filled fab fab--extended" data-fab-scroll="#목록영역" aria-label="버스 부르기"><svg/><span class="fab__label">버스 부르기</span></button>
+ *   줄어도 이름이 남게 aria-label 을 둠 */
+.fab__label { overflow: hidden; max-width: 12em; transition: max-width var(--duration-base) var(--ease-standard), opacity var(--duration-base) var(--ease-standard); }
+.fab--extended.is-collapsed { width: var(--size-btn-lg); padding: 0; gap: 0; }
+.fab--extended.is-collapsed .fab__label { max-width: 0; opacity: 0; }
+@media (prefers-reduced-motion: reduce) { .fab__label { transition: none; } }
 
 /* 아래 고정 버튼 줄 — 화면의 주 행동을 엄지 닿는 아래에 고정. 나란한 버튼이 한 줄에 안 들어가면 한 줄에 하나씩(세로)
  *   <div class="btn-bar"><button class="btn btn--secondary btn--outlined btn--lg">취소</button><button class="btn btn--primary btn--filled btn--lg">호출하기</button></div>

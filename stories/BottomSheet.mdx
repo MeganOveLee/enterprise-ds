@@ -12,13 +12,19 @@ import * as S from './BottomSheet.stories.js';
 <thead><tr><th>구분</th><th>클래스 · 속성</th><th>설명</th></tr></thead>
 <tbody>
 <tr><td><b>덮개 · 창</b></td><td><code>.modal.modal--sheet</code> · <code>.modal__dialog.sheet</code></td><td>Modal과 같은 덮개 · 마크업입니다. 창만 화면 아래에 붙고 폭을 다 씁니다. 높이는 화면의 90%까지이고, 넘치면 창 안에서 스크롤합니다.</td></tr>
-<tr><td><b>머리</b></td><td><code>.modal__header</code> · <code>.modal__title</code></td><td>질문 한 줄 + 닫기 버튼입니다. 끌어 내려 닫기는 두지 않고 닫기 버튼 · Esc로 닫습니다.</td></tr>
+<tr><td><b>머리</b></td><td><code>.modal__header</code> · <code>.modal__title</code></td><td>질문 한 줄 + 닫기 버튼입니다. 닫기 버튼 · Esc로 닫습니다. 손잡이가 있는 시안도 닫기 버튼을 둡니다(끌기만으로 닫지 않음, WCAG 2.5.7).</td></tr>
+<tr><td><b>모양 시안</b></td><td><code>.sheet--handle</code> · <code>.sheet__handle</code> · <code>.sheet--full</code></td><td>B = 위 가운데 손잡이(끌 수 있는 층임을 보임, 끌기 동작은 앱이 맡음), C = 화면 가득(위 덮개 없이 고를 것이 많을 때)입니다.</td></tr>
 <tr><td><b>선택지</b></td><td><code>.modal__body</code> 안 <code>role="radiogroup"</code></td><td>하나를 고릅니다. 고른 것은 선택 바탕 · 체크 또는 선택 면으로 보입니다. 방향키로 옮기며 고르고, Tab은 고른 것 하나에만 멈춥니다.</td></tr>
 <tr><td><b>주 행동</b></td><td><code>.modal__footer</code> · <code>.btn--lg</code> · <code>data-choice-for</code></td><td>폭을 다 쓰는 큰 버튼 하나입니다. 고를 때마다 버튼 글자에 고른 값이 들어갑니다(「2명 호출하기」). 확인 창은 띄우지 않고, 부른 뒤 취소할 수 있게 합니다.</td></tr>
 <tr><td><b>동작</b></td><td><code>js/modal.js</code> · <code>js/chips.js</code> · <code>js/number-input.js</code></td><td>여는 버튼 <code>data-modal-open</code> · 닫는 버튼 <code>data-modal-close</code>, 열린 동안 포커스는 창 안에서만 돕니다. Modal과 같습니다. 고르기 · 숫자 버튼 동작은 각 스크립트가 맡습니다.</td></tr>
 <tr><td><b>브랜드가 바꾸는 것</b></td><td><code>--radius-popover</code> · <code>--shadow-modal</code> · <code>--heading-sm</code> · <code>--size-btn-lg</code> · 색 토큰</td><td>위 모서리 · 그림자 · 제목 크기 · 버튼 높이 · 색입니다. 인원 고르기 시안은 Mobility = 1 목록 행, Default · OOTB = 3 나란한 칸(좁은 화면이 아니면 한 줄에 들어감)입니다.</td></tr>
 </tbody>
 </table>
+</Section>
+<Section title="시트 모양 시안" en="Options">
+<Card of={S.닫기_버튼} title="A · 닫기 버튼" tag="추천" desc="선택지 하나를 고르고 주 행동으로 마칠 때 사용합니다." basis="한 번 눌러 닫는 버튼이 끌기보다 쉽습니다. 위 덮개가 보여 앞 화면 위에 뜬 층임을 알 수 있습니다(NN/g Bottom sheets)." />
+<Card of={S.손잡이} title="B · 손잡이" desc="기본보다 시트 높이를 끌어서 바꾸는 앱 화면에서 사용합니다." basis="기존 앱 · 네이버지도의 아래 시트에 손잡이가 있습니다. 끌기는 닫기 버튼과 함께 둡니다(Material 3 Bottom sheets · WCAG 2.5.7)." />
+<Card of={S.화면_가득} title="C · 화면 가득" desc="기본보다 고를 것이 많아 화면 전체가 필요할 때 사용합니다." basis="Material 3 full-screen dialog와 같은 쓰임입니다. 머리의 닫기로 돌아갑니다." />
 </Section>
 <Section title="인원 고르기 시안" en="Options">
 <Card of={S.인원_목록_행} title="1 · 목록 행" tag="추천" desc="선택지가 서넛이고 줄마다 뜻을 적어야 할 때 사용합니다." basis="한 번 눌러 끝나고 누름 영역이 가장 크며 「보호자와 함께」처럼 뜻을 적을 수 있습니다. 고령자는 넘겨 고르는 휠보다 라디오 목록을 빨리 고릅니다(20.9초 · 12.5초, 조사-8 2-5)." />

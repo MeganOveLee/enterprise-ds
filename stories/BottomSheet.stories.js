@@ -23,11 +23,12 @@ const numberBody = (id) => '<p class="sb-label" id="' + id + '-label">타시는 
 const seg = (v, on = false) => '<button type="button" class="segmented__item" role="radio" aria-checked="' + on + '"' + (on ? '' : ' tabindex="-1"') + ' data-value="' + v + '">' + v + '</button>';
 const segBody = (id) => '<div class="segmented" role="radiogroup" id="' + id + '" aria-label="탑승 인원">' + seg('1명', true) + seg('2명') + seg('3명') + seg('4명') + '</div>';
 
-const sheet = ({ id, live = false, kind = 'list' }) => {
+const sheet = ({ id, live = false, kind = 'list', look = '' }) => {
   const choice = id + '-choice';
   const inner = kind === 'number' ? numberBody(choice) : kind === 'segmented' ? segBody(choice) : listBody(choice);
   return '<div class="modal modal--sheet" id="' + id + '"' + (live ? ' hidden' : '') + '>' +
-    '<div class="modal__dialog sheet" role="dialog"' + (live ? ' aria-modal="true"' : '') + ' aria-labelledby="' + id + '-title">' +
+    '<div class="modal__dialog sheet' + (look ? ' sheet--' + look : '') + '" role="dialog"' + (live ? ' aria-modal="true"' : '') + ' aria-labelledby="' + id + '-title">' +
+    (look === 'handle' ? '<span class="sheet__handle" aria-hidden="true"></span>' : '') +
     '<div class="modal__header"><h2 class="modal__title" id="' + id + '-title">몇 분이 타시나요?</h2>' + iconBtn('close', '닫기', ' data-modal-close="cancel"') + '</div>' +
     '<div class="modal__body">' + inner + '</div>' +
     '<div class="modal__footer">' + callBtn(choice, '1명') + '</div>' +
@@ -52,6 +53,10 @@ export const 인원_나란한_칸 = {
   parameters: { docs: { source: { code: sheet({ id: 'ride-sheet', live: true, kind: 'segmented' }) } } },
   render: () => phone(body('') + sheet({ id: 'ride-sheet-seg', kind: 'segmented' }), 'sb-phone--tall'),
 };
+// 시트 모양 시안 — A 닫기 버튼(추천) · B 손잡이 · C 화면 가득 (조사-9 1장)
+export const 닫기_버튼 = { render: () => phone(body('') + sheet({ id: 'sheet-a' }), 'sb-phone--tall') };
+export const 손잡이 = { render: () => phone(body('') + sheet({ id: 'sheet-b', look: 'handle' }), 'sb-phone--tall') };
+export const 화면_가득 = { render: () => phone(body('') + sheet({ id: 'sheet-c', look: 'full' }), 'sb-phone--tall') };
 export const 직접_열어_보기 = {
   render: () => phone(body('<button type="button" class="btn btn--primary btn--filled btn--lg" data-modal-open="ride-sheet-live">탑승 인원 고르기</button>') + sheet({ id: 'ride-sheet-live', live: true }), 'sb-phone--tall'),
 };

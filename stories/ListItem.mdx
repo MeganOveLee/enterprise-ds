@@ -16,14 +16,20 @@ import * as S from './ListItem.stories.js';
 <tr><td><b>앞 아이콘</b></td><td><code>.list-item__icon</code></td><td>장소 · 종류를 알리는 아이콘입니다. 없어도 됩니다.</td></tr>
 <tr><td><b>글자</b></td><td><code>.list-item__title</code> · <code>.list-item__desc</code></td><td>제목 한 줄 + 보조 글자(주소 · 날짜 · 인원)입니다.</td></tr>
 <tr><td><b>뒤 칸</b></td><td><code>.list-item__end</code></td><td>값(요금 · 상태)과 들어가는 화살표입니다.</td></tr>
-<tr><td><b>브랜드가 바꾸는 것</b></td><td><code>--size-touch</code> · <code>--body-md</code> · <code>--body-sm</code> · 색 토큰</td><td>누름 높이 · 글자 크기 · 색입니다. 행의 칸 구성은 바꾸지 않습니다.</td></tr>
+<tr><td><b>장소 아이콘</b></td><td><code>.list-item__icon.place--{종류}</code></td><td>장소 종류 색 채운 아이콘입니다(Chip과 같은 종류 클래스).</td></tr>
+<tr><td><b>고르는 행</b></td><td><code>role="radio"</code> · <code>aria-checked</code></td><td>아래 시트 안에서 하나를 고르는 행입니다. 쓰임은 Overlay › Bottom Sheet 「인원 고르기」에 있습니다.</td></tr>
+<tr><td><b>시안</b></td><td><code>.list-items--grouped</code> · <code>.list-items--cards</code> · <code>.list-item__action</code></td><td>B = 행을 둥근 상자 하나에 담음, C = 행마다 카드 + 뒤 원형 동작 버튼입니다. C의 동작 버튼은 행과 따로 둡니다(누르는 곳 안에 누르는 곳을 넣지 않음).</td></tr>
+<tr><td><b>브랜드가 바꾸는 것</b></td><td><code>--size-touch</code> · <code>--body-md</code> · <code>--body-sm</code> · <code>--radius-card</code> · 색 토큰</td><td>누름 높이 · 글자 크기 · 카드 모서리 · 색입니다. 행의 칸 구성은 바꾸지 않습니다. 시안은 Mobility = A · C(최근 이용), Default · OOTB = A입니다.</td></tr>
 </tbody>
 </table>
 </Section>
+<Section title="시안" en="Options">
+<Card of={S.구분선_행} title="A · 구분선 행" tag="추천" desc="장소 목록에서 하나를 눌러 들어갈 때 사용합니다." basis="화면 폭을 다 쓰는 행이 누름 영역이 가장 넓습니다. 장소 아이콘은 색 채운 모양 + 글자입니다(조사-8 2-2 · 2-3)." />
+<Card of={S.묶음_카드} title="B · 묶음 카드" desc="기본보다 몇 줄 안 되는 목록을 다른 내용과 나눠 보일 때 사용합니다." basis="Apple inset grouped list와 같은 방식입니다. 둥근 상자 하나가 목록의 범위를 보여 줍니다." />
+<Card of={S.행마다_카드} title="C · 행마다 카드 + 동작 버튼" desc="기본보다 줄마다 따로 하는 일(다시 부르기)이 있을 때 사용합니다." basis="네이버지도 「내 이력」의 행 카드 + 원형 동작 버튼입니다. 행 누르기(상세)와 동작 버튼을 따로 둡니다(조사-8 1장 레퍼런스)." />
+</Section>
 <Section title="예시" en="Examples">
-<Card of={S.즐겨찾는_곳} title="즐겨찾는 곳" desc="장소 목록에서 하나를 눌러 들어갈 때 사용합니다." />
 <Card of={S.이용_내역} title="이용 내역" desc="기본보다 줄마다 값(요금 · 상태)을 함께 보일 때 사용합니다." />
-<Card of={S.고르는_행} title="고르는 행" desc="기본보다 아래 시트 안에서 선택지 하나를 고를 때 사용합니다." />
 </Section>
 </div>
 </Unstyled>

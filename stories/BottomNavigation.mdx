@@ -13,10 +13,17 @@ import * as S from './BottomNavigation.stories.js';
 <tbody>
 <tr><td><b>탭 줄</b></td><td><code>nav.bottom-nav</code> · <code>aria-label</code></td><td>화면 아래에 붙습니다. 휴대폰 아래 안전 영역만큼 띄웁니다.</td></tr>
 <tr><td><b>항목</b></td><td><code>a.bottom-nav__item</code></td><td>아이콘 위 · 글자 아래입니다. 글자를 빼지 않습니다. 항목은 셋에서 다섯입니다. 폭은 같게 나눕니다.</td></tr>
-<tr><td><b>지금 화면</b></td><td><code>aria-current="page"</code></td><td>브랜드 글자색 · 반굵은 글자입니다. 색만이 아니라 굵기로도 구분합니다.</td></tr>
-<tr><td><b>브랜드가 바꾸는 것</b></td><td><code>--size-touch</code> · <code>--body-xs</code> · <code>--color-text-brand</code></td><td>누름 높이 · 글자 크기 · 지금 화면 색입니다. 아이콘은 글자 크기를 따라 커집니다.</td></tr>
+<tr><td><b>지금 화면</b></td><td><code>aria-current="page"</code></td><td>채운 아이콘 · 굵은 글자입니다. 색만이 아니라 아이콘 모양 · 굵기로도 구분합니다.</td></tr>
+<tr><td><b>아이콘 짝</b></td><td><code>.bottom-nav__icon</code> · <code>.bottom-nav__icon--on</code></td><td>같은 모양의 선 아이콘과 채운 아이콘을 함께 두고, 지금 화면만 채운 아이콘을 보입니다.</td></tr>
+<tr><td><b>시안</b></td><td><code>.bottom-nav--indicator</code> · <code>.bottom-nav--floating</code></td><td>B = 지금 화면 아이콘 뒤 옅은 알약 바탕, C = 바닥에서 띄운 둥근 막대입니다. C의 지금 화면은 브랜드 색이 아니라 글자 색 채운 아이콘입니다(선택 면을 쓰지 않음).</td></tr>
+<tr><td><b>브랜드가 바꾸는 것</b></td><td><code>--size-touch</code> · <code>--body-sm</code> · <code>--color-text-brand</code> · <code>--icon-stroke</code></td><td>누름 높이 · 글자 크기 · 지금 화면 색 · 아이콘 선 굵기입니다. 아이콘은 글자 크기를 따라 커집니다. 시안은 Mobility = C(지도 화면 위) 또는 A, Default · OOTB = A입니다.</td></tr>
 </tbody>
 </table>
+</Section>
+<Section title="시안" en="Options">
+<Card of={S.막대} title="A · 막대" tag="추천" desc="앱의 첫 단계 화면 사이를 오갈 때 사용합니다." basis="Apple HIG 탭 막대는 지금 화면에 채운 아이콘을 권합니다. 선 · 채움 짝은 같은 모양이라 알아보기 쉽습니다(조사-8 2-2)." />
+<Card of={S.알약_표시} title="B · 알약 표시" desc="기본보다 지금 화면을 더 크게 표시할 때 사용합니다." basis="Material 3 Navigation bar의 active indicator입니다. 아이콘 뒤 바탕으로 누름 영역이 보입니다." />
+<Card of={S.떠_있는_알약} title="C · 떠 있는 알약" desc="기본보다 지도처럼 화면 끝까지 그림이 차는 화면에서 사용합니다." basis="네이버지도 6.12의 떠 있는 하단 탭 · 기존 앱의 글자 색 채운 아이콘(조사-8 1장 · Mobility 결정 20)입니다." />
 </Section>
 <Section title="예시" en="Examples">
 <Card of={S.항목_셋} title="항목 셋" desc="앱의 첫 단계 화면이 셋일 때 사용합니다." />
