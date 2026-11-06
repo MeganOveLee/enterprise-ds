@@ -1,12 +1,13 @@
 import { Meta, Unstyled } from '@storybook/addon-docs/blocks';
-import { PageHead, Section } from './_blocks.js';
+import { PageHead, Section, BrandCard } from './_blocks.js';
+import * as S from './Screens.stories.js';
 import figmaIcon from '../assets/links/figma.svg';
 import githubIcon from '../assets/links/github.svg';
 
 <Meta title="소개" />
 
 {/* 소개 = 이 디자인 시스템이 무엇이고 어떻게 만들었나 — 처음 보는 사람 · 평가하는 사람이 읽는다. 쓰는 법(설치 · 클래스 · 지원 범위)은 「시작하기」 한 곳에만.
-    흐름: 바로 가기 → 목표 · 결과 · 내 기여 → 어려웠던 점과 푼 방법 → 이전 버전과 비교 → 운영 방식 → 구성 → 적용 환경 */}
+    흐름: 바로 가기 → 화면 → 목표 · 결과 · 내 기여 → 어려웠던 점과 푼 방법 → 이전 버전과 비교 → 운영 방식 → 구성 → 적용 환경 */}
 
 <Unstyled>
 <div className="ds-page">
@@ -18,6 +19,8 @@ import githubIcon from '../assets/links/github.svg';
 <li><a className="ds-quick__a" href="https://github.com/MeganOveLee/enterprise-ds" target="_blank" rel="noreferrer"><img src={githubIcon} alt="" width="18" height="18" />GitHub ↗</a></li>
 </ul>
 </PageHead>
+{/* 화면 (TD-186) — 실제 화면 한 장. 버튼 = 맨 위 도구 막대의 브랜드와 같은 값. 웹 화면이라 웹 브랜드만 */}
+<BrandCard of={S.문서_검색} title="문서 검색 화면" brands={[['default', 'Default'], ['ootb', 'OOTB']]} />
 {/* 첫머리 (TD-117) — 목표 · 결과 · 내 기여를 한 상자에. 결과 = 키워드 네 칸(근거 결정 기록 링크).
     「개발 코드를 건드리지 않고」 → 서버 로직은 그대로, 화면 층(마크업 클래스 · CSS)만 — JSP 마크업은 클래스를 더하고 감싸는 태그를 넣었으므로.
     내 기여 = 디자이너가 한 일만(역할 분담은 「운영 방식」). 「직접 수정 · 자체 구현」 같은 혼자 쓴 것으로 읽히는 말은 쓰지 않는다 */}

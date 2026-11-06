@@ -3,6 +3,7 @@
 import React from 'react';
 import { Story, Source } from '@storybook/addon-docs/blocks';
 import { addons } from 'storybook/preview-api';
+import resolved from '../tokens/build/resolved.json';
 
 const h = React.createElement;
 
@@ -116,4 +117,36 @@ export const Toolbar = ({ figmaIcon }) => {
     hint ? h('span', { className: 'ds-tb__hint', 'aria-hidden': true }, '눌러서 직접 선택합니다') : null,
     h('span', { className: 'ds-tb__deco ds-tb__end', 'aria-hidden': true }, deco('full')));
   return h('div', { className: 'ds-tbrow' }, bar);
+};
+
+// 소개 첫 화면 — 실제 화면 한 장 + 브랜드 버튼(TD-186). 버튼은 맨 위 도구 막대와 같은 값을 바꾼다(updateGlobals).
+// 웹 화면이라 웹 브랜드만 둔다 — 모바일 브랜드는 모바일 화면이 생기면 같은 자리에 더한다
+// 버튼 색 = 각 브랜드 라이트 모드의 color-bg-brand · color-text-on-color(tokens/build/resolved.json). 클래스 규칙으로 한 번만 넣는다
+const brandSwatchCss = (brands) => brands.map(([v]) => {
+  const t = resolved[v + '/light'] || {};
+  return '.ds-brandsw__btn[data-brand="' + v + '"] { --ds-sw-brand: ' + t['color-bg-brand'] + '; --ds-sw-on: ' + t['color-text-on-color'] + '; }';
+}).join('\n');
+export const BrandCard = ({ of, title, brands }) => {
+  const [brand, setBrand] = React.useState(() => readGlobals().brand);
+  React.useEffect(() => {
+    let el = document.getElementById('ds-brandsw-colors');
+    if (!el) { el = document.createElement('style'); el.id = 'ds-brandsw-colors'; document.head.appendChild(el); }
+    el.textContent = brandSwatchCss(brands);
+  }, [brands.map(([v]) => v).join()]);
+  React.useEffect(() => {
+    const ch = addons.getChannel();
+    const on = ({ globals }) => setBrand(globals.brand);
+    ch.on('globalsUpdated', on);
+    return () => ch.off('globalsUpdated', on);
+  }, []);
+  const pick = (v) => { addons.getChannel().emit('updateGlobals', { globals: { brand: v } }); setBrand(v); };
+  return h('section', { className: 'ds-card ds-showcase' },
+    h('header', { className: 'ds-showcase__head' },
+      h('h2', { className: 'ds-showcase__title' }, title),
+      h('div', { className: 'ds-brandsw' },
+        h('span', { className: 'ds-brandsw__label', id: 'ds-brandsw-label' }, '브랜드'),
+        h('div', { className: 'ds-brandsw__list', role: 'group', 'aria-labelledby': 'ds-brandsw-label' },
+          brands.map(([v, t]) => h('button', { key: v, type: 'button', className: 'ds-brandsw__btn', 'data-brand': v, 'aria-pressed': brand === v, onClick: () => pick(v) },
+            h('span', { className: 'ds-brandsw__dot', 'aria-hidden': true }), t))))),
+    h('div', { className: 'ds-card__body' }, h(Story, { of })));
 };
