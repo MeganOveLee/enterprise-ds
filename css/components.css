@@ -4781,7 +4781,7 @@ body.dark-mode .empty-illo__badge  { fill: var(--color-bg-muted); }
 .bottom-nav__item:hover { color: var(--color-text-base); }
 .bottom-nav__item[aria-current="page"] { color: var(--color-text-brand); font-weight: var(--font-weight-semibold); }
 .bottom-nav__item:focus-visible { outline: 2px solid transparent; box-shadow: inset 0 0 0 2px var(--color-border-focus); }
-/* 아이콘 짝 — 선 아이콘(.bottom-nav__icon) + 같은 모양 채운 아이콘(.bottom-nav__icon--on). 지금 화면만 채운 아이콘(조사-8 2-2)
+/* 아이콘 짝 — 선 아이콘(.bottom-nav__icon) + 같은 모양 채운 아이콘(.bottom-nav__icon--on). 지금 화면만 채운 아이콘
  *   <a class="bottom-nav__item" aria-current="page"><span class="bottom-nav__icons"><svg class="bottom-nav__icon"/><svg class="bottom-nav__icon--on"/></span>호출</a> */
 .bottom-nav__icons { position: relative; display: inline-flex; align-items: center; justify-content: center; }
 .bottom-nav__icon--on { display: none; }
@@ -4964,7 +4964,7 @@ body.dark-mode .empty-illo__badge  { fill: var(--color-bg-muted); }
 .chip-group { display: flex; flex-wrap: wrap; gap: var(--spacing-8); }
 .chip-group--scroll { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
 .chip-group--scroll::-webkit-scrollbar { display: none; }
-/* 가로 넘김 — js/chips.js 가 .chip-group--scroll 을 .chip-scroll 로 감쌈. 손가락으로 밀기가 기본, 나머지는 「옆에 더 있다」 신호 (조사-8 2-6)
+/* 가로 넘김 — js/chips.js 가 .chip-group--scroll 을 .chip-scroll 로 감쌈. 손가락으로 밀기가 기본, 나머지는 「옆에 더 있다」 신호 
  *   기본(추천)  .chip-scroll--arrows  숨은 칩이 있는 쪽 끝을 흐리고 그쪽에만 화살표 버튼(누르면 밀림 — 밀기가 어려운 사람의 대안)
  *   1 끝 흐림   .chip-scroll--fade    흐림만
  *   3 끝 칩 잘림 .chip-scroll--peek   흐림 · 버튼 없이 끝 칩이 잘려 보임 + 처음 한 번 살짝 밀렸다 돌아옴
@@ -5049,7 +5049,7 @@ body.dark-mode .empty-illo__badge  { fill: var(--color-bg-muted); }
 }
 .btn-bar > .btn { flex: 1 0 auto; }
 
-/* 하나 고르는 목록 행 — 아래 시트 선택지처럼 서넛 가운데 하나(조사-8 2-5 「선택지가 서넛이면 목록 행」)
+/* 하나 고르는 목록 행 — 아래 시트 선택지처럼 서넛 가운데 하나
  *   <ul class="list-items" role="radiogroup" id="ride-count" aria-label="탑승 인원">
  *     <li><button type="button" class="list-item" role="radio" aria-checked="true" data-value="1명"> … <span class="list-item__end"><svg class="list-item__check" …/></span></button></li>
  *   고른 줄 = 선택 바탕 + 브랜드 체크. 누르기 · 방향키는 js/chips.js, 고른 값을 주 버튼 글자에 넣는 것도(data-choice-for) */
@@ -5110,7 +5110,7 @@ body.dark-mode .empty-illo__badge  { fill: var(--color-bg-muted); }
 .segmented__item[aria-checked="true"] { background: var(--color-bg-selected-strong); color: var(--color-text-on-selected-strong); font-weight: var(--font-weight-emphasis); }
 .segmented__item:focus-visible { outline: 2px solid transparent; box-shadow: 0 0 0 2px var(--color-border-focus), 0 0 0 5px var(--color-focus-ring); }
 
-/* 배지 — 아이콘 · 글자 옆에 붙어 「새 것 · 수 · 짧은 상태」를 알림. 누르지 않음(표시만) (조사-8 2-4, TD-172)
+/* 배지 — 아이콘 · 글자 옆에 붙어 「새 것 · 수 · 짧은 상태」를 알림. 누르지 않음(표시만) 
  *   A 점      <span class="badge-anchor">아이콘 버튼<span class="badge badge--dot" aria-hidden="true"></span></span>  새 것이 있음만
  *   B 개수    <span class="badge badge--count" aria-hidden="true">3</span>   읽지 않은 수에만, 두 자리까지 · 넘으면 「99+」
  *   C 글자    <span class="badge badge--label">1대 운행중</span> · <span class="badge badge--new">N</span>   한 단어, 색만으로 구분하지 않음

@@ -15,8 +15,8 @@ export const Brand = {
   parameters: css([
     '/* 브랜드 파일 css/brands/{브랜드}.css 가 바꾸는 색은 이 램프와 accent (형태는 Foundation › Spacing · Radius · Size) */',
     ':root.theme-mobility {',
-    '  --brand-50: #F3F0FE;  /* … */  --brand-500: #6D4ADB;  /* … */  --brand-900: #261754;',
-    '  --accent-500: #F2A93B;',
+    '  --brand-50: #F3F6FF;  /* … */  --brand-500: #3661EE;  /* … */  --brand-900: #142150;',
+    '  --accent-500: #4F9444;',
     '}',
     '/* 화면 코드는 원색 대신 의미 토큰을 쓴다 */',
     '.badge { background: var(--color-bg-brand-subtle); color: var(--color-text-brand); }',
@@ -47,6 +47,19 @@ export const Status = {
     { name: '초록', note: '성공', prefix: 'green', steps: STEPS },
     { name: '노랑', note: '경고', prefix: 'yellow', steps: STEPS },
     { name: '파랑', note: '정보', prefix: 'blue', steps: STEPS },
+  ]),
+};
+
+// 장소 분류 램프 — 상태 색과 별개인 분류용 원천 색 (DS-ADR-050). 노랑 · 초록은 상태 램프를 같이 읽음
+export const Place = {
+  parameters: css([
+    '/* 화면 CSS는 장소 종류 역할만 쓴다 — 램프를 직접 쓰지 않음 */',
+    '--color-bg-place-market: var(--orange-600);',
+  ]),
+  render: () => ramps([
+    { name: '주황', note: '시장 · 마트', prefix: 'orange', steps: STEPS },
+    { name: '보라', note: '복지관 · 경로당', prefix: 'purple', steps: STEPS },
+    { name: '청록', note: '관공서 · 은행', prefix: 'teal', steps: STEPS },
   ]),
 };
 
@@ -231,4 +244,38 @@ export const ProgressTokens = {
     ['color-progress-plan-start', '예정 시작'], ['color-progress-plan-end', '예정 끝'],
     ['color-progress-hold-start', '보류 시작'], ['color-progress-hold-end', '보류 끝'],
   ]),
+};
+
+// ── 모바일 앱 색 (DS-ADR-050 · 051, TD-172) ──
+const KINDS = [['home', '집'], ['medical', '병원 · 약국'], ['market', '시장 · 마트'], ['welfare', '복지관 · 경로당'], ['public', '관공서 · 은행']];
+export const PlaceTokens = {
+  parameters: css([
+    '/* 장소 종류 클래스가 다섯 역할을 한 번에 고름 (components.css) */',
+    '.place--home { --place-subtle: var(--color-bg-place-home-subtle); --place-fill: var(--color-bg-place-home); … }',
+    '.chip--place { background: var(--place-subtle); border-color: var(--place-line); }',
+  ]),
+  render: () => stackTables(
+    tokenTable('bg', KINDS.flatMap(([k, n]) => [['color-bg-place-' + k + '-subtle', n + ' — 옅은 바탕'], ['color-bg-place-' + k, n + ' — 고른 칩 채움']])),
+    tokenTable('border', KINDS.map(([k, n]) => ['color-border-place-' + k, n + ' — 테두리'])),
+    tokenTable('icon', KINDS.map(([k, n]) => ['color-icon-place-' + k, n + ' — 장소 아이콘'])),
+    tokenTable('text', KINDS.map(([k, n]) => ['color-text-on-place-' + k, n + ' — 채움 위 글자'])),
+  ),
+};
+export const SelectedTokens = {
+  parameters: css([
+    '/* 고른 칩 · 떠 있는 버튼 — 주 버튼(브랜드 면)과 따로 */',
+    '.chip[aria-pressed="true"] { background: var(--color-bg-selected-strong); color: var(--color-text-on-selected-strong); }',
+  ]),
+  render: () => stackTables(
+    tokenTable('bg', [
+      ['color-bg-selected-strong', '선택 면 — 고른 칩 · 떠 있는 버튼 · 고른 나란한 칸'],
+      ['color-bg-notify', '알림 배지 — 새 소식 점 · 읽지 않은 수'],
+      ['color-bg-map-pin', '지도 핀 · 도착 점 — 오류 색과 따로'],
+    ]),
+    tokenTable('text', [
+      ['color-text-on-selected-strong', '선택 면 위 글자'],
+      ['color-text-on-notify', '알림 배지 위 숫자'],
+      ['color-text-on-map-pin', '지도 핀 이름표 글자'],
+    ]),
+  ),
 };

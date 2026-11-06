@@ -6,7 +6,7 @@
  *   - 하나 고르기 [role="radiogroup"] 안 button[role="radio"] — 칩 · 목록 행 · 나란한 칸(.segmented) 모두. 누르면 그것만 고름
  *     방향키(← → ↑ ↓) · Home · End 로 옮기며 고름. Tab 은 고른 것 하나에만 멈춤(나머지 tabindex="-1") — 라디오 묶음과 같은 키보드 규칙
  *   - 고른 값을 버튼 글자에: <button data-choice-for="묶음 id" data-choice-text="{value} 호출하기"> — 고를 때마다
- *     라디오의 data-value 를 {value} 자리에 넣음(확인 창 없이 버튼 글자로 결과를 보여 줌, 조사-8 2-5)
+ *     라디오의 data-value 를 {value} 자리에 넣음(확인 창 없이 버튼 글자로 결과를 보여 줌)
  *   - 바로가기(a · aria-pressed 없는 button)는 건드리지 않음
  *
  * 한 줄 칩 줄(.chip-group--scroll)이 놓인 칸보다 길면 양 끝에 화살표 버튼을 두고 줄을 옆으로 민다.
@@ -16,7 +16,7 @@
  *   불러오기만 하면 화면의 .chip-group--scroll 이 모두 대상(tabs.js 와 같은 방식). 이미 붙은 줄은 건너뜀
  *   나중에 그린 줄은 window.dsChipsInit(영역) 으로 직접 붙임
  *
- * 넘김 시안 (줄에 붙인 클래스로 고름, 조사-8 2-6):
+ * 넘김 시안 (줄에 붙인 클래스로 고름):
  *   기본(추천)          .chip-group--scroll              숨은 칩이 있는 쪽 끝을 흐리고, 그쪽에만 화살표 버튼
  *   끝 흐림             .chip-group--scroll.chip-group--fade   흐림만, 버튼 없음
  *   끝 칩 잘림 + 힌트   .chip-group--scroll.chip-group--peek   흐림 · 버튼 없이 끝 칩이 잘려 보이고, 처음 한 번 살짝 밀렸다 돌아옴

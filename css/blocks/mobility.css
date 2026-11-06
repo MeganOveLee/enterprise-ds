@@ -5,7 +5,7 @@
  *   공통 토큰만 읽음 — 이 파일에 숫자 · 색상 값을 두지 않음
  * ═══════════════════════════════════════════════════════════════════════════ */
 
-/* 경로 요약 — 출발 · 경유 · 도착을 세로로. 앱 상단 바 제목에 경로를 쓰지 않고 본문 첫 카드에 둠(조사-8 2-1)
+/* 경로 요약 — 출발 · 경유 · 도착을 세로로. 앱 상단 바 제목에 경로를 쓰지 않고 본문 첫 카드에 둠
  *   <ol class="route-summary" aria-label="이동 경로">
  *     <li class="route-summary__stop route-summary__stop--start"><span class="route-summary__mark"></span><span class="route-summary__label">출발</span>
  *       <span class="route-summary__place">이천터미널</span><span class="route-summary__time">오전 9:12</span></li>

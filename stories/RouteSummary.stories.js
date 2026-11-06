@@ -1,4 +1,4 @@
-// Blocks/Route Summary — 문서 화면은 RouteSummary.mdx. 모바일 앱 전용 조합 (css/blocks/mobility.css, 조사-8 2-1 · TD-172)
+// Blocks/Route Summary — 문서 화면은 RouteSummary.mdx. 모바일 앱 전용 조합 (css/blocks/mobility.css, TD-172)
 import { phone, body } from './_mobile.js';
 
 export const stop = (kind, label, place, time = '') => '<li class="route-summary__stop route-summary__stop--' + kind + '"><span class="route-summary__mark" aria-hidden="true"></span><span class="route-summary__label">' + label + '</span>' + place + '<span class="route-summary__time">' + time + '</span></li>';

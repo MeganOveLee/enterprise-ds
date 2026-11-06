@@ -1,4 +1,4 @@
-// Data Display/Badge — 문서 화면은 Badge.mdx. 표시만 하는 작은 알림(점 · 개수 · 글자) (조사-8 2-4, TD-172)
+// Data Display/Badge — 문서 화면은 Badge.mdx. 표시만 하는 작은 알림(점 · 개수 · 글자) 
 import { svg, I, phone, body } from './_mobile.js';
 
 const bellBtn = (label, badge) => '<span class="badge-anchor"><button type="button" class="btn btn--secondary btn--transparent btn--icon" aria-label="' + label + '">' + svg(I.bell) + '</button>' + badge + '</span>';
@@ -19,7 +19,7 @@ export const 개수 = {
 };
 export const 글자 = {
   render: () => phone(body('<ul class="list-items" aria-label="정류장 도착 정보">' +
-    row('똑버스 이천 1', '<span class="badge badge--label">1대 운행중</span>', '이천터미널 방면 · 5분 뒤 도착') +
-    row('똑버스 이천 2', '<span class="badge badge--new" aria-label="새 노선">N</span>', '설봉공원 방면 · 12분 뒤 도착') +
-    row('똑버스 이천 3', '', '관고전통시장 방면 · 운행 준비 중') + '</ul>', 'sb-phone__body--flush')),
+    row('이천 콜버스 1', '<span class="badge badge--label">1대 운행중</span>', '이천터미널 방면 · 5분 뒤 도착') +
+    row('이천 콜버스 2', '<span class="badge badge--new" aria-label="새 노선">N</span>', '설봉공원 방면 · 12분 뒤 도착') +
+    row('이천 콜버스 3', '', '관고전통시장 방면 · 운행 준비 중') + '</ul>', 'sb-phone__body--flush')),
 };

@@ -1,5 +1,5 @@
 // Data Display/List Item — 문서 화면은 ListItem.mdx. 모바일 앱 목록 한 줄 (DS-ADR-049, TD-172)
-// 시안 A 구분선 행(추천) · B 묶음 카드 · C 행마다 카드 + 뒤 원형 동작 버튼 (조사-9 1장)
+// 시안 A 구분선 행(추천) · B 묶음 카드 · C 행마다 카드 + 뒤 원형 동작 버튼 
 import { svg, solid, I, P, phone, body } from './_mobile.js';
 
 const icon = (k) => P[k] ? '<span class="list-item__icon place--' + k + '">' + solid(P[k]) + '</span>' : '<span class="list-item__icon">' + svg(I[k]) + '</span>';
