@@ -1,7 +1,7 @@
 // Navigation/App Bar — 문서 화면은 AppBar.mdx. 모바일 앱 화면 맨 위 막대 (DS-ADR-049, TD-172)
 // 시안 A 왼쪽 제목(추천) · B 가운데 제목 · C 큰 제목. 제목은 짧은 고정 문구, 경로 같은 긴 내용은 본문(Blocks/Route Summary)
 import { svg, I, phone, body, iconBtn } from './_mobile.js';
-import { route } from './RouteSummary.stories.js';
+import { route } from './_route.js';
 
 const bar = ({ title, back = true, end = '', center = false, large = false, scroll = '' }) =>
   '<header class="app-bar' + (center ? ' app-bar--center' : '') + (large ? ' app-bar--large' : '') + '"' + (scroll ? ' data-app-bar-scroll="#' + scroll + '"' : '') + '>' +
