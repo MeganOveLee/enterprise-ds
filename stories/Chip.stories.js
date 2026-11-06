@@ -32,4 +32,9 @@ export const 원형_아이콘_칩 = { render: () => phone(body(group([dotChip('h
 export const 큰_타일 = { render: () => phone(body('<div class="chip-tiles" role="group" aria-label="자주 가는 곳">' + [tile('home'), tile('medical', '이천의료원'), tile('market', '관고시장'), tile('public', '주민센터')].join('') + '</div>')) };
 export const 필터_여럿_고르기 = { render: () => phone(body(group([toggle('저상 버스', true), toggle('휠체어 탑승'), toggle('보호자 동반'), toggle('짐 많음')], 'role="group" aria-label="탑승 조건"'))) };
 export const 필터_하나_고르기 = { render: () => phone(body(group([radio('전체', true), radio('이번 주'), radio('지난달'), radio('취소한 이용')], 'role="radiogroup" aria-label="이용 내역 기간"'))) };
-export const 한_줄_스크롤 = { render: () => phone(body('<div class="chip-group chip-group--scroll" aria-label="자주 가는 곳">' + [place('home'), place('medical', '이천의료원'), place('market', '관고전통시장'), place('welfare', '창전동 경로당'), place('public', '이천시청')].join('') + '</div>')) };
+// 가로 넘김 — 줄에 붙인 클래스로 시안을 고름(js/chips.js). 칩이 놓인 칸보다 길 때만 신호가 보임
+const many = () => [place('home'), place('medical', '이천의료원'), place('market', '관고전통시장'), place('welfare', '창전동 경로당'), place('public', '이천시청'), place('medical', '서울약국')].join('');
+const scroller = (mod) => '<div class="chip-group chip-group--scroll' + (mod ? ' chip-group--' + mod : '') + '" role="group" aria-label="자주 가는 곳">' + many() + '</div>';
+export const 넘김_화살표 = { render: () => phone(body(scroller(''))) };
+export const 넘김_끝_흐림 = { render: () => phone(body(scroller('fade'))) };
+export const 넘김_끝_칩_잘림 = { render: () => phone(body(scroller('peek'))) };

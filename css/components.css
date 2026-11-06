@@ -4890,13 +4890,46 @@ body.dark-mode .empty-illo__badge  { fill: var(--color-bg-muted); }
 .chip-group { display: flex; flex-wrap: wrap; gap: var(--spacing-8); }
 .chip-group--scroll { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
 .chip-group--scroll::-webkit-scrollbar { display: none; }
-/* 칩 줄 넘침 ◀ ▶ — js/chips.js 가 .chip-group--scroll 을 감싸고 앞뒤에 버튼을 넣음. 넘칠 때만 보이고 끝에 닿은 쪽은 disabled
- *   밀기와 같은 일을 버튼 한 번 누르기로(Mobility 결정 Q). 탭 넘침(.tab-scroll, DS-ADR-035)과 같은 방식 */
-.chip-scroll { display: flex; align-items: center; gap: var(--spacing-4); min-width: 0; }
-.chip-scroll > .chip-group--scroll { flex: 1; min-width: 0; padding-block: var(--spacing-4); }   /* 위아래 4 = 포커스 링 자리 */
-.chip-scroll__btn { display: none; flex: none; }
-.chip-scroll.is-overflow .chip-scroll__btn { display: inline-flex; }
-.chip-scroll .btn--icon { width: auto; min-width: var(--size-touch); min-height: var(--size-touch); border-radius: var(--radius-rounded); }
+/* 가로 넘김 — js/chips.js 가 .chip-group--scroll 을 .chip-scroll 로 감쌈. 손가락으로 밀기가 기본, 나머지는 「옆에 더 있다」 신호 (조사-8 2-6)
+ *   기본(추천)  .chip-scroll--arrows  숨은 칩이 있는 쪽 끝을 흐리고 그쪽에만 화살표 버튼(누르면 밀림 — 밀기가 어려운 사람의 대안)
+ *   1 끝 흐림   .chip-scroll--fade    흐림만
+ *   3 끝 칩 잘림 .chip-scroll--peek   흐림 · 버튼 없이 끝 칩이 잘려 보임 + 처음 한 번 살짝 밀렸다 돌아옴
+ *   .has-prev · .has-next = 앞 · 뒤에 숨은 칩이 있음(스크립트가 붙임) */
+.chip-scroll { position: relative; min-width: 0; font-size: var(--body-md); }
+.chip-scroll > .chip-group--scroll {
+    --chip-fade-start: 0%;
+    --chip-fade-end: 0%;
+    padding-block: var(--spacing-4);   /* 위아래 4 = 포커스 링 자리 */
+    -webkit-mask-image: linear-gradient(to right, transparent, black var(--chip-fade-start), black calc(100% - var(--chip-fade-end)), transparent);
+            mask-image: linear-gradient(to right, transparent, black var(--chip-fade-start), black calc(100% - var(--chip-fade-end)), transparent);
+}
+.chip-scroll:is(.chip-scroll--arrows, .chip-scroll--fade).has-prev > .chip-group--scroll { --chip-fade-start: 3em; }
+.chip-scroll:is(.chip-scroll--arrows, .chip-scroll--fade).has-next > .chip-group--scroll { --chip-fade-end: 3em; }
+.chip-scroll__btn {
+    position: absolute;
+    top: 50%;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25em;   /* 흐린 끝 위에 얹는 작은 원 — 누름 영역 24 이상(WCAG 2.5.8), 칩을 덜 가리게 */
+    height: 2.25em;
+    padding: 0;
+    border: 1px solid var(--color-border-base);
+    border-radius: var(--radius-rounded);
+    background: var(--color-bg-base);
+    box-shadow: var(--shadow-popover);
+    color: var(--color-icon-base);
+    font: inherit;
+    cursor: pointer;
+    transform: translateY(-50%);
+}
+.chip-scroll__btn[hidden] { display: none; }
+.chip-scroll__btn--prev { left: 0; }
+.chip-scroll__btn--next { right: 0; }
+.chip-scroll__btn svg { width: 1.25em; height: 1.25em; }
+.chip-scroll__btn:hover { background: var(--color-bg-muted); }
+.chip-scroll__btn:focus-visible { outline: 2px solid transparent; box-shadow: 0 0 0 2px var(--color-border-focus), 0 0 0 5px var(--color-focus-ring); }
 
 /* 떠 있는 버튼 — 지도 · 목록 위에 떠서 늘 보이는 동작 하나. 버튼 색은 .btn 중요도 클래스 그대로
  *   <button class="btn btn--primary btn--filled fab">svg 글자</button>  ·  아이콘만 = .fab--icon + aria-label
