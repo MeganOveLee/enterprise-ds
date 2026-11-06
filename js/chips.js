@@ -1,5 +1,12 @@
 /* =====================================================================
- * chips.js - 칩 줄 넘침 ◀ ▶ (DS-ADR-049, TD-172)
+ * chips.js - 칩 고르기 · 칩 줄 넘침 ◀ ▶ (DS-ADR-049 · 050, TD-172)
+ *
+ * 고르기 (문서 전체에 한 번 — 나중에 그린 칩도 따로 붙이지 않아도 됨):
+ *   - 여럿 고르기 .chip[aria-pressed] — 누르면 켜고 끔
+ *   - 하나 고르기 [role="radiogroup"] 안 .chip[role="radio"] — 누르면 그것만 고름. 방향키(← → ↑ ↓) · Home · End 로 옮기며 고름
+ *     Tab 은 고른 칩 하나에만 멈춤(나머지 tabindex="-1") — 라디오 묶음과 같은 키보드 규칙
+ *   - 바로가기(a · aria-pressed 없는 button)는 건드리지 않음
+ *
  * 한 줄 칩 줄(.chip-group--scroll)이 놓인 칸보다 길면 양 끝에 화살표 버튼을 두고 줄을 옆으로 민다.
  * 손가락으로 미는 것과 같은 일을 버튼 한 번 누르기로도 할 수 있게 — 마우스 · 밀기가 어려운 사람도 끝까지 볼 수 있음.
  *
@@ -61,6 +68,40 @@
         if (window.ResizeObserver) new ResizeObserver(redo).observe(track);
         redo();
     }
+    /* ---- 고르기 ---- */
+    function radios(group) {
+        return Array.prototype.filter.call(group.querySelectorAll('[role="radio"]'), function (r) { return !r.disabled; });
+    }
+    function check(radio, focus) {
+        var group = radio.closest('[role="radiogroup"]');
+        if (!group) return;
+        radios(group).forEach(function (r) {
+            var on = r === radio;
+            r.setAttribute('aria-checked', on ? 'true' : 'false');
+            r.tabIndex = on ? 0 : -1;
+        });
+        if (focus) radio.focus();
+    }
+    document.addEventListener('click', function (e) {
+        var chip = e.target.closest && e.target.closest('.chip, .chip-tile');
+        if (!chip || chip.disabled) return;
+        if (chip.getAttribute('role') === 'radio') { check(chip, false); return; }
+        if (chip.hasAttribute('aria-pressed')) chip.setAttribute('aria-pressed', chip.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
+    });
+    document.addEventListener('keydown', function (e) {
+        var radio = e.target.closest && e.target.closest('[role="radiogroup"] [role="radio"]');
+        if (!radio) return;
+        var list = radios(radio.closest('[role="radiogroup"]')), i = list.indexOf(radio), n = list.length, to = -1;
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') to = (i + 1) % n;
+        else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') to = (i - 1 + n) % n;
+        else if (e.key === 'Home') to = 0;
+        else if (e.key === 'End') to = n - 1;
+        else if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); check(radio, false); return; }
+        if (to < 0) return;
+        e.preventDefault();
+        check(list[to], true);
+    });
+
     function init(root) {
         Array.prototype.forEach.call((root || document).querySelectorAll('.chip-group--scroll'), attach);
     }

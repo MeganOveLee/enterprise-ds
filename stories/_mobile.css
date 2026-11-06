@@ -21,3 +21,4 @@
 .sb-phone__map > .fab--end { right: 16px; bottom: 16px; }
 .sb-phone__map > .fab--center { left: 50%; bottom: 16px; transform: translateX(-50%); }
 .sb-stack { display: grid; gap: 16px; }
+.sb-label { margin: 0 0 8px; font-size: var(--body-sm); color: var(--color-text-muted); }

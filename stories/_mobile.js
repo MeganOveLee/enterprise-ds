@@ -12,13 +12,23 @@ export const I = {
   home: '<path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/>',
   pin: '<path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/>',
   star: '<path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.6 6.6 19.5l1.2-6-4.5-4.2 6.1-.7z"/>',
-  hospital: '<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M12 8v6M9 11h6"/>',
+  hospital: '<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M9 8v8M15 8v8M9 12h6"/>',   // 병원 = H, 십자 모양 없음 (DS-ADR-050)
   cart: '<path d="M3 4h2l2.4 11h11L21 7H6.2"/><circle cx="9" cy="19" r="1.5"/><circle cx="17" cy="19" r="1.5"/>',
   next: '<path d="M9 6l6 6-6 6"/>',
   locate: '<circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2.5"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/>',
   people: '<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14.5a6.5 6.5 0 0 1 3.5 5.5"/>',
   check: '<path d="M5 12l4 4 10-10"/>',
 };
+// 장소 아이콘 = 컬러 솔리드(조사-8 2-2 「장소 = 컬러 솔리드 + 글자」). 색은 .place--{종류} 가 정함. 병원 · 약국은 H(십자 없음, DS-ADR-050)
+export const solid = (d, s = 24, cls = '') => '<svg' + (cls ? ' class="' + cls + '"' : '') + ' width="' + s + '" height="' + s + '" viewBox="0 0 24 24" fill="currentColor" fill-rule="evenodd" aria-hidden="true"><path d="' + d + '"/></svg>';
+export const P = {
+  home: 'M12 3.2 2.6 11.4a1 1 0 0 0 .66 1.75H5V20a1 1 0 0 0 1 1h4v-5h4v5h4a1 1 0 0 0 1-1v-6.85h1.74a1 1 0 0 0 .66-1.75z',
+  medical: 'M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm3.5 4.5v9h2V13h3v3.5h2v-9h-2V11h-3V7.5z',
+  market: 'M4 4h16l1.5 5a3 3 0 0 1-5 2.2 3 3 0 0 1-4.5 0 3 3 0 0 1-4.5 0A3 3 0 0 1 2.5 9zM5 13.3a4.6 4.6 0 0 0 2.5-.3 4.7 4.7 0 0 0 4.5.6 4.7 4.7 0 0 0 4.5-.6 4.6 4.6 0 0 0 2.5.3V20a1 1 0 0 1-1 1h-3.5v-4.5h-5V21H6a1 1 0 0 1-1-1z',
+  welfare: 'M9 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zm7.5 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM2 20a7 7 0 0 1 14 0v.5a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5zm15.2 1h4.3a.5.5 0 0 0 .5-.5V20a5.5 5.5 0 0 0-7.4-5.2A8.4 8.4 0 0 1 17.2 21z',
+  public: 'M12 2.5 2.5 7.5V9h19V7.5zM4 10.5h3v7H4zm6.5 0h3v7h-3zm6.5 0h3v7h-3zM2.5 19h19v2.5h-19z',
+};
+export const PLACE = { home: '집', medical: '병원 · 약국', market: '시장 · 마트', welfare: '복지관 · 경로당', public: '관공서 · 은행' };
 export const phone = (inner, cls = '') => '<div class="sb-phone' + (cls ? ' ' + cls : '') + '">' + inner + '</div>';
 export const body = (inner, cls = '') => '<div class="sb-phone__body' + (cls ? ' ' + cls : '') + '">' + inner + '</div>';
 export const iconBtn = (icon, label, attrs = '') => '<button type="button" class="btn btn--secondary btn--transparent btn--icon" aria-label="' + label + '"' + attrs + '>' + svg(I[icon]) + '</button>';

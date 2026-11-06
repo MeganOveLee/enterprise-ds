@@ -4663,6 +4663,10 @@ body.dark-mode .empty-illo__badge  { fill: var(--color-bg-muted); }
  *   폭은 정하지 않고 놓인 칸에 맞춤(DS-ADR-048). 화면 아래에 붙는 것은 안전 영역(env(safe-area-inset-bottom))만큼 띄움
  * ═══════════════════════════════════════════════════════════════════════════ */
 
+/* 아이콘 선 굵기 — 모바일 앱 컴포넌트 안 선 아이콘(stroke)은 --icon-stroke 를 따름. 브랜드가 굵기를 바꿈(Mobility 굵게, TD-172)
+ *   채운 아이콘(장소 아이콘)은 선이 없어 영향 없음 */
+:is(.sheet, .app-bar, .bottom-nav, .list-item, .chip, .chip-tile, .chip-scroll, .fab, .btn-bar, .badge, .route-summary, .number-input, .segmented) svg { stroke-width: var(--icon-stroke); }
+
 /* 아래 시트 — 확인 창(.modal)과 같은 덮개 · 스크립트(js/modal.js), 창만 화면 아래에 붙임
  *   <div class="modal modal--sheet" id="ride-sheet" hidden>
  *     <div class="modal__dialog sheet" role="dialog" aria-modal="true" aria-labelledby="ride-sheet-title">
@@ -4786,9 +4790,24 @@ body.dark-mode .empty-illo__badge  { fill: var(--color-bg-muted); }
 .list-item__end { display: flex; flex: none; align-items: center; gap: var(--spacing-4); font-size: var(--body-sm); color: var(--color-text-muted); }
 .list-item__end svg { width: 1.25em; height: 1.25em; color: var(--color-icon-muted); }
 
-/* 칩 — 누르는 칩(바로가기 · 필터). 상태를 표시만 하는 칩은 .status-chip
- *   바로가기 = <a class="chip" href="…">  ·  필터 = <button type="button" class="chip" aria-pressed="false">
- *   .chip-group = 칩 줄(넘치면 다음 줄), .chip-group--scroll = 한 줄 가로 스크롤 */
+/* 장소 종류 (DS-ADR-050) — 장소 칩 · 장소 타일 · 장소 아이콘이 함께 쓰는 종류 클래스. 색은 장소 종류 토큰만 읽음(상태 색 아님)
+ *   .place--home 집 · .place--medical 병원 · 약국 · .place--market 시장 · 마트 · .place--welfare 복지관 · 경로당 · .place--public 관공서 · 은행
+ *   병원 · 약국 아이콘은 십자 모양을 쓰지 않음(적십자 표장과 닮음, DS-ADR-050) */
+.place--home    { --place-subtle: var(--color-bg-place-home-subtle);    --place-fill: var(--color-bg-place-home);    --place-line: var(--color-border-place-home);    --place-icon: var(--color-icon-place-home);    --place-on: var(--color-text-on-place-home); }
+.place--medical { --place-subtle: var(--color-bg-place-medical-subtle); --place-fill: var(--color-bg-place-medical); --place-line: var(--color-border-place-medical); --place-icon: var(--color-icon-place-medical); --place-on: var(--color-text-on-place-medical); }
+.place--market  { --place-subtle: var(--color-bg-place-market-subtle);  --place-fill: var(--color-bg-place-market);  --place-line: var(--color-border-place-market);  --place-icon: var(--color-icon-place-market);  --place-on: var(--color-text-on-place-market); }
+.place--welfare { --place-subtle: var(--color-bg-place-welfare-subtle); --place-fill: var(--color-bg-place-welfare); --place-line: var(--color-border-place-welfare); --place-icon: var(--color-icon-place-welfare); --place-on: var(--color-text-on-place-welfare); }
+.place--public  { --place-subtle: var(--color-bg-place-public-subtle);  --place-fill: var(--color-bg-place-public);  --place-line: var(--color-border-place-public);  --place-icon: var(--color-icon-place-public);  --place-on: var(--color-text-on-place-public); }
+
+/* 칩 — 누르는 칩. 상태를 표시만 하는 칩은 .status-chip (DS-ADR-049 · 050 · 051)
+ *   역할은 마크업으로 나눔 — 화면 읽기 프로그램이 같은 말로 읽음
+ *     바로가기     <a class="chip" href="…"> · <button type="button" class="chip">        누르면 바로 감. 고르는 상태 없음
+ *     하나 고르기  <div class="chip-group" role="radiogroup" aria-label="…"> 안에 <button type="button" class="chip" role="radio" aria-checked="true|false">
+ *     여럿 고르기  <div class="chip-group" role="group" aria-label="…"> 안에 <button type="button" class="chip" aria-pressed="true|false">
+ *   고른 칩 = 선택 면(--color-bg-selected-strong)으로 채움 + 체크(.chip__check). 장소 칩은 그 장소 색으로 채움
+ *   누르기 · 방향키 동작은 js/chips.js (하나 고르기 = 방향키로 옮기며 고름, 여럿 = 눌러서 켜고 끔)
+ *   시안: A 장소 칩 .chip--place(추천) · B 원형 아이콘 칩 .chip--dot · C 큰 타일 .chip-tile — 장소 종류는 .place--{종류}
+ *   .chip-group = 칩 줄(넘치면 다음 줄), .chip-group--scroll = 한 줄 가로 넘김(아래 「가로 넘김」) */
 .chip {
     display: inline-flex;
     align-items: center;
@@ -4796,7 +4815,7 @@ body.dark-mode .empty-illo__badge  { fill: var(--color-bg-muted); }
     min-height: var(--size-touch);
     padding: 0 0.875em;   /* 좌우 여백 = 글자 크기 비율 — 브랜드가 글자 단계를 올리면 함께 커짐 (DS-ADR-049) */
     box-sizing: border-box;
-    border: 1px solid var(--color-border-input);   /* 누를 수 있는 경계 3:1 (DS-ADR-013) */
+    border: 1px solid var(--color-border-input);   /* 필터 칩 = 회색 테두리, 누를 수 있는 경계 3:1 (DS-ADR-013 · 050) */
     border-radius: var(--radius-chip);
     background: var(--color-bg-base);
     color: var(--color-text-base);
@@ -4810,10 +4829,67 @@ body.dark-mode .empty-illo__badge  { fill: var(--color-bg-muted); }
 }
 .chip svg { width: 1.25em; height: 1.25em; flex: none; }
 .chip:hover { background: var(--color-bg-muted); }
-.chip[aria-pressed="true"] { background: var(--color-bg-brand-subtle); border-color: var(--color-border-brand); color: var(--color-text-brand); }
 .chip:focus-visible { outline: 2px solid transparent; box-shadow: 0 0 0 2px var(--color-border-focus), 0 0 0 5px var(--color-focus-ring); }
+.chip__check { display: none; }
+.chip:is([aria-pressed="true"], [aria-checked="true"]) {
+    background: var(--color-bg-selected-strong);   /* 선택 면 — 주 버튼(브랜드 면)과 다른 색을 쓰는 브랜드가 있음 (DS-ADR-051) */
+    border-color: var(--color-bg-selected-strong);
+    color: var(--color-text-on-selected-strong);
+}
+.chip:is([aria-pressed="true"], [aria-checked="true"]) svg { color: var(--color-icon-on-selected-strong); }
+.chip:is([aria-pressed="true"], [aria-checked="true"]) .chip__check { display: block; }   /* 색만이 아니라 체크로도 구분 */
+
+/* 시안 A · 장소 칩(추천) — 옅은 장소 바탕 + 장소 색 테두리 · 아이콘. 고르면 장소 색으로 채움
+ *   <a class="chip chip--place place--home" href="…"><svg class="chip__place">…</svg>집</a> */
+.chip--place { background: var(--place-subtle); border-color: var(--place-line); }
+.chip--place > .chip__place { color: var(--place-icon); }
+.chip--place:hover { background: var(--place-subtle); box-shadow: inset 0 0 0 1px var(--place-line); }   /* 호버 = 테두리 한 겹 더(바탕은 장소 색 그대로) */
+.chip--place:is([aria-pressed="true"], [aria-checked="true"]) { background: var(--place-fill); border-color: var(--place-line); color: var(--place-on); }
+.chip--place:is([aria-pressed="true"], [aria-checked="true"]) svg { color: var(--place-on); }
+
+/* 시안 B · 원형 아이콘 칩 — 흰 바탕 + 회색 테두리, 앞에 장소 색 원 안 아이콘. 색 면이 작아 화면이 차분함
+ *   <a class="chip chip--dot place--medical" href="…"><span class="chip__dot"><svg …/></span>이천의료원</a> */
+.chip--dot { padding-left: 0.375em; }
+.chip__dot { display: inline-flex; align-items: center; justify-content: center; width: 1.75em; height: 1.75em; flex: none; border-radius: var(--radius-rounded); background: var(--place-fill, var(--color-bg-selected-strong)); color: var(--place-on, var(--color-text-on-selected-strong)); }
+.chip__dot svg { width: 1.1em; height: 1.1em; }
+.chip--dot:is([aria-pressed="true"], [aria-checked="true"]) { background: var(--place-subtle, var(--color-bg-brand-subtle)); border-color: var(--place-line, var(--color-border-brand)); box-shadow: inset 0 0 0 1px var(--place-line, var(--color-border-brand)); color: var(--color-text-base); }
+.chip--dot:is([aria-pressed="true"], [aria-checked="true"]) .chip__dot svg { color: var(--place-on, var(--color-text-on-selected-strong)); }
+
+/* 시안 C · 큰 타일 — 아이콘 위 · 글자 아래. 누름 영역이 가장 크고 한 줄에 넷까지(쉬운 화면 · 큰 글씨)
+ *   <div class="chip-tiles"><a class="chip-tile place--home" href="…"><span class="chip__dot"><svg …/></span>집</a> …</div> */
+.chip-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(4.75em, 1fr)); gap: var(--spacing-8); }
+.chip-tile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-8);
+    min-width: 0;
+    min-height: calc(var(--size-touch) * 2);
+    padding: var(--spacing-12) var(--spacing-4);
+    box-sizing: border-box;
+    border: 1px solid var(--color-border-input);
+    border-radius: var(--radius-card);
+    background: var(--color-bg-base);
+    color: var(--color-text-base);
+    font: inherit;
+    font-size: var(--body-md);
+    font-weight: var(--font-weight-medium);
+    line-height: var(--line-height-tight);
+    text-align: center;
+    text-decoration: none;
+    word-break: keep-all;
+    overflow-wrap: anywhere;   /* 긴 장소 이름이 타일을 넘지 않게 */
+    cursor: pointer;
+}
+.chip-tile .chip__dot { width: 2.75em; height: 2.75em; }
+.chip-tile .chip__dot svg { width: 1.5em; height: 1.5em; }
+.chip-tile:hover { background: var(--color-bg-muted); }
+.chip-tile:focus-visible { outline: 2px solid transparent; box-shadow: 0 0 0 2px var(--color-border-focus), 0 0 0 5px var(--color-focus-ring); }
+
 .chip-group { display: flex; flex-wrap: wrap; gap: var(--spacing-8); }
 .chip-group--scroll { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
+.chip-group--scroll::-webkit-scrollbar { display: none; }
 /* 칩 줄 넘침 ◀ ▶ — js/chips.js 가 .chip-group--scroll 을 감싸고 앞뒤에 버튼을 넣음. 넘칠 때만 보이고 끝에 닿은 쪽은 disabled
  *   밀기와 같은 일을 버튼 한 번 누르기로(Mobility 결정 Q). 탭 넘침(.tab-scroll, DS-ADR-035)과 같은 방식 */
 .chip-scroll { display: flex; align-items: center; gap: var(--spacing-4); min-width: 0; }

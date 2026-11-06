@@ -20,11 +20,13 @@ export const Section = ({ title, desc, children }) =>
     desc ? h('p', { className: 'ds-sec__desc' }, desc) : null,
     children);
 
-export const Card = ({ of, title, desc, code = true, children }) =>
+// tag = 제목 옆 표시(「추천」), basis = 시안 근거 한 줄(디자인 필수 가이드 7장)
+export const Card = ({ of, title, desc, tag, basis, code = true, children }) =>
   h('section', { className: 'ds-card' },
     title ? h('header', { className: 'ds-card__head' },
-      h('h3', { className: 'ds-card__title' }, title),
-      desc ? h('p', { className: 'ds-card__desc' }, desc) : null) : null,
+      h('h3', { className: 'ds-card__title' }, title, tag ? h('span', { className: 'ds-card__tag' }, tag) : null),
+      desc ? h('p', { className: 'ds-card__desc' }, desc) : null,
+      basis ? h('p', { className: 'ds-card__basis' }, h('b', null, '근거'), ' ', basis) : null) : null,
     of ? h('div', { className: 'ds-card__body' }, h(Story, { of })) : null,
     children ? h('div', { className: 'ds-card__extra' }, children) : null,
     of && code ? h('details', { className: 'ds-card__code' }, h('summary', null, '코드 보기'), h(Source, { of })) : null);
