@@ -64,7 +64,7 @@
 
 /* side-area: SUBMENU 있는 페이지의 사이드 패널 (메인 대시보드엔 없음)
  * 패널 = 흰 바탕(bg-base), 오른쪽 손잡이(.sidebar-toggle) = 내용과 같은 bg-subtle, 위쪽 막대(.gnb) = 바탕 없음 →
- * 손잡이가 막대 · 내용과 한 면으로 이어져 틈이 안 보임. 이전 버전 화면과 같음(덮어쓰기 파일의 side-area · gnb 규칙, 10/14 결정).
+ * 손잡이가 막대 · 내용과 한 면으로 이어져 틈이 안 보임. 이전 버전 화면과 같음(덮어쓰기 파일의 side-area · gnb 규칙).
  * 구: 패널 bg-subtle · 막대 bg-base(반대) — 다크에서 손잡이 7px가 어두운 틈으로 보였음 */
 .side-area {
     display: flex;
@@ -272,7 +272,7 @@
 .main-menu > nav > ul > li:hover > span { color: var(--color-text-brand); }
 .main-menu > nav > ul > li:has(a.active, a[aria-current="page"]) {
     background: var(--color-bg-lnb-active);
-    color: var(--color-text-lnb-active);   /* 이전 버전 brand-500 → DS 는 바탕 위 대비로 600 (10/13 결정) */
+    color: var(--color-text-lnb-active);   /* 이전 버전 brand-500 → DS 는 바탕 위 대비로 600 */
     font-weight: var(--font-weight-semibold);
     box-shadow: inset 3px 0 0 var(--color-border-brand);
 }
@@ -297,7 +297,7 @@
     overflow: hidden;
     max-width: 100%;
     margin-top: var(--spacing-4);
-    font-size: var(--body-xs);   /* 11 — 이전 버전 값, 토큰 Body/xs (TD-44 10/17) */
+    font-size: var(--body-xs);   /* 11 — 이전 버전 값, 토큰 Body/xs (TD-44) */
     line-height: var(--line-height-base);   /* 17.6 = Figma Rail item 이름 줄 (TD-108, 구 1.25) */
     text-align: center;
     word-break: keep-all;        /* 줄은 띄어쓰기에서 나눔 — 「벤치마킹 관리」 → 벤치마킹 / 관리 (TD-108 19번 ③, 구: 한 줄 고정 nowrap — 긴 이름이 레일 밖으로 넘침) */
@@ -368,7 +368,7 @@
     box-shadow: 0 0 0 3px var(--color-focus-ring);   /* 포커스 링 = 보더(브랜드 초록) + 옅은 브랜드 번짐 3px. overrides 404·537행과 동일 패턴 */
 }
 
-/* ─── 트리 .tree (TD-75, 10/17) — 폴더 트리 · 산출물 구조처럼 접고 펴는 계층 목록
+/* ─── 트리 .tree (TD-75) — 폴더 트리 · 산출물 구조처럼 접고 펴는 계층 목록
  *   제품에서는 그리드 위젯(트리 모드)이 그리는 자리 — 이 클래스는 같은 값의 HTML 판(.grid-table 과 같은 관계)
  *   <ul class="tree" role="tree" aria-label="문서 폴더">
  *     <li class="tree__item" role="treeitem" aria-expanded="true" style="--tree-level:0">
@@ -401,7 +401,7 @@
  * ============================================================ */
 .gnb {
     height: 56px;
-    background: transparent;   /* 놓인 면(내용 영역 bg-subtle)을 그대로 — 이전 버전 화면과 같음, 아래 선으로만 나눔 (10/14 결정, 구 bg-base) */
+    background: transparent;   /* 놓인 면(내용 영역 bg-subtle)을 그대로 — 이전 버전 화면과 같음, 아래 선으로만 나눔 (구 bg-base) */
     border-bottom: 1px solid var(--color-border-base);
     display: flex;
     align-items: center;
@@ -447,7 +447,7 @@
     margin-left: var(--spacing-4);
 }
 .gnb .header-actions { display: flex; align-items: center; gap: var(--spacing-16); height: 100%; font-size: var(--body-md); }  /* font-size=styles.css 459 이관(컷 시 14→16 방지) */
-.gnb .header-actions nav { height: 100%; }  /* styles.css 607 height:inherit 체인 이관 — 컷 시 항목 세로팽창(483px) 방지 (2026-08-15) */
+.gnb .header-actions nav { height: 100%; }  /* styles.css 607 height:inherit 체인 이관 — 컷 시 항목 세로팽창(483px) 방지 */
 .gnb .header-actions nav ul {
     list-style: none;
     margin: 0;
@@ -511,7 +511,7 @@
     color: var(--color-text-inverse);
     border-radius: var(--radius-rounded);
     padding: 0 var(--spacing-8);
-    font-size: var(--body-xs);   /* 11 — 이전 버전 값, 토큰 Body/xs (TD-44 10/17) */
+    font-size: var(--body-xs);   /* 11 — 이전 버전 값, 토큰 Body/xs (TD-44) */
     line-height: 1;
     font-weight: var(--font-weight-semibold);
     min-width: 22px;
@@ -741,7 +741,7 @@
     transition: width 0.18s ease-out;
     /* 구 padding-top:56px (main-sub-brand 로고 자리 예약) 제거 — 그 로고를 안 쓰기로 하면서
      * overrides 가 padding-top:0 !important 로 다시 지우고 있었음(서로 상쇄만 하던 한 쌍).
-     * 패널 여백은 아래 「LNB 서브패널」 블록의 padding 이 단일 출처 (2026-08-23) */
+     * 패널 여백은 아래 「LNB 서브패널」 블록의 padding 이 단일 출처 */
 }
 .main-sub.is-closed { overflow: hidden; }
 .main-sub.is-closed { width: 0; border-right: none; }
@@ -810,7 +810,7 @@
     font-family: var(--font-family-base);
     font-size: var(--body-sm);
     font-weight: var(--font-weight-medium);
-    border-bottom: 3px solid transparent;   /* 선택 밑줄 3 (10/14 결정 — 이전 버전 2) */
+    border-bottom: 3px solid transparent;   /* 선택 밑줄 3 (이전 버전 2) */
     transition: color var(--duration-fast), border-color var(--duration-fast), background-color var(--duration-fast);
 }
 .main-sub-tabs .sub-tab:hover { color: var(--color-text-base); background: var(--color-bg-lnb-hover); }   /* Hovered = LNB 메뉴와 같은 옅은 브랜드 바탕 (TD-108 29번 · 아래 「탭 상태」) */
@@ -929,7 +929,7 @@
     box-sizing: border-box;
     transition: border-color var(--duration-fast), box-shadow var(--duration-fast);
 }
-/* hover = 입력칸(.input)과 같은 회색 한 단계. 포커스 규칙이 뒤에 있어 포커스가 이긴다 (2026-10-13) */
+/* hover = 입력칸(.input)과 같은 회색 한 단계. 포커스 규칙이 뒤에 있어 포커스가 이긴다 */
 .ui-datepicker:hover { border-color: var(--color-border-input-hover); }
 .ui-datepicker:focus-within,
 .ui-datepicker.is-active {
@@ -980,9 +980,9 @@
     box-shadow: none !important;
     cursor: text;   /* 직접 입력 허용 — 달력은 아이콘 · 클릭 · Alt+↓ (DS-ADR-016) */
 }
-.ui-datepicker__input::placeholder { color: var(--color-text-muted); }   /* 입력칸(.input)과 같음. 구 text-disabled = 대비 2.3 (DS-ADR-016 · 10/13) */
+.ui-datepicker__input::placeholder { color: var(--color-text-muted); }   /* 입력칸(.input)과 같음. 구 text-disabled = 대비 2.3 (DS-ADR-016) */
 
-/* 상태 — 입력칸(.input)과 같은 규칙을 칸을 감싸는 상자에 건다. 새 토큰 없음 (DS-ADR-016 · 017, 2026-10-13)
+/* 상태 — 입력칸(.input)과 같은 규칙을 칸을 감싸는 상자에 건다. 새 토큰 없음 (DS-ADR-016 · 017)
  * 오류 = 칸에 aria-invalid="true" · 비활성 = disabled · 읽기 전용 = readonly. 비활성 · 읽기 전용이면 datepicker.js가 달력을 열지 않고 아이콘 버튼에 disabled */
 .ui-datepicker:has(.ui-datepicker__input[aria-invalid="true"]) { border-color: var(--color-border-danger); }
 .ui-datepicker:has(.ui-datepicker__input:disabled) {
@@ -1035,7 +1035,7 @@
     padding: 0;
     flex-shrink: 0;
 }
-/* 번호 · 화살표 = 흰 칸 + 1px 테두리, 지금 쪽 = 브랜드 채움 + 흰 글자 — 이전 버전 페이지 번호 모양 (TD-45 45-3 B, 10/14 결정 10 대체).
+/* 번호 · 화살표 = 흰 칸 + 1px 테두리, 지금 쪽 = 브랜드 채움 + 흰 글자 — 이전 버전 페이지 번호 모양 (TD-45 45-3 B).
  * 높이 · 모서리는 버튼 역할 토큰 그대로(DS-ADR-020 — 이전 버전은 31 · 2). 칸 안 여백 = 이전 버전 7에 가까운 토큰 8 */
 .ui-pagination__btn {
     display: inline-flex;
@@ -1085,7 +1085,7 @@
     height: 14px;
     stroke-width: 2;
 }
-/* 포커스 = 입력칸과 같은 글로우(보더 --color-border-focus + 바깥 3px --color-focus-ring) — 이전 버전 포커스 그대로 (10/14).
+/* 포커스 = 입력칸과 같은 글로우(보더 --color-border-focus + 바깥 3px --color-focus-ring) — 이전 버전 포커스 그대로.
  * 페이지 번호 · 앱 틀 버튼(뒤로 · 앞으로 · 사용자 메뉴 · 업무 개수 · 패널 닫기) · 팝업 닫기 · 첨부 내려받기 · 산출물 바로가기.
  * 보더가 없는 요소(팝업 닫기 · 첨부 내려받기)는 번짐만 보인다 */
 .ui-pagination__btn:focus-visible,
@@ -1103,7 +1103,7 @@
  *   Hovered = 옅은 브랜드 바탕 --color-bg-lnb-hover(LNB 레일 · 서브 메뉴 Hovered와 같은 토큰). 글자색은 탭마다 그대로(팝업 탭 브랜드 · 패널 탭 기본) — 각 탭 :hover 규칙
  *   Focused = 안쪽 포커스 테두리(보더 1px + 번짐 3px) — LNB 레일 .menu_icon a:focus-visible 과 같은 표시. 탭끼리 붙어 있고 아래 선이 선택 표시라 바깥 링 대신 안쪽
  *   선택한 탭도 같은 규칙 — 브랜드 글자 · 밑줄은 그대로 두고 바탕 · 테두리만 더함
- *   구(10/14): Hovered = 글자색만, Focused = 옅은 브랜드 바탕(bg-brand-subtle) · 선택 글자 on-brand-subtle */
+ *   구: Hovered = 글자색만, Focused = 옅은 브랜드 바탕(bg-brand-subtle) · 선택 글자 on-brand-subtle */
 .main-sub-tabs .sub-tab:focus-visible,
 .pop .tab li:focus-visible {
     outline: 2px solid transparent;   /* 강제 색 모드용 */
@@ -1144,7 +1144,7 @@
  * ============================================================ */
 
 /* 필수 표시 (라벨 뒤 별표) = 빨강(위험 글자색) · 라벨과 같은 굵기, 간격 4 — Figma Label Property 1=Required (TD-120).
- * 구(TD-108 ~ 10/20): 라벨과 같은 색. 이전 버전: 빨강 · 700 · 간격 2.
+ * 구(TD-108): 라벨과 같은 색. 이전 버전: 빨강 · 700 · 간격 2.
  * 필수 여부는 필드의 aria-required 가 알리고 별표는 aria-hidden — 색만으로 알리지 않음.
  * 회색 섹션 상자(bg-muted) 안 · 섹션 머리에서는 danger-bold — danger(red-600)는 bg-muted 위 4.37:1 로 AA 미달(오류 문구와 같은 규칙) */
 .required {
@@ -1205,7 +1205,7 @@
     align-items: center;
     justify-content: space-between;
     padding: var(--spacing-12) var(--spacing-16);
-    background: var(--color-bg-base);   /* sticky 헤더라 배경 필수(없으면 본문이 뒤로 비쳐 지나감). overrides 중복 선언을 여기로 통합 (2026-08-23) */
+    background: var(--color-bg-base);   /* sticky 헤더라 배경 필수(없으면 본문이 뒤로 비쳐 지나감). overrides 중복 선언을 여기로 통합 */
     border-bottom: 1px solid var(--color-border-base);
     flex-shrink: 0;
 }
@@ -1263,7 +1263,7 @@ body.popup { background: var(--color-bg-base); }
 /* 1. 타이틀 헤더 — 흰 배경 + 아래 구분선. 위 .pop .top 블록이 단일 출처.
  * 여기 있던 '브랜드 CI 그라데이션' 시절 잔재(흰 반투명 뱃지 / 흰 X 아이콘 / 흰 글씨)는
  * 헤더가 흰색으로 바뀐 뒤로 '흰 바탕에 흰 요소'라 안 보이는 죽은 값이었고, .pop 과 .pop .top 의
- * background·border-bottom 은 위 블록과 중복이라 함께 제거 (2026-08-23) */
+ * background·border-bottom 은 위 블록과 중복이라 함께 제거 */
 .pop .top-title-area h3 { color: var(--color-text-base); }
 .pop .product { padding: var(--spacing-16); gap: var(--spacing-12); background: var(--color-bg-base); }   /* 전체 흰색 */
 /* 4. 결재선 Template 셀렉트 — 우리 인풋 디자인으로 통일 */
@@ -1271,7 +1271,7 @@ body.popup { background: var(--color-bg-base); }
 .pop .seach_arm .rightbt > span { font-size: var(--body-sm); color: var(--color-text-muted); }
 /* 타이틀 배지(문서 아이콘) — 흰 헤더 위 연한 박스 */
 .pop .top-title-area .doc-type-badge svg { stroke-width: 1.8; }
-/* 섹션 머리 — 접기 토글 + 제목만, 바탕 없음(놓인 면 색을 그대로 따름). 이전 버전 등록 창 모양 (10/14).
+/* 섹션 머리 — 접기 토글 + 제목만, 바탕 없음(놓인 면 색을 그대로 따름). 이전 버전 등록 창 모양.
  * 구: 회색 섹션 바(bg-subtle · 모서리 · 안쪽 여백 4, 다크 bg-header) */
 .pop .seach_arm {
     background: transparent;
@@ -1320,7 +1320,7 @@ body.dark-mode .pop .pro_table { background: var(--color-bg-base); box-shadow: n
     color: var(--color-text-muted);
     font-size: var(--body-md);
     font-weight: var(--font-weight-medium);
-    border-bottom: 3px solid transparent;   /* 선택 밑줄 3 (10/14 결정 — 이전 버전 2) */
+    border-bottom: 3px solid transparent;   /* 선택 밑줄 3 (이전 버전 2) */
     transition: color var(--duration-fast), border-color var(--duration-fast), background-color var(--duration-fast);
 }
 .pop .tab li:hover { color: var(--color-text-brand); background: var(--color-bg-lnb-hover); }   /* 글자 = 이전 버전 브랜드 글자, 바탕 = LNB 메뉴와 같은 옅은 브랜드 (TD-108 29번 · 「탭 상태」) */
@@ -1355,11 +1355,11 @@ body.dark-mode .pop .pro_table { background: var(--color-bg-base); box-shadow: n
     background: var(--color-bg-base);
 }   /* display:flex/column/min-height:0 = 그 전 버전 .pop .contents 에서 이관(단일출처). 내부(approval tree/list 등)가 flex-컬럼 높이제약 받아 내부 스크롤 */
 
-/* 상세 값 보기 .detail-dl — 이전 버전 팝업 상세(세부 내용 탭)와 같은 모양 (TD-45, 10/15 캡쳐 「08_문서 상세 팝업」 · 덮어쓰기 551 ~ 565줄)
+/* 상세 값 보기 .detail-dl — 이전 버전 팝업 상세(세부 내용 탭)와 같은 모양 (TD-45, 이전 버전 캡쳐 「08_문서 상세 팝업」 · 덮어쓰기 551 ~ 565줄)
  *   줄(.detail-dl__row = dl) 하나에 칸 한두 개. 칸 = 라벨(dt) 위 · 값(dd) 아래. 칸이 하나뿐인 줄은 줄 전체 폭
  *   줄마다 위아래 8 + 아래 1px 선, 마지막으로 보이는 줄은 선 없음. 칸 사이 24
  *   라벨 = 12 · 반굵게 · 라벨색(--color-text-label), 값 = 12 · 기본 글자색
- *   구(10/15 오전): 라벨 왼쪽 · 값 오른쪽 4칸 — 이전 버전 화면과 비교 없이 만든 모양 */
+ *   구: 라벨 왼쪽 · 값 오른쪽 4칸 — 이전 버전 화면과 비교 없이 만든 모양 */
 .detail-dl { display: flex; flex-direction: column; }
 .detail-dl__row {
     display: grid;
@@ -1400,7 +1400,7 @@ body.dark-mode .pop .contents .pro_table:not(:has(.form-grid-2)):not(.seach_arm:
 
 /* 첨부 파일 목록 .file-download-list — 이전 버전 첨부 칩(.fileAttachLineItem, 덮어쓰기 579 ~ 587줄)
  *   한 줄 전체 칩: 파일 아이콘 + 파일 이름(반굵게, 누르면 내려받음). 마우스를 올리면 이름에 밑줄 + 오른쪽 내려받기 표시
- *   구(10/15 오전): 흰 칩 + 크기 + 내려받기 버튼 — 이전 버전에 없던 모양 */
+ *   구: 흰 칩 + 크기 + 내려받기 버튼 — 이전 버전에 없던 모양 */
 .file-download-list {
     list-style: none; margin: 0; padding: 0;
     display: flex; flex-direction: column;
@@ -1439,7 +1439,7 @@ body.dark-mode .pop .contents .pro_table:not(:has(.form-grid-2)):not(.seach_arm:
  * 형식 목록은 Figma Art/File(✨ Icons › 그림 자산)과 같다 (TD-108 40번).
  * 이전 버전도 확장자마다 다른 아이콘(PDF 빨강 · 엑셀 초록 …) — 그림 파일 대신 아이콘 토큰 색.
  * 그림 자산(.ds-art, DS-ADR-037): 솔리드 = 색 종이 + 흰 줄 + 아래 띠 흰 형식 글자(형식 색 = --art-file-<형식> · -band, 모드와 상관없음),
- *   라인 = 파일 윤곽 + 아래 형식 글자(글자색 = 아래 아이콘 토큰). 구(~ 10/20): 솔리드 = 흰 종이 + 색 띠 — Figma 모양과 달랐음 (TD-108)
+ *   라인 = 파일 윤곽 + 아래 형식 글자(글자색 = 아래 아이콘 토큰). 구: 솔리드 = 흰 종이 + 색 띠 — Figma 모양과 달랐음 (TD-108)
  * 상세 창 첨부 목록 · 등록 창 업로더 · 최근 문서가 같이 씀. 그 밖 형식(--file) = 회색 */
 .file-icon { --file-art: var(--art-file-file); --file-art-band: var(--art-file-file-band); }
 .file-icon.file-icon--pdf { color: var(--color-icon-danger);  --file-art: var(--art-file-pdf); --file-art-band: var(--art-file-pdf-band); }
@@ -1469,8 +1469,8 @@ body.dark-mode .pop .contents .pro_table:not(:has(.form-grid-2)):not(.seach_arm:
     gap: var(--spacing-8);
 }
 /* 섹션 제목은 h3 · h4 · h5 모두 같은 모양 — 문서 단계에 맞춰 고름: 화면 제목(h2) 아래 = h3, 팝업 제목(h3) 아래 = h4.
- * 이전 버전 마크업은 h4 (접근성 검사 heading-order — 상세 화면 h2 다음 h4 는 단계 건너뜀, 10/16).
- * h5 = 이전 버전 프로젝트 템플릿 화면의 탭 안 섹션 제목 4곳 — 같은 .seach_arm .leftbt 구조 (TD-92, 10/17) */
+ * 이전 버전 마크업은 h4 (접근성 검사 heading-order — 상세 화면 h2 다음 h4 는 단계 건너뜀).
+ * h5 = 이전 버전 프로젝트 템플릿 화면의 탭 안 섹션 제목 4곳 — 같은 .seach_arm .leftbt 구조 (TD-92) */
 .seach_arm .leftbt :is(h3, h4, h5) {   /* 굵기는 globals h3 · h4 · h5 그대로(제목 = SemiBold, TD-108 34번). 색·마진·라인하이트 유지 */
     font-size: var(--heading-sm);   /* 섹션 제목 16 — 이전 버전 h4 크기. h4 기본값(20, DS-ADR-012)은 그대로 두고 섹션 제목에서만 (TD-45 45-3) */
     color: var(--color-text-base);
@@ -1543,7 +1543,7 @@ body.dark-mode .pop .contents .pro_table:not(:has(.form-grid-2)):not(.seach_arm:
 .form-grid-2.form-grid--6 { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: var(--spacing-12) var(--spacing-24); }   /* 열 간격 24 = 이전 버전 검색 폼(TD-45 45-3 규칙대로). 구: 16 */
 .form-grid-2.form-grid--6 .ff-field { gap: var(--spacing-8); }   /* 검색 라벨 ↔ 칸 8 = 이전 버전(라벨 아래 칸 위 여백 8). 등록 폼(.form-grid-2)은 6 그대로 */
 .form-grid-2 .ff-field.span-2 { grid-column: span 2; }
-/* 창이 좁아져도 6칸 그대로 = 이전 버전(표라서 칸 수가 바뀌지 않음). 칸이 좁아지고, 화면 최소 폭(1024)보다 좁으면 화면 전체가 가로 스크롤 (TD-45 45-3 규칙대로). 구: 1200 미만 3칸(10/13 제안 H)
+/* 창이 좁아져도 6칸 그대로 = 이전 버전(표라서 칸 수가 바뀌지 않음). 칸이 좁아지고, 화면 최소 폭(1024)보다 좁으면 화면 전체가 가로 스크롤 (TD-45 45-3 규칙대로). 구: 1200 미만 3칸
  * 예외 — 검색 조건이 놓인 칸(.pro_table)이 480 미만이면 2칸, 280 미만이면 1칸 (DS-ADR-048). 창 너비가 아니라 놓인 칸 너비로 정한다(컨테이너 쿼리).
  *   Default 화면 틀 최소 폭(1024)에서 이 칸은 480보다 넓어 6칸 그대로. 480 = 6칸이면 한 칸 60(날짜 칸이 안 들어감) · 280 = 2칸이면 한 칸 128(선택 목록 최소) */
 .pro_table:has(.form-grid--6) { container: search-form / inline-size; }
@@ -1554,7 +1554,7 @@ body.dark-mode .pop .contents .pro_table:not(:has(.form-grid-2)):not(.seach_arm:
     .form-grid-2.form-grid--6 { grid-template-columns: minmax(0, 1fr); }
     .form-grid-2.form-grid--6 .ff-field.span-2 { grid-column: 1 / -1; }   /* 1칸에서 span 2 는 없는 열을 만들므로 한 줄 전체로 */
 }
-.form-grid-2 .ff-field > .search-label { margin: 0; display: block; font-size: var(--body-sm); font-weight: var(--font-weight-semibold); color: var(--color-text-label); }   /* 라벨 = 작은 브랜드색 굵은 글자(이전 버전 검색 라벨 값). 구: Screens 에만 있던 값(medium)을 DS 로 (10/14) */
+.form-grid-2 .ff-field > .search-label { margin: 0; display: block; font-size: var(--body-sm); font-weight: var(--font-weight-semibold); color: var(--color-text-label); }   /* 라벨 = 작은 브랜드색 굵은 글자(이전 버전 검색 라벨 값). 구: Screens 에만 있던 값(medium)을 DS 로 */
 .form-grid-2 .ff-field .td { width: 100%; display: block; padding: 0; }
 .form-grid-2 .ff-field .checkSelect { width: 100%; }
 .form-grid-2 .ff-field input[type="file"] { font-size: var(--body-sm); color: var(--color-text-muted); }
@@ -1597,7 +1597,7 @@ body.dark-mode .pop .contents .pro_table:not(:has(.form-grid-2)):not(.seach_arm:
 .pop .pro_table .file-view-list .file-name { font-size: var(--body-sm); color: var(--color-text-base); text-decoration: none; }
 .pop .pro_table .file-view-list a.file-name:hover { text-decoration: underline; color: var(--color-text-info); }
 
-/* ── 첨부파일 업로더(.resumable) — 시안 드롭존 (2026-08-03 팝업→전역, 바 구조) ──────
+/* ── 첨부파일 업로더(.resumable) — 시안 드롭존 (팝업→전역, 바 구조) ──────
  *   동작(resumable.js 업로드/저장) 그대로. 구조:
  *   .resumable > .resumable-bar(파일선택 좌/전체삭제 우) + .resumable-drop(드래그영역) + ul.fileList(파일카드)
  *   파일선택·드롭존은 파일이 있어도 유지 → 계속 추가 가능. */
@@ -1662,7 +1662,7 @@ body.dark-mode .pop .contents .pro_table:not(:has(.form-grid-2)):not(.seach_arm:
 /* 올리는 중 막대 = 기본 <progress> 를 DS 색으로(트랙 = 섹션 머리 회색, 채움 = 브랜드) + 빛(TD-48).
  * 빛 = 시스템이 지금 처리 중일 때만 — 채운 부분 안에서만 흰 띠가 왼쪽 → 오른쪽(한 바퀴 --duration-shimmer).
  * 저장된 값(프로젝트 진행률 막대 .progress-bar)에는 넣지 않음. 모션 줄이기면 빛 없이 멈춘 막대. 화면 읽기 이름(aria-label)은 그대로
- * 움직임은 막대(<progress>)에 걸고 채움 의사 요소는 위치 변수만 받음 — 크로미엄은 ::-webkit-progress-value 에 건 animation 을 돌리지 않음(10/16 확인)
+ * 움직임은 막대(<progress>)에 걸고 채움 의사 요소는 위치 변수만 받음 — 크로미엄은 ::-webkit-progress-value 에 건 animation 을 돌리지 않음
  * -webkit- · -moz- 의사 요소는 한 규칙에 묶으면 모르는 쪽 브라우저가 규칙 전체를 버림 → 따로 씀 */
 @property --progress-shimmer-x { syntax: '<percentage>'; inherits: true; initial-value: -60%; }
 .resumable:not(.center) .fileList .file-item progress {
@@ -1755,7 +1755,7 @@ body.dark-mode .resumable:not(.center) .fileList .file-item { background: var(--
     color: var(--color-text-base);
     margin-right: var(--spacing-16);  /* 12 → 16, 라디오와 같게 */
     word-break: keep-all;             /* 한글 낱말 중간에서 줄바꿈 안 함 (E-4 검수 #1) */
-    white-space: nowrap;              /* 라벨은 한 줄 — 칸이 좁으면 칸을 넓힌다(이전 버전 화면, 10/14) */
+    white-space: nowrap;              /* 라벨은 한 줄 — 칸이 좁으면 칸을 넓힌다(이전 버전 화면) */
 }
 .radio .radio__mark { margin-top: calc((1lh - 16px) / 2); }   /* 표식을 첫 줄 가운데에 */
 /* 누름 영역 높이 24 이상 — 라벨 글줄(12 → 19 · 14 → 22)보다 위아래로 넓힌 투명 판. 줄 높이 · 배치는 그대로 (Selection Controls 검수 P4 #5) */
@@ -1769,7 +1769,7 @@ body.dark-mode .resumable:not(.center) .fileList .file-item { background: var(--
 }
 /* 폼 안 라디오 · 체크 라벨 = 12 — 이전 버전 「검색폼 폰트 12 통일」 묶음(입력칸 · 셀렉트와 같은 규칙, TD-45 45-3 규칙대로). 폼 밖(로그인 등)은 14 그대로 */
 :is(.form-grid-2, .mainTable) :is(.radio, .checkbox) { font-size: var(--body-sm); }
-/* 한 칸 안에 늘어놓는 라디오 · 체크박스 묶음 (TD-75, 10/17) — <div class="radio-group" role="radiogroup" aria-label="버전">
+/* 한 칸 안에 늘어놓는 라디오 · 체크박스 묶음 (TD-75) — <div class="radio-group" role="radiogroup" aria-label="버전">
  * 높이 = 옆 입력칸(--size-input)에 맞춰 세로 가운데. 항목 사이 = 각 항목 오른쪽 16(마지막 0), 칸보다 넓으면 다음 줄(줄 사이 4) — 이전 버전 검색 폼 라디오 묶음 값 */
 :is(.radio-group, .checkbox-group) { display: flex; flex-wrap: wrap; align-items: center; row-gap: var(--spacing-4); min-height: var(--size-input); }
 :is(.radio-group, .checkbox-group) > :last-child { margin-right: 0; }
@@ -1814,20 +1814,20 @@ body.dark-mode .resumable:not(.center) .fileList .file-item { background: var(--
     border-color: var(--color-border-focus);
     box-shadow: 0 0 0 3px var(--color-focus-ring);
 }
-/* 켜진 체크 포커스 = 테두리 bg-base(라이트 흰 · 다크 면색) — 브랜드 테두리가 브랜드 면과 같아지는 것 피함 (10/14 결정 ①).
+/* 켜진 체크 포커스 = 테두리 bg-base(라이트 흰 · 다크 면색) — 브랜드 테두리가 브랜드 면과 같아지는 것 피함.
  * 부분 선택도 같은 브랜드 면이라 같은 흰 테두리 — Figma Checkbox Checked=Partial · Focused (TD-108) */
 .checkbox input[type="checkbox"]:checked:focus-visible,
 .checkSelect .option input[type="checkbox"]:checked:focus-visible,
 .checkbox input[type="checkbox"]:indeterminate:focus-visible { border-color: var(--color-bg-base); }
 /* 우리 디자인 체크박스 disabled 상태 추가
- * 꺼짐+비활성 = 연회색 칸(bg-disabled) + 같은 색 테두리(border-disabled) — 라디오 · 스위치 · 버튼 비활성과 같은 규칙 (10/14, DS-ADR-015 보완). 구: bg-subtle + border-base */
+ * 꺼짐+비활성 = 연회색 칸(bg-disabled) + 같은 색 테두리(border-disabled) — 라디오 · 스위치 · 버튼 비활성과 같은 규칙 (DS-ADR-015 보완). 구: bg-subtle + border-base */
 .checkbox input[type="checkbox"]:disabled,
 .checkSelect .option input[type="checkbox"]:disabled {
     background: var(--color-bg-disabled);
     border-color: var(--color-border-disabled);
     cursor: not-allowed;
 }
-/* Selection Controls (2026-10-06) — 조합 상태 · 부분 선택 · hover · 포커스 (D-1 CombinedState, 명세 5항) */
+/* Selection Controls — 조합 상태 · 부분 선택 · hover · 포커스 */
 .checkbox input[type="checkbox"]:hover:not(:disabled):not(:checked):not(:indeterminate),
 .checkSelect .option input[type="checkbox"]:hover:not(:disabled):not(:checked):not(:indeterminate),
 .checkbox input[type="checkbox"]:active:not(:disabled):not(:checked):not(:indeterminate) { border-color: var(--color-border-input-hover); }   /* 누르는 동안 = 올림과 같은 테두리 (Figma Checkbox Pressed, TD-108) */
@@ -1885,12 +1885,12 @@ body.dark-mode .resumable:not(.center) .fileList .file-item { background: var(--
             mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1' stroke-linecap='round' stroke-linejoin='round'><polyline points='3.6 7.7 6.7 10.8 12.5 4.8'/></svg>") center / 16px 16px no-repeat;
 }
 .aui-label .aui-checkbox:disabled {
-    background: var(--color-bg-disabled) !important;   /* .checkbox 비활성과 같게 (10/14, DS-ADR-015 보완) */
+    background: var(--color-bg-disabled) !important;   /* .checkbox 비활성과 같게 (DS-ADR-015 보완) */
     border-color: var(--color-border-disabled) !important;
     cursor: not-allowed;
 }
 
-/* ═══ 커스텀 라디오 .radio — 단일 출처 (2026-07-20 통합)
+/* ═══ 커스텀 라디오 .radio — 단일 출처
  *   그 전 버전 radio.css(파란 #024FC0 + checkmark top/left:2px + padding-left:25px)를 여기서 전부 덮음.
  *   components 가 radio.css 보다 나중 로드라 !important 불필요.
  *   스코프 프리픽스 없음 = 검색폼·pro_table·팝업 어디서든 재사용 ═══ */
@@ -1898,7 +1898,7 @@ body.dark-mode .resumable:not(.center) .fileList .file-item { background: var(--
     display: inline-flex;
     align-items: flex-start;
     word-break: keep-all;
-    white-space: nowrap;             /* 라벨은 한 줄 — 칸이 좁으면 칸을 넓힌다(이전 버전 화면, 10/14) */
+    white-space: nowrap;             /* 라벨은 한 줄 — 칸이 좁으면 칸을 넓힌다(이전 버전 화면) */
     gap: var(--spacing-8);
     padding-left: 0;                 /* radio.css 25px 무효화 */
     margin-right: var(--spacing-16);
@@ -1938,7 +1938,7 @@ body.dark-mode .resumable:not(.center) .fileList .file-item { background: var(--
     border-radius: 50%;
     background: var(--color-icon-on-color);
 }
-/* hover · 포커스 — input 을 투명하게 숨기므로 포커스 링은 표식(.radio__mark)에 그린다. 없으면 키보드 위치가 안 보임 (2026-10-06) */
+/* hover · 포커스 — input 을 투명하게 숨기므로 포커스 링은 표식(.radio__mark)에 그린다. 없으면 키보드 위치가 안 보임 */
 .radio input[type="radio"]:hover:not(:disabled):not(:checked) + .radio__mark,
 .radio input[type="radio"]:active:not(:disabled):not(:checked) + .radio__mark { border-color: var(--color-border-input-hover); }   /* 누르는 동안 = 올림과 같음 (Figma Radio Pressed, TD-108) */
 .radio input[type="radio"]:focus-visible + .radio__mark {
@@ -1946,17 +1946,17 @@ body.dark-mode .resumable:not(.center) .fileList .file-item { background: var(--
     border-color: var(--color-border-focus);
     box-shadow: 0 0 0 3px var(--color-focus-ring);
 }
-.radio input[type="radio"]:checked:focus-visible + .radio__mark { border-color: var(--color-bg-base); }   /* 켜진 라디오 = 흰 테두리 (10/14 결정 ①) */
+.radio input[type="radio"]:checked:focus-visible + .radio__mark { border-color: var(--color-bg-base); }   /* 켜진 라디오 = 흰 테두리 */
 /* disabled — 비활성 라디오는 회색(초록 아님) + 인터랙션 없음 */
 .radio:has(input:disabled) { cursor: not-allowed; color: var(--color-text-muted); }
-.radio input[type="radio"]:disabled + .radio__mark { border-color: var(--color-border-disabled); background: var(--color-bg-disabled); }   /* 꺼짐+비활성 = 체크박스 · 스위치와 같은 연회색 (10/14, DS-ADR-015 보완). 구: bg-muted + border-base */
+.radio input[type="radio"]:disabled + .radio__mark { border-color: var(--color-border-disabled); background: var(--color-bg-disabled); }   /* 꺼짐+비활성 = 체크박스 · 스위치와 같은 연회색 (DS-ADR-015 보완). 구: bg-muted + border-base */
 .radio input[type="radio"]:disabled:checked + .radio__mark { background: var(--color-bg-disabled); border-color: var(--color-bg-disabled); }   /* 선택됨+비활성 = 연회색 (DS-ADR-015) */
 .radio input[type="radio"]:disabled:checked + .radio__mark::after { background: var(--color-icon-disabled); }
 /* 다크모드 */
-/* 다크 라디오 바탕 덮어쓰기(bg-muted) 삭제 — 체크박스와 같은 bg-base, 테두리는 border-input(DS-ADR-013) 그대로 (10/14) */
-/* 다크 checked 덮어쓰기 2줄 삭제 — 토큰이 다크 값을 가짐. 남아 있으면 선택됨+비활성이 브랜드색으로 뜸 (2026-10-06) */
+/* 다크 라디오 바탕 덮어쓰기(bg-muted) 삭제 — 체크박스와 같은 bg-base, 테두리는 border-input(DS-ADR-013) 그대로 */
+/* 다크 checked 덮어쓰기 2줄 삭제 — 토큰이 다크 값을 가짐. 남아 있으면 선택됨+비활성이 브랜드색으로 뜸 */
 
-/* ═══ 스위치 .switch (Selection Controls · 2026-10-06)
+/* ═══ 스위치 .switch (Selection Controls)
  *   <label class="switch"><input type="checkbox" role="switch">자동 저장</label>
  *   네이티브 checkbox + role="switch" — 스크린리더가 '켜짐/꺼짐'으로 읽고, Space 로 토글. 켜짐 = :checked (클래스 없음, D-1 OnStateNaming)
  *   즉시 반영되는 설정에만 쓴다. 저장 버튼을 눌러야 반영되는 값은 체크박스
@@ -2013,7 +2013,7 @@ body.dark-mode .resumable:not(.center) .fileList .file-item { background: var(--
     border-color: var(--color-border-focus);
     box-shadow: 0 0 0 3px var(--color-focus-ring);
 }
-.switch input[type="checkbox"]:checked:focus-visible { border-color: var(--color-bg-base); }   /* 켜진 스위치 = 흰 테두리 (10/14 결정 ①) */
+.switch input[type="checkbox"]:checked:focus-visible { border-color: var(--color-bg-base); }   /* 켜진 스위치 = 흰 테두리 */
 .switch input[type="checkbox"]:disabled {
     background: var(--color-bg-disabled);
     border-color: var(--color-border-disabled);
@@ -2025,7 +2025,7 @@ body.dark-mode .resumable:not(.center) .fileList .file-item { background: var(--
 @media (prefers-reduced-motion: reduce) {
     .switch input[type="checkbox"],
     .switch input[type="checkbox"]::before,
-    .input, .select, .textarea, .ui-datepicker, .checkbox input[type="checkbox"] { transition: none; }   /* E-4 검수 2026-10-06 */
+    .input, .select, .textarea, .ui-datepicker, .checkbox input[type="checkbox"] { transition: none; }
 }
 
 /* 그리드 결과 영역
@@ -2063,7 +2063,7 @@ body.dark-mode .resumable:not(.center) .fileList .file-item { background: var(--
 /* AUI Grid 내부 사이징 fix (max-width / 가로스크롤바 hide / content-panel-mask / body-panel)
  * → AUIGrid_custom_style.css 로 이관 (시스템 컨벤션: 그리드 내부 룰은 custom 파일). */
 
-/* ── 표 .grid-table (Figma Table component · Header · Cell 짝, TD-93 10/16) ─────────────
+/* ── 표 .grid-table (Figma Table component · Header · Cell 짝, TD-93) ─────────────
  * 제품 목록 그리드는 상용 그리드 라이브러리가 그리고, DS 는 바깥 틀(.table_list › .list)과 그리드 토큰만 준다.
  * .grid-table 은 같은 모양을 HTML <table> 로 — 라이브러리 없이 그리는 목록 · 문서 · 화면 예시. 값이 같은 그리드 토큰이라 같이 바뀐다.
  * 근거 = 이전 버전 그리드 커스텀 스타일 · 그리드 설정 · 화면 캡처(문서 검색 0724):
@@ -2115,7 +2115,7 @@ body.dark-mode .resumable:not(.center) .fileList .file-item { background: var(--
 .grid-table td > .file-icon { vertical-align: middle; }   /* 「파일」 열 = 파일 형식 그림 자산(형식 색 · 브랜드 따라 솔리드 ↔ 라인, DS-ADR-026 · 037, TD-108 38번) */
 /* 바깥 틀 안에서 목록이 길면 머리는 위에 붙어 있음(그리드 라이브러리와 같게) */
 .table_list .list .grid-table th { position: sticky; top: 0; z-index: 1; }
-/* 편집 표 .grid-table--edit (TD-93 10/16) — 이전 버전 편집 그리드(overrides .ui-grid-edit) 그대로:
+/* 편집 표 .grid-table--edit (TD-93) — 이전 버전 편집 그리드(overrides .ui-grid-edit) 그대로:
  *   줄 40(그리드 설정 상수) · 칸 안쪽 좌우 4 · 칸 바탕 = 회색 판(bg-subtle, 짝수 줄은 얼룩 row-alt)
  *   입력칸 = DS .input · .select 를 칸 너비로, 높이 30(이전 버전 편집 칸 상자) · 읽기 전용 값은 .input[readonly](DS 읽기 전용 모양)
  *   번호 · 체크 칸은 상자 없이 가운데. 마우스 올림 · 선택 바탕은 읽기 표와 같음(입력칸은 흰 상자 그대로) */
@@ -2222,7 +2222,7 @@ body.dark-mode .select {   /* = --color-icon-muted 다크 값(neutral-300). 구:
     color: var(--color-text-disabled);
     cursor: not-allowed;
 }
-/* readonly = 회색 박스 하나로 — 한 줄 · 여러 줄 · 상세 폼 .ff-readonly 가 같은 모양 (DS-ADR-017, 2026-10-08)
+/* readonly = 회색 박스 하나로 — 한 줄 · 여러 줄 · 상세 폼 .ff-readonly 가 같은 모양 (DS-ADR-017)
  * 옛 방식(한 줄은 테두리·배경 없이 값처럼)은 같은 화면에 모양이 둘이라 폐기. 테두리는 연한 base → 편집 칸(border-input)과 구분
  * hover · 클릭 강조 없음. 키보드 포커스만 링(값 복사하러 들어올 수 있음 — WCAG 2.4.7) */
 .input[readonly],
@@ -2241,7 +2241,7 @@ body.dark-mode .select {   /* = --color-icon-muted 다크 값(neutral-300). 구:
 .textarea[readonly]:focus-visible { box-shadow: 0 0 0 3px var(--color-focus-ring); }
 
 /* ============================================================
- * 버튼 (P2 Button · 2026-10-04)
+ * 버튼
  * .btn + 중요도 .btn--{primary|secondary|destructive} + 모양 .btn--{filled|outlined|transparent}
  * 피그마 Button 의 Type × Style 과 같은 말. 색은 중요도로 정한다(CRUD 아님, DS-ADR-005)
  *   primary     = 그 영역의 핵심 동작 1개(등록·저장·확인) — 브랜드
@@ -2332,14 +2332,14 @@ body.dark-mode .select {   /* = --color-icon-muted 다크 값(neutral-300). 구:
 .btn--transparent:hover    { background: var(--btn-tint-hover);    color: var(--btn-fg-hover); }
 .btn--transparent:active   { background: var(--btn-tint-pressed);  color: var(--btn-fg-pressed); }
 
-/* 포커스 — 입력칸과 같은 글로우(보더 + 바깥 3px 번짐). 이전 버전 포커스 그대로 (10/14 결정, 10/6 E-4 개정).
- * E-4(10/6)는 떼어낸 2px 아웃라인이었음 — 채움 버튼에서 보더가 면과 같은 색이 되는 점은 변경 이력의 대비 표 참고 */
+/* 포커스 — 입력칸과 같은 글로우(보더 + 바깥 3px 번짐). 이전 버전 포커스 그대로.
+ * 떼어낸 2px 아웃라인은 채움 버튼에서 보더가 면과 같은 색이 됨 — 대비 표는 변경 이력 참고 */
 .btn:focus-visible {
     outline: 2px solid transparent;   /* 강제 색 모드(고대비)에서만 보임 — box-shadow 가 꺼지는 환경 대비 */
     border-color: var(--color-border-focus);
     box-shadow: 0 0 0 3px var(--color-focus-ring);
 }
-/* 포커스 흰 테두리 (10/14 결정 ①) — 테두리가 면과 같은 색이 되는 채운 브랜드 · 위험 버튼만 테두리를 버튼 글자색으로.
+/* 포커스 흰 테두리 — 테두리가 면과 같은 색이 되는 채운 브랜드 · 위험 버튼만 테두리를 버튼 글자색으로.
  * 라이트는 bg-base 와 같은 흰색. 다크 채운 브랜드 버튼은 면이 브랜드 틴트라 bg-base(다크 면색)로는 면과 갈라지지 않아 글자색(흰)을 씀 — 대비 표는 변경 이력.
  * 번짐(focus-ring)은 그대로. 켜진 체크 · 라디오 · 스위치는 각 부품 포커스 규칙 아래 */
 .btn--primary.btn--filled:focus-visible,
@@ -2418,7 +2418,7 @@ body.dark-mode .select {   /* = --color-icon-muted 다크 값(neutral-300). 구:
             mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>") center/contain no-repeat;
 }
 .btn--expand[aria-expanded="true"]::after { transform: translateY(-50%) rotate(180deg); }
-/* 상세 검색 펼침 (10/14) — 이전 버전 상세 검색(숨는 조건 줄 + [상세 검색 펼치기] 버튼)을 DS 이름으로. 기본 줄 구성은 DS 결정(대표 조건 1줄 — 이전 버전 한 줄 밀도와 같음)
+/* 상세 검색 펼침 — 이전 버전 상세 검색(숨는 조건 줄 + [상세 검색 펼치기] 버튼)을 DS 이름으로. 기본 줄 구성은 DS 결정(대표 조건 1줄 — 이전 버전 한 줄 밀도와 같음)
  *   <button class="btn btn--secondary btn--outlined btn--expand" aria-expanded="false" aria-controls="ID">
  *     <span class="t-open">상세 검색 펼치기</span><span class="t-close">상세 검색 접기</span></button>
  *   <div class="search-detail" id="ID" hidden><div class="form-grid-2 …"><div class="search-divider">상세 검색</div> …나머지 조건… </div></div>
@@ -2435,7 +2435,7 @@ body.dark-mode .select {   /* = --color-icon-muted 다크 값(neutral-300). 구:
     color: var(--color-text-muted);
 }
 .search-divider::after { content: ""; flex: 1; height: 1px; background: var(--color-border-base); }
-/* 그리드 링크 (10/14 결정) — 행마다 식별자 열(문서 번호 등) 하나만 항상 밑줄 링크, 이름 · 제목 같은 나머지 링크는 평소 밑줄 없이
+/* 그리드 링크 — 행마다 식별자 열(문서 번호 등) 하나만 항상 밑줄 링크, 이름 · 제목 같은 나머지 링크는 평소 밑줄 없이
  * 마우스 올림 · 키보드 포커스에서만 밑줄. 항상 밑줄이면 「마우스 올린 것」처럼 보여서.
  *   식별자 = .grid-custom-rows-link(이전 버전 그리드 열 스타일 이름 그대로) · 나머지 = .grid-link */
 .grid-custom-rows-link { color: var(--color-text-brand); text-decoration: underline; text-underline-offset: 2px; }
@@ -2445,21 +2445,21 @@ body.dark-mode .select {   /* = --color-icon-muted 다크 값(neutral-300). 구:
 .grid-link:focus-visible { color: var(--color-text-brand); text-decoration: underline; text-underline-offset: 2px; }
 .grid-custom-rows-link:hover { color: var(--color-text-interactive-primary-hover); text-decoration-thickness: 2px; }   /* 식별자 링크는 늘 밑줄이라 Hovered = 한 단계 진한 글자 + 굵은 밑줄 */
 /* 키보드 포커스 = 글자 링크 규칙(.file-download-list a.file-name)과 같은 브랜드 테두리. 식별자 링크는 늘 밑줄이라 마우스 올림과 모습이 같아
- * 테두리 없이는 키보드 위치가 안 보였음(브라우저 기본 테두리만, TD-93 10/16). 칸이 overflow:hidden 이라 간격은 1px */
+ * 테두리 없이는 키보드 위치가 안 보였음(브라우저 기본 테두리만, TD-93). 칸이 overflow:hidden 이라 간격은 1px */
 .grid-custom-rows-link:focus-visible,
 .grid-link:focus-visible { outline: 2px solid var(--color-border-focus); outline-offset: 1px; border-radius: var(--radius-sm); }
 /* 선택 행(bg-grid-row-selected) 위 = 한 단계 진한 글자. text-brand는 라이트 선택 행에서 4.08:1(Default)로 AA 미달 → interactive-primary-hover 7.5:1 이상 */
 :is(tr.is-selected, tr[aria-selected="true"]) :is(.grid-custom-rows-link, .grid-link:hover, .grid-link:focus-visible) { color: var(--color-text-interactive-primary-hover); }
-/* 본문 링크(.text-link) — 표 밖 상세 정보 · 폼 안에서 다른 문서를 여는 글자 링크. 이전 버전 규칙 그대로(TD-93 3.1 대조, 10/17):
+/* 본문 링크(.text-link) — 표 밖 상세 정보 · 폼 안에서 다른 문서를 여는 글자 링크. 이전 버전 규칙 그대로(TD-93 이전 버전 대조):
  * 굵게 · 평소 밑줄 없음 · 마우스 · 키보드가 오면 밑줄(간격 3 · 두께 1), 끝에 「↗」 = 다른 창으로 열림.
- * 내려받기처럼 다른 창이 안 열리는 링크는 .no-arrow 로 화살표를 뺌. 글자색은 그리드 링크와 같은 브랜드색(10/16 결정 — 이전 버전은 파랑) */
+ * 내려받기처럼 다른 창이 안 열리는 링크는 .no-arrow 로 화살표를 뺌. 글자색은 그리드 링크와 같은 브랜드색(이전 버전은 파랑) */
 .text-link { color: var(--color-text-brand); font-weight: var(--font-weight-semibold); text-decoration: none; }
 .text-link:not(:empty)::after { content: "\2197"; content: "\2197" / ""; display: inline-block; margin-left: 2px; font-size: .85em; text-decoration: none; }   /* 장식 — 화면 읽기 프로그램은 건너뜀 */
 .text-link.no-arrow::after { content: none; }
 .text-link:hover,
 .text-link:focus-visible { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
 .text-link:focus-visible { outline: 2px solid var(--color-border-focus); outline-offset: 2px; border-radius: 2px; }   /* 파일 이름 링크와 같은 테두리 */
-/* 펼친 상태 = 접힘과 같은 흰 고스트, 화살표와 문구만 바뀜 — 이전 버전 화면 그대로 (10/14). 구: 옅은 브랜드 면 + 브랜드 테두리(Button 제안 ⑬) */
+/* 펼친 상태 = 접힘과 같은 흰 고스트, 화살표와 문구만 바뀜 — 이전 버전 화면 그대로. 구: 옅은 브랜드 면 + 브랜드 테두리(Button 제안 ⑬) */
 
 /* 켜짐 + 비활성 = 회색 (Button 제안 ⑮, DS-ADR-015 선택 컨트롤과 같은 규칙). 구: 켜짐 규칙이 더 구체적이라 브랜드색이 남았음.
  * 버튼 블록 맨 끝에 둠 — 같은 구체성의 켜짐 :hover · :active 보다 뒤에 있어야 비활성이 이김 */
@@ -2483,7 +2483,7 @@ body.dark-mode .select {   /* = --color-icon-muted 다크 값(neutral-300). 구:
     width: 250px;
     background: var(--color-bg-base);
     border-radius: var(--radius-popover);
-    box-shadow: var(--shadow-popover);   /* 떠 있는 층 (10/14 그림자 역할). 구 0 12px 32px 12% + 0 2px 8px 8% */
+    box-shadow: var(--shadow-popover);   /* 떠 있는 층. 구 0 12px 32px 12% + 0 2px 8px 8% */
     font-family: var(--font-family-base);
     font-size: var(--body-sm);
     color: var(--color-text-base);
@@ -2527,7 +2527,7 @@ body.dark-mode .select {   /* = --color-icon-muted 다크 값(neutral-300). 구:
 /* ── 달력 내부 호버 = 옅은 브랜드색(--color-bg-brand-subtle). 회색(neutral-50)은 흰 배경 위에서 거의 안 보였음.
       구 --brand-100 직접 지정은 다크에서 안 뒤집혀 달력에 흰 조각으로 떴음 ── */
 .datepicker__nav:hover {
-    background: var(--color-bg-brand-subtle);   /* hover = 바탕만 (그림자 단계는 그대로, 10/14) */
+    background: var(--color-bg-brand-subtle);   /* hover = 바탕만 (그림자 단계는 그대로) */
 }
 .datepicker__title-area {
     display: flex;
@@ -2748,7 +2748,7 @@ body.dark-mode .select {   /* = --color-icon-muted 다크 값(neutral-300). 구:
     flex-shrink: 0;
 }
 
-/* 섹션 접기 토글 — 이전 버전 등록 창 모양(제품 전체가 이 모양, 10/14). 펼침 = 빼기, 접힘 = 더하기, 상태는 aria-expanded.
+/* 섹션 접기 토글 — 이전 버전 등록 창 모양(제품 전체가 이 모양). 펼침 = 빼기, 접힘 = 더하기, 상태는 aria-expanded.
  * 보이는 네모 16 = 바탕 bg-base · 테두리 border-input(비텍스트 3:1, DS-ADR-013) · 모서리 버튼 역할 · 아이콘 icon-muted.
  * 누름 영역 24 = 네모 둘레 투명 여유 4(최소 누름 영역 24, DS-ADR-020). 왼쪽 여유만 음수 여백으로 흐름에서 빼서 네모가 내용 왼쪽 선에 맞음.
  * 네모 ↔ 제목 12 = 오른쪽 여유 4 + 머리 간격 8 — Figma Accordion(토글 24칸 + gap 8)과 같음 (TD-108 32번). 구: 오른쪽도 음수 여백이라 8.
@@ -2789,10 +2789,10 @@ body.dark-mode .select {   /* = --color-icon-muted 다크 값(neutral-300). 구:
 .section-toggle[aria-expanded="false"]:hover::before { background: var(--color-icon-muted); border-color: var(--color-icon-muted); }
 .section-toggle[aria-expanded="false"]:focus-visible::before { border-color: var(--color-border-focus); }
 
-/* 접는 섹션 = 머리 + 내용이 한 상자, 바탕 bg-muted — 상세 화면 · 등록 창(.pop) 공통 (TD-108 10/19).
+/* 접는 섹션 = 머리 + 내용이 한 상자, 바탕 bg-muted — 상세 화면 · 등록 창(.pop) 공통 (TD-108).
  * 근거 = 이전 버전 캡처 08 · 09: 상자 바탕 #F8F9FA(= bg-muted) · 1px 테두리 · 머리가 상자 안. 접히면 머리 단독 상자.
  * 내용 = 폼(.pro_table) · 표(.table_list) · 첨부(.resumable). 입력칸 · 표 · 첨부 칸은 흰 바탕 그대로라 상자 위에서 구분된다.
- * 구(10/14): 등록 창은 바탕 없는 제목줄 + 흰 내용, 상세 화면은 bg-header 머리 + 흰 내용 — 오류 글자 대비 때문에 흰 바탕을 썼음.
+ * 구: 등록 창은 바탕 없는 제목줄 + 흰 내용, 상세 화면은 bg-header 머리 + 흰 내용 — 오류 글자 대비 때문에 흰 바탕을 썼음.
  * 대비 — 상자 안 오류 글자는 danger-bold(라이트 7.66:1 · 다크 7.34:1). danger(red-600)는 bg-muted 위 4.37:1 로 AA 미달.
  *        다크에서 펼침 토글 네모 테두리(border-input)는 bg-muted 위 2.67:1 → 상자 안에서는 icon-muted(다크 9:1 이상) */
 .seach_arm:has(.section-toggle),
@@ -2843,7 +2843,7 @@ body.dark-mode .section-box { background: var(--color-bg-muted); }
 }
 .progress-bar {
     flex: 1;
-    height: 17px;          /* 캡쳐 디자인 최종값. 구 28px 을 아래에서 !important 로 덮던 것을 여기에 직접 반영 (2026-08-23) */
+    height: 17px;          /* 캡쳐 디자인 최종값. 구 28px 을 아래에서 !important 로 덮던 것을 여기에 직접 반영 */
     background: var(--color-bg-subtle);   /* 구 #E5E7EB 하드코딩 → 쿨그레이 토큰 */
     border-radius: var(--radius-rounded);
     overflow: hidden;
@@ -2866,7 +2866,7 @@ body.dark-mode .section-box { background: var(--color-bg-muted); }
     margin-right: calc(var(--spacing-8) + 4ch);
     overflow: visible;
 }
-/* 계획 표식 — 막대 위 계획 위치를 가리키는 작은 아래 삼각. 실적 = 채움, 계획 = 표식 (10/14 결정 · 이전 버전에 없는 DS 제안).
+/* 계획 표식 — 막대 위 계획 위치를 가리키는 작은 아래 삼각. 실적 = 채움, 계획 = 표식 (이전 버전에 없는 DS 제안).
  * 위치 = style="--plan:64%". 표식은 정보라 막대의 aria-valuetext에 「계획 64%」를 같이 적고, 표식 자체는 aria-hidden.
  * .progress-plan-key = 같은 모양의 범례 — 영역 머리에 한 번 「▼ 계획」(전체 · 단계 줄 막대 공용, 20:40 결정) */
 .progress-bar__plan,
@@ -2932,7 +2932,7 @@ body.dark-mode .section-box { background: var(--color-bg-muted); }
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: var(--spacing-8);   /* 구 spacing-12 를 아래에서 !important 로 덮던 것 흡수 (2026-08-23) */
+    gap: var(--spacing-8);   /* 구 spacing-12 를 아래에서 !important 로 덮던 것 흡수 */
     padding: var(--spacing-4) 0;
 }
 .legend-item {
@@ -2993,7 +2993,7 @@ body.dark-mode .section-box { background: var(--color-bg-muted); }
 .pbar-fill {
     height: 100%;
     background: linear-gradient(to right, var(--color-progress-progress-start), var(--color-progress-progress-end));
-    border-radius: var(--radius-rounded);    /* .progress-bar 와 같은 알약 모양. 구 9px(높이 17의 절반 이상 = 이미 알약) → 토큰 (DS-ADR-020). 구 14px → 아래 !important 규칙 흡수 (2026-08-23) */
+    border-radius: var(--radius-rounded);    /* .progress-bar 와 같은 알약 모양. 구 9px(높이 17의 절반 이상 = 이미 알약) → 토큰 (DS-ADR-020). 구 14px → 아래 !important 규칙 흡수 */
     transition: width var(--duration-fill) ease-out;
 }
 .progress-bar--done    .pbar-fill { background: linear-gradient(to right, var(--color-progress-done-start), var(--color-progress-done-end)); }
@@ -3010,7 +3010,7 @@ body.dark-mode .section-box { background: var(--color-bg-muted); }
     flex-shrink: 0;
 }
 /* 애니메이션 = statusPulse(짙음↔흐림 wave) 단일. 색은 아래 modifier 가 담당.
- * 구 statusCycle(5색 순환)은 뒤에서 !important 로 덮여 한 번도 보인 적 없어 @keyframes 째로 제거 (2026-08-23)
+ * 구 statusCycle(5색 순환)은 뒤에서 !important 로 덮여 한 번도 보인 적 없어 @keyframes 째로 제거
  * 깜빡임 = 사람이 봐야 할 경고 → 지연(--delay)만. 완료 · 진행 · 예정 · 보류는 저장된 상태 값이라 정지
  * (이전 버전은 5 상태 모두 깜빡임. TD-48 「깜빡임 = 지연 경고」 규칙대로) */
 .status-segments__bar {
@@ -3025,7 +3025,7 @@ body.dark-mode .section-box { background: var(--color-bg-muted); }
 .status-segments--delay .status-segments__bar:nth-child(4) { animation-delay: .15s; }
 .status-segments--delay .status-segments__bar:nth-child(5) { animation-delay: .2s; }
 /* @keyframes statusPulse — 두근 · 두근 · 쉼. 크기는 그대로 두고 밝기만 — 박동마다 진해지며 왼쪽 → 오른쪽으로 반짝임이 번진다(막대마다 0.05초) (TD-108 46).
- * 구(10/20 ~ 10/21): 막대가 세로로 1.3배까지 커지며 진해짐 — 「너무 튐」. 구(10/16 ~ 10/20): 진함 ↔ 흐림을 1.6초에 부드럽게 — 「잘 안 보임」.
+ * 구: 막대가 세로로 1.3배까지 커지며 진해짐(지나치게 눈에 띔) · 진함 ↔ 흐림을 1.6초에 부드럽게(잘 보이지 않음).
  * 박동 2번 / 1.2초 = 초당 1.7번이라 깜빡임 기준(초당 3번 미만, WCAG 2.3.1) 안. 상태는 옆 글자가 알려 주고 막대는 꾸밈 */
 @keyframes statusPulse {
     0%        { opacity: .45; }
@@ -3036,7 +3036,7 @@ body.dark-mode .section-box { background: var(--color-bg-muted); }
 }
 /* 지연 경고 빛 — 지연 상태 표시와 같은 줄(.progress-row)의 지연 진행률 막대. 막대 5개와 같은 박자(--duration-pulse)로
  * 박동 두 번(2.4초)에 한 번 — 옅은 흰 빛이 채움을 천천히 훑고(1.7초 지나감 + 쉼), 그동안 붉은 번짐이 한 번 차올랐다 가라앉는다
- * (TD-108 46 — 구: 빛 0.6초 · 번짐 박동마다 「너무 빠름」). 처리 중 Shimmer와 다른 점 = 붉은 번짐. 표 안 지연 막대처럼 상태 표시가 옆에 없는 막대는 정지 —
+ * (TD-108 46 — 구: 빛 0.6초 · 번짐 박동마다, 지나치게 빠름). 처리 중 Shimmer와 다른 점 = 붉은 번짐. 표 안 지연 막대처럼 상태 표시가 옆에 없는 막대는 정지 —
  * 경고가 화면 여러 곳에서 동시에 뛰지 않게 한 화면의 대표 막대 하나만 */
 .progress-row:has(.status-block--delay) .progress-bar--delay .pbar-fill {
     background-image:
@@ -3048,7 +3048,7 @@ body.dark-mode .section-box { background: var(--color-bg-muted); }
     animation: ds-alert-glow calc(var(--duration-pulse) * 2) var(--ease-loop) infinite,
                ds-alert-sweep calc(var(--duration-pulse) * 2) var(--ease-loop) infinite;
 }
-/* 붉은 번짐 = 2.4초에 한 번 천천히 숨 쉬듯(빛이 지나가는 동안 차올랐다 가라앉음). 구: 박동마다 두 번 — 「너무 빨리 뜀」(10/21 TD-108 46) */
+/* 붉은 번짐 = 2.4초에 한 번 천천히 숨 쉬듯(빛이 지나가는 동안 차올랐다 가라앉음). 구: 박동마다 두 번 — 지나치게 빠름(TD-108 46) */
 @keyframes ds-alert-glow {
     0%        { box-shadow: 0 0 0 0 transparent; }
     35%       { box-shadow: 0 0 9px 1px color-mix(in srgb, var(--color-progress-delay-end) 50%, transparent); }
@@ -3086,7 +3086,7 @@ body.dark-mode .section-box { background: var(--color-bg-muted); }
     color: var(--color-icon-on-color);
 }
 .left-legend .legend-dot svg {
-    width: 12px;    /* 10 → 12 · 선 1.8 → 2.6(실제 1.3px): 점 16 안 기호가 가늘어 안 보이던 것 (10/14 34-A) */
+    width: 12px;    /* 10 → 12 · 선 1.8 → 2.6(실제 1.3px): 점 16 안 기호가 가늘어 안 보이던 것 */
     height: 12px;
     stroke-width: 2.6;
     color: var(--color-icon-on-color);
@@ -3167,7 +3167,7 @@ body.dark-mode .main-content,
 body.dark-mode .main-layout {
     background: var(--color-bg-subtle) !important;  /* L1 — 가장 어두움 */
 }
-/* ── L2 작업 공간 — LNB + 카드 모두 같은 톤 (라이트의 흰색 자리). GNB는 라이트처럼 바탕 없음(10/14 결정, 구: 여기서 bg-base) ── */
+/* ── L2 작업 공간 — LNB + 카드 모두 같은 톤 (라이트의 흰색 자리). GNB는 라이트처럼 바탕 없음(구: 여기서 bg-base) ── */
 body.dark-mode .main-menu,
 body.dark-mode .main-sub,
 body.dark-mode .main-sub-brand,
@@ -3223,8 +3223,8 @@ body.dark-mode .datepicker,
 body.dark-mode .pop-area,
 body.dark-mode .pop-popup,
 body.dark-mode .datepicker__dropdown,
-body.dark-mode .checkSelect .options {   /* 다중 선택 펼침 목록도 같은 떠 있는 층 — 빠져 있어 다크에서 카드 바탕과 구분이 안 됐음 (10/13) */
-    background: var(--color-bg-muted) !important;   /* 그림자는 토큰 다크 값이 맡음 (10/14) */
+body.dark-mode .checkSelect .options {   /* 다중 선택 펼침 목록도 같은 떠 있는 층 — 빠져 있어 다크에서 카드 바탕과 구분이 안 됐음 */
+    background: var(--color-bg-muted) !important;   /* 그림자는 토큰 다크 값이 맡음 */
 }
 body.dark-mode .pop-area,
 body.dark-mode .pop-popup { box-shadow: var(--shadow-modal) !important; }
@@ -3255,9 +3255,9 @@ body.dark-mode #leftGrid {
 /* AUI Grid 다크모드 그리드(zebra / 셀·헤더 보더 / 헤더 배경 / 셀 input / 패널 배경)
  * → AUIGrid_custom_style.css 로 이관 (그리드 내부 룰 일원화). */
 
-/* 페이지 번호 다크 — 토큰이 다크 값을 가짐. 옛 !important 덮어쓰기 3개(활성 = 흰 칩) 삭제 (10/14, 버튼과 같은 원칙) */
+/* 페이지 번호 다크 — 토큰이 다크 값을 가짐. 옛 !important 덮어쓰기 3개(활성 = 흰 칩) 삭제 (버튼과 같은 원칙) */
 
-/* 버튼 다크 — 토큰이 다크 값을 갖고 있어 별도 덮어쓰기 없음 (P2 Button · 2026-10-04). 옛 !important 덮어쓰기 묶음 삭제 */
+/* 버튼 다크 — 토큰이 다크 값을 갖고 있어 별도 덮어쓰기 없음. 옛 !important 덮어쓰기 묶음 삭제 */
 /* 산출물/태스크/고침 아이콘 — 라이트 주색 회색 → 다크 흰색 */
 body.dark-mode .left-action-btn svg {
     color: var(--color-text-base) !important;
@@ -3297,7 +3297,7 @@ body.dark-mode .progress-bar {
 .gnb .header-actions .menu-container .menu-toggle { display: flex; align-items: center; }
 .gnb .dropdown-content-top { position: absolute; left: 50%; transform: translateX(-50%); display: none; flex-direction: column; min-width: 80px; margin-top: 0.25rem; z-index: 10; background-color: var(--color-bg-muted); box-shadow: var(--shadow-popover); border-radius: var(--radius-popover); width: max-content; }
 .gnb .dropdown-content-top.show { display: flex; }
-/* 결재/활동 드롭다운(workCount 변형, :has(.logoutBtn) 아님) = 배경+링크. 사용자 메뉴(logoutBtn)는 바로 아래 「GNB 사용자 메뉴」가 덮음 (styles.css 545/556/566 이관 2026-08-16) */
+/* 결재/활동 드롭다운(workCount 변형, :has(.logoutBtn) 아님) = 배경+링크. 사용자 메뉴(logoutBtn)는 바로 아래 「GNB 사용자 메뉴」가 덮음 (styles.css 545/556/566 이관) */
 .gnb .dropdown-content-top a { color: var(--color-text-base); display: block; text-decoration: none; transition: background-color var(--duration-base) ease; }
 .gnb .dropdown-content-top a span { margin-left: 0.25rem; }
 .gnb .dropdown-content-top a:hover { text-decoration: underline; }
@@ -3307,10 +3307,10 @@ body.dark-mode .progress-bar {
 
 /* ═══ GNB 사용자 메뉴 — .dropdown-content-top:has(.logoutBtn) (TD-45 45-3 남은 넷) ═══
  * 이전 버전 개발 마크업 그대로: 머리(.section.user-info › .user-avatar · .user-meta) · 줄(.section-title) · 로그아웃(.logoutBtn › .logout-btn).
- * 값 = 이전 버전 덮어쓰기 31 · 37 · 40절(10/14 코드): 폭 258 · 줄 안쪽 8 16 · 아이콘 18 · 스위치 34 × 18(노브 14) · 로그아웃 줄 안쪽 12 16.
+ * 값 = 이전 버전 덮어쓰기 31 · 37 · 40절: 폭 258 · 줄 안쪽 8 16 · 아이콘 18 · 스위치 34 × 18(노브 14) · 로그아웃 줄 안쪽 12 16.
  * 색 = 패널 토큰만: 몸통 --color-bg-panel-2(brand-700), 머리 · 로그아웃 줄 --color-bg-panel(brand-900), 글자 · 테두리 --color-text-on-panel · -2.
- *   패널 위 글자에 포인트색을 쓰지 않음 — 고채도 포인트색이 진한 브랜드 면 위에서 떨려 보임(이전 버전 8/25 결정).
- *   10/15 오후: 처음 시안(그림 85)은 8/19 코드 사본의 금색 자리를 --accent-500 으로 옮겼는데, 10/14 코드 · 실제 화면(캡쳐 12)에는 금색이 없어 고침.
+ *   패널 위 글자에 포인트색을 쓰지 않음 — 고채도 포인트색이 진한 브랜드 면 위에서 떨려 보임(이전 버전).
+ *: 처음 시안(그림 85)은 사본의 금색 자리를 --accent-500 으로 옮겼는데 · 실제 화면(캡쳐 12)에는 금색이 없어 고침.
  * 줄 아이콘 = 제품이 줄마다 --row-icon 에 그림 경로를 넣음(DS에는 경로 없음 — 아이콘 메뉴 --lnb-icon 과 같은 방식).
  * 사이트맵 · 비밀번호 변경처럼 줄 안 링크(a)는 줄 전체를 누르는 자리로 넓힘(이전 버전 40절). */
 .dropdown-content-top:has(.logoutBtn) {
@@ -3627,7 +3627,7 @@ body.dark-mode .dropdown-content-top:has(.logoutBtn) .section-title > #theme-tog
     color: var(--color-text-disabled);
     cursor: not-allowed;
 }
-/* 두 개 이상 고르면 「첫 값 외 N」 — 첫 값은 넘치면 말줄임, 「외 N」은 늘 보이는 옅은 브랜드 알약 (10/15 결정 · DS-ADR-022).
+/* 두 개 이상 고르면 「첫 값 외 N」 — 첫 값은 넘치면 말줄임, 「외 N」은 늘 보이는 옅은 브랜드 알약 (DS-ADR-022).
  * 위젯 스크립트가 쉼표로 잇던 글자 대신 두 span 을 넣고, 고른 값 전체는 aria-label(화면 읽기) · title(마우스)에 */
 .checkSelect .selected-text:has(.selected-text__more) { display: flex; align-items: center; gap: var(--spacing-4); }
 .checkSelect .selected-text__value { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -3706,7 +3706,7 @@ body.dark-mode .checkSelect .search-text {   /* = --color-icon-muted 다크 값.
 }
 
 /* 옵션 행 = 왼쪽 체크박스 16 + 글자 (Figma Option Type=Check). 여러 개 고르는 목록이라는 걸 체크박스로 보여 줌 —
- * 하나만 고르는 목록(오른쪽 ✓, Type=Text)과 구분 (TD-45 45-3 C, 10/15 결정 · DS-ADR-022). 구: 체크박스 숨기고 오른쪽 ✓(이전 버전 모양) */
+ * 하나만 고르는 목록(오른쪽 ✓, Type=Text)과 구분 (TD-45 45-3 C · DS-ADR-022). 구: 체크박스 숨기고 오른쪽 ✓(이전 버전 모양) */
 .checkSelect .option {
     position: relative;
     display: flex;
@@ -3727,11 +3727,11 @@ body.dark-mode .checkSelect .search-text {   /* = --color-icon-muted 다크 값.
 .checkSelect .option input[type="checkbox"] { margin: 0; }   /* 모양은 .checkbox 와 같은 규칙(위 「Selection Controls」). 줄 가운데 맞춤이라 위 여백 없앰 */
 .checkSelect .option input[type="checkbox"]:focus-visible { box-shadow: none; border-color: var(--color-border-input); }   /* 포커스 표시는 줄 안쪽 글로우 하나로(아래) — 체크박스 링과 겹치지 않게 */
 .checkSelect .option input[type="checkbox"]:checked:focus-visible { border-color: var(--color-bg-checked); }
-/* 마우스 올림 = 옅은 브랜드 바탕 (10/15 결정 — 구: 회색 secondary-hover). 고른 항목 = 같은 옅은 브랜드 바탕 + 켠 체크박스 + 반굵게(Figma Option) */
+/* 마우스 올림 = 옅은 브랜드 바탕 (구: 회색 secondary-hover). 고른 항목 = 같은 옅은 브랜드 바탕 + 켠 체크박스 + 반굵게(Figma Option) */
 .checkSelect .option:hover { background-color: var(--color-bg-brand-subtle); }
 .checkSelect .option:active { background-color: var(--color-bg-interactive-secondary-pressed); color: var(--color-text-interactive-secondary-pressed); }   /* 누르는 동안 = Figma Option Pressed (TD-108). 글자는 바탕의 짝 토큰 — 다크 덮개 층(누름 500) 위에서도 4.5 */
 .checkSelect .option:has(input[type="checkbox"]:checked) { background-color: var(--color-bg-brand-subtle); font-weight: var(--font-weight-semibold, 600); }
-/* 키보드 포커스 = 줄 안쪽 글로우(스크롤 상자 안이라 바깥 번짐은 잘림, 10/14) */
+/* 키보드 포커스 = 줄 안쪽 글로우(스크롤 상자 안이라 바깥 번짐은 잘림) */
 .checkSelect .option:has(input[type="checkbox"]:focus-visible) {
     outline: 2px solid transparent;
     outline-offset: -2px;
@@ -3741,7 +3741,7 @@ body.dark-mode .checkSelect .search-text {   /* = --color-icon-muted 다크 값.
 .checkSelect .option:has(input[type="checkbox"]:disabled):is(:hover, :active),
 .checkSelect .option:has(input[type="checkbox"]:disabled:checked) { background-color: transparent; }   /* 고른 채 막힌 항목 = 바탕 없음 · 흐린 글자 · 회색 체크박스 (Figma Selected=True · Disabled, TD-108) */
 
-/* ── 선택 목록 .ui-select (js/select.js, TD-101 10/19) ──
+/* ── 선택 목록 .ui-select (js/select.js, TD-101) ──
  * 단일 select 를 화면 전체에서 같은 목록으로 바꾸는 위젯(브라우저 · 운영체제마다 다른 열린 목록을 통일). 이름은 이전 버전과 같음
  * 닫힌 상자 = .select 와 같은 토큰 · 같은 화살표 색, 열린 목록 = 다중 선택(.checkSelect) 목록과 같은 줄 높이 · 바탕
  * 하나만 고르는 목록이라 고른 항목은 오른쪽 ✓(Figma Option Type=Text) — 다중 선택의 왼쪽 체크박스와 구분 (DS-ADR-022)
@@ -3900,7 +3900,7 @@ input.onKeySearch2 { display: block; flex: 1 1 auto; min-width: 0; }
 /* 검색결과 그리드 셀 폰트(13px) → AUIGrid_custom_style.css 로 이관. */
 
 /* ═══════════════════════════════════════════════════════════════════════════
- * 로딩 · 스켈레톤 · 빈 상태 (2026-10-07, W3 2차) — D-1 축 조사 결정 반영
+ * 로딩 · 스켈레톤 · 빈 상태
  *   기다림을 보여주는 3종 세트. 같은 자리를 쓰도록 설계(스켈레톤 → 실제 내용 또는 빈 상태로 교체)
  * ═══════════════════════════════════════════════════════════════════════════ */
 
@@ -3979,8 +3979,8 @@ input.onKeySearch2 { display: block; flex: 1 1 auto; min-width: 0; }
 
 /* ── 브랜드 로더 .brand-loader ──────────────────────────────────────────────
  * 페이지 전체를 처음 불러올 때(화면 전환 덮개 · 로그인 직후)만. 영역 · 버튼 안은 언제나 스피너
- * 움직임 = 조각이 맞춰짐(DS-ADR-043, TD-123) — 흩어진 심볼 조각 다섯이 바깥에서 차례로 모여 하나로 맞물린 뒤 흐려지며 되풀이(10/28 새 로고).
- * 배경 네모 없이 마크만(10/21, TD-108 46) — 조각은 브랜드색(--color-bg-brand). 라이트 · 다크 모두 같은 토큰
+ * 움직임 = 조각이 맞춰짐(DS-ADR-043, TD-123) — 흩어진 심볼 조각 다섯이 바깥에서 차례로 모여 하나로 맞물린 뒤 흐려지며 되풀이.
+ * 배경 네모 없이 마크만(TD-108 46) — 조각은 브랜드색(--color-bg-brand). 라이트 · 다크 모두 같은 토큰
  * 마크는 조각으로 나뉜 SVG(아래 마크업). 로고가 그림 한 장(PNG 등)뿐인 브랜드는 .brand-loader--image(왼쪽부터 채워짐)
  * 브랜드 선택은 제품 설정: Default = 로고 로더 · Mobility · OOTB(공개 시연) = 스피너 --lg. 고객사 화면은 기존 로딩 이미지 유지
  *   <div class="loading loading--overlay" role="status" aria-live="polite">
@@ -4015,7 +4015,7 @@ input.onKeySearch2 { display: block; flex: 1 1 auto; min-width: 0; }
     35%, 85% { transform: none; opacity: 1; }
     100%     { transform: none; opacity: 0; }
 }
-/* 그림 한 장 로고 — 아래 = 회색으로 흐리게, 위 = 원본을 왼쪽부터 채움(마스크). 이미지 파일은 손대지 않음 (10/8) */
+/* 그림 한 장 로고 — 아래 = 회색으로 흐리게, 위 = 원본을 왼쪽부터 채움(마스크). 이미지 파일은 손대지 않음 */
 .brand-loader--image { width: var(--brand-loader-width, 160px); }
 .brand-loader img { display: block; width: 100%; height: auto; }
 .brand-loader__base { filter: grayscale(1); opacity: .22; }
@@ -4159,7 +4159,7 @@ body.dark-mode .empty-illo { --empty-illo-shadow: rgb(0 0 0 / .2); }
 .empty-illo__mark   { transform-origin: 98px 77px; transform: scale(var(--empty-badge-scale, 1)); }   /* 배지 가운데(98, 77) 기준 */
 .empty-illo__badge  { fill: var(--color-bg-base); stroke: var(--empty-illo-edge); stroke-width: 1.5; }
 .empty-illo__glyph  { fill: none; stroke: currentColor; stroke-width: 4.2; stroke-linecap: round; stroke-linejoin: round; }
-/* 다크 — 폴더를 bg-base(=카드와 같은 색) + 옅은 브랜드로 칠해 카드보다 어둡게 보이던 것(폴더 1.2:1 · 종이 1.5:1)을 카드보다 밝은 면으로 (10/28).
+/* 다크 — 폴더를 bg-base(=카드와 같은 색) + 옅은 브랜드로 칠해 카드보다 어둡게 보이던 것(폴더 1.2:1 · 종이 1.5:1)을 카드보다 밝은 면으로.
  * 폴더 약 3:1 · 종이 2.1:1 · 종이 줄은 카드색으로 찍음. 라이트는 그대로 */
 body.dark-mode .empty-illo__paper  { fill: var(--color-border-strong); }
 body.dark-mode .empty-illo__line   { stroke: var(--color-bg-base); }
@@ -4197,8 +4197,8 @@ body.dark-mode .empty-illo__badge  { fill: var(--color-bg-muted); }
 .status-chip--error   { --chip-bg: var(--color-bg-danger-subtle);  --chip-fg: var(--color-text-danger-bold); }
 @media (forced-colors: active) { .status-chip { border: 1px solid CanvasText; } }
 /* ═════════════════════════════════════════════════════════════════════════
- * 알림 — Alert(화면 안 줄) · Toast(잠깐 뜨는 알림) · Tooltip(짧은 설명) (TD-45 45-1, 10/14 제안 승인)
- *   자리 나누기(10/14 결정): 입력 확인 → 칸 아래 오류 문구 + 화면 안 Alert / 저장 완료 같은 짧은 결과 → Toast /
+ * 알림 — Alert(화면 안 줄) · Toast(잠깐 뜨는 알림) · Tooltip(짧은 설명) (TD-45 45-1)
+ *   자리 나누기: 입력 확인 → 칸 아래 오류 문구 + 화면 안 Alert / 저장 완료 같은 짧은 결과 → Toast /
  *   되돌릴 수 없는 동작 확인 → 확인 창(Overlay) / 아이콘 버튼 설명 → Tooltip
  *   이전 버전은 알림을 브라우저 기본 창(alert · confirm)으로만 띄워 화면 값이 없음 → 값은 DS 토큰 단계에서 고름
  * ═════════════════════════════════════════════════════════════════════════ */
@@ -4356,7 +4356,7 @@ body.dark-mode .empty-illo__badge  { fill: var(--color-bg-muted); }
 .tooltip--bottom { bottom: auto; top: calc(100% + 8px); }
 .tooltip--bottom::after { top: auto; bottom: 100%; border-top-color: transparent; border-bottom-color: var(--color-bg-inverse); }
 .tooltip--bottom::before { top: auto; bottom: 100%; }
-/* 가로 맞춤 (TD-93, 10/17) — 기본 = 컨트롤 가운데. 칸 왼쪽 끝 컨트롤은 .tooltip--start(툴팁 왼쪽 끝 = 컨트롤 왼쪽 끝),
+/* 가로 맞춤 (TD-93) — 기본 = 컨트롤 가운데. 칸 왼쪽 끝 컨트롤은 .tooltip--start(툴팁 왼쪽 끝 = 컨트롤 왼쪽 끝),
  * 오른쪽 끝은 .tooltip--end — 폭 240 툴팁이 칸 · 화면 밖으로 잘리지 않게. 화살표는 컨트롤 가운데(아이콘 버튼 폭 --size-btn 의 절반) */
 .tooltip--start, .tooltip--end { transform: none; }
 .tooltip--start { left: 0; }

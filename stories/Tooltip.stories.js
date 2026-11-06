@@ -34,7 +34,7 @@ export const 도움말 = {
   // 셀 가운데에 둠 — 왼쪽 끝에 두면 폭 240 툴팁이 셀 밖으로 나가 왼쪽이 잘렸음
   render: () => stage(tip({ icon: 'help', label: '행 높이 도움말', text: '관련 객체 그리드는 행 높이 30을 씁니다. 편집 셀이 있는 그리드만 40입니다.', open: true }), 120, 'end', true),
 };
-// 셀 왼쪽 · 오른쪽 끝 — 가운데 맞춤이면 폭 240 툴팁이 셀 밖으로 잘림 → .tooltip--start · --end (TD-93, 10/17)
+// 셀 왼쪽 · 오른쪽 끝 — 가운데 맞춤이면 폭 240 툴팁이 셀 밖으로 잘림 → .tooltip--start · --end (TD-93)
 const edge = (inner, justify) => '<div style="display:flex;align-items:end;justify-content:' + justify + ';min-height:120px;padding:8px 0;border-inline:1px dashed var(--color-border-strong);width:300px">' + inner + '</div>';
 export const 끝_맞춤 = {
   render: () => '<div class="sb-row" style="gap:24px;padding:8px 24px">' +

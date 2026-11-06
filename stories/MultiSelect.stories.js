@@ -1,5 +1,5 @@
 // Form/Multi Select — 문서 화면은 MultiSelect.mdx. 여러 값을 고르는 드롭다운(.checkSelect)
-// Figma UI Kit 「Option」 · 「Option group」과 같은 짝. 여닫기 · 표시 글자는 js/multiselect.js(TD-101 10/19 — 이전 버전 화면 스크립트에서 화면 동작만 옮김)
+// Figma UI Kit 「Option」 · 「Option group」과 같은 짝. 여닫기 · 표시 글자는 js/multiselect.js(TD-101 — 이전 버전 화면 스크립트에서 화면 동작만 옮김)
 // 「고른 값 줄여 보기」 카드는 그 스크립트로 바꾼 것, 나머지 카드는 같은 마크업을 짧은 스크립트(wire)로 눌러 볼 수 있게 함
 import { matrix } from './_matrix.js';
 import { enablePseudo } from './_pseudo.js';
@@ -7,7 +7,7 @@ import { doDont } from './_dodont.js';
 
 const STATUS = ['작업 중', '검토 중', '승인', '반려', '폐기'];
 const label = (picked) => (picked.length ? picked.join(', ') : '전체');   // 화면 읽기 · title 용 = 고른 값 전체
-// 트리거 글자 — 하나면 그 값, 두 개 이상이면 「첫 값 외 N」(10/15 결정 · DS-ADR-022)
+// 트리거 글자 — 하나면 그 값, 두 개 이상이면 「첫 값 외 N」(DS-ADR-022)
 const shown = (picked) => (picked.length < 2 ? label(picked)
   : '<span class="selected-text__value">' + picked[0] + '</span> <span class="selected-text__more">외 ' + (picked.length - 1) + '</span>');
 // 화면 읽기 이름 = 보이는 글자(「첫 값 외 N」)를 그대로 담고 나머지 값을 괄호로 — 보이는 글자와 이름이 어긋나지 않게(WCAG 2.5.3)

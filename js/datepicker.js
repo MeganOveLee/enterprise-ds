@@ -5,7 +5,7 @@
  *   날짜를 고르면 입력칸에 채우고 바로 닫힘 / 바깥 누름 · Esc -> 닫힘 (확인 · 취소 버튼 없음)
  * calendar / month / year 디자인 반영.
  *
- * Enterprise DS v1.0 (2026-10-06, DS-ADR-016) — 이전 버전에서 직접 만든 달력에 접근성 · 키보드를 덧붙임
+ * Enterprise DS v1.0 (DS-ADR-016) — 이전 버전에서 직접 만든 달력에 접근성 · 키보드를 덧붙임
  *   - 팝업 role="dialog" + 날짜표 role="grid", 날짜 칸 aria-selected · aria-current="date" · aria-label("2026년 10월 6일 화요일")
  *   - 키보드(APG date picker dialog): ←→ 하루 · ↑↓ 일주일 · Home/End 주의 처음/끝 · PageUp/Down 한 달(Shift = 1년)
  *     Enter/Space 선택 · Esc 닫고 입력칸으로 · Tab 은 달력 안에서만 돈다
@@ -67,7 +67,7 @@
             this.icon.setAttribute('aria-expanded', 'false');
             this.icon.tabIndex = 0;   /* 키보드로 달력을 여는 입구 */
         }
-        if (this.icon && (input.disabled || input.readOnly)) this.icon.disabled = true;   /* 비활성 · 읽기 전용 칸 = 아이콘도 못 누름 · Tab에서 빠짐 (2026-10-13) */
+        if (this.icon && (input.disabled || input.readOnly)) this.icon.disabled = true;   /* 비활성 · 읽기 전용 칸 = 아이콘도 못 누름 · Tab에서 빠짐 */
         this.bindTrigger();
     }
 
@@ -91,7 +91,7 @@
     };
 
     Datepicker.prototype.open = function(moveFocus) {
-        if (this.input.disabled || this.input.readOnly) return;   /* 비활성 · 읽기 전용 칸은 달력을 열지 않음 (2026-10-13) */
+        if (this.input.disabled || this.input.readOnly) return;   /* 비활성 · 읽기 전용 칸은 달력을 열지 않음 */
         if (this.popup) { if (moveFocus) this.focusGrid(); return; }
         var initial = parseDate(this.input.value);
         if (initial) {
@@ -471,7 +471,7 @@
         var dd = document.createElement('div');
         dd.className = 'datepicker__dropdown datepicker__dropdown--year is-open';   /* 폭 68 (Figma Year dropdown) */
         /* 연도 범위 = input 의 min / max 연도. 없으면 보는 해 기준 30년 전 ~ 10년 뒤 — 목록은 12개 높이에서 스크롤 (TD-120).
-         * 구(~ 10/20): 보는 해 -6 ~ +5 고정 12개 — 2020년 이전을 고를 수 없었음. 이전 버전(AXISJ 달력)은 연도 화면에서 12년씩 넘겨 범위 제한 없음 */
+         * 구: 보는 해 -6 ~ +5 고정 12개 — 2020년 이전을 고를 수 없었음. 이전 버전(AXISJ 달력)은 연도 화면에서 12년씩 넘겨 범위 제한 없음 */
         var minD = parseDate(this.input.getAttribute('min')), maxD = parseDate(this.input.getAttribute('max'));
         var startYear = minD ? minD.getFullYear() : Math.min(self.viewYear, self.today.getFullYear()) - 30;
         var endYear = maxD ? maxD.getFullYear() : Math.max(self.viewYear, self.today.getFullYear()) + 10;

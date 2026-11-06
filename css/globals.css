@@ -61,7 +61,7 @@
   src: url('../../portal/font/Montserrat_Alternates/MontserratAlternates-SemiBold.ttf');
 }
 
-/* 이전 버전 전역: 폰트 + box-sizing (styles.css *{box-sizing:border-box}(36행) 이관 — 컷 시 border-box 유지, 없으면 전체 content-box 회귀=레이아웃 붕괴. 최종감사서 확정 2026-08-16) */
+/* 이전 버전 전역: 폰트 + box-sizing (styles.css *{box-sizing:border-box}(36행) 이관 — 컷 시 border-box 유지, 없으면 전체 content-box 회귀=레이아웃 붕괴.) */
 * { font-family: var(--font-family-base); box-sizing: border-box; }
 body { line-height: var(--line-height-base); }   /* 글줄 간격 1.6 = 이전 버전 body 값. 문서 화면(.ds-page 1.6)과 단독 화면 · 제품이 같아짐 (TD-45 45-3 D) */
 

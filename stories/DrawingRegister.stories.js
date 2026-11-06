@@ -100,7 +100,7 @@ const list = () => '<div class="main-content"><div class="searchLayout"><div cla
   '</tbody></table></div></div></div></div></div>';
 
 export default {
-  title: 'Screens/Drawing Register',   // 10/28 블록이 아니라 화면(등록 창) — 블록 이름은 UI 기능으로(검색 조건 · 결재선 · BOM 비교 표)
+  title: 'Screens/Drawing Register',   // 블록이 아니라 화면(등록 창) — 블록 이름은 UI 기능으로(검색 조건 · 결재선 · BOM 비교 표)
   tags: ['!dev', '!autodocs'],   // 메뉴에는 문서 한 장만, 문서는 DrawingRegister.mdx
   parameters: { controls: { disable: true }, docs: { source: { language: 'html' } } },
 };

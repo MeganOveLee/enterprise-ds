@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/* 정의되지 않은 CSS 변수 검사 — Claude 작업용 6-5 측정 방법 2번을 자동으로 (DS-ADR-045)
+/* 정의되지 않은 CSS 변수 검사 — 쓰는 이름 − 정의된 이름이 비어 있어야 통과 (DS-ADR-045)
  * 쓰는 이름(var(--x)) − 정의된 이름(--x:) 이 비어 있어야 통과. 대체값이 있는 var(--x, …) 는 뺀다 */
 import fs from 'node:fs';
 import path from 'node:path';

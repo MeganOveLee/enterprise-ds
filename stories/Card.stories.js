@@ -1,4 +1,4 @@
-// Data Display/Card — 문서 화면은 Card.mdx. Figma 이름은 Card(10/16 Basic card에서 바꿈), DS 클래스는 .card
+// Data Display/Card — 문서 화면은 Card.mdx. Figma 이름은 Card(Basic card에서 바꿈), DS 클래스는 .card
 // 홈 대시보드 · 결재 목록처럼 한 주제의 내용을 묶는 상자: 카드 머리(.card-header) + 목록(.card-list) 또는 빈 상태(.empty--card). 여러 장은 .card-grid
 // 목록 앞 칸(90) = 상태(.status-chip) · 헤더 오른쪽 = 이동 링크(.card-more)
 import { matrix } from './_matrix.js';

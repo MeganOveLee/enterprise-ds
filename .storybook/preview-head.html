@@ -99,8 +99,8 @@
   .ds-props--wrap td:nth-child(2) { white-space: normal; width: 34%; }   /* 클래스가 많은 자리(Screens 「쓰인 것」)는 줄바꿈 — 설명 칸이 좁아지지 않게 */
   .ds-after { margin-top: 12px; }
   .ds-table + .ds-card { margin-top: 24px; }
-  .ds-uses { display: flex; flex-wrap: wrap; gap: 4px 20px; margin: 0 0 12px; font-size: 13px; color: #59636e; }   /* Screens 섹션 — 이 화면에 쓴 블록 · 컴포넌트 (TD-122, 10/20) */
-  .ds-uses b { margin-right: 8px; font-weight: 600; color: #1f2328; }   /* 표 바로 아래 예시 카드 — 붙어 보이던 것(Motion 인터랙션 표 → 처리 중 글자, 10/20) */
+  .ds-uses { display: flex; flex-wrap: wrap; gap: 4px 20px; margin: 0 0 12px; font-size: 13px; color: #59636e; }   /* Screens 섹션 — 이 화면에 쓴 블록 · 컴포넌트 (TD-122) */
+  .ds-uses b { margin-right: 8px; font-weight: 600; color: #1f2328; }   /* 표 바로 아래 예시 카드 — 붙어 보이던 것(Motion 인터랙션 표 → 처리 중 글자) */
   .ds-subhead { margin: 24px 0 8px; font-size: 15px; font-weight: 600; color: #111418; }   /* 절 안 두 번째 · 세 번째 박스의 소제목 — 박스를 나눌 때는 박스마다 머리를 둔다 (TD-108) */
   .ds-sec > h2 + .ds-subhead, .ds-sec__desc + .ds-subhead { margin-top: 0; }
   /* 소개 */
@@ -132,7 +132,7 @@
   .intro-demo__search .input { width: 200px; }
   .intro-demo__search .select { width: 140px; }
   .intro-demo__no { font-size: var(--body-sm); color: var(--color-text-muted); font-variant-numeric: tabular-nums; }
-  /* 소개 맨 위 「바로 보기」 — 포트폴리오로 보는 사람이 Figma 원본부터 열게 (10/13) */
+  /* 소개 맨 위 「바로 보기」 — 포트폴리오로 보는 사람이 Figma 원본부터 열게 */
   /* 문서 안 도구 막대(Toolbar 블록) — 화면 맨 위 Storybook 도구 막대에서 잰 값 그대로 */
   .ds-tbrow { margin: 0; }
   .ds-tbrow + .ds-card { border-top: 0; border-radius: 0 0 6px 6px; }   /* 막대 아래에 미리보기가 붙음 — 실제 화면처럼 막대 + 캔버스 한 덩어리 */
@@ -212,7 +212,7 @@
   .ds-page a.ds-keys__link:hover { text-decoration: underline; }
   @media (max-width: 1000px) { .ds-keys { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
   @media (max-width: 720px) { .ds-keys { grid-template-columns: minmax(0, 1fr); } .ds-brief__row { grid-template-columns: minmax(0, 1fr); gap: 6px; } }
-  /* 소개 · 시작하기 (10/21 세영님 피드백) — 절 내용을 한 상자로 묶고, 꼭 봐야 하는 것은 꼬리표 · 강조로 구분 */
+  /* 소개 · 시작하기 — 절 내용을 한 상자로 묶고, 꼭 봐야 하는 것은 꼬리표 · 강조로 구분 */
   .ds-box { padding: 20px 24px; border: 1px solid #e1e4e8; border-radius: 10px; background: #f6f8fa; }
   .ds-page .ds-brief.ds-box { margin: 24px 0 0; padding: 20px 24px; border-bottom: 1px solid #e1e4e8; }
   .ds-box .ds-layer__label { margin-top: 14px; }
@@ -262,7 +262,7 @@
   .ds-flow li + li { margin-left: 22px; }
   .ds-flow li + li::before { content: '→'; position: absolute; left: -23px; top: 50%; transform: translateY(-50%); color: #656d76; font-weight: 400; }
   @media (max-width: 720px) { .ds-cases, .ds-two { grid-template-columns: 1fr; } }
-  /* 좁은 화면(휴대폰) — 표가 페이지 밖으로 밀어 가로 스크롤이 생기던 것 → 표 안에서만 가로로 밀리게, 칸 패딩도 줄임 (10/13) */
+  /* 좁은 화면(휴대폰) — 표가 페이지 밖으로 밀어 가로 스크롤이 생기던 것 → 표 안에서만 가로로 밀리게, 칸 패딩도 줄임 */
   @media (max-width: 720px) { .ds-page .ds-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; } .ds-table th, .ds-table td { padding: 8px 10px; } }
   /* 글 속 링크 = 색 + 밑줄(색만으로 구분하지 않음 — WCAG 1.4.1). 문서 틀 회색 #656d76 = 흰 바탕 5.2 · 회색 머리 #f6f8fa 4.9 */
   .ds-page a.ds-link { color: #0550ae; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 2px; }
@@ -285,9 +285,9 @@
   .ds-tl__card--human { background: #fff; border: 1px solid #d5dcea; color: #111418; }
   .ds-tl__card--ai { background: #5b72c4; border: 1px solid #5b72c4; color: #fff; }
   .ds-tl__card small { display: block; margin-top: 8px; font-size: 11px; line-height: 1.4; color: #656d76; }
-  .ds-tl__card--ai small { color: #fff; }   /* 흰 글자 그대로 4.52:1 — 투명도 0.85면 3.75:1로 AA 미달이었음 (10/17) */
+  .ds-tl__card--ai small { color: #fff; }   /* 흰 글자 그대로 4.52:1 — 투명도 0.85면 3.75:1로 AA 미달이었음 */
   @media (max-width: 760px) { .ds-tl { grid-template-columns: minmax(0, 1fr); } .ds-tl::before, .ds-tl::after, .ds-tl__start, .ds-tl__lg { display: none; } .ds-tl__head { flex-direction: row; text-align: left; } .ds-tl__title { min-height: 0; } }
-  /* 운영 방식 시작 · 끝 강조 (10/21) — START는 테두리 알약, 마지막 단계는 채운 원 + 「v1.0 완료」 알약(제목 아래). 오른쪽 끝 END 글자는 없앰 */
+  /* 운영 방식 시작 · 끝 강조 — START는 테두리 알약, 마지막 단계는 채운 원 + 「v1.0 완료」 알약(제목 아래). 오른쪽 끝 END 글자는 없앰 */
   .ds-tl::after { content: none; }
   .ds-tl__start { justify-self: start; margin-top: 12px; padding: 3px 10px; border: 1px solid #c9d2e3; border-radius: 999px; background: #fff; font-weight: 600; }
   .ds-tl__head:nth-child(8) .ds-tl__no-circle { background: #3f56a8; border-color: #3f56a8; color: #fff; }

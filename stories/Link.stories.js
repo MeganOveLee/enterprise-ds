@@ -51,7 +51,7 @@ export const 위치_표시 = {
   ], { full: true }),
 };
 
-// ── 전체 상태 — Hovered · Focused 는 상호작용 상태를 고정해 표시(_pseudo.js). 키보드 포커스 = 브랜드 테두리(글자 링크 규칙, TD-93 10/16) ──
+// ── 전체 상태 — Hovered · Focused 는 상호작용 상태를 고정해 표시(_pseudo.js). 키보드 포커스 = 브랜드 테두리(글자 링크 규칙, TD-93) ──
 const PS = ['', 'ps-hover', 'ps-focus-visible'];
 export const 전체_상태 = {
   parameters: html(GRID),

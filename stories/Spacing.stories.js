@@ -1,4 +1,4 @@
-// Foundation/Spacing · Radius · Size — 문서 화면은 Spacing.mdx. 여기 스토리는 MDX 카드 안에 들어가는 단계 표 (그림자는 Shadow.stories.js — 10/15 분리)
+// Foundation/Spacing · Radius · Size — 문서 화면은 Spacing.mdx. 여기 스토리는 MDX 카드 안에 들어가는 단계 표 (그림자는 Shadow.stories.js)
 import { mount } from './_foundation.js';
 
 export default {

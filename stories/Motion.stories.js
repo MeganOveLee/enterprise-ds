@@ -264,7 +264,7 @@ export const 빈_상태_배지 = {
   },
 };
 
-// ── 로고 로더 (DS-ADR-043, TD-123) ── 페이지 전체 첫 로딩. 심볼 조각 다섯이 바깥에서 차례로 모여 맞물림(10/28 새 로고) · 그림 한 장 로고는 왼쪽부터 채움
+// ── 로고 로더 (DS-ADR-043, TD-123) ── 페이지 전체 첫 로딩. 심볼 조각 다섯이 바깥에서 차례로 모여 맞물림 · 그림 한 장 로고는 왼쪽부터 채움
 const IMG_LOGO = new URL('../assets/brand/default-logo.svg', import.meta.url).href;   // 가상 제품 마크(그림 한 장으로 쓸 때의 견본)
 const LOADER_PIECES = '<span class="brand-loader" aria-hidden="true">' + '<svg viewBox="0 0 130 129">' + MARK_PATHS.map((d, i) => '<path class="brand-loader__piece brand-loader__piece--' + (i + 1) + '" d="' + d + '"/>').join('') + '</svg>' + '</span>';
 const LOADER_CODE = '<span class="brand-loader" aria-hidden="true">\n    <svg viewBox="0 0 130 129">\n' + [1, 2, 3, 4, 5].map((n) => '      <path class="brand-loader__piece brand-loader__piece--' + n + '" d="…"/>').join('\n') + '\n    </svg>\n  </span>';   // 코드 보기 — 조각 좌표는 줄임

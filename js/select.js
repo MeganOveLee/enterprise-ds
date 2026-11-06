@@ -9,7 +9,7 @@
  *   나중에 그린 select 는 window.buildCustomSelect(select) 또는 window.enhanceSelects(영역) 으로 직접 바꿈
  *   값 · 이름 · 폼 제출 · onchange 는 원래 select 가 그대로 맡는다(숨겨서 둠). 고르면 select.value 를 바꾸고 change 를 보냄
  *
- * Enterprise DS v1.0 (2026-10-19, TD-101) — 이전 버전 화면 스크립트(커스텀 단일 셀렉트)를 옮기고 접근성 · 키보드를 덧붙임
+ * Enterprise DS v1.0 (TD-101) — 이전 버전 화면 스크립트(커스텀 단일 셀렉트)를 옮기고 접근성 · 키보드를 덧붙임
  *   - 역할: 상자 role="combobox"(aria-haspopup="listbox" · aria-expanded · aria-controls) + 목록 role="listbox" + 항목 role="option"(aria-selected)
  *     이름은 select 의 <label for> · aria-labelledby · aria-label 을 그대로 잇고, aria-describedby · aria-invalid · aria-required · disabled 도 옮김
  *   - 키보드(APG select-only combobox): 닫힘 = ↓ ↑ Enter Space Alt+↓ 로 열기, Home/End, 글자 입력 = 열고 그 글자로 시작하는 항목으로

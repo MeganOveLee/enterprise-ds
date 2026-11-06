@@ -119,7 +119,7 @@ const gnb = (crumbs = ['Home', '문서 관리', '문서 검색']) =>
   '</div></header>';
 
 // ── 검색 조건 · 결과 ──
-// 검색 조건 — 대표 조건 1줄 + [상세 검색] 펼침 (10/14)
+// 검색 조건 — 대표 조건 1줄 + [상세 검색] 펼침 
 // 1줄 = 문서 분류 · 문서 번호 · 문서 명 · 작업현황 · 등록일(기간 2칸) — 6열 칸 폭에 5항목. 펼치면 버전 · 등록자 · 수정자 · 수정일
 // 접혀 있을 때 숨은 조건에 값이 있으면 버튼에 개수(이 화면은 등록자 · 수정일에 값 → 2)
 let searchUid = 0;
@@ -159,7 +159,7 @@ const pager = (mark = false) =>
 const grid = ({ paging = false, mark = false } = {}) =>
   '<div class="seach_arm"><div class="leftbt">' + svg(I.list, 16) + '<h4>검색 결과 (' + ROWS.length + '/' + (paging ? 128 : ROWS.length) + ')</h4>' +
   sel('한 페이지에 보일 개수', ['20', '50', '100']) + '</div>' +
-  // [선택 일괄 결재] 아이콘 없음 — 이전 버전 캡처(03 · 06 · 07) 그대로. ✓ 아이콘은 근거 없이 넣었던 것(10/16 대조)
+  // [선택 일괄 결재] 아이콘 없음 — 이전 버전 캡처(03 · 06 · 07) 그대로. ✓ 아이콘은 근거 없이 넣었던 것
   '<div class="rightbt">' + btn('선택 일괄 결재', 'btn--primary btn--filled') +
   '<button type="button" class="btn btn--excel">' + svg(I.excel, 14) + 'Excel</button>' +
   btn('필터 초기화', 'btn--secondary btn--transparent', I.reset) + '</div></div>' +

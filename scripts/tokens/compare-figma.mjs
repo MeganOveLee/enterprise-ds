@@ -3,7 +3,7 @@
  * Figma 변수(tokens/figma/export.json) ↔ 토큰 최종 값(tokens/build/resolved.json) 대조 (DS-ADR-045)
  *
  *   npm run tokens:figma            다른 곳을 보고만 함
- *   npm run tokens:figma -- --strict  값이 다른 곳이 있으면 실패 (CI 에서 켬, 10/28)
+ *   npm run tokens:figma -- --strict  값이 다른 곳이 있으면 실패 (CI 에서 켬)
  *
  * export.json 은 Figma 개발 플러그인 figma-plugin/token-export 로 받는다.
  * 이름 연결 순서: ① 변수의 코드 문법(WEB) var(--이름) ② tokens/figma/map.json ③ 이름의 / · 공백 → -
@@ -64,7 +64,7 @@ function rgba(s) {
   }
   m = s.match(/^rgba?\(([^)]+)\)$/i);
   if (m) { const p = m[1].split(/[\s,\/]+/).filter(Boolean).map(Number); return [p[0], p[1], p[2], p[3] ?? 1]; }
-  // color-mix(in srgb, A p%, B) — CSS 가 계산하는 대로(알파 곱셈) 한 색으로. Figma 는 계산된 값(#0064E0 / 0.35)을 들고 있음 (10/28)
+  // color-mix(in srgb, A p%, B) — CSS 가 계산하는 대로(알파 곱셈) 한 색으로. Figma 는 계산된 값(#0064E0 / 0.35)을 들고 있음 
   m = s.match(/^color-mix\(in srgb,\s*(.+?)\s+([\d.]+)%\s*,\s*(.+)\)$/i);
   if (m) {
     const c1 = rgba(m[1]), c2 = rgba(m[3]), p = parseFloat(m[2]) / 100;
@@ -86,11 +86,11 @@ function same(f, css) {
   if (f.type === 'COLOR') {
     const c = rgba(css); if (!c) return false;
     const [r, g, b] = rgba(f.val.hex);
-    const near = (x, y) => Math.abs(x - y) <= 1;   // color-mix 를 계산할 때 반올림 차이(1/255)는 같은 값으로 봄 (10/28)
+    const near = (x, y) => Math.abs(x - y) <= 1;   // color-mix 를 계산할 때 반올림 차이(1/255)는 같은 값으로 봄 
     return near(c[0], r) && near(c[1], g) && near(c[2], b) && Math.abs(c[3] - f.val.alpha) < 0.01;
   }
   if (f.type === 'FLOAT') { const n = num(css); return n !== null && Math.abs(n - f.val) < 0.01; }
-  // 글꼴: Figma 는 글꼴 이름 하나, CSS 는 대체 글꼴까지 쓴 목록 — 첫 글꼴로 맞춤 (10/28)
+  // 글꼴: Figma 는 글꼴 이름 하나, CSS 는 대체 글꼴까지 쓴 목록 — 첫 글꼴로 맞춤 
   const first = v => String(v).split(',')[0].trim().replace(/^['"]|['"]$/g, '').toLowerCase();
   if (String(css).includes(',')) return first(f.val) === first(css);
   return String(f.val).trim() === String(css).trim();

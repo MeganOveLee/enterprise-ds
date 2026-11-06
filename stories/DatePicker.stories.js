@@ -85,7 +85,7 @@ export const 사용_지침 = {
   ]),
 };
 
-// ── 전체 상태 ── (Hovered · Focused = 문서용 정지 화면, _pseudo.js. 오류 · 비활성 · 읽기 전용 = 입력칸과 같은 규칙, 2026-10-13)
+// ── 전체 상태 ── (Hovered · Focused = 문서용 정지 화면, _pseudo.js. 오류 · 비활성 · 읽기 전용 = 입력칸과 같은 규칙)
 export const 전체_상태 = {
   parameters: {
     controls: { disable: true },

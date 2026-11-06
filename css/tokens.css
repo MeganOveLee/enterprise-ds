@@ -76,7 +76,7 @@
   --neutral-950: #0E1114;                     /* 다크 bg-subtle · grid-header-bottom */
 
   /* ─── 브랜드 컬러 스케일 (--brand-50~900 · --accent-500) ─────────────────────
-   * 값은 이 파일에 없다 → tokens/brands/{브랜드}.json 에서 선언 (DS-ADR-003, 2026-10-02). 생성 파일 = css/brands/{브랜드}.css
+   * 값은 이 파일에 없다 → tokens/brands/{브랜드}.json 에서 선언 (DS-ADR-003). 생성 파일 = css/brands/{브랜드}.css
    *   불러오는 순서: tokens → brands/{브랜드}.css → globals → components
    *   전환: <html class="theme-{브랜드}">. 클래스가 없으면 brands/default.css(기본 브랜드).
    *   html 에 거는 이유: 아래 Layer 4 시맨틱이 :root(=html) 에서 계산되므로 body 클래스로는 안 바뀜.
@@ -205,9 +205,9 @@
                                                                    구 Layer 5 --sidebar-width/-toggle-width 를 치수 층으로 올림 — 이름만 있고 아무도 안 쓰고
                                                                    components 는 같은 숫자를 직접 적고 있었음 (Legacy 별칭 종결).
                                                                    size 층에서 폭을 담는 토큰은 이 둘(sidebar · sidebar-toggle)뿐 — 「size = 높이」의 예외.
-                                                                   이름은 그대로 둔다: 바꾸면 이전 버전 덮어쓰기 파일도 같이 바꿔야 함 (TD-92, 2026-10-17) */
+                                                                   이름은 그대로 둔다: 바꾸면 이전 버전 덮어쓰기 파일도 같이 바꿔야 함 (TD-92) */
 
-  /* 모션 — 값은 여기 한 곳. 컴포넌트 transition · animation 은 이 토큰을 쓴다 (TD-48, 2026-10-16).
+  /* 모션 — 값은 여기 한 곳. 컴포넌트 transition · animation 은 이 토큰을 쓴다 (TD-48).
      fast · base = 이전 버전 tokens 의 모션 토큰 그대로(이전 버전에 함께 있던 ease-standard 는 쓰는 곳이 없어 안 옮김).
      shimmer · pulse · loop = 반복 움직임. 무엇을 알려 주는 움직임인지는 스토리북 Foundation › Motion.
      모션 줄이기(prefers-reduced-motion)는 컴포넌트마다 — 빛 · 깜빡임은 멈춤, 스피너 · 로고 로더는 느리게만 */
@@ -278,8 +278,7 @@
 
   /* 신호 — default = 강한 톤, -subtle = 약한 톤
    * ⚠️ 지금 안 쓰는 칸이 있어도 지우지 말 것. 신호 4색(danger/info/success/warning) × 3층(bg/text/border)은
-   *    세트로 쓰는 스케일이고, 작업상태 뱃지(완료·진행·지연·예정)를 -subtle 배경 + -bold 글씨로 만들 때 필요함.
-   *    2026-08-23 에 미사용분을 지웠다가 되살림 */
+   *    세트로 쓰는 스케일이고, 작업상태 뱃지(완료·진행·지연·예정)를 -subtle 배경 + -bold 글씨로 만들 때 필요함. */
   --color-bg-danger: var(--red-700);
   --color-bg-danger-subtle: var(--red-50);
   --color-bg-info: var(--blue-700);
@@ -298,7 +297,7 @@
 
   /* Foreground (text) */
   --color-text-base: var(--neutral-900);
-  --color-text-muted: var(--neutral-600);     /* 보조 글자 단일 단계. 구 text-subtle(600)과 합침 — 구 muted(700)는 subtle과 한 단계 차이라 구분 안 됨 (DS-ADR-008, 2026-10-03) */
+  --color-text-muted: var(--neutral-600);     /* 보조 글자 단일 단계. 구 text-subtle(600)과 합침 — 구 muted(700)는 subtle과 한 단계 차이라 구분 안 됨 (DS-ADR-008) */
   --color-text-disabled: var(--neutral-400);
   --color-text-inverse: var(--white);
   --color-text-label: var(--brand-600);       /* 폼 라벨(th·detail-label) 단일 출처. 이전 버전 라벨 = 그 브랜드의 진한 메인색(심볼색보다 어두움) · semibold → DS 는 같은 진하기인 600 (구 500 · 그 전 brand-800).
@@ -337,11 +336,11 @@
   --color-icon-inverse: var(--white);
   --color-icon-brand: var(--brand-500);
 
-  /* 포커스 링 · 색 면 위 전경 · 즐겨찾기 (DS-ADR-004, 2026-10-02)
-   * focus-ring  — 포커스 보더(--color-border-focus) 바깥 3px 번짐. 라이트 = 브랜드 500 22%, 다크 = 400 35%(아래 다크 블록, 10/14 결정 — 22%는 다크 바탕 위 1.2:1로 거의 안 보임)
-   * on-color    — 채색 면(브랜드·체크·상태 점) 위 글자/아이콘. 두 모드 모두 흰색이라 다크 재정의 없음
+  /* 포커스 링 · 색 면 위 전경 · 즐겨찾기 (DS-ADR-004)
+   * focus-ring — 포커스 보더(--color-border-focus) 바깥 3px 번짐. 라이트 = 브랜드 500 22%, 다크 = 400 35%(아래 다크 블록 — 22%는 다크 바탕 위 1.2:1로 거의 안 보임)
+   * on-color — 채색 면(브랜드·체크·상태 점) 위 글자/아이콘. 두 모드 모두 흰색이라 다크 재정의 없음
    *               (inverse 와 다름: inverse 는 다크에서 뒤집힘)
-   * favorite    — 즐겨찾기 별. 경고(warning)와 의미가 달라 따로 둠 */
+   * favorite — 즐겨찾기 별. 경고(warning)와 의미가 달라 따로 둠 */
   --color-focus-ring: color-mix(in srgb, var(--brand-500) 22%, transparent);
   --color-text-on-color: var(--white);
   --color-text-grid-header: var(--color-text-on-color); /* 표 머리 글자 — 머리 바탕(--color-bg-grid-header) 위 4.5:1 이상 (DS-ADR-047) */
@@ -369,7 +368,7 @@
   /* LNB hover / active */
   --color-bg-lnb-hover: var(--brand-50);
   --color-bg-lnb-active: var(--brand-100);
-  --color-text-lnb-active: var(--brand-600);  /* 활성 메뉴 글자 — 600(바탕 100 위 Default 4.92 · OOTB 5.74 · Mobility는 색 확정 뒤 다시 잰다, 500은 Default 4.08 미달, 10/13). 다크는 흰색 — 아이콘(흰 마스크)과 톤을 맞춰야 함 */
+  --color-text-lnb-active: var(--brand-600);  /* 활성 메뉴 글자 — 600(바탕 100 위 Default 4.92 · OOTB 5.74 · Mobility는 색 확정 뒤 다시 잰다, 500은 Default 4.08 미달). 다크는 흰색 — 아이콘(흰 마스크)과 톤을 맞춰야 함 */
 
   /* 버튼 — primary(등록 · 저장)
    * primary = 그 영역의 마무리 동작 1개 = 브랜드색. 동작 종류(CRUD)로 색을 정하지 않는다 (DS-ADR-005).
@@ -380,7 +379,7 @@
   --color-bg-btn-primary-hover: var(--brand-700); /* 조회 버튼 hover 와 같은 단계. 구 blue-800 #1A4A8F (DS-ADR-005) */
   --color-border-btn-primary-hover: transparent;
 
-  /* 버튼 상태·역할 (P2 Button · 2026-10-04)
+  /* 버튼 상태·역할
    * 버튼 = .btn + .btn--{primary|secondary|destructive} + .btn--{filled|outlined|transparent}
    * 이름은 피그마 변수와 같다 (color/bg/interactive/… = --color-bg-interactive-…). pressed = :active */
   --color-bg-interactive-primary-pressed: var(--brand-900); /* 800 아님 — 고객사 A는 800 = 500(라벨용)이라 hover 보다 밝아짐 */
@@ -399,7 +398,7 @@
   --color-icon-interactive-secondary: var(--neutral-700);
   --color-icon-interactive-secondary-hover: var(--neutral-800);
   --color-icon-interactive-secondary-pressed: var(--neutral-900);
-  --color-border-interactive-secondary: var(--neutral-300); /* = border-base. 고객사 A 규칙: 아웃라인은 연회색 (2026-08-03) */
+  --color-border-interactive-secondary: var(--neutral-300); /* = border-base. 고객사 A 규칙: 아웃라인은 연회색 */
   --color-border-interactive-secondary-hover: var(--neutral-400);
   --color-border-interactive-secondary-pressed: var(--neutral-500);
 
@@ -456,7 +455,7 @@
   --color-progress-hold-start: #FBBF24;
   --color-progress-hold-end: #F59E0B;
 
-  /* Shadow — 역할 3단계 (10/14 제안 A안: 값은 이전 버전 화면에서 쓰던 것을 모음). 모서리 역할(--radius-popover)과 같은 이름
+  /* Shadow — 역할 3단계 (제안 A안: 값은 이전 버전 화면에서 쓰던 것을 모음). 모서리 역할(--radius-popover)과 같은 이름
    * core    = 카드 · 달력 화살표처럼 바닥에서 살짝 뜬 면
    * popover = 떠 있는 층 — 드롭다운 · 달력 · 다중 선택 목록 · GNB 드롭다운 (구 rgba 직접 값 6곳)
    * modal   = 덮개 층 — 인페이지 팝업 */

@@ -1,5 +1,5 @@
 // Data Display/Accordion — 문서 화면은 Accordion.mdx. 여기 스토리는 MDX 카드 안에 들어가는 예시 · 전체 상태
-// 접는 섹션 = 상세 화면 · 등록 창의 섹션 접기(제품 전체가 같은 토글, 10/14). DS 클래스: .seach_arm + .section-toggle + 내용(.pro_table · .table_list)
+// 접는 섹션 = 상세 화면 · 등록 창의 섹션 접기(제품 전체가 같은 토글). DS 클래스: .seach_arm + .section-toggle + 내용(.pro_table · .table_list)
 // 예시는 눌러 볼 수 있게 토글을 이어 둔다(wire) — 제품에서는 화면 스크립트가 같은 일을 함
 import { matrix } from './_matrix.js';
 import { enablePseudo } from './_pseudo.js';

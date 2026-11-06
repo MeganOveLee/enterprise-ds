@@ -10,7 +10,7 @@ const field = ({ kind, state, value, placeholder, cls = '' }) => {
     (state === 'error' ? ' aria-invalid="true"' : '') +
     (state === 'disabled' ? ' disabled' : '') +
     (state === 'readonly' ? ' readonly' : '');
-  // 네이티브 select는 readonly가 안 됨 → 값만 보여 줄 때는 readonly input (DS-ADR-017, 2026-10-13)
+  // 네이티브 select는 readonly가 안 됨 → 값만 보여 줄 때는 readonly input (DS-ADR-017)
   if (kind === 'select' && state === 'readonly') return `<input class="input${c}"${a} value="${value || '설계 변경'}">`;
   // 값이 없으면 빈 값 옵션 「선택」 = placeholder(보조 글자색, Figma Select placeholder Default)
   if (kind === 'select') return `<select class="select${c}"${a}>${value ? `<option>${value}</option>` : '<option value="">선택</option>'}<option>설계 변경</option></select>`;

@@ -2,10 +2,10 @@
  * 화면은 DS 클래스(components.css)로 짜고, 여기에는 DS에 아직 컴포넌트가 없는 자리만 둔다.
  * 값은 전부 DS 토큰 — 고정 색 · 고정 모서리 없음. 브랜드 · 화면 모드를 그대로 따른다.
  *   .scr-frame  실제 크기(1440 × 900)로 그린 화면을 칸 너비에 맞게 줄여 보여 주는 틀
- *   폴더 트리 · 산출물 구조 = DS .tree (TD-75 10/17, 구 .scr-tree). 메뉴 항목은 DS(.main-menu 항목 · .ui-submenu)
+ *   폴더 트리 · 산출물 구조 = DS .tree (TD-75, 구 .scr-tree). 메뉴 항목은 DS(.main-menu 항목 · .ui-submenu)
  *   검색 조건 6열 · 상세 값 4열 = DS .form-grid--6 · --4 (.form-grid-2 확장), 라디오 묶음 = DS .radio-group (구 .scr-radio-row)
  *   올리는 중 막대 = DS .resumable .fileList progress (TD-48), 진행 상태 점 = DS .output-dot (구 .scr-dot)
- *   섹션 머리 오른쪽 작은 글자 = DS .section-meta (TD-75 10/17, 구 .scr-total)
+ *   섹션 머리 오른쪽 작은 글자 = DS .section-meta (TD-75, 구 .scr-total)
  *   목록 표는 DS .grid-table (제품에서는 상용 그리드 라이브러리가 그리는 자리), 양식 받기 링크 = DS .text-link.no-arrow (구 .scr-link)
  *   상태 칩은 DS .status-chip */
 
@@ -92,7 +92,7 @@
 .scr-tile--success { background: var(--color-bg-success-subtle); color: var(--color-icon-success); }
 
 /* 카드 목록 — 칩 칸은 DS 그대로 90px. 최근 데이터는 앞 칸이 파일 아이콘이라 좁게 */
-.scr .card-list li > a { padding-top: 10px; padding-bottom: 10px; }   /* 줄 = 링크(10/14) — 격자 · 여백은 a 가 가짐 */
+.scr .card-list li > a { padding-top: 10px; padding-bottom: 10px; }   /* 줄 = 링크 — 격자 · 여백은 a 가 가짐 */
 .scr .card-list .status-chip { justify-self: start; }
 .scr .card-list.scr-recent li > a { grid-template-columns: 20px 1fr 84px; }
 .scr .card-list .file-icon { display: inline-flex; }
@@ -139,7 +139,7 @@
 .scr-progress__top { display: flex; align-items: center; gap: var(--spacing-24); padding-bottom: var(--spacing-12); border-bottom: 1px solid var(--color-border-base); }
 .scr-progress__lead { flex: 1; min-width: 0; gap: var(--spacing-24); }   /* 상태 표시 + 전체 진행률 = DS .progress-row (간격만 24) */
 .scr-progress__main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
-.scr-progress__meta { display: flex; align-items: baseline; gap: var(--spacing-12); font-size: var(--body-sm); color: var(--color-text-muted); }   /* 숫자 = 제목 바로 옆(10/14 결정, 구: 오른쪽 끝) */
+.scr-progress__meta { display: flex; align-items: baseline; gap: var(--spacing-12); font-size: var(--body-sm); color: var(--color-text-muted); }   /* 숫자 = 제목 바로 옆(구: 오른쪽 끝) */
 .scr-progress__meta b { color: var(--color-text-base); font-size: var(--body-md); font-weight: var(--font-weight-semibold); }
 .scr-progress__meta em { font-style: normal; color: var(--color-text-danger-bold); font-weight: var(--font-weight-semibold); }
 .scr-kv { display: flex; gap: var(--spacing-24); margin: 0; }
@@ -155,7 +155,7 @@
 .scr-tasks { flex: 0 0 auto; border: 1px solid var(--color-border-base); border-radius: var(--radius-panel); overflow: hidden; }
 .scr-tasks .grid-table th { position: static; }
 .scr-tasks .progress-bar { height: 14px; }
-.scr-tasks .progress-bar__label { font-size: var(--body-xs); }   /* 표 칸(30) 안 낮은 막대 옆 숫자 = 가장 작은 글자 토큰 (구 10, TD-44 10/17) */
+.scr-tasks .progress-bar__label { font-size: var(--body-xs); }   /* 표 칸(30) 안 낮은 막대 옆 숫자 = 가장 작은 글자 토큰 (구 10, TD-44) */
 
 /* 로그인 — 왼쪽 브랜드 딥 패널(--color-bg-panel) + 오른쪽 폼. 칸 · 체크박스 · 버튼은 DS 그대로.
  * 높이 44 = DS .input--lg · .btn--lg */

@@ -1,4 +1,4 @@
-/** 위쪽 도구 막대 「Figma ↗」 — 포트폴리오로 보는 사람이 어느 페이지에서든 Figma 원본(UI Kit 첫 페이지 = 한 장 요약)으로 바로 가게 (10/13)
+/** 위쪽 도구 막대 「Figma ↗」 — 포트폴리오로 보는 사람이 어느 페이지에서든 Figma 원본(UI Kit 첫 페이지 = 한 장 요약)으로 바로 가게 
  * 페이지마다 링크를 달지 않는다는 결정(입구는 소개 하나)은 그대로 — 이건 페이지 밖, 도구 막대 한 곳 */
 import React from 'react';
 import { addons, types } from 'storybook/manager-api';
