@@ -1,0 +1,29 @@
+import { Meta, Unstyled } from '@storybook/addon-docs/blocks';
+import { PageHead, Section, Card } from './_blocks.js';
+import * as S from './ListItem.stories.js';
+
+<Meta of={S} />
+
+<Unstyled>
+<div className="ds-page">
+<PageHead eyebrow="Data Display · 모바일 앱" title="List Item" lead="모바일 앱에서 장소 · 내역 · 선택지를 한 줄씩 보여 주고, 줄 전체를 눌러 들어가거나 고르게 하는 목록 행입니다." />
+<Section title="구성" en="Spec">
+<table className="ds-table ds-props">
+<thead><tr><th>구분</th><th>클래스 · 속성</th><th>설명</th></tr></thead>
+<tbody>
+<tr><td><b>목록</b></td><td><code>ul.list-items</code> · <code>aria-label</code></td><td>행 사이에 옅은 선을 두고, 마지막 행 아래에는 두지 않습니다.</td></tr>
+<tr><td><b>행</b></td><td><code>.list-item</code><span className="ds-muted">들어가는 행 = <code>a</code> · 고르는 행 = <code>button</code></span></td><td>줄 전체가 누르는 곳입니다. 높이는 누름 기준(<code>--size-touch</code>) 이상이고, 글자가 커지면 함께 커집니다.</td></tr>
+<tr><td><b>앞 아이콘</b></td><td><code>.list-item__icon</code></td><td>장소 · 종류를 알리는 아이콘입니다. 없어도 됩니다.</td></tr>
+<tr><td><b>글자</b></td><td><code>.list-item__title</code> · <code>.list-item__desc</code></td><td>제목 한 줄 + 보조 글자(주소 · 날짜 · 인원)입니다.</td></tr>
+<tr><td><b>뒤 칸</b></td><td><code>.list-item__end</code></td><td>값(요금 · 상태)과 들어가는 화살표입니다.</td></tr>
+<tr><td><b>브랜드가 바꾸는 것</b></td><td><code>--size-touch</code> · <code>--body-md</code> · <code>--body-sm</code> · 색 토큰</td><td>누름 높이 · 글자 크기 · 색입니다. 행의 칸 구성은 바꾸지 않습니다.</td></tr>
+</tbody>
+</table>
+</Section>
+<Section title="예시" en="Examples">
+<Card of={S.즐겨찾는_곳} title="즐겨찾는 곳" desc="장소 목록에서 하나를 눌러 들어갈 때 사용합니다." />
+<Card of={S.이용_내역} title="이용 내역" desc="기본보다 줄마다 값(요금 · 상태)을 함께 보일 때 사용합니다." />
+<Card of={S.고르는_행} title="고르는 행" desc="기본보다 아래 시트 안에서 선택지 하나를 고를 때 사용합니다." />
+</Section>
+</div>
+</Unstyled>

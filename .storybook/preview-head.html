@@ -18,6 +18,7 @@
 <script src="ds-js/multiselect.js"></script>
 <script src="ds-js/modal.js"></script>
 <script src="ds-js/tabs.js"></script>
+<script src="ds-js/chips.js"></script>
 <script src="ds-js/motion.js"></script>
 <script src="ds-js/clear.js"></script>
 <style>
@@ -157,7 +158,7 @@
   @media (prefers-reduced-motion: reduce) { .ds-tb--hint .ds-tb__sels { animation: none; box-shadow: 0 0 0 2px var(--brand-500); } .ds-tb__hint { animation: none; } }
   .ds-tbsel__btn svg { flex: none; }
   .ds-tbsel__list { position: absolute; z-index: 30; top: calc(100% + 8px); left: 0; display: block; min-width: 180px; padding: 4px; border-radius: 6px; background: rgba(255, 255, 255, .95); filter: drop-shadow(0 5px 5px rgba(0, 0, 0, .05)) drop-shadow(0 1px 3px rgba(0, 0, 0, .1)); outline: none; }
-  .ds-tbsel__opt { display: flex; align-items: center; height: 32px; padding: 0 9px; border-radius: 4px; color: rgb(46, 51, 56); font-weight: 400; line-height: 16px; white-space: nowrap; cursor: pointer; }
+  .ds-tbsel__opt { display: flex; align-items: center; gap: 8px; height: 32px; padding: 0 9px; border-radius: 4px; color: rgb(46, 51, 56); font-weight: 400; line-height: 16px; white-space: nowrap; cursor: pointer; }
   .ds-tbsel__opt[aria-selected="true"] { color: rgb(0, 85, 184); font-weight: 700; }
   .ds-tbsel__opt.is-active { background: rgba(0, 0, 0, .05); }
   .ds-tbsel__btn:focus-visible, .ds-tb__figma:focus-visible, .ds-tbsel__list:focus-visible { outline: 2px solid rgb(0, 109, 235); outline-offset: 2px; }

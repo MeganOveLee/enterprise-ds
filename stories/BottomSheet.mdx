@@ -1,0 +1,28 @@
+import { Meta, Unstyled } from '@storybook/addon-docs/blocks';
+import { PageHead, Section, Card } from './_blocks.js';
+import * as S from './BottomSheet.stories.js';
+
+<Meta of={S} />
+
+<Unstyled>
+<div className="ds-page">
+<PageHead eyebrow="Overlay · 모바일 앱" title="Bottom Sheet" lead="모바일 앱 화면 아래에서 올라와, 지금 화면을 떠나지 않고 선택지 하나를 고르고 주 행동 하나로 마치는 층입니다." />
+<Section title="구성" en="Spec">
+<table className="ds-table ds-props">
+<thead><tr><th>구분</th><th>클래스 · 속성</th><th>설명</th></tr></thead>
+<tbody>
+<tr><td><b>덮개 · 창</b></td><td><code>.modal.modal--sheet</code> · <code>.modal__dialog.sheet</code></td><td>Modal과 같은 덮개 · 마크업입니다. 창만 화면 아래에 붙고 폭을 다 씁니다. 높이는 화면의 90%까지이고, 넘치면 창 안에서 스크롤합니다.</td></tr>
+<tr><td><b>머리</b></td><td><code>.modal__header</code> · <code>.modal__title</code></td><td>질문 한 줄 + 닫기 버튼입니다. 끌어 내려 닫기는 두지 않고 닫기 버튼 · Esc로 닫습니다.</td></tr>
+<tr><td><b>선택지</b></td><td><code>.modal__body</code> 안 <code>.list-item</code></td><td>선택지 한 줄씩입니다. 고른 줄은 <code>aria-pressed="true"</code>와 체크 표시입니다.</td></tr>
+<tr><td><b>주 행동</b></td><td><code>.modal__footer</code> · <code>.btn--lg</code></td><td>폭을 다 쓰는 큰 버튼 하나입니다. 버튼 글자에 고른 값을 넣습니다.</td></tr>
+<tr><td><b>동작</b></td><td><code>js/modal.js</code></td><td>여는 버튼 <code>data-modal-open</code> · 닫는 버튼 <code>data-modal-close</code>, 열린 동안 포커스는 창 안에서만 돕니다. Modal과 같습니다.</td></tr>
+<tr><td><b>브랜드가 바꾸는 것</b></td><td><code>--radius-popover</code> · <code>--shadow-modal</code> · <code>--heading-sm</code> · <code>--size-btn-lg</code> · 색 토큰</td><td>위 모서리 · 그림자 · 제목 크기 · 버튼 높이 · 색입니다.</td></tr>
+</tbody>
+</table>
+</Section>
+<Section title="예시" en="Examples">
+<Card of={S.고르고_부르기} title="고르고 부르기" desc="선택지 하나를 고르고 바로 주 행동으로 마칠 때 사용합니다." />
+<Card of={S.직접_열어_보기} title="직접 열어 보기" desc="버튼을 누르면 시트가 올라옵니다. Tab · Esc로 동작을 확인합니다." />
+</Section>
+</div>
+</Unstyled>

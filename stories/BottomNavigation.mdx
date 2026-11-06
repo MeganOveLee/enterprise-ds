@@ -1,0 +1,26 @@
+import { Meta, Unstyled } from '@storybook/addon-docs/blocks';
+import { PageHead, Section, Card } from './_blocks.js';
+import * as S from './BottomNavigation.stories.js';
+
+<Meta of={S} />
+
+<Unstyled>
+<div className="ds-page">
+<PageHead eyebrow="Navigation · 모바일 앱" title="Bottom Navigation" lead="모바일 앱 화면 아래에 붙어, 첫 단계 화면 사이를 한 번 눌러 오가게 하는 탭입니다." />
+<Section title="구성" en="Spec">
+<table className="ds-table ds-props">
+<thead><tr><th>구분</th><th>클래스 · 속성</th><th>설명</th></tr></thead>
+<tbody>
+<tr><td><b>탭 줄</b></td><td><code>nav.bottom-nav</code> · <code>aria-label</code></td><td>화면 아래에 붙습니다. 휴대폰 아래 안전 영역만큼 띄웁니다.</td></tr>
+<tr><td><b>항목</b></td><td><code>a.bottom-nav__item</code></td><td>아이콘 위 · 글자 아래입니다. 글자를 빼지 않습니다. 항목은 셋에서 다섯입니다. 폭은 같게 나눕니다.</td></tr>
+<tr><td><b>지금 화면</b></td><td><code>aria-current="page"</code></td><td>브랜드 글자색 · 반굵은 글자입니다. 색만이 아니라 굵기로도 구분합니다.</td></tr>
+<tr><td><b>브랜드가 바꾸는 것</b></td><td><code>--size-touch</code> · <code>--body-xs</code> · <code>--color-text-brand</code></td><td>누름 높이 · 글자 크기 · 지금 화면 색입니다. 아이콘은 글자 크기를 따라 커집니다.</td></tr>
+</tbody>
+</table>
+</Section>
+<Section title="예시" en="Examples">
+<Card of={S.항목_셋} title="항목 셋" desc="앱의 첫 단계 화면이 셋일 때 사용합니다." />
+<Card of={S.항목_다섯} title="항목 다섯" desc="기본보다 첫 단계 화면이 많을 때 사용합니다. 다섯을 넘으면 내 정보 화면 안으로 옮깁니다." />
+</Section>
+</div>
+</Unstyled>

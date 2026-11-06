@@ -135,6 +135,7 @@
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
+  --font-weight-emphasis: var(--font-weight-semibold); /* 강조 굵기 — 큰 버튼 · 떠 있는 버튼 · 앱 상단 바 제목 · 아래 시트 제목. 기본 = SemiBold, 브랜드 파일이 덮을 수 있음(플렉시블, DS-ADR-049) */
 
   /* 제목 6단계 = h1~h6 기본값 (DS-ADR-012). 본문(--body-*)과 값이 겹쳐도 이름은 따로 */
   --heading-2xl: 2.25rem;                     /* 36px · h1 · 홈 인사말 */
@@ -192,8 +193,9 @@
   --size-input: 28px;                         /* 인풋 높이 */
   --size-btn: 28px;                           /* 버튼 기본 (인풋 매칭) · 아이콘 버튼 가로세로. 옛 md(32px)는 실사용 없어 삭제 */
   --size-input-lg: 44px;                      /* 큰 칸 — 화면에 폼 하나만 있는 단독 폼(로그인 · 임시 비밀번호 발급 — 이전 버전 login.css 큰 칸 · 큰 버튼을 쓰던 두 화면, TD-120) (제안 E). 브랜드가 바꾸지 않음(스태틱) */
-  --size-btn-lg: 44px;                        /* 큰 버튼 — 큰 칸과 같은 높이의 주 동작 */
+  --size-btn-lg: 44px;                        /* 큰 버튼 — 단독 폼의 주 동작 · 모바일 화면의 주 행동(호출 · 즐겨찾기). 브랜드 파일이 덮을 수 있음(플렉시블, DS-ADR-049) */
   --size-btn-sm: 26px;                        /* 작은 버튼 = Figma 「Small Button」 — .btn--sm · 첨부 삭제. 최소 누름 영역 24 이상 (DS-ADR-020) */
+  --size-touch: var(--size-btn);              /* 누름 기준 높이 — 모바일 컴포넌트(앱 상단 바 · 하단 탭 · 목록 행 · 칩)의 최소 높이. 기본 = 표준 버튼 높이, 브랜드 파일이 덮을 수 있음(플렉시블, DS-ADR-049) */
 
   /* 표 높이 역할 — 브랜드 파일이 덮을 수 있음(DS-ADR-047). 값 = DS-ADR-030(머리 34 · 줄 30 · 편집 줄 40).
      조건: 줄 높이 ≥ 작은 버튼(--size-btn-sm) + 2 — 칸 안 버튼 상한이 줄 높이 − 2 */
