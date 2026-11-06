@@ -18,6 +18,8 @@ export const I = {
   locate: '<circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2.5"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/>',
   people: '<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14.5a6.5 6.5 0 0 1 3.5 5.5"/>',
   check: '<path d="M5 12l4 4 10-10"/>',
+  minus: '<path d="M5 12h14"/>',
+  plus: '<path d="M12 5v14M5 12h14"/>',
 };
 // 장소 아이콘 = 컬러 솔리드(조사-8 2-2 「장소 = 컬러 솔리드 + 글자」). 색은 .place--{종류} 가 정함. 병원 · 약국은 H(십자 없음, DS-ADR-050)
 export const solid = (d, s = 24, cls = '') => '<svg' + (cls ? ' class="' + cls + '"' : '') + ' width="' + s + '" height="' + s + '" viewBox="0 0 24 24" fill="currentColor" fill-rule="evenodd" aria-hidden="true"><path d="' + d + '"/></svg>';

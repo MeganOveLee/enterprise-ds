@@ -29,6 +29,8 @@ v1.0 · 설계 · 퍼블리싱 이세영
 | `js/motion.js` | 인터랙션 — 숫자 굴러가기 · 방금 바뀐 행 · 처리 끝 체크 · 다음 차이 · 끌어 순서 바꾸기 · 되돌리기 토스트 (`window.dsMotion`) |
 | `js/clear.js` | 조회 조건 입력 · 날짜 칸의 지우기(×) 버튼 — `data-ds-clear`를 단 칸 또는 검색 조건 영역(`.mainTable`) 안의 칸에 붙습니다 |
 | `js/modal.js` | 확인 창 — `.modal` 열기 · 닫기 · 포커스 가두기 · Esc (APG Dialog (Modal) 패턴) |
+| `js/chips.js` | 고르기 · 가로 넘김 — 칩 · 목록 행 · 나란한 칸의 하나 고르기(`role="radiogroup"`, 방향키) · 여럿 고르기(`aria-pressed`), 고른 값을 버튼 글자에(`data-choice-for`), 한 줄 칩 줄의 넘김 신호(흐림 · 있는 쪽 화살표) |
+| `js/number-input.js` | 숫자 버튼 — `.number-input`의 − · + 로 범위 안에서 하나씩, 끝에 닿은 버튼은 꺼짐 |
 | `stories/` · `.storybook/` | Storybook (HTML 프레임워크) |
 | `scripts/tokens/` | 토큰 만들기(`build.mjs`, Style Dictionary) · 정의되지 않은 변수 검사 · Figma 변수 대조 · CSS → JSON 옮기기 |
 | `figma-plugin/token-export/` | Figma 개발 플러그인 — Foundation 변수를 `tokens/figma/export.json`으로 내보냅니다 |

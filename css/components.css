@@ -4690,6 +4690,7 @@ body.dark-mode .empty-illo__badge  { fill: var(--color-bg-muted); }
 .sheet .modal__title { font-size: var(--heading-sm); font-weight: var(--font-weight-emphasis); }
 .sheet .modal__body { font-size: var(--body-md); color: var(--color-text-base); }
 .sheet .modal__body .list-item { padding-inline: var(--spacing-0); }
+.sheet .modal__body .list-item[role="radio"] { padding-inline: var(--spacing-12); border-radius: var(--radius-item); }   /* 고른 줄 바탕이 글자에 붙지 않게 */
 .sheet .modal__footer { flex-direction: column; padding-top: var(--spacing-0); }
 .sheet .modal__footer > .btn { width: 100%; }
 
@@ -4961,3 +4962,64 @@ body.dark-mode .empty-illo__badge  { fill: var(--color-bg-muted); }
     border-top: 1px solid var(--color-border-subtle);
 }
 .btn-bar > .btn { flex: 1 0 auto; }
+
+/* 하나 고르는 목록 행 — 아래 시트 선택지처럼 서넛 가운데 하나(조사-8 2-5 「선택지가 서넛이면 목록 행」)
+ *   <ul class="list-items" role="radiogroup" id="ride-count" aria-label="탑승 인원">
+ *     <li><button type="button" class="list-item" role="radio" aria-checked="true" data-value="1명"> … <span class="list-item__end"><svg class="list-item__check" …/></span></button></li>
+ *   고른 줄 = 선택 바탕 + 브랜드 체크. 누르기 · 방향키는 js/chips.js, 고른 값을 주 버튼 글자에 넣는 것도(data-choice-for) */
+.list-item__check { display: none; }
+.list-item[role="radio"][aria-checked="true"] { background: var(--color-bg-selected); }
+.list-item[role="radio"][aria-checked="true"] .list-item__title { font-weight: var(--font-weight-emphasis); }
+.list-item[role="radio"][aria-checked="true"] .list-item__check { display: block; color: var(--color-icon-brand); }
+
+/* 숫자 버튼 — − 숫자 + (js/number-input.js). 범위가 넓거나 종류별 수를 셀 때. 서넛 가운데 고르기는 목록 행
+ *   <div class="number-input" role="group" aria-labelledby="…" data-min="1" data-max="9"> 줄이기 버튼 · <output class="number-input__value"> · 단위 · 늘리기 버튼 </div> */
+.number-input { display: inline-flex; align-items: center; gap: var(--spacing-12); font-size: var(--body-md); }
+.number-input__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--size-touch);
+    height: var(--size-touch);
+    padding: 0;
+    border: 1px solid var(--color-border-input);
+    border-radius: var(--radius-rounded);
+    background: var(--color-bg-base);
+    color: var(--color-icon-base);
+    font: inherit;
+    cursor: pointer;
+}
+.number-input__btn svg { width: 1.25em; height: 1.25em; }
+.number-input__btn:hover { background: var(--color-bg-muted); }
+.number-input__btn:disabled { border-color: var(--color-border-disabled); background: var(--color-bg-disabled); color: var(--color-icon-disabled); cursor: default; }
+.number-input__btn:focus-visible { outline: 2px solid transparent; box-shadow: 0 0 0 2px var(--color-border-focus), 0 0 0 5px var(--color-focus-ring); }
+.number-input__value { min-width: 1.5em; font-size: var(--heading-md); font-weight: var(--font-weight-emphasis); line-height: var(--line-height-tight); text-align: right; font-variant-numeric: tabular-nums; }
+.number-input__unit { margin-left: calc(var(--spacing-8) * -1); font-size: var(--body-md); }
+
+/* 나란한 칸 — 둘~넷 가운데 하나를 한 줄에서 고름. 고른 칸 = 선택 면(DS-ADR-051). 넘치면 칩으로
+ *   <div class="segmented" role="radiogroup" aria-label="…"><button type="button" class="segmented__item" role="radio" aria-checked="true">1명</button> … </div> */
+.segmented {
+    display: flex;
+    gap: var(--spacing-4);
+    padding: var(--spacing-4);
+    border: 1px solid var(--color-border-input);   /* 묶음 경계 3:1 */
+    border-radius: var(--radius-btn);
+    background: var(--color-bg-base);
+    font-size: var(--body-md);
+}
+.segmented__item {
+    flex: 1 1 0;
+    min-width: 0;
+    min-height: var(--size-touch);
+    padding: 0 var(--spacing-8);
+    border: none;
+    border-radius: var(--radius-btn);
+    background: transparent;
+    color: var(--color-text-base);
+    font: inherit;
+    font-weight: var(--font-weight-medium);
+    cursor: pointer;
+}
+.segmented__item:hover { background: var(--color-bg-muted); }
+.segmented__item[aria-checked="true"] { background: var(--color-bg-selected-strong); color: var(--color-text-on-selected-strong); font-weight: var(--font-weight-emphasis); }
+.segmented__item:focus-visible { outline: 2px solid transparent; box-shadow: 0 0 0 2px var(--color-border-focus), 0 0 0 5px var(--color-focus-ring); }

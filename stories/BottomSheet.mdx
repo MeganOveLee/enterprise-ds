@@ -13,16 +13,20 @@ import * as S from './BottomSheet.stories.js';
 <tbody>
 <tr><td><b>덮개 · 창</b></td><td><code>.modal.modal--sheet</code> · <code>.modal__dialog.sheet</code></td><td>Modal과 같은 덮개 · 마크업입니다. 창만 화면 아래에 붙고 폭을 다 씁니다. 높이는 화면의 90%까지이고, 넘치면 창 안에서 스크롤합니다.</td></tr>
 <tr><td><b>머리</b></td><td><code>.modal__header</code> · <code>.modal__title</code></td><td>질문 한 줄 + 닫기 버튼입니다. 끌어 내려 닫기는 두지 않고 닫기 버튼 · Esc로 닫습니다.</td></tr>
-<tr><td><b>선택지</b></td><td><code>.modal__body</code> 안 <code>.list-item</code></td><td>선택지 한 줄씩입니다. 고른 줄은 <code>aria-pressed="true"</code>와 체크 표시입니다.</td></tr>
-<tr><td><b>주 행동</b></td><td><code>.modal__footer</code> · <code>.btn--lg</code></td><td>폭을 다 쓰는 큰 버튼 하나입니다. 버튼 글자에 고른 값을 넣습니다.</td></tr>
-<tr><td><b>동작</b></td><td><code>js/modal.js</code></td><td>여는 버튼 <code>data-modal-open</code> · 닫는 버튼 <code>data-modal-close</code>, 열린 동안 포커스는 창 안에서만 돕니다. Modal과 같습니다.</td></tr>
-<tr><td><b>브랜드가 바꾸는 것</b></td><td><code>--radius-popover</code> · <code>--shadow-modal</code> · <code>--heading-sm</code> · <code>--size-btn-lg</code> · 색 토큰</td><td>위 모서리 · 그림자 · 제목 크기 · 버튼 높이 · 색입니다.</td></tr>
+<tr><td><b>선택지</b></td><td><code>.modal__body</code> 안 <code>role="radiogroup"</code></td><td>하나를 고릅니다. 고른 것은 선택 바탕 · 체크 또는 선택 면으로 보입니다. 방향키로 옮기며 고르고, Tab은 고른 것 하나에만 멈춥니다.</td></tr>
+<tr><td><b>주 행동</b></td><td><code>.modal__footer</code> · <code>.btn--lg</code> · <code>data-choice-for</code></td><td>폭을 다 쓰는 큰 버튼 하나입니다. 고를 때마다 버튼 글자에 고른 값이 들어갑니다(「2명 호출하기」). 확인 창은 띄우지 않고, 부른 뒤 취소할 수 있게 합니다.</td></tr>
+<tr><td><b>동작</b></td><td><code>js/modal.js</code> · <code>js/chips.js</code> · <code>js/number-input.js</code></td><td>여는 버튼 <code>data-modal-open</code> · 닫는 버튼 <code>data-modal-close</code>, 열린 동안 포커스는 창 안에서만 돕니다. Modal과 같습니다. 고르기 · 숫자 버튼 동작은 각 스크립트가 맡습니다.</td></tr>
+<tr><td><b>브랜드가 바꾸는 것</b></td><td><code>--radius-popover</code> · <code>--shadow-modal</code> · <code>--heading-sm</code> · <code>--size-btn-lg</code> · 색 토큰</td><td>위 모서리 · 그림자 · 제목 크기 · 버튼 높이 · 색입니다. 인원 고르기 시안은 Mobility = 1 목록 행, Default · OOTB = 3 나란한 칸(좁은 화면이 아니면 한 줄에 들어감)입니다.</td></tr>
 </tbody>
 </table>
 </Section>
-<Section title="예시" en="Examples">
-<Card of={S.고르고_부르기} title="고르고 부르기" desc="선택지 하나를 고르고 바로 주 행동으로 마칠 때 사용합니다." />
-<Card of={S.직접_열어_보기} title="직접 열어 보기" desc="버튼을 누르면 시트가 올라옵니다. Tab · Esc로 동작을 확인합니다." />
+<Section title="인원 고르기 시안" en="Options">
+<Card of={S.인원_목록_행} title="1 · 목록 행" tag="추천" desc="선택지가 서넛이고 줄마다 뜻을 적어야 할 때 사용합니다." basis="한 번 눌러 끝나고 누름 영역이 가장 크며 「보호자와 함께」처럼 뜻을 적을 수 있습니다. 고령자는 넘겨 고르는 휠보다 라디오 목록을 빨리 고릅니다(20.9초 · 12.5초, 조사-8 2-5)." />
+<Card of={S.인원_숫자_버튼} title="2 · 숫자 버튼" desc="기본보다 고를 수 있는 범위가 넓거나 어른 · 어린이처럼 종류별 수를 셀 때 사용합니다." basis="열차 예매 앱처럼 종류별 수량에 쓰는 방식입니다. 서넛 가운데 고르기에는 누르는 횟수가 늘어납니다(조사-8 2-5). 별도 컴포넌트입니다." />
+<Card of={S.인원_나란한_칸} title="3 · 나란한 칸" desc="기본보다 짧은 선택지 둘~넷을 한 줄에 놓을 때 사용합니다." basis="한눈에 모두 보이고 한 번 눌러 끝납니다. 줄마다 설명을 적을 수 없고, 칸이 넘치면 칩으로 바꿉니다(eBay Segmented button). 별도 컴포넌트입니다." />
+</Section>
+<Section title="동작" en="Behavior">
+<Card of={S.직접_열어_보기} title="직접 열어 보기" desc="버튼을 누르면 시트가 올라옵니다. 인원을 고르면 버튼 글자가 바뀌고, Tab · Esc로 동작을 확인합니다." />
 </Section>
 </div>
 </Unstyled>

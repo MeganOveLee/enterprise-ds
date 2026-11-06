@@ -3,8 +3,10 @@
  *
  * 고르기 (문서 전체에 한 번 — 나중에 그린 칩도 따로 붙이지 않아도 됨):
  *   - 여럿 고르기 .chip[aria-pressed] — 누르면 켜고 끔
- *   - 하나 고르기 [role="radiogroup"] 안 .chip[role="radio"] — 누르면 그것만 고름. 방향키(← → ↑ ↓) · Home · End 로 옮기며 고름
- *     Tab 은 고른 칩 하나에만 멈춤(나머지 tabindex="-1") — 라디오 묶음과 같은 키보드 규칙
+ *   - 하나 고르기 [role="radiogroup"] 안 button[role="radio"] — 칩 · 목록 행 · 나란한 칸(.segmented) 모두. 누르면 그것만 고름
+ *     방향키(← → ↑ ↓) · Home · End 로 옮기며 고름. Tab 은 고른 것 하나에만 멈춤(나머지 tabindex="-1") — 라디오 묶음과 같은 키보드 규칙
+ *   - 고른 값을 버튼 글자에: <button data-choice-for="묶음 id" data-choice-text="{value} 호출하기"> — 고를 때마다
+ *     라디오의 data-value 를 {value} 자리에 넣음(확인 창 없이 버튼 글자로 결과를 보여 줌, 조사-8 2-5)
  *   - 바로가기(a · aria-pressed 없는 button)는 건드리지 않음
  *
  * 한 줄 칩 줄(.chip-group--scroll)이 놓인 칸보다 길면 양 끝에 화살표 버튼을 두고 줄을 옆으로 민다.
@@ -102,15 +104,21 @@
             r.tabIndex = on ? 0 : -1;
         });
         if (focus) radio.focus();
+        if (group.id && radio.dataset.value) {
+            Array.prototype.forEach.call(document.querySelectorAll('[data-choice-for="' + group.id + '"]'), function (b) {
+                b.textContent = (b.getAttribute('data-choice-text') || '{value}').replace('{value}', radio.dataset.value);
+            });
+        }
     }
     document.addEventListener('click', function (e) {
-        var chip = e.target.closest && e.target.closest('.chip, .chip-tile');
-        if (!chip || chip.disabled) return;
-        if (chip.getAttribute('role') === 'radio') { check(chip, false); return; }
-        if (chip.hasAttribute('aria-pressed')) chip.setAttribute('aria-pressed', chip.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
+        if (!e.target.closest) return;
+        var radio = e.target.closest('[role="radiogroup"] button[role="radio"]');
+        if (radio) { if (!radio.disabled) check(radio, false); return; }
+        var chip = e.target.closest('.chip[aria-pressed]');
+        if (chip && !chip.disabled) chip.setAttribute('aria-pressed', chip.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
     });
     document.addEventListener('keydown', function (e) {
-        var radio = e.target.closest && e.target.closest('[role="radiogroup"] [role="radio"]');
+        var radio = e.target.closest && e.target.closest('[role="radiogroup"] button[role="radio"]');
         if (!radio) return;
         var list = radios(radio.closest('[role="radiogroup"]')), i = list.indexOf(radio), n = list.length, to = -1;
         if (e.key === 'ArrowRight' || e.key === 'ArrowDown') to = (i + 1) % n;
