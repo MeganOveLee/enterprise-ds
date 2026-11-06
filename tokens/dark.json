@@ -594,5 +594,19 @@
   },
   "color-text-on-place-public": {
     "$value": "{color-text-on-place-public-dark}"
+  },
+  "color-bg-notify": {
+    "$value": "{red-400}",
+    "$description": "다크 알림 배지 — 밝은 빨강 + 진한 글자. 500 위 흰 글자는 4.11로 미달",
+    "$extensions": {
+      "eds": {
+        "before": [
+          "/* 알림 배지 (TD-172) */"
+        ]
+      }
+    }
+  },
+  "color-text-on-notify": {
+    "$value": "{neutral-950}"
   }
 }

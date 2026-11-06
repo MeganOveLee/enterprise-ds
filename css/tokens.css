@@ -567,6 +567,10 @@
   --color-bg-map-pin: var(--red-600);         /* 지도 위 고른 위치 핀 · 이름표. 오류 색(--color-bg-danger)과 따로 (DS-ADR-051, 모바일 앱 Blocks) */
   --color-text-on-map-pin: var(--white);
 
+  /* 알림 배지 (TD-172) — 새 소식 점 · 읽지 않은 수. 개수 글자가 작아 4.5:1을 라이트 · 다크 따로 맞춤 */
+  --color-bg-notify: var(--red-700);          /* 알림 배지(점 · 개수 · 새 표시) 바탕. 주의를 끄는 색 — 오류 문구 색과 이름을 나눠 다크 값을 따로 맞춤 (TD-172) */
+  --color-text-on-notify: var(--white);
+
   /* 진행률 5상태 그라데이션 (라이트/다크 공용 — 의미 컬러) */
   --color-progress-done-start: #34D399;
   --color-progress-done-end: #10B981;
@@ -829,4 +833,8 @@ body.dark-mode {
   --color-border-place-public: var(--color-border-place-public-dark);
   --color-icon-place-public: var(--color-icon-place-public-dark);
   --color-text-on-place-public: var(--color-text-on-place-public-dark);
+
+  /* 알림 배지 (TD-172) */
+  --color-bg-notify: var(--red-400);          /* 다크 알림 배지 — 밝은 빨강 + 진한 글자. 500 위 흰 글자는 4.11로 미달 */
+  --color-text-on-notify: var(--neutral-950);
 }

@@ -1710,6 +1710,20 @@
   "color-text-on-map-pin": {
     "$value": "{white}"
   },
+  "color-bg-notify": {
+    "$value": "{red-700}",
+    "$description": "알림 배지(점 · 개수 · 새 표시) 바탕. 주의를 끄는 색 — 오류 문구 색과 이름을 나눠 다크 값을 따로 맞춤 (TD-172)",
+    "$extensions": {
+      "eds": {
+        "before": [
+          "/* 알림 배지 (TD-172) — 새 소식 점 · 읽지 않은 수. 개수 글자가 작아 4.5:1을 라이트 · 다크 따로 맞춤 */"
+        ]
+      }
+    }
+  },
+  "color-text-on-notify": {
+    "$value": "{white}"
+  },
   "color-progress-done-start": {
     "$value": "#34D399",
     "$type": "color",
