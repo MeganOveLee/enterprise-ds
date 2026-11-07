@@ -97,14 +97,15 @@ input {
 /* 버튼형 input(button · submit · reset)은 입력칸이 아니라 버튼 — 모서리만 버튼 역할로 (DS-ADR-020).
  * :where() 라 특이도는 input 과 같음 → .btn 등 클래스 규칙이 그대로 이김. 높이 · 여백은 위 규칙 그대로 */
 input:where([type="button"], [type="submit"], [type="reset"]) { border-radius: var(--radius-btn); }
-/* 텍스트 계열 인풋 높이 = 토큰(--size-input 28px) 단일값.
+/* 텍스트 계열 인풋 최소 높이 = 토큰(--size-input 28px).
  * 위 base input{height:20px}은 그 전 버전 잔재라 여기 목록에 없는 타입(password/number/email/tel/search)이
  * 20px로 떨어졌었음 — 비밀번호 변경 팝업에서 발견. 타입을 빼먹으면 조용히 20px가 되니 목록으로 관리.
  * 값도 1.875rem(30px) 하드코딩이었던 걸 토큰으로 교체 */
 input[type="text"], input[type="date"],
 input[type="password"], input[type="number"],
 input[type="email"], input[type="tel"], input[type="search"] {
-    height: var(--size-input);
+    height: auto;
+    min-height: var(--size-input);   /* 최소 높이 — 글자 배율을 따라 칸이 커짐 (DS-ADR-049) */
     box-sizing: border-box;
     background-color: var(--color-bg-input);   /* !important 제거 — .input[readonly]·:disabled 가 덮을 수 있게 (DS-ADR-010) */
 }

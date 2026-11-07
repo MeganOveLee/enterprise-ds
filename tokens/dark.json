@@ -88,6 +88,16 @@
   "color-bg-selected": {
     "$value": "{neutral-700}"
   },
+  "color-bg-selected-strong": {
+    "$value": "{color-bg-selected-strong-dark}",
+    "$description": "선택 면 — 다크 칸을 읽음 (DS-ADR-051)"
+  },
+  "color-text-on-selected-strong": {
+    "$value": "{color-text-on-selected-strong-dark}"
+  },
+  "color-icon-on-selected-strong": {
+    "$value": "{color-icon-on-selected-strong-dark}"
+  },
   "color-bg-overlay": {
     "$value": "{transparent-60}",
     "$description": "어두운 화면 위 덮개 — 32%는 뒤 화면과 구분이 안 됨. 다크 그림자(--shadow-modal 0.6)와 같은 농도"
@@ -502,5 +512,101 @@
   },
   "shadow-modal": {
     "$value": "0 16px 48px rgba(0, 0, 0, 0.6), 0 4px 12px rgba(0, 0, 0, 0.4)"
+  },
+  "color-bg-place-home-subtle": {
+    "$value": "{color-bg-place-home-subtle-dark}",
+    "$extensions": {
+      "eds": {
+        "before": [
+          "/* 장소 종류 색 (DS-ADR-050) — :root 의 -dark 칸을 읽음 */"
+        ]
+      }
+    }
+  },
+  "color-bg-place-home": {
+    "$value": "{color-bg-place-home-dark}"
+  },
+  "color-border-place-home": {
+    "$value": "{color-border-place-home-dark}"
+  },
+  "color-icon-place-home": {
+    "$value": "{color-icon-place-home-dark}"
+  },
+  "color-text-on-place-home": {
+    "$value": "{color-text-on-place-home-dark}"
+  },
+  "color-bg-place-medical-subtle": {
+    "$value": "{color-bg-place-medical-subtle-dark}"
+  },
+  "color-bg-place-medical": {
+    "$value": "{color-bg-place-medical-dark}"
+  },
+  "color-border-place-medical": {
+    "$value": "{color-border-place-medical-dark}"
+  },
+  "color-icon-place-medical": {
+    "$value": "{color-icon-place-medical-dark}"
+  },
+  "color-text-on-place-medical": {
+    "$value": "{color-text-on-place-medical-dark}"
+  },
+  "color-bg-place-market-subtle": {
+    "$value": "{color-bg-place-market-subtle-dark}"
+  },
+  "color-bg-place-market": {
+    "$value": "{color-bg-place-market-dark}"
+  },
+  "color-border-place-market": {
+    "$value": "{color-border-place-market-dark}"
+  },
+  "color-icon-place-market": {
+    "$value": "{color-icon-place-market-dark}"
+  },
+  "color-text-on-place-market": {
+    "$value": "{color-text-on-place-market-dark}"
+  },
+  "color-bg-place-welfare-subtle": {
+    "$value": "{color-bg-place-welfare-subtle-dark}"
+  },
+  "color-bg-place-welfare": {
+    "$value": "{color-bg-place-welfare-dark}"
+  },
+  "color-border-place-welfare": {
+    "$value": "{color-border-place-welfare-dark}"
+  },
+  "color-icon-place-welfare": {
+    "$value": "{color-icon-place-welfare-dark}"
+  },
+  "color-text-on-place-welfare": {
+    "$value": "{color-text-on-place-welfare-dark}"
+  },
+  "color-bg-place-public-subtle": {
+    "$value": "{color-bg-place-public-subtle-dark}"
+  },
+  "color-bg-place-public": {
+    "$value": "{color-bg-place-public-dark}"
+  },
+  "color-border-place-public": {
+    "$value": "{color-border-place-public-dark}"
+  },
+  "color-icon-place-public": {
+    "$value": "{color-icon-place-public-dark}"
+  },
+  "color-text-on-place-public": {
+    "$value": "{color-text-on-place-public-dark}"
+  },
+  "color-bg-notify": {
+    "$value": "{red-400}",
+    "$description": "다크 알림 배지 — 밝은 빨강 + 진한 글자. 500 위 흰 글자는 4.11로 미달",
+    "$extensions": {
+      "eds": {
+        "before": [
+          "/* 알림 배지 (TD-172) */"
+        ]
+      }
+    }
+  },
+  "color-text-on-notify": {
+    "$value": "{neutral-950}"
   }
 }

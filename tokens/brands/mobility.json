@@ -1,53 +1,77 @@
 {
-  "$description": "/* ============================================================================\n * 브랜드 — Mobility · 모빌리티 서비스 (가상 산업 브랜드 · TD-125)  ← 공개용 데모 브랜드\n * 사용자: 수요응답 교통(DRT) 이용자 — 고령층 포함\n *\n * 선택자: :root.theme-mobility  →  <html class=\"theme-mobility\">\n * 멀티 브랜드가 \"브랜드 파일 하나 + html 클래스 하나\"로 바뀌는 것을 보여주는 가상 브랜드.\n * 이 파일이 여는 토큰 = 색 + 모서리 역할 + 그림 자산 모양 (DS-ADR-003 · 020 · 037, 목록은 _template.css). 높이는 기본값(28 · 28 · 26).\n * 형태: 둥근 모서리 — 버튼 · 칩 알약, 입력칸 · 카드 · 영역 · 떠 있는 층 8, 체크박스 · 행 · 스켈레톤 4.\n *   반대쪽 끝은 ootb.css(직각 · 높이 32).\n * 그림 자산: 라인 — 빈 상태 일러스트 · 폴더 · 파일 형식 아이콘을 선 모양으로 (DS-ADR-037)\n * 대비 (바이올렛 기준 — 색을 바꾸면 다시 잰다): 500/흰 5.75 · 600/흰 7.51 · 800/흰 11.74 · 다크 300 글자 5.62\n * ============================================================================ */",
+  "$description": "/* ============================================================================\n * 브랜드 — Mobility · 모빌리티 서비스 (가상 산업 브랜드 · TD-125)  ← 공개용 데모 브랜드\n * 사용자: 수요응답 교통(DRT) 이용자 — 고령층 포함\n *\n * 선택자: :root.theme-mobility  →  <html class=\"theme-mobility\">\n * 멀티 브랜드가 \"브랜드 파일 하나 + html 클래스 하나\"로 바뀌는 것을 보여주는 가상 브랜드.\n * 이 파일이 여는 토큰 = 색 + 모서리 역할 + 그림 자산 모양 (DS-ADR-003 · 020 · 037, 목록은 _template.css). 높이 · 글자 크기는 고령 이용자 기준 범위의 하한을 임시로(컨트롤 44 · 큰 버튼 56 · 누름 기준 44 · 본문 16, TD-172 · DS-ADR-049) — 최종 값은 TD-145 시안 뒤.\n * 형태: 둥근 모서리 — 버튼 · 칩 알약, 입력칸 · 카드 · 영역 · 떠 있는 층 8, 체크박스 · 행 · 스켈레톤 4.\n *   반대쪽 끝은 ootb.css(직각 · 높이 32).\n * 그림 자산: 라인 — 빈 상태 일러스트 · 폴더 · 파일 형식 아이콘을 선 모양으로 (DS-ADR-037)\n * 색: 기존 모빌리티 앱 실측 램프 — 500 = 주 버튼 · 700 = 로고 · 800 · 900 = 고른 칩 · 떠 있는 버튼, accent = 로고 초록(흰 바탕 위 아이콘 · 점에만). 고른 칩 · 떠 있는 버튼은 선택 면 역할로 800(DS-ADR-051)\n * 대비 (흰 바탕): 500 5.12 · 600 6.93 · 800 12.56 · 900 15.41 — 색을 바꾸면 다시 잰다\n * ============================================================================ */",
   "$extensions": {
     "eds": {
       "selector": ":root.theme-mobility"
     }
   },
   "brand-50": {
-    "$value": "#F3F0FE",
-    "$type": "color"
+    "$value": "#F3F6FF",
+    "$type": "color",
+    "$description": "안내 상자 바탕 — 기존 앱 실측"
   },
   "brand-100": {
-    "$value": "#E4DCFD",
+    "$value": "#E0EAFF",
     "$type": "color"
   },
   "brand-200": {
-    "$value": "#C9B9FA",
+    "$value": "#C1D4FF",
     "$type": "color"
   },
   "brand-300": {
-    "$value": "#A68CF5",
+    "$value": "#97B5FE",
     "$type": "color"
   },
   "brand-400": {
-    "$value": "#8B6CEE",
+    "$value": "#638CFB",
     "$type": "color"
   },
   "brand-500": {
-    "$value": "#6D4ADB",
-    "$type": "color"
+    "$value": "#3661EE",
+    "$type": "color",
+    "$description": "주 버튼(행동) — 기존 앱 실측"
   },
   "brand-600": {
-    "$value": "#5A38C4",
+    "$value": "#2A4DCC",
     "$type": "color"
   },
   "brand-700": {
-    "$value": "#47299F",
-    "$type": "color"
+    "$value": "#234090",
+    "$type": "color",
+    "$description": "로고 · 진한 브랜드 면 — 기존 앱 실측"
   },
   "brand-800": {
-    "$value": "#3B2585",
-    "$type": "color"
+    "$value": "#1B2E70",
+    "$type": "color",
+    "$description": "선택 면(고른 칩) — 기존 앱 실측"
   },
   "brand-900": {
-    "$value": "#261754",
-    "$type": "color"
+    "$value": "#142150",
+    "$type": "color",
+    "$description": "떠 있는 버튼 — 기존 앱 실측"
   },
   "accent-500": {
-    "$value": "#F2A93B",
+    "$value": "#4F9444",
     "$type": "color"
+  },
+  "color-bg-selected-strong": {
+    "$value": "{brand-800}",
+    "$extensions": {
+      "eds": {
+        "before": [
+          "/* --- 선택 면 (DS-ADR-051) — 행동 = 파랑(브랜드 면), 고른 칩 · 떠 있는 버튼 = 진남색. 다크 = 밝은 남색 채움 + 진한 글자 ---------- */"
+        ]
+      }
+    }
+  },
+  "color-bg-selected-strong-dark": {
+    "$value": "{brand-200}"
+  },
+  "color-text-on-selected-strong-dark": {
+    "$value": "{brand-900}"
+  },
+  "color-icon-on-selected-strong-dark": {
+    "$value": "{brand-900}"
   },
   "radius-btn": {
     "$value": "{radius-rounded}",
@@ -82,6 +106,82 @@
   },
   "radius-skeleton": {
     "$value": "{radius-md}"
+  },
+  "size-input": {
+    "$value": "44px",
+    "$extensions": {
+      "eds": {
+        "before": [
+          "/* --- 높이 (DS-ADR-020 · 049) — 고령 이용자 기준 범위의 하한(컨트롤 44–48 · 큰 버튼 56–88), 최종 값은 TD-145 ---------- */"
+        ]
+      }
+    }
+  },
+  "size-btn": {
+    "$value": "44px"
+  },
+  "size-btn-lg": {
+    "$value": "56px"
+  },
+  "size-touch": {
+    "$value": "44px"
+  },
+  "body-lg": {
+    "$value": "1.125rem",
+    "$extensions": {
+      "eds": {
+        "before": [
+          "/* --- 글자 크기 (DS-ADR-046) — 본문 16–18 범위의 하한, 단계 순서 유지. 최종 값은 TD-145 ---------- */"
+        ]
+      }
+    }
+  },
+  "body-md": {
+    "$value": "1rem"
+  },
+  "body-sm": {
+    "$value": "0.875rem"
+  },
+  "body-xs": {
+    "$value": "0.8125rem"
+  },
+  "heading-2xl": {
+    "$value": "2.5rem"
+  },
+  "heading-xl": {
+    "$value": "2rem"
+  },
+  "heading-lg": {
+    "$value": "1.75rem"
+  },
+  "heading-md": {
+    "$value": "1.5rem"
+  },
+  "heading-sm": {
+    "$value": "1.25rem"
+  },
+  "heading-xs": {
+    "$value": "1rem"
+  },
+  "font-weight-emphasis": {
+    "$value": "{font-weight-bold}",
+    "$extensions": {
+      "eds": {
+        "before": [
+          "/* --- 강조 굵기 (DS-ADR-049) — 주 행동 · 제목 700, 고령 이용자 기준(굵기 700 이상) ---------- */"
+        ]
+      }
+    }
+  },
+  "icon-stroke": {
+    "$value": "2.4",
+    "$extensions": {
+      "eds": {
+        "before": [
+          "/* --- 아이콘 선 굵기 (TD-172) — 기존 앱 지도 버튼 아이콘이 굵음. 작은 아이콘도 흐려지지 않게 ---------- */"
+        ]
+      }
+    }
   },
   "art-solid": {
     "$value": "none",

@@ -2109,7 +2109,7 @@ body.dark-mode .resumable:not(.center) .fileList .file-item { background: var(--
 .grid-table tbody tr:hover td { background: var(--color-bg-grid-row-hover); }
 .grid-table tbody :is(tr.is-selected, tr[aria-selected="true"]) td { background: var(--color-bg-grid-row-selected); }
 .grid-table .checkbox { margin: 0; gap: 0; vertical-align: middle; }   /* 칸 가운데 체크만 — 글자 없는 체크박스 */
-.grid-table td .btn { height: min(var(--size-btn), calc(var(--size-grid-row) - 2px)); }   /* 셀 안 버튼은 줄 높이 − 2 안에(기본 28, DS-ADR-030 · 047) — OOTB 버튼 32가 행을 33으로 늘리던 것 */
+.grid-table td .btn { min-height: min(var(--size-btn), calc(var(--size-grid-row) - 2px)); }   /* 셀 안 버튼은 줄 높이 − 2 안에(기본 28, DS-ADR-030 · 047) — OOTB 버튼 32가 행을 33으로 늘리던 것 */
 .grid-table td .btn--icon { width: min(var(--size-btn), calc(var(--size-grid-row) - 2px)); }
 .grid-table td > svg { vertical-align: middle; color: var(--color-icon-muted); }   /* 칸 안 아이콘 — 글줄 가운데 · 흐린 아이콘색 (TD-75) */
 .grid-table td > .file-icon { vertical-align: middle; }   /* 「파일」 열 = 파일 형식 그림 자산(형식 색 · 브랜드 따라 솔리드 ↔ 라인, DS-ADR-026 · 037, TD-108 38번) */
@@ -2124,7 +2124,7 @@ body.dark-mode .resumable:not(.center) .fileList .file-item { background: var(--
     padding: 0 var(--spacing-4);
     background: var(--color-bg-subtle);
 }
-.grid-table--edit td > :is(.input, .select) { height: var(--size-grid-row); }   /* 편집 칸 상자 = 읽기 줄 높이(기본 30, DS-ADR-047) */
+.grid-table--edit td > :is(.input, .select) { min-height: var(--size-grid-row); }   /* 편집 칸 상자 = 읽기 줄 높이(기본 30, DS-ADR-047) */
 /* 검색 페이지에서만 .list 가 .table_list 의 남은 공간 차지 (그리드 화면 가득) */
 .searchLayout .table_list .list {
     flex: 1;
@@ -2162,14 +2162,15 @@ body.dark-mode .resumable:not(.center) .fileList .file-item { background: var(--
 }
 .input,
 .select {
-    height: var(--size-input);
+    height: auto;
+    min-height: var(--size-input);   /* 최소 높이 — 글자 배율을 따라 칸이 커짐 (DS-ADR-049) */
     padding: 0 var(--spacing-8);
     font-size: var(--body-sm);   /* 입력칸 · 셀렉트 글자 12 — 이전 버전 검색 · 등록 폼 값(TD-45 45-3 A). 여러 줄 칸은 아래 .textarea */
 }
 /* 큰 칸 (제안 E) — 로그인처럼 칸이 몇 개뿐인 단독 폼 전용. 업무 화면 안(검색 · 상세 · 그리드)에서는 쓰지 않음 */
 .input.input--lg,
 .select.select--lg {   /* 클래스 두 개 — globals 의 input[type="password"] 같은 타입 규칙(0,1,1)보다 세게 */
-    height: var(--size-input-lg);
+    min-height: var(--size-input-lg);
     padding: 0 var(--spacing-12);
     font-size: var(--body-md);   /* 단독 폼의 큰 칸은 14 그대로 — 업무 화면 칸(12)과 다름 */
 }
@@ -2269,7 +2270,7 @@ body.dark-mode .select {   /* = --color-icon-muted 다크 값(neutral-300). 구:
     align-items: center;
     justify-content: center;
     gap: var(--spacing-4);
-    height: var(--size-btn);
+    min-height: var(--size-btn);   /* 최소 높이 — 글자 배율을 따라 버튼이 커짐 (DS-ADR-049) */
     padding: 0 var(--spacing-12);
     border-radius: var(--radius-btn);
     border: 1px solid transparent;
@@ -2376,9 +2377,9 @@ body.dark-mode .select {   /* = --color-icon-muted 다크 값(neutral-300). 구:
  * 켜고 끄는 버튼이면 aria-pressed 를 함께 (피그마 Toggle Icon Button) */
 .btn--icon { width: var(--size-btn); padding: 0; }
 /* 작은 버튼 = Figma 「Small Button」 (DS-ADR-020). 모서리는 일반 버튼과 같음 */
-.btn--sm { height: var(--size-btn-sm); }
+.btn--sm { min-height: var(--size-btn-sm); }
 /* 큰 버튼 (제안 E) — 큰 칸(.input--lg)과 짝. 단독 폼의 주 동작 하나에만 */
-.btn--lg { height: var(--size-btn-lg); padding: 0 var(--spacing-16); font-size: var(--body-md); font-weight: var(--font-weight-semibold); }
+.btn--lg { min-height: var(--size-btn-lg); padding: 0 var(--spacing-16); font-size: var(--body-md); font-weight: var(--font-weight-emphasis); }   /* 강조 굵기 — 브랜드가 바꿈 (DS-ADR-049) */
 .btn--icon.btn--sm { width: var(--size-btn-sm); }
 .btn--icon svg, .btn--icon img { width: 16px; height: 16px; }
 /* 켜짐 = ⑬ 펼침과 같은 옅은 브랜드 단계 (Button 제안 ⑯). 구: bg-selected 계열 — 다크에서 회색이라 마우스 올림 · 누름 아이콘 대비 2.6 · 1.8(3:1 미달) */
@@ -4653,3 +4654,484 @@ body.dark-mode .empty-illo__badge  { fill: var(--color-bg-muted); }
     .btn, .ui-pagination__btn { --scale-press: 1; }   /* 누름 축소 끔 */
     .toast__timer { display: none; }   /* 시간은 그대로 흐르고(스크립트) 줄어드는 막대만 안 보임 */
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+ * 모바일 앱 컴포넌트 (DS-ADR-049, TD-172)
+ *   공통: 아래 시트 .modal--sheet · 앱 상단 바 .app-bar · 하단 탭 .bottom-nav · 목록 행 .list-item · 아래 고정 버튼 줄 .btn-bar
+ *   브랜드 조정: 칩 .chip · 떠 있는 버튼 .fab — 색 · 글자 · 모서리 · 높이 토큰을 따르고, 좌우 여백은 글자 크기(em)를 따라감
+ *   누를 수 있는 것의 최소 높이 = --size-touch(누름 기준). 브랜드 파일이 정함(Default = 표준 버튼 높이)
+ *   폭은 정하지 않고 놓인 칸에 맞춤(DS-ADR-048). 화면 아래에 붙는 것은 안전 영역(env(safe-area-inset-bottom))만큼 띄움
+ * ═══════════════════════════════════════════════════════════════════════════ */
+
+/* 아이콘 선 굵기 — 모바일 앱 컴포넌트 안 선 아이콘(stroke)은 --icon-stroke 를 따름. 브랜드가 굵기를 바꿈(Mobility 굵게, TD-172)
+ *   채운 아이콘(장소 아이콘)은 선이 없어 영향 없음 */
+:is(.sheet, .app-bar, .bottom-nav, .list-item, .chip, .chip-tile, .chip-scroll, .fab, .btn-bar, .badge, .route-summary, .number-input, .segmented) svg { stroke-width: var(--icon-stroke); }
+
+/* 아래 시트 — 확인 창(.modal)과 같은 덮개 · 스크립트(js/modal.js), 창만 화면 아래에 붙임
+ *   <div class="modal modal--sheet" id="ride-sheet" hidden>
+ *     <div class="modal__dialog sheet" role="dialog" aria-modal="true" aria-labelledby="ride-sheet-title">
+ *       <div class="modal__header"><h2 class="modal__title" id="ride-sheet-title">…</h2> 닫기 버튼(data-modal-close="cancel")</div>
+ *       <div class="modal__body"> 옵션 = .list-item 한 줄씩 </div>
+ *       <div class="modal__footer"><button class="btn btn--primary btn--filled btn--lg">주 행동 하나</button></div>
+ *     </div>
+ *   </div>
+ *   끌어서 닫기는 두지 않음 — 닫기 버튼 · Esc 로 닫음(한 번 누르기로 끝나는 동작) */
+.modal--sheet { padding: var(--spacing-0); }
+.modal--sheet > .sheet {
+    width: 100%;
+    max-height: 90%;   /* 위쪽 덮개가 보여 앞 화면 위에 뜬 층임을 알 수 있게 */
+    margin: auto 0 0;   /* 아래에 붙임 */
+    overflow-y: auto;
+    gap: var(--spacing-16);
+    padding: var(--spacing-16) var(--spacing-16) calc(var(--spacing-16) + env(safe-area-inset-bottom, 0px));
+    border: none;
+    border-radius: var(--radius-popover) var(--radius-popover) 0 0;   /* 위 두 모서리만 — 떠 있는 층 역할 (DS-ADR-020) */
+}
+.sheet .modal__title { font-size: var(--heading-sm); font-weight: var(--font-weight-emphasis); }
+.sheet .modal__body { font-size: var(--body-md); color: var(--color-text-base); }
+.sheet .modal__body .list-item { padding-inline: var(--spacing-0); }
+.sheet .modal__body .list-item[role="radio"] { padding-inline: var(--spacing-12); border-radius: var(--radius-item); }   /* 고른 줄 바탕이 글자에 붙지 않게 */
+.sheet .modal__footer { flex-direction: column; padding-top: var(--spacing-0); }
+.sheet .modal__footer > .btn { width: 100%; }
+/* 시안 B · 손잡이 — 위 가운데 짧은 막대로 「끌 수 있는 층」임을 보임. 닫기 버튼은 그대로 둠(끌기만으로 닫지 않음, WCAG 2.5.7)
+ *   <div class="modal__dialog sheet sheet--handle"><span class="sheet__handle" aria-hidden="true"></span> 머리 · 본문 · 아래 </div>
+ *   끌어서 높이 바꾸기는 앱(네이티브)이 맡음 — 웹 마크업은 모양만 */
+.sheet--handle { padding-top: var(--spacing-8); }
+.sheet__handle { align-self: center; width: 2.5em; height: 0.3em; flex: none; border-radius: var(--radius-rounded); background: var(--color-border-base); }
+/* 시안 C · 화면 가득 — 고를 것이 많아 위 덮개를 남길 자리가 없을 때. 머리에 닫기, 위 모서리 없음 */
+.modal--sheet > .sheet--full { height: 100%; max-height: none; border-radius: 0; }
+.sheet--full .modal__body { flex: 1; overflow-y: auto; }
+
+/* 앱 상단 바 — 뒤로(앞) · 제목 · 동작 하나(뒤)
+ *   <header class="app-bar"><div class="app-bar__start">뒤로 .btn--icon</div><h1 class="app-bar__title">…</h1><div class="app-bar__end">동작</div></header>
+ *   .app-bar--center = 제목 가운데(앞뒤 칸을 같은 폭으로) */
+.app-bar {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-4);
+    min-height: calc(var(--size-touch) + var(--spacing-8));
+    padding: var(--spacing-4) var(--spacing-8);
+    box-sizing: border-box;
+    background: var(--color-bg-base);
+    border-bottom: 1px solid var(--color-border-subtle);
+    color: var(--color-text-base);
+}
+.app-bar__start, .app-bar__end { display: flex; align-items: center; flex: none; }
+.app-bar__title {
+    flex: 1;
+    min-width: 0;
+    margin: 0;
+    padding-inline: var(--spacing-4);
+    font-size: var(--heading-sm);
+    font-weight: var(--font-weight-emphasis);
+    line-height: var(--line-height-tight);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.app-bar--center { display: grid; grid-template-columns: 1fr auto 1fr; }
+.app-bar--center .app-bar__end { justify-content: flex-end; }
+.app-bar--center .app-bar__title { text-align: center; }
+/* 시안 C · 큰 제목 — 첫 단계 화면에서 제목을 크게, 내리면 작은 제목으로 줄어듦(js/app-bar.js 가 .is-collapsed)
+ *   <header class="app-bar app-bar--large" data-app-bar-scroll="#목록영역">  앞 칸 · 제목 · 뒤 칸 (마크업은 기본과 같음)
+ *   data-app-bar-scroll = 내려가는 영역(없으면 화면). 움직임 줄이기 설정이면 바로 바뀜 */
+.app-bar--large {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas: "start . end" "title title title";
+    row-gap: var(--spacing-4);
+    padding-bottom: var(--spacing-12);
+    border-bottom-color: transparent;
+}
+.app-bar--large .app-bar__start { grid-area: start; }
+.app-bar--large .app-bar__end { grid-area: end; }
+.app-bar--large .app-bar__title { grid-area: title; padding-inline: var(--spacing-8); font-size: var(--heading-lg); white-space: normal; transition: font-size var(--duration-fast) var(--ease-standard); }
+.app-bar--large.is-collapsed { grid-template-areas: "start title end"; padding-bottom: var(--spacing-4); border-bottom-color: var(--color-border-subtle); }
+.app-bar--large.is-collapsed .app-bar__title { padding-inline: var(--spacing-4); font-size: var(--heading-sm); white-space: nowrap; }
+@media (prefers-reduced-motion: reduce) { .app-bar--large .app-bar__title { transition: none; } }
+:is(.app-bar, .bottom-nav, .btn-bar, .list-item) .btn--icon { width: auto; min-width: var(--size-touch); min-height: var(--size-touch); }
+
+/* 하단 탭 — 앱의 첫 단계 화면 사이를 오감. 항목 셋~다섯, 아이콘 + 글자(글자를 빼지 않음)
+ *   <nav class="bottom-nav" aria-label="주 메뉴"><a class="bottom-nav__item" href="…" aria-current="page"><svg …/>호출</a> …</nav> */
+.bottom-nav {
+    display: flex;
+    background: var(--color-bg-base);
+    border-top: 1px solid var(--color-border-subtle);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+.bottom-nav__item {
+    flex: 1 1 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-4);
+    min-height: calc(var(--size-touch) + var(--spacing-16));
+    padding: var(--spacing-8) var(--spacing-4);
+    box-sizing: border-box;
+    color: var(--color-text-muted);
+    font-size: var(--body-sm);   /* 탭 글자 — 표 머리 수준(body-xs)보다 한 단계 크게, 아이콘 아래 한 줄 */
+    font-weight: var(--font-weight-medium);
+    line-height: var(--line-height-tight);
+    text-align: center;
+    text-decoration: none;
+}
+.bottom-nav__item svg { width: 1.75em; height: 1.75em; flex: none; }
+.bottom-nav__item:hover { color: var(--color-text-base); }
+.bottom-nav__item[aria-current="page"] { color: var(--color-text-brand); font-weight: var(--font-weight-semibold); }
+.bottom-nav__item:focus-visible { outline: 2px solid transparent; box-shadow: inset 0 0 0 2px var(--color-border-focus); }
+/* 아이콘 짝 — 선 아이콘(.bottom-nav__icon) + 같은 모양 채운 아이콘(.bottom-nav__icon--on). 지금 화면만 채운 아이콘
+ *   <a class="bottom-nav__item" aria-current="page"><span class="bottom-nav__icons"><svg class="bottom-nav__icon"/><svg class="bottom-nav__icon--on"/></span>호출</a> */
+.bottom-nav__icons { position: relative; display: inline-flex; align-items: center; justify-content: center; }
+.bottom-nav__icon--on { display: none; }
+.bottom-nav__item[aria-current="page"] .bottom-nav__icon { display: none; }
+.bottom-nav__item[aria-current="page"] .bottom-nav__icon--on { display: block; }
+/* 시안 B · 알약 표시 — 지금 화면 아이콘 뒤에 옅은 알약 바탕(Material 3 active indicator) */
+.bottom-nav--indicator .bottom-nav__icons { padding: var(--spacing-2) var(--spacing-16); border-radius: var(--radius-rounded); }
+.bottom-nav--indicator .bottom-nav__item[aria-current="page"] .bottom-nav__icons { background: var(--color-bg-brand-subtle); }
+.bottom-nav--indicator .bottom-nav__item[aria-current="page"] { color: var(--color-text-base); }
+.bottom-nav--indicator .bottom-nav__item[aria-current="page"] svg { color: var(--color-icon-brand); }
+/* 시안 C · 떠 있는 알약 — 바닥에서 띄운 둥근 막대(지도 화면 위). 지금 화면 = 글자 색 채운 아이콘 + 굵은 글자(선택 면을 쓰지 않음, DS-ADR-051) */
+.bottom-nav--floating {
+    margin: 0 var(--spacing-16) calc(var(--spacing-12) + env(safe-area-inset-bottom, 0px));
+    padding: var(--spacing-0) var(--spacing-8);
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--radius-rounded);
+    box-shadow: var(--shadow-popover);
+}
+.bottom-nav--floating .bottom-nav__item { min-height: var(--size-touch); padding-block: var(--spacing-8); }
+.bottom-nav--floating .bottom-nav__item[aria-current="page"] { color: var(--color-text-base); font-weight: var(--font-weight-emphasis); }
+
+/* 목록 행 — 앞 아이콘 · 제목 + 보조 글자 · 뒤 값 · 화살표. 누르는 행은 a · button 으로(행 전체가 누르는 곳)
+ *   <ul class="list-items"><li><a class="list-item" href="…"><span class="list-item__icon">svg</span>
+ *     <span class="list-item__text"><span class="list-item__title">…</span><span class="list-item__desc">…</span></span>
+ *     <span class="list-item__end">값 · 화살표</span></a></li></ul> */
+.list-items { list-style: none; margin: 0; padding: 0; }   /* 이름 = list-items — 이전 버전 화면의 .list(목록 영역)와 겹치지 않게 */
+.list-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-12);
+    width: 100%;
+    min-height: var(--size-touch);
+    padding: var(--spacing-12) var(--spacing-16);
+    box-sizing: border-box;
+    border: none;
+    border-bottom: 1px solid var(--color-border-subtle);
+    background: var(--color-bg-base);
+    color: var(--color-text-base);
+    font: inherit;
+    text-align: left;
+    text-decoration: none;
+}
+.list-items > li:last-child > .list-item { border-bottom: none; }
+:is(a, button).list-item { cursor: pointer; }
+:is(a, button).list-item:hover { background: var(--color-bg-muted); }
+:is(a, button).list-item:active { background: var(--color-bg-interactive-secondary-pressed); }
+:is(a, button).list-item:focus-visible { outline: 2px solid transparent; box-shadow: inset 0 0 0 2px var(--color-border-focus); }
+.list-item__icon { display: flex; flex: none; color: var(--color-icon-muted); }
+.list-item__icon svg { width: 1.5em; height: 1.5em; }
+.list-item__icon[class*="place--"] { color: var(--place-icon); }   /* 장소 아이콘 = 장소 색 채운 모양 (DS-ADR-050) */
+.list-item__text { display: flex; flex: 1; min-width: 0; flex-direction: column; gap: var(--spacing-2); }
+.list-item__title { font-size: var(--body-md); font-weight: var(--font-weight-medium); line-height: var(--line-height-tight); }
+.list-item__desc { font-size: var(--body-sm); color: var(--color-text-muted); line-height: var(--line-height-base); }
+.list-item__end { display: flex; flex: none; align-items: center; gap: var(--spacing-4); font-size: var(--body-sm); color: var(--color-text-muted); }
+.list-item__end svg { width: 1.25em; height: 1.25em; color: var(--color-icon-muted); }
+/* 시안 B · 묶음 카드 — 행을 둥근 상자 하나에 담음(설정 · 즐겨찾기처럼 몇 줄 안 되는 목록) */
+.list-items--grouped { overflow: hidden; border: 1px solid var(--color-border-base); border-radius: var(--radius-card); background: var(--color-bg-base); }
+/* 시안 C · 행마다 카드 + 뒤 원형 동작 버튼 — 줄마다 따로 하는 일이 있을 때(다시 부르기). 행 누르기와 동작 버튼은 따로 둠(버튼 안에 버튼 금지)
+ *   <ul class="list-items list-items--cards"><li><a class="list-item" href="…">…</a><button type="button" class="list-item__action" aria-label="이천시청 다시 부르기">svg</button></li></ul> */
+.list-items--cards { display: grid; gap: var(--spacing-8); }
+.list-items--cards > li { display: flex; align-items: center; overflow: hidden; border: 1px solid var(--color-border-base); border-radius: var(--radius-card); background: var(--color-bg-base); }
+.list-items--cards > li > .list-item { flex: 1; min-width: 0; border-bottom: none; }
+.list-item__action {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: var(--size-touch);
+    height: var(--size-touch);
+    margin-right: var(--spacing-12);
+    padding: 0;
+    border: 1px solid var(--color-border-input);
+    border-radius: var(--radius-rounded);
+    background: var(--color-bg-base);
+    color: var(--color-icon-base);
+    font: inherit;
+    cursor: pointer;
+}
+.list-item__action svg { width: 1.25em; height: 1.25em; stroke-width: var(--icon-stroke); }
+.list-item__action:hover { background: var(--color-bg-muted); }
+.list-item__action:focus-visible { outline: 2px solid transparent; box-shadow: 0 0 0 2px var(--color-border-focus), 0 0 0 5px var(--color-focus-ring); }
+
+/* 장소 종류 (DS-ADR-050) — 장소 칩 · 장소 타일 · 장소 아이콘이 함께 쓰는 종류 클래스. 색은 장소 종류 토큰만 읽음(상태 색 아님)
+ *   .place--home 집 · .place--medical 병원 · 약국 · .place--market 시장 · 마트 · .place--welfare 복지관 · 경로당 · .place--public 관공서 · 은행
+ *   병원 · 약국 아이콘은 십자 모양을 쓰지 않음(적십자 표장과 닮음, DS-ADR-050) */
+.place--home    { --place-subtle: var(--color-bg-place-home-subtle);    --place-fill: var(--color-bg-place-home);    --place-line: var(--color-border-place-home);    --place-icon: var(--color-icon-place-home);    --place-on: var(--color-text-on-place-home); }
+.place--medical { --place-subtle: var(--color-bg-place-medical-subtle); --place-fill: var(--color-bg-place-medical); --place-line: var(--color-border-place-medical); --place-icon: var(--color-icon-place-medical); --place-on: var(--color-text-on-place-medical); }
+.place--market  { --place-subtle: var(--color-bg-place-market-subtle);  --place-fill: var(--color-bg-place-market);  --place-line: var(--color-border-place-market);  --place-icon: var(--color-icon-place-market);  --place-on: var(--color-text-on-place-market); }
+.place--welfare { --place-subtle: var(--color-bg-place-welfare-subtle); --place-fill: var(--color-bg-place-welfare); --place-line: var(--color-border-place-welfare); --place-icon: var(--color-icon-place-welfare); --place-on: var(--color-text-on-place-welfare); }
+.place--public  { --place-subtle: var(--color-bg-place-public-subtle);  --place-fill: var(--color-bg-place-public);  --place-line: var(--color-border-place-public);  --place-icon: var(--color-icon-place-public);  --place-on: var(--color-text-on-place-public); }
+
+/* 칩 — 누르는 칩. 상태를 표시만 하는 칩은 .status-chip (DS-ADR-049 · 050 · 051)
+ *   역할은 마크업으로 나눔 — 화면 읽기 프로그램이 같은 말로 읽음
+ *     바로가기     <a class="chip" href="…"> · <button type="button" class="chip">        누르면 바로 감. 고르는 상태 없음
+ *     하나 고르기  <div class="chip-group" role="radiogroup" aria-label="…"> 안에 <button type="button" class="chip" role="radio" aria-checked="true|false">
+ *     여럿 고르기  <div class="chip-group" role="group" aria-label="…"> 안에 <button type="button" class="chip" aria-pressed="true|false">
+ *   고른 칩 = 선택 면(--color-bg-selected-strong)으로 채움 + 체크(.chip__check). 장소 칩은 그 장소 색으로 채움
+ *   누르기 · 방향키 동작은 js/chips.js (하나 고르기 = 방향키로 옮기며 고름, 여럿 = 눌러서 켜고 끔)
+ *   시안: A 장소 칩 .chip--place(추천) · B 원형 아이콘 칩 .chip--dot · C 큰 타일 .chip-tile — 장소 종류는 .place--{종류}
+ *   .chip-group = 칩 줄(넘치면 다음 줄), .chip-group--scroll = 한 줄 가로 넘김(아래 「가로 넘김」) */
+.chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375em;
+    min-height: var(--size-touch);
+    padding: 0 0.875em;   /* 좌우 여백 = 글자 크기 비율 — 브랜드가 글자 단계를 올리면 함께 커짐 (DS-ADR-049) */
+    box-sizing: border-box;
+    border: 1px solid var(--color-border-input);   /* 필터 칩 = 회색 테두리, 누를 수 있는 경계 3:1 (DS-ADR-013 · 050) */
+    border-radius: var(--radius-chip);
+    background: var(--color-bg-base);
+    color: var(--color-text-base);
+    font: inherit;
+    font-size: var(--body-md);   /* 칩 글자 = 본문 단계(Default 14 · Mobility 16) */
+    font-weight: var(--font-weight-medium);
+    line-height: var(--line-height-tight);
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+}
+.chip svg { width: 1.25em; height: 1.25em; flex: none; }
+.chip:hover { background: var(--color-bg-muted); }
+.chip:focus-visible { outline: 2px solid transparent; box-shadow: 0 0 0 2px var(--color-border-focus), 0 0 0 5px var(--color-focus-ring); }
+.chip__check { display: none; }
+.chip:is([aria-pressed="true"], [aria-checked="true"]) {
+    background: var(--color-bg-selected-strong);   /* 선택 면 — 주 버튼(브랜드 면)과 다른 색을 쓰는 브랜드가 있음 (DS-ADR-051) */
+    border-color: var(--color-bg-selected-strong);
+    color: var(--color-text-on-selected-strong);
+}
+.chip:is([aria-pressed="true"], [aria-checked="true"]) svg { color: var(--color-icon-on-selected-strong); }
+.chip:is([aria-pressed="true"], [aria-checked="true"]) .chip__check { display: block; }   /* 색만이 아니라 체크로도 구분 */
+
+/* 시안 A · 장소 칩(추천) — 옅은 장소 바탕 + 장소 색 테두리 · 아이콘. 고르면 장소 색으로 채움
+ *   <a class="chip chip--place place--home" href="…"><svg class="chip__place">…</svg>집</a> */
+.chip--place { background: var(--place-subtle); border-color: var(--place-line); }
+.chip--place > .chip__place { color: var(--place-icon); }
+.chip--place:hover { background: var(--place-subtle); box-shadow: inset 0 0 0 1px var(--place-line); }   /* 호버 = 테두리 한 겹 더(바탕은 장소 색 그대로) */
+.chip--place:is([aria-pressed="true"], [aria-checked="true"]) { background: var(--place-fill); border-color: var(--place-line); color: var(--place-on); }
+.chip--place:is([aria-pressed="true"], [aria-checked="true"]) svg { color: var(--place-on); }
+
+/* 시안 B · 원형 아이콘 칩 — 흰 바탕 + 회색 테두리, 앞에 장소 색 원 안 아이콘. 색 면이 작아 화면이 차분함
+ *   <a class="chip chip--dot place--medical" href="…"><span class="chip__dot"><svg …/></span>이천의료원</a> */
+.chip--dot { padding-left: 0.375em; }
+.chip__dot { display: inline-flex; align-items: center; justify-content: center; width: 1.75em; height: 1.75em; flex: none; border-radius: var(--radius-rounded); background: var(--place-fill, var(--color-bg-selected-strong)); color: var(--place-on, var(--color-text-on-selected-strong)); }
+.chip__dot svg { width: 1.1em; height: 1.1em; }
+.chip--dot:is([aria-pressed="true"], [aria-checked="true"]) { background: var(--place-subtle, var(--color-bg-brand-subtle)); border-color: var(--place-line, var(--color-border-brand)); box-shadow: inset 0 0 0 1px var(--place-line, var(--color-border-brand)); color: var(--color-text-base); }
+.chip--dot:is([aria-pressed="true"], [aria-checked="true"]) .chip__dot svg { color: var(--place-on, var(--color-text-on-selected-strong)); }
+
+/* 시안 C · 큰 타일 — 아이콘 위 · 글자 아래. 누름 영역이 가장 크고 한 줄에 넷까지(쉬운 화면 · 큰 글씨)
+ *   <div class="chip-tiles"><a class="chip-tile place--home" href="…"><span class="chip__dot"><svg …/></span>집</a> …</div> */
+.chip-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(4.75em, 1fr)); gap: var(--spacing-8); }
+.chip-tile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-8);
+    min-width: 0;
+    min-height: calc(var(--size-touch) * 2);
+    padding: var(--spacing-12) var(--spacing-4);
+    box-sizing: border-box;
+    border: 1px solid var(--color-border-input);
+    border-radius: var(--radius-card);
+    background: var(--color-bg-base);
+    color: var(--color-text-base);
+    font: inherit;
+    font-size: var(--body-md);
+    font-weight: var(--font-weight-medium);
+    line-height: var(--line-height-tight);
+    text-align: center;
+    text-decoration: none;
+    word-break: keep-all;
+    overflow-wrap: anywhere;   /* 긴 장소 이름이 타일을 넘지 않게 */
+    cursor: pointer;
+}
+.chip-tile .chip__dot { width: 2.75em; height: 2.75em; }
+.chip-tile .chip__dot svg { width: 1.5em; height: 1.5em; }
+.chip-tile:hover { background: var(--color-bg-muted); }
+.chip-tile:focus-visible { outline: 2px solid transparent; box-shadow: 0 0 0 2px var(--color-border-focus), 0 0 0 5px var(--color-focus-ring); }
+
+.chip-group { display: flex; flex-wrap: wrap; gap: var(--spacing-8); }
+.chip-group--scroll { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
+.chip-group--scroll::-webkit-scrollbar { display: none; }
+/* 가로 넘김 — js/chips.js 가 .chip-group--scroll 을 .chip-scroll 로 감쌈. 손가락으로 밀기가 기본, 나머지는 「옆에 더 있다」 신호 
+ *   기본(추천)  .chip-scroll--arrows  숨은 칩이 있는 쪽 끝을 흐리고 그쪽에만 화살표 버튼(누르면 밀림 — 밀기가 어려운 사람의 대안)
+ *   1 끝 흐림   .chip-scroll--fade    흐림만
+ *   3 끝 칩 잘림 .chip-scroll--peek   흐림 · 버튼 없이 끝 칩이 잘려 보임 + 처음 한 번 살짝 밀렸다 돌아옴
+ *   .has-prev · .has-next = 앞 · 뒤에 숨은 칩이 있음(스크립트가 붙임) */
+.chip-scroll { position: relative; min-width: 0; font-size: var(--body-md); }
+.chip-scroll > .chip-group--scroll {
+    --chip-fade-start: 0%;
+    --chip-fade-end: 0%;
+    padding-block: var(--spacing-4);   /* 위아래 4 = 포커스 링 자리 */
+    -webkit-mask-image: linear-gradient(to right, transparent, black var(--chip-fade-start), black calc(100% - var(--chip-fade-end)), transparent);
+            mask-image: linear-gradient(to right, transparent, black var(--chip-fade-start), black calc(100% - var(--chip-fade-end)), transparent);
+}
+.chip-scroll:is(.chip-scroll--arrows, .chip-scroll--fade).has-prev > .chip-group--scroll { --chip-fade-start: 3em; }
+.chip-scroll:is(.chip-scroll--arrows, .chip-scroll--fade).has-next > .chip-group--scroll { --chip-fade-end: 3em; }
+.chip-scroll__btn {
+    position: absolute;
+    top: 50%;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25em;   /* 흐린 끝 위에 얹는 작은 원 — 누름 영역 24 이상(WCAG 2.5.8), 칩을 덜 가리게 */
+    height: 2.25em;
+    padding: 0;
+    border: 1px solid var(--color-border-base);
+    border-radius: var(--radius-rounded);
+    background: var(--color-bg-base);
+    box-shadow: var(--shadow-popover);
+    color: var(--color-icon-base);
+    font: inherit;
+    cursor: pointer;
+    transform: translateY(-50%);
+}
+.chip-scroll__btn[hidden] { display: none; }
+.chip-scroll__btn--prev { left: 0; }
+.chip-scroll__btn--next { right: 0; }
+.chip-scroll__btn svg { width: 1.25em; height: 1.25em; }
+.chip-scroll__btn:hover { background: var(--color-bg-muted); }
+.chip-scroll__btn:focus-visible { outline: 2px solid transparent; box-shadow: 0 0 0 2px var(--color-border-focus), 0 0 0 5px var(--color-focus-ring); }
+
+/* 떠 있는 버튼 — 지도 · 목록 위에 떠서 늘 보이는 동작 하나. 버튼 색은 .btn 중요도 클래스 그대로
+ *   <button class="btn btn--primary btn--filled fab">svg 글자</button>  ·  아이콘만 = .fab--icon + aria-label
+ *   모양 = 알약(스태틱), 높이 = --size-btn-lg, 그림자 = 떠 있는 층 */
+.fab {
+    min-height: var(--size-btn-lg);
+    padding: 0 1.15em;
+    gap: var(--spacing-8);
+    border-radius: var(--radius-rounded);
+    box-shadow: var(--shadow-popover);
+    font-size: var(--body-md);
+    font-weight: var(--font-weight-emphasis);   /* 강조 굵기 — 브랜드가 바꿈(Mobility 700, DS-ADR-049) */
+}
+.fab.btn--primary {   /* 떠 있는 버튼 = 선택 면 — 주 버튼(브랜드 면)과 다른 색을 쓰는 브랜드가 있음 (DS-ADR-051) */
+    --btn-solid:         var(--color-bg-selected-strong);
+    --btn-solid-hover:   color-mix(in srgb, var(--color-bg-selected-strong) 88%, var(--color-text-base));
+    --btn-solid-pressed: color-mix(in srgb, var(--color-bg-selected-strong) 76%, var(--color-text-base));
+    --btn-on-solid:      var(--color-text-on-selected-strong);
+}
+.fab svg { width: 1.43em; height: 1.43em; }
+.fab--icon { width: var(--size-btn-lg); padding: 0; }
+/* 시안 C · 펼침 — 아이콘 + 글자로 떠 있다가, 목록을 내리는 동안 아이콘만으로 줄고 멈추면 글자가 다시 보임(js/app-bar.js, Material 3 Extended FAB)
+ *   <button class="btn btn--primary btn--filled fab fab--extended" data-fab-scroll="#목록영역" aria-label="버스 부르기"><svg/><span class="fab__label">버스 부르기</span></button>
+ *   줄어도 이름이 남게 aria-label 을 둠 */
+.fab__label { overflow: hidden; max-width: 12em; transition: max-width var(--duration-base) var(--ease-standard), opacity var(--duration-base) var(--ease-standard); }
+.fab--extended.is-collapsed { width: var(--size-btn-lg); padding: 0; gap: 0; }
+.fab--extended.is-collapsed .fab__label { max-width: 0; opacity: 0; }
+@media (prefers-reduced-motion: reduce) { .fab__label { transition: none; } }
+
+/* 아래 고정 버튼 줄 — 화면의 주 행동을 엄지 닿는 아래에 고정. 나란한 버튼이 한 줄에 안 들어가면 한 줄에 하나씩(세로)
+ *   <div class="btn-bar"><button class="btn btn--secondary btn--outlined btn--lg">취소</button><button class="btn btn--primary btn--filled btn--lg">호출하기</button></div>
+ *   글자 길이로 정해짐(줄바꿈 flex-wrap) — 화면 폭 기준이 아님. 주 행동을 마지막에 두면 세로일 때 맨 아래 */
+.btn-bar {
+    position: sticky;
+    bottom: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-8);
+    padding: var(--spacing-12) var(--spacing-16) calc(var(--spacing-12) + env(safe-area-inset-bottom, 0px));
+    box-sizing: border-box;
+    background: var(--color-bg-base);
+    border-top: 1px solid var(--color-border-subtle);
+}
+.btn-bar > .btn { flex: 1 0 auto; }
+
+/* 하나 고르는 목록 행 — 아래 시트 선택지처럼 서넛 가운데 하나
+ *   <ul class="list-items" role="radiogroup" id="ride-count" aria-label="탑승 인원">
+ *     <li><button type="button" class="list-item" role="radio" aria-checked="true" data-value="1명"> … <span class="list-item__end"><svg class="list-item__check" …/></span></button></li>
+ *   고른 줄 = 선택 바탕 + 브랜드 체크. 누르기 · 방향키는 js/chips.js, 고른 값을 주 버튼 글자에 넣는 것도(data-choice-for) */
+.list-item__check { display: none; }
+.list-item[role="radio"][aria-checked="true"] { background: var(--color-bg-selected); }
+.list-item[role="radio"][aria-checked="true"] .list-item__title { font-weight: var(--font-weight-emphasis); }
+.list-item[role="radio"][aria-checked="true"] .list-item__check { display: block; color: var(--color-icon-brand); }
+
+/* 숫자 버튼 — − 숫자 + (js/number-input.js). 범위가 넓거나 종류별 수를 셀 때. 서넛 가운데 고르기는 목록 행
+ *   <div class="number-input" role="group" aria-labelledby="…" data-min="1" data-max="9"> 줄이기 버튼 · <output class="number-input__value"> · 단위 · 늘리기 버튼 </div> */
+.number-input { display: inline-flex; align-items: center; gap: var(--spacing-12); font-size: var(--body-md); }
+.number-input__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--size-touch);
+    height: var(--size-touch);
+    padding: 0;
+    border: 1px solid var(--color-border-input);
+    border-radius: var(--radius-rounded);
+    background: var(--color-bg-base);
+    color: var(--color-icon-base);
+    font: inherit;
+    cursor: pointer;
+}
+.number-input__btn svg { width: 1.25em; height: 1.25em; }
+.number-input__btn:hover { background: var(--color-bg-muted); }
+.number-input__btn:disabled { border-color: var(--color-border-disabled); background: var(--color-bg-disabled); color: var(--color-icon-disabled); cursor: default; }
+.number-input__btn:focus-visible { outline: 2px solid transparent; box-shadow: 0 0 0 2px var(--color-border-focus), 0 0 0 5px var(--color-focus-ring); }
+.number-input__value { min-width: 1.5em; font-size: var(--heading-md); font-weight: var(--font-weight-emphasis); line-height: var(--line-height-tight); text-align: right; font-variant-numeric: tabular-nums; }
+.number-input__unit { margin-left: calc(var(--spacing-8) * -1); font-size: var(--body-md); }
+
+/* 나란한 칸 — 둘~넷 가운데 하나를 한 줄에서 고름. 고른 칸 = 선택 면(DS-ADR-051). 넘치면 칩으로
+ *   <div class="segmented" role="radiogroup" aria-label="…"><button type="button" class="segmented__item" role="radio" aria-checked="true">1명</button> … </div> */
+.segmented {
+    display: flex;
+    gap: var(--spacing-4);
+    padding: var(--spacing-4);
+    border: 1px solid var(--color-border-input);   /* 묶음 경계 3:1 */
+    border-radius: var(--radius-btn);
+    background: var(--color-bg-base);
+    font-size: var(--body-md);
+}
+.segmented__item {
+    flex: 1 1 0;
+    min-width: 0;
+    min-height: var(--size-touch);
+    padding: 0 var(--spacing-8);
+    border: none;
+    border-radius: var(--radius-btn);
+    background: transparent;
+    color: var(--color-text-base);
+    font: inherit;
+    font-weight: var(--font-weight-medium);
+    cursor: pointer;
+}
+.segmented__item:hover { background: var(--color-bg-muted); }
+.segmented__item[aria-checked="true"] { background: var(--color-bg-selected-strong); color: var(--color-text-on-selected-strong); font-weight: var(--font-weight-emphasis); }
+.segmented__item:focus-visible { outline: 2px solid transparent; box-shadow: 0 0 0 2px var(--color-border-focus), 0 0 0 5px var(--color-focus-ring); }
+
+/* 배지 — 아이콘 · 글자 옆에 붙어 「새 것 · 수 · 짧은 상태」를 알림. 누르지 않음(표시만) 
+ *   A 점      <span class="badge-anchor">아이콘 버튼<span class="badge badge--dot" aria-hidden="true"></span></span>  새 것이 있음만
+ *   B 개수    <span class="badge badge--count" aria-hidden="true">3</span>   읽지 않은 수에만, 두 자리까지 · 넘으면 「99+」
+ *   C 글자    <span class="badge badge--label">1대 운행중</span> · <span class="badge badge--new">N</span>   한 단어, 색만으로 구분하지 않음
+ *   점 · 개수는 뜻을 감싸는 버튼 이름에 적음(aria-label="알림, 새 알림 3개") — 배지 자체는 aria-hidden
+ *   칩 안 개수(「전체 29」)는 배지가 아니라 칩 글자 */
+.badge-anchor { position: relative; display: inline-flex; }
+.badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    font-size: var(--body-xs);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-tight);
+    white-space: nowrap;
+}
+.badge-anchor > .badge { position: absolute; top: var(--spacing-4); right: var(--spacing-4); pointer-events: none; }   /* 아이콘 오른쪽 위 */
+.badge--dot { width: 0.75em; height: 0.75em; border-radius: var(--radius-rounded); background: var(--color-bg-notify); box-shadow: 0 0 0 2px var(--color-bg-base); }   /* 바탕 고리 — 아이콘 선과 떨어져 보이게 */
+.badge--count { min-width: 1.6em; height: 1.6em; padding: 0 0.4em; border-radius: var(--radius-rounded); background: var(--color-bg-notify); color: var(--color-text-on-notify); box-shadow: 0 0 0 2px var(--color-bg-base); font-variant-numeric: tabular-nums; }
+.badge-anchor > .badge--count { top: 0; right: 0; }
+.badge--label { padding: 0.2em 0.5em; border: 1px solid var(--color-border-brand); border-radius: var(--radius-chip); background: var(--color-bg-muted); color: var(--color-text-brand); font-weight: var(--font-weight-semibold); }
+.badge--new { min-width: 1.6em; height: 1.6em; padding: 0 0.35em; border-radius: var(--radius-rounded); background: var(--color-bg-notify); color: var(--color-text-on-notify); }
+.list-item__title .badge { margin-left: var(--spacing-4); vertical-align: 0.1em; }
+.bottom-nav__item .badge-anchor > .badge { top: 0; right: 0; transform: translate(60%, -30%); }   /* 하단 탭 = 아이콘 크기의 자리 — 아이콘 모서리 밖으로 */

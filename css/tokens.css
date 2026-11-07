@@ -120,6 +120,45 @@
   --yellow-800: #8F5B00;
   --yellow-900: #664100;
 
+  /* --- 장소 색 원천 램프 — 상태 색(빨강 · 노랑 · 초록 · 파랑)과 별개인 분류용 색. 장소 종류 역할만 읽고 화면 CSS는 직접 쓰지 않는다
+   *     명도 단계는 green 램프와 같게(OKLCH), 색상각만 다르게 만듦 (DS-ADR-050) */
+
+  /* --- Orange (장소 색 — 시장 · 마트, DS-ADR-050) ------------------------------------- */
+  --orange-50: #FFF0E8;
+  --orange-100: #FEDDCB;
+  --orange-200: #FDBE9A;
+  --orange-300: #F69760;
+  --orange-400: #EC7829;
+  --orange-500: #D56405;
+  --orange-600: #B65401;
+  --orange-700: #934200;
+  --orange-800: #723202;
+  --orange-900: #522200;
+
+  /* --- Purple (장소 색 — 복지관 · 경로당, DS-ADR-050) ----------------------------------- */
+  --purple-50: #F6F1FE;
+  --purple-100: #ECDDFF;
+  --purple-200: #DBBFFE;
+  --purple-300: #C899FD;
+  --purple-400: #B77BF5;
+  --purple-500: #A464E3;
+  --purple-600: #8C54C3;
+  --purple-700: #71419F;
+  --purple-800: #57327B;
+  --purple-900: #3D2257;
+
+  /* --- Teal (장소 색 — 관공서 · 은행, DS-ADR-050) -------------------------------------- */
+  --teal-50: #E9F7F5;
+  --teal-100: #CEECE7;
+  --teal-200: #9DDCD3;
+  --teal-300: #5DC7BB;
+  --teal-400: #08B5A7;
+  --teal-500: #079E92;
+  --teal-600: #09877C;
+  --teal-700: #036C63;
+  --teal-800: #03534C;
+  --teal-900: #013A35;
+
   /* --- Transparent (shadow / overlay 용) ------------------------------------- */
   --transparent-12: rgba(0, 0, 0, 0.12);
   --transparent-08: rgba(0, 0, 0, 0.08);
@@ -135,6 +174,8 @@
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
+  --font-weight-emphasis: var(--font-weight-semibold); /* 강조 굵기 — 큰 버튼 · 떠 있는 버튼 · 앱 상단 바 제목 · 아래 시트 제목. 기본 = SemiBold, 브랜드 파일이 덮을 수 있음(플렉시블, DS-ADR-049) */
+  --icon-stroke: 1.8;                         /* 아이콘 선 굵기(24 기준 그리기 칸에서). 모바일 앱 컴포넌트의 선 아이콘이 읽음. 브랜드 파일이 덮을 수 있음 (TD-172) */
 
   /* 제목 6단계 = h1~h6 기본값 (DS-ADR-012). 본문(--body-*)과 값이 겹쳐도 이름은 따로 */
   --heading-2xl: 2.25rem;                     /* 36px · h1 · 홈 인사말 */
@@ -192,8 +233,9 @@
   --size-input: 28px;                         /* 인풋 높이 */
   --size-btn: 28px;                           /* 버튼 기본 (인풋 매칭) · 아이콘 버튼 가로세로. 옛 md(32px)는 실사용 없어 삭제 */
   --size-input-lg: 44px;                      /* 큰 칸 — 화면에 폼 하나만 있는 단독 폼(로그인 · 임시 비밀번호 발급 — 이전 버전 login.css 큰 칸 · 큰 버튼을 쓰던 두 화면, TD-120) (제안 E). 브랜드가 바꾸지 않음(스태틱) */
-  --size-btn-lg: 44px;                        /* 큰 버튼 — 큰 칸과 같은 높이의 주 동작 */
+  --size-btn-lg: 44px;                        /* 큰 버튼 — 단독 폼의 주 동작 · 모바일 화면의 주 행동(호출 · 즐겨찾기). 브랜드 파일이 덮을 수 있음(플렉시블, DS-ADR-049) */
   --size-btn-sm: 26px;                        /* 작은 버튼 = Figma 「Small Button」 — .btn--sm · 첨부 삭제. 최소 누름 영역 24 이상 (DS-ADR-020) */
+  --size-touch: var(--size-btn);              /* 누름 기준 높이 — 모바일 컴포넌트(앱 상단 바 · 하단 탭 · 목록 행 · 칩)의 최소 높이. 기본 = 표준 버튼 높이, 브랜드 파일이 덮을 수 있음(플렉시블, DS-ADR-049) */
 
   /* 표 높이 역할 — 브랜드 파일이 덮을 수 있음(DS-ADR-047). 값 = DS-ADR-030(머리 34 · 줄 30 · 편집 줄 40).
      조건: 줄 높이 ≥ 작은 버튼(--size-btn-sm) + 2 — 칸 안 버튼 상한이 줄 높이 − 2 */
@@ -291,6 +333,12 @@
   /* 선택됨 — '지금 이게 골라져 있다' 표시 전용(페이지네이션 현재 페이지, 열려있는 datepicker).
    * 호버는 --color-bg-muted, 눌림은 --color-bg-subtle, 뱃지는 --color-bg-info-subtle 로 각각 나눠 씀 */
   --color-bg-selected: var(--brand-50);       /* 선택 상태(달력·현재 페이지) = 브랜드 역할 (DS-ADR-005) */
+
+  /* 선택 면 (DS-ADR-051) — 행동(주 버튼 = 브랜드 면)과 선택(고른 칩 · 떠 있는 버튼)을 다른 색으로 쓸 수 있게.
+   * 기본값 = 브랜드 면 · 브랜드 면 위 글자라 브랜드 파일이 덮지 않으면 지금과 같다. 하단 탭 지금 화면 표시는 쓰지 않는다 */
+  --color-bg-selected-strong: var(--color-bg-brand); /* 선택 면 — 고른 칩 · 떠 있는 버튼의 채운 바탕. 기본 = 브랜드 면 (DS-ADR-051) */
+  --color-text-on-selected-strong: var(--color-text-on-color);
+  --color-icon-on-selected-strong: var(--color-icon-on-color);
 
   /* 덮개 — 확인 창(.modal) 뒤 화면을 가리는 반투명 층 (TD-108). 브랜드와 상관없이 검정 투명 */
   --color-bg-overlay: var(--transparent-32);
@@ -443,6 +491,86 @@
   --chart-5: var(--brand-50);
   --chart-track: var(--brand-50);             /* 링 바닥(빈 구간) */
 
+  /* 장소 종류 색 (DS-ADR-050) — 장소 칩 · 장소 아이콘 전용. 상태 색(danger · warning · success · info)을 빌려 쓰지 않는다
+   *   종류 = home 집 · medical 병원 · 약국 · market 시장 · 마트 · welfare 복지관 · 경로당 · public 관공서 · 은행
+   *   역할 = -subtle 옅은 바탕 · (없음) 채움 · border 테두리 · icon 아이콘 · text-on 채움 위 글자
+   *   대비: 테두리 · 채움 ↔ 화면 바탕 3:1, 채움 위 글자 · 옅은 바탕 위 글자 4.5:1 (라이트 · 다크)
+   *   다크 값 = 같은 이름 + -dark 칸. 브랜드 파일이 둘 다 덮을 수 있다 (다크 방식이 브랜드마다 다를 수 있어서) */
+  /* 집 */
+  --color-bg-place-home-subtle: var(--yellow-50);
+  --color-bg-place-home: var(--yellow-700);
+  --color-border-place-home: var(--yellow-700);
+  --color-icon-place-home: var(--yellow-700);
+  --color-text-on-place-home: var(--neutral-950);
+
+  /* 병원 · 약국 */
+  --color-bg-place-medical-subtle: var(--green-50);
+  --color-bg-place-medical: var(--green-700);
+  --color-border-place-medical: var(--green-600);
+  --color-icon-place-medical: var(--green-600);
+  --color-text-on-place-medical: var(--white);
+
+  /* 시장 · 마트 */
+  --color-bg-place-market-subtle: var(--orange-50);
+  --color-bg-place-market: var(--orange-600);
+  --color-border-place-market: var(--orange-600);
+  --color-icon-place-market: var(--orange-600);
+  --color-text-on-place-market: var(--white);
+
+  /* 복지관 · 경로당 */
+  --color-bg-place-welfare-subtle: var(--purple-50);
+  --color-bg-place-welfare: var(--purple-600);
+  --color-border-place-welfare: var(--purple-600);
+  --color-icon-place-welfare: var(--purple-600);
+  --color-text-on-place-welfare: var(--white);
+
+  /* 관공서 · 은행 */
+  --color-bg-place-public-subtle: var(--teal-50);
+  --color-bg-place-public: var(--teal-700);
+  --color-border-place-public: var(--teal-600);
+  --color-icon-place-public: var(--teal-600);
+  --color-text-on-place-public: var(--white);
+
+  /* 다크 칸 — body.dark-mode 가 읽는 값. :root 에 두어 브랜드 파일이 다크 값도 덮을 수 있게 (DS-ADR-050 · 051) */
+  --color-bg-place-home-subtle-dark: var(--yellow-900);
+  --color-bg-place-home-dark: var(--yellow-300);
+  --color-border-place-home-dark: var(--yellow-400);
+  --color-icon-place-home-dark: var(--yellow-300);
+  --color-text-on-place-home-dark: var(--neutral-950);
+  --color-bg-place-medical-subtle-dark: var(--green-900);
+  --color-bg-place-medical-dark: var(--green-300);
+  --color-border-place-medical-dark: var(--green-400);
+  --color-icon-place-medical-dark: var(--green-300);
+  --color-text-on-place-medical-dark: var(--neutral-950);
+  --color-bg-place-market-subtle-dark: var(--orange-900);
+  --color-bg-place-market-dark: var(--orange-300);
+  --color-border-place-market-dark: var(--orange-400);
+  --color-icon-place-market-dark: var(--orange-300);
+  --color-text-on-place-market-dark: var(--neutral-950);
+  --color-bg-place-welfare-subtle-dark: var(--purple-900);
+  --color-bg-place-welfare-dark: var(--purple-300);
+  --color-border-place-welfare-dark: var(--purple-400);
+  --color-icon-place-welfare-dark: var(--purple-300);
+  --color-text-on-place-welfare-dark: var(--neutral-950);
+  --color-bg-place-public-subtle-dark: var(--teal-900);
+  --color-bg-place-public-dark: var(--teal-300);
+  --color-border-place-public-dark: var(--teal-400);
+  --color-icon-place-public-dark: var(--teal-300);
+  --color-text-on-place-public-dark: var(--neutral-950);
+
+  /* 선택 면 다크 칸 (DS-ADR-051) — 다크에서는 면을 밝게 채우고 글자를 진하게. 브랜드 파일이 단계를 덮을 수 있다 */
+  --color-bg-selected-strong-dark: var(--brand-300); /* 다크 칸 — 밝은 브랜드 단계로 채워 카드 · 바닥과 3:1 (브랜드 면 500은 다크 카드와 2.8:1) */
+  --color-text-on-selected-strong-dark: var(--neutral-950);
+  --color-icon-on-selected-strong-dark: var(--neutral-950);
+
+  /* 지도 핀 (DS-ADR-051) — 모바일 앱 Blocks 전용. 지도 그림 위에 놓이므로 다크도 같은 값 */
+  --color-bg-map-pin: var(--red-600);         /* 지도 위 고른 위치 핀 · 이름표. 오류 색(--color-bg-danger)과 따로 (DS-ADR-051, 모바일 앱 Blocks) */
+  --color-text-on-map-pin: var(--white);
+
+  /* 알림 배지 (TD-172) — 새 소식 점 · 읽지 않은 수. 개수 글자가 작아 4.5:1을 라이트 · 다크 따로 맞춤 */
+  --color-bg-notify: var(--red-700);          /* 알림 배지(점 · 개수 · 새 표시) 바탕. 주의를 끄는 색 — 오류 문구 색과 이름을 나눠 다크 값을 따로 맞춤 (TD-172) */
+  --color-text-on-notify: var(--white);
+
   /* 진행률 5상태 그라데이션 (라이트/다크 공용 — 의미 컬러) */
   --color-progress-done-start: #34D399;
   --color-progress-done-end: #10B981;
@@ -545,6 +673,9 @@ body.dark-mode {
   --color-bg-warning: var(--yellow-400);
   --color-bg-warning-subtle: var(--yellow-900);
   --color-bg-selected: var(--neutral-700);
+  --color-bg-selected-strong: var(--color-bg-selected-strong-dark); /* 선택 면 — 다크 칸을 읽음 (DS-ADR-051) */
+  --color-text-on-selected-strong: var(--color-text-on-selected-strong-dark);
+  --color-icon-on-selected-strong: var(--color-icon-on-selected-strong-dark);
   --color-bg-overlay: var(--transparent-60);  /* 어두운 화면 위 덮개 — 32%는 뒤 화면과 구분이 안 됨. 다크 그림자(--shadow-modal 0.6)와 같은 농도 */
 
   /* Foreground */
@@ -675,4 +806,35 @@ body.dark-mode {
   --shadow-core: 0 1px 2px  rgba(0, 0, 0, 0.4);
   --shadow-popover: 0 4px 16px rgba(0, 0, 0, 0.5);
   --shadow-modal: 0 16px 48px rgba(0, 0, 0, 0.6), 0 4px 12px rgba(0, 0, 0, 0.4);
+
+  /* 장소 종류 색 (DS-ADR-050) — :root 의 -dark 칸을 읽음 */
+  --color-bg-place-home-subtle: var(--color-bg-place-home-subtle-dark);
+  --color-bg-place-home: var(--color-bg-place-home-dark);
+  --color-border-place-home: var(--color-border-place-home-dark);
+  --color-icon-place-home: var(--color-icon-place-home-dark);
+  --color-text-on-place-home: var(--color-text-on-place-home-dark);
+  --color-bg-place-medical-subtle: var(--color-bg-place-medical-subtle-dark);
+  --color-bg-place-medical: var(--color-bg-place-medical-dark);
+  --color-border-place-medical: var(--color-border-place-medical-dark);
+  --color-icon-place-medical: var(--color-icon-place-medical-dark);
+  --color-text-on-place-medical: var(--color-text-on-place-medical-dark);
+  --color-bg-place-market-subtle: var(--color-bg-place-market-subtle-dark);
+  --color-bg-place-market: var(--color-bg-place-market-dark);
+  --color-border-place-market: var(--color-border-place-market-dark);
+  --color-icon-place-market: var(--color-icon-place-market-dark);
+  --color-text-on-place-market: var(--color-text-on-place-market-dark);
+  --color-bg-place-welfare-subtle: var(--color-bg-place-welfare-subtle-dark);
+  --color-bg-place-welfare: var(--color-bg-place-welfare-dark);
+  --color-border-place-welfare: var(--color-border-place-welfare-dark);
+  --color-icon-place-welfare: var(--color-icon-place-welfare-dark);
+  --color-text-on-place-welfare: var(--color-text-on-place-welfare-dark);
+  --color-bg-place-public-subtle: var(--color-bg-place-public-subtle-dark);
+  --color-bg-place-public: var(--color-bg-place-public-dark);
+  --color-border-place-public: var(--color-border-place-public-dark);
+  --color-icon-place-public: var(--color-icon-place-public-dark);
+  --color-text-on-place-public: var(--color-text-on-place-public-dark);
+
+  /* 알림 배지 (TD-172) */
+  --color-bg-notify: var(--red-400);          /* 다크 알림 배지 — 밝은 빨강 + 진한 글자. 500 위 흰 글자는 4.11로 미달 */
+  --color-text-on-notify: var(--neutral-950);
 }

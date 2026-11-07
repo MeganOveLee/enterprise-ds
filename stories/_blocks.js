@@ -21,11 +21,13 @@ export const Section = ({ title, desc, children }) =>
     desc ? h('p', { className: 'ds-sec__desc' }, desc) : null,
     children);
 
-export const Card = ({ of, title, desc, code = true, children }) =>
+// tag = 제목 옆 표시(「추천」), basis = 시안 근거 한 줄(디자인 필수 가이드 7장)
+export const Card = ({ of, title, desc, tag, basis, code = true, children }) =>
   h('section', { className: 'ds-card' },
     title ? h('header', { className: 'ds-card__head' },
-      h('h3', { className: 'ds-card__title' }, title),
-      desc ? h('p', { className: 'ds-card__desc' }, desc) : null) : null,
+      h('h3', { className: 'ds-card__title' }, title, tag ? h('span', { className: 'ds-card__tag' }, tag) : null),
+      desc ? h('p', { className: 'ds-card__desc' }, desc) : null,
+      basis ? h('p', { className: 'ds-card__basis' }, h('b', null, '근거'), ' ', basis) : null) : null,
     of ? h('div', { className: 'ds-card__body' }, h(Story, { of })) : null,
     children ? h('div', { className: 'ds-card__extra' }, children) : null,
     of && code ? h('details', { className: 'ds-card__code' }, h('summary', null, '코드 보기'), h(Source, { of })) : null);
@@ -36,6 +38,12 @@ export const Card = ({ of, title, desc, code = true, children }) =>
 // 소개 한 곳에만 둔다 — 처음 온 사람에게 「여기를 눌러 보라」고 알리는 용도. 다른 문서는 맨 위 막대로 충분
 // 막대 전체 = 맨 위 막대와 같은 줄(10:17 피드백): 왼쪽 격자 · 배경 · 윤곽선 아이콘, Figma · 구분선 · 브랜드 · 화면 모드, 오른쪽 끝 전체 화면. 폭은 미리보기 카드 전체
 const FIGMA_URL = 'https://www.figma.com/design/99ff5JQYQPCdY3xRBWHHlO/?node-id=8111-5';
+// 쓰는 기기 아이콘 — Storybook 아이콘 browser · mobile 그대로(맨 위 막대 preview.js 와 같은 모양, TD-172)
+const DEVICE = {
+  web: 'M.5 13.004a.5.5 0 01-.5-.5v-11a.5.5 0 01.5-.5h13a.5.5 0 01.5.5v11a.5.5 0 01-.5.5H.5zm.5-1v-8h12v8H1zm1-9.5a.5.5 0 11-1 0 .5.5 0 011 0zm2 0a.5.5 0 11-1 0 .5.5 0 011 0zm2 0a.5.5 0 11-1 0 .5.5 0 011 0z',
+  mobile: 'M3 1.504a1.5 1.5 0 011.5-1.5h5a1.5 1.5 0 011.5 1.5v11a1.5 1.5 0 01-1.5 1.5h-5a1.5 1.5 0 01-1.5-1.5v-11zm1 10.5v-10h6v10H4z',
+};
+const ico = (d) => h('svg', { width: 14, height: 14, viewBox: '0 0 14 14', fill: 'none', 'aria-hidden': true }, h('path', { fillRule: 'evenodd', clipRule: 'evenodd', d, fill: 'currentColor' }));
 const ICON = {   // Storybook 아이콘 paintbrush · mirror(.storybook/preview.js 도구 막대 icon 과 같음)
   brand: 'M11.854.146a.5.5 0 00-.708 0L2.983 8.31a2.24 2.24 0 00-1.074.6C.677 10.14.24 11.902.085 12.997 0 13.6 0 14 0 14s.4 0 1.002-.085c1.095-.155 2.857-.592 4.089-1.824a2.24 2.24 0 00.6-1.074l8.163-8.163a.5.5 0 000-.708l-2-2zM5.6 9.692l.942-.942L5.25 7.457l-.942.943A2.242 2.242 0 015.6 9.692zm1.649-1.65L12.793 2.5 11.5 1.207 5.957 6.75 7.25 8.043zM4.384 9.617a1.25 1.25 0 010 1.768c-.767.766-1.832 1.185-2.78 1.403-.17.04-.335.072-.49.098.027-.154.06-.318.099-.49.219-.947.637-2.012 1.403-2.779a1.25 1.25 0 011.768 0z',
   mode: 'M1 1.504a.5.5 0 01.5-.5h11a.5.5 0 01.5.5v11a.5.5 0 01-.5.5h-11a.5.5 0 01-.5-.5v-11zm1 10.5h10v-10l-10 10z',
@@ -49,7 +57,7 @@ const DECO = {
 };
 const deco = (k) => h('span', { key: k, className: 'ds-tb__ico' }, h('svg', { width: 14, height: 14, viewBox: '0 0 14 14', fill: 'none' }, DECO[k].map((d, i) => h('path', { key: i, fillRule: 'evenodd', clipRule: 'evenodd', d, fill: 'currentColor' }))));
 const TOOLS = [   // 글자 = .storybook/preview.js globalTypes 와 같게
-  { key: 'brand', label: '브랜드', items: [['default', 'Default'], ['mobility', 'Mobility · 모빌리티 서비스'], ['ootb', 'OOTB · Windchill 화면 리디자인']] },
+  { key: 'brand', label: '브랜드', items: [['default', 'Default · PLM 웹', 'web'], ['mobility', 'Mobility · 모바일 앱', 'mobile'], ['ootb', 'OOTB · Windchill 화면 리디자인', 'web']] },   // 세 번째 = 쓰는 기기 아이콘(TD-172)
   { key: 'mode', label: '화면 모드 (라이트 / 다크)', items: [['light', '라이트'], ['dark', '다크']] },
 ];
 const readGlobals = () => {
@@ -90,11 +98,11 @@ const ToolSelect = ({ tool, value, onPick }) => {
     h('button', { type: 'button', ref: btn, className: 'ds-tbsel__btn', 'aria-label': tool.label + ' ' + title, 'aria-haspopup': 'listbox', 'aria-expanded': open, 'aria-controls': open ? id : undefined,
       onClick: () => (open ? setOpen(false) : openList()),
       onKeyDown: (e) => { if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); openList(); } } },
-      h('svg', { width: 14, height: 14, viewBox: '0 0 14 14', fill: 'none', 'aria-hidden': true }, h('path', { fillRule: 'evenodd', clipRule: 'evenodd', d: ICON[tool.key], fill: 'currentColor' })),
+      ico((cur >= 0 && tool.items[cur][2]) ? DEVICE[tool.items[cur][2]] : ICON[tool.key]),
       title),
     open ? h('span', { className: 'ds-tbsel__list', role: 'listbox', id, 'aria-label': tool.label, tabIndex: -1, ref: list, onKeyDown: onListKey, 'aria-activedescendant': id + '-' + active },
-      tool.items.map(([v, t], i) => h('span', { key: v, id: id + '-' + i, role: 'option', 'aria-selected': i === cur, className: 'ds-tbsel__opt' + (i === active ? ' is-active' : ''),
-        onMouseEnter: () => setActive(i), onClick: () => pick(i) }, t))) : null);
+      tool.items.map(([v, t, dev], i) => h('span', { key: v, id: id + '-' + i, role: 'option', 'aria-selected': i === cur, className: 'ds-tbsel__opt' + (i === active ? ' is-active' : ''),
+        onMouseEnter: () => setActive(i), onClick: () => pick(i) }, dev ? ico(DEVICE[dev]) : null, t))) : null);
 };
 export const Toolbar = ({ figmaIcon }) => {
   const [g, setG] = React.useState(readGlobals);

@@ -18,6 +18,9 @@
 <script src="ds-js/multiselect.js"></script>
 <script src="ds-js/modal.js"></script>
 <script src="ds-js/tabs.js"></script>
+<script src="ds-js/chips.js"></script>
+<script src="ds-js/number-input.js"></script>
+<script src="ds-js/app-bar.js"></script>
 <script src="ds-js/motion.js"></script>
 <script src="ds-js/clear.js"></script>
 <style>
@@ -73,6 +76,9 @@
   .ds-card__head { padding: 12px 16px; background: #f6f8fa; border-bottom: 1px solid #e1e4e8; }
   .ds-card__title { margin: 0; font-size: 14px; line-height: 1.5; font-weight: 600; color: #111418; }
   .ds-card__desc { margin: 2px 0 0; font-size: 12px; line-height: 1.6; color: #57606a; }
+  .ds-card__tag { display: inline-block; margin-left: 8px; padding: 0 8px; border-radius: 10px; background: #ddf4ff; color: #0550ae; font-size: 11px; line-height: 18px; font-weight: 600; vertical-align: 1px; }   /* 시안 「추천」 (디자인 필수 가이드 7장) */
+  .ds-card__basis { margin: 2px 0 0; font-size: 12px; line-height: 1.6; color: #656d76; }
+  .ds-card__basis > b { font-weight: 600; color: #424a53; }
   .ds-card__body > * { margin: 0 !important; }
   .ds-card__extra { border-top: 1px solid #e1e4e8; padding: 4px 16px 12px; }
   .ds-card__code { border-top: 1px solid #e1e4e8; background: #f6f8fa; }
@@ -157,7 +163,7 @@
   @media (prefers-reduced-motion: reduce) { .ds-tb--hint .ds-tb__sels { animation: none; box-shadow: 0 0 0 2px var(--brand-500); } .ds-tb__hint { animation: none; } }
   .ds-tbsel__btn svg { flex: none; }
   .ds-tbsel__list { position: absolute; z-index: 30; top: calc(100% + 8px); left: 0; display: block; min-width: 180px; padding: 4px; border-radius: 6px; background: rgba(255, 255, 255, .95); filter: drop-shadow(0 5px 5px rgba(0, 0, 0, .05)) drop-shadow(0 1px 3px rgba(0, 0, 0, .1)); outline: none; }
-  .ds-tbsel__opt { display: flex; align-items: center; height: 32px; padding: 0 9px; border-radius: 4px; color: rgb(46, 51, 56); font-weight: 400; line-height: 16px; white-space: nowrap; cursor: pointer; }
+  .ds-tbsel__opt { display: flex; align-items: center; gap: 8px; height: 32px; padding: 0 9px; border-radius: 4px; color: rgb(46, 51, 56); font-weight: 400; line-height: 16px; white-space: nowrap; cursor: pointer; }
   .ds-tbsel__opt[aria-selected="true"] { color: rgb(0, 85, 184); font-weight: 700; }
   .ds-tbsel__opt.is-active { background: rgba(0, 0, 0, .05); }
   .ds-tbsel__btn:focus-visible, .ds-tb__figma:focus-visible, .ds-tbsel__list:focus-visible { outline: 2px solid rgb(0, 109, 235); outline-offset: 2px; }

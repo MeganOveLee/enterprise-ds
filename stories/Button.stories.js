@@ -3,6 +3,7 @@
 import { matrix } from './_matrix.js';
 import { enablePseudo } from './_pseudo.js';
 import { doDont } from './_dodont.js';
+import './_mobile.css';
 
 const STAR = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.6 6.6 19.5l1.2-6-4.5-4.2 6.1-.7z"/></svg>';
 const X = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
@@ -73,8 +74,18 @@ export const Size = {
   render: () => matrix(['작은 버튼', '기본', '큰 버튼'], [
     ['미리보기', SIZE],
     ['클래스', [code('.btn--sm'), note('클래스 없음'), code('.btn--lg')]],
-    ['쓰임', [note('좁은 자리 — 카드 머리 · 알림 닫기'), note('대부분의 버튼'), note('큰 칸과 짝인 단독 폼의 주 동작 하나<br>(로그인)')]],
+    ['쓰임', [note('좁은 자리 — 카드 머리 · 알림 닫기'), note('대부분의 버튼'), note('단독 폼의 주 동작 하나(로그인)<br>· 모바일 화면의 주 행동(호출)')]],
   ], { full: true }),
+};
+
+// 아래 고정 줄 (DS-ADR-049, TD-172) — 같은 줄, 글자 길이만 다름. 한 줄에 안 들어가면 세로로 쌓임(폭 기준이 아님)
+const BAR = [
+  '<div class="btn-bar"><button type="button" class="btn btn--secondary btn--outlined btn--lg">취소</button><button type="button" class="btn btn--primary btn--filled btn--lg">호출하기</button></div>',
+  '<div class="btn-bar"><button type="button" class="btn btn--secondary btn--outlined btn--lg">다른 시간에 다시 부르기</button><button type="button" class="btn btn--primary btn--filled btn--lg">지금 바로 1명으로 부르기</button></div>',
+];
+export const 아래_고정_줄 = {
+  parameters: html(BAR),
+  render: () => '<div class="sb-stack">' + BAR.map(b => '<div class="sb-phone">' + b + '</div>').join('') + '</div>',
 };
 
 const EMPHASIS = [btn({ label: '저장' }), btn({ emphasis: 'secondary', label: '조회' }), btn({ emphasis: 'destructive', label: '삭제' })];
@@ -179,9 +190,9 @@ export const 사용_지침 = {
     { title: '초록 엑셀 버튼은 엑셀 내려받기에만 씁니다',
       do: [UTILITY[0], '브랜드와 상관없이 고정된 초록입니다. 엑셀 파일을 내려받는 버튼 하나에만 씁니다.'],
       dont: ['<button type="button" class="btn btn--excel">저장</button>', '다른 동작에 쓰면 엑셀 버튼과 구분되지 않습니다.'] },
-    { title: '큰 버튼은 단독 폼의 주 동작에만 씁니다',
+    { title: '큰 버튼은 단독 폼과 모바일 화면의 주 동작에만 씁니다',
       do: ['<div style="display:grid;gap:8px;width:240px"><input class="input input--lg" aria-label="아이디" placeholder="아이디"><button type="button" class="btn btn--primary btn--filled btn--lg">로그인</button></div>',
-        '칸이 몇 개뿐인 폼(로그인)의 주 동작 하나에만 큰 칸(.input--lg)과 짝으로 씁니다.'],
+        '칸이 몇 개뿐인 폼(로그인)의 주 동작 하나에 큰 칸(.input--lg)과 짝으로 씁니다. 모바일 화면에서는 아래 고정 줄(.btn-bar)의 주 행동에 씁니다.'],
       dont: ['<div class="sb-row" style="gap:8px"><input class="input" aria-label="문서 번호" placeholder="문서 번호" style="width:140px"><button type="button" class="btn btn--primary btn--filled btn--lg">검색</button></div>',
         '검색 · 목록 화면에서 크게 쓰면 옆 칸과 높이가 어긋납니다.'] },
   ]),

@@ -1,0 +1,26 @@
+/* 모바일 컴포넌트 견본 틀 (TD-172) — 문서 화면에서만 쓰는 모양. 컴포넌트 모양은 css/components.css */
+.sb-phone {
+  position: relative;
+  width: 390px;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transform: translateZ(0);   /* 틀 안에 둔 덮개(position: fixed)가 화면 전체가 아니라 틀 안만 덮도록 */
+  border: 1px solid var(--color-border-base);
+  border-radius: 16px;
+  background: var(--color-bg-subtle);
+  color: var(--color-text-base);
+  font-family: var(--font-family-base);
+}
+.sb-phone--tall { height: 600px; }
+.sb-phone__body { flex: 1; min-height: 0; padding: 16px; overflow-y: auto; }   /* min-height 0 = 틀 높이 안에서 내려가게(큰 제목 줄어듦 견본) */
+.sb-phone__body--flush { padding: 0; background: var(--color-bg-base); }
+.sb-phone__map { flex: 1; position: relative; min-height: 320px; background: var(--color-bg-muted); }
+.sb-phone__map > .fab { position: absolute; }
+.sb-phone__map > .fab--end { right: 16px; bottom: 16px; }
+.sb-phone__map > .fab--center { left: 50%; bottom: 16px; transform: translateX(-50%); }
+.sb-stack { display: grid; gap: 16px; }
+.sb-label { margin: 0 0 8px; font-size: var(--body-sm); color: var(--color-text-muted); }
+.sb-stack--row { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.sb-phone__map > .bottom-nav--floating { position: absolute; left: 0; right: 0; bottom: 0; }
