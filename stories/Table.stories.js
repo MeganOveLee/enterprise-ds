@@ -156,3 +156,9 @@ export const 사용_지침 = {
       dont: [ddZero(false), '0건일 때 표를 통째로 숨기고 빈 상태만 두지 않습니다.'] },
   ]),
 };
+const optSrc = (code) => ({ controls: { disable: true }, docs: { source: { language: 'html', code } } });
+
+// ── 시안 (TD-187) — A 얼룩 줄(추천, 위 「기본」) · B 줄 선 · C 넓게 ──
+const optTable = (cls) => '<div class="table_list"><div class="list">' + table(ROWS.map((r, i) => row(r, i)).join('')).replace('class="grid-table"', 'class="grid-table ' + cls + '"') + '</div></div>';
+export const 시안_줄_선 = { parameters: optSrc(optTable('grid-table--lined')), render: () => '<div class="sb-field--table">' + optTable('grid-table--lined') + '</div>' };
+export const 시안_넓게 = { parameters: optSrc(optTable('grid-table--relaxed')), render: () => '<div class="sb-field--table">' + optTable('grid-table--relaxed') + '</div>' };

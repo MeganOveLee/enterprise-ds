@@ -13,10 +13,16 @@ import * as S from './StatusChip.stories.js';
 <tbody>
 <tr><td><b>모양</b></td><td><code>.status-chip</code><span className="ds-muted">높이 20</span></td><td>앞에 점(6) + 12px 반굵은 글자입니다. 옅은 바탕에 진한 글자입니다. 모서리는 <code>--radius-chip</code>입니다(브랜드마다 다릅니다).</td></tr>
 <tr><td><b>상태</b></td><td><code>--neutral</code> · <code>--info</code> · <code>--success</code> · <code>--warning</code> · <code>--danger</code><span className="ds-muted">클래스가 없는 것이 기본(중립)입니다</span></td><td>상태별 뜻은 아래 「상태 색」 표에 있습니다. 같은 상태는 모든 화면에서 같은 색을 쓰고, 색만으로 뜻을 전하지 않도록 글자를 늘 함께 씁니다.</td></tr>
+<tr><td><b>브랜드가 바꾸는 것</b></td><td><code>--radius-chip</code> · 상태 색 토큰</td><td>모서리 · 상태 색입니다. 상태 이름과 색의 짝은 모든 브랜드가 같습니다. 시안은 Default · Mobility = A 옅은 바탕, OOTB = B 점 + 글자입니다.</td></tr>
 </tbody>
 <tr><td><b>바뀜</b></td><td><code>.is-changed</code> · <code>dsMotion.pop</code></td><td>결재 · 승인 · 반려 직후 글자와 색을 바꾼 뒤 칩이 한 번 튑니다. 상태는 글자가 알리고 움직임은 시선만 모읍니다. <a className="ds-link" href="./?path=/docs/foundation-motion--docs" target="_top">Foundation › Motion</a></td></tr>
 </table>
 <p className="ds-sec__desc ds-after">Figma UI Kit의 Status chip과 짝입니다.</p>
+</Section>
+<Section title="시안" en="Options">
+<Card of={S.작업_현황} title="A · 옅은 바탕" tag="추천" desc="표 칸 · 카드 목록에서 상태를 보일 때 사용합니다." basis="옅은 바탕 + 진한 글자 + 점으로 상태 색이 바탕에 묻히지 않습니다(Atlassian Lozenge subtle)." />
+<Card of={S.시안_점_글자} title="B · 점 + 글자" desc="기본보다 칩이 줄마다 반복되는 촘촘한 표에서 사용합니다." basis="바탕을 빼 칸이 가벼워지고, 상태는 점 색과 글자로 함께 알립니다(Carbon Tag)." />
+<Card of={S.시안_진한_채움} title="C · 진한 채움" desc="기본보다 지연 · 반려처럼 꼭 봐야 할 상태 하나를 강조할 때 사용합니다." basis="진한 상태 색 바탕 + 흰 글자(노랑 위는 진한 글자)입니다(Atlassian Lozenge bold). 한 화면에 몇 개만 둡니다." />
 </Section>
 <Section title="예시" en="Examples">
 <Card of={S.작업_현황} title="작업현황" en="Workflow" desc="문서 · 도면의 결재 단계입니다." />
