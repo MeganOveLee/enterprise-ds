@@ -5468,3 +5468,83 @@ body.dark-mode .status-chip--bold:is(.status-chip--success, .status-chip--warnin
 @media (prefers-reduced-motion: reduce) {
     .skeleton--pulse :is(.skeleton-line, .skeleton-title, .skeleton-block) { animation: none; }
 }
+
+/* ============================================================
+ * Blocks 시안 (TD-187 묶음 4)
+ *   Search Form B .search-chips · C .filter-layout + .filter-panel / Approval Line B .approval-flow · C .approval-flow--vertical
+ *   BOM Compare B 한 표 비교 .compare-change. 새 토큰 없음
+ * ============================================================ */
+
+/* Search Form B — 검색 칸 + 필터 칩 한 줄. 조건이 서너 개뿐인 모바일 · 간단한 목록
+ *   <div class="search-chips"><input class="input" type="search" aria-label="…"><div class="chip-group" role="group" aria-label="빠른 조건"> button.chip[aria-pressed] … </div></div> */
+.search-chips { display: grid; gap: var(--spacing-8); }
+
+/* Search Form C — 왼쪽 필터 패널: 항목별 체크로 거르고 오른쪽 결과가 바로 바뀜. 조건 값이 정해진 목록(작업현황 · 분류)일 때
+ *   <div class="filter-layout"><aside class="filter-panel" aria-label="조건"> 머리 + fieldset.filter-panel__group … </aside><div class="filter-layout__main"> 결과 표 </div></div>
+ *   놓인 칸이 좁으면 패널이 결과 위로 내려감(줄바꿈 배치, DS-ADR-048) */
+.filter-layout { display: flex; flex-wrap: wrap; align-items: flex-start; gap: var(--spacing-16); }
+.filter-panel { flex: 1 1 13rem; display: grid; gap: var(--spacing-16); padding: var(--spacing-16); box-sizing: border-box; border: 1px solid var(--color-border-base); border-radius: var(--radius-card); background: var(--color-bg-base); }
+.filter-layout__main { flex: 999 1 30rem; min-width: 0; }
+.filter-panel__head { display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-8); }
+.filter-panel__title { margin: 0; font-size: var(--heading-xs); font-weight: var(--font-weight-semibold); }
+.filter-panel__group { display: grid; gap: var(--spacing-8); min-width: 0; margin: 0; padding: var(--spacing-16) 0 0; border: 0; border-top: 1px solid var(--color-border-subtle); }
+.filter-panel__group > legend { float: left; width: 100%; padding: 0; margin-bottom: var(--spacing-4); font-size: var(--body-sm); font-weight: var(--font-weight-semibold); color: var(--color-text-base); }   /* float = legend 를 grid 칸 안에 */
+.filter-panel__group .checkbox { margin-right: 0; }
+
+/* Approval Line B · C — 결재 진행 흐름: 누가 어디까지 했는지(상세 창 · 모바일 결재함)
+ *   <ol class="approval-flow" aria-label="결재 진행"><li class="approval-flow__step is-done"><span class="approval-flow__mark" aria-hidden="true">✓</span>
+ *     <span class="approval-flow__role">기안</span><span class="approval-flow__name">김도윤</span><span class="approval-flow__state">완료 · 10-12</span></li>
+ *     <li class="approval-flow__step is-current" aria-current="step"> … 결재 중 </li> … </ol>
+ *   상태는 글자(완료 · 결재 중 · 대기 · 반려)가 알리고 표식 모양은 돕기만 함. B = 가로 단계, C = .approval-flow--vertical 세로 타임라인(의견 · 시각) */
+.approval-flow { display: flex; margin: 0; padding: 0; list-style: none; }
+.approval-flow__step { position: relative; flex: 1 1 0; display: grid; justify-items: center; gap: var(--spacing-2); min-width: 0; text-align: center; font-size: var(--body-sm); color: var(--color-text-base); }
+.approval-flow__step + .approval-flow__step::before {   /* 앞 단계와 잇는 선 */
+    content: "";
+    position: absolute;
+    top: 0.75em;
+    right: calc(50% + 1em);
+    left: calc(-50% + 1em);
+    border-top: 2px solid var(--color-border-subtle);
+}
+.approval-flow__step.is-done + .approval-flow__step::before { border-top-color: var(--color-border-brand); }
+.approval-flow__mark {
+    display: inline-grid;
+    place-items: center;
+    width: 1.5em;
+    height: 1.5em;
+    box-sizing: border-box;
+    border: 2px solid var(--color-border-input);
+    border-radius: var(--radius-rounded);
+    background: var(--color-bg-base);
+    color: var(--color-text-on-color);
+}
+.approval-flow__mark svg { width: 0.9em; height: 0.9em; }
+.is-done > .approval-flow__mark { border-color: var(--color-bg-brand); background: var(--color-bg-brand); }
+.is-current > .approval-flow__mark { border-color: var(--color-border-brand); box-shadow: inset 0 0 0 3px var(--color-bg-base), inset 0 0 0 10px var(--color-bg-brand); }
+.is-rejected > .approval-flow__mark { border-color: var(--color-bg-interactive-danger); background: var(--color-bg-interactive-danger); }
+.approval-flow__role { font-size: var(--body-xs); color: var(--color-text-muted); }
+.approval-flow__name { font-weight: var(--font-weight-semibold); }
+.approval-flow__state { font-size: var(--body-xs); color: var(--color-text-muted); }
+.is-current > .approval-flow__state { color: var(--color-text-brand); font-weight: var(--font-weight-semibold); }
+.is-rejected > .approval-flow__state { color: var(--color-text-danger-bold); font-weight: var(--font-weight-semibold); }
+/* C 세로 타임라인 — 표식 왼쪽, 이름 · 상태 · 의견 오른쪽 */
+.approval-flow--vertical { flex-direction: column; }
+.approval-flow--vertical .approval-flow__step { grid-template-columns: 1.5em minmax(0, 1fr); justify-items: start; column-gap: var(--spacing-12); row-gap: var(--spacing-2); padding-bottom: var(--spacing-16); text-align: start; }
+.approval-flow--vertical .approval-flow__mark { grid-row: 1 / span 3; }
+.approval-flow--vertical .approval-flow__step + .approval-flow__step::before { content: none; }
+.approval-flow--vertical .approval-flow__step:not(:last-child)::after {   /* 다음 단계로 잇는 세로 선 */
+    content: "";
+    position: absolute;
+    top: 1.75em;
+    bottom: 0.25em;
+    left: calc(0.75em - 1px);
+    border-left: 2px solid var(--color-border-subtle);
+}
+.approval-flow--vertical .is-done:not(:last-child)::after { border-left-color: var(--color-border-brand); }
+.approval-flow__note { grid-column: 2; margin: var(--spacing-4) 0 0; padding: var(--spacing-8) var(--spacing-12); border-radius: var(--radius-card); background: var(--color-bg-subtle); font-size: var(--body-sm); color: var(--color-text-base); }
+
+/* BOM Compare B — 한 표 비교: 두 BOM 을 한 줄에 겹쳐 바뀐 칸만 「기준 → 비교」로. 좁은 화면 · 바뀐 곳만 볼 때
+ *   수량 칸 <td class="compare-qty"><span class="compare-change"><del>2</del> → <ins>4</ins></span></td>, 줄 표시는 기존 .compare-row--* 그대로 */
+.compare-change { white-space: nowrap; }
+.compare-change del { color: var(--color-text-muted); font-weight: var(--font-weight-regular); }
+.compare-change ins { text-decoration: none; }

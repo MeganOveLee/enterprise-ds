@@ -143,3 +143,14 @@ export const 사용_지침 = {
       dont: [pair(RIGHT_PULLED, '당김'), '빈 행 없이 당기면 아래 행이 한 칸씩 어긋나 다른 품목끼리 나란히 놓입니다.'] },
   ]),
 };
+const optSrc = (code) => ({ controls: { disable: true }, docs: { source: { language: 'html', code } } });
+
+// ── 시안 (TD-187) — A 나란한 두 표(추천, 위 「두 BOM 비교」) · B 한 표 비교 ──
+const ONE_ROWS = PAIRS.map(([a, b, s], i) => {
+  const r = a || b; const [, k] = STATE[s];
+  const qty = s === 'similar' ? '<td class="compare-qty"><span class="compare-change"><del>' + a[3] + '</del> → <ins>' + b[3] + '</ins></span></td>' : '<td>' + r[3] + '</td>';
+  const res = s === 'identical' ? '같음' : s === 'similar' ? '수량 다름' : a ? '기준에만' : '비교에만';
+  return '<tr' + (k ? ' class="compare-row--' + k + '"' : '') + '><td>' + (i + 1) + '</td><td><a href="#" class="grid-custom-rows-link">' + r[0] + '</a></td><td class="is-left">' + r[1] + '</td><td>' + r[2] + '</td>' + qty + '<td class="compare-cell">' + res + '</td></tr>';
+}).join('');
+const ONE = '<div class="table_list"><div class="list"><table class="grid-table" aria-label="B.2 → B.3 비교"><thead><tr><th scope="col">No.</th><th scope="col">품목 번호</th><th scope="col">품목 명</th><th scope="col">버전</th><th scope="col">수량(B.2 → B.3)</th><th scope="col">비교</th></tr></thead><tbody>' + ONE_ROWS + '</tbody></table></div></div>';
+export const 시안_한_표_비교 = { parameters: optSrc(ONE), render: () => '<div class="sb-field--table">' + legend() + ONE + '</div>' };

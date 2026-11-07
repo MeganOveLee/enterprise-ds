@@ -157,3 +157,16 @@ export const 사용_지침 = {
       dont: [mini(lineBtns('btn--secondary btn--outlined')), '셋이 같은 색이면 지우는 버튼을 다른 버튼과 구분하기 어렵습니다.'] },
   ]),
 };
+const optSrc = (code) => ({ controls: { disable: true }, docs: { source: { language: 'html', code } } });
+const OPT_CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg>';
+
+// ── 시안 (TD-187) — A 결재선 표(추천, 위 「결재선 지정」) · B 가로 단계 흐름 · C 세로 타임라인 ──
+const STEPS = [['done', '기안', '김도윤', '완료 · 10-12 09:10', ''], ['done', '합의', '박지훈', '완료 · 10-12 14:32', '토크 기준 표를 2장으로 옮겨 주세요.'], ['current', '승인', '정우진', '결재 중', ''], ['', '승인', '이서연', '대기', ''], ['', '수신', '최하은', '대기', '']];
+const step = ([s, role, name, state, note], vertical) => '<li class="approval-flow__step' + (s ? ' is-' + s : '') + '"' + (s === 'current' ? ' aria-current="step"' : '') + '>' +
+  '<span class="approval-flow__mark" aria-hidden="true">' + (s === 'done' ? OPT_CHECK : '') + '</span>' +
+  '<span class="approval-flow__role">' + role + '</span><span class="approval-flow__name">' + name + '</span><span class="approval-flow__state">' + state + '</span>' +
+  (vertical && note ? '<p class="approval-flow__note">' + note + '</p>' : '') + '</li>';
+const FLOW = '<ol class="approval-flow" aria-label="결재 진행">' + STEPS.map((s) => step(s, false)).join('') + '</ol>';
+const TIMELINE = '<ol class="approval-flow approval-flow--vertical" aria-label="결재 진행">' + STEPS.map((s) => step(s, true)).join('') + '</ol>';
+export const 시안_가로_단계 = { parameters: optSrc(FLOW), render: () => '<div class="sb-field--wide">' + FLOW + '</div>' };
+export const 시안_세로_타임라인 = { parameters: optSrc(TIMELINE), render: () => '<div class="sb-field">' + TIMELINE + '</div>' };
