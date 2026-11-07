@@ -84,3 +84,11 @@ export const 사용_지침 = {
       dont: [screen(pager(5, 1, '페이지 이동 — 지침 예시 2').replace('class="ui-pagination"', 'class="ui-pagination" style="margin-bottom:0"'), 'height:200px;'), '페이지 번호를 화면 바닥에 붙여 두지 않습니다.'] },
   ]),
 };
+
+// ── 시안 (TD-187) — A 번호(추천, 위 「번호 모두 보기」) · B 더 보기 · C 쪽 수 줄 ──
+const SRC = (lines) => ({ controls: { disable: true }, docs: { source: { language: 'html', code: lines.join('\n') } } });
+const MORE = ['<div class="pagination-more">', '  <p class="pagination-more__status" aria-live="polite">124건 중 20건</p>', '  <button type="button" class="btn btn--secondary btn--outlined">더 보기</button>', '</div>'];
+const COMPACT = ['<nav class="ui-pagination ui-pagination--compact" aria-label="페이지 이동 · 쪽 수">', '  ' + arrow('prev', false), '  <span class="ui-pagination__status">3 / 12쪽</span>', '  ' + arrow('next', false),
+  '  <label class="ui-pagination__size">한 쪽에 <select class="select"><option>20줄</option><option selected>50줄</option><option>100줄</option></select></label>', '</nav>'];
+export const 시안_더_보기 = { parameters: SRC(MORE), render: () => '<div class="sb-field">' + MORE.join('') + '</div>' };
+export const 시안_쪽_수_줄 = { parameters: SRC(COMPACT), render: () => COMPACT.join('') };

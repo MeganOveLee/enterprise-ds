@@ -96,3 +96,9 @@ export const 사용_지침 = {
       dont: [ddStack(tlink('PJT-2026-014 브레이크 캘리퍼 경량화 개발') + tlink('(양식) 사양서 양식.docx')), '내려받기 링크에 「↗」를 붙이지 않습니다.'] },
   ]),
 };
+
+// ── 시안 (TD-187) — A 올리면 밑줄(추천, 위 「본문 링크」) · B 늘 밑줄 · C 화살표 링크 ──
+const UNDER = ['<p class="sb-note">첨부 파일 형식은 <a href="#" class="text-link text-link--underline no-arrow">올릴 수 있는 파일 형식</a>에서 확인할 수 있습니다.</p>'];
+const ARROW = ['<a href="#" class="text-link text-link--arrow">최근 문서 전체 보기</a>'];
+export const 시안_늘_밑줄 = { parameters: html(UNDER), render: () => UNDER.join('') };
+export const 시안_화살표_링크 = { parameters: html(ARROW), render: () => ARROW.join('') };

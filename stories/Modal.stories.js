@@ -6,6 +6,7 @@ import { matrix } from './_matrix.js';
 import { enablePseudo } from './_pseudo.js';
 import { doDont } from './_dodont.js';
 
+import { phone, body } from './_mobile.js';
 const svg = (d, s = 16) => '<svg width="' + s + '" height="' + s + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + d + '</svg>';
 const I = {
   doc: '<path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 12h6M9 16h6"/>',
@@ -176,4 +177,24 @@ export const Playground = {
     const u = next();
     return frame(registerWindow(u) + modal({ id: u + '-modal', title: a.title, desc: a.description, close: a.close }), 400);
   },
+};
+
+// ── 시안 (TD-187) — A 가운데 창(추천, 위 「저장하지 않고 나가기」) · B 아래 시트 · C 위험 동작 확인 ──
+const SHEET_FOOT = btn('저장', 'btn--primary btn--filled btn--lg', ' data-modal-close="save"') + btn('저장 안 함', 'btn--destructive btn--outlined btn--lg', ' data-modal-close="discard"') + btn('취소', 'btn--secondary btn--transparent btn--lg', ' data-modal-close="cancel"');
+const sheetModal = (id) => '<div class="modal modal--sheet"><div class="modal__dialog sheet" role="dialog" aria-labelledby="' + id + '-title" aria-describedby="' + id + '-desc">' +
+  '<div class="modal__header"><h2 class="modal__title" id="' + id + '-title">' + TEXT.title + '</h2></div>' +
+  '<div class="modal__body"><p id="' + id + '-desc">' + TEXT.desc + '</p></div>' +
+  '<div class="modal__footer">' + SHEET_FOOT + '</div></div></div>';
+export const 시안_아래_시트 = {
+  parameters: { docs: { source: { code: sheetModal('confirm-sheet').replace('class="modal modal--sheet"', 'class="modal modal--sheet" id="confirm-sheet" hidden').replace('role="dialog"', 'role="dialog" aria-modal="true"') } } },
+  render: () => phone(body('') + sheetModal(next()), 'sb-phone--tall'),
+};
+const WARN = '<path d="M12 4l9 16H3z"/><path d="M12 10v4M12 17h.01"/>';
+const dangerDialog = (id) => '<div class="modal__dialog modal__dialog--danger" role="alertdialog" aria-labelledby="' + id + '-title" aria-describedby="' + id + '-desc">' +
+  '<div class="modal__header"><span class="modal__icon" aria-hidden="true">' + svg(WARN, 20) + '</span><h2 class="modal__title" id="' + id + '-title">문서를 삭제할까요?</h2>' + CLOSE() + '</div>' +
+  '<div class="modal__body"><p id="' + id + '-desc">DOC-2610-0013 브레이크 캘리퍼 조립 사양서와 첨부 파일 3개가 삭제됩니다. 삭제한 문서는 되돌릴 수 없습니다.</p></div>' +
+  '<div class="modal__footer">' + btn('취소', 'btn--secondary btn--transparent', ' data-modal-close="cancel" data-modal-initial') + btn('삭제', 'btn--destructive btn--filled', ' data-modal-close="delete"') + '</div></div>';
+export const 시안_위험_동작_확인 = {
+  parameters: { docs: { source: { code: '<div class="modal" id="delete-doc" hidden>\n  ' + dangerDialog('delete-doc').replace('role="alertdialog"', 'role="alertdialog" aria-modal="true"') + '\n</div>' } } },
+  render: () => '<div class="sb-frame"><div class="modal">' + dangerDialog(next()) + '</div></div>',
 };

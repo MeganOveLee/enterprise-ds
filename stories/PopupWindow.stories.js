@@ -144,3 +144,15 @@ export const Playground = {
   parameters: { docs: { source: { transform: (_, { args }) => '<div class="pop">\n  ' + (args.kind === '등록' ? registerPop(args) : viewPop(args)) + '\n</div>' } } },
   render: (a) => win(a.kind === '등록' ? registerPop(a) : viewPop(a), a.height),
 };
+
+// ── 시안 (TD-187) — A 새 창(추천, 위 「상세 창」) · B 옆 패널 ──
+const LIST_ROWS = [['DOC-2610-0013', '브레이크 캘리퍼 조립 사양서', '작업 중'], ['DOC-2610-0012', '디스크 로터 시험 성적서', '승인'], ['DOC-2610-0011', '캘리퍼 브래킷 도면', '검토 중'], ['DOC-2610-0010', '패드 마모 시험 계획서', '승인']];
+const listTable = '<div class="table_list"><div class="list"><table class="grid-table"><thead><tr><th scope="col">문서 번호</th><th scope="col">문서 명</th><th scope="col">작업현황</th></tr></thead><tbody>' +
+  LIST_ROWS.map(([n, t, s], i) => '<tr' + (i ? '' : ' class="is-selected"') + '><td><a href="#" class="grid-custom-rows-link">' + n + '</a></td><td>' + t + '</td><td>' + s + '</td></tr>').join('') + '</tbody></table></div></div>';
+const sidePanel = (id) => '<aside class="side-panel" aria-labelledby="' + id + '-title">' +
+  '<div class="side-panel__header"><h2 class="side-panel__title" id="' + id + '-title">DOC-2610-0013 브레이크 캘리퍼 조립 사양서</h2><button type="button" class="btn btn--secondary btn--transparent btn--icon" aria-label="닫기">' + svg(I.close, 16) + '</button></div>' +
+  '<div class="side-panel__body">' + dl() + '</div></aside>';
+export const 시안_옆_패널 = {
+  parameters: { docs: { source: { code: sidePanel('doc-panel') } } },
+  render: () => '<div class="sb-frame sb-frame--wide">' + listTable + sidePanel('pw-side-' + (++uid)) + '</div>',
+};
