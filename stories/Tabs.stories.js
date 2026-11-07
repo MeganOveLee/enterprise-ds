@@ -148,3 +148,9 @@ export const 사용_지침 = {
     return tabsInit(el);
   },
 };
+
+// ── 시안 (TD-187) — A 밑줄 탭(추천, 위 「팝업 탭」) · B 알약 탭 ──
+const PILL = ['<div class="tab tab--pill">', '  <ul role="tablist" aria-label="이용 내역">',
+  ...['전체', '이번 달', '취소한 이용'].map((t, i) => '    <li role="tab" tabindex="' + (i ? -1 : 0) + '" aria-selected="' + !i + '"' + (i ? '' : ' class="is-active"') + '>' + t + '</li>'),
+  '  </ul>', '</div>'];
+export const 시안_알약_탭 = { parameters: { controls: { disable: true }, docs: { source: { language: 'html', code: PILL.join('\n') } } }, render: () => live(PILL.join(''), '480px') };

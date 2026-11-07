@@ -5278,3 +5278,126 @@ body.dark-mode .empty-illo__badge  { fill: var(--color-bg-muted); }
     text-align: center;
 }
 .btn.btn--tile svg { width: 24px; height: 24px; }
+
+/* ============================================================
+ * Navigation · Overlay 시안 — 기존 컴포넌트의 변형 클래스 (TD-187 묶음 2)
+ *   Tabs B .tab--pill / Pagination B .pagination-more · C .ui-pagination--compact / Link B .text-link--underline · C .text-link--arrow
+ *   Modal C .modal__dialog--danger / Popup Window B .side-panel. 새 토큰 없음
+ * ============================================================ */
+
+/* Tabs B — 알약 탭: 회색 홈 안에 탭을 나란히 두고 고른 탭만 흰 면. 같은 목록을 기간 · 종류로 나눠 볼 때
+ *   <div class="tab tab--pill"><ul role="tablist" aria-label="…"><li role="tab" tabindex="0" aria-selected="true" class="is-active">…</li> …</ul></div>
+ *   고른 탭 = 흰 면 + 테두리 + 굵은 글자 — 색만으로 구분하지 않음 */
+.tab.tab--pill { display: flex; min-height: 0; padding: 0; border: 0; }
+.tab.tab--pill ul {
+    display: inline-flex;
+    gap: var(--spacing-2);
+    min-width: 0;
+    margin: 0;
+    padding: var(--spacing-2);
+    list-style: none;
+    border-radius: var(--radius-rounded);
+    background: var(--color-bg-muted);
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+.tab.tab--pill li,
+.pop .tab.tab--pill li {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    min-height: var(--size-touch);
+    padding: 0 var(--spacing-16);
+    border: 0;
+    border-radius: var(--radius-rounded);
+    white-space: nowrap;
+    cursor: pointer;
+    color: var(--color-text-muted);
+    font-size: var(--body-md);
+    font-weight: var(--font-weight-medium);
+}
+.tab.tab--pill li:hover,
+.pop .tab.tab--pill li:hover { background: transparent; color: var(--color-text-base); }
+.tab.tab--pill li.is-active,
+.pop .tab.tab--pill li.is-active {
+    background: var(--color-bg-base);
+    box-shadow: inset 0 0 0 1px var(--color-border-input);   /* 고른 탭 경계 3:1 (DS-ADR-013) */
+    color: var(--color-text-base);
+    font-weight: var(--font-weight-semibold);
+}
+.tab.tab--pill li:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--color-focus-ring); }
+
+/* Pagination B — 더 보기: 목록 아래 버튼 하나로 다음 묶음을 이어 붙임. 손가락으로 내려 보는 모바일 목록
+ *   <div class="pagination-more"><p class="pagination-more__status" aria-live="polite">124건 중 20건</p><button type="button" class="btn btn--secondary btn--outlined">더 보기</button></div>
+ *   더 불러온 뒤 포커스는 새로 붙은 첫 줄로 옮김(앱이 맡음) */
+.pagination-more { display: flex; flex-direction: column; align-items: center; gap: var(--spacing-8); }
+.pagination-more__status { margin: 0; font-size: var(--body-sm); color: var(--color-text-muted); }
+.pagination-more > .btn { width: 100%; }
+
+/* Pagination C — 쪽 수 줄: 이전 · 「3 / 12쪽」 · 다음 + 한 쪽에 보일 줄 수. 줄이 많은 촘촘한 표 아래
+ *   <nav class="ui-pagination ui-pagination--compact" aria-label="…"> 이전 <span class="ui-pagination__status">3 / 12쪽</span> 다음
+ *     <label class="ui-pagination__size">한 쪽에 <select class="select">…</select></label></nav> */
+.ui-pagination--compact { gap: var(--spacing-8); }
+.ui-pagination__status { font-size: var(--body-sm); color: var(--color-text-base); white-space: nowrap; }
+.ui-pagination__size { display: inline-flex; align-items: center; gap: var(--spacing-4); margin-left: var(--spacing-16); font-size: var(--body-sm); color: var(--color-text-muted); white-space: nowrap; }
+.ui-pagination__size > .select { width: auto; }
+
+/* Link B — 늘 밑줄: 문장 안 링크가 색만으로 구분되지 않게(WCAG 1.4.1). 안내 · 도움말처럼 글이 긴 곳 */
+.text-link.text-link--underline { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+/* Link C — 화살표 링크: 목록 · 카드 끝 「전체 보기 →」. 같은 창에서 옮겨 가므로 새 창 표시(↗) 대신 → */
+.text-link.text-link--arrow::after {
+    content: "\2192";
+    content: "\2192" / "";
+    margin-left: var(--spacing-4);
+    font-size: 1em;
+    transition: transform var(--duration-fast);
+}
+.text-link.text-link--arrow:hover::after { transform: translateX(var(--spacing-2)); }
+
+/* Modal C — 위험 동작 확인: 머리에 상태 아이콘. 지우기처럼 되돌릴 수 없는 동작을 확인할 때
+ *   <div class="modal__dialog modal__dialog--danger" role="alertdialog" …><div class="modal__header"><span class="modal__icon" aria-hidden="true">svg</span><h2 class="modal__title">…</h2> 닫기</div> … */
+.modal__dialog--danger .modal__header { justify-content: flex-start; }
+.modal__dialog--danger .modal__header .btn--icon { margin-left: auto; }
+.modal__icon {
+    display: inline-grid;
+    place-items: center;
+    flex: none;
+    width: 2.5em;
+    height: 2.5em;
+    border-radius: var(--radius-rounded);
+    background: var(--color-bg-danger-subtle);
+    color: var(--color-icon-danger);
+}
+.modal__icon svg { width: 1.25em; height: 1.25em; }
+.modal__dialog--danger .modal__body { word-break: keep-all; }   /* 지워질 대상 이름이 낱말 중간에서 줄바뀌지 않게 */
+
+/* Popup Window B — 옆 패널: 목록을 그대로 둔 채 오른쪽에서 상세를 엶. 덮개 없음 — 목록을 계속 누를 수 있음(모달 아님)
+ *   <aside class="side-panel" aria-labelledby="…"><div class="side-panel__header"><h2 class="side-panel__title" id="…">…</h2> 닫기</div><div class="side-panel__body">…</div></aside>
+ *   열면 포커스를 제목으로, 닫으면 연 줄로 돌려줌(앱이 맡음) */
+.side-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 900;
+    display: flex;
+    flex-direction: column;
+    width: min(560px, 100%);
+    box-sizing: border-box;
+    border-left: 1px solid var(--color-border-subtle);
+    background: var(--color-bg-base);
+    box-shadow: var(--shadow-modal);
+    color: var(--color-text-base);
+}
+.side-panel[hidden] { display: none; }
+.side-panel__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-16);
+    padding: var(--spacing-12) var(--spacing-16) var(--spacing-12) var(--spacing-24);
+    border-bottom: 1px solid var(--color-border-subtle);
+}
+.side-panel__title { margin: 0; font-size: var(--heading-sm); font-weight: var(--font-weight-semibold); line-height: var(--line-height-tight); }
+.side-panel__body { flex: 1; min-height: 0; overflow-y: auto; padding: var(--spacing-16) var(--spacing-24); word-break: keep-all; }
