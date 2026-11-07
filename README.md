@@ -20,8 +20,9 @@ v1.0 · 설계 · 퍼블리싱 이세영
 |---|---|
 | `tokens/` | **토큰 값의 원본** (DTCG JSON). `core.json` 원천 램프 · 시맨틱 · `vendor.json` 벤더 이름 · `dark.json` 다크 · `brands/*.json` 브랜드. 값은 `tokens/`에서만 고칩니다 |
 | `css/tokens.css` | 공통 토큰 (원천 램프 → 시맨틱 → 다크) — `tokens/`에서 만드는 생성 파일 |
-| `css/blocks/mobility.css` | 모바일 앱 전용 Blocks(경로 요약) — 모바일 앱 화면에서만 `components.css` 다음에 링크합니다 |
+| `css/blocks/mobility.css` | 모바일 앱 전용 Blocks(경로 요약 · 출발 · 도착 입력 · 이동 수단 타일 · 지도 위 컨트롤) — 모바일 앱 화면에서만 `components.css` 다음에 링크합니다 |
 | `css/brands/` | 브랜드 값 파일 — `tokens/brands/`에서 만드는 생성 파일. 브랜드가 여는 토큰(색 · 형태 · 그림 자산 · 글자 크기 · 글꼴 · 회색 · 표 · 그림자) 목록은 `tokens/brands/_template.json`(새 브랜드 양식)에 있고, 지금 값은 스토리북 Foundation › Color(색) · Spacing · Radius · Size(형태 · 그림 자산)에서 브랜드를 바꿔 볼 수 있습니다. `default.css` = 기본 브랜드(그림 자산 솔리드), `mobility.css` · `ootb.css` = 시연용 가상 산업 브랜드(Mobility · 모바일 앱(모빌리티 서비스) 앱 = 색 + 둥근 모서리 / OOTB · Windchill OOTB 화면 비공식 리디자인 = 색 + 직각 · 높이 32, 둘 다 그림 자산 라인) |
+| `css/fonts/` | 브랜드 글꼴 등록 CSS — 기본 글꼴(Pretendard)과 다른 글꼴을 쓰는 브랜드만, 그 브랜드 CSS 옆에 링크합니다(`nanum-square-neo.css` = Mobility) |
 | `css/globals.css` · `components.css` | 전역 · 컴포넌트 스타일입니다. 브랜드마다 다른 코드를 두지 않습니다 |
 | `js/select.js` | 선택 목록 — 화면의 단일 select를 모두 같은 모양의 목록(`.ui-select`)으로 바꿉니다 (APG Select-Only Combobox 패턴) |
 | `js/multiselect.js` | 다중 선택 — `select.checkSelect[multiple]`을 표시 상자 + 체크박스 목록으로 바꿉니다 |
@@ -43,6 +44,7 @@ v1.0 · 설계 · 퍼블리싱 이세영
 <html class="theme-mobility">   <!-- 클래스 없으면 기본 브랜드 -->
 <link rel="stylesheet" href="css/tokens.css">
 <link rel="stylesheet" href="css/brands/mobility.css">
+<link rel="stylesheet" href="css/fonts/nanum-square-neo.css">   <!-- 브랜드가 글꼴을 바꾸면 그 등록 CSS 하나 -->
 <link rel="stylesheet" href="css/globals.css">
 <link rel="stylesheet" href="css/components.css">
 <script src="js/select.js"></script>        <!-- JS는 쓰는 컴포넌트 것만 -->
