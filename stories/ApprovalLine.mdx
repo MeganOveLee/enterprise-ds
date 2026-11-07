@@ -7,6 +7,11 @@ import * as S from './ApprovalLine.stories.js';
 <Unstyled>
 <div className="ds-page">
 <PageHead eyebrow="Blocks" title="Approval Line" lead="등록 창의 결재선 지정 섹션과, 섹션 헤더의 [결재선 지정]으로 여는 결재선 지정 창입니다. 결재 받을 사람을 역할(합의 · 승인 · 수신)별로 지정합니다." />
+<Section title="시안" en="Options">
+<Card of={S.결재선_지정} title="A · 결재선 표" tag="추천" desc="결재 요청 전에 결재자와 순서를 정할 때 사용합니다." basis="조직도에서 사람을 골라 역할별 표에 옮기는 이전 버전 방식 그대로입니다." />
+<Card of={S.시안_가로_단계} title="B · 가로 단계 흐름" desc="기본보다 상세 창 위쪽에서 결재가 어디까지 왔는지 한 줄로 보일 때 사용합니다." basis="Progress 단계 목록과 같은 계열입니다. 단계마다 역할 · 이름 · 상태 글자를 두어 표식 색만으로 읽지 않게 하고, 지금 단계는 aria-current로 알립니다." />
+<Card of={S.시안_세로_타임라인} title="C · 세로 타임라인" desc="기본보다 결재 의견 · 시각까지 함께 보는 모바일 결재함에서 사용합니다." basis="위에서 아래로 시간 순서이고, 의견은 그 단계 아래에 붙습니다. 폭이 좁아도 이름이 잘리지 않습니다." />
+</Section>
 <Section title="예시" en="Examples">
 <Card of={S.결재선_지정} title="결재선 지정" en="Pick approvers" desc="조직도에서 부서를 선택하고 담당자를 체크한 뒤 가운데 [합의 ›] · [승인 ›] · [수신 ›]로 넣거나, 역할 상자로 끌어다 놓습니다. 넣은 사람은 줄 끝 ×로 뺍니다." />
 <Card of={S.저장한_결재선_불러오기} title="저장한 결재선 불러오기" en="From a template" desc="같은 결재선을 자주 쓸 때 사용합니다. 결재선 Template 탭에서 선택하고 [적용]을 누르면 역할 상자가 한 번에 채워집니다." />
@@ -24,6 +29,7 @@ import * as S from './ApprovalLine.stories.js';
 <tr><td><b>결재선 Template</b></td><td><code>.section-box</code> · <code>.btn--destructive</code></td><td>저장해 둔 결재선 목록([삭제] destructive · [적용] secondary)과 선택한 Template의 상세입니다.</td></tr>
 <tr><td><b>표</b></td><td><code>.grid-table</code></td><td>모든 표는 짝수 행에 얼룩 바탕을 둡니다(<a className="ds-link" href="./?path=/docs/data-display-table--docs" target="_top">Table</a>).</td></tr>
 <tr><td><b>순서</b></td><td><code>tbody[data-ds-reorder]</code> · <code>.reorder-handle</code></td><td>순서에 의미가 있는 역할 상자(합의 · 승인)는 줄 앞 손잡이로 끌어 순서를 바꿉니다. 놓을 자리에 선이 생기고, 키보드는 손잡이에서 Alt + ↑ ↓입니다. 옮긴 줄은 한 번 표시되고, 몇 번째로 옮겼는지 화면 읽기 프로그램이 읽어 줍니다. <a className="ds-link" href="./?path=/docs/foundation-motion--docs" target="_top">Foundation › Motion</a></td></tr>
+<tr><td><b>브랜드가 바꾸는 것</b></td><td>표 · 글자 · 색 토큰</td><td>표 높이 · 글자 크기 · 단계 표식 색입니다. 결재 역할(합의 · 승인 · 수신)과 순서 규칙은 모든 브랜드가 같습니다. 시안은 결재선을 정할 때 A, 진행을 볼 때 B(상세 창) · C(모바일 결재함)입니다.</td></tr>
 </tbody>
 </table>
 <p className="ds-sec__desc ds-after">끌어다 놓기와 함께 체크 + 가운데 이동 버튼으로도 지정하므로 키보드로도 결재선을 지정할 수 있습니다. Figma UI Kit 🧱 Blocks 페이지의 「Approval Line」과 같은 구성입니다.</p>

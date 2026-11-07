@@ -62,3 +62,19 @@ export const 펼치고_값_넣기 = {
   parameters: { docs: { source: { code: searchForm({ open: true, v: true }) } } },
   render: () => stage(searchForm({ open: true, v: true })),
 };
+const optSrc = (code) => ({ controls: { disable: true }, docs: { source: { language: 'html', code } } });
+
+// ── 시안 (TD-187) — A 칸 여러 줄(추천, 위 「모두 보기」) · B 필터 칩 한 줄 · C 왼쪽 필터 패널 ──
+const optChip = (t, on = false) => '<button type="button" class="chip" aria-pressed="' + on + '">' + t + '</button>';
+const OPT_CHIPS = '<div class="search-chips"><input class="input" type="search" aria-label="문서 검색" placeholder="문서 번호 또는 문서 명">' +
+  '<div class="chip-group" role="group" aria-label="빠른 조건">' + optChip('내 문서', true) + optChip('작업 중') + optChip('결재 대기') + optChip('이번 달') + '</div></div>';
+const optCk = (t, on = false) => '<label class="checkbox"><input type="checkbox"' + (on ? ' checked' : '') + '>' + t + '</label>';
+const optGroup = (legend, items) => '<fieldset class="filter-panel__group"><legend>' + legend + '</legend>' + items.map(([t, on]) => optCk(t, on)).join('') + '</fieldset>';
+const OPT_ROWS = [['DOC-2610-0013', '브레이크 캘리퍼 조립 사양서', '작업 중'], ['DOC-2610-0011', '커넥터 핀 배열 설계 기준', '작업 중'], ['DOC-2610-0008', '하우징 주조 공정 기준서', '작업 중']];
+const OPT_PANEL = '<div class="filter-layout"><aside class="filter-panel" aria-label="조건">' +
+  '<div class="filter-panel__head"><h3 class="filter-panel__title">조건</h3><button type="button" class="btn btn--secondary btn--transparent">초기화</button></div>' +
+  optGroup('작업현황', [['작업 중', true], ['결재 대기'], ['승인'], ['반려']]) + optGroup('문서 분류', [['설계 문서', true], ['시험 문서'], ['회의록']]) + '</aside>' +
+  '<div class="filter-layout__main"><div class="table_list"><div class="list"><table class="grid-table" aria-label="검색 결과"><thead><tr><th scope="col">문서 번호</th><th scope="col">문서 명</th><th scope="col">작업현황</th></tr></thead><tbody>' +
+  OPT_ROWS.map(([n, t, s]) => '<tr><td><a href="#" class="grid-custom-rows-link">' + n + '</a></td><td class="is-left">' + t + '</td><td>' + s + '</td></tr>').join('') + '</tbody></table></div></div></div></div>';
+export const 시안_필터_칩 = { parameters: optSrc(OPT_CHIPS), render: () => '<div class="sb-field--wide">' + OPT_CHIPS + '</div>' };
+export const 시안_왼쪽_필터_패널 = { parameters: optSrc(OPT_PANEL), render: () => '<div class="sb-field--table">' + OPT_PANEL + '</div>' };
