@@ -276,3 +276,13 @@ export const IconStates = {
 
 // ── Playground ──
 export const Playground = {};
+
+// ── 타일 버튼 (TD-187) — 아이콘 위 · 글자 아래. 큰 동작 몇 개를 나란히 고르게 둘 때 ──
+const TILE_ICON = {
+  doc: '<path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"/><path d="M14 3v5h5M12 12v6M9 15h6"/>',
+  part: '<path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5"/>',
+  draw: '<rect x="3" y="4" width="18" height="16" rx="1"/><path d="M7 16l4-6 3 4 2-2 2 4"/>',
+};
+const tileBtn = (k, t) => '  <button type="button" class="btn btn--secondary btn--outlined btn--tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + TILE_ICON[k] + '</svg>' + t + '</button>';
+const TILES = ['<div class="sb-row">', tileBtn('doc', '문서 등록'), tileBtn('part', '부품 등록'), tileBtn('draw', '도면 등록'), '</div>'];
+export const 타일_버튼 = { parameters: { controls: { disable: true }, docs: { source: { language: 'html', code: TILES.join('\n') } } }, render: () => TILES.join('') };

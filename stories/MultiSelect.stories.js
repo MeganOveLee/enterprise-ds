@@ -147,3 +147,18 @@ export const Playground = {
   parameters: { docs: { source: { transform: (_, { args }) => box({ name: args.name, items: args.items || [], picked: args.picked || [], search: args.search, open: args.open }) } } },
   render: (a) => live(box({ name: a.name, items: a.items || [], picked: a.picked || [], search: a.search, open: a.open }), a.open ? 260 : 40),
 };
+
+// ── 시안 (TD-187) — A 첫 값 외 N(추천) · B 칸 아래 칩. B 는 실제 스크립트(js/multiselect.js data-display="chips")로 그림 ──
+const SRC_CHIPS = '<label class="search-label" for="state-chips">작업현황</label>\n<select class="checkSelect" id="state-chips" multiple data-display="chips">\n' +
+  STATUS.map((t, i) => '  <option' + (i < 3 ? ' selected' : '') + '>' + t + '</option>').join('\n') + '\n</select>';
+export const 시안_칸_아래_칩 = {
+  parameters: { docs: { source: { code: '<!-- data-display="chips" = 칸 글자 「N개 선택」 + 칸 아래 칩(빼기 버튼) -->\n<script src="js/multiselect.js"></script>\n\n' + SRC_CHIPS } } },
+  render: () => {
+    const el = document.createElement('div');
+    el.className = 'sb-field';
+    const [lab, ...rest] = SRC_CHIPS.replace(/state-chips/g, 'ms-chips-live').split('\n');
+    el.innerHTML = '<div class="ff-field">' + lab + '<div class="td">' + rest.join('') + '</div></div>';
+    setTimeout(() => { const sel = el.querySelector('#ms-chips-live'); if (sel && window.buildMultiSelect) window.buildMultiSelect(sel); }, 0);
+    return el;
+  },
+};

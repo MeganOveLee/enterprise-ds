@@ -2481,7 +2481,7 @@ body.dark-mode .select {   /* = --color-icon-muted 다크 값(neutral-300). 구:
 .datepicker {
     position: absolute;
     z-index: 1000;
-    width: 250px;
+    width: max(250px, 19em);   /* 250 = Figma Calendar. 글자를 키운 브랜드(Mobility)는 요일 일곱 칸이 넘치지 않게 글자 크기를 따라 넓어짐 (TD-187) */
     background: var(--color-bg-base);
     border-radius: var(--radius-popover);
     box-shadow: var(--shadow-popover);   /* 떠 있는 층. 구 0 12px 32px 12% + 0 2px 8px 8% */
@@ -5135,3 +5135,146 @@ body.dark-mode .empty-illo__badge  { fill: var(--color-bg-muted); }
 .badge--new { min-width: 1.6em; height: 1.6em; padding: 0 0.35em; border-radius: var(--radius-rounded); background: var(--color-bg-notify); color: var(--color-text-on-notify); }
 .list-item__title .badge { margin-left: var(--spacing-4); vertical-align: 0.1em; }
 .bottom-nav__item .badge-anchor > .badge { top: 0; right: 0; transform: translate(60%, -30%); }   /* 하단 탭 = 아이콘 크기의 자리 — 아이콘 모서리 밖으로 */
+
+/* ============================================================
+ * Form 시안 B · C — 기존 컴포넌트의 변형 클래스 (TD-187)
+ *   Input B .input--filled · C .input-float / Selection B .choice-card / Date Picker C .date-input
+ *   Multi Select B .checkSelect--chips(js/multiselect.js data-display="chips") / Button .btn--tile
+ *   새 토큰 없음 — 기존 시맨틱 토큰만. 상태(오류 · 비활성 · 읽기 전용 · 포커스)는 기본 칸과 같은 토큰
+ * ============================================================ */
+
+/* Input B — 채운 칸: 옅은 바탕 + 아래 선. 칸이 많은 폼에서 상자 테두리가 겹쳐 보이지 않게
+ *   <input class="input input--filled"> · <select class="select select--filled"> · <textarea class="textarea textarea--filled"> */
+.input.input--filled,
+.select.select--filled,
+.textarea.textarea--filled {
+    background-color: var(--color-bg-subtle);   /* shorthand 금지 — .select 화살표 보존 */
+    border-color: transparent transparent var(--color-border-input);
+    border-radius: var(--radius-input) var(--radius-input) 0 0;
+}
+.input.input--filled:hover,
+.select.select--filled:hover,
+.textarea.textarea--filled:hover { border-bottom-color: var(--color-border-input-hover); }
+.input.input--filled:focus,
+.select.select--filled:focus,
+.textarea.textarea--filled:focus { border-color: var(--color-border-focus); }   /* 포커스 = 기본 칸과 같은 테두리 + 링 */
+.input.input--filled[aria-invalid="true"],
+.select.select--filled[aria-invalid="true"],
+.textarea.textarea--filled[aria-invalid="true"] { border-bottom-color: var(--color-border-danger); }
+.input.input--filled:disabled,
+.select.select--filled:disabled,
+.textarea.textarea--filled:disabled { background-color: var(--color-bg-disabled); border-bottom-color: var(--color-border-disabled); }
+.input.input--filled[readonly],
+.textarea.textarea--filled[readonly] { background-color: var(--color-bg-readonly); border-bottom-color: var(--color-border-base); }
+
+/* Input C — 칸 안 라벨이 입력을 시작하면 위로 올라감. 칸 높이 = 큰 칸
+ *   <div class="input-float"><input class="input" id="…" placeholder=" "><label for="…">문서 번호</label></div>
+ *   placeholder=" "(빈칸 하나)가 있어야 값이 있는지 CSS 가 앎. 올라간 라벨이 작아지므로 큰 글씨 브랜드는 쓰지 않음 */
+.input-float { position: relative; }
+.input-float > .input {
+    min-height: var(--size-input-lg);
+    padding-top: var(--spacing-16);
+}
+.input-float > label {
+    position: absolute;
+    top: 50%;
+    left: calc(var(--spacing-8) + 1px);   /* 칸 테두리 1 + 안쪽 여백 = 값 글자와 같은 줄 */
+    transform: translateY(-50%);
+    font-size: var(--body-sm);
+    color: var(--color-text-muted);
+    pointer-events: none;
+    transition: top var(--duration-fast), transform var(--duration-fast), font-size var(--duration-fast);
+}
+.input-float > .input:focus + label,
+.input-float > .input:not(:placeholder-shown) + label {
+    top: var(--spacing-4);
+    transform: none;
+    font-size: var(--body-xs);
+}
+.input-float > .input:focus + label { color: var(--color-text-brand); }
+.input-float > .input:disabled + label { color: var(--color-text-disabled); }
+
+/* Selection B — 카드형 선택: 행 전체가 누르는 칸, 제목 + 설명 줄. 표식(체크박스 · 라디오)은 그대로
+ *   <fieldset class="choice-cards"><legend class="search-label">…</legend>
+ *     <label class="radio choice-card"><input type="radio" name="…"><span class="radio__mark"></span>
+ *       <span class="choice-card__body"><span class="choice-card__title">…</span><span class="choice-card__desc">…</span></span></label> … </fieldset> */
+.choice-cards { display: grid; gap: var(--spacing-8); min-width: 0; margin: 0; padding: 0; border: 0; }
+.choice-cards > legend { padding: 0; margin-bottom: var(--spacing-4); }
+.checkbox.choice-card,
+.radio.choice-card {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-12);
+    min-height: var(--size-touch);
+    margin: 0;
+    padding: var(--spacing-12) var(--spacing-16);
+    box-sizing: border-box;
+    border: 1px solid var(--color-border-input);   /* 누르는 칸 경계 3:1 (DS-ADR-013) */
+    border-radius: var(--radius-card);
+    background: var(--color-bg-base);
+    white-space: normal;   /* 설명 줄은 칸 폭에서 줄바꿈 */
+}
+.choice-card:hover { border-color: var(--color-border-input-hover); }
+.choice-card:has(input:checked) { border-color: var(--color-border-brand); background: var(--color-bg-brand-subtle); }   /* 고른 칸 = 표식 + 테두리 + 바탕, 색만으로 구분하지 않음 */
+.choice-card:has(input:focus-visible) { box-shadow: 0 0 0 3px var(--color-focus-ring); }
+.choice-card:has(input:disabled) { border-color: var(--color-border-disabled); background: var(--color-bg-disabled); cursor: not-allowed; }
+.choice-card__body { display: grid; gap: var(--spacing-2); }
+.choice-card__title { font-weight: var(--font-weight-semibold); color: var(--color-text-base); }
+.choice-card__desc { font-size: var(--body-sm); color: var(--color-text-muted); }
+
+/* Date Picker C — 연 · 월 · 일 세 칸. 생년월일처럼 이미 아는 날짜를 칠 때(달력 없음, 숫자 자판)
+ *   <fieldset class="date-input" aria-describedby="…-hint"><legend class="search-label">생년월일</legend><p class="date-input__hint" id="…-hint">예: 1958 3 27</p>
+ *     <div class="date-input__item date-input__item--year"><label for="…">년</label><input class="input" id="…" inputmode="numeric" autocomplete="bday-year"></div> 월 · 일 </fieldset> */
+.date-input { display: flex; flex-wrap: wrap; gap: var(--spacing-8) var(--spacing-12); min-width: 0; margin: 0; padding: 0; border: 0; }
+.date-input > legend { padding: 0; margin-bottom: var(--spacing-4); }
+.date-input__hint { flex-basis: 100%; margin: 0; font-size: var(--body-sm); color: var(--color-text-muted); }
+.date-input__item { display: grid; gap: var(--spacing-4); }
+.date-input__item > label { font-size: var(--body-sm); color: var(--color-text-base); }
+.date-input__item > .input { width: calc(3ch + 2 * var(--spacing-8) + 2px); text-align: center; }   /* 칸 폭 = 들어갈 자리 수(월 · 일 두 자리) */
+.date-input__item--year > .input { width: calc(5ch + 2 * var(--spacing-8) + 2px); }   /* 연 네 자리 */
+
+/* Multi Select B — 고른 값을 칸 아래 칩으로, 칩마다 빼기 버튼. 칩은 칸(role="button") 밖에 둠 — 누르는 칸 안에 다른 버튼을 넣지 않음
+ *   <select class="checkSelect" multiple data-display="chips"> → js/multiselect.js 가 칸 글자 「N개 선택」 + ul.checkSelect__chips 를 그림 */
+.checkSelect__chips { display: flex; flex-wrap: wrap; gap: var(--spacing-4); margin: var(--spacing-4) 0 0; padding: 0; list-style: none; }
+.checkSelect__chips:empty { display: none; }
+.checkSelect__chip {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    min-height: var(--size-btn-sm);
+    padding: 0 var(--spacing-2) 0 var(--spacing-8);
+    box-sizing: border-box;
+    border: 1px solid var(--color-border-base);
+    border-radius: var(--radius-chip);
+    background: var(--color-bg-subtle);
+    font-size: var(--body-sm);
+    color: var(--color-text-base);
+}
+.checkSelect__chip-remove {
+    display: inline-grid;
+    place-items: center;
+    width: 24px;   /* 누름 영역 24 — 칸 지우기(×)와 같음 */
+    height: 24px;
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-rounded);
+    background: transparent;
+    color: var(--color-icon-muted);
+    cursor: pointer;
+}
+.checkSelect__chip-remove:hover { background: var(--color-bg-muted); color: var(--color-text-base); }
+.checkSelect__chip-remove:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--color-focus-ring); }
+.checkSelect__chip-remove svg { width: 14px; height: 14px; }
+
+/* Button — 타일 버튼: 아이콘 위 · 글자 아래. 큰 동작 몇 개를 나란히 고르게 둘 때(바로가기 · 등록 종류 고르기)
+ *   <button class="btn btn--secondary btn--outlined btn--tile"><svg …></svg>문서 등록</button> */
+.btn.btn--tile {
+    flex-direction: column;
+    gap: var(--spacing-8);
+    min-height: var(--size-btn-lg);
+    padding: var(--spacing-12) var(--spacing-16);
+    line-height: 1.2;
+    white-space: normal;
+    text-align: center;
+}
+.btn.btn--tile svg { width: 24px; height: 24px; }

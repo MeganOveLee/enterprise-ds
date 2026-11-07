@@ -19,6 +19,7 @@ import * as S from './MultiSelect.stories.js';
 <tr><td><b>비활성</b></td><td><code>disabled</code><span className="ds-muted">원래 select · option에</span></td><td>select에 붙이면 트리거가 비활성 모양(<code>aria-disabled="true"</code>)이 되고 열리지 않습니다. option에 붙이면 해당 행의 체크박스만 비활성입니다.</td></tr>
 <tr><td><b>원래 select</b></td><td><code>{'<select class="checkSelect" multiple>'}</code></td><td>스크립트가 원래 select를 트리거와 체크박스 목록으로 바꿉니다. 값 · 이름 · 폼 제출은 숨긴 원래 select가 맡고, 목록을 닫을 때 값이 바뀌었으면 change를 한 번 보냅니다.</td></tr>
 <tr><td><b>접근성</b></td><td><code>role="button"</code> · <code>aria-expanded</code> · <code>aria-label</code> · <code>title</code></td><td>트리거의 이름은 보이는 글자에 나머지 값을 괄호로 붙입니다(「작업현황: 작업 중 외 2 (검토 중, 승인)」). 선택한 값 전체는 <code>title</code>에도 넣어 마우스를 올리면 보입니다.</td></tr>
+<tr><td><b>브랜드가 바꾸는 것</b></td><td><code>--size-input</code> · <code>--radius-input</code> · <code>--radius-chip</code> · 글자 · 색 토큰</td><td>칸 높이 · 모서리 · 칩 모서리 · 글자 크기 · 색입니다. 시안은 Default = A 첫 값 외 N, OOTB = B 칸 아래 칩입니다.</td></tr>
 </tbody>
 </table>
 <p className="ds-sec__desc ds-after">Figma UI Kit의 「Option」(행) · 「Option group」(옵션 목록)과 짝입니다.</p>
@@ -35,6 +36,10 @@ import * as S from './MultiSelect.stories.js';
 </tbody>
 </table>
 <p className="ds-sec__desc ds-after">옵션 사이 이동(<code>↑</code> <code>↓</code>)은 <a className="ds-link" href="./?path=/docs/form-input--docs" target="_top">Input</a>의 셀렉트와 같습니다. 여러 개를 선택하는 목록이라 <code>Space</code>로 선택해도 목록이 닫히지 않습니다. 셀렉트는 <code>Enter</code>로 선택하면 목록이 닫힙니다.</p>
+</Section>
+<Section title="시안" en="Options">
+<Card of={S.기본} title="A · 첫 값 외 N" tag="추천" desc="검색 조건처럼 칸 높이를 한 줄로 지켜야 할 때 사용합니다." basis="여러 값을 골라도 칸 높이가 바뀌지 않아 검색 조건 줄이 흔들리지 않습니다. 고른 값 전체는 화면 읽기 이름과 title로 알립니다(DS-ADR-022)." />
+<Card of={S.시안_칸_아래_칩} title="B · 칸 아래 칩" desc="기본보다 고른 값을 한눈에 보고 하나씩 빼야 할 때 사용합니다. 결재선 · 권한처럼 고른 값이 결과인 폼에 씁니다." basis="Carbon Multiselect · Ant Design Select의 태그 방식입니다. 칩은 칸 밖(아래)에 둡니다 — 누르는 칸(role=button) 안에 빼기 버튼을 넣으면 버튼 안에 버튼이 생겨 화면 읽기 · 키보드가 칩에 닿지 못합니다. 칩을 빼면 포커스가 다음 칩, 마지막이면 칸으로 갑니다." />
 </Section>
 <Section title="예시" en="Examples">
 <Card of={S.기본} title="선택 값 요약" en="Summary" desc="트리거를 누르면 목록이 열립니다. 두 개 이상 선택하면 「첫 값 외 N」으로 요약하고, 선택하지 않으면 「전체」로 표시합니다." />

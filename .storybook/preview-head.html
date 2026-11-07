@@ -40,6 +40,9 @@
   .sb-table--full thead th:first-child, .sb-table--full tbody th { width: 180px; }
   .sb-table code { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 12px; color: var(--color-text-brand); }
   .sb-note { font-size: 12px; line-height: 1.6; color: var(--color-text-muted); }
+  .sb-field { max-width: 280px; }   /* 시안 견본 폭 — 칸 하나 (TD-187) */
+  .sb-field--wide { max-width: 480px; }   /* 칸 둘 · 카드 묶음 */
+  .dp-static > .datepicker--static { position: static; display: block; width: auto; box-shadow: none; }   /* 달력 견본 — 실제 달력을 옮겨 그린 정지 그림 */
   /* Do · Don't (stories/_dodont.js) — 두 칸 한 줄, 머리 선 색 + ✓ · ✕ 글자 */
   .sb-dd { display: grid; gap: 20px; }
   .sb-dd__row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }

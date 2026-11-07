@@ -35,6 +35,7 @@
         var name = nameOf(sel);
         var empty = sel.getAttribute('placeholder') || '전체';
         var withSearch = sel.getAttribute('data-searchBox') === 'true' || sel.getAttribute('data-searchbox') === 'true';
+        var asChips = sel.getAttribute('data-display') === 'chips';   // 시안 B — 고른 값을 칸 아래 칩으로 (TD-187)
 
         var wrap = document.createElement('div');
         wrap.className = 'checkSelect';
@@ -67,6 +68,27 @@
         var holder = document.createElement('div');
         list.appendChild(holder);
 
+        // 칩 줄 — 칸 밖(아래)에 둠. 칩마다 빼기 버튼, 빼면 다음 칩(없으면 칸)으로 포커스
+        var chips = null;
+        if (asChips) {
+            wrap.classList.add('checkSelect--chips');
+            chips = document.createElement('ul');
+            chips.className = 'checkSelect__chips';
+            chips.setAttribute('aria-label', name + ' 고른 값');
+            chips.addEventListener('click', function (e) {
+                var b = e.target.closest('.checkSelect__chip-remove');
+                if (!b) return;
+                var o = sel.options[Number(b.getAttribute('data-index'))];
+                if (!o) return;
+                var all = [].slice.call(chips.querySelectorAll('.checkSelect__chip-remove'));
+                var at = all.indexOf(b);
+                o.selected = false;
+                sel.dispatchEvent(new Event('change', { bubbles: true }));   // 아래 change 가 체크 · 글자 · 칩을 다시 그림
+                var left = chips.querySelectorAll('.checkSelect__chip-remove');
+                (left[Math.min(at, left.length - 1)] || box).focus();
+            });
+        }
+
         function buildOptions() {
             holder.innerHTML = '';
             [].forEach.call(sel.options, function (o, i) {
@@ -79,7 +101,21 @@
             });
         }
         function picked() { return [].filter.call(sel.options, function (o) { return o.selected; }).map(function (o) { return o.label || o.textContent; }); }
+        var X = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+        function renderChips() {
+            var p = picked();
+            box.textContent = p.length ? p.length + '개 선택' : empty;
+            box.setAttribute('aria-label', name + ': ' + (p.length ? p.length + '개 선택 (' + p.join(', ') + ')' : empty));
+            box.removeAttribute('title');
+            box.classList.toggle('is-placeholder', !p.length);
+            chips.innerHTML = [].map.call(sel.options, function (o, i) {
+                if (!o.selected) return '';
+                var t = esc(o.label || o.textContent);
+                return '<li class="checkSelect__chip"><span>' + t + '</span><button type="button" class="checkSelect__chip-remove" data-index="' + i + '" aria-label="' + t + ' 빼기"' + (sel.disabled ? ' disabled' : '') + '>' + X + '</button></li>';
+            }).join('');
+        }
         function render() {
+            if (asChips) { renderChips(); return; }
             var p = picked();
             if (p.length < 2) box.textContent = p.length ? p[0] : empty;
             else box.innerHTML = '<span class="selected-text__value">' + esc(p[0]) + '</span> <span class="selected-text__more">외 ' + (p.length - 1) + '</span>';
@@ -144,6 +180,7 @@
         sel.parentNode.insertBefore(wrap, sel);
         wrap.appendChild(box);
         wrap.appendChild(list);
+        if (chips) wrap.appendChild(chips);
         wrap.appendChild(sel);
         sel.style.display = 'none';
         sel.setAttribute('aria-hidden', 'true');

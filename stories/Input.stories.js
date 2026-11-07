@@ -220,3 +220,18 @@ export const 옵션_상태 = {
 
 // ── Playground ──
 export const Playground = {};
+
+// ── 시안 (TD-187) — A 윤곽 칸(추천) · B 채운 칸 · C 올라가는 라벨. 같은 두 칸(문서 번호 · 문서 분류)으로 비교 ──
+const optPair = (id, lab, ctl) => '  <div class="ff-field"><label class="search-label" for="' + id + '">' + lab + '</label><div class="td">' + ctl + '</div></div>';
+const KINDS2 = '<option>설계 문서</option><option>시험 문서</option><option>회의록</option>';
+const OPT_A = ['<div class="form-grid-2">',
+  optPair('in-a-no', '문서 번호', '<input class="input" id="in-a-no" placeholder="문서 번호 입력" value="DOC-2610">'),
+  optPair('in-a-kind', '문서 분류', '<select class="select" id="in-a-kind">' + KINDS2 + '</select>'), '</div>'];
+const OPT_B = ['<div class="form-grid-2">',
+  optPair('in-b-no', '문서 번호', '<input class="input input--filled" id="in-b-no" placeholder="문서 번호 입력" value="DOC-2610">'),
+  optPair('in-b-kind', '문서 분류', '<select class="select select--filled" id="in-b-kind">' + KINDS2 + '</select>'), '</div>'];
+const floatField = (id, lab, value = '') => '  <div class="input-float"><input class="input" id="' + id + '" placeholder=" " value="' + value + '"><label for="' + id + '">' + lab + '</label></div>';
+const OPT_C = ['<div class="form-grid-2">', floatField('in-c-no', '문서 번호', 'DOC-2610'), floatField('in-c-name', '문서 명'), '</div>'];
+export const 시안_윤곽_칸 = { parameters: html(OPT_A), render: () => '<div class="sb-field--wide">' + OPT_A.join('') + '</div>' };
+export const 시안_채운_칸 = { parameters: html(OPT_B), render: () => '<div class="sb-field--wide">' + OPT_B.join('') + '</div>' };
+export const 시안_올라가는_라벨 = { parameters: html(OPT_C), render: () => '<div class="sb-field--wide">' + OPT_C.join('') + '</div>' };

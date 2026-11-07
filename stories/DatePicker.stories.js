@@ -2,6 +2,7 @@
 import { matrix } from './_matrix.js';
 import { enablePseudo } from './_pseudo.js';
 import { doDont } from './_dodont.js';
+import { phone, body, iconBtn } from './_mobile.js';
 
 const ICON = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>';
 const dp = (label, value = '', extra = '', cls = '') =>
@@ -10,6 +11,7 @@ const dp = (label, value = '', extra = '', cls = '') =>
 // 기간 — x1 · c1 = 시작일 칸 속성 · 상자 클래스, x2 = 종료일 칸 속성
 const range = (a, b, { x1 = '', c1 = '', x2 = '' } = {}) =>
   '<div class="ui-datepicker-range">' + dp('시작일', a, x1, c1) + '<span class="ui-datepicker-range__sep">~</span>' + dp('종료일', b, x2) + '</div>';
+const html2 = (lines) => ({ controls: { disable: true }, docs: { source: { language: 'html', code: lines.join('\n') } } });
 const ST = { default: '', error: ' aria-invalid="true"', disabled: ' disabled', readonly: ' readonly' };
 
 export default {
@@ -125,3 +127,41 @@ export const Playground = {
   render: (a) => '<div style="max-width:200px">' +
     dp(a.label, a.value, (a.min ? ' min="' + a.min + '"' : '') + (a.max ? ' max="' + a.max + '"' : '') + (ST[a.state] || '')) + '</div>',
 };
+
+// ── 시안 (TD-187) — A 칸 + 펼침 달력(추천) · B 아래 시트 달력 · C 연 · 월 · 일 세 칸 ──
+const OPT_A = [dp('희망 납기일', '2026-11-20')];
+export const 시안_펼침_달력 = { parameters: html2(OPT_A), render: () => '<div class="sb-field">' + OPT_A.join('') + '</div>' };
+// B — 칸을 누르면 화면 아래에서 달력 시트가 올라옴. 견본은 같은 달력(js/datepicker.js)을 시트 안에 옮겨 그린 정지 그림
+const SHEET_SRC = ['<div class="modal modal--sheet" id="date-sheet" hidden>',
+  '  <div class="modal__dialog sheet" role="dialog" aria-modal="true" aria-labelledby="date-sheet-title">',
+  '    <div class="modal__header"><h2 class="modal__title" id="date-sheet-title">언제 가시나요?</h2><!-- 닫기 버튼 data-modal-close="cancel" --></div>',
+  '    <div class="modal__body"><!-- js/datepicker.js 달력 --></div>',
+  '    <div class="modal__footer"><button type="button" class="btn btn--primary btn--filled btn--lg" data-modal-close="save">이 날로 정하기</button></div>',
+  '  </div>', '</div>'];
+export const 시안_아래_시트_달력 = {
+  parameters: html2(SHEET_SRC),
+  render: () => {
+    const el = document.createElement('div');
+    el.innerHTML = phone(body('<p class="sb-label">가는 날</p>' + dp('가는 날', '2026-11-12')) +
+      '<div class="modal modal--sheet"><div class="modal__dialog sheet" role="dialog" aria-labelledby="date-sheet-b-title">' +
+      '<div class="modal__header"><h2 class="modal__title" id="date-sheet-b-title">언제 가시나요?</h2>' + iconBtn('close', '닫기') + '</div>' +
+      '<div class="modal__body"><div class="dp-static" inert aria-hidden="true"></div></div>' +
+      '<div class="modal__footer"><button type="button" class="btn btn--primary btn--filled btn--lg">이 날로 정하기</button></div></div></div>', 'sb-phone--tall');
+    setTimeout(() => {
+      const inp = el.querySelector('.ui-datepicker__input'); if (!inp) return;
+      inp.click();
+      setTimeout(() => {
+        const pop = document.querySelector('.datepicker.is-open');
+        if (pop) { const c = pop.cloneNode(true); c.removeAttribute('id'); c.querySelectorAll('[id]').forEach((n) => n.removeAttribute('id')); c.removeAttribute('style'); c.classList.add('datepicker--static'); el.querySelector('.dp-static').appendChild(c); }
+        document.body.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));   // 실제 달력은 닫음(바깥 누름)
+      }, 250);
+    }, 500);
+    return el;
+  },
+};
+// C — 연 · 월 · 일 세 칸(GOV.UK Date input). 생년월일처럼 아는 날짜, 달력 없이 숫자 자판
+const part = (key, lab, value, auto, max) => '  <div class="date-input__item' + (key === 'y' ? ' date-input__item--year' : '') + '"><label for="dob-' + key + '">' + lab + '</label>' +
+  '<input class="input" id="dob-' + key + '" inputmode="numeric" autocomplete="' + auto + '" maxlength="' + max + '" value="' + value + '"></div>';
+const OPT_C = ['<fieldset class="date-input" aria-describedby="dob-hint">', '  <legend class="search-label">생년월일</legend>', '  <p class="date-input__hint" id="dob-hint">예: 1958 3 27</p>',
+  part('y', '년', '1958', 'bday-year', 4), part('m', '월', '3', 'bday-month', 2), part('d', '일', '27', 'bday-day', 2), '</fieldset>'];
+export const 시안_세_칸 = { parameters: html2(OPT_C), render: () => OPT_C.join('') };

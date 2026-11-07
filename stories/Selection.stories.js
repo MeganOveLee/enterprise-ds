@@ -111,3 +111,15 @@ export const Playground = {
     ? '<div role="radiogroup" aria-label="처리 구분">' + rd('pg', a.label, opt(a)) + '</div>'
     : (a.kind === 'switch' ? sw : ck)(a.label, opt(a))),
 };
+
+// ── 시안 (TD-187) — A 라디오 묶음(추천) · B 카드형 선택 · C 나란한 칸. 같은 질문(결재 방식) ──
+const WAYS = [['순차', '한 사람씩 차례로 결재합니다'], ['병렬', '모두에게 한꺼번에 보내고 각자 결재합니다'], ['합의', '모두 승인해야 다음 단계로 넘어갑니다']];
+const OPT_A = ['<div class="radio-group" role="radiogroup" aria-label="결재 방식">', ...WAYS.map(([t], i) => '  ' + rd('way-a', t, i === 0 ? ' checked' : '')), '</div>'];
+const card = (n, [t, d], o = '') => '  <label class="radio choice-card"><input type="radio" name="' + n + '"' + o + '><span class="radio__mark"></span>' +
+  '<span class="choice-card__body"><span class="choice-card__title">' + t + '</span><span class="choice-card__desc">' + d + '</span></span></label>';
+const OPT_B = ['<fieldset class="choice-cards">', '  <legend class="search-label">결재 방식</legend>', ...WAYS.map((w, i) => card('way-b', w, i === 0 ? ' checked' : '')), '</fieldset>'];
+const seg = (t, on) => '  <button type="button" class="segmented__item" role="radio" aria-checked="' + on + '"' + (on ? '' : ' tabindex="-1"') + '>' + t + '</button>';
+const OPT_C = ['<div class="segmented" role="radiogroup" aria-label="결재 방식">', ...WAYS.map(([t], i) => seg(t, i === 0)), '</div>'];
+export const 시안_라디오_묶음 = { parameters: html(OPT_A), render: () => OPT_A.join('') };
+export const 시안_카드형_선택 = { parameters: html(OPT_B), render: () => '<div class="sb-field--wide">' + OPT_B.join('') + '</div>' };
+export const 시안_나란한_칸 = { parameters: html(OPT_C), render: () => '<div class="sb-field">' + OPT_C.join('') + '</div>' };
