@@ -4665,7 +4665,7 @@ body.dark-mode .empty-illo__badge  { fill: var(--color-bg-muted); }
 
 /* 아이콘 선 굵기 — 모바일 앱 컴포넌트 안 선 아이콘(stroke)은 --icon-stroke 를 따름. 브랜드가 굵기를 바꿈(Mobility 굵게, TD-172)
  *   채운 아이콘(장소 아이콘)은 선이 없어 영향 없음 */
-:is(.sheet, .app-bar, .bottom-nav, .list-item, .chip, .chip-tile, .chip-scroll, .fab, .btn-bar, .badge, .route-summary, .number-input, .segmented) svg { stroke-width: var(--icon-stroke); }
+:is(.sheet, .app-bar, .bottom-nav, .list-item, .chip, .chip-tile, .chip-scroll, .fab, .btn-bar, .badge, .route-summary, .number-input, .segmented, .trip-input, .transport-tile) svg { stroke-width: var(--icon-stroke); }
 
 /* 아래 시트 — 확인 창(.modal)과 같은 덮개 · 스크립트(js/modal.js), 창만 화면 아래에 붙임
  *   <div class="modal modal--sheet" id="ride-sheet" hidden>

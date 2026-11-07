@@ -38,3 +38,194 @@
 .route-summary__vias[open] > summary::after { transform: rotate(-135deg) translateY(-25%); }
 .route-summary__vias > summary:focus-visible { outline: 2px solid transparent; border-radius: var(--radius-item); box-shadow: 0 0 0 2px var(--color-border-focus), 0 0 0 5px var(--color-focus-ring); }
 .route-summary__vias > .route-summary__place { display: block; margin-top: var(--spacing-8); }
+
+/* 출발 · 도착 입력 — 호출 화면 첫 칸. 출발은 가까운 정류장을 채워 두고 도착만 고름(결정 G)
+ *   칸 = 누르면 장소 고르기(아래 시트 · 검색 화면)가 열리는 button. 글자를 바로 치는 칸이 아님
+ *   <div class="trip-input" role="group" aria-label="출발 · 도착">
+ *     <div class="trip-input__stop trip-input__stop--start"><span class="trip-input__mark" aria-hidden="true"></span>
+ *       <span class="trip-input__label" id="trip-from">어디서 타요</span>
+ *       <button type="button" class="trip-input__field" aria-labelledby="trip-from trip-from-place"><span class="trip-input__place" id="trip-from-place">장소</span><span class="trip-input__hint">걸어서 3분 · 바꾸기</span></button></div>
+ *     <div class="trip-input__stop trip-input__stop--end"> … 비었으면 칸에 .trip-input__field--empty</div>
+ *   </div>
+ *   시안: A 두 칸 세로(추천) · B 한 줄 .trip-input--inline(+ 바꾸기 버튼 .trip-input__swap) · C 타는 곳 한 칸 .trip-input--pickup
+ *   「출발 · 도착」은 라벨 글자로도 적음(점 색만으로 구분하지 않음). 긴 장소 이름은 자르지 않고 줄바꿈
+ *   라벨은 칸과 같은 글자 크기(--body-md) — 잇는 선 길이가 라벨 한 줄 높이를 씀 */
+.trip-input { display: grid; gap: var(--spacing-12); color: var(--color-text-base); font-size: var(--body-md); }
+.trip-input__stop { display: grid; grid-template-columns: 1.25em minmax(0, 1fr); grid-template-areas: ". label" "mark field"; column-gap: var(--spacing-8); row-gap: var(--spacing-4); }
+.trip-input__mark { grid-area: mark; position: relative; }   /* 점 칸 = 칸 높이만큼 늘어난 세로 줄. 점은 칸 가운데 */
+.trip-input__mark::before { content: ''; position: absolute; z-index: 1; left: 50%; top: 50%; width: 0.875em; height: 0.875em; box-sizing: border-box; border-radius: var(--radius-rounded); background: var(--color-bg-base); transform: translate(-50%, -50%); }
+.trip-input__stop--start .trip-input__mark::before { border: 3px solid var(--color-border-brand); }
+.trip-input__stop--end .trip-input__mark::before { background: var(--color-bg-map-pin); }   /* 도착 = 지도 핀 색 — 경로 요약과 같음 (DS-ADR-051) */
+.trip-input__stop--start:not(:last-child) .trip-input__mark::after,
+.trip-input__stop--end:not(:first-child) .trip-input__mark::after {   /* 출발 점 → 도착 점을 잇는 점선. 출발 = 가운데에서 아래로(사이 간격 · 도착 라벨까지), 도착 = 위에서 가운데까지 */
+    content: '';
+    position: absolute;
+    left: calc(50% - 1px);
+    border-left: 2px dashed var(--color-border-strong);
+}
+.trip-input__stop--start .trip-input__mark::after { top: 50%; bottom: calc((var(--spacing-12) + var(--line-height-tight) * 1em + var(--spacing-4)) * -1); }
+.trip-input__stop--end .trip-input__mark::after { top: 0; bottom: 50%; }
+.trip-input__label { grid-area: label; color: var(--color-text-label); font-size: var(--body-md); font-weight: var(--font-weight-semibold); line-height: var(--line-height-tight); }
+.trip-input__field {
+    grid-area: field;
+    display: grid;
+    gap: var(--spacing-2);
+    min-width: 0;
+    min-height: var(--size-touch);
+    padding: var(--spacing-8) var(--spacing-12);
+    box-sizing: border-box;
+    border: 1px solid var(--color-border-input);
+    border-radius: var(--radius-input);
+    background: var(--color-bg-input);
+    color: var(--color-text-base);
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+}
+.trip-input__field:hover { border-color: var(--color-border-input-hover); }
+.trip-input__field:focus-visible { outline: 2px solid transparent; box-shadow: 0 0 0 2px var(--color-border-focus), 0 0 0 5px var(--color-focus-ring); }
+.trip-input__place { font-weight: var(--font-weight-emphasis); line-height: var(--line-height-tight); overflow-wrap: anywhere; }
+.trip-input__hint { color: var(--color-text-muted); font-size: var(--body-sm); line-height: var(--line-height-tight); }
+.trip-input__field--empty .trip-input__place { color: var(--color-text-muted); font-weight: var(--font-weight-regular); }
+
+/* 시안 B · 한 줄 — 「출발 › 도착」을 한 상자에, 오른쪽 바꾸기 버튼. 화면 위쪽 좁은 자리용(카카오 T 방식)
+ *   라벨은 칸 안 위쪽 작은 글자로 남김. 놓인 칸이 좁아 장소가 길면 두 칸이 줄을 바꿔 세로가 됨 */
+.trip-input--inline { display: flex; flex-wrap: wrap; align-items: stretch; gap: 0; border: 1px solid var(--color-border-input); border-radius: var(--radius-input); background: var(--color-bg-input); }
+.trip-input--inline .trip-input__stop { flex: 1 1 8em; grid-template-columns: minmax(0, 1fr); grid-template-areas: "field"; }
+.trip-input--inline .trip-input__stop + .trip-input__stop { border-left: 1px solid var(--color-border-subtle); }
+.trip-input--inline .trip-input__mark, .trip-input--inline .trip-input__label { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }   /* 화면 읽기 이름은 칸 안 글자가 맡음 */
+.trip-input--inline .trip-input__field { height: 100%; border: 0; border-radius: var(--radius-input); background: transparent; }
+.trip-input--inline .trip-input__field::before { content: attr(data-label); color: var(--color-text-muted); font-size: var(--body-sm); line-height: var(--line-height-tight); }
+.trip-input--inline .trip-input__stop--start .trip-input__place::after { content: '\00a0›';   /* 붙은 빈칸 — 꺾쇠만 다음 줄로 가지 않게 */ color: var(--color-icon-muted); }
+.trip-input__swap { flex: none; align-self: center; margin: 0 var(--spacing-4); }
+
+/* 시안 C · 타는 곳 한 칸 — 지도에서 타는 곳만 맞추고 도착은 다음 단계(Via 방식). 지도 핀을 움직여 맞출 때 */
+.trip-input--pickup .trip-input__stop--start .trip-input__mark::before { border: 0; background: var(--color-bg-map-pin); }
+
+/* 이동 수단 타일 — 홈에서 이동 수단 · 서비스로 들어가는 큰 누름 칸. 이름은 하는 일로(결정 7)
+ *   <a class="transport-tile" href="…"><span class="transport-tile__icon"><svg …/></span><span class="transport-tile__name">버스 부르기</span><span class="transport-tile__desc">부르면 찾아오는 버스</span></a>
+ *   시안: A 큰 타일 하나 .transport-tile--primary(추천, 쉬운 화면) · B 격자 .transport-tiles(큰 타일 줄 + 작은 타일 줄 .transport-tile--sm) · C 줄 타일 .transport-tile--row(시간 · 요금 .transport-tile__meta)
+ *   타일 전체가 누르는 곳 하나(a 또는 button). 그림은 DS 아이콘만 */
+.transport-tile {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-areas: "icon name" "icon desc";
+    align-items: center;
+    column-gap: var(--spacing-12);
+    row-gap: var(--spacing-2);
+    min-width: 0;
+    min-height: var(--size-btn-lg);
+    padding: var(--spacing-16);
+    box-sizing: border-box;
+    border: 1px solid var(--color-border-base);
+    border-radius: var(--radius-card);
+    background: var(--color-bg-base);
+    color: var(--color-text-base);
+    font: inherit;
+    text-align: left;
+    text-decoration: none;
+    cursor: pointer;
+}
+.transport-tile:hover { background: var(--color-bg-muted); }
+.transport-tile:focus-visible { outline: 2px solid transparent; box-shadow: 0 0 0 2px var(--color-border-focus), 0 0 0 5px var(--color-focus-ring); }
+.transport-tile__icon { grid-area: icon; display: grid; place-items: center; width: 2.75em; height: 2.75em; border-radius: var(--radius-rounded); background: var(--color-bg-brand-subtle); color: var(--color-icon-brand); }
+.transport-tile__icon svg { width: 1.5em; height: 1.5em; }
+.transport-tile__name { grid-area: name; font-size: var(--heading-sm); font-weight: var(--font-weight-emphasis); line-height: var(--line-height-tight); word-break: keep-all; overflow-wrap: anywhere; }
+.transport-tile__desc { grid-area: desc; color: var(--color-text-muted); font-size: var(--body-sm); line-height: var(--line-height-tight); word-break: keep-all; }
+.transport-tile:not(:has(.transport-tile__desc)) { grid-template-areas: "icon name"; }
+
+/* 시안 A · 큰 타일 하나 — 주 버튼과 같은 색. 화면에 하나만 */
+.transport-tile--primary { min-height: calc(var(--size-btn-lg) * 1.75); border-color: var(--color-bg-btn-primary); background: var(--color-bg-btn-primary); color: var(--color-text-btn-primary); }
+.transport-tile--primary:hover { background: var(--color-bg-btn-primary-hover); }
+.transport-tile--primary:active { background: var(--color-bg-interactive-primary-pressed); }
+.transport-tile--primary .transport-tile__icon { background: transparent; color: inherit; }
+.transport-tile--primary .transport-tile__icon svg { width: 2em; height: 2em; }
+.transport-tile--primary .transport-tile__name { font-size: var(--heading-md); }
+.transport-tile--primary .transport-tile__desc { color: inherit; font-size: var(--body-md); }
+
+/* 시안 B · 격자 — 큰 타일 줄 + 작은 타일 줄. 놓인 칸이 좁으면 칸 수가 줄어듦(화면 폭 기준이 아님) */
+.transport-tiles { display: grid; gap: var(--spacing-8); }
+.transport-tiles__row { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 9em), 1fr)); gap: var(--spacing-8); }
+.transport-tiles__row--sm { grid-template-columns: repeat(auto-fit, minmax(min(100%, 4.75em), 1fr)); }
+.transport-tile.transport-tile--sm { grid-template-columns: minmax(0, 1fr); grid-template-areas: "icon" "name"; justify-items: center; row-gap: var(--spacing-8); padding: var(--spacing-12) var(--spacing-4); text-align: center; }
+.transport-tile--sm .transport-tile__name { font-size: var(--body-md); font-weight: var(--font-weight-medium); }
+.transport-tile--sm .transport-tile__icon { width: 2.5em; height: 2.5em; }
+.transport-tiles__row:not(.transport-tiles__row--sm) .transport-tile { grid-template-columns: minmax(0, 1fr); grid-template-areas: "icon" "name" "desc"; justify-items: start; row-gap: var(--spacing-8); }
+
+/* 시안 C · 줄 타일 — 이름 옆에 걸리는 시간 · 요금, 끝에 꺾쇠. 수단을 견주어 고를 때(Uber 서비스 목록 · 카카오 T 시트) */
+.transport-tile--row { grid-template-columns: auto minmax(0, 1fr) auto; grid-template-areas: "icon name meta" "icon desc meta"; }
+.transport-tile--row:not(:has(.transport-tile__desc)) { grid-template-areas: "icon name meta"; }
+.transport-tile__meta { grid-area: meta; display: inline-flex; align-items: center; gap: var(--spacing-4); color: var(--color-text-base); font-size: var(--body-sm); font-weight: var(--font-weight-medium); white-space: nowrap; }
+.transport-tile__meta::after { content: ''; width: 0.45em; height: 0.45em; margin-left: var(--spacing-4); border-right: 2px solid var(--color-icon-muted); border-bottom: 2px solid var(--color-icon-muted); transform: rotate(-45deg); }
+
+/* 지도 위 컨트롤 — 지도 위에 뜨는 버튼 묶음 · 정류장 이름표 · 차 태그. 자리는 화면(지도)이 정함
+ *   버튼 = 떠 있는 버튼(.fab, Form/Floating Button)을 그대로 씀 — 새 버튼 모양을 만들지 않음
+ *   <div class="map-btns"><button class="btn btn--secondary btn--outlined fab fab--icon" aria-label="내 위치로 이동"><svg/></button> …</div>
+ *   버튼 시안: A 하나씩 세로 줄 .map-btns(추천) · B 붙은 묶음 .map-btns--group · C 글자 알약(.fab 글자 버튼을 같은 줄에)
+ *   이름표 시안: A 진한 면 + 꼬리 .map-label(추천) · B 흰 면 + 테두리 + 핀 점 .map-label--outline · C 누르는 이름표 .map-label--action
+ *   지도 위 글자는 늘 단색 면 위에 둠(결정 14) — 지도 그림 위에 글자만 두지 않음 */
+.map-btns { display: flex; flex-direction: column; align-items: flex-end; gap: var(--spacing-8); }
+.map-btns > .fab:not(.fab--icon) { min-height: var(--size-touch); font-size: var(--body-sm); }   /* 시안 C 글자 알약 — 지도를 덜 가리게 누름 기준 높이 */
+
+/* 시안 B · 붙은 묶음 — 버튼 여럿을 한 판에. 판 하나만 그림자 */
+.map-btns--group { gap: 0; border-radius: var(--radius-rounded); background: var(--color-bg-base); box-shadow: var(--shadow-popover); overflow: hidden; }
+.map-btns--group > .fab { border: 0; border-radius: 0; box-shadow: none; }
+.map-btns--group > .fab + .fab { border-top: 1px solid var(--color-border-subtle); }
+.map-btns--group > .fab:focus-visible { box-shadow: inset 0 0 0 2px var(--color-border-focus); }
+
+/* 정류장 이름표 — 핀 위에 정류장 · 건물 이름. 화면 읽기는 지도 밖 목록 · 글(경로 요약 · 출발 · 도착 입력)이 맡음 */
+.map-label {
+    position: relative;
+    display: inline-flex;
+    flex-direction: column;
+    width: max-content;   /* 지도 가장자리 가까이 놓여도 좁게 꺾이지 않게 — 줄바꿈은 max-width 에서만 */
+    max-width: 14em;
+    padding: var(--spacing-4) var(--spacing-12);
+    box-sizing: border-box;
+    border-radius: var(--radius-item);
+    background: var(--color-bg-map-pin);
+    color: var(--color-text-on-map-pin);
+    font-size: var(--body-sm);
+    font-weight: var(--font-weight-emphasis);
+    line-height: var(--line-height-tight);
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+    box-shadow: var(--shadow-popover);
+}
+.map-label::after {   /* 꼬리 — 핀 자리를 가리킴 */
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 100%;
+    width: 0.6em;
+    height: 0.6em;
+    background: inherit;
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+/* 시안 B · 흰 면 + 테두리 — 지도에 핀이 여럿일 때 덜 무겁게. 꼬리 대신 아래 핀 점 */
+.map-label--outline { border: 2px solid var(--color-border-strong); background: var(--color-bg-base); color: var(--color-text-base); }
+.map-label--outline::after { top: calc(100% + 0.35em); width: 0.75em; height: 0.75em; box-sizing: border-box; border: 2px solid var(--color-bg-base); border-radius: var(--radius-rounded); background: var(--color-bg-map-pin); transform: translateX(-50%); }
+
+/* 시안 C · 누르는 이름표 — 이름 아래 동작 「여기서 타기 ›」. 지도에서 바로 출발 · 도착을 정할 때(카카오 T 방식) */
+.map-label--action { min-height: var(--size-touch); justify-content: center; border: 0; font: inherit; font-size: var(--body-sm); text-align: left; cursor: pointer; }
+.map-label--action:focus-visible { outline: 2px solid transparent; box-shadow: 0 0 0 2px var(--color-bg-base), 0 0 0 4px var(--color-border-focus); }
+.map-label__name { font-weight: var(--font-weight-emphasis); }
+.map-label__action { font-weight: var(--font-weight-medium); }
+.map-label__action::after { content: '\00a0›'; }
+
+/* 차 태그 — 지도 위 차 옆에 차량 번호 · 도착 범위(와이어 대기 화면). 흰 면 + 테두리라 지도 위에서도 읽힘 */
+.map-tag {
+    display: inline-grid;
+    gap: var(--spacing-2);
+    padding: var(--spacing-4) var(--spacing-8);
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-item);
+    background: var(--color-bg-base);
+    color: var(--color-text-base);
+    font-size: var(--body-sm);
+    line-height: var(--line-height-tight);
+    box-shadow: var(--shadow-popover);
+    white-space: nowrap;
+}
+.map-tag__plate { font-size: var(--body-md); font-weight: var(--font-weight-emphasis); }
