@@ -99,3 +99,11 @@ export const Playground = {
   parameters: { docs: { source: { transform: (_, { args: a }) => (a.withStatus ? row(a.state, a.value, a.name, a.label) : bar(a.state, a.value, a.name, a.label)) } } },
   render: (a) => box(a.withStatus ? row(a.state, a.value, a.name, a.label) : bar(a.state, a.value, a.name, a.label)),
 };
+const optSrc = (code) => ({ controls: { disable: true }, docs: { source: { language: 'html', code } } });
+
+// ── 시안 (TD-187) — A 막대(추천, 위 「진행률 막대」) · C 원형 링. B 단계 목록은 위 「단계별 목록」 ──
+const ring = (pct, label) => '<div class="progress-ring" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + pct + '" aria-label="' + label + '">' +
+  '<svg viewBox="0 0 36 36" aria-hidden="true"><circle class="progress-ring__track" cx="18" cy="18" r="15.5" pathLength="100"/><circle class="progress-ring__value" cx="18" cy="18" r="15.5" pathLength="100" stroke-dasharray="' + pct + ' 100"/></svg>' +
+  '<span class="progress-ring__label">' + pct + '%</span></div>';
+const RINGS = '<div class="sb-row">' + ring(25, '설계 단계 진행률') + ring(65, '시험 단계 진행률') + ring(100, '양산 준비 진행률') + '</div>';
+export const 시안_원형_링 = { parameters: optSrc(RINGS), render: () => RINGS };

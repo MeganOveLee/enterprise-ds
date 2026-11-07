@@ -104,3 +104,9 @@ export const Playground = {
   args: { status: 'success', title: '', msg: '저장되었습니다.', action: '', close: true },
   render: (a) => stage([toast(a)], 150),
 };
+const optSrc = (code) => ({ controls: { disable: true }, docs: { source: { language: 'html', code } } });
+
+// ── 시안 (TD-187) — A 오른쪽 아래(추천, 위 「저장 완료」) · B 아래 가운데 · C 위 가운데 ──
+const optToast = (cls) => '<div class="toast-region ' + cls + '" role="region" aria-label="알림">' + toast({ status: 'success', msg: '문서를 저장했습니다.' }) + '</div>';
+export const 시안_아래_가운데 = { parameters: optSrc(optToast('toast-region--bottom')), render: () => '<div class="sb-frame sb-frame--short">' + optToast('toast-region--bottom') + '</div>' };
+export const 시안_위_가운데 = { parameters: optSrc(optToast('toast-region--top')), render: () => '<div class="sb-frame sb-frame--short">' + optToast('toast-region--top') + '</div>' };

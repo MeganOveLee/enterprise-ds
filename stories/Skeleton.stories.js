@@ -45,3 +45,9 @@ export const 사용_지침 = {
         '실제 배치와 다른 회색 막대를 두면 내용이 들어올 때 배치가 바뀌어 화면이 흔들립니다.'] },
   ]),
 };
+const optSrc = (code) => ({ controls: { disable: true }, docs: { source: { language: 'html', code } } });
+
+// ── 시안 (TD-187) — A 빛(추천, 위 「조각」) · B 깜빡임 · C 정지. 묶음(aria-busy)에 클래스 하나 ──
+const optSkel = (cls) => '<div class="sb-field ' + cls + '" aria-busy="true"><span class="sr-only">불러오는 중</span><span class="skeleton-title" aria-hidden="true"></span><span class="skeleton-line" aria-hidden="true"></span><span class="skeleton-line" aria-hidden="true"></span><span class="skeleton-line" aria-hidden="true"></span></div>';
+export const 시안_깜빡임 = { parameters: optSrc(optSkel('skeleton--pulse')), render: () => optSkel('skeleton--pulse') };
+export const 시안_정지 = { parameters: optSrc(optSkel('skeleton--static')), render: () => optSkel('skeleton--static') };

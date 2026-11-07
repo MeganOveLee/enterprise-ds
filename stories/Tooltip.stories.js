@@ -91,3 +91,10 @@ export const Playground = {
   args: { text: '첨부 받기', bottom: false, side: 'center', open: true },
   render: (a) => cell(tip({ icon: 'down', label: '첨부 받기', text: a.text, bottom: a.bottom, side: a.side === 'center' ? '' : a.side, open: a.open }), a.side === 'start' ? 'flex-start' : a.side === 'end' ? 'flex-end' : 'center', a.bottom),
 };
+const optSrc = (code) => ({ controls: { disable: true }, docs: { source: { language: 'html', code } } });
+
+// ── 시안 (TD-187) — A 어두운 바탕(추천, 위 「아이콘 버튼 설명」) · B 밝은 바탕 · C 제목 + 본문 ──
+const OPT_LIGHT = tip({ icon: 'down', label: '첨부 받기', text: '첨부 받기', open: true, side: 'light' });
+const OPT_RICH = tip({ icon: 'down', label: '첨부 받기', open: true, side: 'rich', text: '<strong class="tooltip__title">첨부 받기</strong><span class="tooltip__body">첨부 파일을 하나로 묶어 내려받습니다. 3개 이상이면 ZIP으로 받습니다.</span>' });
+export const 시안_밝은_바탕 = { parameters: optSrc(OPT_LIGHT), render: () => '<div class="sb-stage">' + OPT_LIGHT + '</div>' };
+export const 시안_제목_본문 = { parameters: optSrc(OPT_RICH), render: () => '<div class="sb-stage sb-stage--center">' + OPT_RICH + '</div>' };

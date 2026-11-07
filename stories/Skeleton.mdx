@@ -16,8 +16,14 @@ import * as S from './Skeleton.stories.js';
 <tr><td><b>접근성</b></td><td><code>aria-busy="true"</code> · <code>.sr-only</code> · <code>aria-hidden</code></td><td>묶음에 <code>aria-busy="true"</code>와 숨김 글자 <code>{'<span class="sr-only">불러오는 중</span>'}</code>를 두고, 조각은 <code>aria-hidden="true"</code>로 스크린 리더가 읽지 않게 합니다.</td></tr>
 <tr><td><b>모션</b></td><td><code>--duration-shimmer</code> · <code>--ease-loop</code></td><td>Shimmer가 왼쪽에서 오른쪽으로 지나간 뒤 잠깐 쉽니다(<a className="ds-link" href="./?path=/docs/foundation-motion--docs" target="_top">Foundation › Motion</a>). 모션 줄이기 설정이면 멈춥니다.</td></tr>
 <tr><td><b>모서리</b></td><td><code>--radius-skeleton</code></td><td>브랜드가 바꿀 수 있습니다. 입력 필드 자리는 입력 필드 모서리(<code>--radius-input</code>)를 따릅니다.</td></tr>
+<tr><td><b>브랜드가 바꾸는 것</b></td><td><code>--radius-skeleton</code> · 바탕 색 토큰</td><td>조각 모서리 · 바탕 색입니다. 움직임 규칙은 모든 브랜드가 같습니다. 시안은 세 브랜드 모두 A 빛입니다.</td></tr>
 </tbody>
 </table>
+</Section>
+<Section title="시안" en="Options">
+<Card of={S.조각} title="A · 빛" tag="추천" desc="목록 · 폼을 불러오는 동안 사용합니다." basis="빛이 한 방향으로 지나가 「불러오는 중」이 보입니다. 움직임 줄이기 설정에서는 멈춥니다(DS-ADR-041)." />
+<Card of={S.시안_깜빡임} title="B · 깜빡임" desc="기본보다 조각이 작고 많아 빛 띠가 어지러워 보일 때 사용합니다." basis="면 전체가 옅어졌다 돌아옵니다. 움직임 줄이기 설정에서는 멈춥니다." />
+<Card of={S.시안_정지} title="C · 정지" desc="기본보다 아주 짧게만 보이는 자리에서 사용합니다." basis="움직임 없이 자리만 보입니다. 불러오는 중이라는 것은 aria-busy와 숨김 글자로 알립니다." />
 </Section>
 <Section title="예시" en="Examples">
 <Card of={S.조각} title="조각" en="Segment" desc="제목 · 글자 줄 · 영역 조각을 조합합니다." />

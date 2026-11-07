@@ -55,3 +55,10 @@ export const 사용_지침 = {
       dont: [row([chip('warning', '검토 의견 반영 후 재상신 대기'), chip('success', '승인')]), '「검토 의견 반영 후 재상신 대기」처럼 문장형 글자를 칩에 넣지 않습니다.'] },
   ]),
 };
+const optSrc = (code) => ({ controls: { disable: true }, docs: { source: { language: 'html', code } } });
+
+// ── 시안 (TD-187) — A 옅은 바탕(추천, 위 「작업 현황」) · B 점 + 글자 · C 진한 채움 ──
+const OPT_TONES = [['success', '승인'], ['warning', '결재 대기'], ['danger', '반려'], ['info', '작업 중']];
+const optChips = (cls) => '<div class="sb-row">' + OPT_TONES.map(([t, l]) => '<span class="status-chip status-chip--' + t + ' ' + cls + '">' + l + '</span>').join('') + '</div>';
+export const 시안_점_글자 = { parameters: optSrc(optChips('status-chip--dot')), render: () => optChips('status-chip--dot') };
+export const 시안_진한_채움 = { parameters: optSrc(optChips('status-chip--bold')), render: () => optChips('status-chip--bold') };

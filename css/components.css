@@ -5401,3 +5401,70 @@ body.dark-mode .empty-illo__badge  { fill: var(--color-bg-muted); }
 }
 .side-panel__title { margin: 0; font-size: var(--heading-sm); font-weight: var(--font-weight-semibold); line-height: var(--line-height-tight); }
 .side-panel__body { flex: 1; min-height: 0; overflow-y: auto; padding: var(--spacing-16) var(--spacing-24); word-break: keep-all; }
+
+/* ============================================================
+ * Data Display · Feedback 시안 — 기존 컴포넌트의 변형 클래스 (TD-187 묶음 3)
+ *   Card B .card--filled · C .card--elevated / Table B .grid-table--lined · C .grid-table--relaxed / Status Chip B .status-chip--dot · C .status-chip--bold
+ *   Alert B .alert--stripe · C .alert--banner / Toast B .toast-region--bottom · C .toast-region--top / Tooltip B .tooltip--light · C .tooltip--rich
+ *   Progress C .progress-ring / Skeleton B .skeleton--pulse · C .skeleton--static. 새 토큰 없음
+ * ============================================================ */
+
+/* Card B — 채운 카드: 테두리 · 그림자 없이 옅은 바탕. 카드가 여럿 붙은 대시보드에서 선이 겹치지 않게 */
+.card.card--filled { border-color: transparent; background: var(--color-bg-subtle); box-shadow: none; }
+/* Card C — 떠 있는 카드: 그림자로 바탕에서 띄움. 지도 · 사진 위처럼 바탕이 복잡한 곳 */
+.card.card--elevated { border-color: var(--color-border-subtle); box-shadow: var(--shadow-popover); }
+
+/* Table B — 줄 선: 얼룩(짝수 줄 바탕) 없이 줄마다 아래 선. 열이 적고 줄을 눈으로 따라가기 쉬운 표 */
+.grid-table--lined tbody tr:nth-child(even) td { background: var(--color-bg-base); }
+.grid-table--lined tbody tr:hover td { background: var(--color-bg-grid-row-hover); }
+.grid-table--lined td { border-right-color: transparent; }
+/* Table C — 넓게: 줄 높이 + 8. 줄 수가 적고 오래 읽는 표. 촘촘함은 브랜드 줄 높이 토큰이 맡음(DS-ADR-047) */
+.grid-table--relaxed td { height: calc(var(--size-grid-row) + var(--spacing-8)); }
+
+/* Status Chip B — 점 + 글자: 바탕 없이. 표 칸처럼 칩이 줄마다 반복되는 촘촘한 곳 */
+.status-chip.status-chip--dot { --chip-bg: transparent; padding-left: 0; }
+/* Status Chip C — 진한 채움: 꼭 봐야 할 상태 하나를 강조(지연 · 반려). 한 화면에 몇 개만 */
+.status-chip--bold { --chip-bg: var(--color-bg-inverse); --chip-fg: var(--color-text-inverse); }
+.status-chip--bold.status-chip--success { --chip-bg: var(--color-bg-success); --chip-fg: var(--color-text-on-color); }
+.status-chip--bold.status-chip--danger,
+.status-chip--bold.status-chip--error { --chip-bg: var(--color-bg-interactive-danger); --chip-fg: var(--color-text-on-color); }   /* = 위험 채운 버튼 바탕 — 흰 글자 4.5:1(라이트 · 다크) */
+.status-chip--bold.status-chip--info { --chip-bg: var(--color-bg-info); --chip-fg: var(--color-text-on-color); }
+.status-chip--bold.status-chip--warning { --chip-bg: var(--color-bg-warning); --chip-fg: var(--color-text-base); }   /* 노랑 위는 진한 글자 */
+body.dark-mode .status-chip--bold:is(.status-chip--success, .status-chip--warning) { --chip-fg: var(--color-text-inverse); }   /* 다크 = 상태 색이 밝아져 진한 글자(4.5:1). 정보 파랑 · 위험 빨강은 흰 글자 그대로 */
+
+/* Alert B — 왼쪽 띠: 바탕 · 테두리 대신 왼쪽 굵은 띠. 폼 안처럼 상자가 이미 많은 곳 */
+.alert.alert--stripe { border-width: 0 0 0 4px; border-radius: 0; background: var(--color-bg-base); }
+/* Alert C — 맨 위 배너: 화면 폭 전체, 모서리 없음. 화면 전체에 걸린 공지(점검 · 권한 만료) */
+.alert.alert--banner { border-width: 0 0 1px; border-radius: 0; padding-inline: var(--spacing-24); }
+
+/* Toast B · C — 놓는 자리. 기본 = 오른쪽 아래 */
+.toast-region.toast-region--bottom { left: 50%; right: auto; transform: translateX(-50%); align-items: center; }   /* 아래 가운데 — 모바일, 엄지가 닿는 자리 */
+.toast-region.toast-region--top { top: var(--spacing-24); bottom: auto; left: 50%; right: auto; transform: translateX(-50%); align-items: center; flex-direction: column-reverse; }   /* 위 가운데 — 아래에 고정 버튼 줄이 있는 화면 */
+
+/* Tooltip B — 밝은 바탕: 흰 면 + 테두리. 어두운 화면 위나 다크 모드에서 툴팁이 너무 튈 때 */
+.tooltip.tooltip--light { background: var(--color-bg-base); color: var(--color-text-base); border: 1px solid var(--color-border-subtle); box-shadow: var(--shadow-popover); }
+/* Tooltip C — 제목 + 본문: 아이콘 하나로 설명이 모자랄 때. 누를 것(링크)은 넣지 않음 — 툴팁은 마우스가 떠나면 닫힘 */
+.tooltip.tooltip--rich { max-width: 280px; padding: var(--spacing-8) var(--spacing-12); word-break: keep-all; }
+.tooltip__title { display: block; margin-bottom: var(--spacing-2); font-weight: var(--font-weight-semibold); }
+.tooltip__body { display: block; font-weight: var(--font-weight-regular); }
+
+/* Progress C — 원형 링: 한 값의 진행률을 작은 자리에. 값 = SVG stroke-dasharray(pathLength 100)
+ *   <div class="progress-ring" role="progressbar" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100" aria-label="…">
+ *     <svg viewBox="0 0 36 36" aria-hidden="true"><circle class="progress-ring__track" cx="18" cy="18" r="15.5" pathLength="100"/><circle class="progress-ring__value" … stroke-dasharray="65 100"/></svg>
+ *     <span class="progress-ring__label">65%</span></div> */
+.progress-ring { display: inline-grid; place-items: center; width: 4.5em; height: 4.5em; }
+.progress-ring > * { grid-area: 1 / 1; }
+.progress-ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.progress-ring circle { fill: none; stroke-width: 3.5; }
+.progress-ring__track { stroke: var(--color-bg-subtle); }
+.progress-ring__value { stroke: var(--color-bg-brand); stroke-linecap: round; transition: stroke-dasharray var(--duration-base); }
+.progress-ring__label { font-size: var(--body-sm); font-weight: var(--font-weight-semibold); color: var(--color-text-base); }
+
+/* Skeleton B — 깜빡임: 빛이 지나가는 대신 면 전체가 옅어졌다 돌아옴. 조각이 작고 많은 목록
+ * Skeleton C — 정지: 움직이지 않는 면. 짧게만 보이는 자리 · 움직임을 줄이고 싶은 화면 */
+.skeleton--pulse :is(.skeleton-line, .skeleton-title, .skeleton-block) { background-image: none; animation: ds-skeleton-pulse var(--duration-pulse) var(--ease-loop) infinite alternate; }
+.skeleton--static :is(.skeleton-line, .skeleton-title, .skeleton-block) { background-image: none; animation: none; }
+@keyframes ds-skeleton-pulse { from { opacity: 1; } to { opacity: .55; } }
+@media (prefers-reduced-motion: reduce) {
+    .skeleton--pulse :is(.skeleton-line, .skeleton-title, .skeleton-block) { animation: none; }
+}

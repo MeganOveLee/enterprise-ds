@@ -107,3 +107,9 @@ export const 사용_지침 = {
       dont: [ddBox(ddCard(LONG.map(wrapRow).join(''))), '긴 이름을 줄바꿈해 행 높이가 제각각이 되게 두지 않습니다.'] },
   ]); },
 };
+const optSrc = (code) => ({ controls: { disable: true }, docs: { source: { language: 'html', code } } });
+
+// ── 시안 (TD-187) — A 테두리 카드(추천, 위 「목록 카드」) · B 채운 카드 · C 떠 있는 카드 ──
+const optCard = (cls) => '<div class="card ' + cls + '">' + head('결재 대기', 3) + list(3) + '</div>';
+export const 시안_채운_카드 = { parameters: optSrc(optCard('card--filled')), render: () => '<div class="sb-field--wide">' + optCard('card--filled') + '</div>' };
+export const 시안_떠_있는_카드 = { parameters: optSrc(optCard('card--elevated')), render: () => '<div class="sb-field--wide">' + optCard('card--elevated') + '</div>' };
