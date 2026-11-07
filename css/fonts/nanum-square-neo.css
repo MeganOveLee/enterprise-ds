@@ -1,0 +1,13 @@
+@charset "UTF-8";
+/* ═══════════════════════════════════════════════════════════════════════════
+ * 글꼴 등록 — 나눔스퀘어 네오 (Mobility 브랜드 본문 글꼴, DS-ADR-047 · 052)
+ *   브랜드 CSS(css/brands/mobility.css) 옆에 링크. 빌드는 @font-face 를 만들지 않음
+ *   굵기 다섯을 한 이름(NanumSquare Neo)으로 묶음 — 배포처 CSS 는 굵기마다 이름이 달라 font-weight 로 고를 수 없음
+ *   글꼴에 없는 굵기: 500 → 400 · 600 → 700 으로 그려짐. 그래서 Mobility 는 --font-weight-semibold 를 700 으로 둠
+ *   파일: 네이버 한글 글꼴 배포 주소(교차 출처 허용). 라이선스 = SIL Open Font License 1.1
+ * ═══════════════════════════════════════════════════════════════════════════ */
+@font-face { font-family: 'NanumSquare Neo'; font-weight: 300; font-display: swap; src: url('https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-aLt.woff') format('woff'); }
+@font-face { font-family: 'NanumSquare Neo'; font-weight: 400; font-display: swap; src: url('https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-bRg.woff') format('woff'); }
+@font-face { font-family: 'NanumSquare Neo'; font-weight: 700; font-display: swap; src: url('https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-cBd.woff') format('woff'); }
+@font-face { font-family: 'NanumSquare Neo'; font-weight: 800; font-display: swap; src: url('https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-dEb.woff') format('woff'); }
+@font-face { font-family: 'NanumSquare Neo'; font-weight: 900; font-display: swap; src: url('https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-eHv.woff') format('woff'); }

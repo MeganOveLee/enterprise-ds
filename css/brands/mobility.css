@@ -6,7 +6,7 @@
  *
  * 선택자: :root.theme-mobility  →  <html class="theme-mobility">
  * 멀티 브랜드가 "브랜드 파일 하나 + html 클래스 하나"로 바뀌는 것을 보여주는 가상 브랜드.
- * 이 파일이 여는 토큰 = 색 + 모서리 역할 + 그림 자산 모양 (DS-ADR-003 · 020 · 037, 목록은 _template.css). 높이 · 글자 크기는 고령 이용자 기준 범위의 하한을 임시로(컨트롤 44 · 큰 버튼 56 · 누름 기준 44 · 본문 16, TD-172 · DS-ADR-049) — 최종 값은 TD-145 시안 뒤.
+ * 이 파일이 여는 토큰 = 색 + 모서리 역할 + 그림 자산 모양 (DS-ADR-003 · 020 · 037, 목록은 _template.css). 글꼴 · 글자 크기 · 굵기 · 누름 높이는 고령 이용자 기준(Mobility 결정 22 · DS-ADR-052) — 나눔스퀘어 네오 · 본문 18 · 굵기 700 이상 · 누름 48 · 큰 버튼 64.
  * 형태: 둥근 모서리 — 버튼 · 칩 알약, 입력칸 · 카드 · 영역 · 떠 있는 층 8, 체크박스 · 행 · 스켈레톤 4.
  *   반대쪽 끝은 ootb.css(직각 · 높이 32).
  * 그림 자산: 라인 — 빈 상태 일러스트 · 폴더 · 파일 형식 아이콘을 선 모양으로 (DS-ADR-037)
@@ -44,26 +44,31 @@
   --radius-popover: var(--radius-lg);
   --radius-skeleton: var(--radius-md);
 
-  /* --- 높이 (DS-ADR-020 · 049) — 고령 이용자 기준 범위의 하한(컨트롤 44–48 · 큰 버튼 56–88), 최종 값은 TD-145 ---------- */
+  /* --- 높이 (DS-ADR-020 · 049) — 고령 이용자 기준(컨트롤 44 · 누름 48 · 큰 버튼 64, Mobility 결정 22). 컨트롤은 최소 높이라 글자를 따라 커짐 ---------- */
   --size-input: 44px;
   --size-btn: 44px;
-  --size-btn-lg: 56px;
-  --size-touch: 44px;
+  --size-btn-lg: 64px;
+  --size-touch: 48px;
 
-  /* --- 글자 크기 (DS-ADR-046) — 본문 16–18 범위의 하한, 단계 순서 유지. 최종 값은 TD-145 ---------- */
-  --body-lg: 1.125rem;
-  --body-md: 1rem;
-  --body-sm: 0.875rem;
-  --body-xs: 0.8125rem;
-  --heading-2xl: 2.5rem;
-  --heading-xl: 2rem;
-  --heading-lg: 1.75rem;
-  --heading-md: 1.5rem;
+  /* --- 글자 크기 (DS-ADR-046) — 본문 18(body-md) · 쉬운 화면은 한 단계 위(body-lg 20). 단계 순서 유지, Mobility 결정 22 ---------- */
+  --body-lg: 1.25rem;
+  --body-md: 1.125rem;
+  --body-sm: 1rem;
+  --body-xs: 0.875rem;
+  --heading-2xl: 2.25rem;
+  --heading-xl: 1.875rem;
+  --heading-lg: 1.625rem;
+  --heading-md: 1.375rem;
   --heading-sm: 1.25rem;
-  --heading-xs: 1rem;
+  --heading-xs: 1.125rem;
 
-  /* --- 강조 굵기 (DS-ADR-049) — 주 행동 · 제목 700, 고령 이용자 기준(굵기 700 이상) ---------- */
-  --font-weight-emphasis: var(--font-weight-bold);
+  /* --- 글꼴 (DS-ADR-047) — 나눔스퀘어 네오(OFL). 등록은 css/fonts/nanum-square-neo.css, 이 브랜드 CSS 옆에 링크 ---------- */
+  --font-family-base: 'NanumSquare Neo', -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', '맑은 고딕', Helvetica, Arial, sans-serif;
+
+  /* --- 굵기 (DS-ADR-052) — 글꼴에 600이 없음, 제목 · 주요 숫자 700 이상(고령 이용자 기준) ---------- */
+  --font-weight-semibold: 700;
+  --font-weight-bold: 800;
+  --font-weight-emphasis: var(--font-weight-bold); /* 강조 굵기 = bold(800) — 큰 버튼 · 떠 있는 버튼 · 앱 상단 바 · 아래 시트 제목 */
 
   /* --- 아이콘 선 굵기 (TD-172) — 기존 앱 지도 버튼 아이콘이 굵음. 작은 아이콘도 흐려지지 않게 ---------- */
   --icon-stroke: 2.4;

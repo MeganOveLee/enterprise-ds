@@ -29,7 +29,7 @@
 .route-summary__stop--via .route-summary__mark { width: 0.625em; height: 0.625em; margin-top: 0.2em; background: var(--color-icon-muted); }
 .route-summary__stop--end .route-summary__mark { background: var(--color-bg-map-pin); }   /* 도착 = 지도 핀 색 (DS-ADR-051) */
 .route-summary__label { color: var(--color-text-muted); font-size: var(--body-sm); padding-top: 0.1em; }
-.route-summary__place { min-width: 0; font-weight: var(--font-weight-medium); overflow-wrap: anywhere; }   /* 긴 장소 이름은 줄바꿈 — 자르지 않음 */
+.route-summary__place { min-width: 0; font-weight: var(--font-weight-medium); word-break: keep-all; overflow-wrap: anywhere; }   /* 긴 장소 이름은 줄바꿈 — 자르지 않음 */
 .route-summary__time { color: var(--color-text-muted); font-size: var(--body-sm); white-space: nowrap; }
 .route-summary__vias { min-width: 0; }
 .route-summary__vias > summary { display: inline-flex; align-items: center; gap: var(--spacing-4); min-height: 1.5em; color: var(--color-text-base); font-weight: var(--font-weight-medium); cursor: pointer; list-style: none; }
@@ -152,11 +152,12 @@
 .transport-tile--sm .transport-tile__icon { width: 2.5em; height: 2.5em; }
 .transport-tiles__row:not(.transport-tiles__row--sm) .transport-tile { grid-template-columns: minmax(0, 1fr); grid-template-areas: "icon" "name" "desc"; justify-items: start; row-gap: var(--spacing-8); }
 
-/* 시안 C · 줄 타일 — 이름 옆에 걸리는 시간 · 요금, 끝에 꺾쇠. 수단을 견주어 고를 때(Uber 서비스 목록 · 카카오 T 시트) */
-.transport-tile--row { grid-template-columns: auto minmax(0, 1fr) auto; grid-template-areas: "icon name meta" "icon desc meta"; }
-.transport-tile--row:not(:has(.transport-tile__desc)) { grid-template-areas: "icon name meta"; }
-.transport-tile__meta { grid-area: meta; display: inline-flex; align-items: center; gap: var(--spacing-4); color: var(--color-text-base); font-size: var(--body-sm); font-weight: var(--font-weight-medium); white-space: nowrap; }
-.transport-tile__meta::after { content: ''; width: 0.45em; height: 0.45em; margin-left: var(--spacing-4); border-right: 2px solid var(--color-icon-muted); border-bottom: 2px solid var(--color-icon-muted); transform: rotate(-45deg); }
+/* 시안 C · 줄 타일 — 이름 아래 설명 · 시간이나 요금을 한 줄씩, 끝에 꺾쇠. 수단을 견주어 고를 때(Uber 서비스 목록 · 카카오 T 시트)
+ *   시간 · 요금은 이름 옆이 아니라 아래 줄 — 큰 글자(고령 이용자 기준)에서도 이름이 두 줄로 밀리지 않게 */
+.transport-tile--row { grid-template-columns: auto minmax(0, 1fr) auto; grid-template-areas: "icon name arrow" "icon desc arrow" "icon meta arrow"; }
+.transport-tile--row:not(:has(.transport-tile__desc)) { grid-template-areas: "icon name arrow" "icon meta arrow"; }
+.transport-tile--row::after { content: ''; grid-area: arrow; width: 0.45em; height: 0.45em; margin-left: var(--spacing-8); border-right: 2px solid var(--color-icon-muted); border-bottom: 2px solid var(--color-icon-muted); transform: rotate(-45deg); }
+.transport-tile__meta { grid-area: meta; color: var(--color-text-base); font-size: var(--body-sm); font-weight: var(--font-weight-semibold); line-height: var(--line-height-tight); }
 
 /* 지도 위 컨트롤 — 지도 위에 뜨는 버튼 묶음 · 정류장 이름표 · 차 태그. 자리는 화면(지도)이 정함
  *   버튼 = 떠 있는 버튼(.fab, Form/Floating Button)을 그대로 씀 — 새 버튼 모양을 만들지 않음

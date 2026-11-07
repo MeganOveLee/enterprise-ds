@@ -12,7 +12,7 @@ import * as S from './TransportTile.stories.js';
 <thead><tr><th>구분</th><th>클래스 · 속성</th><th>설명</th></tr></thead>
 <tbody>
 <tr><td><b>타일</b></td><td><code>a.transport-tile</code> 또는 <code>button</code></td><td>타일 전체가 누르는 곳 하나입니다. 안에 다른 버튼을 넣지 않습니다.</td></tr>
-<tr><td><b>안</b></td><td><code>__icon</code> · <code>__name</code> · <code>__desc</code> · <code>__meta</code></td><td>아이콘 · 하는 일 이름 · 설명 한 줄 · 시간이나 요금입니다. 그림은 DS 아이콘만 씁니다. 이름은 단어 중간에서 줄을 바꾸지 않습니다.</td></tr>
+<tr><td><b>안</b></td><td><code>__icon</code> · <code>__name</code> · <code>__desc</code> · <code>__meta</code></td><td>아이콘 · 하는 일 이름 · 설명 한 줄 · 시간이나 요금(줄 타일)입니다. 그림은 DS 아이콘만 씁니다. 이름은 단어 중간에서 줄을 바꾸지 않습니다.</td></tr>
 <tr><td><b>크기</b></td><td><code>--size-btn-lg</code></td><td>가장 작은 타일도 큰 버튼 높이 이상입니다.</td></tr>
 <tr><td><b>격자</b></td><td><code>.transport-tiles</code> · <code>__row</code> · <code>__row--sm</code></td><td>큰 타일 줄과 작은 타일 줄입니다. 놓인 칸이 좁으면 한 줄의 칸 수가 줄어듭니다.</td></tr>
 <tr><td><b>파일</b></td><td><code>css/blocks/mobility.css</code></td><td>모바일 앱 전용 조합이라 따로 둡니다. PLM 화면은 이 파일을 링크하지 않습니다.</td></tr>
@@ -23,7 +23,7 @@ import * as S from './TransportTile.stories.js';
 <Section title="시안" en="Options">
 <Card of={S.큰_타일_하나} title="A · 큰 타일 하나" tag="추천" desc="쉬운 화면에서 고를 것 없이 주 행동 하나로 들어가게 할 때 사용합니다." basis="Uber 쉬운 모드는 이동 수단을 고르지 않고 「Get a ride」 하나를 크게 둡니다. 주 버튼과 같은 색이라 화면에 하나만 둡니다." />
 <Card of={S.격자} title="B · 격자" desc="기본보다 서비스가 여럿이라 홈에서 나란히 보여야 할 때 사용합니다." basis="카카오 T는 작은 아이콘 + 이름 격자로 서비스를 늘어놓습니다. 자주 쓰는 둘만 큰 타일로 둡니다." />
-<Card of={S.줄_타일} title="C · 줄 타일" desc="기본보다 수단마다 걸리는 시간 · 요금을 견주어 고를 때 사용합니다." basis="카카오 T 시트와 Uber 서비스 목록은 옵션마다 이름 · 시간 · 요금을 한 줄에 둡니다." />
+<Card of={S.줄_타일} title="C · 줄 타일" desc="기본보다 수단마다 걸리는 시간 · 요금을 견주어 고를 때 사용합니다." basis="카카오 T 시트와 Uber 서비스 목록은 옵션마다 이름 · 시간 · 요금을 함께 둡니다. 큰 글자에서 이름이 밀리지 않게 시간 · 요금은 아래 줄에 둡니다." />
 </Section>
 </div>
 </Unstyled>
