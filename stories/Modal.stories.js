@@ -1,6 +1,6 @@
-// Overlay/Modal — 문서 화면은 Modal.mdx. Figma 이름 = Modal(🗣️ Feedback Components 4060:886), DS 클래스 = .modal
+// Overlay/Modal: 문서 화면은 Modal.mdx. Figma 이름 = Modal(🗣️ Feedback Components 4060:886), DS 클래스 = .modal
 // 같은 페이지 위에 뜨는 확인 창. 열기 · 닫기 · 포커스 가두기 · Esc = js/modal.js(.storybook/preview-head.html 에서 일반 스크립트로 불러옴)
-// 견본은 크기를 정한 틀(frame) 안에 그림 — 틀에 transform 을 두면 position: fixed 인 덮개가 화면 전체가 아니라 틀 안만 덮음
+// 견본은 크기를 정한 틀(frame) 안에 그림: 틀에 transform 을 두면 position: fixed 인 덮개가 화면 전체가 아니라 틀 안만 덮음
 // 늘 열려 있는 견본(정지 그림)은 문서 화면을 막지 않도록 aria-modal 을 빼고 그림. 실제 마크업(aria-modal · hidden)은 「코드 보기」
 import { matrix } from './_matrix.js';
 import { enablePseudo } from './_pseudo.js';
@@ -17,13 +17,13 @@ const btn = (t, cls, attrs = '') => '<button type="button" class="btn ' + cls + 
 
 // ── 확인 창 조각 ──
 const TEXT = { title: '저장하지 않은 내용이 있습니다', desc: '저장하지 않고 나가면 바뀐 내용이 사라집니다.' };
-// 버튼 3개 — 순서 [저장 안 함] [취소] [저장], 열 때 포커스 = [취소] (A · 2번). ps = 정지 그림용 상태 클래스
+// 버튼 3개: 순서 [저장 안 함] [취소] [저장], 열 때 포커스 = [취소] (A · 2번). ps = 정지 그림용 상태 클래스
 const FOOT = (ps = {}) =>
   btn('저장 안 함', 'btn--destructive btn--outlined' + (ps.discard || ''), ' data-modal-close="discard"') +
   btn('취소', 'btn--secondary btn--transparent' + (ps.cancel || ''), ' data-modal-close="cancel" data-modal-initial') +
   btn('저장', 'btn--primary btn--filled' + (ps.save || ''), ' data-modal-close="save"');
 const CLOSE = (ps = '') => '<button type="button" class="btn btn--secondary btn--transparent btn--icon' + ps + '" data-modal-close="cancel" aria-label="닫기">' + svg(I.close, 16) + '</button>';
-// 창(.modal__dialog) — live = 실제로 여닫는 창(aria-modal), 아니면 정지 그림
+// 창(.modal__dialog): live = 실제로 여닫는 창(aria-modal), 아니면 정지 그림
 const dialog = ({ id, title = TEXT.title, desc = TEXT.desc, close = true, foot = FOOT(), live = false, style = '' }) =>
   '<div class="modal__dialog" role="dialog"' + (live ? ' aria-modal="true"' : '') + ' aria-labelledby="' + id + '-title" aria-describedby="' + id + '-desc"' + (style ? ' style="' + style + '"' : '') + '>' +
   '<div class="modal__header"><h2 class="modal__title" id="' + id + '-title">' + title + '</h2>' + (close ? CLOSE() : '') + '</div>' +
@@ -31,9 +31,9 @@ const dialog = ({ id, title = TEXT.title, desc = TEXT.desc, close = true, foot =
   '<div class="modal__footer">' + foot + '</div></div>';
 const modal = (o) => '<div class="modal" id="' + o.id + '"' + (o.live ? ' hidden' : '') + '>' + dialog(o) + '</div>';
 
-// 「코드 보기」 — 실제로 쓰는 마크업(닫힌 상태 · aria-modal)
+// 「코드 보기」: 실제로 쓰는 마크업(닫힌 상태 · aria-modal)
 const CODE = ({ title = TEXT.title, desc = TEXT.desc, close = true } = {}) => [
-  '<!-- 여는 버튼: 바뀐 내용이 있을 때 화면 스크립트가 window.modalOpen(\'unsaved-modal\', 이 버튼) — 또는 data-modal-open="unsaved-modal" -->',
+  '<!-- 여는 버튼: 바뀐 내용이 있을 때 화면 스크립트가 window.modalOpen(\'unsaved-modal\', 이 버튼): 또는 data-modal-open="unsaved-modal" -->',
   '<div class="modal" id="unsaved-modal" hidden>',
   '  <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="unsaved-modal-title" aria-describedby="unsaved-modal-desc">',
   '    <div class="modal__header">',
@@ -55,7 +55,7 @@ const CODE = ({ title = TEXT.title, desc = TEXT.desc, close = true } = {}) => [
   '</script>',
 ].filter((l) => l !== null).join('\n');
 
-// ── 뒤 화면 — 등록 창(Popup Window) 한 장. 확인 창은 이 창의 닫기를 누를 때 뜸 ──
+// ── 뒤 화면: 등록 창(Popup Window) 한 장. 확인 창은 이 창의 닫기를 누를 때 뜸 ──
 const field = (label, control, id, col2 = false) =>
   '<div class="ff-field' + (col2 ? ' col-2' : '') + '"><label class="search-label" for="' + id + '">' + label + '</label><div class="td">' + control + '</div></div>';
 const registerWindow = (u, { live = false } = {}) =>
@@ -70,7 +70,7 @@ const registerWindow = (u, { live = false } = {}) =>
   field('설명', '<textarea class="textarea" id="' + u + '-desc" rows="3" data-saved="" placeholder="문서의 목적 · 변경 내용 입력">조립 순서와 체결 토크 기준</textarea>', u + '-desc', true) +
   '</div></div></div></div>';
 
-// 틀 — 제품의 창 한 장 크기. transform 으로 덮개(fixed)를 틀 안에 가둠
+// 틀: 제품의 창 한 장 크기. transform 으로 덮개(fixed)를 틀 안에 가둠
 const frame = (inner, h = 400) =>
   '<div style="position:relative;max-width:760px;height:' + h + 'px;overflow:hidden;transform:translateZ(0);border:1px solid var(--color-border-base);border-radius:var(--radius-card)">' + inner + '</div>';
 
@@ -84,7 +84,7 @@ export default {
 };
 
 // ── 예시 ──
-// 정지 그림 — 등록 창 위에 확인 창이 열린 모습. 열린 직후라 포커스가 [취소]에 있음
+// 정지 그림: 등록 창 위에 확인 창이 열린 모습. 열린 직후라 포커스가 [취소]에 있음
 export const 저장하지_않고_나가기 = {
   parameters: { docs: { source: { code: CODE() } } },
   render: () => {
@@ -94,11 +94,11 @@ export const 저장하지_않고_나가기 = {
   },
 };
 
-// 직접 열어 보기 — 등록 창의 닫기를 누르면 바뀐 내용이 있을 때만 확인 창을 엶. 고른 버튼은 아래 줄에 표시
+// 직접 열어 보기: 등록 창의 닫기를 누르면 바뀐 내용이 있을 때만 확인 창을 엶. 고른 버튼은 아래 줄에 표시
 const RESULT = {
-  discard: '[저장 안 함] — 저장하지 않고 등록 창을 닫습니다.',
-  cancel: '[취소] — 확인 창만 닫고 등록 창으로 돌아갑니다. 입력한 내용은 그대로입니다.',
-  save: '[저장] — 저장한 뒤 등록 창을 닫습니다.',
+  discard: '[저장 안 함]: 저장하지 않고 등록 창을 닫습니다.',
+  cancel: '[취소]: 확인 창만 닫고 등록 창으로 돌아갑니다. 입력한 내용은 그대로입니다.',
+  save: '[저장]: 저장한 뒤 등록 창을 닫습니다.',
 };
 let demoReady = false;
 const wireDemo = () => {
@@ -129,12 +129,12 @@ export const 직접_열어_보기 = {
   },
 };
 
-// ── Do · Don't — 미리보기만. 창만 그림(덮개 없이) ──
-const mini = (o) => dialog({ id: next(), style: 'width:100%;margin:0;align-self:flex-start;box-shadow:none', ...o });   // 위 정렬(가운데 맞춤 margin:auto 를 풂) — 두 칸 높이가 달라도 창 위치가 맞게
+// ── Do · Don't: 미리보기만. 창만 그림(덮개 없이) ──
+const mini = (o) => dialog({ id: next(), style: 'width:100%;margin:0;align-self:flex-start;box-shadow:none', ...o });   // 위 정렬(가운데 맞춤 margin:auto 를 풂): 두 칸 높이가 달라도 창 위치가 맞게
 export const 사용_지침 = {
   parameters: { controls: { disable: true } },
   render: () => doDont([
-    // 근거: Polaris Modal · KRDS 모달 · Cloudscape Unsaved changes — 버튼 이름은 「확인 · 예」 대신 동작 이름
+    // 근거: Polaris Modal · KRDS 모달 · Cloudscape Unsaved changes: 버튼 이름은 「확인 · 예」 대신 동작 이름
     { title: '버튼 이름은 누르면 일어나는 동작으로 짓습니다',
       do: [mini({}), '누르면 일어나는 일을 버튼 이름으로 짓습니다(예: [저장 안 함] · [저장]). 제목을 다시 읽지 않아도 고를 수 있습니다.'],
       dont: [mini({ foot: btn('아니요', 'btn--destructive btn--outlined') + btn('취소', 'btn--secondary btn--transparent') + btn('예', 'btn--primary btn--filled') }),
@@ -149,7 +149,7 @@ export const 사용_지침 = {
   ]),
 };
 
-// ── 전체 상태 — 창 안의 버튼(닫기 · 푸터 버튼 3개). 모양 · 상태는 Button 과 같음 ──
+// ── 전체 상태: 창 안의 버튼(닫기 · 푸터 버튼 3개). 모양 · 상태는 Button 과 같음 ──
 export const 전체_상태 = {
   parameters: { controls: { disable: true }, docs: { source: { code: '<!-- 닫기 = .btn--secondary.btn--transparent.btn--icon · 푸터 = [저장 안 함] destructive outlined · [취소] secondary transparent · [저장] primary filled. Hovered · Focused 는 CSS가 표시 -->' } } },
   render: () => {
@@ -167,9 +167,9 @@ export const 전체_상태 = {
 // ── Playground ──
 export const Playground = {
   argTypes: {
-    title: { control: 'text', description: '제목 — `.modal__title` (aria-labelledby). 짧은 상태 문장 또는 질문' },
-    description: { control: 'text', description: '본문 — `.modal__body p` (aria-describedby). 한두 문장' },
-    close: { control: 'boolean', description: '닫기 버튼(✕) — `.btn--icon` · `data-modal-close="cancel"`. 누르면 [취소]와 같습니다' },
+    title: { control: 'text', description: '제목: `.modal__title` (aria-labelledby). 짧은 상태 문장 또는 질문' },
+    description: { control: 'text', description: '본문: `.modal__body p` (aria-describedby). 한두 문장' },
+    close: { control: 'boolean', description: '닫기 버튼(✕): `.btn--icon` · `data-modal-close="cancel"`. 누르면 [취소]와 같습니다' },
   },
   args: { title: TEXT.title, description: TEXT.desc, close: true },
   parameters: { docs: { source: { transform: (_, { args }) => CODE({ title: args.title, desc: args.description, close: args.close }) } } },
@@ -179,7 +179,7 @@ export const Playground = {
   },
 };
 
-// ── 시안 — A 가운데 창(추천, 위 「저장하지 않고 나가기」) · B 아래 시트 · C 위험 동작 확인 ──
+// ── 시안: A 가운데 창(추천, 위 「저장하지 않고 나가기」) · B 아래 시트 · C 위험 동작 확인 ──
 const SHEET_FOOT = btn('저장', 'btn--primary btn--filled btn--lg', ' data-modal-close="save"') + btn('저장 안 함', 'btn--destructive btn--outlined btn--lg', ' data-modal-close="discard"') + btn('취소', 'btn--secondary btn--transparent btn--lg', ' data-modal-close="cancel"');
 const sheetModal = (id) => '<div class="modal modal--sheet"><div class="modal__dialog sheet" role="dialog" aria-labelledby="' + id + '-title" aria-describedby="' + id + '-desc">' +
   '<div class="modal__header"><h2 class="modal__title" id="' + id + '-title">' + TEXT.title + '</h2></div>' +

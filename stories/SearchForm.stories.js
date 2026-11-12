@@ -1,6 +1,6 @@
-// Blocks/Search Form — 문서 화면은 SearchForm.mdx. 검색 조건 영역 = 섹션 헤더(.seach_arm) + 조건 영역(.pro_table > .form-grid-2.form-grid--6)
+// Blocks/Search Form: 문서 화면은 SearchForm.mdx. 검색 조건 영역 = 섹션 헤더(.seach_arm) + 조건 영역(.pro_table > .form-grid-2.form-grid--6)
 // 예시 카드 두 개 = 모두 보기 · 접고 펴기(눌러서 펼침). 한 행에 조건 최대 6칸. 동작은 ./_search.js (Screens 문서 검색과 같음)
-// 첫 카드 그림에 번호 표시(data-no). 번호별 이름 · 클래스 표는 SearchForm.mdx 카드 아래 — 구성 표를 따로 두지 않음 (Figma 🧱 Blocks 「Search Form」과 같은 구성)
+// 첫 카드 그림에 번호 표시(data-no). 번호별 이름 · 클래스 표는 SearchForm.mdx 카드 아래: 구성 표를 따로 두지 않음 (Figma 🧱 Blocks 「Search Form」과 같은 구성)
 import './_flow.css';
 import { wireSearchDetail, EXPAND_LABEL } from './_search.js';
 import { lnbSvg } from './_lnbicons.js';
@@ -24,7 +24,7 @@ export default {
 };
 
 let uid = 0;
-// 문서 검색 — 조건이 한 줄(6칸)을 넘는 화면. 첫 줄 = 자주 쓰는 조건, 나머지 = 상세 검색
+// 문서 검색: 조건이 한 줄(6칸)을 넘는 화면. 첫 줄 = 자주 쓰는 조건, 나머지 = 상세 검색
 const docFirst = (n = false, v = false) => field('문서 분류', input('문서 분류', '/제품 문서/설계 문서', true)) + field('문서 번호', input('문서 번호', v ? 'DOC-2610' : '', false, '문서 번호 입력'), 0, n ? 4 : 0) + field('문서 명', input('문서 명', v ? '캘리퍼' : '', false, '문서 명 입력')) +
   field('작업현황', select('작업현황', ['전체', '작업 중', '검토 중', '승인', '반려'], v ? '검토 중' : '')) + field('등록일', v ? range('등록일', '2026-09-01', '2026-09-30') : range('등록일'), 2, n ? 5 : 0);
 const docDetail = (id, v = false) => field('버전', '<div class="radio-group" role="radiogroup" aria-label="버전">' +
@@ -57,14 +57,14 @@ export const 접고_펴기 = {
   parameters: { docs: { source: { code: searchForm({}) } } },
   render: () => stage(searchForm({})),
 };
-// 펼치고 값을 넣은 모습 — 상세 검색을 펼치고 첫 줄 · 상세 조건에 값을 넣어 검색하기 직전. 값이 있는 칸에는 지우기(×)
+// 펼치고 값을 넣은 모습: 상세 검색을 펼치고 첫 줄 · 상세 조건에 값을 넣어 검색하기 직전. 값이 있는 칸에는 지우기(×)
 export const 펼치고_값_넣기 = {
   parameters: { docs: { source: { code: searchForm({ open: true, v: true }) } } },
   render: () => stage(searchForm({ open: true, v: true })),
 };
 const optSrc = (code) => ({ controls: { disable: true }, docs: { source: { language: 'html', code } } });
 
-// ── 시안 — A 칸 여러 줄(추천, 위 「모두 보기」) · B 필터 칩 한 줄 · C 왼쪽 필터 패널 ──
+// ── 시안: A 칸 여러 줄(추천, 위 「모두 보기」) · B 필터 칩 한 줄 · C 왼쪽 필터 패널 ──
 const optChip = (t, on = false) => '<button type="button" class="chip" aria-pressed="' + on + '">' + t + '</button>';
 const OPT_CHIPS = '<div class="search-chips"><input class="input" type="search" aria-label="문서 검색" placeholder="문서 번호 또는 문서 명">' +
   '<div class="chip-group" role="group" aria-label="빠른 조건">' + optChip('내 문서', true) + optChip('작업 중') + optChip('결재 대기') + optChip('이번 달') + '</div></div>';

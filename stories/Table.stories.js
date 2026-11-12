@@ -1,6 +1,6 @@
-// Data Display/Table — 문서 화면은 Table.mdx. Figma 짝 = Table component · Header · Cell, DS 클래스 = .grid-table (바깥 컨테이너 .table_list › .list)
-// 제품 목록 그리드는 상용 그리드 라이브러리가 그림 — .grid-table 은 같은 그리드 토큰으로 그리는 HTML 표(라이브러리 없이 쓰는 목록 · 문서 · 화면 예시)
-// 값 = 헤더 행 34 · 행 30 · 글자 12 · 세로선 · 얼룩 행 · 가운데 정렬, 긴 글만 왼쪽 — components.css 주석
+// Data Display/Table: 문서 화면은 Table.mdx. Figma 짝 = Table component · Header · Cell, DS 클래스 = .grid-table (바깥 컨테이너 .table_list › .list)
+// 제품 목록 그리드는 상용 그리드 라이브러리가 그림: .grid-table 은 같은 그리드 토큰으로 그리는 HTML 표(라이브러리 없이 쓰는 목록 · 문서 · 화면 예시)
+// 값 = 헤더 행 34 · 행 30 · 글자 12 · 세로선 · 얼룩 행 · 가운데 정렬, 긴 글만 왼쪽: components.css 주석
 import { matrix } from './_matrix.js';
 import { enablePseudo } from './_pseudo.js';
 import { doDont } from './_dodont.js';
@@ -19,7 +19,7 @@ const ck = (label, on = false) => '<label class="checkbox"><input type="checkbox
 const COLS = '<colgroup><col style="width:52px"><col style="width:44px"><col style="width:132px"><col><col style="width:64px"><col style="width:96px"><col style="width:84px"><col style="width:104px"></colgroup>';
 const HEAD = '<thead><tr><th>No.</th><th>' + ck('전체 선택') + '</th><th>문서 번호</th><th>문서 명</th><th>버전</th><th>작업현황</th><th>등록자</th><th>등록일</th></tr></thead>';
 
-// 행 하나 — sel = 선택한 행(체크 + 선택 바탕), ps = 정지 화면 상태 클래스(.ps-hover), linkPs = 링크 상태 클래스(.ps-focus-visible)
+// 행 하나: sel = 선택한 행(체크 + 선택 바탕), ps = 정지 화면 상태 클래스(.ps-hover), linkPs = 링크 상태 클래스(.ps-focus-visible)
 const row = (r, i, { sel = false, ps = '', linkPs = '' } = {}) => {
   const cls = [sel ? 'is-selected' : '', ps].filter(Boolean).join(' ');
   return '<tr' + (cls ? ' class="' + cls + '"' : '') + (sel ? ' aria-selected="true"' : '') + '>' +
@@ -37,10 +37,10 @@ export default {
   parameters: { docs: { source: { language: 'html' } } },
 };
 
-// ── 예시 — 문서 검색 결과처럼. 섹션 헤더(.seach_arm) + 표, 두 번째 행 선택 ──
+// ── 예시: 문서 검색 결과처럼. 섹션 헤더(.seach_arm) + 표, 두 번째 행 선택 ──
 const LIST = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/></svg>';
 const XLS = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9l4 6M11 9l-4 6M14.5 9H18M14.5 12H18M14.5 15H18"/></svg>';   // Button 엑셀 아이콘과 같은 모양
-// 결과 헤더 — 기본 · 0건 예시가 같은 헤더를 쓰고 결과 수 · 내보내기 가능 여부만 다름
+// 결과 헤더: 기본 · 0건 예시가 같은 헤더를 쓰고 결과 수 · 내보내기 가능 여부만 다름
 const resultHead = (n) => '<div class="seach_arm"><div class="leftbt">' + LIST + '<h4>검색 결과 (' + n + ')</h4></div>' +
   '<div class="rightbt"><button type="button" class="btn btn--excel"' + (n ? '' : ' disabled') + '>' + XLS + 'Excel</button></div></div>';
 const SRC = [
@@ -63,7 +63,7 @@ export const 기본 = {
   render: () => '<div style="max-width:760px">' + resultHead(ROWS.length) + '<div class="table_list"><div class="list">' + table(ROWS.map((r, i) => row(r, i, { sel: i === 1 })).join('')) + '</div></div></div>',
 };
 
-// ── 결과 0건 — 헤더 행은 그대로, 표 아래 빈 상태(검색 결과 없음 = 기본 .empty + [검색 조건 초기화]), 내보내기는 누를 수 없음 ──
+// ── 결과 0건: 헤더 행은 그대로, 표 아래 빈 상태(검색 결과 없음 = 기본 .empty + [검색 조건 초기화]), 내보내기는 누를 수 없음 ──
 // 일러스트 = 그림 자산(솔리드 · 라인, 브랜드 파일이 고름). 표 헤더 행 바로 아래라 작은 크기(.grid-table + .empty)
 const EMPTY_HIT = (actions = true) => '<div class="empty" role="status">' + emptyArt('search') + '<p class="empty__title">조건에 맞는 문서가 없습니다</p>' +
   '<p class="empty__desc">기간을 넓히거나 작업현황을 \'전체\'로 바꿔 주십시오.</p>' +
@@ -76,7 +76,7 @@ export const 결과_0건 = {
   render: () => '<div style="max-width:760px">' + ZERO + '</div>',
 };
 
-// ── 편집 표 — 일괄 등록처럼 셀 안에 입력 필드. 회색 판 + 흰 입력 상자 ──
+// ── 편집 표: 일괄 등록처럼 셀 안에 입력 필드. 회색 판 + 흰 입력 상자 ──
 const EROWS = [['설계 사양서', '브레이크 캘리퍼 조립 사양서', '김도윤'], ['시험 성적서', '', '김도윤'], ['도면', '하우징 3D 모델', '김도윤']];
 const sel = (label, v) => '<select class="select" aria-label="' + label + '">' + ['설계 사양서', '시험 성적서', '도면'].map((o) => '<option' + (o === v ? ' selected' : '') + '>' + o + '</option>').join('') + '</select>';
 const ECOLS = '<colgroup><col style="width:52px"><col style="width:44px"><col style="width:150px"><col><col style="width:120px"></colgroup>';
@@ -101,7 +101,7 @@ export const 편집 = {
   render: () => wrap('<table class="grid-table grid-table--edit">' + ECOLS + EHEAD + '<tbody>' + EROWS.map((r, i) => erow(r, i, i === 2)).join('') + '</tbody></table>'),
 };
 
-// ── 셀 안 아이콘 버튼 — Figma Cell Type=Actions 짝. 행마다 같은 동작을 아이콘 버튼으로(.button_group 간격 8), 이름은 「식별자 + 동작」 ──
+// ── 셀 안 아이콘 버튼: Figma Cell Type=Actions 짝. 행마다 같은 동작을 아이콘 버튼으로(.button_group 간격 8), 이름은 「식별자 + 동작」 ──
 const ico = (d) => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + d + '</svg>';
 const ACT = [['미리보기', '<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>'],
   ['내려받기', '<path d="M12 4v11M7 10l5 5 5-5M5 20h14"/>'],
@@ -124,7 +124,7 @@ export const 셀_안_버튼 = {
   render: () => wrap('<table class="grid-table">' + ACOLS + AHEAD + '<tbody>' + ROWS.slice(0, 3).map(arow).join('') + '</tbody></table>'),
 };
 
-// ── 전체 상태 — 행 상태. Hovered 는 마우스 상태를, 링크 Focused 는 키보드 상태를 정지 화면으로 ──
+// ── 전체 상태: 행 상태. Hovered 는 마우스 상태를, 링크 Focused 는 키보드 상태를 정지 화면으로 ──
 export const 전체_상태 = {
   parameters: html('<tr>…</tr>                                        <!-- Default -->\n<tr>…</tr>                                        <!-- 짝수 행 = 얼룩 -->\n<tr class="is-selected" aria-selected="true">…</tr>  <!-- Selected -->'),
   render: () => {
@@ -141,7 +141,7 @@ export const 전체_상태 = {
   },
 };
 
-// ── Do · Don't — 미리보기만, 코드는 위 예시 카드에. 열 넷으로 줄인 표 ──
+// ── Do · Don't: 미리보기만, 코드는 위 예시 카드에. 열 넷으로 줄인 표 ──
 const DCOLS = '<colgroup><col style="width:44px"><col style="width:120px"><col><col style="width:100px"></colgroup>';
 const DHEAD = '<thead><tr><th>' + ck('전체 선택') + '</th><th>문서 번호</th><th>문서 명</th><th>작업현황</th></tr></thead>';
 const ddZero = (withTable) => '<div style="width:100%;align-self:flex-start">' + resultHead(0) +
@@ -158,7 +158,7 @@ export const 사용_지침 = {
 };
 const optSrc = (code) => ({ controls: { disable: true }, docs: { source: { language: 'html', code } } });
 
-// ── 시안 — A 얼룩 줄(추천, 위 「기본」) · B 줄 선 · C 넓게 ──
+// ── 시안: A 얼룩 줄(추천, 위 「기본」) · B 줄 선 · C 넓게 ──
 const optTable = (cls) => '<div class="table_list"><div class="list">' + table(ROWS.map((r, i) => row(r, i)).join('')).replace('class="grid-table"', 'class="grid-table ' + cls + '"') + '</div></div>';
 export const 시안_줄_선 = { parameters: optSrc(optTable('grid-table--lined')), render: () => '<div class="sb-field--table">' + optTable('grid-table--lined') + '</div>' };
 export const 시안_넓게 = { parameters: optSrc(optTable('grid-table--relaxed')), render: () => '<div class="sb-field--table">' + optTable('grid-table--relaxed') + '</div>' };

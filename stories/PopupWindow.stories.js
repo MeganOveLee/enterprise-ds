@@ -1,4 +1,4 @@
-// Overlay/Popup Window — 문서 화면은 PopupWindow.mdx. DS 클래스는 .pop(팝업 창). 같은 페이지 위 확인 창은 Overlay/Modal(.modal)
+// Overlay/Popup Window: 문서 화면은 PopupWindow.mdx. DS 클래스는 .pop(팝업 창). 같은 페이지 위 확인 창은 Overlay/Modal(.modal)
 // 제품은 상세 · 등록 화면을 새 창으로 띄우고, .pop 이 그 창 한 장을 채우는 틀(높이 100vh · 내용이 넘치면 창 안에서 스크롤)
 // 여기서는 창 크기를 정해 둔 틀(win) 안에 .pop 을 그림. 높이만 틀에 맞추고(100vh → 100%) 나머지 규칙은 DS 그대로
 import { matrix } from './_matrix.js';
@@ -20,12 +20,12 @@ const top = ({ title = '문서 - DOC-2610-0013, 브레이크 캘리퍼 조립 �
   (version ? '<span class="version">' + version + '</span>' : '') + '</div>' +
   '<div class="top-btn-area">' + buttons + '<button type="button" class="pop-close" aria-label="닫기">' + svg(I.close, 16) + '</button></div></div>';
 const TABS = ['세부 내용', '관련 객체', '이력'];
-// 탭 줄 — 오른쪽 버튼(.tab-actions)은 탭 줄에
+// 탭 줄: 오른쪽 버튼(.tab-actions)은 탭 줄에
 const tabs = (list = TABS, actions = '') =>
   '<div class="tab"><ul role="tablist" aria-label="문서 상세">' +
   list.map((t, i) => '<li role="tab" tabindex="' + (i ? -1 : 0) + '" aria-selected="' + !i + '"' + (i ? '' : ' class="is-active"') + '>' + t + '</li>').join('') + '</ul>' +
   (actions ? '<div class="tab-actions">' + actions + '</div>' : '') + '</div>';
-// 핵심 동작 하나만 primary — 결재 요청 = primary filled, 수정 = secondary outlined, 삭제 = destructive outlined (Button 업무 동작별 버튼)
+// 핵심 동작 하나만 primary: 결재 요청 = primary filled, 수정 = secondary outlined, 삭제 = destructive outlined (Button 업무 동작별 버튼)
 const VIEW_ACTIONS = btn('결재 요청', 'btn--primary btn--filled') + btn('수정', 'btn--secondary btn--outlined') + btn('삭제', 'btn--destructive btn--outlined');
 // 행 = 필드 한두 개. 필드 하나면 행 전체 폭
 const ROWS = [
@@ -41,18 +41,18 @@ const SUB_FILES = ['체결 토크 시험 결과.xlsx', '조립도_BRK-20417.dwg'
 const files = (list) => '<ul class="file-download-list">' + list.map((n) =>
   '<li>' + fileIcon(n) + '<a class="file-name" href="#" download>' + n + '</a></li>').join('') + '</ul>';
 const row = (cells) => '<dl class="detail-dl__row">' + cells.map(([k, v]) => '<div><dt>' + k + '</dt><dd>' + v + '</dd></div>').join('') + '</dl>';
-// 값 보기 — 섹션 헤더 + 옅은 회색 카드 안에 행
+// 값 보기: 섹션 헤더 + 옅은 회색 카드 안에 행
 const dl = () => '<div class="seach_arm"><div class="leftbt"><h4>기본 정보</h4></div></div>' +
   '<div class="pro_table"><div class="detail-dl">' + ROWS.map(row).join('') +
   row([['주 첨부 파일', files(MAIN_FILE)]]) + row([['부 첨부 파일', files(SUB_FILES)]]) + '</div></div>';
 
-// 상세 창 — 제목 줄(닫기만) + 탭 줄(탭 · 오른쪽 버튼) + 내용(.contents) = 섹션 헤더 · 값 보기 카드
+// 상세 창: 제목 줄(닫기만) + 탭 줄(탭 · 오른쪽 버튼) + 내용(.contents) = 섹션 헤더 · 값 보기 카드
 const viewPop = ({ title, version, withTabs = true } = {}) =>
   top({ title, version }) +
   (withTabs ? tabs(TABS, VIEW_ACTIONS) : '') +
   '<div class="contents">' + dl() + '</div>';
 
-// 등록 창 — 탭 없음. 제목 줄 버튼 = 임시 저장 · 등록, 내용(.contents) = 접는 섹션 상자(섹션 헤더 + 폼, 배경 bg-muted). Screens 등록 창과 같은 구성
+// 등록 창: 탭 없음. 제목 줄 버튼 = 임시 저장 · 등록, 내용(.contents) = 접는 섹션 상자(섹션 헤더 + 폼, 배경 bg-muted). Screens 등록 창과 같은 구성
 const field = (label, control, { req = false, id = '', col2 = false } = {}) =>
   '<div class="ff-field' + (col2 ? ' col-2' : '') + '"><label class="search-label"' + (id ? ' for="' + id + '"' : '') + '>' + label +
   (req ? '<span class="required" aria-hidden="true"></span>' : '') + '</label><div class="td">' + control + '</div></div>';
@@ -72,7 +72,7 @@ const registerPop = ({ title = '문서 등록' } = {}, u = 'pw' + (++uid)) =>
   field('설명', '<textarea class="textarea" id="' + u + '-desc" rows="3" placeholder="문서의 목적 · 변경 내용 입력"></textarea>', { id: u + '-desc', col2: true }) +
   '</div></div></div>';
 
-// 창 크기를 정한 틀 — 제품의 새 창 한 장. 좁은 화면에서는 틀 안에서 가로로 밀림(.pop 최소 폭 600)
+// 창 크기를 정한 틀: 제품의 새 창 한 장. 좁은 화면에서는 틀 안에서 가로로 밀림(.pop 최소 폭 600)
 const win = (inner, h = 440) =>
   '<div style="max-width:760px;height:' + h + 'px;overflow-x:auto;overflow-y:hidden;border:1px solid var(--color-border-base);border-radius:var(--radius-card)">' +
   '<div class="pop" style="height:100%">' + inner + '</div></div>';
@@ -93,11 +93,11 @@ export const 등록_창 = {
   render: () => win(registerPop(), 400),
 };
 
-// ── Do · Don't — 미리보기만. 작은 틀이라 .pop 최소 폭(600)만 풀어 둠 ──
-// 근거: Primer Saving 패턴(저장 버튼은 한 곳) · 구성 「제목 줄」(sticky — 스크롤해도 창 위에 남음)
+// ── Do · Don't: 미리보기만. 작은 틀이라 .pop 최소 폭(600)만 풀어 둠 ──
+// 근거: Primer Saving 패턴(저장 버튼은 한 곳) · 구성 「제목 줄」(sticky: 스크롤해도 창 위에 남음)
 const mini = (inner) =>
   '<div style="width:100%;align-self:flex-start;overflow:hidden;border:1px solid var(--color-border-base);border-radius:var(--radius-card)">' +
-  '<div class="pop" style="height:auto;min-width:0">' + inner + '</div></div>';   // 위 정렬 — 두 칸 높이가 달라도 창 위치가 맞게
+  '<div class="pop" style="height:auto;min-width:0">' + inner + '</div></div>';   // 위 정렬: 두 칸 높이가 달라도 창 위치가 맞게
 const SAVE_BTNS = () => btn('임시 저장', 'btn--secondary btn--outlined') + btn('등록', 'btn--primary btn--filled');
 const ddForm = (bottom = '') => {
   const u = 'pw' + (++uid);
@@ -116,7 +116,7 @@ export const 사용_지침 = {
   ]),
 };
 
-// ── 전체 상태 — 창 안의 아이콘 버튼(닫기) · 첨부 이름 링크 ──
+// ── 전체 상태: 창 안의 아이콘 버튼(닫기) · 첨부 이름 링크 ──
 export const 전체_상태 = {
   parameters: { controls: { disable: true }, docs: { source: { language: 'html', code: '<!-- 닫기 = 아이콘 버튼(aria-label) · 첨부 = 이름 링크(누르면 내려받음). Hovered · Focused 는 CSS가 표시 -->' } } },
   render: () => {
@@ -134,18 +134,18 @@ export const 전체_상태 = {
 // ── Playground ──
 export const Playground = {
   argTypes: {
-    kind: { control: 'inline-radio', options: ['상세', '등록'], description: '창 종류 — 상세 = 버튼이 탭 줄 오른쪽, 등록 = 버튼이 제목 줄' },
-    title: { control: 'text', description: '창 제목 — `.top-title-area h3`' },
-    version: { control: 'text', description: '버전 표시 — `.version` (비우면 표시하지 않습니다). 제목에 버전을 적었으면 비워 둡니다' },
-    withTabs: { control: 'boolean', description: '탭 줄 — `.tab` (상세 창만)' },
-    height: { control: { type: 'range', min: 280, max: 640, step: 20 }, description: '틀 높이 — 내용이 넘치면 창 안에서 스크롤하고, 제목 줄은 위에 붙어 있습니다' },
+    kind: { control: 'inline-radio', options: ['상세', '등록'], description: '창 종류: 상세 = 버튼이 탭 줄 오른쪽, 등록 = 버튼이 제목 줄' },
+    title: { control: 'text', description: '창 제목: `.top-title-area h3`' },
+    version: { control: 'text', description: '버전 표시: `.version` (비우면 표시하지 않습니다). 제목에 버전을 적었으면 비워 둡니다' },
+    withTabs: { control: 'boolean', description: '탭 줄: `.tab` (상세 창만)' },
+    height: { control: { type: 'range', min: 280, max: 640, step: 20 }, description: '틀 높이: 내용이 넘치면 창 안에서 스크롤하고, 제목 줄은 위에 붙어 있습니다' },
   },
   args: { kind: '상세', title: '문서 - DOC-2610-0013, 브레이크 캘리퍼 조립 사양서, A.2', version: '', withTabs: true, height: 520 },
   parameters: { docs: { source: { transform: (_, { args }) => '<div class="pop">\n  ' + (args.kind === '등록' ? registerPop(args) : viewPop(args)) + '\n</div>' } } },
   render: (a) => win(a.kind === '등록' ? registerPop(a) : viewPop(a), a.height),
 };
 
-// ── 시안 — A 새 창(추천, 위 「상세 창」) · B 옆 패널 ──
+// ── 시안: A 새 창(추천, 위 「상세 창」) · B 옆 패널 ──
 const LIST_ROWS = [['DOC-2610-0013', '브레이크 캘리퍼 조립 사양서', '작업 중'], ['DOC-2610-0012', '디스크 로터 시험 성적서', '승인'], ['DOC-2610-0011', '캘리퍼 브래킷 도면', '검토 중'], ['DOC-2610-0010', '패드 마모 시험 계획서', '승인']];
 const listTable = '<div class="table_list"><div class="list"><table class="grid-table"><thead><tr><th scope="col">문서 번호</th><th scope="col">문서 명</th><th scope="col">작업현황</th></tr></thead><tbody>' +
   LIST_ROWS.map(([n, t, s], i) => '<tr' + (i ? '' : ' class="is-selected"') + '><td><a href="#" class="grid-custom-rows-link">' + n + '</a></td><td>' + t + '</td><td>' + s + '</td></tr>').join('') + '</tbody></table></div></div>';

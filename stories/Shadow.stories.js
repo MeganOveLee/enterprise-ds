@@ -1,4 +1,4 @@
-// Foundation/Shadow — 문서 화면은 Shadow.mdx
+// Foundation/Shadow: 문서 화면은 Shadow.mdx
 import { mount } from './_foundation.js';
 
 export default {

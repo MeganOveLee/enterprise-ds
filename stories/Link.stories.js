@@ -1,6 +1,6 @@
-// Navigation/Link — 문서 화면은 Link.mdx. 여기 스토리는 MDX 카드 안에 들어가는 예시 · 전체 상태
-// 그리드 링크 — 행마다 식별자 열 하나만 항상 밑줄(.grid-custom-rows-link), 일반 링크는 마우스 · 키보드가 올 때만 밑줄(.grid-link)
-// 본문 링크(.text-link) — 표 밖 상세 정보 · 폼 안 글자 링크, 끝 「↗」= 다른 창. 내려받기는 .no-arrow
+// Navigation/Link: 문서 화면은 Link.mdx. 여기 스토리는 MDX 카드 안에 들어가는 예시 · 전체 상태
+// 그리드 링크: 행마다 식별자 열 하나만 항상 밑줄(.grid-custom-rows-link), 일반 링크는 마우스 · 키보드가 올 때만 밑줄(.grid-link)
+// 본문 링크(.text-link): 표 밖 상세 정보 · 폼 안 글자 링크, 끝 「↗」= 다른 창. 내려받기는 .no-arrow
 // 브레드크럼(.breadcrumb) 규칙은 이 문서, GNB · 페이지 헤더 안 배치는 App Shell 문서
 import { matrix } from './_matrix.js';
 import { enablePseudo } from './_pseudo.js';
@@ -51,13 +51,13 @@ export const 위치_표시 = {
   ], { full: true }),
 };
 
-// ── 전체 상태 — Hovered · Focused 는 상호작용 상태를 고정해 표시(_pseudo.js). 키보드 포커스 = 브랜드 테두리(글자 링크 규칙) ──
+// ── 전체 상태: Hovered · Focused 는 상호작용 상태를 고정해 표시(_pseudo.js). 키보드 포커스 = 브랜드 테두리(글자 링크 규칙) ──
 const PS = ['', 'ps-hover', 'ps-focus-visible'];
 export const 전체_상태 = {
   parameters: html(GRID),
   render: () => {
     enablePseudo();
-    // 표 칸과 같은 글자 크기(--body-sm)로 그림 — 상태마다 글자 크기 · 폭은 같고, Focused는 바깥 2px 테두리만 더해짐
+    // 표 칸과 같은 글자 크기(--body-sm)로 그림: 상태마다 글자 크기 · 폭은 같고, Focused는 바깥 2px 테두리만 더해짐
     const inCell = (h) => '<span style="font-size:var(--body-sm)">' + h + '</span>';
     return matrix(['Default', 'Hovered', 'Focused'], [
       ['식별자 열 <code>.grid-custom-rows-link</code>', PS.map((p) => inCell(idLink('DOC-2610-0012', p)))],
@@ -77,7 +77,7 @@ export const 본문_링크_상태 = {
   },
 };
 
-// ── Do · Don't — 미리보기만, 코드는 위 예시 카드에 ──
+// ── Do · Don't: 미리보기만, 코드는 위 예시 카드에 ──
 const ddTable = (first, second) => '<div class="table_list" style="width:100%"><div class="list"><table class="grid-table"><colgroup><col style="width:132px"><col></colgroup>' +
   '<thead><tr><th>문서 번호</th><th>문서 명</th></tr></thead><tbody>' +
   '<tr><td>' + first('DOC-2610-0013') + '</td><td class="is-left">' + second('브레이크 캘리퍼 조립 사양서') + '</td></tr>' +
@@ -86,18 +86,18 @@ const ddStack = (h) => '<div style="display:grid;gap:8px">' + h + '</div>';
 export const 사용_지침 = {
   parameters: { controls: { disable: true } },
   render: () => doDont([
-    // 근거: Link.mdx 구성 「식별자 링크 · 일반 링크」 (그리드 링크 결정) —  지금 두 개 그대로
+    // 근거: Link.mdx 구성 「식별자 링크 · 일반 링크」 (그리드 링크 결정):  지금 두 개 그대로
     { title: '늘 밑줄인 링크는 행마다 하나만 둡니다',
       do: [ddTable((t) => idLink(t), (t) => link(t)), '식별자 열 하나만 늘 밑줄이고, 나머지는 마우스 · 키보드가 올 때만 밑줄입니다.'],
       dont: [ddTable((t) => idLink(t), (t) => idLink(t)), '모든 링크가 늘 밑줄이면 마우스를 올린 것처럼 보입니다.'] },
-    // 근거: Link.mdx 구성 「본문 링크 — 끝의 「↗」는 다른 창으로 열린다는 표시, 창이 열리지 않는 링크는 .no-arrow」
+    // 근거: Link.mdx 구성 「본문 링크: 끝의 「↗」는 다른 창으로 열린다는 표시, 창이 열리지 않는 링크는 .no-arrow」
     { title: '↗는 다른 창으로 열 때만 붙입니다',
       do: [ddStack(tlink('PJT-2026-014 브레이크 캘리퍼 경량화 개발') + tlink('(양식) 사양서 양식.docx', 'no-arrow')), '창이 열리지 않는 링크(예: 내려받기)는 .no-arrow로 화살표를 뺍니다.'],
       dont: [ddStack(tlink('PJT-2026-014 브레이크 캘리퍼 경량화 개발') + tlink('(양식) 사양서 양식.docx')), '내려받기 링크에 「↗」를 붙이지 않습니다.'] },
   ]),
 };
 
-// ── 시안 — A 올리면 밑줄(추천, 위 「본문 링크」) · B 늘 밑줄 · C 화살표 링크 ──
+// ── 시안: A 올리면 밑줄(추천, 위 「본문 링크」) · B 늘 밑줄 · C 화살표 링크 ──
 const UNDER = ['<p class="sb-note">첨부 파일 형식은 <a href="#" class="text-link text-link--underline no-arrow">올릴 수 있는 파일 형식</a>에서 확인할 수 있습니다.</p>'];
 const ARROW = ['<a href="#" class="text-link text-link--arrow">최근 문서 전체 보기</a>'];
 export const 시안_늘_밑줄 = { parameters: html(UNDER), render: () => UNDER.join('') };

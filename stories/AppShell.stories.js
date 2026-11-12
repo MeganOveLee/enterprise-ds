@@ -1,4 +1,4 @@
-// Navigation/App Shell — 문서 화면은 AppShell.mdx. 모든 업무 화면이 함께 쓰는 레이아웃: GNB · LNB(레일 · 서브 패널) · 페이지 헤더 · 푸터
+// Navigation/App Shell: 문서 화면은 AppShell.mdx. 모든 업무 화면이 함께 쓰는 레이아웃: GNB · LNB(레일 · 서브 패널) · 페이지 헤더 · 푸터
 // LNB 레일(.main-menu) · 서브 메뉴(.ui-submenu) 마크업은 제품 마크업 그대로, 값만 DS 토큰
 import { matrix } from './_matrix.js';
 import { enablePseudo } from './_pseudo.js';
@@ -20,16 +20,16 @@ const history = (x = '') =>
   '<button type="button" class="nav-history-btn" aria-label="앞으로">' + svg(I.next, 14) + '</button></div>';
 const crumbs = (list) => '<div class="breadcrumb">' + list.map((c, i) => i < list.length - 1 ? '<span>' + c + '</span><span aria-hidden="true">&gt;</span>' : '<span class="crumb-current" aria-current="page">' + c + '</span>').join('') + '</div>';
 const count = (title, n) => '<div class="menu-container"><button type="button" class="menu-toggle" aria-haspopup="true" aria-expanded="false"><span class="title">' + title + '</span><span class="count">' + n + '</span></button></div>';
-// 사용자 메뉴 버튼 = 사용자 아이콘 24(Figma GNB/Top bar › user — 원 없는 사람 윤곽)만, 이름 없음. 누르면 사용자 메뉴(화면 모드 · 로그아웃 포함)가 펼쳐짐
+// 사용자 메뉴 버튼 = 사용자 아이콘 24(Figma GNB/Top bar › user: 원 없는 사람 윤곽)만, 이름 없음. 누르면 사용자 메뉴(화면 모드 · 로그아웃 포함)가 펼쳐짐
 const userBtn = (x = '') => '<div class="menu-container"><button type="button" class="menu-toggle' + x + '" aria-label="사용자 메뉴" aria-haspopup="true" aria-expanded="false">' + lnbSvg('user', 24) + '</button></div>';
 const actions = (a = 2, b = 0) => '<div class="header-actions">' + userBtn() + count('결재업무', a) + count('활동업무', b) + '</div>';   // GNB 오른쪽 = 사용자 아이콘 · 결재업무 · 활동업무
 
 const gnb = ({ list = ['Home', '문서 관리', '문서 검색'], a = 2, b = 0 } = {}) =>
   '<header class="gnb"><div style="display:flex;align-items:center">' + history() + crumbs(list) + '</div>' + actions(a, b) + '</header>';
-// 로고형 GNB — LNB 레일이 없는 화면 틀에서 GNB 왼쪽에 로고. 세 가지:
-//   워드마크 = 제품 이름이 든 로고 그림 한 장(.brand-logo) + 버전 — 이전 버전 상단 바(로고 그림 + 버전 + 뒤로 · 앞으로)와 같은 구성
-//   심볼 + 텍스트 = 마크 + 제품 이름 글자 + 버전 — 로고 그림이 마크뿐인 제품. 글자 마크(.logo-mark)를 쓰는 제품도 같은 자리
-//   심볼 = 마크만, 제품 이름은 마크의 이름(aria-label) — GNB 왼쪽 자리가 좁을 때(DS 제안, 이전 버전에 없음)
+// 로고형 GNB: LNB 레일이 없는 화면 틀에서 GNB 왼쪽에 로고. 세 가지:
+//   워드마크 = 제품 이름이 든 로고 그림 한 장(.brand-logo) + 버전: 이전 버전 상단 바(로고 그림 + 버전 + 뒤로 · 앞으로)와 같은 구성
+//   심볼 + 텍스트 = 마크 + 제품 이름 글자 + 버전: 로고 그림이 마크뿐인 제품. 글자 마크(.logo-mark)를 쓰는 제품도 같은 자리
+//   심볼 = 마크만, 제품 이름은 마크의 이름(aria-label): GNB 왼쪽 자리가 좁을 때(DS 제안, 이전 버전에 없음)
 // 워드마크 견본 그림 = 가상 제품 「Enterprise PLM」의 마크 + 글자를 한 장으로 그린 것(실제 회사 로고 아님)
 const wordmark = () => '<svg class="brand-logo" width="168" height="28" viewBox="0 0 168 28" role="img" aria-label="Enterprise PLM">' +
   '<g transform="scale(.8235)">' + lnbLogo('', '').replace(/^<svg[^>]*>/, '').replace(/<\/svg>$/, '') + '</g>' +
@@ -63,7 +63,7 @@ export const 페이지_머리 = {
     '<button type="button" class="favorite-icon" aria-label="즐겨찾기에 추가" aria-pressed="false" style="border:0;background:transparent;padding:0;display:inline-flex">' + svg(I.star, 18) + '</button></div>' +
     crumbs(['Home', '문서 관리', '문서 검색']) + '</div></div>'),
 };
-// 폴더 트리 = DS .tree — 단계는 --tree-level, 끝 항목도 꺾쇠 칸을 비워 둠. 폴더 아이콘 = 그림 자산(솔리드 · 라인, ./_fileicon.js)
+// 폴더 트리 = DS .tree: 단계는 --tree-level, 끝 항목도 꺾쇠 칸을 비워 둠. 폴더 아이콘 = 그림 자산(솔리드 · 라인, ./_fileicon.js)
 const FOLDERS = [[0, '제품 문서', true], [1, '설계 문서', true, true], [2, '사양서'], [2, '시험 성적서'], [1, '품질 문서', false], [1, '양식']];
 const tree = () => '<ul class="tree" role="tree" aria-label="문서 폴더">' + FOLDERS.map(([lv, t, open, on]) =>
   '<li class="tree__item" role="treeitem"' + (open !== undefined ? ' aria-expanded="' + open + '"' : '') + (on ? ' aria-selected="true"' : '') + ' style="--tree-level:' + lv + '">' +
@@ -82,7 +82,7 @@ export const 보조_메뉴_패널 = { parameters: { docs: { source: { code: pane
 export const 바닥 = { render: () => frame('<footer class="gnb-footer">© 2026 Enterprise PLM</footer>') };
 
 // ── LNB 레일 · 서브 메뉴 ──
-// 아이콘 = Figma 「LNB/Rail」 아이콘(./_lnbicons.js, Screens 와 같음). mask 그림 — 제품은 메뉴마다 그림 파일 경로를 --lnb-icon 에 넣음
+// 아이콘 = Figma 「LNB/Rail」 아이콘(./_lnbicons.js, Screens 와 같음). mask 그림: 제품은 메뉴마다 그림 파일 경로를 --lnb-icon 에 넣음
 // 사용자 메뉴 행 아이콘도 같은 mask 방식(--row-icon)
 const railIcon = (d) => "url('data:image/svg+xml," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' + d + '</svg>') + "')";
 const railItem = (ic, t, { current = false, liX = '', aX = '', spanStyle = '' } = {}) =>
@@ -108,7 +108,7 @@ const subPanel = () =>
   '<div class="main-sub-content">' + subMenu() + '</div></aside>';
 export const 보조_메뉴 = { parameters: { docs: { source: { code: subMenu() } } }, render: () => '<div style="display:flex">' + subPanel() + '</div>' };
 
-// ── 사용자 메뉴 — GNB 사용자 아이콘을 누르면 열림 ──
+// ── 사용자 메뉴: GNB 사용자 아이콘을 누르면 열림 ──
 const UM = {
   map: '<path d="M3 6l6-3 6 3 6-3v15l-6 3-6-3-6 3z"/><path d="M9 3v15M15 6v15"/>',
   palette: '<circle cx="12" cy="12" r="9"/><circle cx="8" cy="10" r="1.2"/><circle cx="12" cy="7.5" r="1.2"/><circle cx="16" cy="10" r="1.2"/><path d="M12 21a2 2 0 0 1 0-4h1.5a2.5 2.5 0 0 0 0-5"/>',
@@ -117,7 +117,7 @@ const UM = {
   moon: '<path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/>',
   download: '<path d="M12 4v11M7 10l5 5 5-5M5 20h14"/>',
 };
-// 줄 아이콘 = mask 그림 — 제품은 줄마다 그림 파일 경로를 --row-icon 에 넣음
+// 줄 아이콘 = mask 그림: 제품은 줄마다 그림 파일 경로를 --row-icon 에 넣음
 const umRow = (ic, label, ctrl, x = '') => '<div class="section-title' + x + '" style="--row-icon:' + railIcon(UM[ic]) + '">' + label + ctrl + '</div>';
 const umLang = (x = '') => '<div class="custom-select"><div class="selected' + x + '" role="button" tabindex="0" aria-haspopup="listbox" aria-expanded="false" aria-label="언어 설정: 한국어">한국어</div>' +
   '<ul class="options" role="listbox" aria-label="언어"><li role="option" aria-selected="true" class="active">한국어</li><li role="option" aria-selected="false">영어</li></ul></div>';
@@ -141,7 +141,7 @@ export const 사용자_메뉴_상태 = {
   parameters: { controls: { disable: true }, docs: { source: { language: 'html', code: '<!-- Hovered · Focused 는 마우스 · 키보드에 따라 CSS가 표시. 화면 모드 켬 = aria-checked="true" -->' } } },
   render: () => {
     enablePseudo();
-    // 행 하나만 잘라 보여 줌 — 규칙이 「로그아웃 버튼이 든 펼침」에만 걸리므로 빈 로그아웃 자리를 숨겨 둠
+    // 행 하나만 잘라 보여 줌: 규칙이 「로그아웃 버튼이 든 펼침」에만 걸리므로 빈 로그아웃 자리를 숨겨 둠
     // 카드 폭 안에 3열이 들어가게 패널 폭 220(제품 258)
     const box = (h) => '<div class="dropdown-content-top" style="border-radius:0;box-shadow:none;width:220px"><div class="section">' + h + '</div><div class="logoutBtn" hidden></div></div>';
     const foot = (h) => '<div class="dropdown-content-top" style="border-radius:0;box-shadow:none;width:220px"><div class="section"><div class="logoutBtn">' + h + '</div></div></div>';
@@ -153,21 +153,21 @@ export const 사용자_메뉴_상태 = {
     return matrix(['Default', 'Hovered', 'Focused'], [
       ['행 링크', [link(''), link(' ps-hover'), link(' ps-focus-visible')]],
       ['내려받기', [dl(''), dl(' ps-hover'), dl(' ps-focus-visible')]],
-      ['언어', [lang(''), '—', lang(' ps-focus-visible')]],
-      ['화면 모드 · 끔', [sw(false), '—', sw(false, ' ps-focus-visible')]],
-      ['화면 모드 · 켬', [sw(true), '—', sw(true, ' ps-focus-visible')]],
+      ['언어', [lang(''), '없음', lang(' ps-focus-visible')]],
+      ['화면 모드 · 끔', [sw(false), '없음', sw(false, ' ps-focus-visible')]],
+      ['화면 모드 · 켬', [sw(true), '없음', sw(true, ' ps-focus-visible')]],
       ['로그아웃', [foot(umLogout()), foot(umLogout(' ps-hover')), foot(umLogout(' ps-focus-visible'))]],
     ]);
   },
 };
 
-// LNB 레일 · 서브 메뉴 상태 — Hovered · Focused 는 정지 화면 클래스(.ps-*)
+// LNB 레일 · 서브 메뉴 상태: Hovered · Focused 는 정지 화면 클래스(.ps-*)
 export const 메뉴_상태 = {
   parameters: { controls: { disable: true }, docs: { source: { language: 'html', code: '<!-- 지금 화면 = a 에 aria-current="page". Hovered · Focused 는 마우스 · 키보드에 따라 CSS가 표시 -->' } } },
   render: () => {
     enablePseudo();
-    // 상태마다 영역 이름을 따로 — 같은 이름 없는 영역이 여러 개면 화면 읽기에서 구분이 안 됨(접근성 검사 landmark-unique)
-    const one = (o) => '<aside class="main-menu" aria-label="LNB 레일 예시 — ' + o.name + '" style="height:auto;width:60px;border:0"><nav aria-label="주 메뉴 예시 — ' + o.name + '"><ul>' + railItem('doc', '문서 관리', o) + '</ul></nav></aside>';
+    // 상태마다 영역 이름을 따로: 같은 이름 없는 영역이 여러 개면 화면 읽기에서 구분이 안 됨(접근성 검사 landmark-unique)
+    const one = (o) => '<aside class="main-menu" aria-label="LNB 레일 예시: ' + o.name + '" style="height:auto;width:60px;border:0"><nav aria-label="주 메뉴 예시: ' + o.name + '"><ul>' + railItem('doc', '문서 관리', o) + '</ul></nav></aside>';
     const flat = (o) => '<div class="ui-submenu" style="width:200px;padding:0;text-align:start"><ul><li class="ui-submenu-flat"><a href="#" class="' + (o.aX || '') + '"' + (o.current ? ' aria-current="page"' : '') + '>문서 검색</a></li></ul></div>';
     const list = (o) => '<div class="ui-submenu" style="width:200px;padding:0;text-align:start"><ul class="ui-submenu-list" style="margin-left:0"><li><a href="#" class="' + (o.aX || '') + '"' + (o.current ? ' aria-current="page"' : '') + '>변경 요청</a></li></ul></div>';
     return matrix(['LNB 레일', '서브 메뉴', '3단계 목록'], [
@@ -192,9 +192,9 @@ export const 전체_상태 = {
     return matrix(['뒤로 · 앞으로', '사용자 메뉴', '패널 닫기', '패널 탭'], [
       ['Default', row('')],
       ['Hovered', row(' ps-hover')],
-      ['Pressed', [wrapGnb('<div class="nav-history" style="margin:0">' + nh(' ps-active') + '</div>'), '—', '—', '—']],
+      ['Pressed', [wrapGnb('<div class="nav-history" style="margin:0">' + nh(' ps-active') + '</div>'), '없음', '없음', '없음']],
       ['Focused', row(' ps-focus-visible')],
-      ['Selected', ['—', '—', '—', tab('', true)]],
+      ['Selected', ['없음', '없음', '없음', tab('', true)]],
     ]) + '<p class="sb-note" style="margin:8px 0 0">Focused = 포커스 테두리(--color-border-focus) + 바깥 3px 링(--color-focus-ring), 입력 필드와 같은 표시입니다. 패널 탭의 상태는 Tabs 문서와 같습니다. 사용자 메뉴 · 업무 개수 버튼(.menu-toggle)은 Hovered 모양 없이 Focused만 있습니다.</p>';
   },
 };
@@ -202,8 +202,8 @@ export const 전체_상태 = {
 // ── Playground ──
 export const Playground = {
   argTypes: {
-    path: { control: 'text', description: '위치 — 「›」 없이 쉼표로 구분 (마지막 = 지금 화면, aria-current="page")' },
-    approvals: { control: 'text', description: '결재업무 개수 — `.menu-toggle .count`' },
+    path: { control: 'text', description: '위치: 「›」 없이 쉼표로 구분 (마지막 = 지금 화면, aria-current="page")' },
+    approvals: { control: 'text', description: '결재업무 개수: `.menu-toggle .count`' },
     activities: { control: 'text', description: '활동업무 개수' },
   },
   args: { path: 'Home, 문서 관리, 문서 검색', approvals: '2', activities: '0' },
@@ -211,12 +211,12 @@ export const Playground = {
   render: (a) => frame(gnb({ list: String(a.path).split(',').map((x) => x.trim()).filter(Boolean), a: a.approvals, b: a.activities })),
 };
 
-// ── Do · Don't (② ③) — 미리보기만, 코드는 위 예시 카드에 ──
+// ── Do · Don't (② ③): 미리보기만, 코드는 위 예시 카드에 ──
 const ddBar = (h) => '<div style="width:100%;border:1px solid var(--color-border-base);border-radius:var(--radius-card);overflow:hidden"><header class="gnb"><div></div>' + h + '</header></div>';
 const ddCounts = (a) => '<div class="header-actions">' + userBtn() + count('결재업무', a) + count('활동업무', 3) + '</div>';
-// 레일 조각 — 같은 메뉴 셋, 가운데 긴 이름만 줄바꿈 ↔ 말줄임. 영역 이름은 미리보기마다 따로(접근성 검사 landmark-unique)
+// 레일 조각: 같은 메뉴 셋, 가운데 긴 이름만 줄바꿈 ↔ 말줄임. 영역 이름은 미리보기마다 따로(접근성 검사 landmark-unique)
 const ddRail = (name, spanStyle = '') => '<div style="border:1px solid var(--color-border-base);border-radius:var(--radius-card);overflow:hidden">' +
-  '<aside class="main-menu" aria-label="LNB 레일 예시 — ' + name + '" style="height:auto;border:0"><nav aria-label="주 메뉴 예시 — ' + name + '"><ul>' +
+  '<aside class="main-menu" aria-label="LNB 레일 예시: ' + name + '" style="height:auto;border:0"><nav aria-label="주 메뉴 예시: ' + name + '"><ul>' +
   railItem('doc', '문서 관리') + railItem('bench', '벤치마킹 관리', { spanStyle }) + railItem('drawing', '도면 관리') + '</ul></nav></aside></div>';
 export const 사용_지침 = {
   parameters: { controls: { disable: true } },

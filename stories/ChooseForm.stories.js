@@ -1,6 +1,6 @@
-// Form/고르는 법 — 문서 화면은 ChooseForm.mdx. 입력 컴포넌트의 표준 이름 · 정의 · 고르는 기준을 한 표로
+// Form/고르는 법: 문서 화면은 ChooseForm.mdx. 입력 컴포넌트의 표준 이름 · 정의 · 고르는 기준을 한 표로
 // 이름 · 정의 = 공개 DS 문서(KRDS · Carbon · Material · Atlassian · GOV.UK)의 표준 용어
-// 고르는 기준의 옵션 수 = 4개까지 라디오 · 체크박스(가로 한 줄), 5개부터 드롭다운(셀렉트 · 다중 선택) — · 27번
+// 고르는 기준의 옵션 수 = 4개까지 라디오 · 체크박스(가로 한 줄), 5개부터 드롭다운(셀렉트 · 다중 선택): · 27번
 import { matrix } from './_matrix.js';
 
 const svg = (d, s = 14) => '<svg width="' + s + '" height="' + s + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + d + '</svg>';
@@ -36,7 +36,7 @@ const ROWS = [
     '<label class="switch"><input type="checkbox" role="switch" checked>알림 받기</label>',
     link('Selection Controls', 'form-selection-controls') + ' ' + code('.switch'), '켜짐 · 꺼짐 두 상태를 즉시 전환하는 요소입니다.', '누르는 즉시 적용될 때만 사용합니다. 저장이 필요하면 체크박스를 씁니다.'],
   ['날짜 입력 필드',
-    '<div style="width:200px">' + dp('등록일', '2026-10-01') + '</div>',   // 미리보기 칸 폭 안에 — 기간 묶음(280)은 칸 밖으로 넘쳐 옆 칸을 덮었음
+    '<div style="width:200px">' + dp('등록일', '2026-10-01') + '</div>',   // 미리보기 칸 폭 안에: 기간 묶음(280)은 칸 밖으로 넘쳐 옆 칸을 덮었음
     link('Date Picker', 'form-date-picker') + ' ' + code('.ui-datepicker'), '날짜나 기간을 직접 입력하거나 달력에서 선택하는 필드입니다.', '아는 날짜는 직접 입력하고, 요일 · 인접 날짜가 중요하면 달력에서 고릅니다. 기간은 범위 필드(.ui-datepicker-range)를 씁니다.'],
   ['읽기 전용 상태',
     '<input class="input" aria-label="문서 분류" value="/제품 문서/설계 문서" readonly style="width:200px">',

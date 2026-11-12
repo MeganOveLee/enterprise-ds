@@ -1,4 +1,4 @@
-// Foundation/Color — 문서 화면은 Color.mdx. 여기 스토리는 MDX 카드 안에 들어가는 표 · 램프
+// Foundation/Color: 문서 화면은 Color.mdx. 여기 스토리는 MDX 카드 안에 들어가는 표 · 램프
 import { ramps, tokenTable } from './_tables.js';
 
 const STEPS = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900];
@@ -23,13 +23,13 @@ export const Brand = {
   ]),
   render: () => ramps([
     { prefix: 'brand', steps: STEPS },
-    { name: '포인트', note: 'Accent — 작은 강조 한 가지', prefix: 'accent', steps: [500] },
+    { name: '포인트', note: 'Accent: 작은 강조 한 가지', prefix: 'accent', steps: [500] },
   ]),
 };
 
 export const Neutral = {
   parameters: css([
-    '/* 의미 토큰이 중립 단계를 가리킨다 — 다크는 같은 이름에 다른 단계 */',
+    '/* 의미 토큰이 중립 단계를 가리킨다: 다크는 같은 이름에 다른 단계 */',
     '--color-bg-subtle:  var(--neutral-200);   /* 다크: neutral-950 */',
     '--color-text-muted: var(--neutral-600);   /* 다크: neutral-400 */',
   ]),
@@ -50,10 +50,10 @@ export const Status = {
   ]),
 };
 
-// 장소 분류 램프 — 상태 색과 별개인 분류용 원천 색 (DS-ADR-050). 노랑 · 초록은 상태 램프를 같이 읽음
+// 장소 분류 램프: 상태 색과 별개인 분류용 원천 색 (DS-ADR-050). 노랑 · 초록은 상태 램프를 같이 읽음
 export const Place = {
   parameters: css([
-    '/* 화면 CSS는 장소 종류 역할만 쓴다 — 램프를 직접 쓰지 않음 */',
+    '/* 화면 CSS는 장소 종류 역할만 쓴다: 램프를 직접 쓰지 않음 */',
     '--color-bg-place-market: var(--orange-600);',
   ]),
   render: () => ramps([
@@ -182,7 +182,7 @@ export const Icon = {
   ]),
 };
 
-// ── 상호작용 — 버튼 중요도별 상태 색(Hovered · Pressed)과 공통 포커스 링 (Foundation › State) ──
+// ── 상호작용: 버튼 중요도별 상태 색(Hovered · Pressed)과 공통 포커스 링 (Foundation › State) ──
 export const Interactive = {
   parameters: css([
     '.btn--secondary:hover { background: var(--color-bg-interactive-secondary-hover); }',
@@ -234,7 +234,7 @@ export const Interactive = {
   ])),
 };
 
-// ── 진행 — 진행률 막대 · 범례 점의 상태별 그라데이션(시작 → 끝). 브랜드와 상관없이 고정 ──
+// ── 진행: 진행률 막대 · 범례 점의 상태별 그라데이션(시작 → 끝). 브랜드와 상관없이 고정 ──
 export const ProgressTokens = {
   parameters: css(['.progress-bar--done .pbar-fill { background: linear-gradient(90deg, var(--color-progress-done-start), var(--color-progress-done-end)); }']),
   render: () => tokenTable('bg', [
@@ -255,22 +255,22 @@ export const PlaceTokens = {
     '.chip--place { background: var(--place-subtle); border-color: var(--place-line); }',
   ]),
   render: () => stackTables(
-    tokenTable('bg', KINDS.flatMap(([k, n]) => [['color-bg-place-' + k + '-subtle', n + ' — 옅은 바탕'], ['color-bg-place-' + k, n + ' — 고른 칩 채움']])),
-    tokenTable('border', KINDS.map(([k, n]) => ['color-border-place-' + k, n + ' — 테두리'])),
-    tokenTable('icon', KINDS.map(([k, n]) => ['color-icon-place-' + k, n + ' — 장소 아이콘'])),
-    tokenTable('text', KINDS.map(([k, n]) => ['color-text-on-place-' + k, n + ' — 채움 위 글자'])),
+    tokenTable('bg', KINDS.flatMap(([k, n]) => [['color-bg-place-' + k + '-subtle', n + ': 옅은 바탕'], ['color-bg-place-' + k, n + ': 고른 칩 채움']])),
+    tokenTable('border', KINDS.map(([k, n]) => ['color-border-place-' + k, n + ': 테두리'])),
+    tokenTable('icon', KINDS.map(([k, n]) => ['color-icon-place-' + k, n + ': 장소 아이콘'])),
+    tokenTable('text', KINDS.map(([k, n]) => ['color-text-on-place-' + k, n + ': 채움 위 글자'])),
   ),
 };
 export const SelectedTokens = {
   parameters: css([
-    '/* 고른 칩 · 떠 있는 버튼 — 주 버튼(브랜드 면)과 따로 */',
+    '/* 고른 칩 · 떠 있는 버튼: 주 버튼(브랜드 면)과 따로 */',
     '.chip[aria-pressed="true"] { background: var(--color-bg-selected-strong); color: var(--color-text-on-selected-strong); }',
   ]),
   render: () => stackTables(
     tokenTable('bg', [
-      ['color-bg-selected-strong', '선택 면 — 고른 칩 · 떠 있는 버튼 · 고른 나란한 칸'],
-      ['color-bg-notify', '알림 배지 — 새 소식 점 · 읽지 않은 수'],
-      ['color-bg-map-pin', '지도 핀 · 도착 점 — 오류 색과 따로'],
+      ['color-bg-selected-strong', '선택 면: 고른 칩 · 떠 있는 버튼 · 고른 나란한 칸'],
+      ['color-bg-notify', '알림 배지: 새 소식 점 · 읽지 않은 수'],
+      ['color-bg-map-pin', '지도 핀 · 도착 점: 오류 색과 따로'],
     ]),
     tokenTable('text', [
       ['color-text-on-selected-strong', '선택 면 위 글자'],

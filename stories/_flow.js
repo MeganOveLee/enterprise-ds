@@ -1,12 +1,12 @@
-// Blocks 문서 공통 — 「기본 화면 → 누르면 열리는 창」 틀. 모양은 ./_flow.css
-// flow({ base, open }) — base · open = { html, w, h, title, where }. trigger = 누르는 버튼 이름(화살표 줄 글자), how = 열리는 방식(새 창 · 화면 이동)
+// Blocks 문서 공통: 「기본 화면 → 누르면 열리는 창」 틀. 모양은 ./_flow.css
+// flow({ base, open }): base · open = { html, w, h, title, where }. trigger = 누르는 버튼 이름(화살표 줄 글자), how = 열리는 방식(새 창 · 화면 이동)
 // 기본 화면에서 누르는 버튼에는 MARK 클래스를 붙인다(점선 테두리만, 문서 전용)
 import './_flow.css';
 
 export const MARK = 'flow-mark';
 const DOWN = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v16M6 14l6 6 6-6"/></svg>';
 
-// 실제 크기(w × h)로 그리고 칸 너비에 맞게 줄임 — Screens 화면 틀과 같은 방식
+// 실제 크기(w × h)로 그리고 칸 너비에 맞게 줄임: Screens 화면 틀과 같은 방식
 const fit = (html, w, h) => {
   const el = document.createElement('div');
   el.className = 'flow__fit';
@@ -18,7 +18,7 @@ const fit = (html, w, h) => {
   requestAnimationFrame(go);
   return el;
 };
-// 을 / 를 — 버튼 이름 마지막 글자의 받침으로 고름([등록]을 · [BOM 비교]를)
+// 을 / 를: 버튼 이름 마지막 글자의 받침으로 고름([등록]을 · [BOM 비교]를)
 const josa = (t) => { const c = t.replace(/[\]\s]+$/, '').slice(-1).charCodeAt(0) - 0xac00; return c >= 0 && c < 11172 && c % 28 === 0 ? '를' : '을'; };
 const label = (no, title, where) => '<p class="flow__label"><span class="flow__no" aria-hidden="true">' + no + '</span><b>' + title + '</b><span>' + where + '</span></p>';
 
@@ -33,10 +33,10 @@ export const flow = ({ base, open, trigger, how }) => {
   return root;
 };
 
-// 한 장만 실제 크기로(흐름 없이) — 같은 창의 다른 상태 카드
+// 한 장만 실제 크기로(흐름 없이): 같은 창의 다른 상태 카드
 export const shot = (html, w, h) => fit(html, w, h);
 
-// 접는 섹션 눌러 보기 — Accordion 문서와 같은 동작(토글이 aria-expanded 를 바꾸고, aria-controls 로 이은 내용에 hidden). 제품에서는 화면 스크립트가 같은 일을 함
+// 접는 섹션 눌러 보기: Accordion 문서와 같은 동작(토글이 aria-expanded 를 바꾸고, aria-controls 로 이은 내용에 hidden). 제품에서는 화면 스크립트가 같은 일을 함
 const MINUS = '<path d="M6 12h12"/>';
 const PLUS = '<path d="M12 5v14M5 12h14"/>';
 const tg = (d) => '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + d + '</svg>';

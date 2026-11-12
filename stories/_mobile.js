@@ -1,4 +1,4 @@
-// 모바일 컴포넌트 견본 조각 — 아이콘 · 틀. 모양은 ./_mobile.css · css/components.css
+// 모바일 컴포넌트 견본 조각: 아이콘 · 틀. 모양은 ./_mobile.css · css/components.css
 import './_mobile.css';
 
 export const svg = (d, s = 24) => '<svg width="' + s + '" height="' + s + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + d + '</svg>';
@@ -37,7 +37,7 @@ export const P = {
   welfare: 'M9 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zm7.5 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM2 20a7 7 0 0 1 14 0v.5a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5zm15.2 1h4.3a.5.5 0 0 0 .5-.5V20a5.5 5.5 0 0 0-7.4-5.2A8.4 8.4 0 0 1 17.2 21z',
   public: 'M12 2.5 2.5 7.5V9h19V7.5zM4 10.5h3v7H4zm6.5 0h3v7h-3zm6.5 0h3v7h-3zM2.5 19h19v2.5h-19z',
 };
-// 하단 탭 채운 아이콘 — 선 아이콘 I 와 같은 모양(지금 화면 표시)
+// 하단 탭 채운 아이콘: 선 아이콘 I 와 같은 모양(지금 화면 표시)
 export const F = {
   home: P.home,
   bus: 'M7 2h10a3 3 0 0 1 3 3v12a1 1 0 0 1-1 1h-1v2a1 1 0 0 1-2 0v-2H8v2a1 1 0 0 1-2 0v-2H5a1 1 0 0 1-1-1V5a3 3 0 0 1 3-3zM6 6v4h12V6zm2 7.5a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm8 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z',

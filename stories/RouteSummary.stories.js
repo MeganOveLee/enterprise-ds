@@ -1,4 +1,4 @@
-// Blocks/Route Summary — 문서 화면은 RouteSummary.mdx. 모바일 앱 전용 조합 (css/blocks/mobility.css)
+// Blocks/Route Summary: 문서 화면은 RouteSummary.mdx. 모바일 앱 전용 조합 (css/blocks/mobility.css)
 import { phone, body } from './_mobile.js';
 import { route } from './_route.js';
 

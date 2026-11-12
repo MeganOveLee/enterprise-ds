@@ -1,4 +1,4 @@
-// Form/Date Picker — 문서 화면은 DatePicker.mdx. 여기 스토리는 MDX 카드 안에 들어가는 예시 · 전체 상태 · Playground
+// Form/Date Picker: 문서 화면은 DatePicker.mdx. 여기 스토리는 MDX 카드 안에 들어가는 예시 · 전체 상태 · Playground
 import { matrix } from './_matrix.js';
 import { enablePseudo } from './_pseudo.js';
 import { doDont } from './_dodont.js';
@@ -8,7 +8,7 @@ const ICON = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" vie
 const dp = (label, value = '', extra = '', cls = '') =>
   `<div class="ui-datepicker${cls}"><button type="button" class="ui-datepicker__icon">${ICON}</button>` +
   `<input class="ui-datepicker__input" aria-label="${label}" placeholder="YYYY-MM-DD" value="${value}"${extra}></div>`;
-// 기간 — x1 · c1 = 시작일 칸 속성 · 상자 클래스, x2 = 종료일 칸 속성
+// 기간: x1 · c1 = 시작일 칸 속성 · 상자 클래스, x2 = 종료일 칸 속성
 const range = (a, b, { x1 = '', c1 = '', x2 = '' } = {}) =>
   '<div class="ui-datepicker-range">' + dp('시작일', a, x1, c1) + '<span class="ui-datepicker-range__sep">~</span>' + dp('종료일', b, x2) + '</div>';
 const html2 = (lines) => ({ controls: { disable: true }, docs: { source: { language: 'html', code: lines.join('\n') } } });
@@ -30,7 +30,7 @@ export const 기간 = {
   render: () => `<div style="max-width:420px"><div class="ui-datepicker-range">${dp('시작일', '2026-10-06')}<span class="ui-datepicker-range__sep">~</span>${dp('종료일', '2026-10-20')}</div></div>`,
 };
 
-// 지우기(×) — 조회 조건의 기간에 값이 있을 때 틀 안 맨 끝에(DS-ADR-042). data-ds-clear 또는 검색 조건 영역(.mainTable) 안이면 js/clear.js 가 붙임
+// 지우기(×): 조회 조건의 기간에 값이 있을 때 틀 안 맨 끝에(DS-ADR-042). data-ds-clear 또는 검색 조건 영역(.mainTable) 안이면 js/clear.js 가 붙임
 export const 지우기 = {
   parameters: { docs: { source: { code: range('2026-09-01', '2026-09-30', { x1: ' data-ds-clear', x2: ' data-ds-clear' }) } } },
   render: () => '<div style="max-width:360px">' + range('2026-09-01', '2026-09-30', { x1: ' data-ds-clear', x2: ' data-ds-clear' }) + '</div>',
@@ -41,7 +41,7 @@ export const 고를_수_있는_범위 = {
   render: () => `<div style="max-width:200px">${dp('희망일', '2026-10-15', ' min="2026-10-10" max="2026-10-25"')}</div>`,
 };
 
-// ── 펼친 달력 — 날짜 상태 클래스. 실제 달력(js/datepicker.js)을 한 번 열어 그 모습을 옆에 고정해 둠(눌러지지 않는 그림) ──
+// ── 펼친 달력: 날짜 상태 클래스. 실제 달력(js/datepicker.js)을 한 번 열어 그 모습을 옆에 고정해 둠(눌러지지 않는 그림) ──
 const DAY_SRC = [
   '<!-- 달력은 js/datepicker.js 가 그린다. 날짜 칸의 상태 클래스 -->',
   '<button class="datepicker__day is-today" aria-current="date">     <!-- 오늘 -->',
@@ -70,10 +70,10 @@ export const 펼친_달력 = {
   },
 };
 
-// ── Do · Don't (① ②) — 미리보기만 ──
+// ── Do · Don't (① ②): 미리보기만 ──
 const wide = (h) => '<div style="width:100%;max-width:360px">' + h + '</div>';
 const noHint = (h) => h.replace(' placeholder="YYYY-MM-DD"', '');
-// 기간 두 필드의 폭이 다른 잘못된 예 — 시작일 필드만 좁게
+// 기간 두 필드의 폭이 다른 잘못된 예: 시작일 필드만 좁게
 const unequal = '<div class="ui-datepicker-range">' + dp('시작일', '2026-10-06', '', '" style="flex:0 0 120px') + '<span class="ui-datepicker-range__sep">~</span>' + dp('종료일', '2026-10-20') + '</div>';
 export const 사용_지침 = {
   parameters: { controls: { disable: true } },
@@ -117,21 +117,21 @@ export const 전체_상태 = {
 // ── Playground ──
 export const Playground = {
   argTypes: {
-    label: { control: 'text', description: '칸 이름 — `aria-label`' },
-    value: { control: 'text', description: '값 — YYYY-MM-DD' },
-    min: { control: 'text', description: '고를 수 있는 첫날 — `min`' },
-    max: { control: 'text', description: '고를 수 있는 마지막 날 — `max`' },
-    state: { control: 'inline-radio', options: ['default', 'error', 'disabled', 'readonly'], description: '상태 — 날짜 칸(input)에 `aria-invalid="true"` · `disabled` · `readonly`' },
+    label: { control: 'text', description: '칸 이름: `aria-label`' },
+    value: { control: 'text', description: '값: YYYY-MM-DD' },
+    min: { control: 'text', description: '고를 수 있는 첫날: `min`' },
+    max: { control: 'text', description: '고를 수 있는 마지막 날: `max`' },
+    state: { control: 'inline-radio', options: ['default', 'error', 'disabled', 'readonly'], description: '상태: 날짜 칸(input)에 `aria-invalid="true"` · `disabled` · `readonly`' },
   },
   args: { label: '납기일', value: '2026-10-15', min: '2026-10-10', max: '2026-10-25', state: 'default' },
   render: (a) => '<div style="max-width:200px">' +
     dp(a.label, a.value, (a.min ? ' min="' + a.min + '"' : '') + (a.max ? ' max="' + a.max + '"' : '') + (ST[a.state] || '')) + '</div>',
 };
 
-// ── 시안 — A 칸 + 펼침 달력(추천) · B 아래 시트 달력 · C 연 · 월 · 일 세 칸 ──
+// ── 시안: A 칸 + 펼침 달력(추천) · B 아래 시트 달력 · C 연 · 월 · 일 세 칸 ──
 const OPT_A = [dp('희망 납기일', '2026-11-20')];
 export const 시안_펼침_달력 = { parameters: html2(OPT_A), render: () => '<div class="sb-field">' + OPT_A.join('') + '</div>' };
-// B — 칸을 누르면 화면 아래에서 달력 시트가 올라옴. 견본은 같은 달력(js/datepicker.js)을 시트 안에 옮겨 그린 정지 그림
+// B: 칸을 누르면 화면 아래에서 달력 시트가 올라옴. 견본은 같은 달력(js/datepicker.js)을 시트 안에 옮겨 그린 정지 그림
 const SHEET_SRC = ['<div class="modal modal--sheet" id="date-sheet" hidden>',
   '  <div class="modal__dialog sheet" role="dialog" aria-modal="true" aria-labelledby="date-sheet-title">',
   '    <div class="modal__header"><h2 class="modal__title" id="date-sheet-title">언제 가시나요?</h2><!-- 닫기 버튼 data-modal-close="cancel" --></div>',
@@ -159,7 +159,7 @@ export const 시안_아래_시트_달력 = {
     return el;
   },
 };
-// C — 연 · 월 · 일 세 칸(GOV.UK Date input). 생년월일처럼 아는 날짜, 달력 없이 숫자 자판
+// C: 연 · 월 · 일 세 칸(GOV.UK Date input). 생년월일처럼 아는 날짜, 달력 없이 숫자 자판
 const part = (key, lab, value, auto, max) => '  <div class="date-input__item' + (key === 'y' ? ' date-input__item--year' : '') + '"><label for="dob-' + key + '">' + lab + '</label>' +
   '<input class="input" id="dob-' + key + '" inputmode="numeric" autocomplete="' + auto + '" maxlength="' + max + '" value="' + value + '"></div>';
 const OPT_C = ['<fieldset class="date-input" aria-describedby="dob-hint">', '  <legend class="search-label">생년월일</legend>', '  <p class="date-input__hint" id="dob-hint">예: 1958 3 27</p>',

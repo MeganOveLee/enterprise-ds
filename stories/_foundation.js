@@ -1,4 +1,4 @@
-// Foundation 페이지 공용 도우미 — 견본은 CSS 변수로 그리고, 옆의 값은 화면에 그려진 결과에서 읽어 온다.
+// Foundation 페이지 공용 도우미: 견본은 CSS 변수로 그리고, 옆의 값은 화면에 그려진 결과에서 읽어 온다.
 // 그래서 툴바에서 브랜드 · 라이트/다크를 바꾸면 견본과 값이 같이 바뀐다.
 
 const STYLE = `
@@ -50,7 +50,7 @@ export function toHex(str) {
 }
 
 // html 을 그리고, 다음 프레임에 [data-read] 칸을 실제 값으로 채운다.
-// data-read="bg|color|border|font-size|width|radius|shadow" — 어떤 값을 읽을지, 같은 .fd-item 안의 .fd-sw 기준
+// data-read="bg|color|border|font-size|width|radius|shadow": 어떤 값을 읽을지, 같은 .fd-item 안의 .fd-sw 기준
 export function mount(html) {
   ensureStyle();
   const el = document.createElement('div');
