@@ -18,7 +18,7 @@ import * as S from './ListItem.stories.js';
 <tr><td><b>뒤 칸</b></td><td><code>.list-item__end</code></td><td>값(요금 · 상태)과 들어가는 화살표입니다.</td></tr>
 <tr><td><b>장소 아이콘</b></td><td><code>.list-item__icon.place--{종류}</code></td><td>장소 종류 색 채운 아이콘입니다(Chip과 같은 종류 클래스).</td></tr>
 <tr><td><b>고르는 행</b></td><td><code>role="radio"</code> · <code>aria-checked</code></td><td>아래 시트 안에서 하나를 고르는 행입니다. 쓰임은 Overlay › Bottom Sheet 「인원 고르기」에 있습니다.</td></tr>
-<tr><td><b>시안</b></td><td><code>.list-items--grouped</code> · <code>.list-items--cards</code> · <code>.list-item__action</code></td><td>B = 행을 둥근 상자 하나에 담음, C = 행마다 카드 + 뒤 원형 동작 버튼입니다. C의 동작 버튼은 행과 따로 둡니다(누르는 곳 안에 누르는 곳을 넣지 않음).</td></tr>
+<tr><td><b>시안</b></td><td><code>.list-items--grouped</code> · <code>.list-items--cards</code> · <code>.list-item__action</code></td><td>B = 행을 둥근 상자 하나에 담음, C = 행마다 카드 + 뒤 원형 동작 버튼입니다. C의 동작 버튼은 행 밖에 둡니다(누르는 곳 안에 누르는 곳을 넣지 않음).</td></tr>
 <tr><td><b>브랜드가 바꾸는 것</b></td><td><code>--size-touch</code> · <code>--body-md</code> · <code>--body-sm</code> · <code>--radius-card</code> · 색 토큰</td><td>누름 높이 · 글자 크기 · 카드 모서리 · 색입니다. 행의 칸 구성은 바꾸지 않습니다. 시안은 Mobility = A · C(최근 이용), Default · OOTB = A입니다.</td></tr>
 </tbody>
 </table>
