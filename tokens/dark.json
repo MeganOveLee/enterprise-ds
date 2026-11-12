@@ -456,7 +456,7 @@
   },
   "color-text-btn-excel-hover": {
     "$value": "{green-100}",
-    "$description": "올림 30% · 누름 40% 바탕 위 green-300 = 4.14 · 3.36(AA 미달) → green-100 6.69 · 5.43 (TD-108)"
+    "$description": "올림 30% · 누름 40% 바탕 위 green-300 = 4.14 · 3.36(AA 미달) → green-100 6.69 · 5.43"
   },
   "color-bg-btn-excel-hover": {
     "$value": "rgba(34, 197, 94, 0.30)",
@@ -601,7 +601,7 @@
     "$extensions": {
       "eds": {
         "before": [
-          "/* 알림 배지 (TD-172) */"
+          "/* 알림 배지 */"
         ]
       }
     }

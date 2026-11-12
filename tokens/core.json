@@ -488,7 +488,7 @@
   },
   "icon-stroke": {
     "$value": "1.8",
-    "$description": "아이콘 선 굵기(24 기준 그리기 칸에서). 모바일 앱 컴포넌트의 선 아이콘이 읽음. 브랜드 파일이 덮을 수 있음 (TD-172)",
+    "$description": "아이콘 선 굵기(24 기준 그리기 칸에서). 모바일 앱 컴포넌트의 선 아이콘이 읽음. 브랜드 파일이 덮을 수 있음",
     "$type": "number"
   },
   "heading-2xl": {
@@ -546,7 +546,7 @@
   "body-xs": {
     "$value": "0.6875rem",
     "$type": "dimension",
-    "$description": "11px · 가장 작은 글자 — 레일 메뉴 이름 · 개수 배지 · 표 안 진행률 숫자 같은 보조 표시. 한글 라벨이 읽히는 가장 작은 크기라 10 이하는 두지 않음 (TD-44, Figma Body/xs)"
+    "$description": "11px · 가장 작은 글자 — 레일 메뉴 이름 · 개수 배지 · 표 안 진행률 숫자 같은 보조 표시. 한글 라벨이 읽히는 가장 작은 크기라 10 이하는 두지 않음 (Figma Body/xs)"
   },
   "line-height-tight": {
     "$value": "1.2",
@@ -562,7 +562,7 @@
   "line-height-base": {
     "$value": "1.6",
     "$type": "number",
-    "$description": "본문 글줄 간격 = body 기본값. 이전 버전 body 값 (TD-45 45-3 D). 고정 높이 컴포넌트(입력칸 · 버튼)는 자기 높이 그대로"
+    "$description": "본문 글줄 간격 = body 기본값. 이전 버전 body 값. 고정 높이 컴포넌트(입력칸 · 버튼)는 자기 높이 그대로"
   },
   "radius-none": {
     "$value": "0",
@@ -692,7 +692,7 @@
   "size-input-lg": {
     "$value": "44px",
     "$type": "dimension",
-    "$description": "큰 칸 — 화면에 폼 하나만 있는 단독 폼(로그인 · 임시 비밀번호 발급 — 이전 버전 login.css 큰 칸 · 큰 버튼을 쓰던 두 화면, TD-120) (제안 E). 브랜드가 바꾸지 않음(스태틱)"
+    "$description": "큰 칸 — 화면에 폼 하나만 있는 단독 폼(로그인 · 임시 비밀번호 발급 — 이전 버전 login.css 큰 칸 · 큰 버튼을 쓰던 두 화면) (제안 E). 브랜드가 바꾸지 않음(스태틱)"
   },
   "size-btn-lg": {
     "$value": "44px",
@@ -738,7 +738,7 @@
   },
   "size-sidebar": {
     "$value": "calc(13.875rem - {size-sidebar-toggle})",
-    "$description": "LNB 폭 = 사이드 영역 222px − 손잡이.\n구 Layer 5 --sidebar-width/-toggle-width 를 치수 층으로 올림 — 이름만 있고 아무도 안 쓰고\ncomponents 는 같은 숫자를 직접 적고 있었음 (Legacy 별칭 종결).\nsize 층에서 폭을 담는 토큰은 이 둘(sidebar · sidebar-toggle)뿐 — 「size = 높이」의 예외.\n이름은 그대로 둔다: 바꾸면 이전 버전 덮어쓰기 파일도 같이 바꿔야 함 (TD-92)"
+    "$description": "LNB 폭 = 사이드 영역 222px − 손잡이.\n구 Layer 5 --sidebar-width/-toggle-width 를 치수 층으로 올림 — 이름만 있고 아무도 안 쓰고\ncomponents 는 같은 숫자를 직접 적고 있었음 (Legacy 별칭 종결).\nsize 층에서 폭을 담는 토큰은 이 둘(sidebar · sidebar-toggle)뿐 — 「size = 높이」의 예외.\n이름은 그대로 둔다: 바꾸면 이전 버전 덮어쓰기 파일도 같이 바꿔야 함"
   },
   "duration-fast": {
     "$value": ".12s",
@@ -746,7 +746,7 @@
     "$extensions": {
       "eds": {
         "before": [
-          "/* 모션 — 값은 여기 한 곳. 컴포넌트 transition · animation 은 이 토큰을 쓴다 (TD-48).\n   fast · base = 이전 버전 tokens 의 모션 토큰 그대로(이전 버전에 함께 있던 ease-standard 는 쓰는 곳이 없어 안 옮김).\n   shimmer · pulse · loop = 반복 움직임. 무엇을 알려 주는 움직임인지는 스토리북 Foundation › Motion.\n   모션 줄이기(prefers-reduced-motion)는 컴포넌트마다 — 빛 · 깜빡임은 멈춤, 스피너 · 로고 로더는 느리게만 */"
+          "/* 모션 — 값은 여기 한 곳. 컴포넌트 transition · animation 은 이 토큰을 쓴다.\n   fast · base = 이전 버전 tokens 의 모션 토큰 그대로(이전 버전에 함께 있던 ease-standard 는 쓰는 곳이 없어 안 옮김).\n   shimmer · pulse · loop = 반복 움직임. 무엇을 알려 주는 움직임인지는 스토리북 Foundation › Motion.\n   모션 줄이기(prefers-reduced-motion)는 컴포넌트마다 — 빛 · 깜빡임은 멈춤, 스피너 · 로고 로더는 느리게만 */"
         ]
       }
     },
@@ -765,7 +765,7 @@
   "duration-pulse": {
     "$value": "1.2s",
     "$type": "duration",
-    "$description": "Pulse 한 바퀴 = 두근 · 두근 · 쉼 — 지연 상태 표시 막대(statusPulse, 밝기만)와 같은 줄 진행률 막대(ds-alert-glow · ds-alert-sweep, 두 박동에 한 번). 구 1.6s 부드러운 진함 ↔ 흐림 (TD-123)"
+    "$description": "Pulse 한 바퀴 = 두근 · 두근 · 쉼 — 지연 상태 표시 막대(statusPulse, 밝기만)와 같은 줄 진행률 막대(ds-alert-glow · ds-alert-sweep, 두 박동에 한 번). 구 1.6s 부드러운 진함 ↔ 흐림"
   },
   "duration-fill": {
     "$value": "1.6s",
@@ -782,7 +782,7 @@
     "$extensions": {
       "eds": {
         "before": [
-          "/* 인터랙션 — 누른 결과 · 바뀐 곳을 알려 주는 한 번짜리 움직임 (DS-ADR-041, TD-108 44번) */"
+          "/* 인터랙션 — 누른 결과 · 바뀐 곳을 알려 주는 한 번짜리 움직임 (DS-ADR-041) */"
         ]
       }
     },
@@ -814,7 +814,7 @@
     "$extensions": {
       "eds": {
         "before": [
-          "/* 그림 자산 — 솔리드 문서 아이콘의 형식 색(종이 · 아래 띠). Figma ✨ Icons › 솔리드 — 파일 형식과 같은 값 (TD-108).\n   모양 = 색 종이 + 흰 줄 3개 + 아래 띠에 흰 형식 글자 — 모든 형식이 같은 모양이고 색만 다름. 남의 로고(Office · Acrobat) 모양은 쓰지 않음.\n   형식을 알아보는 그림 색이라 브랜드 · 화면 모드와 상관없이 같음(다크에서도 흰 줄 · 글자가 읽히게). 띠 위 흰 글자 대비 4.5:1 이상(TXT만 3.4 — 옆 파일 이름이 뜻을 맡음) */"
+          "/* 그림 자산 — 솔리드 문서 아이콘의 형식 색(종이 · 아래 띠). Figma ✨ Icons › 솔리드 — 파일 형식과 같은 값.\n   모양 = 색 종이 + 흰 줄 3개 + 아래 띠에 흰 형식 글자 — 모든 형식이 같은 모양이고 색만 다름. 남의 로고(Office · Acrobat) 모양은 쓰지 않음.\n   형식을 알아보는 그림 색이라 브랜드 · 화면 모드와 상관없이 같음(다크에서도 흰 줄 · 글자가 읽히게). 띠 위 흰 글자 대비 4.5:1 이상(TXT만 3.4 — 옆 파일 이름이 뜻을 맡음) */"
         ]
       }
     }
@@ -1027,7 +1027,7 @@
     "$extensions": {
       "eds": {
         "before": [
-          "/* 덮개 — 확인 창(.modal) 뒤 화면을 가리는 반투명 층 (TD-108). 브랜드와 상관없이 검정 투명 */"
+          "/* 덮개 — 확인 창(.modal) 뒤 화면을 가리는 반투명 층. 브랜드와 상관없이 검정 투명 */"
         ]
       }
     }
@@ -1209,7 +1209,7 @@
     "$extensions": {
       "eds": {
         "before": [
-          "/* 반전 바탕(bg-inverse, 토스트 · 툴팁) 위 상태 아이콘 — 라이트는 바탕이 어두워 밝은 단계, 다크는 바탕이 밝아 진한 단계.\n   대비(아이콘 기준 3:1): 라이트 성공 5.80 · 경고 8.54 · 위험 4.05 / 다크 성공 5.67 · 경고 3.48 · 위험 5.50 (TD-45 45-1) */"
+          "/* 반전 바탕(bg-inverse, 토스트 · 툴팁) 위 상태 아이콘 — 라이트는 바탕이 어두워 밝은 단계, 다크는 바탕이 밝아 진한 단계.\n   대비(아이콘 기준 3:1): 라이트 성공 5.80 · 경고 8.54 · 위험 4.05 / 다크 성공 5.67 · 경고 3.48 · 위험 5.50 */"
         ]
       }
     }
@@ -1330,7 +1330,7 @@
   },
   "color-text-interactive-secondary": {
     "$value": "{neutral-600}",
-    "$description": "보조 버튼 글자 = 이전 버전 neutral-600 (TD-45 45-3 규칙대로, 흰 바탕 AA). 구: 700"
+    "$description": "보조 버튼 글자 = 이전 버전 neutral-600 (규칙대로, 흰 바탕 AA). 구: 700"
   },
   "color-text-interactive-secondary-hover": {
     "$value": "{neutral-800}"
@@ -1363,7 +1363,7 @@
       "eds": {
         "before": [
           "/* destructive = 삭제 등 되돌릴 수 없는 동작 */",
-          "/* 이전 버전 위험 버튼 = 채움 · 테두리 · 글자 모두 red-700(흰 바탕 6.0:1). 올림 · 누름은 한 단계씩 진하게 (TD-45 45-3 규칙대로). 구: 600 · 700 · 800 */"
+          "/* 이전 버전 위험 버튼 = 채움 · 테두리 · 글자 모두 red-700(흰 바탕 6.0:1). 올림 · 누름은 한 단계씩 진하게. 구: 600 · 700 · 800 */"
         ]
       }
     }
@@ -1420,7 +1420,7 @@
   },
   "color-text-btn-excel-hover": {
     "$value": "{white}",
-    "$description": "올림 · 누름 글자 (TD-108)"
+    "$description": "올림 · 누름 글자"
   },
   "color-bg-btn-excel-hover": {
     "$value": "#185838",
@@ -1712,11 +1712,11 @@
   },
   "color-bg-notify": {
     "$value": "{red-700}",
-    "$description": "알림 배지(점 · 개수 · 새 표시) 바탕. 주의를 끄는 색 — 오류 문구 색과 이름을 나눠 다크 값을 따로 맞춤 (TD-172)",
+    "$description": "알림 배지(점 · 개수 · 새 표시) 바탕. 주의를 끄는 색 — 오류 문구 색과 이름을 나눠 다크 값을 따로 맞춤",
     "$extensions": {
       "eds": {
         "before": [
-          "/* 알림 배지 (TD-172) — 새 소식 점 · 읽지 않은 수. 개수 글자가 작아 4.5:1을 라이트 · 다크 따로 맞춤 */"
+          "/* 알림 배지 — 새 소식 점 · 읽지 않은 수. 개수 글자가 작아 4.5:1을 라이트 · 다크 따로 맞춤 */"
         ]
       }
     }
