@@ -6,7 +6,7 @@ import path from 'node:path';
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../..');
 const files = ['css/tokens.css', 'css/globals.css', 'css/components.css',
   ...fs.readdirSync(path.join(ROOT, 'css/brands')).filter(f => f.endsWith('.css')).map(f => `css/brands/${f}`),
-  ...(fs.existsSync(path.join(ROOT, 'css/blocks')) ? fs.readdirSync(path.join(ROOT, 'css/blocks')).filter(f => f.endsWith('.css')).map(f => `css/blocks/${f}`) : [])];   // 브랜드 전용 Blocks (TD-172)
+  ...(fs.existsSync(path.join(ROOT, 'css/blocks')) ? fs.readdirSync(path.join(ROOT, 'css/blocks')).filter(f => f.endsWith('.css')).map(f => `css/blocks/${f}`) : [])];   // 브랜드 전용 Blocks
 /* 예외 — 마크업이 넣는 이름. DS 에는 값이 없고 제품이 요소마다 그림 경로를 style 로 넣는다
  *   --lnb-icon  LNB 레일 메뉴 아이콘 (components.css .menu_icon)
  *   --row-icon  사용자 메뉴 줄 아이콘 (components.css .section-title) */
