@@ -2,7 +2,7 @@
 /* ============================================================================
  * CSS 토큰 파일 → DTCG JSON (tokens/)
  *
- * 한 번 옮길 때와, 저장소 밖에 둔 비공개 브랜드 CSS(고객사 브랜드)를 JSON 으로 바꿀 때 쓴다.
+ * 한 번 옮길 때와, 저장소 밖에 둔 다른 브랜드 CSS를 JSON 으로 바꿀 때 쓴다.
  * 평소에는 쓰지 않는다: 값의 원본은 tokens/*.json 이고 CSS 는 build.mjs 가 만든다 (DS-ADR-045).
  *
  *   node scripts/tokens/css-to-json.mjs css/tokens.css          → tokens/core.json · vendor.json · dark.json
