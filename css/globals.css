@@ -61,11 +61,11 @@
   src: url('../../portal/font/Montserrat_Alternates/MontserratAlternates-SemiBold.ttf');
 }
 
-/* 이전 버전 전역: 폰트 + box-sizing (styles.css *{box-sizing:border-box}(36행) 이관 — 컷 시 border-box 유지, 없으면 전체 content-box 회귀=레이아웃 붕괴.) */
+/* 이전 버전 전역: 폰트 + box-sizing (styles.css *{box-sizing:border-box}(36행) 이관: 컷 시 border-box 유지, 없으면 전체 content-box 회귀=레이아웃 붕괴.) */
 * { font-family: var(--font-family-base); box-sizing: border-box; }
 body { line-height: var(--line-height-base); }   /* 글줄 간격 1.6 = 이전 버전 body 값. 문서 화면(.ds-page 1.6)과 단독 화면 · 제품이 같아짐 */
 
-/* ═══ h1~h6 = 제목 토큰 6단계(2xl~xs) · SemiBold · 줄 간격 tight. margin:0 = 기존 앱 레이아웃 보존(UA 여백 도입 방지) — DS-ADR-012 · 036 ═══ */
+/* ═══ h1~h6 = 제목 토큰 6단계(2xl~xs) · SemiBold · 줄 간격 tight. margin:0 = 기존 앱 레이아웃 보존(UA 여백 도입 방지): DS-ADR-012 · 036 ═══ */
 h1 { font-size: var(--heading-2xl); font-weight: var(--font-weight-semibold); margin: 0; line-height: var(--line-height-tight); }   /* 태그 기본값 = 크기 토큰 (DS-ADR-012) · 굵기 SemiBold (DS-ADR-036) */
 h2 { font-size: var(--heading-xl); font-weight: var(--font-weight-semibold); margin: 0; line-height: var(--line-height-tight); }   /* 태그 기본값 = 크기 토큰 (DS-ADR-012) · 굵기 SemiBold (DS-ADR-036) */
 h3 { font-size: var(--heading-lg); font-weight: var(--font-weight-semibold); margin: 0; line-height: var(--line-height-tight); }   /* 태그 기본값 = 크기 토큰 (DS-ADR-012) · 굵기 SemiBold (DS-ADR-036) */
@@ -74,7 +74,7 @@ h5 { font-size: var(--heading-sm); font-weight: var(--font-weight-semibold); mar
 h6 { font-size: var(--heading-xs); font-weight: var(--font-weight-semibold); margin: 0; line-height: var(--line-height-tight); }   /* 태그 기본값 = 크기 토큰 (DS-ADR-012) · 굵기 SemiBold (DS-ADR-036) */
 
 
-/* ===== 상세검색 토글 (switchDetail) — 검색폼 상세행 펼침/접힘 ===== */
+/* ===== 상세검색 토글 (switchDetail): 검색폼 상세행 펼침/접힘 ===== */
 .switchDetail {
     transition: opacity var(--duration-base);
 }
@@ -94,20 +94,20 @@ input {
     box-sizing: border-box;
     border-radius: var(--radius-input);   /* 구 4px → 입력칸 역할(2). 클래스 없는 옛 입력칸도 .input 과 같은 모서리 (DS-ADR-019 · 020) */
 }
-/* 버튼형 input(button · submit · reset)은 입력칸이 아니라 버튼 — 모서리만 버튼 역할로 (DS-ADR-020).
+/* 버튼형 input(button · submit · reset)은 입력칸이 아니라 버튼: 모서리만 버튼 역할로 (DS-ADR-020).
  * :where() 라 특이도는 input 과 같음 → .btn 등 클래스 규칙이 그대로 이김. 높이 · 여백은 위 규칙 그대로 */
 input:where([type="button"], [type="submit"], [type="reset"]) { border-radius: var(--radius-btn); }
 /* 텍스트 계열 인풋 최소 높이 = 토큰(--size-input 28px).
  * 위 base input{height:20px}은 그 전 버전 잔재라 여기 목록에 없는 타입(password/number/email/tel/search)이
- * 20px로 떨어졌었음 — 비밀번호 변경 팝업에서 발견. 타입을 빼먹으면 조용히 20px가 되니 목록으로 관리.
+ * 20px로 떨어졌었음: 비밀번호 변경 팝업에서 발견. 타입을 빼먹으면 조용히 20px가 되니 목록으로 관리.
  * 값도 1.875rem(30px) 하드코딩이었던 걸 토큰으로 교체 */
 input[type="text"], input[type="date"],
 input[type="password"], input[type="number"],
 input[type="email"], input[type="tel"], input[type="search"] {
     height: auto;
-    min-height: var(--size-input);   /* 최소 높이 — 글자 배율을 따라 칸이 커짐 (DS-ADR-049) */
+    min-height: var(--size-input);   /* 최소 높이: 글자 배율을 따라 칸이 커짐 (DS-ADR-049) */
     box-sizing: border-box;
-    background-color: var(--color-bg-input);   /* !important 제거 — .input[readonly]·:disabled 가 덮을 수 있게 (DS-ADR-010) */
+    background-color: var(--color-bg-input);   /* !important 제거: .input[readonly]·:disabled 가 덮을 수 있게 (DS-ADR-010) */
 }
 input[type='file'] { height: 24px; }
 input[type="checkbox"] { accent-color: var(--color-bg-checked) !important; }
@@ -115,5 +115,5 @@ select {
     border: 1px solid var(--color-border-base);
     background-color: var(--color-bg-input);
 }
-/* 제품 경로의 화살표 이미지 제거 — 화살표는 components.css .select · .checkSelect 가 그림 (DS-ADR-010) */
+/* 제품 경로의 화살표 이미지 제거: 화살표는 components.css .select · .checkSelect 가 그림 (DS-ADR-010) */
 .multiSelect { border: 1px solid var(--color-border-base); }
