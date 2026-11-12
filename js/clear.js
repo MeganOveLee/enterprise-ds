@@ -1,12 +1,12 @@
-/* 지우기(×) 버튼 — 조회 조건의 입력 · 날짜 칸에 값이 있으면 칸 오른쪽에 지우기 버튼을 붙인다 (DS-ADR-042)
+/* 지우기(×) 버튼: 조회 조건의 입력 · 날짜 칸에 값이 있으면 칸 오른쪽에 지우기 버튼을 붙인다 (DS-ADR-042)
  *
  * 붙는 곳
  *   - data-ds-clear 를 단 입력 · 날짜 칸
- *   - 검색 조건 영역(.mainTable) 안의 텍스트 입력 · 날짜 칸 — 마크업은 그대로, 스크립트가 찾아 붙인다(select.js · datepicker.js 와 같은 방식)
+ *   - 검색 조건 영역(.mainTable) 안의 텍스트 입력 · 날짜 칸: 마크업은 그대로, 스크립트가 찾아 붙인다(select.js · datepicker.js 와 같은 방식)
  * 붙지 않는 곳: 편집 폼 칸 · 읽기 전용 · 비활성(지울 수 없는 값이라 버튼이 있으면 지울 수 있는 것처럼 읽힘)
  *
  * 동작: 값이 있을 때만 보임 → 누르면 값을 비우고 input · change 이벤트를 보낸 뒤 포커스를 칸으로 돌려준다
- * 접근성: <button aria-label="문서 번호 지우기"> — 이름은 칸의 aria-label 또는 <label for> 글자. Tab으로 닿고, 값이 없으면 숨어서 닿지 않음
+ * 접근성: <button aria-label="문서 번호 지우기">: 이름은 칸의 aria-label 또는 <label for> 글자. Tab으로 닿고, 값이 없으면 숨어서 닿지 않음
  *
  * <span class="field-clear-wrap"><input class="input" …><button class="field-clear" aria-label="… 지우기">×</button></span>   ← 텍스트 칸(스크립트가 감쌈)
  * <div class="ui-datepicker"> … <input class="ui-datepicker__input"><button class="field-clear">×</button></div>           ← 날짜 칸(틀 안 맨 끝)

@@ -8,12 +8,12 @@
  *   나중에 그린 탭 줄은 window.dsTabsInit(영역) 으로 직접 붙임
  *   탭 선택(누름 · ← → · Home · End)은 화면의 탭 스크립트가 맡는다. 이 스크립트는 보이는 범위만 맞춤
  *
- * Enterprise DS v1.0 (— Carbon · Cloudscape Tabs 의 넘침 버튼과 같은 방식)
+ * Enterprise DS v1.0 (Carbon · Cloudscape Tabs 의 넘침 버튼과 같은 방식)
  *   - 넘칠 때만 버튼을 보임(.tab.is-overflow). 끝에 닿은 쪽 버튼은 disabled. 탭 이름은 한 줄 고정(CSS)
  *   - 버튼 = 아이콘 버튼(.btn--secondary.btn--transparent.btn--icon) · aria-label 「이전 탭 보기」 「다음 탭 보기」.
  *     키보드는 ← →로 탭을 옮기면 목록이 따라 밀리므로 버튼은 Tab 순서에 넣지 않음(tabindex="-1")
  *   - 누르면 목록이 보이는 폭의 3/4만큼 밀림. 모션 줄이기 설정이면 바로 이동
- *   - 선택한 탭(aria-selected="true" · .is-active)과 포커스가 간 탭은 늘 보이게 — 목록 안에서만 밀고 페이지는 움직이지 않음
+ *   - 선택한 탭(aria-selected="true" · .is-active)과 포커스가 간 탭은 늘 보이게: 목록 안에서만 밀고 페이지는 움직이지 않음
  *   - 크기가 바뀌면(창 크기 · 탭 추가 · 글꼴 로드) 다시 잼(ResizeObserver · MutationObserver)
  *   - 오른쪽 창 버튼(.tab-actions)은 그대로 탭 줄 오른쪽 끝
  * ===================================================================== */
@@ -25,7 +25,7 @@
         next: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>'
     };
     var LABEL = { prev: '이전 탭 보기', next: '다음 탭 보기' };
-    var EDGE = 16;   /* 가려진 탭을 보일 때 목록 끝에 남기는 여유 — 다음 탭이 이어진다는 것이 보이게 */
+    var EDGE = 16;   /* 가려진 탭을 보일 때 목록 끝에 남기는 여유: 다음 탭이 이어진다는 것이 보이게 */
 
     function reducedMotion() {
         return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
@@ -69,7 +69,7 @@
             prev.disabled = !over || list.scrollLeft <= 1;
             next.disabled = !over || list.scrollLeft >= maxLeft() - 1;
         }
-        /* 탭 하나가 목록 보이는 범위 안에 들어오게 — 목록만 밀고 페이지(바깥 스크롤)는 그대로 */
+        /* 탭 하나가 목록 보이는 범위 안에 들어오게: 목록만 밀고 페이지(바깥 스크롤)는 그대로 */
         function reveal(tab, instant) {
             if (!tab || tab.parentNode !== list || maxLeft() <= 1) return;
             var lr = list.getBoundingClientRect();
@@ -123,7 +123,7 @@
         reveal(selectedTab(), true);
     }
 
-    /* 탭 밑줄 — 목록 안에 .tab-indicator 하나. 고른 탭(aria-selected="true" · .is-active)의 왼쪽 · 폭으로 옮김.
+    /* 탭 밑줄: 목록 안에 .tab-indicator 하나. 고른 탭(aria-selected="true" · .is-active)의 왼쪽 · 폭으로 옮김.
      * 처음 자리는 움직이지 않고 놓고(.is-ready 전), 그 뒤 고른 탭이 바뀌면 CSS transition 으로 미끄러짐. 탭 이름 · 폭이 바뀌어도 다시 잼 */
     function initIndicator(list) {
         if (!list || list.getAttribute('data-ds-indicator') === 'on') return;

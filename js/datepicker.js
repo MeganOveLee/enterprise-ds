@@ -5,7 +5,7 @@
  *   날짜를 고르면 입력칸에 채우고 바로 닫힘 / 바깥 누름 · Esc -> 닫힘 (확인 · 취소 버튼 없음)
  * calendar / month / year 디자인 반영.
  *
- * Enterprise DS v1.0 (DS-ADR-016) — 이전 버전에서 직접 만든 달력에 접근성 · 키보드를 덧붙임
+ * Enterprise DS v1.0 (DS-ADR-016): 이전 버전에서 직접 만든 달력에 접근성 · 키보드를 덧붙임
  *   - 팝업 role="dialog" + 날짜표 role="grid", 날짜 칸 aria-selected · aria-current="date" · aria-label("2026년 10월 6일 화요일")
  *   - 키보드(APG date picker dialog): ←→ 하루 · ↑↓ 일주일 · Home/End 주의 처음/끝 · PageUp/Down 한 달(Shift = 1년)
  *     Enter/Space 선택 · Esc 닫고 입력칸으로 · Tab 은 달력 안에서만 돈다
@@ -82,7 +82,7 @@
             if (e.altKey && e.key === 'ArrowDown') { e.preventDefault(); self.open(true); }
             else if (e.key === 'Escape' && self.popup) { e.preventDefault(); self.close(); }
         });
-        /* 직접 입력 — YYYY-MM-DD 로 읽히면 달력도 그 달로 */
+        /* 직접 입력: YYYY-MM-DD 로 읽히면 달력도 그 달로 */
         this.input.addEventListener('input', function() {
             var d = parseDate(self.input.value);
             if (d && self.popup) { self.selectedDate = d; self.tempSelected = d; self.viewYear = d.getFullYear(); self.viewMonth = d.getMonth(); self.render(false); }
@@ -199,12 +199,12 @@
         var daysHTML = '';
         var minD = parseDate(this.input.getAttribute('min')), maxD = parseDate(this.input.getAttribute('max'));
         var rng = rangeOf(this.input);   /* 기간 칸이면 {start, end} */
-        /* 기간의 다른 쪽 끝 — 시작 칸 달력엔 종료일, 종료 칸 달력엔 시작일을 고른 날과 같은 채움으로 (is-range-end). 이 칸의 값은 아니라 aria-selected 없이 이름에만 붙임 */
+        /* 기간의 다른 쪽 끝: 시작 칸 달력엔 종료일, 종료 칸 달력엔 시작일을 고른 날과 같은 채움으로 (is-range-end). 이 칸의 값은 아니라 aria-selected 없이 이름에만 붙임 */
         var rl = rangeInputs(this.input), peer = null, peerName = '';
         if (rl) { var isStartField = rl[0] === this.input; peer = parseDate(rl[isStartField ? 1 : 0].value); peerName = isStartField ? '종료일' : '시작일'; }
         var fd = this.focusDate;
         if (!fd || fd.getFullYear() !== year || fd.getMonth() !== month) fd = this.focusDate = (this.tempSelected && this.tempSelected.getFullYear() === year && this.tempSelected.getMonth() === month) ? this.tempSelected : new Date(year, month, 1);
-        /* 동적 5주/6주 — 35칸 안에 다 들어가면 5주, 안 되면 6주 */
+        /* 동적 5주/6주: 35칸 안에 다 들어가면 5주, 안 되면 6주 */
         var needed = startOffset + lastDay.getDate();
         var totalCells = needed > 35 ? 42 : 35;
         for (var i = 0; i < totalCells; i++) {
@@ -470,8 +470,8 @@
         var self = this;
         var dd = document.createElement('div');
         dd.className = 'datepicker__dropdown datepicker__dropdown--year is-open';   /* 폭 68 (Figma Year dropdown) */
-        /* 연도 범위 = input 의 min / max 연도. 없으면 보는 해 기준 30년 전 ~ 10년 뒤 — 목록은 12개 높이에서 스크롤.
-         * 구: 보는 해 -6 ~ +5 고정 12개 — 2020년 이전을 고를 수 없었음. 이전 버전(AXISJ 달력)은 연도 화면에서 12년씩 넘겨 범위 제한 없음 */
+        /* 연도 범위 = input 의 min / max 연도. 없으면 보는 해 기준 30년 전 ~ 10년 뒤: 목록은 12개 높이에서 스크롤.
+         * 구: 보는 해 -6 ~ +5 고정 12개: 2020년 이전을 고를 수 없었음. 이전 버전(AXISJ 달력)은 연도 화면에서 12년씩 넘겨 범위 제한 없음 */
         var minD = parseDate(this.input.getAttribute('min')), maxD = parseDate(this.input.getAttribute('max'));
         var startYear = minD ? minD.getFullYear() : Math.min(self.viewYear, self.today.getFullYear()) - 30;
         var endYear = maxD ? maxD.getFullYear() : Math.max(self.viewYear, self.today.getFullYear()) + 10;
@@ -519,7 +519,7 @@
             /* input 자리에 wrap 삽입 후, wrap 안으로 아이콘+input 이동 */
             input.parentNode.insertBefore(wrap, input);
             input.setAttribute('type', 'text');
-            /* readonly 해제 — 직접 입력 허용 (명세 4항). placeholder 가 형식을 알려줌 */
+            /* readonly 해제: 직접 입력 허용 (명세 4항). placeholder 가 형식을 알려줌 */
             input.setAttribute('inputmode', 'numeric');
             input.classList.remove('typeDate', 'w100');
             input.classList.add('ui-datepicker__input');
@@ -531,7 +531,7 @@
         });
     }
 
-    /* 기간(.ui-datepicker-range) — 두 칸이 서로 min/max 를 잡아 기간이 뒤집히지 않게 */
+    /* 기간(.ui-datepicker-range): 두 칸이 서로 min/max 를 잡아 기간이 뒤집히지 않게 */
     function rangeInputs(input) {
         var r = input.closest && input.closest('.ui-datepicker-range');
         if (!r) return null;
@@ -549,7 +549,7 @@
         if (l[1].value) l[0].setAttribute('max', l[1].value.slice(0, 10)); else l[0].removeAttribute('max');
     }
 
-    /* 만든 달력 목록 — 칸이 DOM에서 빠지면(부분 갱신 · 팝업 닫힘 · Storybook 스토리 전환) 열린 달력을 닫고 목록에서 뺀다 */
+    /* 만든 달력 목록: 칸이 DOM에서 빠지면(부분 갱신 · 팝업 닫힘 · Storybook 스토리 전환) 열린 달력을 닫고 목록에서 뺀다 */
     var instances = [];
     function cleanup() {
         instances = instances.filter(function(dp) {

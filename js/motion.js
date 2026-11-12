@@ -3,18 +3,18 @@
  * 뜻이 있는 한 번짜리 움직임에 필요한 몫만. 모양 · 시간은 components.css 「인터랙션」 절과 모션 토큰이 정한다.
  *
  * 사용:
- *   <script src="js/motion.js"></script>   — 불러오면 끌어 순서 바꾸기([data-ds-reorder]) · [다음 차이]([data-ds-next-diff])가 자동으로 붙음
- *   dsMotion.roll(요소, 값)                 숫자 굴러가기 — 대시보드 카드 · 결재 배지 · 검색 결과 건수
- *   dsMotion.flash(행)                      방금 바뀐 행 — 저장 · 추가 직후 한 번
+ *   <script src="js/motion.js"></script>  : 불러오면 끌어 순서 바꾸기([data-ds-reorder]) · [다음 차이]([data-ds-next-diff])가 자동으로 붙음
+ *   dsMotion.roll(요소, 값)                 숫자 굴러가기: 대시보드 카드 · 결재 배지 · 검색 결과 건수
+ *   dsMotion.flash(행)                      방금 바뀐 행: 저장 · 추가 직후 한 번
  *   dsMotion.pop(상태 칩)                   상태 칩이 바뀐 직후 한 번 튐(글자 · 색은 화면 스크립트가 먼저 바꿈)
- *   dsMotion.done(버튼, { text, message })  처리 끝 — 버튼 자리에 「✓ 저장됨」을 잠깐, 결과 문장은 알림 자리로
+ *   dsMotion.done(버튼, { text, message })  처리 끝: 버튼 자리에 「✓ 저장됨」을 잠깐, 결과 문장은 알림 자리로
  *   dsMotion.nextDiff(표)                   다음 차이 행으로 내려가 한 번 표시, 포커스는 그 행 링크로
- *   dsMotion.undoToast({ message, onUndo, onCommit })   되돌리기 토스트 — --duration-undo 동안, 마우스 · 포커스가 있으면 멈춤
+ *   dsMotion.undoToast({ message, onUndo, onCommit })   되돌리기 토스트: --duration-undo 동안, 마우스 · 포커스가 있으면 멈춤
  *   dsMotion.reorderInit(영역)              나중에 그린 [data-ds-reorder] 목록에 붙임
  *   dsMotion.announce(문장)                 화면 읽기 프로그램 알림(role="status" 자리 하나를 같이 씀)
  *
  * Enterprise DS v1.0 (DS-ADR-041)
- *   - 동작 줄이기 설정(prefers-reduced-motion)이면 움직이지 않고 결과만 — 숫자는 바로 바뀌고 줄은 바로 자리를 바꿈
+ *   - 동작 줄이기 설정(prefers-reduced-motion)이면 움직이지 않고 결과만: 숫자는 바로 바뀌고 줄은 바로 자리를 바꿈
  *   - 움직임은 꾸밈이고 뜻은 글자가 맡는다: 숫자 · 상태 · 결과는 글자로도 읽히게 둔다
  * ===================================================================== */
 (function () {
@@ -224,7 +224,7 @@
         if (!n && h) n = (h.getAttribute('aria-label') || '').replace(/\s*순서 바꾸기$/, '');   /* 손잡이 이름 「○○ 순서 바꾸기」의 ○○ */
         return n || (item.textContent || '').trim().split(/\s+/).slice(0, 2).join(' ');
     }
-    /* FLIP — 바꾸기 전 자리를 재고, 바꾼 뒤 그 차이만큼 되돌렸다가 제자리로 */
+    /* FLIP: 바꾸기 전 자리를 재고, 바꾼 뒤 그 차이만큼 되돌렸다가 제자리로 */
     function flip(list, mutate, skip) {
         var before = new Map();
         items(list).forEach(function (it) { before.set(it, it.getBoundingClientRect().top); });
