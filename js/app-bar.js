@@ -5,7 +5,7 @@
  * 줄어드는 기준 = 큰 제목 줄의 높이만큼 내려갔을 때. 다시 맨 위로 오면 크게
  * 나중에 그린 막대는 window.dsAppBarInit(영역)
  *
- * 펼침 떠 있는 버튼(.fab--extended[data-fab-scroll]) — 영역을 내리는 동안 .is-collapsed(아이콘만), 멈추고 0.8초 뒤 다시 글자
+ * 펼침 떠 있는 버튼(.fab--extended[data-fab-scroll]): 영역을 내리는 동안 .is-collapsed(아이콘만), 멈추고 0.8초 뒤 다시 글자
  * ===================================================================== */
 (function () {
     'use strict';

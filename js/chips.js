@@ -1,16 +1,16 @@
 /* =====================================================================
  * chips.js - 칩 고르기 · 칩 줄 넘침 ◀ ▶ (DS-ADR-049 · 050)
  *
- * 고르기 (문서 전체에 한 번 — 나중에 그린 칩도 따로 붙이지 않아도 됨):
- *   - 여럿 고르기 .chip[aria-pressed] — 누르면 켜고 끔
- *   - 하나 고르기 [role="radiogroup"] 안 button[role="radio"] — 칩 · 목록 행 · 나란한 칸(.segmented) 모두. 누르면 그것만 고름
- *     방향키(← → ↑ ↓) · Home · End 로 옮기며 고름. Tab 은 고른 것 하나에만 멈춤(나머지 tabindex="-1") — 라디오 묶음과 같은 키보드 규칙
- *   - 고른 값을 버튼 글자에: <button data-choice-for="묶음 id" data-choice-text="{value} 호출하기"> — 고를 때마다
+ * 고르기 (문서 전체에 한 번: 나중에 그린 칩도 따로 붙이지 않아도 됨):
+ *   - 여럿 고르기 .chip[aria-pressed]: 누르면 켜고 끔
+ *   - 하나 고르기 [role="radiogroup"] 안 button[role="radio"]: 칩 · 목록 행 · 나란한 칸(.segmented) 모두. 누르면 그것만 고름
+ *     방향키(← → ↑ ↓) · Home · End 로 옮기며 고름. Tab 은 고른 것 하나에만 멈춤(나머지 tabindex="-1"): 라디오 묶음과 같은 키보드 규칙
+ *   - 고른 값을 버튼 글자에: <button data-choice-for="묶음 id" data-choice-text="{value} 호출하기">: 고를 때마다
  *     라디오의 data-value 를 {value} 자리에 넣음(확인 창 없이 버튼 글자로 결과를 보여 줌)
  *   - 바로가기(a · aria-pressed 없는 button)는 건드리지 않음
  *
  * 한 줄 칩 줄(.chip-group--scroll)이 놓인 칸보다 길면 양 끝에 화살표 버튼을 두고 줄을 옆으로 민다.
- * 손가락으로 미는 것과 같은 일을 버튼 한 번 누르기로도 할 수 있게 — 마우스 · 밀기가 어려운 사람도 끝까지 볼 수 있음.
+ * 손가락으로 미는 것과 같은 일을 버튼 한 번 누르기로도 할 수 있게: 마우스 · 밀기가 어려운 사람도 끝까지 볼 수 있음.
  *
  * 사용:
  *   불러오기만 하면 화면의 .chip-group--scroll 이 모두 대상(tabs.js 와 같은 방식). 이미 붙은 줄은 건너뜀
@@ -24,7 +24,7 @@
  * 동작:
  *   - 줄을 .chip-scroll(.chip-scroll--arrows · --fade · --peek)로 감쌈. 앞뒤에 숨은 칩이 있으면 .has-prev · .has-next
  *   - 화살표는 보이는 폭의 3/4만큼 밂. 모션 줄이기 설정이면 바로 이동하고, 힌트 움직임은 하지 않음
- *   - 버튼은 Tab 순서에 넣지 않음(tabindex="-1") — 키보드로 칩에 포커스가 가면 줄이 따라 밀림. 밀기와 같은 일을 누르기로(대안)
+ *   - 버튼은 Tab 순서에 넣지 않음(tabindex="-1"): 키보드로 칩에 포커스가 가면 줄이 따라 밀림. 밀기와 같은 일을 누르기로(대안)
  *   - 크기가 바뀌면 다시 잼(ResizeObserver)
  * ===================================================================== */
 (function () {
@@ -61,7 +61,7 @@
         if (track.classList.contains('chip-group--peek')) return 'peek';
         return 'arrows';
     }
-    function hint(track) {   // 끝 칩 잘림 시안 — 처음 한 번 살짝 밀었다 돌아와 「옆에 더 있다」를 알림
+    function hint(track) {   // 끝 칩 잘림 시안: 처음 한 번 살짝 밀었다 돌아와 「옆에 더 있다」를 알림
         if (reducedMotion() || track.dataset.hinted || track.scrollWidth - track.clientWidth <= 1) return;
         track.dataset.hinted = 'true';
         var step = parseFloat(getComputedStyle(track).fontSize) * 2.5;

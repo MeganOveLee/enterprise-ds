@@ -9,13 +9,13 @@
  *   나중에 그린 select 는 window.buildCustomSelect(select) 또는 window.enhanceSelects(영역) 으로 직접 바꿈
  *   값 · 이름 · 폼 제출 · onchange 는 원래 select 가 그대로 맡는다(숨겨서 둠). 고르면 select.value 를 바꾸고 change 를 보냄
  *
- * Enterprise DS v1.0 — 이전 버전 화면 스크립트(커스텀 단일 셀렉트)를 옮기고 접근성 · 키보드를 덧붙임
+ * Enterprise DS v1.0: 이전 버전 화면 스크립트(커스텀 단일 셀렉트)를 옮기고 접근성 · 키보드를 덧붙임
  *   - 역할: 상자 role="combobox"(aria-haspopup="listbox" · aria-expanded · aria-controls) + 목록 role="listbox" + 항목 role="option"(aria-selected)
  *     이름은 select 의 <label for> · aria-labelledby · aria-label 을 그대로 잇고, aria-describedby · aria-invalid · aria-required · disabled 도 옮김
  *   - 키보드(APG select-only combobox): 닫힘 = ↓ ↑ Enter Space Alt+↓ 로 열기, Home/End, 글자 입력 = 열고 그 글자로 시작하는 항목으로
  *     열림 = ↑ ↓ Home End PageUp PageDown 으로 이동, Enter · Space 고르고 닫기, Esc 고르지 않고 닫기, Tab 고르고 다음 칸으로
  *     포커스는 상자에 두고 aria-activedescendant 로 지금 항목을 알림
- *   - 목록은 열 때 body 로 옮겨 fixed 로 띄움 — 표 칸 · 창(.pop)처럼 넘침을 자르는 영역에서도 잘리지 않게(이전 버전과 같음)
+ *   - 목록은 열 때 body 로 옮겨 fixed 로 띄움: 표 칸 · 창(.pop)처럼 넘침을 자르는 영역에서도 잘리지 않게(이전 버전과 같음)
  * ===================================================================== */
 (function () {
     'use strict';
@@ -39,9 +39,9 @@
 
         var wrap = document.createElement('div');
         wrap.className = 'ui-select';
-        // native select 의 너비 유틸(w10 ~ w95 = %)은 위젯에 물려줌 — 좁게 둔 셀렉트를 그대로
+        // native select 의 너비 유틸(w10 ~ w95 = %)은 위젯에 물려줌: 좁게 둔 셀렉트를 그대로
         (String(sel.className).match(/\bw\d+\b/g) || []).forEach(function (c) { wrap.classList.add(c); });
-        if (sel.style.width) wrap.style.width = sel.style.width;   // style="width:…" 로 폭을 정한 셀렉트도 그 폭 그대로 (— 고르는 법 미리보기가 칸 폭 전체로 늘어나던 것)
+        if (sel.style.width) wrap.style.width = sel.style.width;   // style="width:…" 로 폭을 정한 셀렉트도 그 폭 그대로 (고르는 법 미리보기가 칸 폭 전체로 늘어나던 것)
 
         var trigger = document.createElement('div');
         trigger.className = 'ui-select__trigger';
@@ -64,10 +64,10 @@
         menu.id = uid + '-list';
         menu.setAttribute('role', 'listbox');
         menu.setAttribute('tabindex', '-1');
-        // 목록을 눌러도 포커스는 상자에 남게(항목 · 스크롤 막대) — 포커스가 빠지면 닫히므로
+        // 목록을 눌러도 포커스는 상자에 남게(항목 · 스크롤 막대): 포커스가 빠지면 닫히므로
         menu.addEventListener('mousedown', function (e) { e.preventDefault(); });
 
-        // 이름 · 설명 · 상태 — 원래 select 의 것을 상자와 목록에 잇는다
+        // 이름 · 설명 · 상태: 원래 select 의 것을 상자와 목록에 잇는다
         function syncAttrs() {
             var lid = labelIdFor(sel);
             var al = sel.getAttribute('aria-label');
@@ -158,7 +158,7 @@
         function isOpen() { return menu.classList.contains('show'); }
         function open() {
             if (sel.disabled || isOpen()) return;
-            document.dispatchEvent(new CustomEvent('ds-popup-open', { detail: wrap }));   // 한 번에 하나만 — 다른 선택 · 다중 선택 목록은 닫힘
+            document.dispatchEvent(new CustomEvent('ds-popup-open', { detail: wrap }));   // 한 번에 하나만: 다른 선택 · 다중 선택 목록은 닫힘
             document.body.appendChild(menu);
             menu.classList.add('show');
             positionMenu();
@@ -176,7 +176,7 @@
             if (refocus) trigger.focus();
         }
 
-        // 글자로 찾기 — 같은 글자를 이어 치면 그 글자로 시작하는 다음 항목
+        // 글자로 찾기: 같은 글자를 이어 치면 그 글자로 시작하는 다음 항목
         var typed = '', typedAt = 0;
         function typeAhead(ch) {
             var now = Date.now();
@@ -221,12 +221,12 @@
         window.addEventListener('scroll', function (e) { if (isOpen() && !menu.contains(e.target)) positionMenu(); }, true);
         window.addEventListener('resize', function () { if (isOpen()) positionMenu(); });
 
-        // 라벨을 누르면 상자로 — 원래 select 는 숨어 있어 라벨 클릭을 받지 못함
+        // 라벨을 누르면 상자로: 원래 select 는 숨어 있어 라벨 클릭을 받지 못함
         var lid = labelIdFor(sel);
         var lab = lid ? document.getElementById(lid) : null;
         if (lab && lab.tagName === 'LABEL') lab.addEventListener('click', function (e) { e.preventDefault(); if (!sel.disabled) trigger.focus(); });
 
-        // 배치: select 자리에 wrap — 안에 상자 · 목록 · 숨은 select 순서
+        // 배치: select 자리에 wrap: 안에 상자 · 목록 · 숨은 select 순서
         sel.parentNode.insertBefore(wrap, sel);
         wrap.appendChild(trigger);
         wrap.appendChild(menu);
@@ -239,7 +239,7 @@
         refreshValue();
         syncAttrs();
 
-        // 상자 폭을 목록 폭에 맞춤 — 목록이 상자보다 넓게 튀어나오지 않게. 단 부모 칸 폭까지만(검색 조건 칸 정렬 유지)
+        // 상자 폭을 목록 폭에 맞춤: 목록이 상자보다 넓게 튀어나오지 않게. 단 부모 칸 폭까지만(검색 조건 칸 정렬 유지)
         (function fitTriggerToMenu() {
             try {
                 var prev = menu.style.cssText;
@@ -252,7 +252,7 @@
             } catch (e) { /* 재지 못하면 그대로 */ }
         })();
 
-        // 밖에서 값 · 옵션 · 상태를 바꿔도 따라감 — select.value 대입 후 change, 폼 초기화, 옵션을 나중에 채움(AJAX), disabled · aria-invalid 토글
+        // 밖에서 값 · 옵션 · 상태를 바꿔도 따라감: select.value 대입 후 change, 폼 초기화, 옵션을 나중에 채움(AJAX), disabled · aria-invalid 토글
         sel.addEventListener('change', refreshValue);
         if (sel.form) sel.form.addEventListener('reset', function () { setTimeout(refreshValue, 0); });
         if (window.MutationObserver) {
@@ -264,7 +264,7 @@
     // 영역 안의 단일 select 를 모두 바꿈(나중에 그린 화면 · 팝업 내용용)
     function enhanceSelects(root) {
         (root || document).querySelectorAll('select:not([multiple]):not(.no-ui):not(.checkSelect):not(.ui-select__native)').forEach(function (sel) {
-            // 라이브러리(에디터 · 그리드)가 숨겨 두고 자기 위젯으로 쓰는 select 는 건드리지 않음 — 보이는 폼 select 만
+            // 라이브러리(에디터 · 그리드)가 숨겨 두고 자기 위젯으로 쓰는 select 는 건드리지 않음: 보이는 폼 select 만
             if (getComputedStyle(sel).display === 'none') return;
             buildCustomSelect(sel);
         });
