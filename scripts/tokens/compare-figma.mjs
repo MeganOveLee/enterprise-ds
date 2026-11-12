@@ -17,7 +17,7 @@ const MAP = path.join(ROOT, 'tokens/figma/map.json');
 const STRICT = process.argv.includes('--strict');
 
 if (!fs.existsSync(EXPORT)) {
-  console.log('tokens/figma/export.json 이 아직 없음 — Figma 플러그인으로 내보낸 뒤 대조한다 (건너뜀)');
+  console.log('tokens/figma/export.json 이 아직 없음: Figma 플러그인으로 내보낸 뒤 대조한다 (건너뜀)');
   process.exit(0);
 }
 const exp = JSON.parse(fs.readFileSync(EXPORT, 'utf8'));
@@ -64,7 +64,7 @@ function rgba(s) {
   }
   m = s.match(/^rgba?\(([^)]+)\)$/i);
   if (m) { const p = m[1].split(/[\s,\/]+/).filter(Boolean).map(Number); return [p[0], p[1], p[2], p[3] ?? 1]; }
-  // color-mix(in srgb, A p%, B) — CSS 가 계산하는 대로(알파 곱셈) 한 색으로. Figma 는 계산된 값(#0064E0 / 0.35)을 들고 있음 
+  // color-mix(in srgb, A p%, B): CSS 가 계산하는 대로(알파 곱셈) 한 색으로. Figma 는 계산된 값(#0064E0 / 0.35)을 들고 있음 
   m = s.match(/^color-mix\(in srgb,\s*(.+?)\s+([\d.]+)%\s*,\s*(.+)\)$/i);
   if (m) {
     const c1 = rgba(m[1]), c2 = rgba(m[3]), p = parseFloat(m[2]) / 100;
@@ -90,7 +90,7 @@ function same(f, css) {
     return near(c[0], r) && near(c[1], g) && near(c[2], b) && Math.abs(c[3] - f.val.alpha) < 0.01;
   }
   if (f.type === 'FLOAT') { const n = num(css); return n !== null && Math.abs(n - f.val) < 0.01; }
-  // 글꼴: Figma 는 글꼴 이름 하나, CSS 는 대체 글꼴까지 쓴 목록 — 첫 글꼴로 맞춤 
+  // 글꼴: Figma 는 글꼴 이름 하나, CSS 는 대체 글꼴까지 쓴 목록: 첫 글꼴로 맞춤 
   const first = v => String(v).split(',')[0].trim().replace(/^['"]|['"]$/g, '').toLowerCase();
   if (String(css).includes(',')) return first(f.val) === first(css);
   return String(f.val).trim() === String(css).trim();
@@ -113,7 +113,7 @@ for (const [key, { v }] of Object.entries(vars)) {
   }
 }
 const lines = [
-  `## Figma 변수 ↔ 토큰 대조 — ${exp.file} (${exp.exportedAt.slice(0, 10)})`,
+  `## Figma 변수 ↔ 토큰 대조: ${exp.file} (${exp.exportedAt.slice(0, 10)})`,
   '', `일치 ${ok} · 다름 ${rows.filter(r => r[0] === '값이 다름').length} · Figma 에만 ${rows.filter(r => r[0] === 'Figma 에만').length} · CSS 에만 ${cssOnly.size} · 건너뜀 ${skipped}`, '',
   '| 구분 | Figma 변수 | Figma 값 | CSS 값 |', '| --- | --- | --- | --- |',
   ...rows.slice(0, 200).map(r => `| ${r.join(' | ')} |`),

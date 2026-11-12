@@ -7,7 +7,7 @@
  *   npm run tokens:check    만들어 보고 저장소의 CSS 와 다르면 실패 (CI)
  *
  * Style Dictionary 가 하는 일: JSON 읽기 · 참조 검사(없는 이름을 가리키면 빌드 실패) · CSS 쓰기.
- * 값은 바꾸지 않는다 — 참조 {이름} 을 var(--이름) 으로 되돌려 쓰기만 해서, 다크 모드 · 브랜드 전환이
+ * 값은 바꾸지 않는다: 참조 {이름} 을 var(--이름) 으로 되돌려 쓰기만 해서, 다크 모드 · 브랜드 전환이
  * 지금처럼 CSS 캐스케이드로 계산된다 (DS-ADR-045).
  * ============================================================================ */
 import fs from 'node:fs';
@@ -51,7 +51,7 @@ function cssBlock(file) {
   return lines.join('\n');
 }
 
-/* ---- Style Dictionary: 파일마다 한 번 — 참조 검사 + 블록 쓰기 ----------------- */
+/* ---- Style Dictionary: 파일마다 한 번: 참조 검사 + 블록 쓰기 ----------------- */
 StyleDictionary.registerFormat({
   name: 'eds/css-block',
   format: ({ options }) => cssBlock(options.file),
@@ -90,7 +90,7 @@ async function render(file, include) {
   return out.output;
 }
 
-const GEN = '/* ⚙️ 생성 파일 — 고치지 말 것. 원본은 tokens/{SRC}, 만들기는 npm run tokens (DS-ADR-045) */';
+const GEN = '/* ⚙️ 생성 파일: 고치지 말 것. 원본은 tokens/{SRC}, 만들기는 npm run tokens (DS-ADR-045) */';
 const files = {};
 const core = T('core.json');
 const parts = [
@@ -104,7 +104,7 @@ for (const f of brandFiles) {
     ['@charset "UTF-8";', GEN.replace('{SRC}', `brands/${f}`), await render(T(`brands/${f}`), [core])].join('\n') + '\n';
 }
 
-/* ---- 최종 값 (브랜드 × 모드) — CSS 캐스케이드와 같은 규칙으로 푼다 ---------------
+/* ---- 최종 값 (브랜드 × 모드): CSS 캐스케이드와 같은 규칙으로 푼다 ---------------
  *   html(:root) 층 = core + 브랜드     → 시맨틱이 여기서 계산됨
  *   body 층       = vendor (+ dark)   → body 에 다시 선언된 이름만 body 값으로 다시 계산, 나머지는 html 값을 물려받음 */
 const tokensOf = f => Object.fromEntries(Object.entries(readJson(f)).filter(([k]) => !k.startsWith('$')).map(([k, v]) => [k, v.$value]));

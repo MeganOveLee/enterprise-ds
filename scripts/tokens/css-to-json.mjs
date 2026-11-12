@@ -3,7 +3,7 @@
  * CSS 토큰 파일 → DTCG JSON (tokens/)
  *
  * 한 번 옮길 때와, 저장소 밖에 둔 비공개 브랜드 CSS(고객사 브랜드)를 JSON 으로 바꿀 때 쓴다.
- * 평소에는 쓰지 않는다 — 값의 원본은 tokens/*.json 이고 CSS 는 build.mjs 가 만든다 (DS-ADR-045).
+ * 평소에는 쓰지 않는다: 값의 원본은 tokens/*.json 이고 CSS 는 build.mjs 가 만든다 (DS-ADR-045).
  *
  *   node scripts/tokens/css-to-json.mjs css/tokens.css          → tokens/core.json · vendor.json · dark.json
  *   node scripts/tokens/css-to-json.mjs css/brands/acme.css     → tokens/brands/acme.json
@@ -34,7 +34,7 @@ export const typeOf = (name, v) => {
   if (/^-?[\d.]+(px|rem|em|%)$/.test(v) || v === '0') return 'dimension';
   if (/^[\d.]+m?s$/.test(v)) return 'duration';
   if (/^-?[\d.]+$/.test(v)) return 'number';
-  return undefined;   // 계산식 · 그림자 · 키워드 — 문자열 그대로
+  return undefined;   // 계산식 · 그림자 · 키워드: 문자열 그대로
 };
 
 function ruleToJson(rule, header) {
