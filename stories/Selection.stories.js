@@ -45,7 +45,7 @@ export const Radio = {
 
 export const Switch = { args: { label: '자동 저장' }, render: (a) => sw(a.label, opt(a)) };
 
-// ── Do · Don't (TD-108 27번 ① ② ③) — 미리보기만 ──
+// ── Do · Don't (① ② ③) — 미리보기만 ──
 const saveForm = (ctl) => '<div class="sb-row" style="gap:12px">' + ctl + '<button type="button" class="btn btn--primary btn--filled">저장</button></div>';
 // 폼 한 행 = 라디오 묶음 필드 + 옆 텍스트 필드. stack = 라디오를 세로로 쌓은 잘못된 예
 const formRow = (name, stack) => '<div class="form-grid-2" style="width:460px;text-align:left">' +
@@ -112,7 +112,7 @@ export const Playground = {
     : (a.kind === 'switch' ? sw : ck)(a.label, opt(a))),
 };
 
-// ── 시안 (TD-187) — A 라디오 묶음(추천) · B 카드형 선택 · C 나란한 칸. 같은 질문(결재 방식) ──
+// ── 시안 — A 라디오 묶음(추천) · B 카드형 선택 · C 나란한 칸. 같은 질문(결재 방식) ──
 const WAYS = [['순차', '한 사람씩 차례로 결재합니다'], ['병렬', '모두에게 한꺼번에 보내고 각자 결재합니다'], ['합의', '모두 승인해야 다음 단계로 넘어갑니다']];
 const OPT_A = ['<div class="radio-group" role="radiogroup" aria-label="결재 방식">', ...WAYS.map(([t], i) => '  ' + rd('way-a', t, i === 0 ? ' checked' : '')), '</div>'];
 const card = (n, [t, d], o = '') => '  <label class="radio choice-card"><input type="radio" name="' + n + '"' + o + '><span class="radio__mark"></span>' +

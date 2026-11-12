@@ -34,7 +34,7 @@ export const 도움말 = {
   // 셀 가운데에 둠 — 왼쪽 끝에 두면 폭 240 툴팁이 셀 밖으로 나가 왼쪽이 잘렸음
   render: () => stage(tip({ icon: 'help', label: '행 높이 도움말', text: '관련 객체 그리드는 행 높이 30을 씁니다. 편집 셀이 있는 그리드만 40입니다.', open: true }), 120, 'end', true),
 };
-// 셀 왼쪽 · 오른쪽 끝 — 가운데 맞춤이면 폭 240 툴팁이 셀 밖으로 잘림 → .tooltip--start · --end (TD-93)
+// 셀 왼쪽 · 오른쪽 끝 — 가운데 맞춤이면 폭 240 툴팁이 셀 밖으로 잘림 → .tooltip--start · --end
 const edge = (inner, justify) => '<div style="display:flex;align-items:end;justify-content:' + justify + ';min-height:120px;padding:8px 0;border-inline:1px dashed var(--color-border-strong);width:300px">' + inner + '</div>';
 export const 끝_맞춤 = {
   render: () => '<div class="sb-row" style="gap:24px;padding:8px 24px">' +
@@ -45,7 +45,7 @@ export const 아래쪽 = {
   render: () => stage(tip({ icon: 'down', label: '첨부 받기', text: '첨부 받기', bottom: true, open: true }), 80, 'start'),
 };
 
-// ── Do · Don't (TD-108 18번 ① ②) ── 미리보기만, 코드는 위 예시 카드에
+// ── Do · Don't (① ②) ── 미리보기만, 코드는 위 예시 카드에
 const ddStage = (inner) => '<div style="flex:1;display:flex;align-items:end;justify-content:center;gap:8px;min-height:104px">' + inner + '</div>';   // 가운데 — 긴 툴팁도 판 안에
 const textTip = (t) => { const id = 'tt' + (++uid); return '<span class="has-tooltip"><button type="button" class="btn btn--secondary btn--outlined" aria-describedby="' + id + '">' + svg(I.print) + t + '</button><span class="tooltip is-open" role="tooltip" id="' + id + '">' + t + '</span></span>'; };
 // 툴팁 안 링크 — Don't 그림용. 어두운 바탕 위라 글자색은 툴팁 글자색 그대로, 밑줄로 링크임을 표시
@@ -93,7 +93,7 @@ export const Playground = {
 };
 const optSrc = (code) => ({ controls: { disable: true }, docs: { source: { language: 'html', code } } });
 
-// ── 시안 (TD-187) — A 어두운 바탕(추천, 위 「아이콘 버튼 설명」) · B 밝은 바탕 · C 제목 + 본문 ──
+// ── 시안 — A 어두운 바탕(추천, 위 「아이콘 버튼 설명」) · B 밝은 바탕 · C 제목 + 본문 ──
 const OPT_LIGHT = tip({ icon: 'down', label: '첨부 받기', text: '첨부 받기', open: true, side: 'light' });
 const OPT_RICH = tip({ icon: 'down', label: '첨부 받기', open: true, side: 'rich', text: '<strong class="tooltip__title">첨부 받기</strong><span class="tooltip__body">첨부 파일을 하나로 묶어 내려받습니다. 3개 이상이면 ZIP으로 받습니다.</span>' });
 export const 시안_밝은_바탕 = { parameters: optSrc(OPT_LIGHT), render: () => '<div class="sb-stage">' + OPT_LIGHT + '</div>' };

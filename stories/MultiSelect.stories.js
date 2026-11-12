@@ -1,5 +1,5 @@
 // Form/Multi Select — 문서 화면은 MultiSelect.mdx. 여러 값을 고르는 드롭다운(.checkSelect)
-// Figma UI Kit 「Option」 · 「Option group」과 같은 짝. 여닫기 · 표시 글자는 js/multiselect.js(TD-101 — 이전 버전 화면 스크립트에서 화면 동작만 옮김)
+// Figma UI Kit 「Option」 · 「Option group」과 같은 짝. 여닫기 · 표시 글자는 js/multiselect.js(— 이전 버전 화면 스크립트에서 화면 동작만 옮김)
 // 「고른 값 줄여 보기」 카드는 그 스크립트로 바꾼 것, 나머지 카드는 같은 마크업을 짧은 스크립트(wire)로 눌러 볼 수 있게 함
 import { matrix } from './_matrix.js';
 import { enablePseudo } from './_pseudo.js';
@@ -78,13 +78,13 @@ export const 펼친_모습 = {
   parameters: { docs: { source: { code: box({ picked: ['작업 중'], open: true }) } } },
   render: () => live(box({ picked: ['작업 중'], open: true }), 250),
 };
-const KINDS = ['설계 사양서', '시험 성적서', '도면', '회의록', '검토 보고서'];   // 다중 선택은 옵션 5개부터 (4개까지는 체크박스 그룹, TD-108 26번)
+const KINDS = ['설계 사양서', '시험 성적서', '도면', '회의록', '검토 보고서'];   // 다중 선택은 옵션 5개부터 (4개까지는 체크박스 그룹)
 export const 검색_없이 = {
   parameters: { docs: { source: { code: box({ name: '문서 분류', items: KINDS, picked: ['설계 사양서', '도면'], open: true, search: false }) } } },
   render: () => live(box({ name: '문서 분류', items: KINDS, picked: ['설계 사양서', '도면'], open: true, search: false }), 210),
 };
 
-// ── Do · Don't (TD-108 26번 ① ②) — 미리보기만. 펼친 목록은 틀 높이를 잡아 미리보기 안에 둠 ──
+// ── Do · Don't (① ②) — 미리보기만. 펼친 목록은 틀 높이를 잡아 미리보기 안에 둠 ──
 const fit = (h, w = 200, ht = 0) => '<div style="width:' + w + 'px' + (ht ? ';height:' + ht + 'px' : '') + '">' + h + '</div>';
 const KIND3 = ['사양서', '도면', '시험 성적서'];
 const group = '<div class="form-grid-2" style="grid-template-columns:1fr;width:240px;text-align:left"><div class="ff-field"><span class="search-label" id="dd-ms-kind">문서 분류</span>' +
@@ -148,7 +148,7 @@ export const Playground = {
   render: (a) => live(box({ name: a.name, items: a.items || [], picked: a.picked || [], search: a.search, open: a.open }), a.open ? 260 : 40),
 };
 
-// ── 시안 (TD-187) — A 첫 값 외 N(추천) · B 칸 아래 칩. B 는 실제 스크립트(js/multiselect.js data-display="chips")로 그림 ──
+// ── 시안 — A 첫 값 외 N(추천) · B 칸 아래 칩. B 는 실제 스크립트(js/multiselect.js data-display="chips")로 그림 ──
 const SRC_CHIPS = '<label class="search-label" for="state-chips">작업현황</label>\n<select class="checkSelect" id="state-chips" multiple data-display="chips">\n' +
   STATUS.map((t, i) => '  <option' + (i < 3 ? ' selected' : '') + '>' + t + '</option>').join('\n') + '\n</select>';
 export const 시안_칸_아래_칩 = {

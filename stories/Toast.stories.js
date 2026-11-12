@@ -53,7 +53,7 @@ export const 쌓임 = {
   ], 260),
 };
 
-// ── Do · Don't (TD-108 17번 ① ② ③) ── 미리보기만, 코드는 위 예시 카드에
+// ── Do · Don't (① ② ③) ── 미리보기만, 코드는 위 예시 카드에
 const col = (items) => '<div style="flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-end;gap:8px">' + items.join('') + '</div>';
 const field = (id, err = '') => '<div class="form-grid-2" style="grid-template-columns:1fr;align-self:stretch"><div class="ff-field"><label class="search-label" for="' + id + '">문서 명</label><div class="td">' +
   '<input class="input" id="' + id + '"' + (err ? ' aria-invalid="true" aria-describedby="' + id + '-err"' : '') + '>' + (err ? '<span class="field-error-msg" id="' + id + '-err">' + err + '</span>' : '') + '</div></div></div>';
@@ -106,7 +106,7 @@ export const Playground = {
 };
 const optSrc = (code) => ({ controls: { disable: true }, docs: { source: { language: 'html', code } } });
 
-// ── 시안 (TD-187) — A 오른쪽 아래(추천, 위 「저장 완료」) · B 아래 가운데 · C 위 가운데 ──
+// ── 시안 — A 오른쪽 아래(추천, 위 「저장 완료」) · B 아래 가운데 · C 위 가운데 ──
 const optToast = (cls) => '<div class="toast-region ' + cls + '" role="region" aria-label="알림">' + toast({ status: 'success', msg: '문서를 저장했습니다.' }) + '</div>';
 export const 시안_아래_가운데 = { parameters: optSrc(optToast('toast-region--bottom')), render: () => '<div class="sb-frame sb-frame--short">' + optToast('toast-region--bottom') + '</div>' };
 export const 시안_위_가운데 = { parameters: optSrc(optToast('toast-region--top')), render: () => '<div class="sb-frame sb-frame--short">' + optToast('toast-region--top') + '</div>' };

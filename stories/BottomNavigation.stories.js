@@ -1,4 +1,4 @@
-// Navigation/Bottom Navigation — 문서 화면은 BottomNavigation.mdx. 모바일 앱 첫 단계 화면 사이를 오가는 하단 탭 (DS-ADR-049, TD-172)
+// Navigation/Bottom Navigation — 문서 화면은 BottomNavigation.mdx. 모바일 앱 첫 단계 화면 사이를 오가는 하단 탭 (DS-ADR-049)
 // 시안 A 막대(추천) · B 알약 표시 · C 떠 있는 알약. 아이콘 = 선 ↔ 채움 짝, 지금 화면만 채움 
 import { svg, solid, I, F, phone, body } from './_mobile.js';
 

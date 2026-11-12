@@ -26,8 +26,8 @@ const actions = (a = 2, b = 0) => '<div class="header-actions">' + userBtn() + c
 
 const gnb = ({ list = ['Home', '문서 관리', '문서 검색'], a = 2, b = 0 } = {}) =>
   '<header class="gnb"><div style="display:flex;align-items:center">' + history() + crumbs(list) + '</div>' + actions(a, b) + '</header>';
-// 로고형 GNB — LNB 레일이 없는 화면 틀에서 GNB 왼쪽에 로고(TD-122). 세 가지:
-//   워드마크 = 제품 이름이 든 로고 그림 한 장(.brand-logo) + 버전 — 이전 버전 상단 바(top.jsp: 로고 그림 + 버전 + 뒤로 · 앞으로)와 같은 구성
+// 로고형 GNB — LNB 레일이 없는 화면 틀에서 GNB 왼쪽에 로고. 세 가지:
+//   워드마크 = 제품 이름이 든 로고 그림 한 장(.brand-logo) + 버전 — 이전 버전 상단 바(로고 그림 + 버전 + 뒤로 · 앞으로)와 같은 구성
 //   심볼 + 텍스트 = 마크 + 제품 이름 글자 + 버전 — 로고 그림이 마크뿐인 제품. 글자 마크(.logo-mark)를 쓰는 제품도 같은 자리
 //   심볼 = 마크만, 제품 이름은 마크의 이름(aria-label) — GNB 왼쪽 자리가 좁을 때(DS 제안, 이전 버전에 없음)
 // 워드마크 견본 그림 = 가상 제품 「Enterprise PLM」의 마크 + 글자를 한 장으로 그린 것(실제 회사 로고 아님)
@@ -63,7 +63,7 @@ export const 페이지_머리 = {
     '<button type="button" class="favorite-icon" aria-label="즐겨찾기에 추가" aria-pressed="false" style="border:0;background:transparent;padding:0;display:inline-flex">' + svg(I.star, 18) + '</button></div>' +
     crumbs(['Home', '문서 관리', '문서 검색']) + '</div></div>'),
 };
-// 폴더 트리 = DS .tree — 단계는 --tree-level, 끝 항목도 꺾쇠 칸을 비워 둠 (TD-75). 폴더 아이콘 = 그림 자산(솔리드 · 라인, ./_fileicon.js)
+// 폴더 트리 = DS .tree — 단계는 --tree-level, 끝 항목도 꺾쇠 칸을 비워 둠. 폴더 아이콘 = 그림 자산(솔리드 · 라인, ./_fileicon.js)
 const FOLDERS = [[0, '제품 문서', true], [1, '설계 문서', true, true], [2, '사양서'], [2, '시험 성적서'], [1, '품질 문서', false], [1, '양식']];
 const tree = () => '<ul class="tree" role="tree" aria-label="문서 폴더">' + FOLDERS.map(([lv, t, open, on]) =>
   '<li class="tree__item" role="treeitem"' + (open !== undefined ? ' aria-expanded="' + open + '"' : '') + (on ? ' aria-selected="true"' : '') + ' style="--tree-level:' + lv + '">' +
@@ -211,7 +211,7 @@ export const Playground = {
   render: (a) => frame(gnb({ list: String(a.path).split(',').map((x) => x.trim()).filter(Boolean), a: a.approvals, b: a.activities })),
 };
 
-// ── Do · Don't (TD-108 19번 ② ③) — 미리보기만, 코드는 위 예시 카드에 ──
+// ── Do · Don't (② ③) — 미리보기만, 코드는 위 예시 카드에 ──
 const ddBar = (h) => '<div style="width:100%;border:1px solid var(--color-border-base);border-radius:var(--radius-card);overflow:hidden"><header class="gnb"><div></div>' + h + '</header></div>';
 const ddCounts = (a) => '<div class="header-actions">' + userBtn() + count('결재업무', a) + count('활동업무', 3) + '</div>';
 // 레일 조각 — 같은 메뉴 셋, 가운데 긴 이름만 줄바꿈 ↔ 말줄임. 영역 이름은 미리보기마다 따로(접근성 검사 landmark-unique)

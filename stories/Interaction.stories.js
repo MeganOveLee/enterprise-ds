@@ -1,4 +1,4 @@
-// Foundation/Interaction — 문서 화면은 Interaction.mdx. 누른 결과 · 바뀐 곳을 알려 주는 한 번짜리 움직임 (DS-ADR-041 · DS-ADR-053, TD-190)
+// Foundation/Interaction — 문서 화면은 Interaction.mdx. 누른 결과 · 바뀐 곳을 알려 주는 한 번짜리 움직임 (DS-ADR-041 · DS-ADR-053)
 // 견본마다 실제 컴포넌트 마크업 + 누르면 움직이는 짧은 스크립트(제품은 화면 스크립트가 dsMotion 을 부름)
 // 동작 줄이기 설정이면 움직이지 않고 결과만 보임(js/motion.js · components.css 「인터랙션」). 시간 · 곡선 토큰은 Foundation › Motion
 import { emptyArt } from './_illustrations.js';
@@ -187,7 +187,7 @@ export const 빈_상태_배지 = {
   },
 };
 
-// Do · Don't (TD-191) — 근거: Toast 「되돌리기」 · Modal 시안 C(되돌릴 수 없는 동작만 확인 창) · 규칙 「뜻은 글자로 전달합니다」
+// Do · Don't — 근거: Toast 「되돌리기」 · Modal 시안 C(되돌릴 수 없는 동작만 확인 창) · 규칙 「뜻은 글자로 전달합니다」
 const UNDO_ICO = '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 5 3.5 8.5 7 12"/><path d="M3.5 8.5H12a4.5 4.5 0 0 1 0 9H9"/></svg>';
 const undoToast = '<div class="toast toast--undo" role="status" style="position:static;width:100%;box-shadow:none"><span class="toast__icon">' + UNDO_ICO + '</span><span class="toast__msg">첨부 1건이 삭제되었습니다.</span>' + btn('되돌리기', 'btn--secondary btn--transparent toast__action') + '</div>';
 const confirmBox = '<div class="modal__dialog" role="dialog" aria-label="삭제 확인" style="width:100%;margin:0;box-shadow:none"><div class="modal__header"><h3 class="modal__title">첨부를 삭제하시겠습니까?</h3></div><div class="modal__body"><p>BRK-20417_조립도.dwg</p></div><div class="modal__footer">' + btn('취소', 'btn--secondary btn--transparent') + btn('삭제', 'btn--destructive btn--outlined') + '</div></div>';

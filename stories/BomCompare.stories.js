@@ -1,5 +1,5 @@
 // Blocks/BOM Compare — 문서 화면은 BomCompare.mdx. 두 BOM을 나란히 놓고 같은 품목끼리 줄을 맞춰 차이를 보이는 화면
-// 근거 = 이전 버전 jsp/part/compareBom.jsp(= bom/compareBom.jsp) — 부품 관리 메뉴 › BOM 조회 › BOM 비교로 여는 본문 화면(새 창 아님)
+// 근거 = 이전 버전 BOM 비교 화면 — 부품 관리 메뉴 › BOM 조회 › BOM 비교로 여는 본문 화면(새 창 아님)
 //   열마다 조건(BOM 유형 · 품목 번호 + 버전 · Baseline) + 표, 왼쪽 열에 비교 옵션(단일 · 멀티 레벨), 오른쪽 열에 조회 옵션(Identical · Unassigned · Similar)
 //   두 표는 같은 줄 = 같은 품목(한쪽에 없으면 빈 줄), 세로 스크롤을 서로 맞춤. 표 안 찾기(품목 번호) · 필터 초기화
 // 이전 버전과 다르게 한 것 — 범례 색과 줄 색을 같은 토큰으로(이전: 범례 Unassigned 노랑 · 줄 빨강), 색만으로 알리지 않게 「비교」 칸에 글자,
@@ -117,7 +117,7 @@ export const 차이만_보기 = {
   render: () => shot(body(screen({ show: [false, true, true] })), W, 470),
 };
 
-// ── Do · Don't (TD-108 5번 ① ②) — 미리보기만. 작은 표 3행 ──
+// ── Do · Don't (① ②) — 미리보기만. 작은 표 3행 ──
 const miniTable = (label, rows, { result = true } = {}) => '<div class="table_list"><div class="list"><table class="grid-table" aria-label="' + label + '"><thead><tr><th>품목 번호</th><th>수량</th>' + (result ? '<th>비교</th>' : '') + '</tr></thead><tbody>' +
   rows.map((r) => {
     if (!r) return '<tr class="compare-row--unassigned"><td>&nbsp;</td><td></td>' + (result ? '<td></td>' : '') + '</tr>';   // 반대쪽 빈 행 — 본 화면과 같은 표시
@@ -145,7 +145,7 @@ export const 사용_지침 = {
 };
 const optSrc = (code) => ({ controls: { disable: true }, docs: { source: { language: 'html', code } } });
 
-// ── 시안 (TD-187) — A 나란한 두 표(추천, 위 「두 BOM 비교」) · B 한 표 비교 ──
+// ── 시안 — A 나란한 두 표(추천, 위 「두 BOM 비교」) · B 한 표 비교 ──
 const ONE_ROWS = PAIRS.map(([a, b, s], i) => {
   const r = a || b; const [, k] = STATE[s];
   const qty = s === 'similar' ? '<td class="compare-qty"><span class="compare-change"><del>' + a[3] + '</del> → <ins>' + b[3] + '</ins></span></td>' : '<td>' + r[3] + '</td>';

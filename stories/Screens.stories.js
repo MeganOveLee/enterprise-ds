@@ -83,7 +83,7 @@ const field = (label, control, { req = false, span = 0, id = '', cls = '' } = {}
 // ── LNB 레일 + LNB 서브 패널 ──
 // 메뉴 · 아이콘 = Figma 「LNB/Rail」과 같음(아이콘 · 로고 마크는 ./_lnbicons.js, App Shell 문서와 같음)
 const LNB = [['work', '업무 관리'], ['doc', '문서 관리'], ['drawing', '도면 관리'], ['part', '부품 관리'], ['project', '프로젝트'], ['change', '설계 변경']];
-// 가상 제품 로고(모든 브랜드 레일 · 로그인, TD-101). 그림 설명은 ./_lnbicons.js
+// 가상 제품 로고(모든 브랜드 레일 · 로그인). 그림 설명은 ./_lnbicons.js
 const LOGO = lnbLogo('Enterprise PLM', 'scr-logo');
 // active = 지금 메뉴 이름. 홈(대시보드)은 로고가 홈이라 켜진 메뉴 없음
 // LNB 레일 = 제품 마크업 그대로(li › .menu_icon_box › .menu_icon › a + span). 아이콘은 mask 그림(--lnb-icon) 한 장을 글자색으로 칠함
@@ -123,7 +123,7 @@ const gnb = (crumbs = ['Home', '문서 관리', '문서 검색']) =>
 // 1줄 = 문서 분류 · 문서 번호 · 문서 명 · 작업현황 · 등록일(기간 2칸) — 6열 칸 폭에 5항목. 펼치면 버전 · 등록자 · 수정자 · 수정일
 // 접혀 있을 때 숨은 조건에 값이 있으면 버튼에 개수(이 화면은 등록자 · 수정일에 값 → 2)
 let searchUid = 0;
-// mark = 문서 그림에서 카드 제목이 가리키는 곳에 점선(.flow-mark, Blocks 「누르는 곳 점선」과 같은 표기 · TD-122). 코드 보기에는 넣지 않음
+// mark = 문서 그림에서 카드 제목이 가리키는 곳에 점선(.flow-mark, Blocks 「누르는 곳 점선」과 같은 표기). 코드 보기에는 넣지 않음
 const searchForm = ({ open = false, mark = false } = {}) => {
   const id = 'scr-search-detail-' + (++searchUid);
   return '<div class="seach_arm"><div class="leftbt">' + lnbSvg('sliders', 18) + '<h4>검색 조건</h4></div>' +
@@ -348,7 +348,7 @@ const detailBody = () =>
   ro('계획 기간', '2026-07-01 ~ 2026-12-18', 2) + ro('실적 시작일', '2026-07-03') + ro('관리 등급', 'A · 중점 관리') +
   '</div></div>' +
   dsec('진행 현황', true, '<span class="section-meta"><span class="progress-plan-key" aria-hidden="true"></span>계획 · 기준 2026-10-13</span>') +
-  // 상태 표시 + 전체 진행률을 DS .progress-row 하나로 — 지연이면 막대 5개와 진행률 막대가 같은 박자로 뜀(TD-123, Foundation › Motion 견본과 같은 마크업)
+  // 상태 표시 + 전체 진행률을 DS .progress-row 하나로 — 지연이면 막대 5개와 진행률 막대가 같은 박자로 뜀(Foundation › Motion 견본과 같은 마크업)
   '<div class="pro_table scr-progress"><div class="scr-progress__top"><div class="progress-row scr-progress__lead">' +
   '<div class="status-block status-block--delay"><div class="status-segments status-segments--delay" aria-hidden="true">' + '<span class="status-segments__bar"></span>'.repeat(5) + '</div><span class="status-text"></span></div>' +
   '<div class="scr-progress__main"><div class="scr-progress__meta"><b>전체 진행률</b><span>계획 64% · 실적 58% · <em>6%p 늦음</em></span></div>' +
@@ -422,7 +422,7 @@ const frame = (inner) => {
 };
 const src = (code) => ({ controls: { disable: true }, docs: { source: { language: 'html', code } } });
 
-// ── 움직임 다시 보기 (TD-123) ── 인터랙션(Foundation › Interaction)을 화면 안에서 실제 쓰임으로
+// ── 움직임 다시 보기 ── 인터랙션(Foundation › Interaction)을 화면 안에서 실제 쓰임으로
 // 화면이 처음 보일 때 한 번 저절로, 그 뒤에는 화면 위 [움직임 다시 보기] 또는 화면 안 버튼을 누르면 다시. 동작 줄이기 설정이면 결과만(motion.js)
 const busy = (b, text, after) => {   // 버튼 처리 중(스피너) → 끝나면 after — Motion 「처리 끝 체크」와 같은 순서
   if (b.classList.contains('is-loading') || b.classList.contains('is-done')) return;
@@ -470,7 +470,7 @@ export default {
   parameters: { layout: 'fullscreen' },
 };
 
-// ── 화면 지도 (TD-104 반영 7) ── 화면마다 영역 상자 + 영역 이름 + 쓰는 블록 · 컴포넌트. 「언제」 한 줄로 어떤 화면을 고르는지
+// ── 화면 지도 (반영 7) ── 화면마다 영역 상자 + 영역 이름 + 쓰는 블록 · 컴포넌트. 「언제」 한 줄로 어떤 화면을 고르는지
 // 상자 색 = 토큰(브랜드 · 화면 모드를 따름). 문서용 그림이라 화면 마크업과 따로
 const R = (area, no, name, uses = '', kind = '') => '<div class="scr-map__r' + (kind ? ' scr-map__r--' + kind : '') + '" style="grid-area:' + area + '">' +
   '<span class="scr-map__head"><i class="scr-map__no" aria-hidden="true">' + no + '</i>' + (name ? '<b>' + name + '</b>' : '') + '</span>' + (uses ? '<span>' + uses + '</span>' : '') + '</div>';
@@ -519,7 +519,7 @@ export const 화면_지도 = {
     ANATOMY.map(([no, name, cls, desc]) => '<tr><td><i class="scr-map__no">' + no + '</i></td><td><b>' + name + '</b></td><td>' + cls + '</td><td>' + desc + '</td></tr>').join('') + '</tbody></table>',
 };
 
-// ── 상세 머리 — 보기 · 편집 중 · 잠김 (TD-104 반영 5 · 업무 정책) ── 같은 머리에서 버튼만 바뀐다
+// ── 상세 머리 — 보기 · 편집 중 · 잠김 (반영 5 · 업무 정책) ── 같은 머리에서 버튼만 바뀐다
 // 잠김 = 다른 사람이 수정 중. 편집 버튼은 aria-disabled(포커스는 받음) + 이유 문구를 늘 보이게, 버튼이 aria-describedby 로 그 문구를 읽음
 const LOCK = '<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>';
 const headTitle = (extra = '') => '<div class="detail-header__title"><span class="detail-icon">' + svg(I.project, 24) + '</span>' +

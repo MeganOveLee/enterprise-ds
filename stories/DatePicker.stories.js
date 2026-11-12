@@ -37,7 +37,7 @@ export const 지우기 = {
 };
 export const 고를_수_있는_범위 = {
   parameters: { docs: { description: { story: '`min` · `max` 밖의 날짜는 비활성(취소선)으로 보입니다.' } } },
-  // min · max 값은 모양을 보이려는 예시(업무 규칙 아님, TD-120). 범위는 화면이 정함
+  // min · max 값은 모양을 보이려는 예시(업무 규칙 아님). 범위는 화면이 정함
   render: () => `<div style="max-width:200px">${dp('희망일', '2026-10-15', ' min="2026-10-10" max="2026-10-25"')}</div>`,
 };
 
@@ -70,7 +70,7 @@ export const 펼친_달력 = {
   },
 };
 
-// ── Do · Don't (TD-108 24번 ① ②) — 미리보기만 ──
+// ── Do · Don't (① ②) — 미리보기만 ──
 const wide = (h) => '<div style="width:100%;max-width:360px">' + h + '</div>';
 const noHint = (h) => h.replace(' placeholder="YYYY-MM-DD"', '');
 // 기간 두 필드의 폭이 다른 잘못된 예 — 시작일 필드만 좁게
@@ -128,7 +128,7 @@ export const Playground = {
     dp(a.label, a.value, (a.min ? ' min="' + a.min + '"' : '') + (a.max ? ' max="' + a.max + '"' : '') + (ST[a.state] || '')) + '</div>',
 };
 
-// ── 시안 (TD-187) — A 칸 + 펼침 달력(추천) · B 아래 시트 달력 · C 연 · 월 · 일 세 칸 ──
+// ── 시안 — A 칸 + 펼침 달력(추천) · B 아래 시트 달력 · C 연 · 월 · 일 세 칸 ──
 const OPT_A = [dp('희망 납기일', '2026-11-20')];
 export const 시안_펼침_달력 = { parameters: html2(OPT_A), render: () => '<div class="sb-field">' + OPT_A.join('') + '</div>' };
 // B — 칸을 누르면 화면 아래에서 달력 시트가 올라옴. 견본은 같은 달력(js/datepicker.js)을 시트 안에 옮겨 그린 정지 그림

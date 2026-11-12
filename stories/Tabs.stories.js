@@ -1,7 +1,7 @@
 // Navigation/Tabs — 문서 화면은 Tabs.mdx. 같은 자리의 내용을 나눠 보여 주는 탭
 // DS 탭은 두 자리: 팝업(상세 창) 탭 .pop .tab · LNB 서브 패널 탭 .main-sub-tabs
 // 여기 스토리는 누르면 탭이 바뀌는 짧은 스크립트를 붙여 눌러 볼 수 있게 함(제품은 탭 로더 스크립트)
-// 팝업 탭이 넘치면 js/tabs.js 가 ◀ ▶ 를 붙임(TD-108 28번) — 그린 뒤 window.dsTabsInit(영역)
+// 팝업 탭이 넘치면 js/tabs.js 가 ◀ ▶ 를 붙임 — 그린 뒤 window.dsTabsInit(영역)
 import { matrix } from './_matrix.js';
 import { enablePseudo } from './_pseudo.js';
 import { doDont } from './_dodont.js';
@@ -72,7 +72,7 @@ export const 탭이_많을_때 = {
   render: () => live(popFrame(popTabs(MANY_TABS))),
 };
 
-// ── 전체 상태 — Hovered = 옅은 브랜드 바탕(LNB 메뉴와 같음), Focused = 안쪽 포커스 테두리(LNB 레일과 같음). 선택한 탭도 같은 규칙 (TD-108 29번) ──
+// ── 전체 상태 — Hovered = 옅은 브랜드 바탕(LNB 메뉴와 같음), Focused = 안쪽 포커스 테두리(LNB 레일과 같음). 선택한 탭도 같은 규칙 ──
 export const 전체_상태 = {
   parameters: { controls: { disable: true }, docs: { source: { language: 'html', code: '<!-- 선택된 탭 = .is-active + aria-selected="true" · Hovered · Focused 는 CSS가 표시 -->' } } },
   render: () => {
@@ -108,7 +108,7 @@ export const Playground = {
   },
 };
 
-// ── Do · Don't (TD-108 22번 ① · ⓐ · ⓑ, ⓑ 그림 = 30번) — 미리보기만, 코드는 위 예시 카드에 ──
+// ── Do · Don't (① · ⓐ · ⓑ, ⓑ 그림 = 30번) — 미리보기만, 코드는 위 예시 카드에 ──
 const ddPanel = (tabs) => '<div class="main-sub" style="align-self:flex-start;height:auto;width:240px;border:1px solid var(--color-border-base);border-radius:var(--radius-card);overflow:hidden"><div class="main-sub-header"><h3>문서 관리</h3></div>' + tabs +
   '<div style="padding:16px;color:var(--color-text-muted);font-size:var(--body-sm)">패널 내용</div></div>';
 const ddPop = (tabs) => '<div class="pop" style="align-self:flex-start;height:auto;min-width:0;width:100%;overflow:visible">' + popTabs(tabs, 0, { actions: false }) + '</div>';
@@ -132,7 +132,7 @@ export const 사용_지침 = {
   render: () => {
     const el = document.createElement('div');
     el.innerHTML = doDont([
-      // 근거: TD-108 22번 ① (Carbon · Atlassian Tabs — 탭 이름은 짧게)
+      // 근거:  ① (Carbon · Atlassian Tabs — 탭 이름은 짧게)
       { title: '탭 이름은 짧은 명사로 짓습니다',
         do: [ddPop(['기본 정보', '첨부 파일', '결재 이력']), '탭 이름은 짧은 명사로 짓습니다(예: 「기본 정보」 「첨부 파일」).'],
         dont: [ddPop(['문서 기본 정보 보기', '첨부된 파일 목록', '결재 진행 이력 확인']), '「첨부된 파일 목록」처럼 문장형 이름을 쓰지 않습니다. 탭 줄이 길어져 넘칩니다.'] },
@@ -140,7 +140,7 @@ export const 사용_지침 = {
       { title: '탭이 하나면 탭 줄을 숨깁니다',
         do: [ddPanel(panelTabs(['메뉴']).replace('class="main-sub-tabs"', 'class="main-sub-tabs is-single"')), '탭이 하나뿐이면 .is-single로 탭 줄을 숨깁니다.'],
         dont: [ddPanel(panelTabs(['메뉴'])), '고를 것이 없는 탭 한 칸을 남겨 두지 않습니다.'] },
-      // 근거: Tabs.mdx 머리 설명 「같은 영역의 내용을 나누어 표시」 · 화면 이동은 LNB 서브 패널의 서브 메뉴(.ui-submenu) — 그림 = TD-108 30번 B
+      // 근거: Tabs.mdx 머리 설명 「같은 영역의 내용을 나누어 표시」 · 화면 이동은 LNB 서브 패널의 서브 메뉴(.ui-submenu) — 그림 =  B
       { title: '같은 창 안의 내용을 바꿀 때만 사용합니다',
         do: [ddDetail(), '한 문서 안의 내용을 나눌 때 씁니다. 상세 창 제목 아래에 둡니다.'],
         dont: [ddScreen(), 'LNB 서브 메뉴에 있는 화면 이동 메뉴를 화면 안 탭으로 또 두지 않습니다.'] },
@@ -149,7 +149,7 @@ export const 사용_지침 = {
   },
 };
 
-// ── 시안 (TD-187) — A 밑줄 탭(추천, 위 「팝업 탭」) · B 알약 탭 ──
+// ── 시안 — A 밑줄 탭(추천, 위 「팝업 탭」) · B 알약 탭 ──
 const PILL = ['<div class="tab tab--pill">', '  <ul role="tablist" aria-label="이용 내역">',
   ...['전체', '이번 달', '취소한 이용'].map((t, i) => '    <li role="tab" tabindex="' + (i ? -1 : 0) + '" aria-selected="' + !i + '"' + (i ? '' : ' class="is-active"') + '>' + t + '</li>'),
   '  </ul>', '</div>'];

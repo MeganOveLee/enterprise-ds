@@ -13,15 +13,15 @@ import * as S from './Motion.stories.js';
 <tbody>
 <tr><td><b>Shimmer</b><span className="ds-muted">지나가는 띠</span></td><td>시스템이 지금 처리 중이고 곧 끝납니다. 채운 부분 안에서만 흰 띠가 왼쪽에서 오른쪽으로 지나가고, 한 번 지나간 뒤 잠깐 쉽니다.</td><td>첨부 업로더의 올리는 중 막대. 스켈레톤도 같은 뜻(불러오는 중)의 Shimmer입니다.</td><td><code>--duration-shimmer</code><br/><code>--ease-loop</code></td></tr>
 <tr><td><b>Pulse</b><span className="ds-muted">두근 · 두근 · 쉼</span></td><td>확인이 필요한 경고입니다. 일정이 늦어진 곳으로 시선을 모읍니다. 심장 박동처럼 두 번 뛰고 쉽니다. 상태 자체는 옆 글자가 알려 주고, 움직임은 꾸밈입니다.</td><td>지연 상태 표시의 막대 5개(<code>statusPulse</code>)가 크기는 바꾸지 않은 채 박동마다 진해지며 왼쪽부터 반짝이고, 같은 줄의 지연 진행률 막대는 박동 두 번에 한 번 옅은 빛이 천천히 지나가고(<code>ds-alert-sweep</code>) 그동안 붉게 한 번 번집니다(<code>ds-alert-glow</code>).</td><td><code>--duration-pulse</code><br/><code>--ease-loop</code></td></tr>
-<tr><td><b>Static</b><span className="ds-muted">정지</span></td><td>저장된 값입니다. 지금 바뀌는 중이 아니므로 움직이지 않습니다.</td><td>진행률 막대(지연 상태 표시와 같은 줄의 막대는 빼고), 지연이 아닌 상태 표시(완료 · 진행 중 · 예정 · 보류), 상태 칩. 값이 바뀔 때만 막대 채움이 늘어납니다.</td><td>—</td></tr>
+<tr><td><b>Static</b><span className="ds-muted">정지</span></td><td>저장된 값입니다. 지금 바뀌는 중이 아니므로 움직이지 않습니다.</td><td>진행률 막대(지연 상태 표시와 같은 줄의 막대는 빼고), 지연이 아닌 상태 표시(완료 · 진행 중 · 예정 · 보류), 상태 칩. 값이 바뀔 때만 막대 채움이 늘어납니다.</td><td>없음</td></tr>
 </tbody>
 </table>
 <p className="ds-sec__desc ds-after">불러오는 중 표시(스피너 · 로고 로더 · 스켈레톤)의 움직임은 <a className="ds-link" href="./?path=/docs/feedback-loading--docs" target="_top">Feedback › Loading</a> · <a className="ds-link" href="./?path=/docs/feedback-skeleton--docs" target="_top">Skeleton</a> 문서에 있습니다. 누른 결과 · 바뀐 곳을 알리는 한 번짜리 움직임은 <a className="ds-link" href="./?path=/docs/foundation-interaction--docs" target="_top">Foundation › Interaction</a>에 있습니다.</p>
 </Section>
 <Section title="견본" en="Samples" desc="실제 컴포넌트 마크업입니다. 화면에서 보는 움직임과 같습니다.">
-<Card of={S.빛} title="Shimmer" en="In progress" desc="지금 처리 중 — 첨부 파일을 올리는 중입니다. 올린 파일 줄에는 막대가 없습니다." />
-<Card of={S.깜빡임} title="Pulse" en="Warning" desc="경고 — 지연일 때만 막대 5개가 두근 · 두근 반짝이고(크기 변화 없음), 같은 줄 진행률 막대는 박동 두 번에 한 번 옅은 빛이 천천히 지나가며 붉게 번집니다. 상태는 옆 글자가 알려 줍니다. 프로젝트 상세 화면의 진행 현황과 같은 마크업입니다." />
-<Card of={S.정지} title="Static" en="Saved value" desc="저장된 값 — 지연이 아닌 상태 표시와 같은 줄의 진행률 막대는 움직이지 않습니다." />
+<Card of={S.빛} title="Shimmer" en="In progress" desc="지금 처리 중: 첨부 파일을 올리는 중입니다. 올린 파일 줄에는 막대가 없습니다." />
+<Card of={S.깜빡임} title="Pulse" en="Warning" desc="경고: 지연일 때만 막대 5개가 두근 · 두근 반짝이고(크기 변화 없음), 같은 줄 진행률 막대는 박동 두 번에 한 번 옅은 빛이 천천히 지나가며 붉게 번집니다. 상태는 옆 글자가 알려 줍니다. 프로젝트 상세 화면의 진행 현황과 같은 마크업입니다." />
+<Card of={S.정지} title="Static" en="Saved value" desc="저장된 값: 지연이 아닌 상태 표시와 같은 줄의 진행률 막대는 움직이지 않습니다." />
 </Section>
 <Section title="기다림" en="Waiting" desc="몇 초 걸리는 처리에서 멈춘 화면이 아니라 처리 중임을 알리는 반복 움직임입니다. 처리가 끝날 때까지 움직입니다.">
 <table className="ds-table">
@@ -46,14 +46,14 @@ import * as S from './Motion.stories.js';
 <tbody>
 <tr><td><code>--duration-fast</code></td><td>.12s</td><td>색 · 테두리 전환(메뉴 · 탭 · 페이지 번호 · 입력 필드 포커스), 툴팁 표시, 스위치 손잡이 이동</td></tr>
 <tr><td><code>--duration-base</code></td><td>.2s</td><td>펼침 화살표 회전, 상세 검색 펼침, 사용자 메뉴 안 바탕 · 화면 모드 스위치</td></tr>
-<tr><td><code>--duration-shimmer</code></td><td>2.4s</td><td>Shimmer 한 바퀴 — 지나감 1.8초 + 쉼 0.6초. 업로더의 올리는 중 막대 · 스켈레톤</td></tr>
-<tr><td><code>--duration-pulse</code></td><td>1.2s</td><td>Pulse 한 바퀴 — 두근(진하게) → 두근 → 쉼. 지연 상태 표시와 같은 줄의 진행률 막대에만 씁니다. 박동은 초당 2번을 넘지 않습니다</td></tr>
+<tr><td><code>--duration-shimmer</code></td><td>2.4s</td><td>Shimmer 한 바퀴: 지나감 1.8초 + 쉼 0.6초. 업로더의 올리는 중 막대 · 스켈레톤</td></tr>
+<tr><td><code>--duration-pulse</code></td><td>1.2s</td><td>Pulse 한 바퀴: 두근(진하게) → 두근 → 쉼. 지연 상태 표시와 같은 줄의 진행률 막대에만 씁니다. 박동은 초당 2번을 넘지 않습니다</td></tr>
 <tr><td><code>--duration-fill</code></td><td>1.6s</td><td>진행률 막대 채움이 늘어나는 시간(값이 바뀔 때 한 번)</td></tr>
-<tr><td><code>--ease-loop</code></td><td>ease-in-out</td><td>반복 움직임 곡선 — Shimmer · Pulse · 스켈레톤 · 그림 한 장 로고 로더</td></tr>
+<tr><td><code>--ease-loop</code></td><td>ease-in-out</td><td>반복 움직임 곡선: Shimmer · Pulse · 스켈레톤 · 그림 한 장 로고 로더</td></tr>
 <tr><td><code>--duration-slow</code></td><td>.4s</td><td>숫자 굴러가기 · 상태 칩 전환</td></tr>
-<tr><td><code>--duration-once</code></td><td>1.6s</td><td>한 번 일어나고 끝나는 알림 — 방금 바뀐 행의 바탕 · 다음 차이 테두리 · 빈 상태 배지</td></tr>
-<tr><td><code>--duration-undo</code></td><td>5s</td><td>되돌리기 시간 — 삭제 뒤 [되돌리기]가 남아 있는 시간</td></tr>
-<tr><td><code>--ease-standard</code></td><td>cubic-bezier(.2, 0, 0, 1)</td><td>자리 이동 곡선 — 탭 밑줄 · 숫자 · 끌어 놓은 줄 · 누르기 · 로고 로더 조각. 빨리 출발해 부드럽게 멈춥니다</td></tr>
+<tr><td><code>--duration-once</code></td><td>1.6s</td><td>한 번 일어나고 끝나는 알림: 방금 바뀐 행의 바탕 · 다음 차이 테두리 · 빈 상태 배지</td></tr>
+<tr><td><code>--duration-undo</code></td><td>5s</td><td>되돌리기 시간: 삭제 뒤 [되돌리기]가 남아 있는 시간</td></tr>
+<tr><td><code>--ease-standard</code></td><td>cubic-bezier(.2, 0, 0, 1)</td><td>자리 이동 곡선: 탭 밑줄 · 숫자 · 끌어 놓은 줄 · 누르기 · 로고 로더 조각. 빨리 출발해 부드럽게 멈춥니다</td></tr>
 <tr><td><code>--scale-press</code></td><td>.96</td><td>누르는 동안 버튼 · 페이지 번호 크기</td></tr>
 </tbody>
 </table>
@@ -65,7 +65,7 @@ import * as S from './Motion.stories.js';
 <tbody>
 <tr><td><b>한 자리에는 박자 하나만 둡니다</b></td><td>같은 곳에서 두 가지가 다른 박자로 움직이지 않게 합니다. 지연 상태 표시와 같은 줄의 진행률 막대는 Pulse 박자에 맞춰(박동 두 번에 한 번) 움직입니다. 경고는 화면의 대표 막대 한 곳에서만 뛰고, 표 안 지연 막대 · 단계 막대는 정지입니다(상태는 칩 글자로 알립니다).</td></tr>
 <tr><td><b>느리고 옅게 움직입니다</b></td><td>Shimmer는 흰색 낮은 투명도라 막대 옆 글자 · 숫자 대비를 해치지 않습니다. 한 바퀴 사이에 쉼이 있습니다.</td></tr>
-<tr><td><b>Shimmer는 처리 중에만 사용합니다</b></td><td>진행률이 있는 처리의 채움(파일 올리기)과 몇 초 걸리는 처리의 안내 문구(<code>.text-shimmer</code>)에만 씁니다. 지연 막대의 빛은 Shimmer가 아니라 Pulse 박자에 맞춘 경고 빛입니다 — 박동 두 번에 한 번 지나가며 붉은 번짐이 함께 한 번 차오릅니다. 버튼 · 영역의 처리 중 표시는 스피너(<a className="ds-link" href="./?path=/docs/feedback-loading--docs" target="_top">Loading</a>)이고, 저장된 상태 값(완료 · 진행 중 · 예정 · 보류)에는 쓰지 않습니다.</td></tr>
+<tr><td><b>Shimmer는 처리 중에만 사용합니다</b></td><td>진행률이 있는 처리의 채움(파일 올리기)과 몇 초 걸리는 처리의 안내 문구(<code>.text-shimmer</code>)에만 씁니다. 지연 막대의 빛은 Shimmer가 아니라 Pulse 박자에 맞춘 경고 빛입니다: 박동 두 번에 한 번 지나가며 붉은 번짐이 함께 한 번 차오릅니다. 버튼 · 영역의 처리 중 표시는 스피너(<a className="ds-link" href="./?path=/docs/feedback-loading--docs" target="_top">Loading</a>)이고, 저장된 상태 값(완료 · 진행 중 · 예정 · 보류)에는 쓰지 않습니다.</td></tr>
 <tr><td><b>반복하는 움직임은 정해 둔 것만 씁니다</b></td><td>되풀이해서 움직이는 것은 Shimmer · Pulse · 스피너와 기다림 두 가지(처리 중 글자 · 단계 목록)뿐입니다. 누른 결과 · 바뀐 곳은 한 번 움직이고 멈춥니다(<a className="ds-link" href="./?path=/docs/foundation-interaction--docs" target="_top">Foundation › Interaction</a>).</td></tr>
 <tr><td><b>모션 줄이기</b></td><td>운영체제의 「동작 줄이기」 설정(<code>prefers-reduced-motion</code>)이면 Shimmer · Pulse는 멈춥니다. Shimmer는 띠 없이 채움만, Pulse는 진한 막대와 빛 · 번짐 없는 진행률 막대로 표시합니다. 스피너 · 로고 로더 · 단계 목록의 도는 고리는 멈추면 멈춘 화면으로 오해할 수 있어 느리게만 돕니다. 스크린 리더가 읽는 이름은 바뀌지 않습니다. 인터랙션의 동작 줄이기 규칙은 Interaction 문서에 있습니다.</td></tr>
 </tbody>

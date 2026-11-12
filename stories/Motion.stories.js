@@ -1,5 +1,5 @@
 // Foundation/Motion — 문서 화면은 Motion.mdx. 움직임 세 가지 견본: 빛(지금 처리 중) · 깜빡임(봐야 할 경고 = 지연, 두근 박동) · 정지(저장된 값) + 기다림 두 가지(처리 중 글자 · 단계 목록) + 로고 로더. 한 번짜리 인터랙션은 Interaction.stories.js
-// TD-48 — 빛은 지금 처리 중일 때만, 첫 자리 = 첨부 업로더 올리는 중 막대. 값은 tokens.css 모션 토큰
+//  — 빛은 지금 처리 중일 때만, 첫 자리 = 첨부 업로더 올리는 중 막대. 값은 tokens.css 모션 토큰
 // 견본은 실제 컴포넌트 마크업 그대로(업로더 · 상태 표시 · 진행률 막대) — 화면에서 보는 움직임과 같음
 import { fileIcon } from './_fileicon.js';
 import { MARK_PATHS } from './_lnbicons.js';
@@ -44,7 +44,7 @@ export const 빛 = {
   render: () => box(uploader(UP)),
 };
 
-// 깜빡임(Pulse) — 지연 상태 표시의 막대 5개가 두근 · 두근 · 쉼(statusPulse, 밝기만), 같은 줄 진행률 막대는 두 박동에 한 번 옅은 빛 + 붉은 번짐(TD-123 · TD-108 46).
+// 깜빡임(Pulse) — 지연 상태 표시의 막대 5개가 두근 · 두근 · 쉼(statusPulse, 밝기만), 같은 줄 진행률 막대는 두 박동에 한 번 옅은 빛 + 붉은 번짐.
 // 다른 상태는 정지. 상태는 옆 글자가 알려 주고 막대는 꾸밈(aria-hidden). 마크업 = Screens › 프로젝트 상세 진행 현황과 같음
 export const 깜빡임 = {
   parameters: html(summary('delay', 58, 64)),
@@ -57,7 +57,7 @@ export const 정지 = {
   render: () => box(summary('progress', 72, 70), '720px'),
 };
 
-// ── 기다림 두 가지 (DS-ADR-041 · DS-ADR-053, TD-190) ── 몇 초 걸리는 처리에서 멈춘 화면이 아님을 알림. 반복 움직임이라 Motion에 둠
+// ── 기다림 두 가지 (DS-ADR-041 · DS-ADR-053) ── 몇 초 걸리는 처리에서 멈춘 화면이 아님을 알림. 반복 움직임이라 Motion에 둠
 const el = (h, w = '560px') => { const d = document.createElement('div'); d.style.maxWidth = w; d.innerHTML = h; return d; };
 const M = () => window.dsMotion;
 const btn = (t, cls, attrs = '') => '<button type="button" class="btn ' + cls + '"' + attrs + '>' + t + '</button>';
@@ -93,7 +93,7 @@ export const 단계_목록 = {
   },
 };
 
-// ── 로고 로더 (DS-ADR-043, TD-123) ── 페이지 전체 첫 로딩. 심볼 조각 다섯이 바깥에서 차례로 모여 맞물림 · 그림 한 장 로고는 왼쪽부터 채움
+// ── 로고 로더 (DS-ADR-043) ── 페이지 전체 첫 로딩. 심볼 조각 다섯이 바깥에서 차례로 모여 맞물림 · 그림 한 장 로고는 왼쪽부터 채움
 const IMG_LOGO = new URL('../assets/brand/default-logo.svg', import.meta.url).href;   // 가상 제품 마크(그림 한 장으로 쓸 때의 견본)
 const LOADER_PIECES = '<span class="brand-loader" aria-hidden="true">' + '<svg viewBox="0 0 130 129">' + MARK_PATHS.map((d, i) => '<path class="brand-loader__piece brand-loader__piece--' + (i + 1) + '" d="' + d + '"/>').join('') + '</svg>' + '</span>';
 const LOADER_CODE = '<span class="brand-loader" aria-hidden="true">\n    <svg viewBox="0 0 130 129">\n' + [1, 2, 3, 4, 5].map((n) => '      <path class="brand-loader__piece brand-loader__piece--' + n + '" d="…"/>').join('\n') + '\n    </svg>\n  </span>';   // 코드 보기 — 조각 좌표는 줄임
@@ -108,7 +108,7 @@ export const 로고_로더 = {
     loaderFig(LOADER_IMAGE(IMG_LOGO), '그림 한 장 로고 .brand-loader--image', '로고가 그림 파일 한 장뿐인 브랜드는 흐린 로고 위로 원래 로고가 왼쪽부터 채워집니다.') + '</div>',
 };
 
-// Do · Don't (TD-191) — 근거: 규칙 「Shimmer는 처리 중에만 사용합니다」 · 「한 자리에는 박자 하나만 둡니다」
+// Do · Don't — 근거: 규칙 「Shimmer는 처리 중에만 사용합니다」 · 「한 자리에는 박자 하나만 둡니다」
 const delayRow = (name) => '<div class="progress-row" style="gap:var(--spacing-16)">' + status('delay') + '<span style="font-size:var(--body-sm)">' + name + '</span></div>';
 export const 사용_지침 = {
   parameters: { controls: { disable: true } },

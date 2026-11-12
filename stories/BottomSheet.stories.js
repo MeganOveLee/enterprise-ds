@@ -1,4 +1,4 @@
-// Overlay/Bottom Sheet — 문서 화면은 BottomSheet.mdx. 화면 아래에서 올라오는 층 (DS-ADR-049, TD-172)
+// Overlay/Bottom Sheet — 문서 화면은 BottomSheet.mdx. 화면 아래에서 올라오는 층 (DS-ADR-049)
 // 덮개 · 열기 · 닫기 · 포커스 가두기 · Esc = 확인 창과 같은 js/modal.js. 창 클래스만 .modal--sheet · .sheet
 // 늘 열려 있는 견본(정지 그림)은 문서 화면을 막지 않도록 aria-modal 을 빼고 그림
 // 인원 고르기 세 시안 — 1 목록 행(추천) · 2 숫자 버튼 · 3 나란한 칸. 고른 값이 주 버튼 글자에 들어감(확인 창 없음)

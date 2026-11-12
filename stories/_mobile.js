@@ -1,4 +1,4 @@
-// 모바일 컴포넌트 견본 조각 (TD-172) — 아이콘 · 틀. 모양은 ./_mobile.css · css/components.css
+// 모바일 컴포넌트 견본 조각 — 아이콘 · 틀. 모양은 ./_mobile.css · css/components.css
 import './_mobile.css';
 
 export const svg = (d, s = 24) => '<svg width="' + s + '" height="' + s + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + d + '</svg>';

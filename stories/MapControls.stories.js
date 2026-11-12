@@ -1,4 +1,4 @@
-// Blocks/Map Controls — 문서 화면은 MapControls.mdx. 모바일 앱 전용 조합 (css/blocks/mobility.css, TD-172)
+// Blocks/Map Controls — 문서 화면은 MapControls.mdx. 모바일 앱 전용 조합 (css/blocks/mobility.css)
 // 버튼 = 떠 있는 버튼(.fab) 그대로. 시안 — 버튼: A 하나씩 · B 붙은 묶음 · C 글자 알약 / 이름표: A 진한 면 · B 흰 면 · C 누르는 이름표
 // 지도 그림 자리는 회색 판 · 길 선, 자리는 견본 전용 클래스(.sb-at--*, stories/_mobile.css)
 import { svg, I, phone } from './_mobile.js';
