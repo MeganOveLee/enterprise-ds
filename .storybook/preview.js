@@ -2,14 +2,14 @@
 import '../css/tokens.css';
 import '../css/brands/default.css';
 import '../css/brands/mobility.css';
-import '../css/fonts/nanum-square-neo.css';   // Mobility 본문 글꼴 등록 — 브랜드 CSS 옆에 링크 (DS-ADR-052)
+import '../css/fonts/nanum-square-neo.css';   // Mobility 본문 글꼴 등록: 브랜드 CSS 옆에 링크 (DS-ADR-052)
 import '../css/brands/ootb.css';
 import '../css/globals.css';
 import '../css/components.css';
-import '../css/blocks/mobility.css';   // 모바일 앱 전용 Blocks — PLM 화면은 링크하지 않음
+import '../css/blocks/mobility.css';   // 모바일 앱 전용 Blocks: PLM 화면은 링크하지 않음
 import './fonts.css';
 
-/** 브랜드 = <html class="theme-*">, 다크 = <body class="dark-mode"> — 실제 화면과 같은 스위치 */
+/** 브랜드 = <html class="theme-*">, 다크 = <body class="dark-mode">: 실제 화면과 같은 스위치 */
 const withTheme = (Story, ctx) => {
   const { brand, mode } = ctx.globals;
   document.documentElement.classList.toggle('theme-mobility', brand === 'mobility');
@@ -41,7 +41,7 @@ export default {
   decorators: [withTheme],
   parameters: {
     layout: 'fullscreen',
-    // 왼쪽 메뉴 순서 — 문서(소개 · 시작하기) → 화면 → 조합(Blocks) → 컴포넌트 분류 → 기본 요소(Foundation, 맨 아래). 「디자인이 먼저, 토큰은 밑」
+    // 왼쪽 메뉴 순서: 문서(소개 · 시작하기) → 화면 → 조합(Blocks) → 컴포넌트 분류 → 기본 요소(Foundation, 맨 아래). 「디자인이 먼저, 토큰은 밑」
     options: { storySort: { order: ['소개', '시작하기', 'Screens', ['PLM 화면', '*'], 'Blocks', ['SearchForm', 'BomCompare', 'ApprovalLine', '*'], 'Form', ['고르는 법', '*'], 'Navigation', 'Overlay', 'Data Display', 'Feedback', ['고르는 법', '*'], 'Foundation', ['Color', 'Typography', 'Spacing · Radius · Size', 'Shadow', 'Motion', 'Interaction', 'State']] } },
     controls: { expanded: true },
     a11y: { test: 'todo' },
