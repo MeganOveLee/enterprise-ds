@@ -175,7 +175,7 @@
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
   --font-weight-emphasis: var(--font-weight-semibold); /* 강조 굵기 — 큰 버튼 · 떠 있는 버튼 · 앱 상단 바 제목 · 아래 시트 제목. 기본 = SemiBold, 브랜드 파일이 덮을 수 있음(플렉시블, DS-ADR-049) */
-  --icon-stroke: 1.8;                         /* 아이콘 선 굵기(24 기준 그리기 칸에서). 모바일 앱 컴포넌트의 선 아이콘이 읽음. 브랜드 파일이 덮을 수 있음 (TD-172) */
+  --icon-stroke: 1.8;                         /* 아이콘 선 굵기(24 기준 그리기 칸에서). 모바일 앱 컴포넌트의 선 아이콘이 읽음. 브랜드 파일이 덮을 수 있음 */
 
   /* 제목 6단계 = h1~h6 기본값 (DS-ADR-012). 본문(--body-*)과 값이 겹쳐도 이름은 따로 */
   --heading-2xl: 2.25rem;                     /* 36px · h1 · 홈 인사말 */
@@ -187,12 +187,12 @@
   --body-lg: 1rem;                            /* 16px */
   --body-md: 0.875rem;                        /* 14px ← 기본 본문 */
   --body-sm: 0.75rem;                         /* 12px */
-  --body-xs: 0.6875rem;                       /* 11px · 가장 작은 글자 — 레일 메뉴 이름 · 개수 배지 · 표 안 진행률 숫자 같은 보조 표시. 한글 라벨이 읽히는 가장 작은 크기라 10 이하는 두지 않음 (TD-44, Figma Body/xs) */
+  --body-xs: 0.6875rem;                       /* 11px · 가장 작은 글자 — 레일 메뉴 이름 · 개수 배지 · 표 안 진행률 숫자 같은 보조 표시. 한글 라벨이 읽히는 가장 작은 크기라 10 이하는 두지 않음 (Figma Body/xs) */
 
   /* 제목 행간 = 스펙의 120%. 정의가 없어 제목 6곳(page h1·greeting h1·card-title·팝업 h3·
      검색폼 h4·mainTable th)의 line-height 선언이 무효였던 것 복구 */
   --line-height-tight: 1.2;
-  --line-height-base: 1.6;                    /* 본문 글줄 간격 = body 기본값. 이전 버전 body 값 (TD-45 45-3 D). 고정 높이 컴포넌트(입력칸 · 버튼)는 자기 높이 그대로 */
+  --line-height-base: 1.6;                    /* 본문 글줄 간격 = body 기본값. 이전 버전 body 값. 고정 높이 컴포넌트(입력칸 · 버튼)는 자기 높이 그대로 */
 
   /* ==========================================================================
    * LAYER 3 — MEASUREMENT
@@ -232,7 +232,7 @@
      input · btn 은 같은 줄에 놓이므로 같은 값. 앱 틀(GNB 막대 안 버튼)은 이 토큰을 쓰지 않고 높이 고정 */
   --size-input: 28px;                         /* 인풋 높이 */
   --size-btn: 28px;                           /* 버튼 기본 (인풋 매칭) · 아이콘 버튼 가로세로. 옛 md(32px)는 실사용 없어 삭제 */
-  --size-input-lg: 44px;                      /* 큰 칸 — 화면에 폼 하나만 있는 단독 폼(로그인 · 임시 비밀번호 발급 — 이전 버전 login.css 큰 칸 · 큰 버튼을 쓰던 두 화면, TD-120) (제안 E). 브랜드가 바꾸지 않음(스태틱) */
+  --size-input-lg: 44px;                      /* 큰 칸 — 화면에 폼 하나만 있는 단독 폼(로그인 · 임시 비밀번호 발급 — 이전 버전 login.css 큰 칸 · 큰 버튼을 쓰던 두 화면) (제안 E). 브랜드가 바꾸지 않음(스태틱) */
   --size-btn-lg: 44px;                        /* 큰 버튼 — 단독 폼의 주 동작 · 모바일 화면의 주 행동(호출 · 즐겨찾기). 브랜드 파일이 덮을 수 있음(플렉시블, DS-ADR-049) */
   --size-btn-sm: 26px;                        /* 작은 버튼 = Figma 「Small Button」 — .btn--sm · 첨부 삭제. 최소 누름 영역 24 이상 (DS-ADR-020) */
   --size-touch: var(--size-btn);              /* 누름 기준 높이 — 모바일 컴포넌트(앱 상단 바 · 하단 탭 · 목록 행 · 칩)의 최소 높이. 기본 = 표준 버튼 높이, 브랜드 파일이 덮을 수 있음(플렉시블, DS-ADR-049) */
@@ -247,27 +247,27 @@
                                                                    구 Layer 5 --sidebar-width/-toggle-width 를 치수 층으로 올림 — 이름만 있고 아무도 안 쓰고
                                                                    components 는 같은 숫자를 직접 적고 있었음 (Legacy 별칭 종결).
                                                                    size 층에서 폭을 담는 토큰은 이 둘(sidebar · sidebar-toggle)뿐 — 「size = 높이」의 예외.
-                                                                   이름은 그대로 둔다: 바꾸면 이전 버전 덮어쓰기 파일도 같이 바꿔야 함 (TD-92) */
+                                                                   이름은 그대로 둔다: 바꾸면 이전 버전 덮어쓰기 파일도 같이 바꿔야 함 */
 
-  /* 모션 — 값은 여기 한 곳. 컴포넌트 transition · animation 은 이 토큰을 쓴다 (TD-48).
+  /* 모션 — 값은 여기 한 곳. 컴포넌트 transition · animation 은 이 토큰을 쓴다.
      fast · base = 이전 버전 tokens 의 모션 토큰 그대로(이전 버전에 함께 있던 ease-standard 는 쓰는 곳이 없어 안 옮김).
      shimmer · pulse · loop = 반복 움직임. 무엇을 알려 주는 움직임인지는 스토리북 Foundation › Motion.
      모션 줄이기(prefers-reduced-motion)는 컴포넌트마다 — 빛 · 깜빡임은 멈춤, 스피너 · 로고 로더는 느리게만 */
   --duration-fast: .12s;                      /* 색 · 테두리 바뀜(메뉴 · 탭 · 입력 필드 포커스) · 툴팁 나타남 · 스위치 손잡이 */
   --duration-base: .2s;                       /* 펼침 화살표 회전 · 상세 검색 펼침 · 사용자 메뉴 안 바탕 · 화면 모드 스위치 */
   --duration-shimmer: 2.4s;                   /* Shimmer 한 바퀴 = 지나감 1.8초 + 쉼 0.6초. 업로더 올리는 중 막대 · 스켈레톤 */
-  --duration-pulse: 1.2s;                     /* Pulse 한 바퀴 = 두근 · 두근 · 쉼 — 지연 상태 표시 막대(statusPulse, 밝기만)와 같은 줄 진행률 막대(ds-alert-glow · ds-alert-sweep, 두 박동에 한 번). 구 1.6s 부드러운 진함 ↔ 흐림 (TD-123) */
+  --duration-pulse: 1.2s;                     /* Pulse 한 바퀴 = 두근 · 두근 · 쉼 — 지연 상태 표시 막대(statusPulse, 밝기만)와 같은 줄 진행률 막대(ds-alert-glow · ds-alert-sweep, 두 박동에 한 번). 구 1.6s 부드러운 진함 ↔ 흐림 */
   --duration-fill: 1.6s;                      /* 진행률 막대 채움이 늘어나는 시간(값이 바뀔 때 한 번) */
   --ease-loop: ease-in-out;                   /* 반복 움직임 곡선 — 빛 · 깜빡임 · 스켈레톤 · 그림 한 장 로고 로더 */
 
-  /* 인터랙션 — 누른 결과 · 바뀐 곳을 알려 주는 한 번짜리 움직임 (DS-ADR-041, TD-108 44번) */
+  /* 인터랙션 — 누른 결과 · 바뀐 곳을 알려 주는 한 번짜리 움직임 (DS-ADR-041) */
   --duration-slow: .4s;                       /* 숫자 굴러가기 · 상태 칩 전환 */
   --duration-once: 1.6s;                      /* 한 번 일어나고 끝나는 알림 — 방금 바뀐 행이 옅어짐 · 다음 차이 테두리 · 빈 상태 배지 */
   --duration-undo: 5s;                        /* 되돌리기 시간 — 삭제 뒤 [되돌리기]가 남아 있는 시간(마우스 · 포커스가 있으면 멈춤) */
   --ease-standard: cubic-bezier(.2, 0, 0, 1); /* 자리 이동 곡선 — 탭 밑줄 · 숫자 · 끌어 놓은 줄 · 누름 · 로고 로더 조각. 빨리 출발해 부드럽게 멈춤 */
   --scale-press: .96;                         /* 누르는 동안 버튼 · 페이지 번호 크기 */
 
-  /* 그림 자산 — 솔리드 문서 아이콘의 형식 색(종이 · 아래 띠). Figma ✨ Icons › 솔리드 — 파일 형식과 같은 값 (TD-108).
+  /* 그림 자산 — 솔리드 문서 아이콘의 형식 색(종이 · 아래 띠). Figma ✨ Icons › 솔리드 — 파일 형식과 같은 값.
      모양 = 색 종이 + 흰 줄 3개 + 아래 띠에 흰 형식 글자 — 모든 형식이 같은 모양이고 색만 다름. 남의 로고(Office · Acrobat) 모양은 쓰지 않음.
      형식을 알아보는 그림 색이라 브랜드 · 화면 모드와 상관없이 같음(다크에서도 흰 줄 · 글자가 읽히게). 띠 위 흰 글자 대비 4.5:1 이상(TXT만 3.4 — 옆 파일 이름이 뜻을 맡음) */
   --art-file-pdf: #E5484D;
@@ -340,7 +340,7 @@
   --color-text-on-selected-strong: var(--color-text-on-color);
   --color-icon-on-selected-strong: var(--color-icon-on-color);
 
-  /* 덮개 — 확인 창(.modal) 뒤 화면을 가리는 반투명 층 (TD-108). 브랜드와 상관없이 검정 투명 */
+  /* 덮개 — 확인 창(.modal) 뒤 화면을 가리는 반투명 층. 브랜드와 상관없이 검정 투명 */
   --color-bg-overlay: var(--transparent-32);
 
   /* Foreground (text) */
@@ -401,7 +401,7 @@
   --color-icon-warning: var(--yellow-700);
 
   /* 반전 바탕(bg-inverse, 토스트 · 툴팁) 위 상태 아이콘 — 라이트는 바탕이 어두워 밝은 단계, 다크는 바탕이 밝아 진한 단계.
-     대비(아이콘 기준 3:1): 라이트 성공 5.80 · 경고 8.54 · 위험 4.05 / 다크 성공 5.67 · 경고 3.48 · 위험 5.50 (TD-45 45-1) */
+     대비(아이콘 기준 3:1): 라이트 성공 5.80 · 경고 8.54 · 위험 4.05 / 다크 성공 5.67 · 경고 3.48 · 위험 5.50 */
   --color-icon-on-inverse-success: var(--green-400);
   --color-icon-on-inverse-warning: var(--yellow-400);
   --color-icon-on-inverse-danger: var(--red-400);
@@ -440,7 +440,7 @@
   --color-bg-interactive-secondary: var(--neutral-100);
   --color-bg-interactive-secondary-hover: var(--neutral-200);
   --color-bg-interactive-secondary-pressed: var(--neutral-300);
-  --color-text-interactive-secondary: var(--neutral-600); /* 보조 버튼 글자 = 이전 버전 neutral-600 (TD-45 45-3 규칙대로, 흰 바탕 AA). 구: 700 */
+  --color-text-interactive-secondary: var(--neutral-600); /* 보조 버튼 글자 = 이전 버전 neutral-600 (규칙대로, 흰 바탕 AA). 구: 700 */
   --color-text-interactive-secondary-hover: var(--neutral-800);
   --color-text-interactive-secondary-pressed: var(--neutral-900);
   --color-icon-interactive-secondary: var(--neutral-700);
@@ -452,7 +452,7 @@
 
   /* destructive = 삭제 등 되돌릴 수 없는 동작 */
 
-  /* 이전 버전 위험 버튼 = 채움 · 테두리 · 글자 모두 red-700(흰 바탕 6.0:1). 올림 · 누름은 한 단계씩 진하게 (TD-45 45-3 규칙대로). 구: 600 · 700 · 800 */
+  /* 이전 버전 위험 버튼 = 채움 · 테두리 · 글자 모두 red-700(흰 바탕 6.0:1). 올림 · 누름은 한 단계씩 진하게. 구: 600 · 700 · 800 */
   --color-bg-interactive-danger: var(--red-700);
   --color-bg-interactive-danger-hover: var(--red-800);
   --color-bg-interactive-danger-pressed: var(--red-900);
@@ -469,7 +469,7 @@
   /* 버튼 — Excel (.btn_excel) */
   --color-bg-btn-excel: #1E7E34;
   --color-text-btn-excel: var(--white);
-  --color-text-btn-excel-hover: var(--white); /* 올림 · 누름 글자 (TD-108) */
+  --color-text-btn-excel-hover: var(--white); /* 올림 · 누름 글자 */
   --color-bg-btn-excel-hover: #185838;
   --color-bg-btn-excel-active: #144A2E;
   --color-border-btn-excel: transparent;
@@ -567,8 +567,8 @@
   --color-bg-map-pin: var(--red-600);         /* 지도 위 고른 위치 핀 · 이름표. 오류 색(--color-bg-danger)과 따로 (DS-ADR-051, 모바일 앱 Blocks) */
   --color-text-on-map-pin: var(--white);
 
-  /* 알림 배지 (TD-172) — 새 소식 점 · 읽지 않은 수. 개수 글자가 작아 4.5:1을 라이트 · 다크 따로 맞춤 */
-  --color-bg-notify: var(--red-700);          /* 알림 배지(점 · 개수 · 새 표시) 바탕. 주의를 끄는 색 — 오류 문구 색과 이름을 나눠 다크 값을 따로 맞춤 (TD-172) */
+  /* 알림 배지 — 새 소식 점 · 읽지 않은 수. 개수 글자가 작아 4.5:1을 라이트 · 다크 따로 맞춤 */
+  --color-bg-notify: var(--red-700);          /* 알림 배지(점 · 개수 · 새 표시) 바탕. 주의를 끄는 색 — 오류 문구 색과 이름을 나눠 다크 값을 따로 맞춤 */
   --color-text-on-notify: var(--white);
 
   /* 진행률 5상태 그라데이션 (라이트/다크 공용 — 의미 컬러) */
@@ -789,7 +789,7 @@ body.dark-mode {
   /* 버튼 — Excel (.btn_excel) Soft Green + 컬러 보더 */
   --color-bg-btn-excel: rgba(34, 197, 94, 0.20);
   --color-text-btn-excel: var(--green-300);
-  --color-text-btn-excel-hover: var(--green-100); /* 올림 30% · 누름 40% 바탕 위 green-300 = 4.14 · 3.36(AA 미달) → green-100 6.69 · 5.43 (TD-108) */
+  --color-text-btn-excel-hover: var(--green-100); /* 올림 30% · 누름 40% 바탕 위 green-300 = 4.14 · 3.36(AA 미달) → green-100 6.69 · 5.43 */
   --color-bg-btn-excel-hover: rgba(34, 197, 94, 0.30);
   --color-bg-btn-excel-active: rgba(34, 197, 94, 0.40);
   --color-border-btn-excel: #22C55E;
@@ -834,7 +834,7 @@ body.dark-mode {
   --color-icon-place-public: var(--color-icon-place-public-dark);
   --color-text-on-place-public: var(--color-text-on-place-public-dark);
 
-  /* 알림 배지 (TD-172) */
+  /* 알림 배지 */
   --color-bg-notify: var(--red-400);          /* 다크 알림 배지 — 밝은 빨강 + 진한 글자. 500 위 흰 글자는 4.11로 미달 */
   --color-text-on-notify: var(--neutral-950);
 }

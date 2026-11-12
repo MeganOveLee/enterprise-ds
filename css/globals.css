@@ -63,7 +63,7 @@
 
 /* 이전 버전 전역: 폰트 + box-sizing (styles.css *{box-sizing:border-box}(36행) 이관 — 컷 시 border-box 유지, 없으면 전체 content-box 회귀=레이아웃 붕괴.) */
 * { font-family: var(--font-family-base); box-sizing: border-box; }
-body { line-height: var(--line-height-base); }   /* 글줄 간격 1.6 = 이전 버전 body 값. 문서 화면(.ds-page 1.6)과 단독 화면 · 제품이 같아짐 (TD-45 45-3 D) */
+body { line-height: var(--line-height-base); }   /* 글줄 간격 1.6 = 이전 버전 body 값. 문서 화면(.ds-page 1.6)과 단독 화면 · 제품이 같아짐 */
 
 /* ═══ h1~h6 = 제목 토큰 6단계(2xl~xs) · SemiBold · 줄 간격 tight. margin:0 = 기존 앱 레이아웃 보존(UA 여백 도입 방지) — DS-ADR-012 · 036 ═══ */
 h1 { font-size: var(--heading-2xl); font-weight: var(--font-weight-semibold); margin: 0; line-height: var(--line-height-tight); }   /* 태그 기본값 = 크기 토큰 (DS-ADR-012) · 굵기 SemiBold (DS-ADR-036) */
