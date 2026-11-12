@@ -11,11 +11,11 @@ import * as S from './Toast.stories.js';
 <table className="ds-table ds-props">
 <thead><tr><th>구분</th><th>클래스 · 속성</th><th>설명</th></tr></thead>
 <tbody>
-<tr><td><b>영역</b></td><td><code>.toast-region</code> · <code>role="status"</code></td><td>화면 오른쪽 아래(24 · 24)에 고정되고, 새 토스트는 아래에 쌓입니다. 토스트가 없는 빈 자리는 아래 화면을 그대로 누를 수 있습니다.</td></tr>
-<tr><td><b>구조</b></td><td><code>.toast</code> › <code>.toast__icon</code> · <code>.toast__msg</code> · <code>.toast__action</code> · 닫기</td><td>어두운 바탕에 아이콘 → 문구 → 동작 버튼 → 닫기 순서이고 모두 위에 맞춥니다. 폭 360 · 안쪽 여백 16 · 모서리 8이고, 상태 아이콘은 20, 문구는 16px Medium입니다. 글이 길면 줄을 바꿉니다.</td></tr>
+<tr><td><b>영역</b></td><td><code>.toast-region</code> · <code>role="status"</code></td><td>화면 오른쪽 아래(24 · 24)에 고정되고, 새 토스트는 아래에 쌓입니다. 토스트가 없는 빈 자리는 아래 화면을 누를 수 있습니다.</td></tr>
+<tr><td><b>구조</b></td><td><code>.toast</code> › <code>.toast__icon</code> · <code>.toast__msg</code> · <code>.toast__action</code> · 닫기</td><td>어두운 바탕에 아이콘 → 문구 → 동작 버튼 → 닫기 순서이고 위쪽 끝을 맞춥니다. 폭 360 · 안쪽 여백 16 · 모서리 8이고, 상태 아이콘은 20, 문구는 16px Medium입니다. 글이 길면 줄을 바꿉니다.</td></tr>
 <tr><td><b>제목</b></td><td><code>.toast__body</code> › <code>.toast__title</code> + <code>.toast__msg</code><span className="ds-muted">선택</span></td><td>결과를 한마디로 묶을 때만 20px SemiBold 제목을 문구 위에 둡니다(간격 4). 제목이 있으면 제목과 문구를 <code>.toast__body</code>로 감쌉니다.</td></tr>
-<tr><td><b>닫기</b></td><td><code>.btn.btn--secondary.btn--transparent.btn--icon</code> · <code>aria-label="알림 닫기"</code></td><td>아이콘 버튼(28)입니다. 별도 클래스 없이 Button을 그대로 쓰고, 어두운 바탕에 맞춰 글자색만 바뀝니다.</td></tr>
-<tr><td><b>상태</b></td><td><code>.toast--success</code> · <code>--warning</code> · <code>--danger</code><span className="ds-muted">클래스가 없는 것이 기본(정보)입니다</span></td><td>아이콘 색만 바뀝니다. 바탕 · 글자는 같습니다. 아이콘 색은 어두운 바탕 전용 상태 토큰(<code>--color-icon-on-inverse-*</code>)이라 라이트 · 다크 모두 잘 보입니다.</td></tr>
+<tr><td><b>닫기</b></td><td><code>.btn.btn--secondary.btn--transparent.btn--icon</code> · <code>aria-label="알림 닫기"</code></td><td>아이콘 버튼(28)입니다. 별도 클래스 없이 Button을 쓰고, 어두운 바탕에 맞춰 글자색만 바뀝니다.</td></tr>
+<tr><td><b>상태</b></td><td><code>.toast--success</code> · <code>--warning</code> · <code>--danger</code><span className="ds-muted">클래스가 없는 것이 기본(정보)입니다</span></td><td>아이콘 색만 바뀝니다. 바탕 · 글자는 같습니다. 아이콘 색은 어두운 바탕 전용 상태 토큰(<code>--color-icon-on-inverse-*</code>)이라 라이트 · 다크에서 대비를 지킵니다.</td></tr>
 <tr><td><b>동작 버튼</b></td><td><code>.btn.btn--secondary.btn--transparent.toast__action</code></td><td>하나만 둡니다(예: 「보기」 「다시 시도」). 보조 · 투명 버튼(높이 28 · 좌우 여백 8)이고, 닫기와의 간격은 8입니다.</td></tr>
 <tr><td><b>사라짐</b></td><td><span className="ds-muted">화면 스크립트</span></td><td>4초 뒤 닫힙니다. 동작 버튼이 있거나 위험 알림이면 사용자가 닫을 때까지 유지합니다. 되돌리기 토스트만 예외입니다(아래).</td></tr>
 <tr><td><b>되돌리기</b></td><td><code>.toast--undo</code> › <code>.toast__timer</code><span className="ds-muted">dsMotion.undoToast</span></td><td>삭제 뒤 확인 창 대신 [되돌리기]가 든 토스트를 5초 동안 두고, 아래 막대가 줄어 남은 시간을 보입니다. 마우스 · 키보드 포커스가 토스트에 있으면 시간이 멈추고, 시간이 끝나면 삭제가 확정되며 토스트가 닫힙니다. <a className="ds-link" href="./?path=/docs/foundation-interaction--docs" target="_top">Foundation › Interaction</a></td></tr>

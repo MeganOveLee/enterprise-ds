@@ -15,11 +15,11 @@ import * as S from './Tooltip.stories.js';
 <tr><td><b>위치</b></td><td><code>.tooltip--bottom</code><span className="ds-muted">클래스가 없는 것이 기본(위)입니다</span></td><td>보통은 컨트롤 위에 뜹니다. 위가 좁은 곳(예: 화면 맨 위)에서는 아래에 둡니다.</td></tr>
 <tr><td><b>가로 맞춤</b></td><td><code>.tooltip--start</code> · <code>.tooltip--end</code><span className="ds-muted">클래스가 없는 것이 기본(가운데)입니다</span></td><td>보통은 컨트롤 가운데에 맞춥니다. 셀 왼쪽 끝 컨트롤은 툴팁 왼쪽 끝을, 오른쪽 끝 컨트롤은 오른쪽 끝을 컨트롤에 맞춰 셀 밖으로 잘리지 않게 합니다. 화살표는 컨트롤 가운데를 가리킵니다.</td></tr>
 <tr><td><b>열림</b></td><td><code>:hover</code> · <code>:focus-within</code><span className="ds-muted">.is-open · .is-hidden</span></td><td>마우스를 올리거나(<code>:hover</code>) 키보드 포커스가 오면(<code>:focus-within</code>) 열립니다. 툴팁 위로 마우스를 옮겨도 닫히지 않아 긴 글도 읽을 수 있습니다. <code>.is-open</code> = 열어 둔 상태(문서 예시용), <code>.is-hidden</code> = Esc로 닫은 상태로, 화면 스크립트가 붙이고 마우스 · 포커스가 떠나면 뗍니다.</td></tr>
-<tr><td><b>접근성</b></td><td><code>role="tooltip"</code> · <code>aria-describedby</code></td><td>툴팁에 <code>id</code>를 주고 컨트롤의 <code>aria-describedby</code>로 잇습니다. 아이콘 버튼의 이름은 <code>aria-label</code>이 따로 맡습니다.</td></tr>
-<tr><td><b>브랜드가 바꾸는 것</b></td><td><code>--radius-popover</code> · 글자 · 색 토큰</td><td>모서리 · 글자 크기 · 색입니다. 여는 · 닫는 규칙은 모든 브랜드가 같습니다. 시안은 세 브랜드 모두 A이고, 다크 화면 위 밝은 툴팁은 B를 씁니다.</td></tr>
+<tr><td><b>접근성</b></td><td><code>role="tooltip"</code> · <code>aria-describedby</code></td><td>툴팁에 <code>id</code>를 주고 컨트롤의 <code>aria-describedby</code>로 잇습니다. 아이콘 버튼의 이름은 <code>aria-label</code>이 맡습니다.</td></tr>
+<tr><td><b>브랜드가 바꾸는 것</b></td><td><code>--radius-popover</code> · 글자 · 색 토큰</td><td>모서리 · 글자 크기 · 색입니다. 여는 · 닫는 규칙은 모든 브랜드가 같습니다. 시안은 세 브랜드 공통 A이고, 다크 화면 위 밝은 툴팁은 B를 씁니다.</td></tr>
 </tbody>
 </table>
-<p className="ds-sec__desc ds-after">Figma UI Kit의 Tooltip(까만 툴팁)과 짝입니다. 툴팁에는 꼭 알아야 할 내용을 넣지 않습니다 — 마우스를 올려야만 보이기 때문입니다.</p>
+<p className="ds-sec__desc ds-after">Figma UI Kit의 Tooltip(까만 툴팁)과 짝입니다. 툴팁에는 모르면 작업이 막히는 내용을 넣지 않습니다 — 마우스를 올려야만 보이기 때문입니다.</p>
 </Section>
 <Section title="시안" en="Options">
 <Card of={S.아이콘_버튼_설명} title="A · 어두운 바탕" tag="추천" desc="아이콘 버튼의 이름을 짧게 알릴 때 사용합니다." basis="어두운 면 + 흰 글자로 화면 위 어느 바탕에서도 툴팁이 떠 보입니다(Material 3 Plain tooltip)." />
