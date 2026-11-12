@@ -2,7 +2,7 @@
   "name": "enterprise-ds",
   "version": "1.0.0",
   "private": true,
-  "description": "Enterprise DS v1.0 — 엔터프라이즈 백오피스용 CSS 디자인 시스템",
+  "description": "Enterprise DS v1.0: 엔터프라이즈 백오피스용 CSS 디자인 시스템",
   "license": "UNLICENSED",
   "type": "module",
   "scripts": {
