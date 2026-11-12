@@ -4,13 +4,13 @@ v1.0 · 설계 · 퍼블리싱 이세영
 
 엔터프라이즈 백오피스(PLM) 화면을 위한 CSS 디자인 시스템입니다. 기존 화면의 개발 코드는 바꾸지 않고, CSS 클래스만 붙여 적용합니다.
 
-**링크** — [Figma UI Kit (한 장 요약)](https://www.figma.com/design/99ff5JQYQPCdY3xRBWHHlO/?node-id=8111-5) · [Figma Foundation](https://www.figma.com/design/Mf4XTC6dNUOH0anjOMcRPi) · [Storybook](https://meganovelee.github.io/enterprise-ds/) · [화면 예시](https://meganovelee.github.io/enterprise-ds/?path=/docs/screens-plm-%ED%99%94%EB%A9%B4--docs) · [결정 기록(ADR)](https://app.notion.com/p/3eda8196682d8126967fcc86f796fcb4)
+**링크**: [Figma UI Kit (한 장 요약)](https://www.figma.com/design/99ff5JQYQPCdY3xRBWHHlO/?node-id=8111-5) · [Figma Foundation](https://www.figma.com/design/Mf4XTC6dNUOH0anjOMcRPi) · [Storybook](https://meganovelee.github.io/enterprise-ds/) · [화면 예시](https://meganovelee.github.io/enterprise-ds/?path=/docs/screens-plm-%ED%99%94%EB%A9%B4--docs) · [결정 기록(ADR)](https://app.notion.com/p/3eda8196682d8126967fcc86f796fcb4)
 
-- **Figma**: [UI Kit](https://www.figma.com/design/99ff5JQYQPCdY3xRBWHHlO/?node-id=8111-5) — 컴포넌트 원본, 첫 페이지가 한 장 요약 · [Foundation](https://www.figma.com/design/Mf4XTC6dNUOH0anjOMcRPi) — 토큰(변수) · 글자 스타일 원본
-- **Storybook**: https://meganovelee.github.io/enterprise-ds/ — 같은 값을 실제 CSS로 그린 견본
-- **화면 예시**: [Screens › PLM 화면](https://meganovelee.github.io/enterprise-ds/?path=/docs/screens-plm-%ED%99%94%EB%A9%B4--docs) — 디자인 시스템의 컴포넌트와 토큰으로 구성한 실제 크기 업무 화면(로그인 · 홈 · 문서 검색 · 문서 등록 · 프로젝트 상세)입니다. 화면 배치만 별도 CSS로 둡니다. 스토리북 맨 위 막대에서 브랜드 × 라이트 · 다크로 바꿔 볼 수 있습니다
-- **결정 기록(ADR)**: [Notion — 결정 기록](https://app.notion.com/p/3eda8196682d8126967fcc86f796fcb4) — 토큰 · 컴포넌트를 정할 때의 배경 · 선택지 · 근거
-- 스타일은 CSS에서만 정합니다 — 토큰(`--color-*` …) → 컴포넌트 클래스(`.btn`, `.input` …). 서버 렌더링 화면(JSP)에도 같은 클래스를 씁니다.
+- **Figma**: [UI Kit](https://www.figma.com/design/99ff5JQYQPCdY3xRBWHHlO/?node-id=8111-5): 컴포넌트 원본, 첫 페이지가 한 장 요약 · [Foundation](https://www.figma.com/design/Mf4XTC6dNUOH0anjOMcRPi): 토큰(변수) · 글자 스타일 원본
+- **Storybook**: [meganovelee.github.io/enterprise-ds](https://meganovelee.github.io/enterprise-ds/), 같은 값을 실제 CSS로 그린 견본
+- **화면 예시**: [Screens › PLM 화면](https://meganovelee.github.io/enterprise-ds/?path=/docs/screens-plm-%ED%99%94%EB%A9%B4--docs): 디자인 시스템의 컴포넌트와 토큰으로 구성한 실제 크기 업무 화면(로그인 · 홈 · 문서 검색 · 문서 등록 · 프로젝트 상세)입니다. 화면 배치만 별도 CSS로 둡니다. 스토리북 맨 위 막대에서 브랜드 × 라이트 · 다크로 바꿔 볼 수 있습니다
+- **결정 기록(ADR)**: [Notion: 결정 기록](https://app.notion.com/p/3eda8196682d8126967fcc86f796fcb4): 토큰 · 컴포넌트를 정할 때의 배경 · 선택지 · 근거
+- 스타일은 CSS에서만 정합니다: 토큰(`--color-*` …) → 컴포넌트 클래스(`.btn`, `.input` …). 서버 렌더링 화면(JSP)에도 같은 클래스를 씁니다.
 - 브랜드는 `<html class="theme-*">`, 다크 모드는 `<body class="dark-mode">` 하나로 바뀝니다.
 - 최소 폭은 창 틀에만 있습니다. 업무 화면 틀(`.main-layout`)은 1024px, 새 창(`.pop`)은 600px이고, 창이 더 좁으면 화면 전체가 가로로 스크롤합니다. 컴포넌트는 폭을 정하지 않고 놓인 칸에 맞춥니다. 카드는 한 줄 개수가 줄고, 검색 조건은 놓인 칸이 좁으면(480px 미만) 칸 수를 줄이며, 목록 표는 열을 줄이지 않고 가로로 스크롤합니다.
 
@@ -19,24 +19,24 @@ v1.0 · 설계 · 퍼블리싱 이세영
 | 경로 | 내용 |
 |---|---|
 | `tokens/` | **토큰 값의 원본** (DTCG JSON). `core.json` 원천 램프 · 시맨틱 · `vendor.json` 벤더 이름 · `dark.json` 다크 · `brands/*.json` 브랜드. 값은 `tokens/`에서만 고칩니다 |
-| `css/tokens.css` | 공통 토큰 (원천 램프 → 시맨틱 → 다크) — `tokens/`에서 만드는 생성 파일 |
-| `css/blocks/mobility.css` | 모바일 앱 전용 Blocks(경로 요약 · 출발 · 도착 입력 · 이동 수단 타일 · 지도 위 컨트롤) — 모바일 앱 화면에서만 `components.css` 다음에 링크합니다 |
-| `css/brands/` | 브랜드 값 파일 — `tokens/brands/`에서 만드는 생성 파일. 브랜드가 여는 토큰(색 · 형태 · 그림 자산 · 글자 크기 · 글꼴 · 회색 · 표 · 그림자) 목록은 `tokens/brands/_template.json`(새 브랜드 양식)에 있고, 지금 값은 스토리북 Foundation › Color(색) · Spacing · Radius · Size(형태 · 그림 자산)에서 브랜드를 바꿔 볼 수 있습니다. `default.css` = 기본 브랜드(그림 자산 솔리드), `mobility.css` · `ootb.css` = 시연용 가상 산업 브랜드(Mobility · 모바일 앱(모빌리티 서비스) 앱 = 색 + 둥근 모서리 / OOTB · Windchill OOTB 화면 비공식 리디자인 = 색 + 직각 · 높이 32, 둘 다 그림 자산 라인) |
-| `css/fonts/` | 브랜드 글꼴 등록 CSS — 기본 글꼴(Pretendard)과 다른 글꼴을 쓰는 브랜드만, 그 브랜드 CSS 옆에 링크합니다(`nanum-square-neo.css` = Mobility) |
+| `css/tokens.css` | 공통 토큰 (원천 램프 → 시맨틱 → 다크): `tokens/`에서 만드는 생성 파일 |
+| `css/blocks/mobility.css` | 모바일 앱 전용 Blocks(경로 요약 · 출발 · 도착 입력 · 이동 수단 타일 · 지도 위 컨트롤): 모바일 앱 화면에서만 `components.css` 다음에 링크합니다 |
+| `css/brands/` | 브랜드 값 파일: `tokens/brands/`에서 만드는 생성 파일. 브랜드가 여는 토큰(색 · 형태 · 그림 자산 · 글자 크기 · 글꼴 · 회색 · 표 · 그림자) 목록은 `tokens/brands/_template.json`(새 브랜드 양식)에 있고, 지금 값은 스토리북 Foundation › Color(색) · Spacing · Radius · Size(형태 · 그림 자산)에서 브랜드를 바꿔 볼 수 있습니다. `default.css` = 기본 브랜드(그림 자산 솔리드), `mobility.css` · `ootb.css` = 시연용 가상 산업 브랜드(Mobility · 모바일 앱(모빌리티 서비스) 앱 = 색 + 둥근 모서리 / OOTB · Windchill OOTB 화면 비공식 리디자인 = 색 + 직각 · 높이 32, 둘 다 그림 자산 라인) |
+| `css/fonts/` | 브랜드 글꼴 등록 CSS: 기본 글꼴(Pretendard)과 다른 글꼴을 쓰는 브랜드만, 그 브랜드 CSS 옆에 링크합니다(`nanum-square-neo.css` = Mobility) |
 | `css/globals.css` · `components.css` | 전역 · 컴포넌트 스타일입니다. 브랜드마다 다른 코드를 두지 않습니다 |
-| `js/select.js` | 선택 목록 — 화면의 단일 select를 같은 모양의 목록(`.ui-select`)으로 바꿉니다 (APG Select-Only Combobox 패턴) |
-| `js/multiselect.js` | 다중 선택 — `select.checkSelect[multiple]`을 표시 상자 + 체크박스 목록으로 바꿉니다 |
+| `js/select.js` | 선택 목록: 화면의 단일 select를 같은 모양의 목록(`.ui-select`)으로 바꿉니다 (APG Select-Only Combobox 패턴) |
+| `js/multiselect.js` | 다중 선택: `select.checkSelect[multiple]`을 표시 상자 + 체크박스 목록으로 바꿉니다 |
 | `js/datepicker.js` | 날짜 선택 (WAI-ARIA APG Date Picker Dialog 패턴) |
-| `js/tabs.js` | 팝업 탭 넘침 — 탭이 줄보다 많으면 양 끝에 이전 · 다음 버튼을 둡니다. 고른 탭의 밑줄이 다음 탭으로 미끄러지듯 옮겨 갑니다 |
-| `js/motion.js` | 인터랙션 — 숫자 굴러가기 · 방금 바뀐 행 · 처리 끝 체크 · 다음 차이 · 끌어 순서 바꾸기 · 되돌리기 토스트 (`window.dsMotion`) |
-| `js/clear.js` | 조회 조건 입력 · 날짜 칸의 지우기(×) 버튼 — `data-ds-clear`를 단 칸 또는 검색 조건 영역(`.mainTable`) 안의 칸에 붙습니다 |
-| `js/modal.js` | 확인 창 — `.modal` 열기 · 닫기 · 포커스 가두기 · Esc (APG Dialog (Modal) 패턴) |
-| `js/chips.js` | 고르기 · 가로 넘김 — 칩 · 목록 행 · 나란한 칸의 하나 고르기(`role="radiogroup"`, 방향키) · 여럿 고르기(`aria-pressed`), 고른 값을 버튼 글자에(`data-choice-for`), 한 줄 칩 줄의 넘김 신호(흐림 · 있는 쪽 화살표) |
-| `js/number-input.js` | 숫자 버튼 — `.number-input`의 − · + 로 범위 안에서 하나씩, 끝에 닿은 버튼은 꺼짐 |
-| `js/app-bar.js` | 큰 제목 앱 상단 바 — `.app-bar--large`를 내용을 내리면 작은 제목으로 줄입니다 |
+| `js/tabs.js` | 팝업 탭 넘침: 탭이 줄보다 많으면 양 끝에 이전 · 다음 버튼을 둡니다. 고른 탭의 밑줄이 다음 탭으로 미끄러지듯 옮겨 갑니다 |
+| `js/motion.js` | 인터랙션: 숫자 굴러가기 · 방금 바뀐 행 · 처리 끝 체크 · 다음 차이 · 끌어 순서 바꾸기 · 되돌리기 토스트 (`window.dsMotion`) |
+| `js/clear.js` | 조회 조건 입력 · 날짜 칸의 지우기(×) 버튼: `data-ds-clear`를 단 칸 또는 검색 조건 영역(`.mainTable`) 안의 칸에 붙습니다 |
+| `js/modal.js` | 확인 창: `.modal` 열기 · 닫기 · 포커스 가두기 · Esc (APG Dialog (Modal) 패턴) |
+| `js/chips.js` | 고르기 · 가로 넘김: 칩 · 목록 행 · 나란한 칸의 하나 고르기(`role="radiogroup"`, 방향키) · 여럿 고르기(`aria-pressed`), 고른 값을 버튼 글자에(`data-choice-for`), 한 줄 칩 줄의 넘김 신호(흐림 · 있는 쪽 화살표) |
+| `js/number-input.js` | 숫자 버튼: `.number-input`의 − · + 로 범위 안에서 하나씩, 끝에 닿은 버튼은 꺼짐 |
+| `js/app-bar.js` | 큰 제목 앱 상단 바: `.app-bar--large`를 내용을 내리면 작은 제목으로 줄입니다 |
 | `stories/` · `.storybook/` | Storybook (HTML 프레임워크) |
 | `scripts/tokens/` | 토큰 만들기(`build.mjs`, Style Dictionary) · 정의되지 않은 변수 검사 · Figma 변수 대조 · CSS → JSON 옮기기 |
-| `figma-plugin/token-export/` | Figma 개발 플러그인 — Foundation 변수를 `tokens/figma/export.json`으로 내보냅니다 |
+| `figma-plugin/token-export/` | Figma 개발 플러그인: Foundation 변수를 `tokens/figma/export.json`으로 내보냅니다 |
 
 ## 불러오는 순서
 
@@ -61,7 +61,7 @@ v1.0 · 설계 · 퍼블리싱 이세영
 - 화면 CSS는 `--color-*` 시맨틱 토큰만 씁니다. 원천 램프(`--neutral-N`, `--brand-N`)는 참조하지 않습니다
 - 토큰 값은 `tokens/`의 JSON에서만 고칩니다. `css/tokens.css` · `css/brands/*.css`는 생성 파일이라 고치지 않습니다
 - 브랜드 값은 `tokens/brands/` 파일에만 둡니다
-- 결정마다 ADR(결정 기록)을 남깁니다 — 코드 주석의 `DS-ADR-0NN`
+- 결정마다 ADR(결정 기록)을 남깁니다: 코드 주석의 `DS-ADR-0NN`
 
 ## 로컬 실행
 
@@ -85,7 +85,7 @@ npm run tokens:check    # 3. 생성 파일 · 정의되지 않은 변수 검사 
 
 ## 다음 버전
 
-- Figma 가져오기 — 같은 JSON을 Figma 변수에 반영하는 플러그인 버튼을 만듭니다. 지금은 내보내기 · 대조까지입니다.
+- Figma 가져오기: 같은 JSON을 Figma 변수에 반영하는 플러그인 버튼을 만듭니다. 지금은 내보내기 · 대조까지입니다.
 - 같은 JSON에서 리액트용 JS 토큰을 함께 만듭니다.
 
 ---
@@ -93,4 +93,4 @@ npm run tokens:check    # 3. 생성 파일 · 정의되지 않은 변수 검사 
 © 2026 이세영 (MeganOveLee). All rights reserved.
 저장소의 코드와 문서는 포트폴리오 열람용으로 공개합니다. 별도 허락 없이 복제·수정·배포·상업적 이용을 할 수 없습니다.
 
-출처 — 글꼴 Pretendard(SIL Open Font License 1.1, 저장소에는 글꼴 파일을 넣지 않았습니다) · GitHub · Figma · Notion 로고는 각 회사의 상표이며 참고 자료 링크 표시에만 씁니다.
+출처: 글꼴 Pretendard(SIL Open Font License 1.1, 저장소에는 글꼴 파일을 넣지 않았습니다) · GitHub · Figma · Notion 로고는 각 회사의 상표이며 참고 자료 링크 표시에만 씁니다.
