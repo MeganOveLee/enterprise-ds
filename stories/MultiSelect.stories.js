@@ -1,5 +1,5 @@
-// Form/Multi Select — 문서 화면은 MultiSelect.mdx. 여러 값을 고르는 드롭다운(.checkSelect)
-// Figma UI Kit 「Option」 · 「Option group」과 같은 짝. 여닫기 · 표시 글자는 js/multiselect.js(— 이전 버전 화면 스크립트에서 화면 동작만 옮김)
+// Form/Multi Select: 문서 화면은 MultiSelect.mdx. 여러 값을 고르는 드롭다운(.checkSelect)
+// Figma UI Kit 「Option」 · 「Option group」과 같은 짝. 여닫기 · 표시 글자는 js/multiselect.js(이전 버전 화면 스크립트에서 화면 동작만 옮김)
 // 「고른 값 줄여 보기」 카드는 그 스크립트로 바꾼 것, 나머지 카드는 같은 마크업을 짧은 스크립트(wire)로 눌러 볼 수 있게 함
 import { matrix } from './_matrix.js';
 import { enablePseudo } from './_pseudo.js';
@@ -7,10 +7,10 @@ import { doDont } from './_dodont.js';
 
 const STATUS = ['작업 중', '검토 중', '승인', '반려', '폐기'];
 const label = (picked) => (picked.length ? picked.join(', ') : '전체');   // 화면 읽기 · title 용 = 고른 값 전체
-// 트리거 글자 — 하나면 그 값, 두 개 이상이면 「첫 값 외 N」(DS-ADR-022)
+// 트리거 글자: 하나면 그 값, 두 개 이상이면 「첫 값 외 N」(DS-ADR-022)
 const shown = (picked) => (picked.length < 2 ? label(picked)
   : '<span class="selected-text__value">' + picked[0] + '</span> <span class="selected-text__more">외 ' + (picked.length - 1) + '</span>');
-// 화면 읽기 이름 = 보이는 글자(「첫 값 외 N」)를 그대로 담고 나머지 값을 괄호로 — 보이는 글자와 이름이 어긋나지 않게(WCAG 2.5.3)
+// 화면 읽기 이름 = 보이는 글자(「첫 값 외 N」)를 그대로 담고 나머지 값을 괄호로: 보이는 글자와 이름이 어긋나지 않게(WCAG 2.5.3)
 const spoken = (name, picked) => name + ': ' + (picked.length < 2 ? label(picked) : picked[0] + ' 외 ' + (picked.length - 1) + ' (' + picked.slice(1).join(', ') + ')');
 const option = (t, on, extra = '') =>
   '<label class="option' + extra + '"><input type="checkbox"' + (on ? ' checked' : '') + '><span>' + t + '</span></label>';
@@ -23,7 +23,7 @@ const box = ({ name = '작업현황', items = STATUS, picked = [], open = false,
   '<div>' + items.map((t, i) => option(t, picked.includes(t), i === hoverAt ? ' ps-hover' : '')).join('') + '</div>' +
   '</div></div>';
 
-// 눌러 볼 수 있게 — 트리거 누르면 여닫기, 고르면 글자 갱신, 검색하면 거르기, 바깥 · Esc 로 닫기
+// 눌러 볼 수 있게: 트리거 누르면 여닫기, 고르면 글자 갱신, 검색하면 거르기, 바깥 · Esc 로 닫기
 const wire = (root) => {
   root.querySelectorAll('.checkSelect').forEach((cs) => {
     const btn = cs.querySelector('.selected-text');
@@ -84,7 +84,7 @@ export const 검색_없이 = {
   render: () => live(box({ name: '문서 분류', items: KINDS, picked: ['설계 사양서', '도면'], open: true, search: false }), 210),
 };
 
-// ── Do · Don't (① ②) — 미리보기만. 펼친 목록은 틀 높이를 잡아 미리보기 안에 둠 ──
+// ── Do · Don't (① ②): 미리보기만. 펼친 목록은 틀 높이를 잡아 미리보기 안에 둠 ──
 const fit = (h, w = 200, ht = 0) => '<div style="width:' + w + 'px' + (ht ? ';height:' + ht + 'px' : '') + '">' + h + '</div>';
 const KIND3 = ['사양서', '도면', '시험 성적서'];
 const group = '<div class="form-grid-2" style="grid-template-columns:1fr;width:240px;text-align:left"><div class="ff-field"><span class="search-label" id="dd-ms-kind">문서 분류</span>' +
@@ -122,14 +122,14 @@ export const 전체_상태 = {
     return matrix(['트리거', '옵션 행'], [
       ['Default', [cell(box({ picked: [] })), opt('작업 중', false)]],
       ['Hovered', [cell(box({ picked: [], extraBox: ' ps-hover' })), opt('작업 중', false, ' ps-hover')]],
-      ['Pressed', ['—', opt('작업 중', false, ' ps-active')]],
+      ['Pressed', ['없음', opt('작업 중', false, ' ps-active')]],
       ['고른 값 하나 · 고른 항목', [cell(box({ picked: ['작업 중'] })), opt('작업 중', true)]],
-      ['고른 값 여럿', [cell(box({ picked: ['작업 중', '검토 중', '승인'] })), '—']],
-      ['긴 값 여럿', [cell(box({ name: '분류', items: ['설계 변경 요청서', '부품 승인 원', '검사 성적서'], picked: ['설계 변경 요청서', '부품 승인 원'] })), '—']],
+      ['고른 값 여럿', [cell(box({ picked: ['작업 중', '검토 중', '승인'] })), '없음']],
+      ['긴 값 여럿', [cell(box({ name: '분류', items: ['설계 변경 요청서', '부품 승인 원', '검사 성적서'], picked: ['설계 변경 요청서', '부품 승인 원'] })), '없음']],
       ['Focused', [cell(box({ picked: ['작업 중'], extraBox: ' ps-focus-visible' })), '<div class="checkSelect" style="width:200px;text-align:left"><div class="options show" style="position:static;box-shadow:none"><div><label class="option"><input type="checkbox" class="ps-focus-visible"><span>작업 중</span></label></div></div></div>']],
       ['Disabled', [cell(box({ picked: [], disabled: true })), '<div class="checkSelect" style="width:200px;text-align:left"><div class="options show" style="position:static;box-shadow:none"><div><label class="option"><input type="checkbox" disabled><span>폐기</span></label></div></div></div>']],
-      ['Disabled · 고른 항목', ['—', '<div class="checkSelect" style="width:200px;text-align:left"><div class="options show" style="position:static;box-shadow:none"><div><label class="option"><input type="checkbox" checked disabled><span>폐기</span></label></div></div></div>']],
-      ['펼침', [cell('<div class="checkSelect"><div class="selected-text" role="button" tabindex="0" aria-haspopup="true" aria-expanded="true" aria-label="작업현황: 작업 중">작업 중</div><div class="options show" style="display:none"></div></div>'), '—']],
+      ['Disabled · 고른 항목', ['없음', '<div class="checkSelect" style="width:200px;text-align:left"><div class="options show" style="position:static;box-shadow:none"><div><label class="option"><input type="checkbox" checked disabled><span>폐기</span></label></div></div></div>']],
+      ['펼침', [cell('<div class="checkSelect"><div class="selected-text" role="button" tabindex="0" aria-haspopup="true" aria-expanded="true" aria-label="작업현황: 작업 중">작업 중</div><div class="options show" style="display:none"></div></div>'), '없음']],
     ]) + '<p class="sb-note" style="margin:8px 0 0">트리거 비활성 = 원래 select에 disabled를 붙이면 스크립트가 aria-disabled="true"를 붙이고, 트리거가 열리지 않습니다. 옵션 행 비활성 = 체크박스 비활성 + 흐린 글자이고, 고른 채 막힌 항목은 옅은 브랜드 바탕 없이 표시합니다. 펼치면 트리거 화살표가 위를 향합니다.</p>';
   },
 };
@@ -137,18 +137,18 @@ export const 전체_상태 = {
 // ── Playground ──
 export const Playground = {
   argTypes: {
-    name: { control: 'text', description: '필드 이름 — 트리거 · 옵션 묶음의 이름' },
+    name: { control: 'text', description: '필드 이름: 트리거 · 옵션 묶음의 이름' },
     items: { control: 'object', description: '옵션 목록' },
-    picked: { control: 'object', description: '선택한 값 — 체크박스 checked' },
-    search: { control: 'boolean', description: '검색 필드(선택 사항) — data-searchBox="true" → `.search-text`' },
-    open: { control: 'boolean', description: '펼침 — `.options.show`' },
+    picked: { control: 'object', description: '선택한 값: 체크박스 checked' },
+    search: { control: 'boolean', description: '검색 필드(선택 사항): data-searchBox="true" → `.search-text`' },
+    open: { control: 'boolean', description: '펼침: `.options.show`' },
   },
   args: { name: '작업현황', items: STATUS, picked: ['작업 중'], search: true, open: true },
   parameters: { docs: { source: { transform: (_, { args }) => box({ name: args.name, items: args.items || [], picked: args.picked || [], search: args.search, open: args.open }) } } },
   render: (a) => live(box({ name: a.name, items: a.items || [], picked: a.picked || [], search: a.search, open: a.open }), a.open ? 260 : 40),
 };
 
-// ── 시안 — A 첫 값 외 N(추천) · B 칸 아래 칩. B 는 실제 스크립트(js/multiselect.js data-display="chips")로 그림 ──
+// ── 시안: A 첫 값 외 N(추천) · B 칸 아래 칩. B 는 실제 스크립트(js/multiselect.js data-display="chips")로 그림 ──
 const SRC_CHIPS = '<label class="search-label" for="state-chips">작업현황</label>\n<select class="checkSelect" id="state-chips" multiple data-display="chips">\n' +
   STATUS.map((t, i) => '  <option' + (i < 3 ? ' selected' : '') + '>' + t + '</option>').join('\n') + '\n</select>';
 export const 시안_칸_아래_칩 = {

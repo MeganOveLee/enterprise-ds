@@ -1,4 +1,4 @@
-// 문서(MDX) 블록 — 페이지 머리 · 섹션 · 예시 카드. 모양은 .storybook/preview-head.html 의 .ds-* 규칙
+// 문서(MDX) 블록: 페이지 머리 · 섹션 · 예시 카드. 모양은 .storybook/preview-head.html 의 .ds-* 규칙
 // 카드 = 머리(제목 · 설명) + 미리보기(스토리) + 코드 보기(접힘). 제목이 없으면 머리를 그리지 않는다
 import React from 'react';
 import { Story, Source } from '@storybook/addon-docs/blocks';
@@ -14,7 +14,7 @@ export const PageHead = ({ eyebrow, title, lead, children }) =>
     lead ? h('p', { className: 'ds-lead' }, lead) : null,
     children);
 
-// 제목 옆 영어 라벨(en)은 그리지 않는다 — 제목을 영어로 되풀이하는 부연 설명이라서. mdx의 en 속성은 남겨 둔다
+// 제목 옆 영어 라벨(en)은 그리지 않는다: 제목을 영어로 되풀이하는 부연 설명이라서. mdx의 en 속성은 남겨 둔다
 export const Section = ({ title, desc, children }) =>
   h('section', { className: 'ds-sec' },
     h('h2', null, title),
@@ -32,13 +32,13 @@ export const Card = ({ of, title, desc, tag, basis, code = true, children }) =>
     children ? h('div', { className: 'ds-card__extra' }, children) : null,
     of && code ? h('details', { className: 'ds-card__code' }, h('summary', null, '코드 보기'), h(Source, { of })) : null);
 
-// 문서 안 도구 막대 — 화면 맨 위 Storybook 도구 막대와 같은 모양 · 같은 아이콘 · 같은 글자 · 같은 열림 목록.
+// 문서 안 도구 막대: 화면 맨 위 Storybook 도구 막대와 같은 모양 · 같은 아이콘 · 같은 글자 · 같은 열림 목록.
 // 값 = 실제 막대에서 잰 것(버튼 28 · 안쪽 0 7 · 모서리 4 · 바탕 rgba(0,109,235,.07) · 글자 12 굵게 rgb(0,85,184) · 아이콘 14,
 // 목록 180 · 안쪽 4 · 줄 32 · 모서리 6). 고르면 실제 막대 · 주소(URL)도 같이 바뀐다(updateGlobals)
-// 소개 한 곳에만 둔다 — 처음 온 사람에게 「여기를 눌러 보라」고 알리는 용도. 다른 문서는 맨 위 막대로 충분
+// 소개 한 곳에만 둔다: 처음 온 사람에게 「여기를 눌러 보라」고 알리는 용도. 다른 문서는 맨 위 막대로 충분
 // 막대 전체 = 맨 위 막대와 같은 줄: 왼쪽 격자 · 배경 · 윤곽선 아이콘, Figma · 구분선 · 브랜드 · 화면 모드, 오른쪽 끝 전체 화면. 폭은 미리보기 카드 전체
 const FIGMA_URL = 'https://www.figma.com/design/99ff5JQYQPCdY3xRBWHHlO/?node-id=8111-5';
-// 쓰는 기기 아이콘 — Storybook 아이콘 browser · mobile 그대로(맨 위 막대 preview.js 와 같은 모양)
+// 쓰는 기기 아이콘: Storybook 아이콘 browser · mobile 그대로(맨 위 막대 preview.js 와 같은 모양)
 const DEVICE = {
   web: 'M.5 13.004a.5.5 0 01-.5-.5v-11a.5.5 0 01.5-.5h13a.5.5 0 01.5.5v11a.5.5 0 01-.5.5H.5zm.5-1v-8h12v8H1zm1-9.5a.5.5 0 11-1 0 .5.5 0 011 0zm2 0a.5.5 0 11-1 0 .5.5 0 011 0zm2 0a.5.5 0 11-1 0 .5.5 0 011 0z',
   mobile: 'M3 1.504a1.5 1.5 0 011.5-1.5h5a1.5 1.5 0 011.5 1.5v11a1.5 1.5 0 01-1.5 1.5h-5a1.5 1.5 0 01-1.5-1.5v-11zm1 10.5v-10h6v10H4z',
@@ -48,7 +48,7 @@ const ICON = {   // Storybook 아이콘 paintbrush · mirror(.storybook/preview.
   brand: 'M11.854.146a.5.5 0 00-.708 0L2.983 8.31a2.24 2.24 0 00-1.074.6C.677 10.14.24 11.902.085 12.997 0 13.6 0 14 0 14s.4 0 1.002-.085c1.095-.155 2.857-.592 4.089-1.824a2.24 2.24 0 00.6-1.074l8.163-8.163a.5.5 0 000-.708l-2-2zM5.6 9.692l.942-.942L5.25 7.457l-.942.943A2.242 2.242 0 015.6 9.692zm1.649-1.65L12.793 2.5 11.5 1.207 5.957 6.75 7.25 8.043zM4.384 9.617a1.25 1.25 0 010 1.768c-.767.766-1.832 1.185-2.78 1.403-.17.04-.335.072-.49.098.027-.154.06-.318.099-.49.219-.947.637-2.012 1.403-2.779a1.25 1.25 0 011.768 0z',
   mode: 'M1 1.504a.5.5 0 01.5-.5h11a.5.5 0 01.5.5v11a.5.5 0 01-.5.5h-11a.5.5 0 01-.5-.5v-11zm1 10.5h10v-10l-10 10z',
 };
-// 맨 위 막대의 나머지 버튼(격자 · 배경 · 윤곽선 · 전체 화면) — 실제 막대에서 뽑은 Storybook 아이콘 그대로. 문서 안에서는 모양만(누르지 않음)
+// 맨 위 막대의 나머지 버튼(격자 · 배경 · 윤곽선 · 전체 화면): 실제 막대에서 뽑은 Storybook 아이콘 그대로. 문서 안에서는 모양만(누르지 않음)
 const DECO = {
   grid: ['M1 1.504a.5.5 0 01.5-.5H6a.5.5 0 01.5.5v4.5a.5.5 0 01-.5.5H1.5a.5.5 0 01-.5-.5v-4.5zm1 4v-3.5h3.5v3.5H2zM7.5 1.504a.5.5 0 01.5-.5h4.5a.5.5 0 01.5.5v4.5a.5.5 0 01-.5.5H8a.5.5 0 01-.5-.5v-4.5zm1 4v-3.5H12v3.5H8.5zM1.5 7.504a.5.5 0 00-.5.5v4.5a.5.5 0 00.5.5H6a.5.5 0 00.5-.5v-4.5a.5.5 0 00-.5-.5H1.5zm.5 1v3.5h3.5v-3.5H2zM7.5 8.004a.5.5 0 01.5-.5h4.5a.5.5 0 01.5.5v4.5a.5.5 0 01-.5.5H8a.5.5 0 01-.5-.5v-4.5zm1 4v-3.5H12v3.5H8.5z'],
   bg: ['M6.25 4.254a1.25 1.25 0 11-2.5 0 1.25 1.25 0 012.5 0zm-.5 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z', 'M13 1.504v11a.5.5 0 01-.5.5h-11a.5.5 0 01-.5-.5v-11a.5.5 0 01.5-.5h11a.5.5 0 01.5.5zM2 9.297V2.004h10v5.293L9.854 5.15a.5.5 0 00-.708 0L6.5 7.797 5.354 6.65a.5.5 0 00-.708 0L2 9.297zM9.5 6.21l2.5 2.5v3.293H2V10.71l3-3 3.146 3.146a.5.5 0 00.708-.707L7.207 8.504 9.5 6.21z'],
@@ -65,7 +65,7 @@ const readGlobals = () => {
   return { brand: c.contains('theme-mobility') ? 'mobility' : c.contains('theme-ootb') ? 'ootb' : 'default', mode: document.body.classList.contains('dark-mode') ? 'dark' : 'light' };
 };
 let selSeq = 0;
-// 처음 온 사람에게 「여기를 눌러 보세요」(:35 ④ 제안) — 한 번 누르면 다시 안 보임(다시 그려져도 · 새로 열어도)
+// 처음 온 사람에게 「여기를 눌러 보세요」(:35 ④ 제안): 한 번 누르면 다시 안 보임(다시 그려져도 · 새로 열어도)
 let hintSeen = (() => { try { return localStorage.getItem('eds-tb-hint') === '1'; } catch (e) { return false; } })();
 let refocus = null;   // 고른 뒤 문서가 다시 그려져도 키보드 포커스를 같은 버튼으로 되돌림(바디로 빠지지 않게)
 const ToolSelect = ({ tool, value, onPick }) => {
@@ -127,8 +127,8 @@ export const Toolbar = ({ figmaIcon }) => {
   return h('div', { className: 'ds-tbrow' }, bar);
 };
 
-// 소개 첫 화면 — 실제 화면 한 장 + 브랜드 버튼. 버튼은 맨 위 도구 막대와 같은 값을 바꾼다(updateGlobals).
-// 웹 화면이라 웹 브랜드만 둔다 — 모바일 브랜드는 모바일 화면이 생기면 같은 자리에 더한다
+// 소개 첫 화면: 실제 화면 한 장 + 브랜드 버튼. 버튼은 맨 위 도구 막대와 같은 값을 바꾼다(updateGlobals).
+// 웹 화면이라 웹 브랜드만 둔다: 모바일 브랜드는 모바일 화면이 생기면 같은 자리에 더한다
 // 버튼 색 = 각 브랜드 라이트 모드의 color-bg-brand · color-text-on-color(tokens/build/resolved.json). 클래스 규칙으로 한 번만 넣는다
 const brandSwatchCss = (brands) => brands.map(([v]) => {
   const t = resolved[v + '/light'] || {};

@@ -1,4 +1,4 @@
-// Foundation/Spacing · Radius · Size — 문서 화면은 Spacing.mdx. 여기 스토리는 MDX 카드 안에 들어가는 단계 표 (그림자는 Shadow.stories.js)
+// Foundation/Spacing · Radius · Size: 문서 화면은 Spacing.mdx. 여기 스토리는 MDX 카드 안에 들어가는 단계 표 (그림자는 Shadow.stories.js)
 import { mount } from './_foundation.js';
 
 export default {
@@ -26,28 +26,28 @@ export const 간격 = {
 };
 
 export const 모서리 = {
-  parameters: css(['/* 컴포넌트는 역할 이름을 쓴다 — 값은 단계를 가리키고, 브랜드 파일이 바꿀 수 있다 */', '.btn   { border-radius: var(--radius-btn); }    /* 기본 = var(--radius-md) */', '.input { border-radius: var(--radius-input); }  /* 기본 = var(--radius-sm) */', ':root.theme-ootb { --radius-btn: var(--radius-none); --radius-input: var(--radius-none); }']),
+  parameters: css(['/* 컴포넌트는 역할 이름을 쓴다: 값은 단계를 가리키고, 브랜드 파일이 바꿀 수 있다 */', '.btn   { border-radius: var(--radius-btn); }    /* 기본 = var(--radius-md) */', '.input { border-radius: var(--radius-input); }  /* 기본 = var(--radius-sm) */', ':root.theme-ootb { --radius-btn: var(--radius-none); --radius-input: var(--radius-none); }']),
   render: () => mount(`
-    <p class="fd-lead">단계 — 값 사전입니다. 모든 브랜드가 같은 값을 씁니다.</p>
+    <p class="fd-lead">단계: 값 사전입니다. 모든 브랜드가 같은 값을 씁니다.</p>
     <div class="fd-boxes">${[
-      ['none', '직각 — 브랜드가 역할을 0으로 둘 때'], ['sm', '입력 필드 · 체크박스 · 작은 표식의 기본'], ['md', '버튼 · 영역 · 팝오버의 기본'], ['lg', '카드의 기본'], ['rounded', '완전 둥근 모서리 — 칩 · 스위치'],
+      ['none', '직각: 브랜드가 역할을 0으로 둘 때'], ['sm', '입력 필드 · 체크박스 · 작은 표식의 기본'], ['md', '버튼 · 영역 · 팝오버의 기본'], ['lg', '카드의 기본'], ['rounded', '완전 둥근 모서리: 칩 · 스위치'],
     ].map(([n, use]) => `
       <div class="fd-item">
         <div class="fd-sw fd-box" style="border-radius:var(--radius-${n})"></div>
         <span class="fd-name">--radius-${n}</span><span class="fd-val" data-read="radius"></span>
         <span class="fd-val">${use}</span>
       </div>`).join('')}</div>
-    <p class="fd-lead" style="margin-top:32px">역할 — 컴포넌트는 역할 토큰 이름을 씁니다. 브랜드가 값을 바꿀 수 있습니다.</p>
+    <p class="fd-lead" style="margin-top:32px">역할: 컴포넌트는 역할 토큰 이름을 씁니다. 브랜드가 값을 바꿀 수 있습니다.</p>
     <div class="fd-row fd-head" style="padding-top:0;align-items:center"><span>토큰 · 기본 단계</span><span>지금 값</span><span>쓰는 곳</span></div>
     ${[
-      ['btn', 'md', '모든 버튼 — 표준 · 아이콘(닫기 · 페이지 번호 · 달력 화살표) · 작은 버튼'],
+      ['btn', 'md', '모든 버튼: 표준 · 아이콘(닫기 · 페이지 번호 · 달력 화살표) · 작은 버튼'],
       ['input', 'sm', '입력칸 · 셀렉트 · 여러 줄 입력 · 날짜 · 다중 선택'],
       ['checkbox', 'sm', '체크박스 표식'],
-      ['chip', 'rounded', '칩 — Status chip · 버전 표시'],
+      ['chip', 'rounded', '칩: Status chip · 버전 표시'],
       ['item', 'sm', '목록 · 메뉴 안의 행'],
       ['card', 'lg', '카드 · 스켈레톤 카드'],
-      ['panel', 'md', '화면 안 영역 박스 — 그리드 목록 · 검색 폼'],
-      ['popover', 'md', '팝오버 — 달력 · 드롭다운'],
+      ['panel', 'md', '화면 안 영역 박스: 그리드 목록 · 검색 폼'],
+      ['popover', 'md', '팝오버: 달력 · 드롭다운'],
       ['skeleton', 'sm', '스켈레톤 조각'],
     ].map(([n, base, use]) => `
       <div class="fd-row fd-item" style="align-items:center">
@@ -65,7 +65,7 @@ export const 높이 = {
   render: () => mount([
     ['size-input', '입력칸 · 셀렉트 · 날짜 선택입니다. 브랜드가 바꿀 수 있습니다'],
     ['size-btn', '버튼(입력칸과 같은 줄에 맞춥니다)과 아이콘 버튼의 가로세로입니다. 브랜드가 바꿀 수 있습니다'],
-    ['size-btn-sm', '작은 버튼 (Figma Small Button) — 섹션 접기 · 첨부 삭제'],
+    ['size-btn-sm', '작은 버튼 (Figma Small Button): 섹션 접기 · 첨부 삭제'],
   ].map(([n, use]) => `
     <div class="fd-row fd-item">
       <code>--${n}</code><span class="fd-val" data-read="height"></span>

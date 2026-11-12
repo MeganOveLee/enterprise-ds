@@ -1,4 +1,4 @@
-// Form/Button — 문서 화면은 Button.mdx. 여기 스토리는 MDX 카드 안에 들어가는 예시 표 · 전체 조합 · Playground
+// Form/Button: 문서 화면은 Button.mdx. 여기 스토리는 MDX 카드 안에 들어가는 예시 표 · 전체 조합 · Playground
 // 예시는 미리보기와 「코드 보기」가 같은 마크업 문자열을 쓴다 (코드 = 그대로 붙여 쓰는 마크업)
 import { matrix } from './_matrix.js';
 import { enablePseudo } from './_pseudo.js';
@@ -7,9 +7,9 @@ import './_mobile.css';
 
 const STAR = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.6 6.6 19.5l1.2-6-4.5-4.2 6.1-.7z"/></svg>';
 const X = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
-// 엑셀 내려받기 아이콘 — Figma Button Type=Excel 의 엑셀 그림과 같은 구성(X 칸 + 표 줄)을 선 아이콘으로. 상표 로고는 그리지 않음
+// 엑셀 내려받기 아이콘: Figma Button Type=Excel 의 엑셀 그림과 같은 구성(X 칸 + 표 줄)을 선 아이콘으로. 상표 로고는 그리지 않음
 const SHEET = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9l4 6M11 9l-4 6M14.5 9H18M14.5 12H18M14.5 15H18"/></svg>';
-// 처리 중 스피너 — 크기 · 색은 버튼이 정함(글자색 14, 아이콘만 있는 버튼 16)
+// 처리 중 스피너: 크기 · 색은 버튼이 정함(글자색 14, 아이콘만 있는 버튼 16)
 const SPIN = '<span class="spinner" aria-hidden="true"></span>';
 
 // 글자 버튼 한 줄
@@ -17,7 +17,7 @@ const btn = ({ label = '저장', emphasis = 'primary', shape = 'filled', disable
   '<button type="button" class="btn btn--' + emphasis + ' btn--' + shape + (loading ? ' is-loading' : '') + (extra ? ' ' + extra : '') + '"' +
   (disabled ? ' disabled' : '') + (loading ? ' aria-busy="true"' : '') + attrs + '>' +
   (loading ? SPIN : icon ? STAR : '') + (loading ? '처리 중' : label) + '</button>';
-// 아이콘만 있는 버튼 — 처리 중이면 아이콘 자리에 스피너
+// 아이콘만 있는 버튼: 처리 중이면 아이콘 자리에 스피너
 const iconBtn = ({ emphasis = 'secondary', shape = 'outlined', label = '닫기', glyph = X, extra = '', attrs = '', disabled = false, loading = false } = {}) =>
   '<button type="button" class="btn btn--' + emphasis + ' btn--' + shape + ' btn--icon' + (loading ? ' is-loading' : '') + (extra ? ' ' + extra : '') + '" aria-label="' + label + '"' +
   attrs + (disabled ? ' disabled' : '') + (loading ? ' aria-busy="true"' : '') + '>' + (loading ? SPIN : glyph) + '</button>';
@@ -41,11 +41,11 @@ export default {
   render: (args) => btn(args),
   argTypes: {
     label: { control: 'text', description: '버튼 글자' },
-    emphasis: { control: 'inline-radio', options: ['primary', 'secondary', 'destructive'], description: '중요도 — `.btn--{중요도}`' },
-    shape: { control: 'inline-radio', options: ['filled', 'outlined', 'transparent'], description: '모양 — `.btn--{모양}`' },
+    emphasis: { control: 'inline-radio', options: ['primary', 'secondary', 'destructive'], description: '중요도: `.btn--{중요도}`' },
+    shape: { control: 'inline-radio', options: ['filled', 'outlined', 'transparent'], description: '모양: `.btn--{모양}`' },
     icon: { control: 'boolean', description: '왼쪽 아이콘' },
-    disabled: { control: 'boolean', description: '비활성 — `disabled`' },
-    loading: { control: 'boolean', description: '처리 중 — `.is-loading` + `aria-busy="true"`' },
+    disabled: { control: 'boolean', description: '비활성: `disabled`' },
+    loading: { control: 'boolean', description: '처리 중: `.is-loading` + `aria-busy="true"`' },
   },
   args: { label: '저장', emphasis: 'primary', shape: 'filled', icon: false, disabled: false, loading: false },
   parameters: { docs: { source: { language: 'html' } } },
@@ -63,7 +63,7 @@ export const Basic = {
   render: () => '<div class="sb-row" style="justify-content:flex-end"><div class="button_group">' + BASIC.join('') + '</div></div>',
 };
 
-// 크기 — 작은 버튼 = Figma 「Small Button」(.btn--sm), 큰 버튼 = 큰 칸(.input--lg)과 짝(.btn--lg)
+// 크기: 작은 버튼 = Figma 「Small Button」(.btn--sm), 큰 버튼 = 큰 칸(.input--lg)과 짝(.btn--lg)
 const SIZE = [
   btn({ emphasis: 'secondary', shape: 'outlined', label: '조회', extra: 'btn--sm' }),
   btn({ emphasis: 'secondary', shape: 'outlined', label: '조회' }),
@@ -74,11 +74,11 @@ export const Size = {
   render: () => matrix(['작은 버튼', '기본', '큰 버튼'], [
     ['미리보기', SIZE],
     ['클래스', [code('.btn--sm'), note('클래스 없음'), code('.btn--lg')]],
-    ['쓰임', [note('좁은 자리 — 카드 머리 · 알림 닫기'), note('대부분의 버튼'), note('단독 폼의 주 동작 하나(로그인)<br>· 모바일 화면의 주 행동(호출)')]],
+    ['쓰임', [note('좁은 자리: 카드 머리 · 알림 닫기'), note('대부분의 버튼'), note('단독 폼의 주 동작 하나(로그인)<br>· 모바일 화면의 주 행동(호출)')]],
   ], { full: true }),
 };
 
-// 아래 고정 줄 (DS-ADR-049) — 같은 줄, 글자 길이만 다름. 한 줄에 안 들어가면 세로로 쌓임(폭 기준이 아님)
+// 아래 고정 줄 (DS-ADR-049): 같은 줄, 글자 길이만 다름. 한 줄에 안 들어가면 세로로 쌓임(폭 기준이 아님)
 const BAR = [
   '<div class="btn-bar"><button type="button" class="btn btn--secondary btn--outlined btn--lg">취소</button><button type="button" class="btn btn--primary btn--filled btn--lg">호출하기</button></div>',
   '<div class="btn-bar"><button type="button" class="btn btn--secondary btn--outlined btn--lg">다른 시간에 다시 부르기</button><button type="button" class="btn btn--primary btn--filled btn--lg">지금 바로 1명으로 부르기</button></div>',
@@ -94,7 +94,7 @@ export const Emphasis = {
   render: () => matrix(['primary', 'secondary', 'destructive'], [
     ['미리보기', EMPHASIS],
     ['클래스', [code('.btn--primary'), code('.btn--secondary'), code('.btn--destructive')]],
-    ['쓰임', [note('핵심 동작 — 등록 · 저장 · 확인<br>한 영역에 하나만'), note('보조 동작 — 조회 · 취소 · 닫기 · 초기화'), note('되돌릴 수 없는 동작 — 삭제')]],
+    ['쓰임', [note('핵심 동작: 등록 · 저장 · 확인<br>한 영역에 하나만'), note('보조 동작: 조회 · 취소 · 닫기 · 초기화'), note('되돌릴 수 없는 동작: 삭제')]],
   ], { full: true }),
 };
 
@@ -104,7 +104,7 @@ export const Style = {
   render: () => matrix(['filled', 'outlined', 'transparent'], [
     ['미리보기', STYLE],
     ['클래스', [code('.btn--filled'), code('.btn--outlined'), code('.btn--transparent')]],
-    ['쓰임', [note('가장 강하게 — 채운 면'), note('중간 — 테두리'), note('가장 약하게 — 글자만')]],
+    ['쓰임', [note('가장 강하게: 채운 면'), note('중간: 테두리'), note('가장 약하게: 글자만')]],
   ], { full: true }),
 };
 
@@ -214,15 +214,15 @@ export const AllStates = {
         rows.push([e + ' · ' + s, PS.map((p) => btn({ ...a, extra: p })).concat([btn({ ...a, disabled: true }), btn({ ...a, loading: true })])]);
       }
     }
-    // 엑셀 버튼 — 올림 · 누름은 전용 초록 단계, 포커스 · 비활성 · 처리 중은 다른 버튼과 같은 규칙
+    // 엑셀 버튼: 올림 · 누름은 전용 초록 단계, 포커스 · 비활성 · 처리 중은 다른 버튼과 같은 규칙
     const xl = (cls = '', dis = false, load = false) => '<button type="button" class="btn btn--excel' + (load ? ' is-loading' : '') + (cls ? ' ' + cls : '') + '"' + (dis ? ' disabled' : '') + (load ? ' aria-busy="true"' : '') + '>' + (load ? SPIN + '처리 중' : SHEET + 'Excel') + '</button>';
     rows.push(['excel', PS.map((p) => xl(p)).concat([xl('', true), xl('', false, true)])]);
     return matrix(STATES.concat(['Loading']), rows, { full: true });
   },
 };
 
-// 작은 버튼 · 큰 버튼 상태 — Figma Small Button(7가지 모양 × 6상태) · Button Size=Large(primary filled × 6상태)와 짝.
-// 작은 destructive 는 Figma에 filled 만 있지만 CSS는 세 모양 모두 됨 — 세 모양 모두 그림
+// 작은 버튼 · 큰 버튼 상태: Figma Small Button(7가지 모양 × 6상태) · Button Size=Large(primary filled × 6상태)와 짝.
+// 작은 destructive 는 Figma에 filled 만 있지만 CSS는 세 모양 모두 됨: 세 모양 모두 그림
 export const SizeStates = {
   parameters: html([
     btn({ emphasis: 'secondary', shape: 'outlined', label: '조회', extra: 'btn--sm' }),
@@ -256,13 +256,13 @@ export const IconStates = {
   ]),
   render: () => {
     enablePseudo();
-    const na = '<span class="sb-h">—</span>';
+    const na = '<span class="sb-h">없음</span>';
     // 아이콘만 있는 버튼 = Figma Icon Button(중요도 × 모양 × 6상태). 토글 · 접고 펴기에는 처리 중이 없음
     const set = (make, load = false) => PS.map((p) => make({ extra: p })).concat([make({ disabled: true }), load ? make({ loading: true }) : na]);
     const icon = [['primary', 'filled'], ['primary', 'outlined'], ['primary', 'transparent'], ['secondary', 'filled'], ['secondary', 'outlined'], ['secondary', 'transparent']]
       .map(([e, s]) => ['아이콘만<br>' + e + ' · ' + s, set((o) => iconBtn({ emphasis: e, shape: s, ...o }), true)]);
     const set5 = (make) => PS.map((p) => make({ extra: p })).concat([make({ disabled: true })]);
-    // 글자가 있는 접고 펴기 버튼(최소 폭 150)은 칸이 넓은 별도 표로 — 처리 중 열이 없음
+    // 글자가 있는 접고 펴기 버튼(최소 폭 150)은 칸이 넓은 별도 표로: 처리 중 열이 없음
     return matrix(STATES.concat(['Loading']), icon.concat([
       ['켜고 끄기 · 꺼짐', set((o) => toggleBtn({ on: false, ...o }))],
       ['켜고 끄기 · 켜짐', set((o) => toggleBtn({ on: true, ...o }))],
@@ -277,7 +277,7 @@ export const IconStates = {
 // ── Playground ──
 export const Playground = {};
 
-// ── 타일 버튼 — 아이콘 위 · 글자 아래. 큰 동작 몇 개를 나란히 고르게 둘 때 ──
+// ── 타일 버튼: 아이콘 위 · 글자 아래. 큰 동작 몇 개를 나란히 고르게 둘 때 ──
 const TILE_ICON = {
   doc: '<path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"/><path d="M14 3v5h5M12 12v6M9 15h6"/>',
   part: '<path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5"/>',

@@ -1,4 +1,4 @@
-// 문서 표 도우미 — 스토리 안에 그리는 설계표 · 토큰표 · 램프.
+// 문서 표 도우미: 스토리 안에 그리는 설계표 · 토큰표 · 램프.
 // 값 칸은 그려진 결과에서 읽어 온다 → 도구 막대에서 브랜드 · 모드를 바꾸면 미리보기와 값이 함께 바뀐다.
 // 여러 줄 템플릿 문자열 대신 문자열 이어 붙이기 (스토리북 색인기 오인 방지, _matrix.js와 같은 방식)
 import { toHex } from './_foundation.js';
@@ -43,7 +43,7 @@ function ensureStyle() {
   document.head.appendChild(s);
 }
 
-// 「복사」 버튼 — 페이지에 한 번만 건다
+// 「복사」 버튼: 페이지에 한 번만 건다
 if (typeof document !== 'undefined' && !window.__dtCopy) {
   window.__dtCopy = true;
   document.addEventListener('click', (e) => {
@@ -86,7 +86,7 @@ export function mountDoc(html) {
   return el;
 }
 
-// 토큰표 — 미리보기 · 토큰 · 쓰임 · 값 · 복사
+// 토큰표: 미리보기 · 토큰 · 쓰임 · 값 · 복사
 const SW = { bg: ['is-bg', 'background', 'bg'], text: ['is-text', 'color', 'color'], border: ['is-border', 'border-color', 'border'], icon: ['is-icon', 'color', 'color'] };
 export function tokenTable(kind, rows) {
   const [cls, prop, read] = SW[kind];
@@ -103,7 +103,7 @@ export function tokenTable(kind, rows) {
     '</tbody></table>');
 }
 
-// 램프 — 가족별 단계 타일. families: [{ name?, note?, prefix, steps }]
+// 램프: 가족별 단계 타일. families: [{ name?, note?, prefix, steps }]
 export function ramps(families) {
   return mountDoc(families.map((f) =>
     '<div class="dt-fam">' +
@@ -116,16 +116,16 @@ export function ramps(families) {
     '</div></div>').join(''));
 }
 
-// 설계표 — 항목 · 토큰 · 클래스 · 미리보기 · 값. rows: [{ name, en?, sub?, tokens?, preview?, probe?, live?, value? }]
-// live: READ 키 — 미리보기(또는 probe)의 [data-probe] 요소에서 실제 값을 읽는다
+// 설계표: 항목 · 토큰 · 클래스 · 미리보기 · 값. rows: [{ name, en?, sub?, tokens?, preview?, probe?, live?, value? }]
+// live: READ 키: 미리보기(또는 probe)의 [data-probe] 요소에서 실제 값을 읽는다
 export function specTable(rows) {
   return mountDoc(
     '<table class="dt"><thead><tr><th>항목</th><th>토큰 · 클래스</th><th>미리보기</th><th class="dt-c-val">값</th></tr></thead><tbody>' +
     rows.map((r) =>
       '<tr data-row>' +
       '<td><b>' + r.name + '</b>' + (r.en ? '<span class="dt-en">' + r.en + '</span>' : '') + (r.sub ? '<span class="dt-sub">' + r.sub + '</span>' : '') + '</td>' +
-      '<td>' + ((r.tokens && r.tokens.length) ? r.tokens.map((t) => '<code>' + t + '</code>').join('<br>') : '<span class="dt-dash">—</span>') + '</td>' +
-      '<td><div class="dt-prev">' + (r.preview || '<span class="dt-dash">—</span>') + (r.probe ? '<span class="dt-probe">' + r.probe + '</span>' : '') + '</div></td>' +
+      '<td>' + ((r.tokens && r.tokens.length) ? r.tokens.map((t) => '<code>' + t + '</code>').join('<br>') : '<span class="dt-dash">없음</span>') + '</td>' +
+      '<td><div class="dt-prev">' + (r.preview || '<span class="dt-dash">없음</span>') + (r.probe ? '<span class="dt-probe">' + r.probe + '</span>' : '') + '</div></td>' +
       '<td class="dt-val"' + (r.live ? ' data-live="' + r.live + '"' : '') + '>' + (r.value || '') + '</td>' +
       '</tr>').join('') +
     '</tbody></table>');

@@ -1,5 +1,5 @@
-// Feedback/Loading — 문서 화면은 Loading.mdx. 여기 스토리는 MDX 카드 안에 들어가는 예시 · Playground
-// 브랜드 로더 — 브랜드(제품)에 로고 로더가 있으면 마크 조각이 맞춰지는 로더(DS-ADR-043), 없으면 스피너 --lg (Mobility · OOTB)
+// Feedback/Loading: 문서 화면은 Loading.mdx. 여기 스토리는 MDX 카드 안에 들어가는 예시 · Playground
+// 브랜드 로더: 브랜드(제품)에 로고 로더가 있으면 마크 조각이 맞춰지는 로더(DS-ADR-043), 없으면 스피너 --lg (Mobility · OOTB)
 // 마크 = 가상 제품 마크(Screens 레일과 같은 모양)의 심볼 조각 다섯(_lnbicons.js MARK_PATHS)
 import { MARK_PATHS } from './_lnbicons.js';
 const MARK_PIECES = '<svg viewBox="0 0 130 129">' + MARK_PATHS.map((d, i) => '<path class="brand-loader__piece brand-loader__piece--' + (i + 1) + '" d="' + d + '"/>').join('') + '</svg>';
@@ -53,7 +53,7 @@ export const 영역_오버레이 = {
   </div>`,
 };
 
-// 스피너 ↔ 로고 로더 — 쓰는 곳이 다름. 로고 로더는 로고가 있는 브랜드(Default) 모양으로 그림
+// 스피너 ↔ 로고 로더: 쓰는 곳이 다름. 로고 로더는 로고가 있는 브랜드(Default) 모양으로 그림
 const fig = (inner, name, use) => `<div style="flex:1 1 280px;min-width:0;display:flex;flex-direction:column;gap:8px">${inner}
   <p style="margin:0;font-size:var(--body-sm);color:var(--color-text-base)"><b>${name}</b></p><p class="sb-note" style="margin:0">${use}</p></div>`;
 export const 스피너와_로고_로더 = {
@@ -86,7 +86,7 @@ export const 인라인 = {
 
 // ── Do · Don't (① ② ③) ── 미리보기만, 코드는 위 예시 카드에
 const ddArea = (inner, style = '') => `<div style="position:relative;flex:1;min-width:0;border:1px solid var(--color-border-base);border-radius:var(--radius-card);overflow:hidden;background:var(--color-bg-base)${style ? ';' + style : ''}">${inner}</div>`;
-// 작은 목록 화면 — 검색 조건 행 + 표. over = 'table'(표만 덮음) · 'page'(화면 전체를 덮음)
+// 작은 목록 화면: 검색 조건 행 + 표. over = 'table'(표만 덮음) · 'page'(화면 전체를 덮음)
 const miniPage = (over) => {
   const cover = `<div class="loading loading--overlay" role="status" aria-live="polite">${spin()}<p class="loading__text">다시 불러오는 중</p></div>`;
   return ddArea(`<div style="display:flex;align-items:center;gap:8px;padding:12px">
@@ -94,7 +94,7 @@ const miniPage = (over) => {
       <button type="button" class="btn btn--primary btn--filled">검색</button></div>
     <div style="position:relative;padding:0 12px 12px">${table()}${over === 'table' ? cover : ''}</div>${over === 'page' ? cover : ''}`);
 };
-// 카드 — 카드 제목 + 본문 로딩
+// 카드: 카드 제목 + 본문 로딩
 const ddCard = (inner) => ddArea(`<p style="margin:0;padding:12px 16px;border-bottom:1px solid var(--color-border-subtle);font-size:var(--body-md);font-weight:var(--font-weight-semibold);color:var(--color-text-base)">결재할 문서</p>
     <div class="loading" role="status" aria-live="polite" style="min-height:104px">${inner}</div>`);
 export const 사용_지침 = {
@@ -124,10 +124,10 @@ export const 사용_지침 = {
 // ── Playground ──
 export const Playground = {
   argTypes: {
-    size: { control: 'inline-radio', options: ['sm', '기본', 'lg'], description: '스피너 크기 — `.spinner--sm` 16 · 기본 24 · `.spinner--lg` 40' },
-    tone: { control: 'inline-radio', options: ['브랜드', 'neutral'], description: '색 — 기본 브랜드 · `.spinner--neutral` 회색' },
+    size: { control: 'inline-radio', options: ['sm', '기본', 'lg'], description: '스피너 크기: `.spinner--sm` 16 · 기본 24 · `.spinner--lg` 40' },
+    tone: { control: 'inline-radio', options: ['브랜드', 'neutral'], description: '색: 기본 브랜드 · `.spinner--neutral` 회색' },
     text: { control: 'text', description: '안내 문구 `.loading__text`(비우면 스피너와 화면 읽기용 숨김 글자만 둡니다)' },
-    cancel: { control: 'boolean', description: '취소 버튼 `.loading__actions` — 10초가 넘을 것 같을 때' },
+    cancel: { control: 'boolean', description: '취소 버튼 `.loading__actions`: 10초가 넘을 것 같을 때' },
   },
   args: { size: '기본', tone: '브랜드', text: '문서 목록을 불러오는 중입니다', cancel: false },
   render: (a) => '<div class="loading" role="status" aria-live="polite">' +

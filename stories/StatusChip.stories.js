@@ -1,4 +1,4 @@
-// Data Display/Status Chip — 문서 화면은 StatusChip.mdx. 색 = DS 상태 토큰(bg-*-subtle + text-*-bold)
+// Data Display/Status Chip: 문서 화면은 StatusChip.mdx. 색 = DS 상태 토큰(bg-*-subtle + text-*-bold)
 import { matrix } from './_matrix.js';
 import { doDont } from './_dodont.js';
 
@@ -15,13 +15,13 @@ export default {
 export const 작업_현황 = { render: () => row([chip('info', '작업 중'), chip('warning', '검토 중'), chip('success', '승인'), chip('danger', '반려'), chip('neutral', '폐기')]) };
 export const 진행_상태 = { render: () => row([chip('success', '완료'), chip('info', '진행 중'), chip('danger', '지연'), chip('neutral', '예정'), chip('warning', '승인 대기')]) };
 
-// ── 상태 색 — 상태마다 정의 · 클래스 · 토큰 ──
+// ── 상태 색: 상태마다 정의 · 클래스 · 토큰 ──
 const TONES = [
-  ['중립', 'neutral', '폐기', '진행하지 않는 상태 — 폐기 · 예정', 'bg-muted', 'text-muted'],
-  ['정보', 'info', '작업 중', '진행 중인 상태 — 작업 중 · 진행 중', 'bg-info-subtle', 'text-info-bold'],
-  ['성공', 'success', '승인', '끝난 상태 — 승인 · 완료', 'bg-success-subtle', 'text-success-bold'],
-  ['경고', 'warning', '검토 중', '확인을 기다리는 상태 — 검토 중 · 승인 대기', 'bg-warning-subtle', 'text-warning-bold'],
-  ['위험', 'danger', '반려', '문제가 생긴 상태 — 반려 · 지연', 'bg-danger-subtle', 'text-danger-bold'],
+  ['중립', 'neutral', '폐기', '진행하지 않는 상태: 폐기 · 예정', 'bg-muted', 'text-muted'],
+  ['정보', 'info', '작업 중', '진행 중인 상태: 작업 중 · 진행 중', 'bg-info-subtle', 'text-info-bold'],
+  ['성공', 'success', '승인', '끝난 상태: 승인 · 완료', 'bg-success-subtle', 'text-success-bold'],
+  ['경고', 'warning', '검토 중', '확인을 기다리는 상태: 검토 중 · 승인 대기', 'bg-warning-subtle', 'text-warning-bold'],
+  ['위험', 'danger', '반려', '문제가 생긴 상태: 반려 · 지연', 'bg-danger-subtle', 'text-danger-bold'],
 ];
 const note = (t) => '<span class="sb-note">' + t + '</span>';
 export const 전체_상태 = {
@@ -31,14 +31,14 @@ export const 전체_상태 = {
 // ── Playground ──
 export const Playground = {
   argTypes: {
-    tone: { control: 'inline-radio', options: ['neutral', 'info', 'success', 'warning', 'danger'], description: '상태 — `.status-chip--{상태}`' },
-    label: { control: 'text', description: '글자 — 짧은 상태 이름' },
+    tone: { control: 'inline-radio', options: ['neutral', 'info', 'success', 'warning', 'danger'], description: '상태: `.status-chip--{상태}`' },
+    label: { control: 'text', description: '글자: 짧은 상태 이름' },
   },
   args: { tone: 'info', label: '작업 중' },
   render: (a) => chip(a.tone, a.label),
 };
 
-// ── Do · Don't (① ②) — 미리보기만, 코드는 위 예시 카드에 ──
+// ── Do · Don't (① ②): 미리보기만, 코드는 위 예시 카드에 ──
 // ① 두 화면(검색 결과 · 홈 카드)에 같은 상태를 놓고 색만 비교
 const place = (name, chips) => '<div style="display:flex;align-items:center;gap:8px"><span class="sb-note" style="width:64px">' + name + '</span>' + chips.join('') + '</div>';
 const twoPlaces = (home) => '<div style="display:grid;gap:8px">' + place('검색 결과', [chip('success', '승인'), chip('danger', '반려'), chip('warning', '검토 중')]) + place('홈 카드', home) + '</div>';
@@ -49,7 +49,7 @@ export const 사용_지침 = {
     { title: '같은 상태는 모든 화면에서 같은 색으로 표시합니다',
       do: [twoPlaces([chip('success', '승인'), chip('danger', '반려'), chip('warning', '검토 중')]), '같은 상태 이름은 어느 화면에서나 같은 상태 색(승인 = success)을 씁니다.'],
       dont: [twoPlaces([chip('info', '승인'), chip('warning', '반려'), chip('neutral', '검토 중')]), '화면마다 같은 상태를 다른 색으로 표시하지 않습니다.'] },
-    // 근거:  ② · Playground 「글자 — 짧은 상태 이름」
+    // 근거:  ② · Playground 「글자: 짧은 상태 이름」
     { title: '상태 이름은 2~4자로 짧게 짓습니다',
       do: [row([chip('warning', '검토 중'), chip('success', '승인')]), '상태 이름은 2~4자로 짓습니다(예: 「검토 중」 「승인」).'],
       dont: [row([chip('warning', '검토 의견 반영 후 재상신 대기'), chip('success', '승인')]), '「검토 의견 반영 후 재상신 대기」처럼 문장형 글자를 칩에 넣지 않습니다.'] },
@@ -57,7 +57,7 @@ export const 사용_지침 = {
 };
 const optSrc = (code) => ({ controls: { disable: true }, docs: { source: { language: 'html', code } } });
 
-// ── 시안 — A 옅은 바탕(추천, 위 「작업 현황」) · B 점 + 글자 · C 진한 채움 ──
+// ── 시안: A 옅은 바탕(추천, 위 「작업 현황」) · B 점 + 글자 · C 진한 채움 ──
 const OPT_TONES = [['success', '승인'], ['warning', '결재 대기'], ['danger', '반려'], ['info', '작업 중']];
 const optChips = (cls) => '<div class="sb-row">' + OPT_TONES.map(([t, l]) => '<span class="status-chip status-chip--' + t + ' ' + cls + '">' + l + '</span>').join('') + '</div>';
 export const 시안_점_글자 = { parameters: optSrc(optChips('status-chip--dot')), render: () => optChips('status-chip--dot') };

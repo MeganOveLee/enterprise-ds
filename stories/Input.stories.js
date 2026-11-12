@@ -1,4 +1,4 @@
-// Form/Input — 문서 화면은 Input.mdx. 여기 스토리는 MDX 카드 안에 들어가는 예시 표 · 전체 상태 · Playground
+// Form/Input: 문서 화면은 Input.mdx. 여기 스토리는 MDX 카드 안에 들어가는 예시 표 · 전체 상태 · Playground
 import { matrix } from './_matrix.js';
 import { enablePseudo } from './_pseudo.js';
 import { doDont } from './_dodont.js';
@@ -27,10 +27,10 @@ export default {
   tags: ['!dev', '!autodocs'],   // 메뉴에는 문서 한 장만, 문서는 Input.mdx
   render: (args) => `<div style="max-width:280px">${field(args)}</div>`,
   argTypes: {
-    kind: { control: 'inline-radio', options: ['input', 'select', 'textarea'], description: '종류 — `.input` · `.select` · `.textarea`' },
-    state: { control: 'inline-radio', options: ['default', 'error', 'disabled', 'readonly'], description: '상태 — 오류 = `aria-invalid="true"`. 셀렉트에서 readonly를 고르면 readonly 텍스트 필드로 그립니다(셀렉트에는 readonly가 없습니다)' },
+    kind: { control: 'inline-radio', options: ['input', 'select', 'textarea'], description: '종류: `.input` · `.select` · `.textarea`' },
+    state: { control: 'inline-radio', options: ['default', 'error', 'disabled', 'readonly'], description: '상태: 오류 = `aria-invalid="true"`. 셀렉트에서 readonly를 고르면 readonly 텍스트 필드로 그립니다(셀렉트에는 readonly가 없습니다)' },
     value: { control: 'text', description: '값' },
-    placeholder: { control: 'text', description: 'placeholder — 입력 전 안내 글자' },
+    placeholder: { control: 'text', description: 'placeholder: 입력 전 안내 글자' },
   },
   args: { kind: 'input', state: 'default', value: '', placeholder: '부품 번호 입력' },
   parameters: { docs: { source: { language: 'html' } } },
@@ -47,7 +47,7 @@ export const Kind = {
   render: () => matrix(['한 줄 입력', '선택', '여러 줄 입력'], [
     ['미리보기', KIND],
     ['클래스', [code('.input'), code('.select'), code('.textarea')]],
-    ['쓰임', [note('글자 · 숫자를 직접 입력<br>부품 번호 · 이름 · 검색어'), note('정해진 목록에서 하나 선택<br>구분 · 상태'), note('여러 줄을 입력 — 사유 · 비고<br>기본 높이 180, rows를 주면 rows 값의 줄 수만큼 높아집니다<br>높이는 세로로만 늘릴 수 있습니다')]],
+    ['쓰임', [note('글자 · 숫자를 직접 입력<br>부품 번호 · 이름 · 검색어'), note('정해진 목록에서 하나 선택<br>구분 · 상태'), note('여러 줄을 입력: 사유 · 비고<br>기본 높이 180, rows를 주면 rows 값의 줄 수만큼 높아집니다<br>높이는 세로로만 늘릴 수 있습니다')]],
   ], { full: true }),
 };
 
@@ -55,7 +55,7 @@ const LOCKED = [
   field({ kind: 'input', state: 'disabled', value: 'BRK-20417', placeholder: '부품 번호' }),
   field({ kind: 'input', state: 'readonly', value: 'BRK-20417', placeholder: '부품 번호' }),
 ];
-// 라벨 — 칸 위에 붙는 글자 = .search-label (Figma 「Label」). 라벨 위 · 칸 아래 짝(.ff-field)을 폼 칸(.form-grid-2)에 놓음
+// 라벨: 칸 위에 붙는 글자 = .search-label (Figma 「Label」). 라벨 위 · 칸 아래 짝(.ff-field)을 폼 칸(.form-grid-2)에 놓음
 const LABEL = [
   '<div class="form-grid-2">',
   '  <div class="ff-field"><label class="search-label" for="in-docno">문서 번호</label><div class="td"><input class="input" id="in-docno"></div></div>',
@@ -67,7 +67,7 @@ export const Label = {
   render: () => '<div style="max-width:480px">' + LABEL.join('') + '</div>',
 };
 
-// 지우기(×) — 조회 조건 칸에 값이 있을 때만(DS-ADR-042). data-ds-clear 를 달면 js/clear.js 가 버튼을 붙임. 편집 폼 · 읽기 전용 칸에는 붙지 않음
+// 지우기(×): 조회 조건 칸에 값이 있을 때만(DS-ADR-042). data-ds-clear 를 달면 js/clear.js 가 버튼을 붙임. 편집 폼 · 읽기 전용 칸에는 붙지 않음
 const CLEAR = [
   '<div class="form-grid-2">',
   '  <div class="ff-field"><label class="search-label" for="in-clear-no">문서 번호</label><div class="td"><input class="input" id="in-clear-no" value="DOC-2610" data-ds-clear></div></div>',
@@ -85,13 +85,13 @@ export const Locked = {
     ['미리보기', LOCKED],
     ['속성', [code('disabled'), code('readonly')]],
     ['쓰임', [
-      note('지금 입력할 수 없는 필드 — 조건이 맞으면 활성<br>Tab 순서에서 빠지고, 값은 제출되지 않습니다'),
-      note('값을 표시만 하는 필드 — 상세 화면 · 결재가 끝난 문서<br>Tab으로 이동해 값을 복사할 수 있고, 값은 제출됩니다'),
+      note('지금 입력할 수 없는 필드: 조건이 맞으면 활성<br>Tab 순서에서 빠지고, 값은 제출되지 않습니다'),
+      note('값을 표시만 하는 필드: 상세 화면 · 결재가 끝난 문서<br>Tab으로 이동해 값을 복사할 수 있고, 값은 제출됩니다'),
     ]],
   ], { full: true }),
 };
 
-// ── 셀렉트 목록 — js/select.js 가 select 를 같은 목록(.ui-select)으로 바꿈. 왼쪽 = 눌러 보기, 오른쪽 = 열린 모습(정지 화면) ──
+// ── 셀렉트 목록: js/select.js 가 select 를 같은 목록(.ui-select)으로 바꿈. 왼쪽 = 눌러 보기, 오른쪽 = 열린 모습(정지 화면) ──
 const SEL_OPTS = ['전체', '작업 중', '검토 중', '승인', '반려'];
 const CHEV = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>';
 const openList = (id, pick, act) => '<div class="ui-select"><div class="ui-select__trigger is-open" role="combobox" tabindex="0" aria-haspopup="listbox" aria-expanded="true" aria-controls="' + id + '-list" aria-labelledby="' + id + '-lb" aria-activedescendant="' + id + '-opt-' + act + '">' +
@@ -105,7 +105,7 @@ const SEL_SRC = [
   '<label class="search-label" for="state">작업현황</label>',
   '<select class="select" id="state">' + SEL_OPTS.map((o) => '<option>' + o + '</option>').join('') + '</select>',
   '',
-  '<!-- 바뀐 뒤(스크립트가 그림) — 원래 select 는 숨어서 값 · 폼 제출 · change 를 그대로 맡음 -->',
+  '<!-- 바뀐 뒤(스크립트가 그림): 원래 select 는 숨어서 값 · 폼 제출 · change 를 그대로 맡음 -->',
   '<div class="ui-select">',
   '  <div class="ui-select__trigger" role="combobox" tabindex="0" aria-haspopup="listbox" aria-expanded="false" aria-controls="…-list" aria-labelledby="state-label">',
   '    <span class="ui-select__value">전체</span><span class="ui-select__chevron">…</span>',
@@ -135,7 +135,7 @@ export const 선택_목록 = {
 const ff = (label, ctl, id, req = false) => '<div class="form-grid-2" style="grid-template-columns:1fr;width:220px;text-align:left"><div class="ff-field"><label class="search-label" for="' + id + '">' + label + (req ? '<span class="required" aria-hidden="true"></span>' : '') + '</label><div class="td">' + ctl + '</div></div></div>';
 const one = (ctl) => '<div style="width:220px">' + ctl + '</div>';
 const pair = (a, b) => '<div style="display:grid;gap:12px">' + a + b + '</div>';
-// 라벨 글자에 별표 · (필수)를 직접 쓴 잘못된 예 — .required 없이
+// 라벨 글자에 별표 · (필수)를 직접 쓴 잘못된 예: .required 없이
 const rawLabel = (label, ctl, id) => '<div class="form-grid-2" style="grid-template-columns:1fr;width:220px;text-align:left"><div class="ff-field"><label class="search-label" for="' + id + '">' + label + '</label><div class="td">' + ctl + '</div></div></div>';
 export const 사용_지침 = {
   parameters: { controls: { disable: true } },
@@ -167,7 +167,7 @@ export const 사용_지침 = {
 export const 전체_상태 = {
   parameters: html([
     '<!-- Hovered · Focused 는 마우스 · 키보드에 따라 CSS가 표시한다 (클래스 불필요) -->',
-    '<!-- select는 readonly가 안 된다 — 값만 보여 줄 때는 readonly input -->',
+    '<!-- select는 readonly가 안 된다: 값만 보여 줄 때는 readonly input -->',
     field({ kind: 'input', state: 'error', value: 'BRK-20417', placeholder: '부품 번호 입력' }) + '   <!-- 오류 -->',
     field({ kind: 'input', state: 'disabled', value: 'BRK-20417', placeholder: '부품 번호 입력' }),
     field({ kind: 'input', state: 'readonly', value: 'BRK-20417', placeholder: '부품 번호 입력' }),
@@ -185,7 +185,7 @@ export const 전체_상태 = {
     // 열 = 종류. 큰 필드(.input--lg) = Figma Text Field Size=Large
     const kinds = ['input', 'lg', 'select', 'textarea'];
     const head = { input: '.input', lg: '.input.input--lg', select: '.select', textarea: '.textarea' };
-    const na = '<span class="sb-h">—</span>';
+    const na = '<span class="sb-h">없음</span>';
     const rows = st.map(([name, state, v, cls]) =>
       [name, kinds.map((k) => (k === 'select' && state === 'readonly' ? na
         : k === 'select' && cls ? trig(cls)
@@ -196,7 +196,7 @@ export const 전체_상태 = {
   },
 };
 
-// 셀렉트 옵션 행 상태 — Figma Option Type=Text(Selected × State)와 짝. 열린 목록 안 한 행만 정지 화면으로
+// 셀렉트 옵션 행 상태: Figma Option Type=Text(Selected × State)와 짝. 열린 목록 안 한 행만 정지 화면으로
 const optCell = (text, { cls = '', sel = false, dis = false } = {}) =>
   '<div class="ui-select__menu show" role="listbox" aria-label="옵션 상태 예시" style="position:static;box-shadow:none;width:200px;min-width:0;margin:0 auto;text-align:left">' +
   '<div class="ui-select__option' + (sel ? ' is-selected' : '') + (cls ? ' ' + cls : '') + '" role="option" aria-selected="' + sel + '"' + (dis ? ' aria-disabled="true"' : '') + '>' + text + '</div></div>';
@@ -221,7 +221,7 @@ export const 옵션_상태 = {
 // ── Playground ──
 export const Playground = {};
 
-// ── 시안 — A 윤곽 칸(추천) · B 채운 칸 · C 올라가는 라벨. 같은 두 칸(문서 번호 · 문서 분류)으로 비교 ──
+// ── 시안: A 윤곽 칸(추천) · B 채운 칸 · C 올라가는 라벨. 같은 두 칸(문서 번호 · 문서 분류)으로 비교 ──
 const optPair = (id, lab, ctl) => '  <div class="ff-field"><label class="search-label" for="' + id + '">' + lab + '</label><div class="td">' + ctl + '</div></div>';
 const KINDS2 = '<option>설계 문서</option><option>시험 문서</option><option>회의록</option>';
 const OPT_A = ['<div class="form-grid-2">',

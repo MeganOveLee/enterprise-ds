@@ -1,4 +1,4 @@
-// Foundation/Typography — 문서 화면은 Typography.mdx. 여기 스토리는 MDX 카드 안에 들어가는 단계 표
+// Foundation/Typography: 문서 화면은 Typography.mdx. 여기 스토리는 MDX 카드 안에 들어가는 단계 표
 import { mount } from './_foundation.js';
 
 const SAMPLE = '설계 변경 요청서 ECR-2026-0142';

@@ -1,4 +1,4 @@
-// Feedback/Toast — 문서 화면은 Toast.mdx. 여기 스토리는 MDX 카드 안에 들어가는 예시 · 전체 상태 · Playground
+// Feedback/Toast: 문서 화면은 Toast.mdx. 여기 스토리는 MDX 카드 안에 들어가는 예시 · 전체 상태 · Playground
 // 제품에서 .toast-region 은 화면 오른쪽 아래에 고정(position: fixed). 문서에서는 정해진 크기의 틀 오른쪽 아래에 그림
 import { matrix } from './_matrix.js';
 import { doDont } from './_dodont.js';
@@ -13,7 +13,7 @@ const I = {
   close: '<path d="m4.67 4.67 6.66 6.66m0-6.66-6.66 6.66"/>',
 };
 
-// 토스트 하나 — status: info · success · warning · danger. 위험만 role="alert"(나머지는 영역의 status 가 읽음). title = 선택(제목 줄)
+// 토스트 하나: status: info · success · warning · danger. 위험만 role="alert"(나머지는 영역의 status 가 읽음). title = 선택(제목 줄)
 const toast = ({ status = 'info', title = '', msg = '', action = '', close = true } = {}) =>
   '<div class="toast' + (status !== 'info' ? ' toast--' + status : '') + '"' + (status === 'danger' ? ' role="alert"' : '') + '>' +
   '<span class="toast__icon">' + svg(I[status]) + '</span>' +
@@ -21,7 +21,7 @@ const toast = ({ status = 'info', title = '', msg = '', action = '', close = tru
   (action ? '<button type="button" class="btn btn--secondary btn--transparent toast__action">' + action + '</button>' : '') +
   (close ? '<button type="button" class="btn btn--secondary btn--transparent btn--icon" aria-label="알림 닫기">' + svg(I.close) + '</button>' : '') +
   '</div>';
-// 화면 틀 — 회색 화면 오른쪽 아래에 영역(제품의 fixed 대신 틀 안 absolute)
+// 화면 틀: 회색 화면 오른쪽 아래에 영역(제품의 fixed 대신 틀 안 absolute)
 const stage = (items, h = 260) =>
   '<div style="position:relative;height:' + h + 'px;max-width:720px;background:var(--color-bg-subtle);border:1px solid var(--color-border-base);border-radius:var(--radius-card);overflow:hidden">' +
   '<div class="toast-region" role="status" style="position:absolute;right:16px;bottom:16px">' + items.join('') + '</div></div>';
@@ -73,7 +73,7 @@ export const 사용_지침 = {
         '여러 건을 한 번에 처리한 결과는 건수를 적은 토스트 하나로 알립니다.'],
       dont: [col(DOCS.map((n) => toast({ status: 'success', msg: n + ' 문서가 결재 요청되었습니다.' }))),
         '건마다 토스트를 띄우면 쌓여서 화면을 가리고 결과를 세기 어렵습니다.'] },
-    // ③ 한두 줄 — 사라지기 전에 읽을 수 있는 길이
+    // ③ 한두 줄: 사라지기 전에 읽을 수 있는 길이
     { title: '문장은 한두 줄로 적습니다',
       do: [col([toast({ status: 'success', msg: '저장되었습니다.' })]),
         '방금 한 동작의 결과만 한두 줄로 적습니다.'],
@@ -82,7 +82,7 @@ export const 사용_지침 = {
   ]),
 };
 
-// ── 전체 상태 — 행 = 상태, 열 = 구성 ──
+// ── 전체 상태: 행 = 상태, 열 = 구성 ──
 const STATES = [['정보', 'info'], ['성공', 'success'], ['경고', 'warning'], ['위험', 'danger']];
 export const 전체_상태 = {
   render: () => matrix(['문구 + 닫기', '제목 + 두 줄 문구 + 동작 버튼'],
@@ -95,10 +95,10 @@ export const 전체_상태 = {
 // ── Playground ──
 export const Playground = {
   argTypes: {
-    status: { control: 'inline-radio', options: ['info', 'success', 'warning', 'danger'], description: '상태 — `.toast--{상태}`(info는 기본이라 클래스가 없습니다). 아이콘 색만 바뀝니다' },
-    title: { control: 'text', description: '제목 — `.toast__title`(선택 사항입니다. 비우면 표시하지 않고, 있으면 `.toast__body`로 문구와 묶습니다)' },
-    msg: { control: 'text', description: '문구 — `.toast__msg`' },
-    action: { control: 'text', description: '동작 버튼 — `.btn.btn--secondary.btn--transparent.toast__action` (비우면 표시하지 않습니다)' },
+    status: { control: 'inline-radio', options: ['info', 'success', 'warning', 'danger'], description: '상태: `.toast--{상태}`(info는 기본이라 클래스가 없습니다). 아이콘 색만 바뀝니다' },
+    title: { control: 'text', description: '제목: `.toast__title`(선택 사항입니다. 비우면 표시하지 않고, 있으면 `.toast__body`로 문구와 묶습니다)' },
+    msg: { control: 'text', description: '문구: `.toast__msg`' },
+    action: { control: 'text', description: '동작 버튼: `.btn.btn--secondary.btn--transparent.toast__action` (비우면 표시하지 않습니다)' },
     close: { control: 'boolean', description: '닫기 버튼 (아이콘 버튼 28 + aria-label)' },
   },
   args: { status: 'success', title: '', msg: '저장되었습니다.', action: '', close: true },
@@ -106,7 +106,7 @@ export const Playground = {
 };
 const optSrc = (code) => ({ controls: { disable: true }, docs: { source: { language: 'html', code } } });
 
-// ── 시안 — A 오른쪽 아래(추천, 위 「저장 완료」) · B 아래 가운데 · C 위 가운데 ──
+// ── 시안: A 오른쪽 아래(추천, 위 「저장 완료」) · B 아래 가운데 · C 위 가운데 ──
 const optToast = (cls) => '<div class="toast-region ' + cls + '" role="region" aria-label="알림">' + toast({ status: 'success', msg: '문서를 저장했습니다.' }) + '</div>';
 export const 시안_아래_가운데 = { parameters: optSrc(optToast('toast-region--bottom')), render: () => '<div class="sb-frame sb-frame--short">' + optToast('toast-region--bottom') + '</div>' };
 export const 시안_위_가운데 = { parameters: optSrc(optToast('toast-region--top')), render: () => '<div class="sb-frame sb-frame--short">' + optToast('toast-region--top') + '</div>' };

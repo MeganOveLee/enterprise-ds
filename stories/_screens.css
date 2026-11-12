@@ -1,6 +1,6 @@
-/* Screens — 화면 예시 전용 보조 규칙 (stories/Screens.stories.js)
+/* Screens: 화면 예시 전용 보조 규칙 (stories/Screens.stories.js)
  * 화면은 DS 클래스(components.css)로 짜고, 여기에는 DS에 아직 컴포넌트가 없는 자리만 둔다.
- * 값은 전부 DS 토큰 — 고정 색 · 고정 모서리 없음. 브랜드 · 화면 모드를 그대로 따른다.
+ * 값은 전부 DS 토큰: 고정 색 · 고정 모서리 없음. 브랜드 · 화면 모드를 그대로 따른다.
  *   .scr-frame  실제 크기(1440 × 900)로 그린 화면을 칸 너비에 맞게 줄여 보여 주는 틀
  *   폴더 트리 · 산출물 구조 = DS .tree (구 .scr-tree). 메뉴 항목은 DS(.main-menu 항목 · .ui-submenu)
  *   검색 조건 6열 · 상세 값 4열 = DS .form-grid--6 · --4 (.form-grid-2 확장), 라디오 묶음 = DS .radio-group (구 .scr-radio-row)
@@ -27,11 +27,11 @@
   color: var(--color-text-base);
   font-size: var(--body-md);
 }
-.scr .main-layout { height: 100%; }   /* 제품은 100vh — 틀 안에서는 틀 높이 */
+.scr .main-layout { height: 100%; }   /* 제품은 100vh: 틀 안에서는 틀 높이 */
 .scr .main-menu,
 .scr .main-sub { height: 100%; }
 
-/* 상세 팝업 — 제품에서는 새 창. 여기서는 목록 화면 위에 띄운 창으로 */
+/* 상세 팝업: 제품에서는 새 창. 여기서는 목록 화면 위에 띄운 창으로 */
 .scr-dim { position: absolute; inset: 0; z-index: 5; background: color-mix(in srgb, var(--color-bg-subtle) 72%, transparent); }   /* 덮개 = .loading--overlay 와 같은 방식(시맨틱 바탕을 반투명으로) */
 .scr-window {
   position: absolute;
@@ -48,12 +48,12 @@
   border-color: var(--color-border-strong);
 }
 .scr-window .pop { height: 100%; min-width: 0; }
-/* 섹션 사이 간격은 섹션 머리(margin-top 12)가 맡는다 — gap 을 두면 머리와 내용 상자 사이가 벌어짐 */
+/* 섹션 사이 간격은 섹션 머리(margin-top 12)가 맡는다: gap 을 두면 머리와 내용 상자 사이가 벌어짐 */
 .scr-window .grid-table th { position: static; }
 
 
 
-/* 홈 대시보드 — 카드 · 카드 목록 · 빈 상태는 DS 그대로(.card · .card-grid · .card-list · .empty--card).
+/* 홈 대시보드: 카드 · 카드 목록 · 빈 상태는 DS 그대로(.card · .card-grid · .card-list · .empty--card).
  * 여기에는 DS에 아직 없는 자리만: 프로필 카드 · 숫자 카드 · 도넛 · 바로가기, 그리고 3열 배치 */
 .scr-home { display: grid; grid-template-rows: auto 1fr; gap: var(--spacing-16); height: 100%; }
 .scr .main-content:has(.scr-home) { padding: var(--spacing-24); }
@@ -62,7 +62,7 @@
 .scr-home__grid .card { min-width: 0; min-height: 0; overflow: hidden; display: flex; flex-direction: column; }
 .scr .card-title { font-size: var(--heading-sm); }
 
-/* 프로필 카드 — 브랜드 딥 패널(--color-bg-panel, 토큰 주석의 '홈 프로필 카드' 자리) */
+/* 프로필 카드: 브랜드 딥 패널(--color-bg-panel, 토큰 주석의 '홈 프로필 카드' 자리) */
 .scr-profile {
   display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-16);
   background: var(--color-bg-panel); border-color: var(--color-bg-panel); color: var(--color-text-on-panel);
@@ -91,8 +91,8 @@
 .scr-tile--warning { background: var(--color-bg-warning-subtle); color: var(--color-icon-warning); }
 .scr-tile--success { background: var(--color-bg-success-subtle); color: var(--color-icon-success); }
 
-/* 카드 목록 — 칩 칸은 DS 그대로 90px. 최근 데이터는 앞 칸이 파일 아이콘이라 좁게 */
-.scr .card-list li > a { padding-top: 10px; padding-bottom: 10px; }   /* 줄 = 링크 — 격자 · 여백은 a 가 가짐 */
+/* 카드 목록: 칩 칸은 DS 그대로 90px. 최근 데이터는 앞 칸이 파일 아이콘이라 좁게 */
+.scr .card-list li > a { padding-top: 10px; padding-bottom: 10px; }   /* 줄 = 링크: 격자 · 여백은 a 가 가짐 */
 .scr .card-list .status-chip { justify-self: start; }
 .scr .card-list.scr-recent li > a { grid-template-columns: 20px 1fr 84px; }
 .scr .card-list .file-icon { display: inline-flex; }
@@ -111,7 +111,7 @@
 .scr-legend b { font-weight: var(--font-weight-semibold); font-variant-numeric: tabular-nums; }
 .scr-legend span { text-align: right; font-size: var(--body-sm); color: var(--color-text-muted); font-variant-numeric: tabular-nums; }
 
-/* 바로가기 — 2열 타일 */
+/* 바로가기: 2열 타일 */
 .scr-shortcuts { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-8); }
 .scr-shortcuts a {
   display: flex; align-items: center; gap: var(--spacing-12); height: 60px; padding: 0 var(--spacing-12);
@@ -124,17 +124,17 @@
 .scr-shortcuts .scr-tile { width: 34px; height: 34px; }
 .scr-shortcuts .scr-tile svg { width: 18px; height: 18px; }
 
-/* 프로젝트 상세 — 틀 · 머리 · 섹션 토글 · 진행률 막대 · 왼쪽 패널은 DS(detail-page · left-grid) 그대로.
+/* 프로젝트 상세: 틀 · 머리 · 섹션 토글 · 진행률 막대 · 왼쪽 패널은 DS(detail-page · left-grid) 그대로.
  * 여기에는 DS에 없는 자리만: 산출물 트리(제품은 그리드 라이브러리의 트리) · 상세 값 4열 · 진행 현황 배치 */
 .scr .divide-detail-layout { min-height: 0; }
 .scr .left-panel { overflow: hidden; }
 .scr-wbs { flex: 1; min-height: 0; overflow: hidden; margin-top: var(--spacing-4); }
-.scr-detail { display: flex; flex-direction: column; gap: 0; min-height: 0; overflow-y: auto; padding: var(--spacing-4); }   /* 사방 4 — 스크롤 상자 가장자리 버튼의 포커스 번짐(3)이 잘리지 않게 (구: 오른쪽만 4). 틈 0 — 섹션 머리 · 내용이 한 상자로 붙도록(섹션 사이는 DS 카드 위 여백 12) */
+.scr-detail { display: flex; flex-direction: column; gap: 0; min-height: 0; overflow-y: auto; padding: var(--spacing-4); }   /* 사방 4: 스크롤 상자 가장자리 버튼의 포커스 번짐(3)이 잘리지 않게 (구: 오른쪽만 4). 틈 0: 섹션 머리 · 내용이 한 상자로 붙도록(섹션 사이는 DS 카드 위 여백 12) */
 .scr-detail .detail-header { margin-bottom: 0; }
 .scr-detail .detail-header__title .status-chip { margin-left: var(--spacing-4); }
 .scr .form-grid-2.scr-cols-4 .ff-readonly { color: var(--color-text-base); }
 
-/* 진행 현황 — 상태 블록 + 전체 막대 + 숫자 3개, 아래에 단계별 막대 */
+/* 진행 현황: 상태 블록 + 전체 막대 + 숫자 3개, 아래에 단계별 막대 */
 .scr-progress { display: flex; flex-direction: column; gap: var(--spacing-12); }
 .scr-progress__top { display: flex; align-items: center; gap: var(--spacing-24); padding-bottom: var(--spacing-12); border-bottom: 1px solid var(--color-border-base); }
 .scr-progress__lead { flex: 1; min-width: 0; gap: var(--spacing-24); }   /* 상태 표시 + 전체 진행률 = DS .progress-row (간격만 24) */
@@ -146,7 +146,7 @@
 .scr-kv div { display: flex; flex-direction: column; gap: 2px; }
 .scr-kv dt { font-size: var(--body-sm); color: var(--color-text-muted); }
 .scr-kv dd { margin: 0; font-size: var(--heading-sm); font-weight: var(--font-weight-semibold); color: var(--color-text-base); font-variant-numeric: tabular-nums; }
-.scr-kv dd.is-danger { color: var(--color-text-danger-bold); }   /* bg-subtle 위 4.5 이상 — danger(600)는 4.37 */
+.scr-kv dd.is-danger { color: var(--color-text-danger-bold); }   /* bg-subtle 위 4.5 이상: danger(600)는 4.37 */
 .scr-phases { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-8) var(--spacing-32); }
 .scr-phases li { display: grid; grid-template-columns: 64px 1fr 96px 52px; align-items: center; gap: var(--spacing-12); font-size: var(--body-sm); }
 .scr-phases__name { font-weight: var(--font-weight-medium); color: var(--color-text-base); }
@@ -157,7 +157,7 @@
 .scr-tasks .progress-bar { height: 14px; }
 .scr-tasks .progress-bar__label { font-size: var(--body-xs); }   /* 표 칸(30) 안 낮은 막대 옆 숫자 = 가장 작은 글자 토큰 (구 10) */
 
-/* 로그인 — 왼쪽 브랜드 딥 패널(--color-bg-panel) + 오른쪽 폼. 칸 · 체크박스 · 버튼은 DS 그대로.
+/* 로그인: 왼쪽 브랜드 딥 패널(--color-bg-panel) + 오른쪽 폼. 칸 · 체크박스 · 버튼은 DS 그대로.
  * 높이 44 = DS .input--lg · .btn--lg */
 .scr-login { display: grid; grid-template-columns: 600px 1fr; height: 100%; padding: var(--spacing-24); box-sizing: border-box; background: var(--color-bg-base); }
 .scr-login__panel {
@@ -188,16 +188,16 @@
 .scr .scr-login__submit { width: 100%; margin-top: var(--spacing-8); }   /* 높이 · 글자 = DS .btn--lg */
 .scr-login__copy { margin: var(--spacing-32) 0 0; text-align: center; font-size: var(--body-sm); color: var(--color-text-muted); }
 
-/* 상세 머리 상태 카드(보기 · 편집 중 · 잠김) — 문서용 배치. 머리 하나씩 흰 판에 */
+/* 상세 머리 상태 카드(보기 · 편집 중 · 잠김): 문서용 배치. 머리 하나씩 흰 판에 */
 .scr-states { display: grid; gap: var(--spacing-12); }
 .scr-state__label { margin: 0 0 var(--spacing-4); font-size: var(--body-sm); color: var(--color-text-muted); }
 .scr-state__box .detail-header { border-bottom: 0; padding-bottom: 0; }
 .scr-state__box { overflow: visible; background: var(--color-bg-base); border: 1px solid var(--color-border-base); border-radius: var(--radius-card); padding: var(--spacing-16); }
-/* 잠김 이유 — 제목 줄 안 흐린 작은 글자 + 자물쇠. 편집 버튼이 aria-describedby 로 이 문구를 읽음 */
+/* 잠김 이유: 제목 줄 안 흐린 작은 글자 + 자물쇠. 편집 버튼이 aria-describedby 로 이 문구를 읽음 */
 .scr-lock { display: inline-flex; align-items: center; gap: var(--spacing-4); margin-left: var(--spacing-8); font-size: var(--body-sm); color: var(--color-text-muted); white-space: nowrap; }
 .scr-lock svg { color: var(--color-icon-muted); }
 
-/* 화면 지도 — 화면마다 영역 상자. 색은 토큰이라 브랜드 · 화면 모드를 따름 (문서용 그림) */
+/* 화면 지도: 화면마다 영역 상자. 색은 토큰이라 브랜드 · 화면 모드를 따름 (문서용 그림) */
 .scr-maps { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: var(--spacing-16); }
 .scr-map { margin: 0; display: flex; flex-direction: column; gap: var(--spacing-8); }
 .scr-map figcaption { display: flex; flex-direction: column; gap: 2px; }
@@ -221,7 +221,7 @@
 .scr-map__r--focus { background: var(--color-bg-brand-subtle); color: var(--color-text-on-brand-subtle); }
 .scr-map__r--focus span { color: var(--color-text-on-brand-subtle); }
 
-/* 움직임 다시 보기 — 화면 그림 위 오른쪽. 무엇이 움직이는지 한 줄 + 버튼 */
+/* 움직임 다시 보기: 화면 그림 위 오른쪽. 무엇이 움직이는지 한 줄 + 버튼 */
 .scr-play { display: grid; gap: var(--spacing-8); }
 .scr-play__bar { display: flex; align-items: center; justify-content: flex-end; gap: var(--spacing-12); }
 .scr-play__note { font-size: var(--body-sm); color: var(--color-text-muted); }

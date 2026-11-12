@@ -1,4 +1,4 @@
-// Blocks/Transport Tile — 문서 화면은 TransportTile.mdx. 모바일 앱 전용 조합 (css/blocks/mobility.css)
+// Blocks/Transport Tile: 문서 화면은 TransportTile.mdx. 모바일 앱 전용 조합 (css/blocks/mobility.css)
 // 시안 A 큰 타일 하나(추천, 쉬운 화면) · B 격자 · C 줄 타일. 이름은 하는 일로, 그림은 DS 아이콘
 import { svg, I, phone, body } from './_mobile.js';
 

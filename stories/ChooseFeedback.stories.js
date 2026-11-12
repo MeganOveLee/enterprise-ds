@@ -1,4 +1,4 @@
-// Feedback/고르는 법 — 문서 화면은 ChooseFeedback.mdx. 피드백 컴포넌트의 표준 이름 · 정의 · 고르는 기준을 한 표로
+// Feedback/고르는 법: 문서 화면은 ChooseFeedback.mdx. 피드백 컴포넌트의 표준 이름 · 정의 · 고르는 기준을 한 표로
 // 이름 · 정의 = 공개 DS 문서(KRDS · Carbon · Polaris · Atlassian)의 표준 용어. 고르는 기준 = 언제 고르는지 + 대신 쓸 컴포넌트(쓰는 법은 각 문서의 Do · Don't)
 import { matrix } from './_matrix.js';
 import { emptyArt } from './_illustrations.js';

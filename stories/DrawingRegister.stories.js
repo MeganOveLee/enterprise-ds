@@ -1,4 +1,4 @@
-// Screens/Drawing Register — 문서 화면은 DrawingRegister.mdx. 도면 검색에서 여는 도면 등록 창 (Figma 🧱 Blocks 「Drawing Register」와 같은 구성)
+// Screens/Drawing Register: 문서 화면은 DrawingRegister.mdx. 도면 검색에서 여는 도면 등록 창 (Figma 🧱 Blocks 「Drawing Register」와 같은 구성)
 // 섹션 = 접는 섹션 상자(Accordion), 첨부 = 업로더(.resumable), 경로 = .ui-field-addon(읽기 전용 필드 + [선택])
 // 필드는 보여 주기용으로 5개만(경로 · 도면 명 영문/한글 · CAD 구분 · 제품군 + 설명)
 import { flow, shot, MARK, wireSections, toggleIcon } from './_flow.js';
@@ -20,7 +20,7 @@ const ck = (label, on = false) => '<label class="checkbox"><input type="checkbox
 const REQ = '<span class="required" aria-hidden="true"></span>';
 const iga = (t) => { const c = t.slice(-1).charCodeAt(0) - 0xac00; return c >= 0 && c < 11172 && c % 28 === 0 ? '가' : '이'; };   // 부품이 · 프로젝트가
 
-// ── 섹션 — 접는 섹션 상자(헤더 + 내용, 내용 id 를 토글이 aria-controls 로 가리킴). 등록 창 안이라 제목은 h4 ──
+// ── 섹션: 접는 섹션 상자(헤더 + 내용, 내용 id 를 토글이 aria-controls 로 가리킴). 등록 창 안이라 제목은 h4 ──
 const section = (u, key, title, body, { open = true, right = '', req = false } = {}) => {
   const id = u + '-' + key;
   return '<div class="seach_arm"><div class="leftbt"><button type="button" class="section-toggle" aria-expanded="' + open + '" aria-controls="' + id + '" aria-label="' + title + (open ? ' 접기' : ' 펼치기') + '">' +
@@ -28,7 +28,7 @@ const section = (u, key, title, body, { open = true, right = '', req = false } =
     body(id, open);
 };
 
-// ── 필드 — 라벨 위 · 필드 아래(.ff-field). err = 필드 아래 오류 문구(자리는 늘 비워 둠) ──
+// ── 필드: 라벨 위 · 필드 아래(.ff-field). err = 필드 아래 오류 문구(자리는 늘 비워 둠) ──
 const field = (u, key, label, control, { req = false, col2 = false, err = '' } = {}) => {
   const id = u + '-' + key;
   const ctl = control(id, (req ? ' aria-required="true"' : '') + (err ? ' aria-invalid="true" aria-describedby="' + id + '-err"' : '')) + (err ? '<span class="field-error-msg" id="' + id + '-err">' + err + '</span>' : '');
@@ -37,7 +37,7 @@ const field = (u, key, label, control, { req = false, col2 = false, err = '' } =
 const text = (value = '', ph = '') => (id, a) => '<input class="input" id="' + id + '"' + a + (value ? ' value="' + value + '"' : '') + (ph ? ' placeholder="' + ph + '"' : '') + '>';
 const pick = (opts, value = '') => (id, a) => '<select class="select" id="' + id + '"' + a + '><option value="">선택</option>' + opts.map((o) => '<option' + (o === value ? ' selected' : '') + '>' + o + '</option>').join('') + '</select>';
 
-// ── 업로더 — 바(안내 + [파일 선택]) + 끌어다 놓는 영역 + 파일 목록. one = 주 파일 하나(전체 삭제 없음) ──
+// ── 업로더: 바(안내 + [파일 선택]) + 끌어다 놓는 영역 + 파일 목록. one = 주 파일 하나(전체 삭제 없음) ──
 const uploader = (id, open, files, { one = false, err = '' } = {}) =>
   '<div class="resumable' + (err ? ' is-error' : '') + '" id="' + id + '"' + (open ? '' : ' hidden') + (err ? ' aria-describedby="' + id + '-err"' : '') + '><div class="resumable-bar">' +
   '<span class="resumable-help">' + (one ? '도면 파일 1개 · 100 MB까지(dwg · dxf · pdf)' : '여러 개 · 파일당 100 MB까지') + '</span>' +
@@ -47,7 +47,7 @@ const uploader = (id, open, files, { one = false, err = '' } = {}) =>
     '<button type="button" class="remove-btn" aria-label="' + n + ' 빼기">' + svg(I.close, 14) + '</button></li>').join('') + '</ul>' : '') +
   (err ? '<span class="field-error-msg" id="' + id + '-err">' + err + '</span>' : '') + '</div>';
 
-// ── 관련 객체 — 섹션 헤더 오른쪽 [추가] · [삭제] + 표. 비어 있으면 헤더 행 + 표 안 빈 상태(.empty) ──
+// ── 관련 객체: 섹션 헤더 오른쪽 [추가] · [삭제] + 표. 비어 있으면 헤더 행 + 표 안 빈 상태(.empty) ──
 const related = (what, head, rows) => (id, open) => '<div class="table_list" id="' + id + '"' + (open ? '' : ' hidden') + '><div class="list"><table class="grid-table" aria-label="관련 ' + what + '">' +
   '<colgroup><col style="width:44px">' + head.map((h, i) => '<col' + (i === 1 ? '' : ' style="width:' + (i === 0 ? 150 : 90) + 'px"') + '>').join('') + '</colgroup>' +
   '<thead><tr><th>' + ck('전체 선택') + '</th>' + head.map((h) => '<th>' + h + '</th>').join('') + '</tr></thead><tbody>' +
@@ -57,7 +57,7 @@ const related = (what, head, rows) => (id, open) => '<div class="table_list" id=
 const addDel = (what) => btn('추가', 'btn--secondary btn--outlined', { label: '관련 ' + what + ' 추가' }) + btn('삭제', 'btn--destructive btn--outlined', { label: '관련 ' + what + ' 삭제' });
 
 let uid = 0;
-// 등록 창 — errors = [저장]을 눌렀는데 필수 항목이 비었을 때
+// 등록 창: errors = [저장]을 눌렀는데 필수 항목이 비었을 때
 const pop = ({ errors = false } = {}) => {
   const u = 'dr' + (++uid);
   const E = (t) => (errors ? t : '');
@@ -88,7 +88,7 @@ const pop = ({ errors = false } = {}) => {
     '</div></div>';
 };
 
-// 기본 화면 — 도면 검색 결과 머리줄 + 표 앞부분. 누르는 곳 = [등록]
+// 기본 화면: 도면 검색 결과 머리줄 + 표 앞부분. 누르는 곳 = [등록]
 const DWG = [['DWG-BRK-20417', '캘리퍼 조립도', 'B.3', 'info', '작업 중', '김도윤', '2026-10-13'], ['DWG-BRK-20416', '캘리퍼 하우징 상세도', 'A.2', 'warning', '검토 중', '이서연', '2026-10-12'], ['DWG-BRK-20415', '패드 브래킷 상세도', 'C.1', 'success', '승인', '박지훈', '2026-10-08']];
 const list = () => '<div class="main-content"><div class="searchLayout"><div class="product">' +
   '<div class="seach_arm"><div class="leftbt">' + svg(I.list) + '<h4>검색 결과 (' + DWG.length + ')</h4></div><div class="rightbt">' +
@@ -100,7 +100,7 @@ const list = () => '<div class="main-content"><div class="searchLayout"><div cla
   '</tbody></table></div></div></div></div></div>';
 
 export default {
-  title: 'Screens/Drawing Register',   // 블록이 아니라 화면(등록 창) — 블록 이름은 UI 기능으로(검색 조건 · 결재선 · BOM 비교 표)
+  title: 'Screens/Drawing Register',   // 블록이 아니라 화면(등록 창): 블록 이름은 UI 기능으로(검색 조건 · 결재선 · BOM 비교 표)
   tags: ['!dev', '!autodocs'],   // 메뉴에는 문서 한 장만, 문서는 DrawingRegister.mdx
   parameters: { controls: { disable: true }, docs: { source: { language: 'html' } } },
 };
@@ -118,7 +118,7 @@ export const 필수_칸_비었을_때 = {
   render: () => wireSections(shot(pop({ errors: true }), 950, 1024)),
 };
 
-// ── Do · Don't (① ②) — 미리보기만 ──
+// ── Do · Don't (① ②): 미리보기만 ──
 const mini = (inner) => '<div style="width:100%;overflow:hidden;border:1px solid var(--color-border-base);border-radius:var(--radius-card)"><div class="pop" style="height:auto;min-width:0"><div class="contents">' + inner + '</div></div></div>';
 const two = (a, b) => '<div class="pro_table"><div class="form-grid-2">' + a + b + '</div></div>';
 const ddAlert = '<div class="alert alert--danger" role="status"><span class="alert__icon">' + svg(I.danger) + '</span><div class="alert__body"><strong class="alert__title">필수 항목을 모두 입력해 주십시오.</strong></div></div>';

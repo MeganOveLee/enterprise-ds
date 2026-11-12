@@ -1,8 +1,8 @@
-// Feedback/Alert — 문서 화면은 Alert.mdx. 여기 스토리는 MDX 카드 안에 들어가는 예시 · 전체 상태 · Playground
+// Feedback/Alert: 문서 화면은 Alert.mdx. 여기 스토리는 MDX 카드 안에 들어가는 예시 · 전체 상태 · Playground
 import { matrix } from './_matrix.js';
 import { doDont } from './_dodont.js';
 
-// 상태 아이콘 = Figma Icons 세트와 같은 모양(16 격자, 선 1) — info · check · alert-triangle · x-circle · x
+// 상태 아이콘 = Figma Icons 세트와 같은 모양(16 격자, 선 1): info · check · alert-triangle · x-circle · x
 const svg = (d) => '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + d + '</svg>';
 const I = {
   info: '<circle cx="8" cy="8" r="5.56"/><path d="M8 8v2.22M8 5.78h.01"/>',
@@ -14,7 +14,7 @@ const I = {
 const ICON = { info: 'info', success: 'success', warning: 'warning', danger: 'danger', brand: 'info', neutral: 'info' };   // 브랜드 · 중립은 정보 아이콘
 const ROLE = { danger: 'alert' };   // 바로 알려야 하는 것만 alert, 나머지는 status
 
-// 줄 하나 — status: info · success · warning · danger · brand · neutral. list = 설명 안 목록(여러 건)
+// 줄 하나: status: info · success · warning · danger · brand · neutral. list = 설명 안 목록(여러 건)
 const alert = ({ status = 'info', title = '', desc = '', list = null, close = false, plain = false } = {}) =>
   '<div class="alert' + (status !== 'info' ? ' alert--' + status : '') + (plain ? ' alert--plain' : '') + '" role="' + (ROLE[status] || 'status') + '">' +
   '<span class="alert__icon">' + svg(I[ICON[status]]) + '</span>' +
@@ -75,7 +75,7 @@ export const 사용_지침 = {
   ]),
 };
 
-// ── 전체 상태 — 행 = 상태, 열 = 모양 ── 오류(위험)에는 닫기 버튼을 두지 않음(Do · Don't ③)
+// ── 전체 상태: 행 = 상태, 열 = 모양 ── 오류(위험)에는 닫기 버튼을 두지 않음(Do · Don't ③)
 const STATES = [['정보', 'info'], ['성공', 'success'], ['경고', 'warning'], ['위험', 'danger'], ['브랜드', 'brand'], ['중립', 'neutral']];
 export const 전체_상태 = {
   render: () => matrix(['테두리 (기본)', '테두리 없음 (.alert--plain)', '설명 · 닫기'],
@@ -89,18 +89,18 @@ export const 전체_상태 = {
 // ── Playground ──
 export const Playground = {
   argTypes: {
-    status: { control: 'inline-radio', options: ['info', 'success', 'warning', 'danger', 'brand', 'neutral'], description: '상태 — `.alert--{상태}`(info는 기본이라 클래스가 없습니다). 위험에만 role="alert"를 붙입니다' },
-    plain: { control: 'boolean', description: '테두리 없음 — `.alert--plain`' },
-    title: { control: 'text', description: '제목 — `.alert__title` (16px SemiBold)' },
-    desc: { control: 'text', description: '설명 — `.alert__desc` (14px Regular, 비우면 표시하지 않습니다)' },
-    close: { control: 'boolean', description: '닫기 버튼 — `.alert__close` (아이콘 버튼 28 + aria-label). 위험에는 두지 않습니다' },
+    status: { control: 'inline-radio', options: ['info', 'success', 'warning', 'danger', 'brand', 'neutral'], description: '상태: `.alert--{상태}`(info는 기본이라 클래스가 없습니다). 위험에만 role="alert"를 붙입니다' },
+    plain: { control: 'boolean', description: '테두리 없음: `.alert--plain`' },
+    title: { control: 'text', description: '제목: `.alert__title` (16px SemiBold)' },
+    desc: { control: 'text', description: '설명: `.alert__desc` (14px Regular, 비우면 표시하지 않습니다)' },
+    close: { control: 'boolean', description: '닫기 버튼: `.alert__close` (아이콘 버튼 28 + aria-label). 위험에는 두지 않습니다' },
   },
   args: { status: 'info', plain: false, title: '검색 결과는 최근 1년 문서만 표시됩니다', desc: '기간을 바꾸면 이전 문서도 검색할 수 있습니다.', close: false },
   render: (a) => stack([alert(a)]),
 };
 const optSrc = (code) => ({ controls: { disable: true }, docs: { source: { language: 'html', code } } });
 
-// ── 시안 — A 옅은 바탕(추천, 위 「안내」) · B 왼쪽 띠 · C 맨 위 배너 ──
+// ── 시안: A 옅은 바탕(추천, 위 「안내」) · B 왼쪽 띠 · C 맨 위 배너 ──
 const optAlert = (cls) => alert({ status: 'warning', title: '결재선이 비어 있습니다', desc: '결재 요청 전에 결재자를 한 명 이상 지정하세요.' }).replace('class="alert', 'class="alert ' + cls);
 const optBanner = () => alert({ status: 'info', desc: '11월 9일(일) 02:00–04:00 시스템 점검으로 접속할 수 없습니다.', close: true }).replace('class="alert', 'class="alert alert--banner');
 export const 시안_왼쪽_띠 = { parameters: optSrc(optAlert('alert--stripe')), render: () => '<div class="sb-field--wide">' + optAlert('alert--stripe') + '</div>' };

@@ -1,4 +1,4 @@
-// Data Display/Badge — 문서 화면은 Badge.mdx. 표시만 하는 작은 알림(점 · 개수 · 글자) 
+// Data Display/Badge: 문서 화면은 Badge.mdx. 표시만 하는 작은 알림(점 · 개수 · 글자) 
 import { svg, I, phone, body } from './_mobile.js';
 
 const bellBtn = (label, badge) => '<span class="badge-anchor"><button type="button" class="btn btn--secondary btn--transparent btn--icon" aria-label="' + label + '">' + svg(I.bell) + '</button>' + badge + '</span>';

@@ -1,10 +1,10 @@
-// 그림 자산(DS-ADR-037) — 첨부 파일 형식 아이콘 · 폴더 트리 아이콘. 두 모양(솔리드 · 라인)을 함께 내고,
-// 어느 쪽이 보일지는 브랜드 파일 토큰(--art-solid · --art-line)이 정한다. 두 svg 모두 aria-hidden — 뜻은 옆 파일 이름 · 폴더 이름이 맡음
+// 그림 자산(DS-ADR-037): 첨부 파일 형식 아이콘 · 폴더 트리 아이콘. 두 모양(솔리드 · 라인)을 함께 내고,
+// 어느 쪽이 보일지는 브랜드 파일 토큰(--art-solid · --art-line)이 정한다. 두 svg 모두 aria-hidden: 뜻은 옆 파일 이름 · 폴더 이름이 맡음
 
 // ── 첨부 파일 형식 아이콘 ── 파일 이름(또는 확장자)을 받아 형식마다 색 + 형식 글자
 // 상세 창 첨부 목록(.file-download-list) · 등록 창 업로더(.resumable) · 홈 최근 문서가 같이 씀
 // 색은 DS .file-icon--<형식>(components.css). 표에 없는 형식 = 흐린 회색 FILE
-//   솔리드 = Figma 「solid/dwg · file · memo」와 같은 모양 — 색 종이(오른쪽 위 접힘) + 흰 줄 3개 + 아래 띠에 흰 형식 글자. 색 = --file-art · --file-art-band(형식별, components.css)
+//   솔리드 = Figma 「solid/dwg · file · memo」와 같은 모양: 색 종이(오른쪽 위 접힘) + 흰 줄 3개 + 아래 띠에 흰 형식 글자. 색 = --file-art · --file-art-band(형식별, components.css)
 //   라인   = Figma Icons 「file」 윤곽(아래는 열어 둠) + 아래에 형식 글자(형식 색)
 const TYPES = {
   pdf: ['pdf', 'PDF'],
@@ -29,7 +29,7 @@ const fileLine = (text) => '<svg class="ds-art__line" width="20" height="20" vie
   '<path d="M4.44 12V4.44a1.39 1.39 0 0 1 1.39-1.39h4.86l4.87 4.87V12M10.69 3.05v4.87h4.87" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>' +
   label(text, 10, 17.3, 'currentColor') + '</svg>';
 
-// label: 옆에 파일 이름이 없는 자리(목록 표 「파일」 열)에서 true — 형식 글자를 읽어 주는 이름(role="img")
+// label: 옆에 파일 이름이 없는 자리(목록 표 「파일」 열)에서 true: 형식 글자를 읽어 주는 이름(role="img")
 export const fileIcon = (name, { label = false } = {}) => {
   const ext = String(name).toLowerCase().split('.').pop();
   const [type, text] = TYPES[ext] || ['file', 'FILE'];
@@ -53,5 +53,5 @@ const folderLine = (open, s) => open
   ? '<svg class="ds-art__line" width="' + s + '" height="' + s + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="' + FOLDER_OPEN_LINE + '"/></svg>'
   : '<svg class="ds-art__line" width="' + s + '" height="' + s + '" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path fill-rule="evenodd" d="' + FOLDER_LINE + '" style="fill:currentColor"/></svg>';
 
-/** 폴더 트리 행의 아이콘 자리 — <span class="tree__icon ds-art"> + 솔리드 · 라인 */
+/** 폴더 트리 행의 아이콘 자리: <span class="tree__icon ds-art"> + 솔리드 · 라인 */
 export const folderIcon = (open = false, s = 16) => '<span class="tree__icon ds-art">' + folderSolid(open, s) + folderLine(open, s) + '</span>';

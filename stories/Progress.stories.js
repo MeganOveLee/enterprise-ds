@@ -1,11 +1,11 @@
-// Feedback/Progress — 문서 화면은 Progress.mdx. Figma 이름은 Progress bar, DS 클래스는 .progress-bar
+// Feedback/Progress: 문서 화면은 Progress.mdx. Figma 이름은 Progress bar, DS 클래스는 .progress-bar
 // 프로젝트 · 태스크의 진행률 막대(.progress-bar + .pbar-fill)와 상태 표시(.status-block = 막대 5개 + 상태 글자). 상태 5가지 = 완료 · 진행 · 지연 · 예정 · 보류
-// 상태 글자(완료 · 진행 중 …)는 CSS가 ::before 로 넣음 — 마크업은 비워 둠. 범례 점 색은 화면이 지정(클래스 없음)
+// 상태 글자(완료 · 진행 중 …)는 CSS가 ::before 로 넣음: 마크업은 비워 둠. 범례 점 색은 화면이 지정(클래스 없음)
 import { matrix } from './_matrix.js';
 import { doDont } from './_dodont.js';
 
 const svg = (d, s = 16) => '<svg width="' + s + '" height="' + s + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + d + '</svg>';
-const ST = {   // 상태 — 이름 · 범례 기호
+const ST = {   // 상태: 이름 · 범례 기호
   done: ['완료', '<path d="M5 12l4 4 10-10"/>'],
   progress: ['진행 중', '<path d="M9 6l6 6-6 6"/>'],
   delay: ['지연', '<path d="M12 6v7M12 17.5v.5"/>'],
@@ -14,7 +14,7 @@ const ST = {   // 상태 — 이름 · 범례 기호
 };
 const KEYS = Object.keys(ST);
 
-// 계획 표식이 있을 때 화면 읽기 문구 — 「진행률 58%, 계획 64%, 6%p 늦음」
+// 계획 표식이 있을 때 화면 읽기 문구: 「진행률 58%, 계획 64%, 6%p 늦음」
 const planText = (pct, plan) => '진행률 ' + pct + '%, 계획 ' + plan + '%, ' + (plan > pct ? (plan - pct) + '%p 늦음' : plan < pct ? (pct - plan) + '%p 빠름' : '계획대로');
 const bar = (k = 'progress', pct = 58, name = '전체', label = true, plan) =>
   '<div class="progress-bar progress-bar--' + k + '" role="progressbar" aria-label="' + name + ' 진행률" aria-valuenow="' + pct + '" aria-valuemin="0" aria-valuemax="100"' +
@@ -75,7 +75,7 @@ export const 사용_지침 = {
   ]),
 };
 
-// ── 전체 상태 — 상태 5가지 ──
+// ── 전체 상태: 상태 5가지 ──
 export const 전체_상태 = {
   parameters: { controls: { disable: true }, docs: { source: { language: 'html', code: '<!-- 상태 = .progress-bar--{done|progress|delay|plan|hold} · .status-block--{같은 이름} -->' } } },
   render: () => matrix(['상태 표시 (.status-block)', '진행률 막대 (.progress-bar)', '범례 점'],
@@ -89,11 +89,11 @@ export const 전체_상태 = {
 // ── Playground ──
 export const Playground = {
   argTypes: {
-    state: { control: 'inline-radio', options: KEYS, description: '상태 — `.progress-bar--{상태}` · `.status-block--{상태}`' },
-    value: { control: { type: 'range', min: 0, max: 100, step: 1 }, description: '진행률 — `.pbar-fill` 너비 · `aria-valuenow`' },
-    name: { control: 'text', description: '무엇의 진행률인지 — `aria-label="{이름} 진행률"`' },
-    label: { control: 'boolean', description: '막대 오른쪽 % 글자 — `.progress-bar__label`' },
-    withStatus: { control: 'boolean', description: '왼쪽 상태 표시 — `.status-block`(`.progress-row`로 묶습니다)' },
+    state: { control: 'inline-radio', options: KEYS, description: '상태: `.progress-bar--{상태}` · `.status-block--{상태}`' },
+    value: { control: { type: 'range', min: 0, max: 100, step: 1 }, description: '진행률: `.pbar-fill` 너비 · `aria-valuenow`' },
+    name: { control: 'text', description: '무엇의 진행률인지: `aria-label="{이름} 진행률"`' },
+    label: { control: 'boolean', description: '막대 오른쪽 % 글자: `.progress-bar__label`' },
+    withStatus: { control: 'boolean', description: '왼쪽 상태 표시: `.status-block`(`.progress-row`로 묶습니다)' },
   },
   args: { state: 'progress', value: 58, name: '전체', label: true, withStatus: true },
   parameters: { docs: { source: { transform: (_, { args: a }) => (a.withStatus ? row(a.state, a.value, a.name, a.label) : bar(a.state, a.value, a.name, a.label)) } } },
@@ -101,7 +101,7 @@ export const Playground = {
 };
 const optSrc = (code) => ({ controls: { disable: true }, docs: { source: { language: 'html', code } } });
 
-// ── 시안 — A 막대(추천, 위 「진행률 막대」) · C 원형 링. B 단계 목록은 위 「단계별 목록」 ──
+// ── 시안: A 막대(추천, 위 「진행률 막대」) · C 원형 링. B 단계 목록은 위 「단계별 목록」 ──
 const ring = (pct, label) => '<div class="progress-ring" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + pct + '" aria-label="' + label + '">' +
   '<svg viewBox="0 0 36 36" aria-hidden="true"><circle class="progress-ring__track" cx="18" cy="18" r="15.5" pathLength="100"/><circle class="progress-ring__value" cx="18" cy="18" r="15.5" pathLength="100" stroke-dasharray="' + pct + ' 100"/></svg>' +
   '<span class="progress-ring__label">' + pct + '%</span></div>';

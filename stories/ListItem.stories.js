@@ -1,4 +1,4 @@
-// Data Display/List Item — 문서 화면은 ListItem.mdx. 모바일 앱 목록 한 줄 (DS-ADR-049)
+// Data Display/List Item: 문서 화면은 ListItem.mdx. 모바일 앱 목록 한 줄 (DS-ADR-049)
 // 시안 A 구분선 행(추천) · B 묶음 카드 · C 행마다 카드 + 뒤 원형 동작 버튼 
 import { svg, solid, I, P, phone, body } from './_mobile.js';
 

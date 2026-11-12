@@ -1,12 +1,12 @@
-// Screens — DS 컴포넌트와 토큰으로 구성한 PLM 업무 화면 (실제 크기 1440 × 900, 가상 데이터). 화면 배치만 _screens.css
+// Screens: DS 컴포넌트와 토큰으로 구성한 PLM 업무 화면 (실제 크기 1440 × 900, 가상 데이터). 화면 배치만 _screens.css
 // 문서 화면은 Screens.mdx. 도구 막대의 브랜드 · 화면 모드를 그대로 따른다.
 // 로그인 = 브랜드 패널 + 폼 / 대시보드 = LNB 레일 + GNB + 카드
 // 목록 = LNB 레일 + LNB 서브 패널(메뉴 · 폴더 트리) + GNB + 검색 폼 + 목록
 // 상세 = LNB 레일 + GNB + 왼쪽 산출물 구조 패널 + 오른쪽 상세(섹션 · 진행률)
-// 마크업은 문자열 이어 붙이기 — 스토리북 색인기가 여러 줄 HTML 템플릿을 MDX로 잘못 읽는 일을 피함
+// 마크업은 문자열 이어 붙이기: 스토리북 색인기가 여러 줄 HTML 템플릿을 MDX로 잘못 읽는 일을 피함
 import './_screens.css';
 import { wireSearchDetail, EXPAND_LABEL } from './_search.js';
-import './_flow.css';   // .flow-mark — 카드 제목이 가리키는 곳 점선
+import './_flow.css';   // .flow-mark: 카드 제목이 가리키는 곳 점선
 import { fileIcon, folderIcon } from './_fileicon.js';
 import { emptyArt } from './_illustrations.js';
 import { lnbMask, lnbSvg, lnbLogo } from './_lnbicons.js';
@@ -61,7 +61,7 @@ const ROWS = [
   ['DOC-2609-0002', '모터 마운트 진동 시험 계획서', 'C.1', '검토', '최하은', '2026-09-17', '최하은', '2026-09-18'],
   ['DOC-2609-0001', '설계 검토 회의록 양식', 'A.1', '승인', '정우진', '2026-09-15', '정우진', '2026-09-15'],
 ];
-// 「파일」 열 첨부 형식 — 줄마다 다른 형식(문서 성격에 맞춤). 최근 문서(RECENT)와 같은 문서는 같은 형식
+// 「파일」 열 첨부 형식: 줄마다 다른 형식(문서 성격에 맞춤). 최근 문서(RECENT)와 같은 문서는 같은 형식
 const FILE_EXT = ['pdf', 'docx', 'pdf', 'pdf', 'xlsx', 'zip', 'pdf', 'dwg', 'pdf', 'pdf', 'xlsx', 'pptx', 'docx'];
 
 const chip = (k) => '<span class="status-chip status-chip--' + STATUS[k][0] + '">' + STATUS[k][1] + '</span>';
@@ -74,7 +74,7 @@ const range = (label, a = '', b = '', extra = '') =>
 const CLR = ' data-ds-clear';   // 조회 조건 칸 = 값이 있으면 지우기(×) (DS-ADR-042)
 const btn = (t, cls, icon = '') => '<button type="button" class="btn ' + cls + '">' + (icon ? svg(icon, 14) : '') + t + '</button>';
 const sel = (label, opts, pick) => '<select class="select" aria-label="' + label + '">' + opts.map((o) => '<option' + (o === pick ? ' selected' : '') + '>' + o + '</option>').join('') + '</select>';
-// 라벨 위 · 칸 아래 — 검색 폼 · 등록 폼이 같은 짝 (.ff-field > .search-label + .td)
+// 라벨 위 · 칸 아래: 검색 폼 · 등록 폼이 같은 짝 (.ff-field > .search-label + .td)
 const field = (label, control, { req = false, span = 0, id = '', cls = '' } = {}) =>
   '<div class="ff-field' + (span ? ' span-' + span : '') + (cls ? ' ' + cls : '') + '">' +
   '<label class="search-label"' + (id ? ' for="' + id + '"' : '') + '>' + label + (req ? '<span class="required" aria-hidden="true"></span>' : '') + '</label>' +
@@ -119,8 +119,8 @@ const gnb = (crumbs = ['Home', '문서 관리', '문서 검색']) =>
   '</div></header>';
 
 // ── 검색 조건 · 결과 ──
-// 검색 조건 — 대표 조건 1줄 + [상세 검색] 펼침 
-// 1줄 = 문서 분류 · 문서 번호 · 문서 명 · 작업현황 · 등록일(기간 2칸) — 6열 칸 폭에 5항목. 펼치면 버전 · 등록자 · 수정자 · 수정일
+// 검색 조건: 대표 조건 1줄 + [상세 검색] 펼침 
+// 1줄 = 문서 분류 · 문서 번호 · 문서 명 · 작업현황 · 등록일(기간 2칸): 6열 칸 폭에 5항목. 펼치면 버전 · 등록자 · 수정자 · 수정일
 // 접혀 있을 때 숨은 조건에 값이 있으면 버튼에 개수(이 화면은 등록자 · 수정일에 값 → 2)
 let searchUid = 0;
 // mark = 문서 그림에서 카드 제목이 가리키는 곳에 점선(.flow-mark, Blocks 「누르는 곳 점선」과 같은 표기). 코드 보기에는 넣지 않음
@@ -146,8 +146,8 @@ const searchForm = ({ open = false, mark = false } = {}) => {
   '</div></div></div>';
 };
 
-// 페이지네이션 — 기본 목록 화면에는 두지 않음(페이지를 나누면 다음 페이지 데이터가 검색 조건 · 정렬에 걸리지 않아서).
-// 「페이지네이션을 둔 문서 검색」 화면에만 둠 — 검색 · 정렬을 전체 결과에 먼저 하고 페이지를 나누는 경우
+// 페이지네이션: 기본 목록 화면에는 두지 않음(페이지를 나누면 다음 페이지 데이터가 검색 조건 · 정렬에 걸리지 않아서).
+// 「페이지네이션을 둔 문서 검색」 화면에만 둠: 검색 · 정렬을 전체 결과에 먼저 하고 페이지를 나누는 경우
 const pager = (mark = false) =>
   '<nav class="ui-pagination' + (mark ? ' flow-mark' : '') + '" aria-label="페이지 이동">' +
   '<button type="button" class="ui-pagination__btn ui-pagination__btn--nav is-disabled" aria-label="이전 페이지">' + svg(I.prev, 14) + '</button>' +
@@ -159,7 +159,7 @@ const pager = (mark = false) =>
 const grid = ({ paging = false, mark = false } = {}) =>
   '<div class="seach_arm"><div class="leftbt">' + svg(I.list, 16) + '<h4>검색 결과 (' + ROWS.length + '/' + (paging ? 128 : ROWS.length) + ')</h4>' +
   sel('한 페이지에 보일 개수', ['20', '50', '100']) + '</div>' +
-  // [선택 일괄 결재] 아이콘 없음 — 이전 버전 캡처(03 · 06 · 07) 그대로. ✓ 아이콘은 근거 없이 넣었던 것
+  // [선택 일괄 결재] 아이콘 없음: 이전 버전 캡처(03 · 06 · 07) 그대로. ✓ 아이콘은 근거 없이 넣었던 것
   '<div class="rightbt">' + btn('선택 일괄 결재', 'btn--primary btn--filled') +
   '<button type="button" class="btn btn--excel">' + svg(I.excel, 14) + 'Excel</button>' +
   btn('필터 초기화', 'btn--secondary btn--transparent', I.reset) + '</div></div>' +
@@ -181,13 +181,13 @@ const listScreen = ({ paging = false, open = false, mark = false } = {}) =>
   '<div class="main-content"><div class="searchLayout"><div class="product">' + searchForm({ open, mark: mark && open }) + grid({ paging, mark: mark && paging }) + '</div></div></div>' +
   '</div></div></div></div></div>';
 
-// ── 등록 창 — 제품에서는 새 창(.pop). 여기서는 목록 위에 띄운 창 ──
-// 섹션 머리 — DS .pop .seach_arm(바탕 없는 제목줄) + .section-toggle. 펼침 = 빼기, 접힘 = 더하기
+// ── 등록 창: 제품에서는 새 창(.pop). 여기서는 목록 위에 띄운 창 ──
+// 섹션 머리: DS .pop .seach_arm(바탕 없는 제목줄) + .section-toggle. 펼침 = 빼기, 접힘 = 더하기
 const section = (title, open = true, right = '') =>
   '<div class="seach_arm scr-sec"><div class="leftbt"><button type="button" class="section-toggle" aria-expanded="' + open + '" aria-label="' + title + (open ? ' 접기' : ' 펼치기') + '">' +
   svg(open ? I.minus : I.plus, 16) + '</button><h4>' + title + '</h4></div>' + (right ? '<div class="rightbt">' + right + '</div>' : '') + '</div>';
 
-// 첨부 — 파일 형식 아이콘은 _fileicon.js(상세 창 첨부 목록과 같은 것)
+// 첨부: 파일 형식 아이콘은 _fileicon.js(상세 창 첨부 목록과 같은 것)
 const FILES = [
   ['BRK-20417_조립사양_B2.pdf', 'pdf', '1.8 MB'],
   ['체결토크_시험결과.xlsx', 'xlsx', '96 KB'],
@@ -224,7 +224,7 @@ const registerPop = () =>
   section('첨부 파일') + uploader() +
   '</div></div>';
 
-// ── 대시보드 — LNB 서브 패널 없음. 위 = 인사 카드 + 숫자 카드 3, 아래 = .card-grid 3열 × 2행 ──
+// ── 대시보드: LNB 서브 패널 없음. 위 = 인사 카드 + 숫자 카드 3, 아래 = .card-grid 3열 × 2행 ──
 const more = (t = '전체 보기') => '<a href="#" class="card-more">' + t + '</a>';
 const cardHead = (title, count, right = '') =>
   '<div class="card-header"><h2 class="card-title">' + title + (count !== undefined ? '<span class="card-title-count">' + count + '</span>' : '') + '</h2>' + right + '</div>';
@@ -243,7 +243,7 @@ const stat = ([icon, tone, label, n, unit]) =>
   '<div><p class="scr-stat__label">' + label + '</p><p class="scr-stat__num">' + n + '<span>' + unit + '</span></p></div></div>' +
   more('자세히 보기') + '</section>';
 
-// 내 업무 구성 — 도넛. 차트 색 토큰이 DS에 아직 없어서 아이콘 신호색을 빌려 씀
+// 내 업무 구성: 도넛. 차트 색 토큰이 DS에 아직 없어서 아이콘 신호색을 빌려 씀
 const MIX = [['문서', 12, '--color-icon-brand'], ['도면', 8, '--color-icon-success'], ['부품', 5, '--color-icon-warning'], ['설계 변경', 3, '--color-icon-muted']];
 const donut = () => {
   const total = MIX.reduce((a, m) => a + m[1], 0);
@@ -253,13 +253,13 @@ const donut = () => {
     const a = '<circle cx="21" cy="21" r="15.915" fill="none" stroke-width="5" stroke-dasharray="' + (p - 0.8).toFixed(2) + ' ' + (100 - p + 0.8).toFixed(2) + '" stroke-dashoffset="' + (25 - at).toFixed(2) + '" style="stroke:var(' + tok + ')"/>';
     at += p; return a;
   }).join('');
-  return '<div class="scr-donut"><svg viewBox="0 0 42 42" width="148" height="148" role="img" aria-label="내 업무 ' + total + '건 — ' + MIX.map((m) => m[0] + ' ' + m[1]).join(', ') + '">' +
+  return '<div class="scr-donut"><svg viewBox="0 0 42 42" width="148" height="148" role="img" aria-label="내 업무 ' + total + '건: ' + MIX.map((m) => m[0] + ' ' + m[1]).join(', ') + '">' +
     '<circle cx="21" cy="21" r="15.915" fill="none" stroke-width="5" style="stroke:var(--color-bg-muted)"/>' + arcs + '</svg>' +
     '<div class="scr-donut__center"><b>' + total + '</b><span>전체</span></div></div>' +
     '<ul class="scr-legend">' + MIX.map(([t, n, tok]) => '<li><i style="background:var(' + tok + ')"></i>' + t + '<b>' + n + '</b><span>' + Math.round(n / total * 100) + '%</span></li>').join('') + '</ul>';
 };
 const APPROVALS = [['검토', '결재 대기', '하우징 재질 변경 검토 보고서', '10-13'], ['검토', '결재 대기', '모터 마운트 진동 시험 계획서', '10-12'], ['승인', '승인', '브래킷 체결 토크 시험 성적서', '10-09'], ['반려', '반려', '실링 고무 경도 측정 결과', '10-08'], ['승인', '승인', '방열판 핀 간격 해석 자료', '10-07']];
-const TASKS = [['danger', '1일 지남', '캘리퍼 조립 사양 검토 — BRK-20417', '10-12'], ['warning', 'D-1', '하우징 재질 변경 승인 요청', '10-14'], ['info', 'D-3', '방열판 핀 간격 해석 보완', '10-16'], ['neutral', 'D-7', '양산 이관 체크리스트 작성', '10-20'], ['neutral', 'D-9', '센서 브래킷 형상 재검토', '10-22']];
+const TASKS = [['danger', '1일 지남', '캘리퍼 조립 사양 검토: BRK-20417', '10-12'], ['warning', 'D-1', '하우징 재질 변경 승인 요청', '10-14'], ['info', 'D-3', '방열판 핀 간격 해석 보완', '10-16'], ['neutral', 'D-7', '양산 이관 체크리스트 작성', '10-20'], ['neutral', 'D-9', '센서 브래킷 형상 재검토', '10-22']];
 const RECENT = [['pdf', 'DOC-2610-0013 브레이크 캘리퍼 조립 사양서', '10-13'], ['dwg', 'DWG-BRK-20417 캘리퍼 조립도', '10-13'], ['xlsx', '체결 토크 시험 결과 집계', '10-12'], ['docx', '설계 검토 회의록 10월 2주', '10-10'], ['pdf', 'DOC-2610-0010 브래킷 체결 토크 시험 성적서', '10-09']];
 const SHORTCUTS = [['doc', '문서 등록'], ['drawing', '도면 등록'], ['part', '부품 검색'], ['change', '설계 변경 요청'], ['project', '프로젝트 현황'], ['inbox', '결재함']];
 const li = (lead, title, date) => '<li><a href="#">' + lead + '<span class="item-title">' + title + '</span><span class="item-date">' + date + '</span></a></li>';
@@ -285,9 +285,9 @@ const homeScreen = () =>
   '<div class="main-content">' + homeBody() + '</div>' +
   '</div></div></div></div></div>';
 
-// ── 프로젝트 상세 — 왼쪽 산출물 구조(WBS) 패널 + 오른쪽 상세. DS detail-page 컴포넌트를 그대로 씀 ──
+// ── 프로젝트 상세: 왼쪽 산출물 구조(WBS) 패널 + 오른쪽 상세. DS detail-page 컴포넌트를 그대로 씀 ──
 // .divide-detail-layout > .left-panel(.left-actions · .left-legend · .left-search) + .right-panel(.detail-header · .section-toggle · .progress-bar)
-const PS = {   // 진행 상태 — 글자 · 진행률 막대 · 상태 칩 · 범례 기호
+const PS = {   // 진행 상태: 글자 · 진행률 막대 · 상태 칩 · 범례 기호
   done: ['완료', 'success', '<path d="M5 12l4 4 10-10"/>'],
   progress: ['진행 중', 'info', '<path d="M9 6l6 6-6 6"/>'],
   delay: ['지연', 'danger', '<path d="M12 6v7M12 17.5v.5"/>'],
@@ -295,7 +295,7 @@ const PS = {   // 진행 상태 — 글자 · 진행률 막대 · 상태 칩 · 
   hold: ['보류', 'warning', '<path d="M9 7v10M15 7v10"/>'],
 };
 const pchip = (k) => '<span class="status-chip status-chip--' + PS[k][1] + '">' + PS[k][0] + '</span>';
-// 계획 표식이 있을 때 화면 읽기 문구 — 「진행률 58%, 계획 64%, 6%p 늦음」
+// 계획 표식이 있을 때 화면 읽기 문구: 「진행률 58%, 계획 64%, 6%p 늦음」
 const planText = (pct, plan) => '진행률 ' + pct + '%, 계획 ' + plan + '%, ' + (plan > pct ? (plan - pct) + '%p 늦음' : plan < pct ? (pct - plan) + '%p 빠름' : '계획대로');
 const pbar = (k, pct, name, label = true, plan) => '<div class="progress-bar progress-bar--' + k + '" role="progressbar" aria-label="' + name + ' 진행률" aria-valuenow="' + pct + '" aria-valuemin="0" aria-valuemax="100"' +
   (plan === undefined ? '' : ' aria-valuetext="' + planText(pct, plan) + '"') + '>' +
@@ -322,12 +322,12 @@ const leftPanel = () =>
     '<span class="output-row"><span class="output-dot" style="background:var(--color-progress-' + k + '-end)" title="' + PS[k][0] + '"></span><span class="output-label">' + t + '</span></span></li>').join('') +
   '</ul></aside>';
 
-// 섹션 머리 — DS .seach_arm + .section-toggle (등록 창과 같은 토글). 펼침 = 빼기, 접힘 = 더하기
+// 섹션 머리: DS .seach_arm + .section-toggle (등록 창과 같은 토글). 펼침 = 빼기, 접힘 = 더하기
 const dsec = (title, open = true, right = '') =>
   '<div class="seach_arm"><div class="leftbt"><button type="button" class="section-toggle" aria-expanded="' + open + '" aria-label="' + title + (open ? ' 접기' : ' 펼치기') + '">' +
   svg(open ? I.minus : I.plus, 16) + '</button><h3>' + title + '</h3></div>' + (right ? '<div class="rightbt">' + right + '</div>' : '') + '</div>';
 const ro = (label, value, span = 0) => field(label, '<div class="ff-readonly">' + value + '</div>', { span });
-// 단계 — 이름 · 상태 · 실적 % · 기간 · 계획 %(기준일 10-13). 계획 0이면 표식 없음
+// 단계: 이름 · 상태 · 실적 % · 기간 · 계획 %(기준일 10-13). 계획 0이면 표식 없음
 const PHASES = [['기획', 'done', 100, '07-01 ~ 07-31', 100], ['설계', 'progress', 72, '08-01 ~ 10-24', 87], ['시작품', 'delay', 25, '09-22 ~ 11-07', 46], ['검증', 'plan', 0, '11-10 ~ 12-05', 0], ['양산 이관', 'hold', 0, '12-08 ~ 12-18', 0]];
 const TASK_ROWS = [
   ['조립 도면 작성', '설계', '김도윤', '2026-10-17', '', 70, 'progress'],
@@ -348,7 +348,7 @@ const detailBody = () =>
   ro('계획 기간', '2026-07-01 ~ 2026-12-18', 2) + ro('실적 시작일', '2026-07-03') + ro('관리 등급', 'A · 중점 관리') +
   '</div></div>' +
   dsec('진행 현황', true, '<span class="section-meta"><span class="progress-plan-key" aria-hidden="true"></span>계획 · 기준 2026-10-13</span>') +
-  // 상태 표시 + 전체 진행률을 DS .progress-row 하나로 — 지연이면 막대 5개와 진행률 막대가 같은 박자로 뜀(Foundation › Motion 견본과 같은 마크업)
+  // 상태 표시 + 전체 진행률을 DS .progress-row 하나로: 지연이면 막대 5개와 진행률 막대가 같은 박자로 뜀(Foundation › Motion 견본과 같은 마크업)
   '<div class="pro_table scr-progress"><div class="scr-progress__top"><div class="progress-row scr-progress__lead">' +
   '<div class="status-block status-block--delay"><div class="status-segments status-segments--delay" aria-hidden="true">' + '<span class="status-segments__bar"></span>'.repeat(5) + '</div><span class="status-text"></span></div>' +
   '<div class="scr-progress__main"><div class="scr-progress__meta"><b>전체 진행률</b><span>계획 64% · 실적 58% · <em>6%p 늦음</em></span></div>' +
@@ -361,7 +361,7 @@ const detailBody = () =>
   '<col style="width:48px"><col><col style="width:80px"><col style="width:84px"><col style="width:104px"><col style="width:104px"><col style="width:150px"><col style="width:84px"></colgroup>' +
   '<thead><tr><th>No.</th><th>태스크</th><th>단계</th><th>담당자</th><th>계획 종료</th><th>실적 종료</th><th>진행률</th><th>상태</th></tr></thead><tbody>' +
   TASK_ROWS.map((r, i) => '<tr' + (i === 0 ? ' class="is-selected"' : '') + '><td>' + (i + 1) + '</td><td class="is-left"><a href="#" class="grid-link">' + r[0] + '</a></td>' +
-    '<td>' + r[1] + '</td><td>' + r[2] + '</td><td>' + r[3] + '</td><td>' + (r[4] || '—') + '</td>' +
+    '<td>' + r[1] + '</td><td>' + r[2] + '</td><td>' + r[3] + '</td><td>' + (r[4] || '없음') + '</td>' +
     '<td>' + pbar(r[6], r[5], r[0]) + '</td><td>' + pchip(r[6]) + '</td></tr>').join('') +
   '</tbody></table></div></div>' +
   dsec('산출물 문서', false, '<span class="section-meta">14건</span>') +
@@ -372,8 +372,8 @@ const detailScreen = () =>
   '<div class="main-content">' + detailBody() + '</div>' +
   '</div></div></div></div></div>';
 
-// ── 로그인 — 왼쪽 브랜드 패널(딥 패널 + 분자 그림) + 오른쪽 로그인 폼. 메뉴 · 상단 바 없음 ──
-// 그림은 직접 그린 SVG — 색은 패널 위 글자 토큰을 옅게 써서 브랜드 · 모드를 따라감. 사진 · 고객사 로고 · 연락처는 쓰지 않음
+// ── 로그인: 왼쪽 브랜드 패널(딥 패널 + 분자 그림) + 오른쪽 로그인 폼. 메뉴 · 상단 바 없음 ──
+// 그림은 직접 그린 SVG: 색은 패널 위 글자 토큰을 옅게 써서 브랜드 · 모드를 따라감. 사진 · 고객사 로고 · 연락처는 쓰지 않음
 const ORB = (cx, cy, r) =>
   '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="url(#scr-orb)" stroke-width="1.5" style="stroke:var(--color-text-on-panel);stroke-opacity:.22"/>' +
   '<ellipse cx="' + (cx - r * 0.35) + '" cy="' + (cy - r * 0.4) + '" rx="' + (r * 0.28) + '" ry="' + (r * 0.16) + '" transform="rotate(-30 ' + (cx - r * 0.35) + ' ' + (cy - r * 0.4) + ')" style="fill:var(--color-text-on-panel);fill-opacity:.18"/>';
@@ -406,7 +406,7 @@ const loginScreen = () =>
   '<div class="scr-login__field"><label for="scr-login-id">아이디</label><input class="input input--lg" id="scr-login-id" autocomplete="username" placeholder="사번 또는 ID 입력"></div>' +
   '<div class="scr-login__field"><label for="scr-login-pw">비밀번호</label><input class="input input--lg" id="scr-login-pw" type="password" autocomplete="current-password" placeholder="비밀번호 입력"></div>' +
   '<label class="checkbox"><input type="checkbox">아이디 저장</label>' +
-  '<button type="button" class="btn btn--primary btn--filled btn--lg scr-login__submit">로그인</button>' +   // 예시 화면 — 제출 없음
+  '<button type="button" class="btn btn--primary btn--filled btn--lg scr-login__submit">로그인</button>' +   // 예시 화면: 제출 없음
   '</div><p class="scr-login__copy">© 2026 Enterprise PLM · 가상 화면</p></div></main></div>';
 
 // 실제 크기로 그린 화면을 칸 너비에 맞게 줄여 보여 준다 (1보다 크게 키우지 않음)
@@ -424,7 +424,7 @@ const src = (code) => ({ controls: { disable: true }, docs: { source: { language
 
 // ── 움직임 다시 보기 ── 인터랙션(Foundation › Interaction)을 화면 안에서 실제 쓰임으로
 // 화면이 처음 보일 때 한 번 저절로, 그 뒤에는 화면 위 [움직임 다시 보기] 또는 화면 안 버튼을 누르면 다시. 동작 줄이기 설정이면 결과만(motion.js)
-const busy = (b, text, after) => {   // 버튼 처리 중(스피너) → 끝나면 after — Motion 「처리 끝 체크」와 같은 순서
+const busy = (b, text, after) => {   // 버튼 처리 중(스피너) → 끝나면 after: Motion 「처리 끝 체크」와 같은 순서
   if (b.classList.contains('is-loading') || b.classList.contains('is-done')) return;
   const html = b.innerHTML;
   b.style.minWidth = b.offsetWidth + 'px';
@@ -433,7 +433,7 @@ const busy = (b, text, after) => {   // 버튼 처리 중(스피너) → 끝나�
   setTimeout(() => { b.innerHTML = html; after(); }, window.dsMotion && window.dsMotion.reducedMotion() ? 0 : 900);
 };
 const byText = (root, text) => [...root.querySelectorAll('.btn')].find((x) => x.textContent.trim() === text);
-// 문서 검색 — 체크한 문서(둘째 줄)를 [선택 일괄 결재] → 처리 중 → 상태 칩 검토 → 승인(상태 칩 전환) + 그 줄 한 번 표시(방금 바뀐 행) + 버튼 「✓ 결재됨」
+// 문서 검색: 체크한 문서(둘째 줄)를 [선택 일괄 결재] → 처리 중 → 상태 칩 검토 → 승인(상태 칩 전환) + 그 줄 한 번 표시(방금 바뀐 행) + 버튼 「✓ 결재됨」
 const playApprove = (root) => {
   const M = window.dsMotion, b = byText(root, '선택 일괄 결재'), tr = root.querySelectorAll('.grid-table tbody tr')[1];
   if (!M || !b || !tr) return;
@@ -442,7 +442,7 @@ const playApprove = (root) => {
   set('검토');
   busy(b, '결재 중', () => { set('승인'); M.pop(c); M.flash(tr); M.done(b, { text: '결재됨', message: 'DOC-2610-0012 1건을 승인했습니다.' }); });
 };
-// 문서 등록 — [임시 저장] → 처리 중 → 「✓ 저장됨」(처리 끝 체크)
+// 문서 등록: [임시 저장] → 처리 중 → 「✓ 저장됨」(처리 끝 체크)
 const playSave = (root) => {
   const M = window.dsMotion, b = byText(root, '임시 저장');
   if (!M || !b) return;
@@ -488,7 +488,7 @@ const MAPS = [
     R('rail', 1, '', '', 'nav') + R('tree', 13, '산출물 패널', '트리 · 상태 점', 'nav') + R('top', 3, 'GNB', '', 'bar') +
     R('head', 14, '상세 헤더', 'Button · Status Chip') + R('sec', 15, '접는 섹션', 'Accordion · Progress · Table', 'focus')],
 ];
-// 번호별 클래스 · 토큰 — 지도 번호와 같은 번호(1 · 2 · 3 은 여러 화면에 공통)
+// 번호별 클래스 · 토큰: 지도 번호와 같은 번호(1 · 2 · 3 은 여러 화면에 공통)
 const c = (t) => '<code>' + t + '</code>';
 const mu = (t) => '<span class="ds-muted">' + t + '</span>';
 const lk = (t, path) => '<a class="ds-link" href="./?path=/docs/' + path + '" target="_top">' + t + '</a>';
@@ -519,7 +519,7 @@ export const 화면_지도 = {
     ANATOMY.map(([no, name, cls, desc]) => '<tr><td><i class="scr-map__no">' + no + '</i></td><td><b>' + name + '</b></td><td>' + cls + '</td><td>' + desc + '</td></tr>').join('') + '</tbody></table>',
 };
 
-// ── 상세 머리 — 보기 · 편집 중 · 잠김 (반영 5 · 업무 정책) ── 같은 머리에서 버튼만 바뀐다
+// ── 상세 머리: 보기 · 편집 중 · 잠김 (반영 5 · 업무 정책) ── 같은 머리에서 버튼만 바뀐다
 // 잠김 = 다른 사람이 수정 중. 편집 버튼은 aria-disabled(포커스는 받음) + 이유 문구를 늘 보이게, 버튼이 aria-describedby 로 그 문구를 읽음
 const LOCK = '<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>';
 const headTitle = (extra = '') => '<div class="detail-header__title"><span class="detail-icon">' + svg(I.project, 24) + '</span>' +
@@ -554,7 +554,7 @@ export const 문서_검색 = {
   render: () => playable(wireSearchDetail(frame(listScreen())), playApprove, '선택 일괄 결재', '[선택 일괄 결재]를 누르면 처리 중을 거쳐 「✓ 결재됨」으로 바뀌고, 상태 칩과 방금 바뀐 행이 표시됩니다'),
 };
 
-// 목록 — 상세 검색을 펼친 모습(Figma 📄 Templates 「문서 검색 · 상세 검색 펼침」과 같은 정지 화면)
+// 목록: 상세 검색을 펼친 모습(Figma 📄 Templates 「문서 검색 · 상세 검색 펼침」과 같은 정지 화면)
 export const 문서_검색_상세_펼침 = {
   parameters: src(listScreen({ open: true })),
   render: () => wireSearchDetail(frame(listScreen({ open: true, mark: true }))),
