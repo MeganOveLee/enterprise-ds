@@ -57,14 +57,14 @@ export const 접고_펴기 = {
   parameters: { docs: { source: { code: searchForm({}) } } },
   render: () => stage(searchForm({})),
 };
-// 펼치고 값을 넣은 모습 — 상세 검색을 펼치고 첫 줄 · 상세 조건에 값을 넣어 검색하기 직전(TD-122). 값이 있는 칸에는 지우기(×)
+// 펼치고 값을 넣은 모습 — 상세 검색을 펼치고 첫 줄 · 상세 조건에 값을 넣어 검색하기 직전. 값이 있는 칸에는 지우기(×)
 export const 펼치고_값_넣기 = {
   parameters: { docs: { source: { code: searchForm({ open: true, v: true }) } } },
   render: () => stage(searchForm({ open: true, v: true })),
 };
 const optSrc = (code) => ({ controls: { disable: true }, docs: { source: { language: 'html', code } } });
 
-// ── 시안 (TD-187) — A 칸 여러 줄(추천, 위 「모두 보기」) · B 필터 칩 한 줄 · C 왼쪽 필터 패널 ──
+// ── 시안 — A 칸 여러 줄(추천, 위 「모두 보기」) · B 필터 칩 한 줄 · C 왼쪽 필터 패널 ──
 const optChip = (t, on = false) => '<button type="button" class="chip" aria-pressed="' + on + '">' + t + '</button>';
 const OPT_CHIPS = '<div class="search-chips"><input class="input" type="search" aria-label="문서 검색" placeholder="문서 번호 또는 문서 명">' +
   '<div class="chip-group" role="group" aria-label="빠른 조건">' + optChip('내 문서', true) + optChip('작업 중') + optChip('결재 대기') + optChip('이번 달') + '</div></div>';

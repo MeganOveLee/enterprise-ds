@@ -2,10 +2,10 @@
  * 화면은 DS 클래스(components.css)로 짜고, 여기에는 DS에 아직 컴포넌트가 없는 자리만 둔다.
  * 값은 전부 DS 토큰 — 고정 색 · 고정 모서리 없음. 브랜드 · 화면 모드를 그대로 따른다.
  *   .scr-frame  실제 크기(1440 × 900)로 그린 화면을 칸 너비에 맞게 줄여 보여 주는 틀
- *   폴더 트리 · 산출물 구조 = DS .tree (TD-75, 구 .scr-tree). 메뉴 항목은 DS(.main-menu 항목 · .ui-submenu)
+ *   폴더 트리 · 산출물 구조 = DS .tree (구 .scr-tree). 메뉴 항목은 DS(.main-menu 항목 · .ui-submenu)
  *   검색 조건 6열 · 상세 값 4열 = DS .form-grid--6 · --4 (.form-grid-2 확장), 라디오 묶음 = DS .radio-group (구 .scr-radio-row)
- *   올리는 중 막대 = DS .resumable .fileList progress (TD-48), 진행 상태 점 = DS .output-dot (구 .scr-dot)
- *   섹션 머리 오른쪽 작은 글자 = DS .section-meta (TD-75, 구 .scr-total)
+ *   올리는 중 막대 = DS .resumable .fileList progress, 진행 상태 점 = DS .output-dot (구 .scr-dot)
+ *   섹션 머리 오른쪽 작은 글자 = DS .section-meta (구 .scr-total)
  *   목록 표는 DS .grid-table (제품에서는 상용 그리드 라이브러리가 그리는 자리), 양식 받기 링크 = DS .text-link.no-arrow (구 .scr-link)
  *   상태 칩은 DS .status-chip */
 
@@ -48,7 +48,7 @@
   border-color: var(--color-border-strong);
 }
 .scr-window .pop { height: 100%; min-width: 0; }
-/* 섹션 사이 간격은 섹션 머리(margin-top 12)가 맡는다 — gap 을 두면 머리와 내용 상자 사이가 벌어짐 (TD-108) */
+/* 섹션 사이 간격은 섹션 머리(margin-top 12)가 맡는다 — gap 을 두면 머리와 내용 상자 사이가 벌어짐 */
 .scr-window .grid-table th { position: static; }
 
 
@@ -155,7 +155,7 @@
 .scr-tasks { flex: 0 0 auto; border: 1px solid var(--color-border-base); border-radius: var(--radius-panel); overflow: hidden; }
 .scr-tasks .grid-table th { position: static; }
 .scr-tasks .progress-bar { height: 14px; }
-.scr-tasks .progress-bar__label { font-size: var(--body-xs); }   /* 표 칸(30) 안 낮은 막대 옆 숫자 = 가장 작은 글자 토큰 (구 10, TD-44) */
+.scr-tasks .progress-bar__label { font-size: var(--body-xs); }   /* 표 칸(30) 안 낮은 막대 옆 숫자 = 가장 작은 글자 토큰 (구 10) */
 
 /* 로그인 — 왼쪽 브랜드 딥 패널(--color-bg-panel) + 오른쪽 폼. 칸 · 체크박스 · 버튼은 DS 그대로.
  * 높이 44 = DS .input--lg · .btn--lg */
@@ -221,7 +221,7 @@
 .scr-map__r--focus { background: var(--color-bg-brand-subtle); color: var(--color-text-on-brand-subtle); }
 .scr-map__r--focus span { color: var(--color-text-on-brand-subtle); }
 
-/* 움직임 다시 보기 (TD-123) — 화면 그림 위 오른쪽. 무엇이 움직이는지 한 줄 + 버튼 */
+/* 움직임 다시 보기 — 화면 그림 위 오른쪽. 무엇이 움직이는지 한 줄 + 버튼 */
 .scr-play { display: grid; gap: var(--spacing-8); }
 .scr-play__bar { display: flex; align-items: center; justify-content: flex-end; gap: var(--spacing-12); }
 .scr-play__note { font-size: var(--body-sm); color: var(--color-text-muted); }

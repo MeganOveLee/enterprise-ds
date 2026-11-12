@@ -14,7 +14,7 @@ export const PageHead = ({ eyebrow, title, lead, children }) =>
     lead ? h('p', { className: 'ds-lead' }, lead) : null,
     children);
 
-// 제목 옆 영어 라벨(en)은 그리지 않는다 — 제목을 영어로 되풀이하는 부연 설명이라서(TD-140). mdx의 en 속성은 남겨 둔다
+// 제목 옆 영어 라벨(en)은 그리지 않는다 — 제목을 영어로 되풀이하는 부연 설명이라서. mdx의 en 속성은 남겨 둔다
 export const Section = ({ title, desc, children }) =>
   h('section', { className: 'ds-sec' },
     h('h2', null, title),
@@ -36,9 +36,9 @@ export const Card = ({ of, title, desc, tag, basis, code = true, children }) =>
 // 값 = 실제 막대에서 잰 것(버튼 28 · 안쪽 0 7 · 모서리 4 · 바탕 rgba(0,109,235,.07) · 글자 12 굵게 rgb(0,85,184) · 아이콘 14,
 // 목록 180 · 안쪽 4 · 줄 32 · 모서리 6). 고르면 실제 막대 · 주소(URL)도 같이 바뀐다(updateGlobals)
 // 소개 한 곳에만 둔다 — 처음 온 사람에게 「여기를 눌러 보라」고 알리는 용도. 다른 문서는 맨 위 막대로 충분
-// 막대 전체 = 맨 위 막대와 같은 줄(10:17 피드백): 왼쪽 격자 · 배경 · 윤곽선 아이콘, Figma · 구분선 · 브랜드 · 화면 모드, 오른쪽 끝 전체 화면. 폭은 미리보기 카드 전체
+// 막대 전체 = 맨 위 막대와 같은 줄: 왼쪽 격자 · 배경 · 윤곽선 아이콘, Figma · 구분선 · 브랜드 · 화면 모드, 오른쪽 끝 전체 화면. 폭은 미리보기 카드 전체
 const FIGMA_URL = 'https://www.figma.com/design/99ff5JQYQPCdY3xRBWHHlO/?node-id=8111-5';
-// 쓰는 기기 아이콘 — Storybook 아이콘 browser · mobile 그대로(맨 위 막대 preview.js 와 같은 모양, TD-172)
+// 쓰는 기기 아이콘 — Storybook 아이콘 browser · mobile 그대로(맨 위 막대 preview.js 와 같은 모양)
 const DEVICE = {
   web: 'M.5 13.004a.5.5 0 01-.5-.5v-11a.5.5 0 01.5-.5h13a.5.5 0 01.5.5v11a.5.5 0 01-.5.5H.5zm.5-1v-8h12v8H1zm1-9.5a.5.5 0 11-1 0 .5.5 0 011 0zm2 0a.5.5 0 11-1 0 .5.5 0 011 0zm2 0a.5.5 0 11-1 0 .5.5 0 011 0z',
   mobile: 'M3 1.504a1.5 1.5 0 011.5-1.5h5a1.5 1.5 0 011.5 1.5v11a1.5 1.5 0 01-1.5 1.5h-5a1.5 1.5 0 01-1.5-1.5v-11zm1 10.5v-10h6v10H4z',
@@ -57,7 +57,7 @@ const DECO = {
 };
 const deco = (k) => h('span', { key: k, className: 'ds-tb__ico' }, h('svg', { width: 14, height: 14, viewBox: '0 0 14 14', fill: 'none' }, DECO[k].map((d, i) => h('path', { key: i, fillRule: 'evenodd', clipRule: 'evenodd', d, fill: 'currentColor' }))));
 const TOOLS = [   // 글자 = .storybook/preview.js globalTypes 와 같게
-  { key: 'brand', label: '브랜드', items: [['default', 'Default · PLM 웹', 'web'], ['mobility', 'Mobility · 모바일 앱', 'mobile'], ['ootb', 'OOTB · Windchill 화면 리디자인', 'web']] },   // 세 번째 = 쓰는 기기 아이콘(TD-172)
+  { key: 'brand', label: '브랜드', items: [['default', 'Default · PLM 웹', 'web'], ['mobility', 'Mobility · 모바일 앱', 'mobile'], ['ootb', 'OOTB · Windchill 화면 리디자인', 'web']] },   // 세 번째 = 쓰는 기기 아이콘
   { key: 'mode', label: '화면 모드 (라이트 / 다크)', items: [['light', '라이트'], ['dark', '다크']] },
 ];
 const readGlobals = () => {
@@ -65,7 +65,7 @@ const readGlobals = () => {
   return { brand: c.contains('theme-mobility') ? 'mobility' : c.contains('theme-ootb') ? 'ootb' : 'default', mode: document.body.classList.contains('dark-mode') ? 'dark' : 'light' };
 };
 let selSeq = 0;
-// 처음 온 사람에게 「여기를 눌러 보세요」(TD-42 08:35 ④ 제안) — 한 번 누르면 다시 안 보임(다시 그려져도 · 새로 열어도)
+// 처음 온 사람에게 「여기를 눌러 보세요」(:35 ④ 제안) — 한 번 누르면 다시 안 보임(다시 그려져도 · 새로 열어도)
 let hintSeen = (() => { try { return localStorage.getItem('eds-tb-hint') === '1'; } catch (e) { return false; } })();
 let refocus = null;   // 고른 뒤 문서가 다시 그려져도 키보드 포커스를 같은 버튼으로 되돌림(바디로 빠지지 않게)
 const ToolSelect = ({ tool, value, onPick }) => {
@@ -127,7 +127,7 @@ export const Toolbar = ({ figmaIcon }) => {
   return h('div', { className: 'ds-tbrow' }, bar);
 };
 
-// 소개 첫 화면 — 실제 화면 한 장 + 브랜드 버튼(TD-186). 버튼은 맨 위 도구 막대와 같은 값을 바꾼다(updateGlobals).
+// 소개 첫 화면 — 실제 화면 한 장 + 브랜드 버튼. 버튼은 맨 위 도구 막대와 같은 값을 바꾼다(updateGlobals).
 // 웹 화면이라 웹 브랜드만 둔다 — 모바일 브랜드는 모바일 화면이 생기면 같은 자리에 더한다
 // 버튼 색 = 각 브랜드 라이트 모드의 color-bg-brand · color-text-on-color(tokens/build/resolved.json). 클래스 규칙으로 한 번만 넣는다
 const brandSwatchCss = (brands) => brands.map(([v]) => {

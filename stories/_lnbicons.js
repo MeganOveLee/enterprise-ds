@@ -1,4 +1,4 @@
-// LNB 레일 메뉴 아이콘 · 레일 로고 마크 · 검색 조건 헤더 아이콘 — Figma 🧭 App Shell 「LNB/Rail」 · 🧱 Blocks 와 같은 모양 (TD-108). App Shell · Screens · Blocks 문서가 같이 씀
+// LNB 레일 메뉴 아이콘 · 레일 로고 마크 · 검색 조건 헤더 아이콘 — Figma 🧭 App Shell 「LNB/Rail」 · 🧱 Blocks 와 같은 모양. App Shell · Screens · Blocks 문서가 같이 씀
 // 아이콘 = Figma Icons 라인 세트(lucide 모양, 24 칸 · 선 1.5). 세트 아이콘은 lucide 원본(24 칸 · 선 1.8)을 5/6로 줄인 모양이라
 //   viewBox 를 -2.4 ~ 26.4 로 넓혀 같은 크기 · 같은 선 굵기로 그린다. 설계 변경(file-search)만 세트에서 24 칸 · 선 1.5 그대로
 // 제품은 메뉴마다 그림 파일 경로를 --lnb-icon 에 넣는다(DS에는 그림 경로 없음) — 여기서는 같은 그림을 data URI 로
@@ -23,7 +23,7 @@ export const lnbMask = (name) => "url('data:image/svg+xml," + encodeURIComponent
 // 같은 그림을 인라인 svg 로(currentColor) — GNB 사용자 아이콘 · 바로가기 타일 · 검색 조건 헤더
 export const lnbSvg = (name, s = 24) => body(name, 'currentColor').replace('<svg ', '<svg width="' + s + '" height="' + s + '" ') + ' aria-hidden="true">' + ICONS[name][2] + '</svg>';
 
-// 레일 로고 마크 = 가상 제품 로고(모든 브랜드 레일 · 로그인 · 로고형 GNB, TD-101). Figma 「LNB/Mark」와 같은 그림. label 이 없으면 읽기에서 뺌(옆에 제품 이름 글자가 있을 때):
+// 레일 로고 마크 = 가상 제품 로고(모든 브랜드 레일 · 로그인 · 로고형 GNB). Figma 「LNB/Mark」와 같은 그림. label 이 없으면 읽기에서 뺌(옆에 제품 이름 글자가 있을 때):
 // 브랜드 타일 + 다섯 조각 심볼(흰색) — Figma 「Design system Logo」 › Frame 1. 타일 색은 브랜드를 따름(브랜드를 바꾸면 로고 색도 토큰을 따라 바뀜)
 // 로고 = 브랜드 자산이라 모서리 · 심볼 크기(타일 34 안에 22)는 고정. 심볼 조각은 로고 로더(.brand-loader)와 같은 MARK_PATHS
 export const MARK_PATHS = [

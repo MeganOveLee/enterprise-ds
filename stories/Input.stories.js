@@ -131,7 +131,7 @@ export const 선택_목록 = {
   },
 };
 
-// ── Do · Don't (TD-108 25번 ① ~ ④) ──
+// ── Do · Don't (① ~ ④) ──
 const ff = (label, ctl, id, req = false) => '<div class="form-grid-2" style="grid-template-columns:1fr;width:220px;text-align:left"><div class="ff-field"><label class="search-label" for="' + id + '">' + label + (req ? '<span class="required" aria-hidden="true"></span>' : '') + '</label><div class="td">' + ctl + '</div></div></div>';
 const one = (ctl) => '<div style="width:220px">' + ctl + '</div>';
 const pair = (a, b) => '<div style="display:grid;gap:12px">' + a + b + '</div>';
@@ -221,7 +221,7 @@ export const 옵션_상태 = {
 // ── Playground ──
 export const Playground = {};
 
-// ── 시안 (TD-187) — A 윤곽 칸(추천) · B 채운 칸 · C 올라가는 라벨. 같은 두 칸(문서 번호 · 문서 분류)으로 비교 ──
+// ── 시안 — A 윤곽 칸(추천) · B 채운 칸 · C 올라가는 라벨. 같은 두 칸(문서 번호 · 문서 분류)으로 비교 ──
 const optPair = (id, lab, ctl) => '  <div class="ff-field"><label class="search-label" for="' + id + '">' + lab + '</label><div class="td">' + ctl + '</div></div>';
 const KINDS2 = '<option>설계 문서</option><option>시험 문서</option><option>회의록</option>';
 const OPT_A = ['<div class="form-grid-2">',

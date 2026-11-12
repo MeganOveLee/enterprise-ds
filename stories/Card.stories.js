@@ -84,8 +84,8 @@ export const Playground = {
   render: (a) => box(card(a)),
 };
 
-// ── Do · Don't (TD-108 9번 ① ② — 홈 화면 카드 안 목록 행 기준) — 미리보기만, 코드는 위 예시 카드에 ──
-const ddBox = (h) => '<div style="width:100%;align-self:flex-start">' + h + '</div>';   // 미리보기 위 정렬(TD-108 공통 · 간격)
+// ── Do · Don't (① ② — 홈 화면 카드 안 목록 행 기준) — 미리보기만, 코드는 위 예시 카드에 ──
+const ddBox = (h) => '<div style="width:100%;align-self:flex-start">' + h + '</div>';   // 미리보기 위 정렬(공통 · 간격)
 const ddCard = (rows) => '<section class="card">' + head('결재 업무', 2, more()) + '<ul class="card-list">' + rows + '</ul></section>';
 // 한 행 안에 링크 여러 곳(하지 않음 예시) — 제목 링크 + 「보기」 링크
 const splitRow = ([lead, title, , tone]) =>
@@ -97,11 +97,11 @@ const wrapRow = ([lead, title, date, tone]) =>
 export const 사용_지침 = {
   parameters: { controls: { disable: true } },
   render: () => { enablePseudo(); return doDont([
-    // 근거: TD-108 9번 ① (Carbon Tile · Atlassian — 누르는 곳 하나)
+    // 근거:  ① (Carbon Tile · Atlassian — 누르는 곳 하나)
     { title: '행마다 링크는 한 곳만 둡니다',
       do: [ddBox(ddCard(row(ROWS[0]) + row(ROWS[1], ' ps-hover') + row(ROWS[2]))), '행 전체를 링크 하나(&lt;li&gt;&lt;a href&gt;)로 두어 어디를 눌러도 같은 상세로 이동합니다.'],
       dont: [ddBox(ddCard(ROWS.slice(0, 3).map(splitRow).join(''))), '한 행 안에 같은 곳으로 가는 링크(제목 · 「보기」)를 여러 개 두지 않습니다.'] },
-    // 근거: TD-108 9번 ② · Card.mdx 구성 「목록 — 제목(.item-title, 길면 말줄임)」
+    // 근거:  ② · Card.mdx 구성 「목록 — 제목(.item-title, 길면 말줄임)」
     { title: '긴 이름은 말줄임하고 전체 이름을 title 속성에 둡니다',
       do: [ddBox(ddCard(LONG.map((r) => row(r)).join(''))), '긴 이름은 한 줄로 줄이고(말줄임) 전체 이름은 title 속성으로 둡니다.'],
       dont: [ddBox(ddCard(LONG.map(wrapRow).join(''))), '긴 이름을 줄바꿈해 행 높이가 제각각이 되게 두지 않습니다.'] },
@@ -109,7 +109,7 @@ export const 사용_지침 = {
 };
 const optSrc = (code) => ({ controls: { disable: true }, docs: { source: { language: 'html', code } } });
 
-// ── 시안 (TD-187) — A 테두리 카드(추천, 위 「목록 카드」) · B 채운 카드 · C 떠 있는 카드 ──
+// ── 시안 — A 테두리 카드(추천, 위 「목록 카드」) · B 채운 카드 · C 떠 있는 카드 ──
 const optCard = (cls) => '<div class="card ' + cls + '">' + head('결재 대기', 3) + list(3) + '</div>';
 export const 시안_채운_카드 = { parameters: optSrc(optCard('card--filled')), render: () => '<div class="sb-field--wide">' + optCard('card--filled') + '</div>' };
 export const 시안_떠_있는_카드 = { parameters: optSrc(optCard('card--elevated')), render: () => '<div class="sb-field--wide">' + optCard('card--elevated') + '</div>' };

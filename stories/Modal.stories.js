@@ -17,7 +17,7 @@ const btn = (t, cls, attrs = '') => '<button type="button" class="btn ' + cls + 
 
 // ── 확인 창 조각 ──
 const TEXT = { title: '저장하지 않은 내용이 있습니다', desc: '저장하지 않고 나가면 바뀐 내용이 사라집니다.' };
-// 버튼 3개 — 순서 [저장 안 함] [취소] [저장], 열 때 포커스 = [취소] (TD-108 1번 A · 2번). ps = 정지 그림용 상태 클래스
+// 버튼 3개 — 순서 [저장 안 함] [취소] [저장], 열 때 포커스 = [취소] (A · 2번). ps = 정지 그림용 상태 클래스
 const FOOT = (ps = {}) =>
   btn('저장 안 함', 'btn--destructive btn--outlined' + (ps.discard || ''), ' data-modal-close="discard"') +
   btn('취소', 'btn--secondary btn--transparent' + (ps.cancel || ''), ' data-modal-close="cancel" data-modal-initial') +
@@ -129,7 +129,7 @@ export const 직접_열어_보기 = {
   },
 };
 
-// ── Do · Don't (TD-108) — 미리보기만. 창만 그림(덮개 없이) ──
+// ── Do · Don't — 미리보기만. 창만 그림(덮개 없이) ──
 const mini = (o) => dialog({ id: next(), style: 'width:100%;margin:0;align-self:flex-start;box-shadow:none', ...o });   // 위 정렬(가운데 맞춤 margin:auto 를 풂) — 두 칸 높이가 달라도 창 위치가 맞게
 export const 사용_지침 = {
   parameters: { controls: { disable: true } },
@@ -179,7 +179,7 @@ export const Playground = {
   },
 };
 
-// ── 시안 (TD-187) — A 가운데 창(추천, 위 「저장하지 않고 나가기」) · B 아래 시트 · C 위험 동작 확인 ──
+// ── 시안 — A 가운데 창(추천, 위 「저장하지 않고 나가기」) · B 아래 시트 · C 위험 동작 확인 ──
 const SHEET_FOOT = btn('저장', 'btn--primary btn--filled btn--lg', ' data-modal-close="save"') + btn('저장 안 함', 'btn--destructive btn--outlined btn--lg', ' data-modal-close="discard"') + btn('취소', 'btn--secondary btn--transparent btn--lg', ' data-modal-close="cancel"');
 const sheetModal = (id) => '<div class="modal modal--sheet"><div class="modal__dialog sheet" role="dialog" aria-labelledby="' + id + '-title" aria-describedby="' + id + '-desc">' +
   '<div class="modal__header"><h2 class="modal__title" id="' + id + '-title">' + TEXT.title + '</h2></div>' +

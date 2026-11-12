@@ -86,8 +86,8 @@ export const 전체_상태 = {
   },
 };
 
-// ── Do · Don't (TD-108 8번 ② ③) — 미리보기만, 코드는 위 예시 카드에 ──
-const ddWrap = (h) => '<div style="width:100%;align-self:flex-start">' + h + '</div>';   // 미리보기 위 정렬(TD-108 공통 · 간격)
+// ── Do · Don't (② ③) — 미리보기만, 코드는 위 예시 카드에 ──
+const ddWrap = (h) => '<div style="width:100%;align-self:flex-start">' + h + '</div>';   // 미리보기 위 정렬(공통 · 간격)
 const sub = (t) => '<div class="ff-divider">' + t + '</div>';   // 섹션 안 소제목 = .form-grid-2 .ff-divider
 const CHANGE_SUB = '<div class="form-grid-2">' + sub('도면 변경') + ro('도면 번호', 'DWG-20417') + ro('개정', 'B') + sub('부품 변경') + ro('품번', 'BRK-20417') + ro('재질', '마그네슘') + '</div>';
 const CHANGE_NEST = section('도면 변경', '<div class="form-grid-2">' + ro('도면 번호', 'DWG-20417') + ro('개정', 'B') + '</div>', { h: 'h4' }) +
@@ -99,11 +99,11 @@ const NEED = '<span class="section-meta">필수</span>';
 export const 사용_지침 = {
   parameters: { controls: { disable: true } },
   render: () => doDont([
-    // 근거: TD-108 8번 ② (Carbon · Atlassian Accordion — 중첩하지 않음). 나눌 내용이 많으면 상세 창 탭으로
+    // 근거:  ② (Carbon · Atlassian Accordion — 중첩하지 않음). 나눌 내용이 많으면 상세 창 탭으로
     { title: '접는 섹션은 한 단계로 두고, 안쪽은 소제목으로 나눕니다',
       do: [ddWrap(section('변경 내용', CHANGE_SUB)), '섹션 안을 더 나눌 때는 접는 섹션 대신 소제목(.ff-divider)을 둡니다. 내용이 길면 상세 창 탭으로 나눕니다.'],
       dont: [ddWrap(section('변경 내용', CHANGE_NEST)), '접는 섹션 안에 접는 섹션을 다시 두지 않습니다.'] },
-    // 근거: TD-108 8번 ③ (필수 입력을 접힌 섹션에 숨기지 않음)
+    // 근거:  ③ (필수 입력을 접힌 섹션에 숨기지 않음)
     { title: '필수 입력이 있는 섹션은 펼친 채 시작합니다',
       do: [ddWrap(section('기본 정보', REQ(), { h: 'h4', right: NEED }) + section('첨부 파일', '', { open: false, h: 'h4' })), '필수 입력이 있는 섹션은 펼친 상태로 시작하고, 선택 입력만 있는 섹션을 접어 둡니다.'],
       dont: [ddWrap(section('기본 정보', REQ(), { open: false, h: 'h4', right: NEED }) + section('첨부 파일', '', { open: false, h: 'h4' })), '필수 입력이 있는 섹션을 접힌 채로 시작하지 않습니다.'] },

@@ -62,7 +62,7 @@ export const 범례 = {
   render: () => box(legend(KEYS), '360px'),
 };
 
-// ── Do · Don't (TD-108 15번 ①) ── 미리보기만, 코드는 위 예시 카드에
+// ── Do · Don't ── 미리보기만, 코드는 위 예시 카드에
 const wide = (h) => '<div style="flex:1;min-width:0">' + h + '</div>';
 export const 사용_지침 = {
   parameters: { controls: { disable: true } },
@@ -101,7 +101,7 @@ export const Playground = {
 };
 const optSrc = (code) => ({ controls: { disable: true }, docs: { source: { language: 'html', code } } });
 
-// ── 시안 (TD-187) — A 막대(추천, 위 「진행률 막대」) · C 원형 링. B 단계 목록은 위 「단계별 목록」 ──
+// ── 시안 — A 막대(추천, 위 「진행률 막대」) · C 원형 링. B 단계 목록은 위 「단계별 목록」 ──
 const ring = (pct, label) => '<div class="progress-ring" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + pct + '" aria-label="' + label + '">' +
   '<svg viewBox="0 0 36 36" aria-hidden="true"><circle class="progress-ring__track" cx="18" cy="18" r="15.5" pathLength="100"/><circle class="progress-ring__value" cx="18" cy="18" r="15.5" pathLength="100" stroke-dasharray="' + pct + ' 100"/></svg>' +
   '<span class="progress-ring__label">' + pct + '%</span></div>';

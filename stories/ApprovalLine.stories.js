@@ -1,6 +1,6 @@
 // Blocks/Approval Line — 문서 화면은 ApprovalLine.mdx. 결재 받을 사람을 역할(합의 · 승인 · 수신)별로 지정하는 영역과 창 (Figma 🧱 Blocks 「Approval Line」과 같은 구성)
 // 등록 창 안 결재선 지정 섹션 → [결재선 지정] = 새 창(탭: 조직 · 결재선 Template). 담당자를 체크하고 가운데 열의 [합의 ›] · [승인 ›] · [수신 ›]로 넣거나 끌어다 놓음,
-// 넣은 사람은 줄 끝 ×로 뺌 (TD-122 — 이전 버전 캡처 「10_결재선 지정 조직 탭」처럼 가운데 이동 버튼. 구: 역할 상자 머리 [추가] — 다른 Template 목록이 뜰 것처럼 읽힘)
+// 넣은 사람은 줄 끝 ×로 뺌 (— 이전 버전 캡처 「10_결재선 지정 조직 탭」처럼 가운데 이동 버튼. 구: 역할 상자 머리 [추가] — 다른 Template 목록이 뜰 것처럼 읽힘)
 // 역할 상자 세 개는 너비 · 높이가 같고, 표 최소 높이 = 머리 + 데이터 3줄
 // 상자 = 접는 섹션 상자 · 섹션 상자(.section-box, 접기 없음). 두 칸 배치(왼쪽 | 역할 상자)만 이 블록의 inline grid
 import { flow, shot, MARK, wireSections, toggleIcon } from './_flow.js';
@@ -47,7 +47,7 @@ const left = () => '<div class="section-box" style="padding-top:16px;gap:8px;gri
   '<div style="flex:1;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px">' + org() + users() + '</div></div>';
 
 // ── 역할 상자 — 섹션 상자(헤더 h4) + 표(No. · 부서 · 이름 · ID · 빼기 ×). 비어 있으면 표 안 빈 상태(카드 크기) ──
-// 표 최소 높이 = 머리 34 + 데이터 3줄(30 × 3) — 세 상자는 줄 높이(1fr)가 같아 가장 큰 상자에 맞춰 같은 높이(TD-122)
+// 표 최소 높이 = 머리 34 + 데이터 3줄(30 × 3) — 세 상자는 줄 높이(1fr)가 같아 가장 큰 상자에 맞춰 같은 높이
 // add = 왼쪽에 이동 버튼을 붙인 견본(Do · Don't), blank = 빈 상태 안내(Do · Don't 견본만 끔)
 const ROW_MIN = '';   // 높이는 .table_list--rows(머리 + 3줄, 넘치면 스크롤)
 // 빈 역할 상자 — 데이터 3줄 자리(90) 안에 들어가게 제목 + 설명만(그림 없음). 그림을 넣으면 이 상자만 커져 세 상자 높이가 같이 커짐
@@ -134,7 +134,7 @@ export const 저장한_결재선_불러오기 = {
   render: () => shot(pop({ tab: 1 }), 1200, 760),
 };
 
-// ── Do · Don't (TD-108 7번 ① ② ③) — 미리보기만 ──
+// ── Do · Don't (① ② ③) — 미리보기만 ──
 const mini = (inner) => '<div style="width:100%;display:flex;flex-direction:column;gap:8px;padding:12px;border:1px solid var(--color-border-base);border-radius:var(--radius-card);background:var(--color-bg-base)">' + inner + '</div>';
 const guide = (t) => '<p class="section-meta" style="margin:0">' + t + '</p>';
 const ONE = [['설계1팀', '정우진', 'wjjung']];
@@ -160,7 +160,7 @@ export const 사용_지침 = {
 const optSrc = (code) => ({ controls: { disable: true }, docs: { source: { language: 'html', code } } });
 const OPT_CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg>';
 
-// ── 시안 (TD-187) — A 결재선 표(추천, 위 「결재선 지정」) · B 가로 단계 흐름 · C 세로 타임라인 ──
+// ── 시안 — A 결재선 표(추천, 위 「결재선 지정」) · B 가로 단계 흐름 · C 세로 타임라인 ──
 const STEPS = [['done', '기안', '김도윤', '완료 · 10-12 09:10', ''], ['done', '합의', '박지훈', '완료 · 10-12 14:32', '토크 기준 표를 2장으로 옮겨 주세요.'], ['current', '승인', '정우진', '결재 중', ''], ['', '승인', '이서연', '대기', ''], ['', '수신', '최하은', '대기', '']];
 const step = ([s, role, name, state, note], vertical) => '<li class="approval-flow__step' + (s ? ' is-' + s : '') + '"' + (s === 'current' ? ' aria-current="step"' : '') + '>' +
   '<span class="approval-flow__mark" aria-hidden="true">' + (s === 'done' ? OPT_CHECK : '') + '</span>' +

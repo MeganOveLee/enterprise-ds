@@ -1,4 +1,4 @@
-/* 모바일 컴포넌트 견본 틀 (TD-172) — 문서 화면에서만 쓰는 모양. 컴포넌트 모양은 css/components.css */
+/* 모바일 컴포넌트 견본 틀 — 문서 화면에서만 쓰는 모양. 컴포넌트 모양은 css/components.css */
 .sb-phone {
   position: relative;
   width: 390px;
@@ -24,7 +24,7 @@
 .sb-label { margin: 0 0 8px; font-size: var(--body-sm); color: var(--color-text-muted); }
 .sb-stack--row { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
 .sb-phone__map > .bottom-nav--floating { position: absolute; left: 0; right: 0; bottom: 0; }
-/* 지도 위 컨트롤 견본 (TD-172) — 지도 그림 대신 회색 판 + 경로 선, 자리는 견본 전용 클래스. 실제 화면은 지도가 자리를 정함 */
+/* 지도 위 컨트롤 견본 — 지도 그림 대신 회색 판 + 경로 선, 자리는 견본 전용 클래스. 실제 화면은 지도가 자리를 정함 */
 .sb-map__road { position: absolute; left: 10%; right: 18%; top: 62%; height: 6px; border-radius: 3px; background: var(--color-border-base); }
 .sb-at { position: absolute; }
 .sb-at--end { top: 16px; right: 16px; }

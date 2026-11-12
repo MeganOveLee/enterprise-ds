@@ -1,4 +1,4 @@
-// Blocks 문서 공통 — 「기본 화면 → 누르면 열리는 창」 틀 (TD-103). 모양은 ./_flow.css
+// Blocks 문서 공통 — 「기본 화면 → 누르면 열리는 창」 틀. 모양은 ./_flow.css
 // flow({ base, open }) — base · open = { html, w, h, title, where }. trigger = 누르는 버튼 이름(화살표 줄 글자), how = 열리는 방식(새 창 · 화면 이동)
 // 기본 화면에서 누르는 버튼에는 MARK 클래스를 붙인다(점선 테두리만, 문서 전용)
 import './_flow.css';

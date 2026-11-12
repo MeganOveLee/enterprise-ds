@@ -74,18 +74,18 @@ export const Playground = {
   render: (a) => pager(a.total, Math.min(a.current, a.total)),
 };
 
-// ── Do · Don't (TD-108 21번 ①) — 미리보기만, 코드는 위 예시 카드에. 페이지 이동이 여럿이라 이름을 따로(landmark-unique) ──
+// ── Do · Don't — 미리보기만, 코드는 위 예시 카드에. 페이지 이동이 여럿이라 이름을 따로(landmark-unique) ──
 export const 사용_지침 = {
   parameters: { controls: { disable: true } },
   render: () => doDont([
-    // 근거: TD-108 21번 ① (Carbon Pagination) · 위 「놓는 자리」 — 검색 화면 CSS(.searchLayout .table_list > .ui-pagination) 아래 16
+    // 근거:  ① (Carbon Pagination) · 위 「놓는 자리」 — 검색 화면 CSS(.searchLayout .table_list > .ui-pagination) 아래 16
     { title: '목록 아래 가운데에 두고 아래 여백을 띄웁니다',
       do: [screen(pager(5, 1, '페이지 이동 — 지침 예시 1'), 'height:200px;'), '목록 바로 아래 가운데에 두고 화면 아래와 16을 띄웁니다.'],
       dont: [screen(pager(5, 1, '페이지 이동 — 지침 예시 2').replace('class="ui-pagination"', 'class="ui-pagination" style="margin-bottom:0"'), 'height:200px;'), '페이지 번호를 화면 바닥에 붙여 두지 않습니다.'] },
   ]),
 };
 
-// ── 시안 (TD-187) — A 번호(추천, 위 「번호 모두 보기」) · B 더 보기 · C 쪽 수 줄 ──
+// ── 시안 — A 번호(추천, 위 「번호 모두 보기」) · B 더 보기 · C 쪽 수 줄 ──
 const SRC = (lines) => ({ controls: { disable: true }, docs: { source: { language: 'html', code: lines.join('\n') } } });
 const MORE = ['<div class="pagination-more">', '  <p class="pagination-more__status" aria-live="polite">124건 중 20건</p>', '  <button type="button" class="btn btn--secondary btn--outlined">더 보기</button>', '</div>'];
 const COMPACT = ['<nav class="ui-pagination ui-pagination--compact" aria-label="페이지 이동 · 쪽 수">', '  ' + arrow('prev', false), '  <span class="ui-pagination__status">3 / 12쪽</span>', '  ' + arrow('next', false),

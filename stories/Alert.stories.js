@@ -2,7 +2,7 @@
 import { matrix } from './_matrix.js';
 import { doDont } from './_dodont.js';
 
-// 상태 아이콘 = Figma Icons 세트와 같은 모양(16 격자, 선 1) — info · check · alert-triangle · x-circle · x (TD-108 32번)
+// 상태 아이콘 = Figma Icons 세트와 같은 모양(16 격자, 선 1) — info · check · alert-triangle · x-circle · x
 const svg = (d) => '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + d + '</svg>';
 const I = {
   info: '<circle cx="8" cy="8" r="5.56"/><path d="M8 8v2.22M8 5.78h.01"/>',
@@ -49,7 +49,7 @@ export const 공지 = {
   render: () => stack([alert({ status: 'brand', title: '결재선을 저장해 두고 다시 쓸 수 있습니다', close: true })]),
 };
 
-// ── Do · Don't (TD-108 12번 ① ② ③) ── 미리보기만, 코드는 위 예시 카드에
+// ── Do · Don't (① ② ③) ── 미리보기만, 코드는 위 예시 카드에
 const col = (items) => '<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:8px">' + items.join('') + '</div>';
 export const 사용_지침 = {
   parameters: { controls: { disable: true } },
@@ -100,7 +100,7 @@ export const Playground = {
 };
 const optSrc = (code) => ({ controls: { disable: true }, docs: { source: { language: 'html', code } } });
 
-// ── 시안 (TD-187) — A 옅은 바탕(추천, 위 「안내」) · B 왼쪽 띠 · C 맨 위 배너 ──
+// ── 시안 — A 옅은 바탕(추천, 위 「안내」) · B 왼쪽 띠 · C 맨 위 배너 ──
 const optAlert = (cls) => alert({ status: 'warning', title: '결재선이 비어 있습니다', desc: '결재 요청 전에 결재자를 한 명 이상 지정하세요.' }).replace('class="alert', 'class="alert ' + cls);
 const optBanner = () => alert({ status: 'info', desc: '11월 9일(일) 02:00–04:00 시스템 점검으로 접속할 수 없습니다.', close: true }).replace('class="alert', 'class="alert alert--banner');
 export const 시안_왼쪽_띠 = { parameters: optSrc(optAlert('alert--stripe')), render: () => '<div class="sb-field--wide">' + optAlert('alert--stripe') + '</div>' };

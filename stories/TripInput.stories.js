@@ -1,4 +1,4 @@
-// Blocks/Trip Input — 문서 화면은 TripInput.mdx. 모바일 앱 전용 조합 (css/blocks/mobility.css, TD-172)
+// Blocks/Trip Input — 문서 화면은 TripInput.mdx. 모바일 앱 전용 조합 (css/blocks/mobility.css)
 // 시안 A 두 칸 세로(추천) · B 한 줄 · C 타는 곳 한 칸. 칸은 누르면 장소 고르기가 열리는 button
 import { svg, I, phone, body } from './_mobile.js';
 

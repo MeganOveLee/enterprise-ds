@@ -33,7 +33,7 @@ export const 카드 = {
     busy(`<div class="skeleton-card"><span class="skeleton-title" aria-hidden="true"></span>${block('80px', '28px')}<div style="height:12px"></div>${block('100%', '64px')}</div>`, 'width:220px')).join('')}</div>`,
 };
 
-// ── Do · Don't (TD-108 16번 ①) ── 미리보기만, 코드는 위 예시 카드에
+// ── Do · Don't ── 미리보기만, 코드는 위 예시 카드에
 const gridRow = () => `<div class="skeleton-grid-row">${block('16px', '16px')}${block()}${block()}${block()}${block()}</div>`;
 export const 사용_지침 = {
   parameters: { controls: { disable: true } },
@@ -47,7 +47,7 @@ export const 사용_지침 = {
 };
 const optSrc = (code) => ({ controls: { disable: true }, docs: { source: { language: 'html', code } } });
 
-// ── 시안 (TD-187) — A 빛(추천, 위 「조각」) · B 깜빡임 · C 정지. 묶음(aria-busy)에 클래스 하나 ──
+// ── 시안 — A 빛(추천, 위 「조각」) · B 깜빡임 · C 정지. 묶음(aria-busy)에 클래스 하나 ──
 const optSkel = (cls) => '<div class="sb-field ' + cls + '" aria-busy="true"><span class="sr-only">불러오는 중</span><span class="skeleton-title" aria-hidden="true"></span><span class="skeleton-line" aria-hidden="true"></span><span class="skeleton-line" aria-hidden="true"></span><span class="skeleton-line" aria-hidden="true"></span></div>';
 export const 시안_깜빡임 = { parameters: optSrc(optSkel('skeleton--pulse')), render: () => optSkel('skeleton--pulse') };
 export const 시안_정지 = { parameters: optSrc(optSkel('skeleton--static')), render: () => optSkel('skeleton--static') };

@@ -93,7 +93,7 @@ export const 등록_창 = {
   render: () => win(registerPop(), 400),
 };
 
-// ── Do · Don't (TD-108 23번 ①) — 미리보기만. 작은 틀이라 .pop 최소 폭(600)만 풀어 둠 ──
+// ── Do · Don't — 미리보기만. 작은 틀이라 .pop 최소 폭(600)만 풀어 둠 ──
 // 근거: Primer Saving 패턴(저장 버튼은 한 곳) · 구성 「제목 줄」(sticky — 스크롤해도 창 위에 남음)
 const mini = (inner) =>
   '<div style="width:100%;align-self:flex-start;overflow:hidden;border:1px solid var(--color-border-base);border-radius:var(--radius-card)">' +
@@ -145,7 +145,7 @@ export const Playground = {
   render: (a) => win(a.kind === '등록' ? registerPop(a) : viewPop(a), a.height),
 };
 
-// ── 시안 (TD-187) — A 새 창(추천, 위 「상세 창」) · B 옆 패널 ──
+// ── 시안 — A 새 창(추천, 위 「상세 창」) · B 옆 패널 ──
 const LIST_ROWS = [['DOC-2610-0013', '브레이크 캘리퍼 조립 사양서', '작업 중'], ['DOC-2610-0012', '디스크 로터 시험 성적서', '승인'], ['DOC-2610-0011', '캘리퍼 브래킷 도면', '검토 중'], ['DOC-2610-0010', '패드 마모 시험 계획서', '승인']];
 const listTable = '<div class="table_list"><div class="list"><table class="grid-table"><thead><tr><th scope="col">문서 번호</th><th scope="col">문서 명</th><th scope="col">작업현황</th></tr></thead><tbody>' +
   LIST_ROWS.map(([n, t, s], i) => '<tr' + (i ? '' : ' class="is-selected"') + '><td><a href="#" class="grid-custom-rows-link">' + n + '</a></td><td>' + t + '</td><td>' + s + '</td></tr>').join('') + '</tbody></table></div></div>';

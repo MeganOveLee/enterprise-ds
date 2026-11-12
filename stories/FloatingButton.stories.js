@@ -1,4 +1,4 @@
-// Form/Floating Button — 문서 화면은 FloatingButton.mdx. 지도 · 목록 위에 떠 있는 동작 하나 (DS-ADR-049 · 051, TD-172)
+// Form/Floating Button — 문서 화면은 FloatingButton.mdx. 지도 · 목록 위에 떠 있는 동작 하나 (DS-ADR-049 · 051)
 // 시안 A 알약 글자(추천) · B 아이콘만 · C 펼침(내리는 동안 아이콘만). 지도 자리는 회색 판
 import { svg, I, phone } from './_mobile.js';
 

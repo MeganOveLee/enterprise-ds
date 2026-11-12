@@ -38,18 +38,18 @@ export const Playground = {
   render: (a) => chip(a.tone, a.label),
 };
 
-// ── Do · Don't (TD-108 10번 ① ②) — 미리보기만, 코드는 위 예시 카드에 ──
+// ── Do · Don't (① ②) — 미리보기만, 코드는 위 예시 카드에 ──
 // ① 두 화면(검색 결과 · 홈 카드)에 같은 상태를 놓고 색만 비교
 const place = (name, chips) => '<div style="display:flex;align-items:center;gap:8px"><span class="sb-note" style="width:64px">' + name + '</span>' + chips.join('') + '</div>';
 const twoPlaces = (home) => '<div style="display:grid;gap:8px">' + place('검색 결과', [chip('success', '승인'), chip('danger', '반려'), chip('warning', '검토 중')]) + place('홈 카드', home) + '</div>';
 export const 사용_지침 = {
   parameters: { controls: { disable: true } },
   render: () => doDont([
-    // 근거: TD-108 10번 ① · StatusChip.mdx 「상태 색」 (Carbon Tag · Atlassian Lozenge)
+    // 근거:  ① · StatusChip.mdx 「상태 색」 (Carbon Tag · Atlassian Lozenge)
     { title: '같은 상태는 모든 화면에서 같은 색으로 표시합니다',
       do: [twoPlaces([chip('success', '승인'), chip('danger', '반려'), chip('warning', '검토 중')]), '같은 상태 이름은 어느 화면에서나 같은 상태 색(승인 = success)을 씁니다.'],
       dont: [twoPlaces([chip('info', '승인'), chip('warning', '반려'), chip('neutral', '검토 중')]), '화면마다 같은 상태를 다른 색으로 표시하지 않습니다.'] },
-    // 근거: TD-108 10번 ② · Playground 「글자 — 짧은 상태 이름」
+    // 근거:  ② · Playground 「글자 — 짧은 상태 이름」
     { title: '상태 이름은 2~4자로 짧게 짓습니다',
       do: [row([chip('warning', '검토 중'), chip('success', '승인')]), '상태 이름은 2~4자로 짓습니다(예: 「검토 중」 「승인」).'],
       dont: [row([chip('warning', '검토 의견 반영 후 재상신 대기'), chip('success', '승인')]), '「검토 의견 반영 후 재상신 대기」처럼 문장형 글자를 칩에 넣지 않습니다.'] },
@@ -57,7 +57,7 @@ export const 사용_지침 = {
 };
 const optSrc = (code) => ({ controls: { disable: true }, docs: { source: { language: 'html', code } } });
 
-// ── 시안 (TD-187) — A 옅은 바탕(추천, 위 「작업 현황」) · B 점 + 글자 · C 진한 채움 ──
+// ── 시안 — A 옅은 바탕(추천, 위 「작업 현황」) · B 점 + 글자 · C 진한 채움 ──
 const OPT_TONES = [['success', '승인'], ['warning', '결재 대기'], ['danger', '반려'], ['info', '작업 중']];
 const optChips = (cls) => '<div class="sb-row">' + OPT_TONES.map(([t, l]) => '<span class="status-chip status-chip--' + t + ' ' + cls + '">' + l + '</span>').join('') + '</div>';
 export const 시안_점_글자 = { parameters: optSrc(optChips('status-chip--dot')), render: () => optChips('status-chip--dot') };

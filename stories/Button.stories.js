@@ -7,7 +7,7 @@ import './_mobile.css';
 
 const STAR = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.6 6.6 19.5l1.2-6-4.5-4.2 6.1-.7z"/></svg>';
 const X = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
-// 엑셀 내려받기 아이콘 — Figma Button Type=Excel 의 엑셀 그림과 같은 구성(X 칸 + 표 줄)을 선 아이콘으로. 상표 로고는 그리지 않음 (TD-108)
+// 엑셀 내려받기 아이콘 — Figma Button Type=Excel 의 엑셀 그림과 같은 구성(X 칸 + 표 줄)을 선 아이콘으로. 상표 로고는 그리지 않음
 const SHEET = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9l4 6M11 9l-4 6M14.5 9H18M14.5 12H18M14.5 15H18"/></svg>';
 // 처리 중 스피너 — 크기 · 색은 버튼이 정함(글자색 14, 아이콘만 있는 버튼 16)
 const SPIN = '<span class="spinner" aria-hidden="true"></span>';
@@ -29,7 +29,7 @@ const CHEV = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke
 const iconExpand = ({ open = false, extra = '', disabled = false } = {}) =>
   iconBtn({ shape: 'transparent', label: '왼쪽 메뉴', glyph: CHEV, extra, attrs: ' aria-expanded="' + open + '"', disabled });
 const toggleBtn = ({ on = false, extra = '', disabled = false } = {}) =>
-  iconBtn({ shape: 'transparent', label: '즐겨찾기', glyph: STAR, extra: 'btn--favorite' + (extra ? ' ' + extra : ''), attrs: ' aria-pressed="' + on + '"', disabled });   // 켜짐 = 노란 채움 별(TD-120)
+  iconBtn({ shape: 'transparent', label: '즐겨찾기', glyph: STAR, extra: 'btn--favorite' + (extra ? ' ' + extra : ''), attrs: ' aria-pressed="' + on + '"', disabled });   // 켜짐 = 노란 채움 별
 
 const note = (t) => '<span class="sb-note">' + t + '</span>';
 const code = (t) => '<code>' + t + '</code>';
@@ -78,7 +78,7 @@ export const Size = {
   ], { full: true }),
 };
 
-// 아래 고정 줄 (DS-ADR-049, TD-172) — 같은 줄, 글자 길이만 다름. 한 줄에 안 들어가면 세로로 쌓임(폭 기준이 아님)
+// 아래 고정 줄 (DS-ADR-049) — 같은 줄, 글자 길이만 다름. 한 줄에 안 들어가면 세로로 쌓임(폭 기준이 아님)
 const BAR = [
   '<div class="btn-bar"><button type="button" class="btn btn--secondary btn--outlined btn--lg">취소</button><button type="button" class="btn btn--primary btn--filled btn--lg">호출하기</button></div>',
   '<div class="btn-bar"><button type="button" class="btn btn--secondary btn--outlined btn--lg">다른 시간에 다시 부르기</button><button type="button" class="btn btn--primary btn--filled btn--lg">지금 바로 1명으로 부르기</button></div>',
@@ -143,7 +143,7 @@ export const Utility = {
   ], { full: true }),
 };
 
-// ── 업무 동작별 버튼 (TD-104 반영 4) ── 행 = 동작, 근거 = DS-ADR-009 대응표 · Screens 화면. 같은 동작은 화면이 달라도 같은 버튼
+// ── 업무 동작별 버튼 (반영 4) ── 행 = 동작, 근거 = DS-ADR-009 대응표 · Screens 화면. 같은 동작은 화면이 달라도 같은 버튼
 const SRCH = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/></svg>';
 const RST = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9 9l6 6M15 9l-6 6"/></svg>';
 const UP = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg>';
@@ -166,7 +166,7 @@ export const 업무_동작 = {
 const STATES = ['Default', 'Hovered', 'Pressed', 'Focused', 'Disabled'];
 const PS = ['', 'ps-hover', 'ps-active', 'ps-focus-visible'];
 
-// ── Do · Don't (TD-70) ── 미리보기만, 코드는 위 예시 카드에
+// ── Do · Don't ── 미리보기만, 코드는 위 예시 카드에
 const grp = (h) => '<div class="button_group">' + h + '</div>';
 const box = (h) => '<div style="width:140px;padding:6px 0;outline:1px dashed var(--color-border-strong);outline-offset:4px">' + h + '</div>';
 export const 사용_지침 = {
@@ -277,7 +277,7 @@ export const IconStates = {
 // ── Playground ──
 export const Playground = {};
 
-// ── 타일 버튼 (TD-187) — 아이콘 위 · 글자 아래. 큰 동작 몇 개를 나란히 고르게 둘 때 ──
+// ── 타일 버튼 — 아이콘 위 · 글자 아래. 큰 동작 몇 개를 나란히 고르게 둘 때 ──
 const TILE_ICON = {
   doc: '<path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"/><path d="M14 3v5h5M12 12v6M9 15h6"/>',
   part: '<path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5"/>',

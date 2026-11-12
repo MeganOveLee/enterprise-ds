@@ -29,7 +29,7 @@ export const 서버_오류 = { render: () => frame(empty({ mod: 'empty--error', 
 export const 페이지 = { render: () => `<div style="max-width:720px;height:420px;overflow:hidden;border:1px solid var(--color-border-base);border-radius:var(--radius-card);display:flex;flex-direction:column">${empty({ mod: 'empty--page', type: 'empty', title: '참여 중인 프로젝트가 없습니다', desc: '프로젝트에 배정되면 이 화면에 표시됩니다.' }).replace('class="empty empty--page"', 'class="empty empty--page" style="min-height:100%;flex:1"')}</div>` };
 export const 카드_안 = { render: () => frame(empty({ mod: 'empty--card', type: 'empty', title: '결재할 문서가 없습니다', desc: '새로 상신된 문서가 이 목록에 표시됩니다.' }), '280px') };
 
-// ── Do · Don't (TD-108 13번 ① ②) ── 미리보기만, 코드는 위 예시 카드에. 일러스트는 브랜드를 따름
+// ── Do · Don't (① ②) ── 미리보기만, 코드는 위 예시 카드에. 일러스트는 브랜드를 따름
 const ddFrame = (inner, w = '') => `<div style="${w ? 'width:' + w : 'flex:1;min-width:0'};border:1px solid var(--color-border-base);border-radius:var(--radius-card)">${inner}</div>`;
 // 카드 안 — 카드 제목 + 빈 상태. Don't 는 페이지용(.empty--page) 큰 일러스트
 const ddCard = (inner) => `<div style="width:240px;border:1px solid var(--color-border-base);border-radius:var(--radius-card);overflow:hidden"><p style="margin:0;padding:12px 16px;border-bottom:1px solid var(--color-border-subtle);font-size:var(--body-md);font-weight:var(--font-weight-semibold);color:var(--color-text-base)">결재할 문서</p>${inner}</div>`;
@@ -38,7 +38,7 @@ const searchCtx = '<p style="margin:0 0 8px;padding:6px 10px;border-radius:var(-
 export const 사용_지침 = {
   parameters: { controls: { disable: true } },
   render: () => doDont([
-    // ① 아직 없음에는 다음 동작 — 사용자가 만들 수 있는 것이 비었으면 [등록] (TD-121: 예전 Don't는 「검색 결과 없음」 자리에 아직 없음 문구를 둔 것이었는데 검색 맥락이 그림에 없어 맞는 예처럼 보였음)
+    // ① 아직 없음에는 다음 동작 — 사용자가 만들 수 있는 것이 비었으면 [등록] (: 예전 Don't는 「검색 결과 없음」 자리에 아직 없음 문구를 둔 것이었는데 검색 맥락이 그림에 없어 맞는 예처럼 보였음)
     { title: '「아직 없음」에는 다음 동작을 둡니다',
       do: [ddFrame(empty({ type: 'empty', title: '등록된 문서가 없습니다', desc: '새 문서를 등록하면 이 목록에 표시됩니다.', actions: btn('문서 등록', 'primary', 'filled') })),
         '사용자가 만들 수 있는 것이 비어 있으면 [등록]을 둡니다.'],

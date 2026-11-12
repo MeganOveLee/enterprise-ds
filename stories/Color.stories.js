@@ -246,7 +246,7 @@ export const ProgressTokens = {
   ]),
 };
 
-// ── 모바일 앱 색 (DS-ADR-050 · 051, TD-172) ──
+// ── 모바일 앱 색 (DS-ADR-050 · 051) ──
 const KINDS = [['home', '집'], ['medical', '병원 · 약국'], ['market', '시장 · 마트'], ['welfare', '복지관 · 경로당'], ['public', '관공서 · 은행']];
 export const PlaceTokens = {
   parameters: css([

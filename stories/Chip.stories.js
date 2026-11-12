@@ -1,5 +1,5 @@
 // Form/Chip — 문서 화면은 Chip.mdx. 누르는 칩(바로가기 · 하나 고르기 · 여럿 고르기). 표시만 하는 칩은 Data Display/Status Chip
-// 시안 A 장소 칩(추천) · B 원형 아이콘 칩 · C 큰 타일 (DS-ADR-049 · 050 · 051, TD-172)
+// 시안 A 장소 칩(추천) · B 원형 아이콘 칩 · C 큰 타일 (DS-ADR-049 · 050 · 051)
 import { svg, solid, I, P, PLACE, phone, body } from './_mobile.js';
 
 const check = svg(I.check).replace('<svg ', '<svg class="chip__check" ');

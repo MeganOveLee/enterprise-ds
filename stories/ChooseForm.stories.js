@@ -1,6 +1,6 @@
 // Form/고르는 법 — 문서 화면은 ChooseForm.mdx. 입력 컴포넌트의 표준 이름 · 정의 · 고르는 기준을 한 표로
 // 이름 · 정의 = 공개 DS 문서(KRDS · Carbon · Material · Atlassian · GOV.UK)의 표준 용어
-// 고르는 기준의 옵션 수 = 4개까지 라디오 · 체크박스(가로 한 줄), 5개부터 드롭다운(셀렉트 · 다중 선택) — TD-108 26 · 27번
+// 고르는 기준의 옵션 수 = 4개까지 라디오 · 체크박스(가로 한 줄), 5개부터 드롭다운(셀렉트 · 다중 선택) — · 27번
 import { matrix } from './_matrix.js';
 
 const svg = (d, s = 14) => '<svg width="' + s + '" height="' + s + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + d + '</svg>';

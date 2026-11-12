@@ -7,8 +7,6 @@ import notionIcon from '../assets/links/notion.svg';
 
 <Meta title="시작하기" />
 
-{/* 시작하기 = 가져다 쓰는 사람(디자이너 · 개발자)이 읽는다 — 스토리북 사용법 · 개발 화면에 적용하는 법 · 지원 범위 · 참고 자료 (TD-50).
-    이 디자인 시스템이 무엇이고 어떻게 만들었나(이전 버전과 비교 포함)는 「소개」. 도구 막대 · 테마 전환 설명은 여기 한 곳에만 */}
 
 export const LOAD = [
   '<!-- 기존 전역 CSS는 빼고 아래 순서로 불러옵니다 -->',
@@ -29,7 +27,6 @@ export const LOAD = [
   '<button type="button" class="btn btn--primary btn--filled">저장</button>',
 ].join('\n');
 
-{/* 비침습 — 이전 버전 문서 검색 화면(searchDoc.jsp) 「문서 번호」 칸 그대로. 개발 코드(id · name · 자동 검색 클래스 · 서버 주소)는 두고 클래스 하나만 더함 (TD-118) */}
 export const BEFORE = [
   '<div class="td over">',
   '  <input id="number" name="number" class="onKeySearch" data-url="/doc/searchNumber">',
@@ -66,8 +63,8 @@ export const AFTER = [
 <thead><tr><th>단계</th><th>할 일</th></tr></thead>
 <tbody>
 <tr><td><b>1. 불러오기</b><span className="ds-muted">필수</span></td><td>공통 레이아웃에서 기존 전역 CSS를 빼고, CSS 네 파일을 아래 코드의 순서(토큰 → 브랜드 → 전역 → 컴포넌트)로 불러옵니다. 글꼴(Pretendard) 파일은 저장소에 포함되어 있지 않습니다. 경로가 맞지 않으면 시스템 글꼴로 표시되므로 <code>globals.css</code>의 <code>@font-face</code> 경로를 화면 폴더 구조에 맞춥니다. JS는 쓰는 컴포넌트의 파일만 불러옵니다. 파일별 용도는 아래 「불러오는 코드」에 있습니다.</td></tr>
-<tr><td><b>2. 클래스 적용</b><span className="ds-muted">필수</span></td><td>컴포넌트 문서 예시 카드의 「코드 보기」 마크업을 복사해 사용합니다. 상태는 클래스가 아닌 HTML 속성으로 표현합니다 — <code>disabled</code> · <code>readonly</code> · <code>aria-invalid="true"</code> · <code>aria-expanded</code> · <code>aria-pressed</code>.</td></tr>
-<tr><td><b>3. 브랜드 · 화면 모드</b><span className="ds-muted">선택 — 적용하지 않으면 Default · 라이트</span></td><td>브랜드는 브랜드 파일(<code>{'css/brands/*.css'}</code>)과 <code>{'<html class="theme-*">'}</code>를 함께, 다크 모드는 <code>{'<body class="dark-mode">'}</code>로 적용합니다. 화면에 CSS를 추가할 때는 색상에 시맨틱 토큰(<code>--color-*</code>)만 사용하고, 원천 색(<code>--neutral-N</code> · <code>--brand-N</code>)이나 색상 값을 쓰지 않습니다.</td></tr>
+<tr><td><b>2. 클래스 적용</b><span className="ds-muted">필수</span></td><td>컴포넌트 문서 예시 카드의 「코드 보기」 마크업을 복사해 사용합니다. 상태는 클래스가 아닌 HTML 속성으로 표현합니다: <code>disabled</code> · <code>readonly</code> · <code>aria-invalid="true"</code> · <code>aria-expanded</code> · <code>aria-pressed</code>.</td></tr>
+<tr><td><b>3. 브랜드 · 화면 모드</b><span className="ds-muted">선택: 적용하지 않으면 Default · 라이트</span></td><td>브랜드는 브랜드 파일(<code>{'css/brands/*.css'}</code>)과 <code>{'<html class="theme-*">'}</code>를 함께, 다크 모드는 <code>{'<body class="dark-mode">'}</code>로 적용합니다. 화면에 CSS를 추가할 때는 색상에 시맨틱 토큰(<code>--color-*</code>)만 사용하고, 원천 색(<code>--neutral-N</code> · <code>--brand-N</code>)이나 색상 값을 쓰지 않습니다.</td></tr>
 </tbody>
 </table>
 <h3 className="ds-subhead">불러오는 코드</h3>
@@ -85,7 +82,7 @@ export const AFTER = [
 </tbody>
 </table>
 <h3 className="ds-subhead">바뀌는 범위</h3>
-<p className="ds-sec__desc">화면 코드의 동작 — <code>id</code> · <code>name</code> · 이벤트 · 서버 주소 — 은 바꾸지 않고, 클래스를 더하거나 감싸는 태그를 넣어 화면을 바꿉니다. 아래는 이전 버전 문서 검색 화면의 「문서 번호」 칸입니다.</p>
+<p className="ds-sec__desc">화면 코드의 동작: <code>id</code> · <code>name</code> · 이벤트 · 서버 주소: 은 바꾸지 않고, 클래스를 더하거나 감싸는 태그를 넣어 화면을 바꿉니다. 아래는 이전 버전 문서 검색 화면의 「문서 번호」 칸입니다.</p>
 <div className="ds-pair">
 <div><p className="ds-pair__label">이전 버전</p><Source language="html" code={BEFORE} /></div>
 <div><p className="ds-pair__label"><code>input</code> 클래스만 더한 디자인 시스템 적용</p><Source language="html" code={AFTER} /></div>
@@ -96,16 +93,14 @@ export const AFTER = [
 <div><span className="ds-tag ds-tag--warn">화면마다 클래스 수정</span><h4>새 클래스로 바꿔야 하는 것</h4><ul><li>버튼 <code>{'.btn_*'}</code> → <code>{'.btn--*'}</code></li><li>입력 필드 → <code>.input</code> · <code>.select</code> · <code>.textarea</code></li><li>체크박스 · 라디오 → <code>.checkbox</code> · <code>.radio</code></li></ul></div>
 </div>
 </Section>
-{/* 지원 범위 — 「마크업을 바꿀 수 없는 곳」과 「포함하지 않는 JS」가 같은 말을 하던 것을 한 표로: 디자인 시스템이 맡는 것 / 각 시스템이 맡는 것.
-    그리드 사용자 스타일 파일 이름은 그리드 라이브러리(AUIGrid)가 정한 이름 */}
 <Section title="지원 범위" en="What the system covers" desc="디자인 시스템은 화면의 모양(CSS 토큰 · 클래스)과 모양에 필요한 스크립트만 제공합니다. 마크업을 디자인 시스템이 정할 수 없는 곳은 아래처럼 나눠 맡습니다.">
 <table className="ds-table ds-table--wrap">
 <thead><tr><th>자리</th><th>디자인 시스템이 맡는 것</th><th>각 시스템이 맡는 것</th></tr></thead>
 <tbody>
 <tr><td><b>그리드 라이브러리가 그리는 표</b></td><td>바깥 틀(<code>.table_list</code> › <code>.list</code>) · 그리드 토큰(<code>--color-bg-grid-header</code> 등) · 선택 체크박스 모양</td><td>라이브러리가 만드는 마크업은 바꾸지 않고, 그리드 사용자 스타일 파일(<code>AUIGrid_custom_style.css</code>)에서 그리드 토큰으로 덮어씁니다.</td></tr>
 <tr><td><b>선택 목록 · 날짜</b></td><td><code>select.js</code> · <code>datepicker.js</code>가 원래 요소 위에 디자인 시스템 목록 · 달력을 만듭니다. <a className="ds-link" href="https://app.notion.com/p/3fea8196682d8130928dc7e0c7dcad6e" target="_blank" rel="noreferrer">DS-ADR-033 ↗</a> · <a className="ds-link" href="https://app.notion.com/p/3f1a8196682d81798072f56cec921405" target="_blank" rel="noreferrer">016 ↗</a></td><td>값 · 이름 · 제출은 원래 <code>select</code> · <code>input</code>이 맡습니다.</td></tr>
-<tr><td><b>첨부 · 사람 검색</b></td><td>모양(CSS) — 첨부 <code>.resumable</code> · 다중 선택 <code>.checkSelect</code></td><td>서버와 묶인 스크립트인 파일 올리기와, 서버에 물어 옵션을 채우는 사람 검색을 맡습니다.</td></tr>
-<tr><td><b>CSS 밖에서 색을 그리는 곳</b></td><td>—</td><td>그리드의 엑셀 내보내기처럼 브라우저 밖에서 만드는 파일은 CSS 변수를 읽지 못하므로, 토큰 이름이 아니라 계산된 값(<code>getComputedStyle</code>)을 넘깁니다.</td></tr>
+<tr><td><b>첨부 · 사람 검색</b></td><td>모양(CSS): 첨부 <code>.resumable</code> · 다중 선택 <code>.checkSelect</code></td><td>서버와 묶인 스크립트인 파일 올리기와, 서버에 물어 옵션을 채우는 사람 검색을 맡습니다.</td></tr>
+<tr><td><b>CSS 밖에서 색을 그리는 곳</b></td><td>없음</td><td>그리드의 엑셀 내보내기처럼 브라우저 밖에서 만드는 파일은 CSS 변수를 읽지 못하므로, 토큰 이름이 아니라 계산된 값(<code>getComputedStyle</code>)을 넘깁니다.</td></tr>
 </tbody>
 </table>
 <h3 className="ds-subhead">적용 단위</h3>
@@ -118,11 +113,11 @@ export const AFTER = [
 <Section title="참고 자료 · 문의" en="Resources">
 <table className="ds-table">
 <tbody>
-<tr><td><img className="ds-res-icon" src={figmaIcon} alt="" width="20" height="20" /><b>Figma UI Kit</b></td><td>컴포넌트 원본입니다. 첫 페이지에 전체 요약이 있습니다.</td><td><a className="ds-link" href="https://www.figma.com/design/99ff5JQYQPCdY3xRBWHHlO/?node-id=8111-5" target="_blank" rel="noreferrer">Figma — UI Kit ↗</a></td></tr>
-<tr><td><img className="ds-res-icon" src={figmaIcon} alt="" width="20" height="20" /><b>Figma Foundation</b></td><td>토큰(변수)과 글자 스타일 원본입니다. 브랜드와 라이트 · 다크 모드는 변수 모드로 전환합니다.</td><td><a className="ds-link" href="https://www.figma.com/design/Mf4XTC6dNUOH0anjOMcRPi" target="_blank" rel="noreferrer">Figma — Foundation ↗</a></td></tr>
+<tr><td><img className="ds-res-icon" src={figmaIcon} alt="" width="20" height="20" /><b>Figma UI Kit</b></td><td>컴포넌트 원본입니다. 첫 페이지에 전체 요약이 있습니다.</td><td><a className="ds-link" href="https://www.figma.com/design/99ff5JQYQPCdY3xRBWHHlO/?node-id=8111-5" target="_blank" rel="noreferrer">Figma: UI Kit ↗</a></td></tr>
+<tr><td><img className="ds-res-icon" src={figmaIcon} alt="" width="20" height="20" /><b>Figma Foundation</b></td><td>토큰(변수)과 글자 스타일 원본입니다. 브랜드와 라이트 · 다크 모드는 변수 모드로 전환합니다.</td><td><a className="ds-link" href="https://www.figma.com/design/Mf4XTC6dNUOH0anjOMcRPi" target="_blank" rel="noreferrer">Figma: Foundation ↗</a></td></tr>
 <tr><td><img className="ds-res-icon" src={githubIcon} alt="" width="20" height="20" /><b>저장소</b></td><td>소스 코드와 변경 이력</td><td><a className="ds-link" href="https://github.com/MeganOveLee/enterprise-ds" target="_blank" rel="noreferrer">github.com/MeganOveLee/enterprise-ds</a></td></tr>
 
-<tr><td><img className="ds-res-icon ds-res-icon--light" src={notionIcon} alt="" width="20" height="20" /><b>결정 기록 (ADR)</b></td><td>디자인 시스템을 기획 · 설계하며 검토한 선택지와 결정 근거</td><td><a className="ds-link" href="https://app.notion.com/p/3eda8196682d8126967fcc86f796fcb4" target="_blank" rel="noreferrer">Notion — 결정 기록 (ADR)</a></td></tr>
+<tr><td><img className="ds-res-icon ds-res-icon--light" src={notionIcon} alt="" width="20" height="20" /><b>결정 기록 (ADR)</b></td><td>디자인 시스템을 기획 · 설계하며 검토한 선택지와 결정 근거</td><td><a className="ds-link" href="https://app.notion.com/p/3eda8196682d8126967fcc86f796fcb4" target="_blank" rel="noreferrer">Notion: 결정 기록 (ADR)</a></td></tr>
 <tr><td><img className="ds-res-icon" src={githubIcon} alt="" width="20" height="20" /><b>문의 · 제안</b></td><td>질문과 개선 제안은 GitHub 이슈로 등록합니다</td><td><a className="ds-link" href="https://github.com/MeganOveLee/enterprise-ds/issues" target="_blank" rel="noreferrer">GitHub Issues ↗</a></td></tr>
 </tbody>
 </table>
