@@ -1,5 +1,5 @@
 {
-  "$description": "/* ============================================================================\n * DARK MODE — body.dark-mode 토글 시 Layer 4 Semantic Aliases override\n *\n * 디자인 정책 — 라이트 모드의 위계 의미를 유지:\n *   subtle (페이지 바닥, 가장 가라앉음) → base (카드, 약간 들림) → muted (호버, 더 들림)\n *\n *   - 페이지 바닥(subtle):   neutral-950\n *   - 카드(base):            neutral-800\n *   - 호버/elevation(muted): neutral-750\n *   - 섹션 헤더·그리드 헤더: neutral-850\n *   - 브랜드:                brand-400  (다크 배경에 살아남도록 한 단계 옅게) — 보더·아이콘. 글자는 300(AA 4.5, DS-ADR-014). 흰 글자를 얹는 채색 면(bg-brand)은 500 (DS-ADR-004)\n *   Vendor Bridge(Layer 5)는 body 에 선언돼 있어 여기서 다시 쓸 필요 없음.\n * ============================================================================ */",
+  "$description": "/* ============================================================================\n * DARK MODE: body.dark-mode 토글 시 Layer 4 Semantic Aliases override\n *\n * 디자인 정책: 라이트 모드의 위계 의미를 유지:\n *   subtle (페이지 바닥, 가장 가라앉음) → base (카드, 약간 들림) → muted (호버, 더 들림)\n *\n *   - 페이지 바닥(subtle):   neutral-950\n *   - 카드(base):            neutral-800\n *   - 호버/elevation(muted): neutral-750\n *   - 섹션 헤더·그리드 헤더: neutral-850\n *   - 브랜드:                brand-400  (다크 배경에 살아남도록 한 단계 옅게): 보더·아이콘. 글자는 300(AA 4.5, DS-ADR-014). 흰 글자를 얹는 채색 면(bg-brand)은 500 (DS-ADR-004)\n *   Vendor Bridge(Layer 5)는 body 에 선언돼 있어 여기서 다시 쓸 필요 없음.\n * ============================================================================ */",
   "$extensions": {
     "eds": {
       "selector": "body.dark-mode"
@@ -10,8 +10,8 @@
     "$extensions": {
       "eds": {
         "before": [
-          "/* ⚠️ 여기는 '값'을 만들지 않는다 — Layer 1 팔레트(--neutral-* / --brand-* / 신호색)를 참조만.\n *   토큰 이름은 라이트와 동일. 이름은 그대로 두고 가리키는 팔레트 단계만 바꾸는 게 이 층의 역할.\n *   ⚠️ Halation(어두운 배경 위 흰 글자 번짐) 방지로 subtle(바닥)↔base(카드) 명도차를 일부러 벌려 뒀음. */",
-          "/* Background — 라이트 모드와 동일 위계 의미 (subtle 가장 가라앉음 → muted 가장 들림) */"
+          "/* ⚠️ 여기는 '값'을 만들지 않는다: Layer 1 팔레트(--neutral-* / --brand-* / 신호색)를 참조만.\n *   토큰 이름은 라이트와 동일. 이름은 그대로 두고 가리키는 팔레트 단계만 바꾸는 게 이 층의 역할.\n *   ⚠️ Halation(어두운 배경 위 흰 글자 번짐) 방지로 subtle(바닥)↔base(카드) 명도차를 일부러 벌려 뒀음. */",
+          "/* Background: 라이트 모드와 동일 위계 의미 (subtle 가장 가라앉음 → muted 가장 들림) */"
         ]
       }
     }
@@ -21,7 +21,7 @@
   },
   "color-bg-subtle": {
     "$value": "{neutral-950}",
-    "$description": "페이지 바닥. 입력칸(neutral-900)과 한 단계 벌려야 함 —\n같은 값이면 편집그리드에서 '회색 판 위 입력칸'이 안 보임"
+    "$description": "페이지 바닥. 입력칸(neutral-900)과 한 단계 벌려야 함 : \n같은 값이면 편집그리드에서 '회색 판 위 입력칸'이 안 보임"
   },
   "color-bg-header": {
     "$value": "{neutral-850}"
@@ -34,15 +34,15 @@
     "$extensions": {
       "eds": {
         "before": [
-          "/* 라이트와 반전 관계 — 라이트: 입력=흰색 / 읽기전용=회색(어둡게).\n *                      다크 : 입력=파인 어두운 칸 / 읽기전용=떠 있는 밝은 칸.\n * 어느 쪽이든 '입력 가능한 칸'이 배경에서 더 멀어지는 방향 */"
+          "/* 라이트와 반전 관계: 라이트: 입력=흰색 / 읽기전용=회색(어둡게).\n *                      다크 : 입력=파인 어두운 칸 / 읽기전용=떠 있는 밝은 칸.\n * 어느 쪽이든 '입력 가능한 칸'이 배경에서 더 멀어지는 방향 */"
         ]
       }
     },
-    "$description": "입력칸 — 카드보다 확실히 파이게"
+    "$description": "입력칸: 카드보다 확실히 파이게"
   },
   "color-bg-readonly": {
     "$value": "{neutral-750}",
-    "$description": "읽기전용 — 카드보다 밝게 떠서 '건드릴 수 없는 칸'"
+    "$description": "읽기전용: 카드보다 밝게 떠서 '건드릴 수 없는 칸'"
   },
   "color-bg-inverse": {
     "$value": "{neutral-100}"
@@ -52,7 +52,7 @@
   },
   "color-bg-brand": {
     "$value": "{brand-500}",
-    "$description": "다크도 500 — 채색 면 위에 흰 글자(on-color)가 올라감. 400 은 흰 글자 대비 Default 4.27 · 고객사 A 3.91 로 AA 미달.\n'다크 브랜드 = 400' 은 다크 바탕 위 글자·보더용 (DS-ADR-004)"
+    "$description": "다크도 500: 채색 면 위에 흰 글자(on-color)가 올라감. 400 은 흰 글자 대비 Default 4.27 · 고객사 A 3.91 로 AA 미달.\n'다크 브랜드 = 400' 은 다크 바탕 위 글자·보더용 (DS-ADR-004)"
   },
   "color-bg-brand-subtle": {
     "$value": "color-mix(in srgb, {brand-500} 30%, transparent)"
@@ -90,7 +90,7 @@
   },
   "color-bg-selected-strong": {
     "$value": "{color-bg-selected-strong-dark}",
-    "$description": "선택 면 — 다크 칸을 읽음 (DS-ADR-051)"
+    "$description": "선택 면: 다크 칸을 읽음 (DS-ADR-051)"
   },
   "color-text-on-selected-strong": {
     "$value": "{color-text-on-selected-strong-dark}"
@@ -100,7 +100,7 @@
   },
   "color-bg-overlay": {
     "$value": "{transparent-60}",
-    "$description": "어두운 화면 위 덮개 — 32%는 뒤 화면과 구분이 안 됨. 다크 그림자(--shadow-modal 0.6)와 같은 농도"
+    "$description": "어두운 화면 위 덮개: 32%는 뒤 화면과 구분이 안 됨. 다크 그림자(--shadow-modal 0.6)와 같은 농도"
   },
   "color-text-base": {
     "$value": "{neutral-200}",
@@ -115,7 +115,7 @@
   },
   "color-text-muted": {
     "$value": "{neutral-400}",
-    "$description": "구 text-subtle 다크값. 구 muted(300)와 subtle(400)은 한 단계 차이라 구분되지 않았음 — 이전 버전 다크에서는 대비 1.01 (DS-ADR-001 · 008)"
+    "$description": "구 text-subtle 다크값. 구 muted(300)와 subtle(400)은 한 단계 차이라 구분되지 않았음: 이전 버전 다크에서는 대비 1.01 (DS-ADR-001 · 008)"
   },
   "color-text-disabled": {
     "$value": "{neutral-600}"
@@ -165,7 +165,7 @@
     "$extensions": {
       "eds": {
         "before": [
-          "/* 진행 상태 「예정」 — 라이트 값(#111827 → 거의 검정)이 다크 바탕에 묻힘(1.18) → 중립 밝은 단계 (제안 B). 나머지 4색은 다크 바탕 위 3:1 근처라 그대로 */"
+          "/* 진행 상태 「예정」: 라이트 값(#111827 → 거의 검정)이 다크 바탕에 묻힘(1.18) → 중립 밝은 단계 (제안 B). 나머지 4색은 다크 바탕 위 3:1 근처라 그대로 */"
         ]
       }
     }
@@ -219,7 +219,7 @@
   },
   "color-focus-ring": {
     "$value": "color-mix(in srgb, {brand-400} 35%, transparent)",
-    "$description": "다크 번짐 — 바탕 위 1.5~1.7:1(22%는 1.2). 표시는 테두리가 맡고 번짐은 보조"
+    "$description": "다크 번짐: 바탕 위 1.5~1.7:1(22%는 1.2). 표시는 테두리가 맡고 번짐은 보조"
   },
   "color-border-danger": {
     "$value": "{red-500}"
@@ -291,33 +291,33 @@
   },
   "color-bg-row-alt": {
     "$value": "{neutral-850}",
-    "$description": "짝수행 — 카드보다 살짝 가라앉게.\n구 #15151A 는 줄무늬가 너무 셌고, 실제로는 components.css 가\n#1E2822(옅은 그린)로 덮고 있어 트리 짝수행이 초록으로 떴음"
+    "$description": "짝수행: 카드보다 살짝 가라앉게.\n구 #15151A 는 줄무늬가 너무 셌고, 실제로는 components.css 가\n#1E2822(옅은 그린)로 덮고 있어 트리 짝수행이 초록으로 떴음"
   },
   "color-border-grid-outer": {
     "$value": "{color-border-base}"
   },
   "color-bg-grid-row-hover": {
     "$value": "{neutral-750}",
-    "$description": "다크는 명도차만으로 구분 — 어두운 배경이 채도를 먹어서 틴트를 줘도 잘 안 보임"
+    "$description": "다크는 명도차만으로 구분: 어두운 배경이 채도를 먹어서 틴트를 줘도 잘 안 보임"
   },
   "color-bg-grid-row-selected": {
     "$value": "color-mix(in srgb, {brand-500} 14%, {neutral-800})",
-    "$description": "선택만 브랜드 틴트 — 호버와 구분되고 인풋과도 분리.\n구 #243044 하드코딩 → 브랜드 추종 (DS-ADR-003). Default 에서 rgb(30,48,68) ≈ 구 값 rgb(36,48,68)"
+    "$description": "선택만 브랜드 틴트: 호버와 구분되고 인풋과도 분리.\n구 #243044 하드코딩 → 브랜드 추종 (DS-ADR-003). Default 에서 rgb(30,48,68) ≈ 구 값 rgb(36,48,68)"
   },
   "color-bg-lnb-hover": {
     "$value": "{neutral-750}",
     "$extensions": {
       "eds": {
         "before": [
-          "/* LNB hover / active — 다크 위 옅은 브랜드 반투명. 옛 브랜드(빨강) 하드코딩 rgba(239,0,16,…) 이었던 것 → 브랜드 추종 */",
-          "/* 다크 LNB — 사이드바가 순검정(#000)이라 반투명 브랜드색은 다 먹힘.\n * 호버 = 명도만, 활성 = 채도 100 짜리 진한 파랑 블록 + 흰 글자 */"
+          "/* LNB hover / active: 다크 위 옅은 브랜드 반투명. 옛 브랜드(빨강) 하드코딩 rgba(239,0,16,…) 이었던 것 → 브랜드 추종 */",
+          "/* 다크 LNB: 사이드바가 순검정(#000)이라 반투명 브랜드색은 다 먹힘.\n * 호버 = 명도만, 활성 = 채도 100 짜리 진한 파랑 블록 + 흰 글자 */"
         ]
       }
     }
   },
   "color-bg-lnb-active": {
     "$value": "{brand-700}",
-    "$description": "#00347F — s100 딥블루"
+    "$description": "#00347F: s100 딥블루"
   },
   "color-text-lnb-active": {
     "$value": "{brand-50}",
@@ -328,7 +328,7 @@
     "$extensions": {
       "eds": {
         "before": [
-          "/* 버튼 — primary(등록 · 저장) */"
+          "/* 버튼: primary(등록 · 저장) */"
         ]
       }
     },
@@ -352,7 +352,7 @@
     "$extensions": {
       "eds": {
         "before": [
-          "/* 버튼 상태·역할 — 다크 (P2 Button). 다크 브랜드 글자·보더 = 400 → hover 300 → pressed 200 */"
+          "/* 버튼 상태·역할: 다크 (P2 Button). 다크 브랜드 글자·보더 = 400 → hover 300 → pressed 200 */"
         ]
       }
     }
@@ -411,7 +411,7 @@
   },
   "color-bg-interactive-danger-hover": {
     "$value": "{red-700}",
-    "$description": "흰 글자 대비 유지 — 밝게 가면 4.5 아래로 떨어짐"
+    "$description": "흰 글자 대비 유지: 밝게 가면 4.5 아래로 떨어짐"
   },
   "color-bg-interactive-danger-pressed": {
     "$value": "{red-800}"
@@ -446,7 +446,7 @@
     "$extensions": {
       "eds": {
         "before": [
-          "/* 버튼 — Excel (.btn_excel) Soft Green + 컬러 보더 */"
+          "/* 버튼: Excel (.btn_excel) Soft Green + 컬러 보더 */"
         ]
       }
     }
@@ -502,7 +502,7 @@
     "$extensions": {
       "eds": {
         "before": [
-          "/* Shadow — 다크에선 더 진하게 (modal = 구 다크 떠 있는 층 묶음 값) */"
+          "/* Shadow: 다크에선 더 진하게 (modal = 구 다크 떠 있는 층 묶음 값) */"
         ]
       }
     }
@@ -518,7 +518,7 @@
     "$extensions": {
       "eds": {
         "before": [
-          "/* 장소 종류 색 (DS-ADR-050) — :root 의 -dark 칸을 읽음 */"
+          "/* 장소 종류 색 (DS-ADR-050): :root 의 -dark 칸을 읽음 */"
         ]
       }
     }
@@ -597,7 +597,7 @@
   },
   "color-bg-notify": {
     "$value": "{red-400}",
-    "$description": "다크 알림 배지 — 밝은 빨강 + 진한 글자. 500 위 흰 글자는 4.11로 미달",
+    "$description": "다크 알림 배지: 밝은 빨강 + 진한 글자. 500 위 흰 글자는 4.11로 미달",
     "$extensions": {
       "eds": {
         "before": [
