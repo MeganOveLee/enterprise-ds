@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════════════════════
- * 모바일 앱 전용 Blocks (DS-ADR-049, TD-172)
+ * 모바일 앱 전용 Blocks (DS-ADR-049)
  *   모바일 앱 화면에서만 쓰는 조합. PLM 화면은 이 파일을 링크하지 않음
  *   불러오는 순서: tokens → brands → globals → components → blocks/mobility.css
  *   공통 토큰만 읽음 — 이 파일에 숫자 · 색상 값을 두지 않음
@@ -31,7 +31,7 @@
 .route-summary__label { color: var(--color-text-muted); font-size: var(--body-sm); padding-top: 0.1em; }
 .route-summary__place { min-width: 0; font-weight: var(--font-weight-medium); word-break: keep-all; overflow-wrap: anywhere; }   /* 긴 장소 이름은 줄바꿈 — 자르지 않음 */
 .route-summary__time { color: var(--color-text-muted); font-size: var(--body-sm); white-space: nowrap; }
-/* 놓인 칸이 좁으면(글자를 키운 휴대폰) 시각을 장소 아래 줄로 — 장소 칸이 글자 한두 개 폭으로 좁아지지 않게 (Mobility 결정 28).
+/* 놓인 칸이 좁으면(글자를 키운 휴대폰) 시각을 장소 아래 줄로 — 장소 칸이 글자 한두 개 폭으로 좁아지지 않게 (Mobility ).
  *   기준 17em = 점 · 라벨 · 장소 6자 · 시각이 한 줄에 드는 폭. em 이라 글자 크기를 따라감 */
 @container (max-width: 17em) {
     .route-summary__stop { grid-template-columns: 1.25em 2.75em 1fr; }
@@ -108,7 +108,7 @@
 /* 시안 C · 타는 곳 한 칸 — 지도에서 타는 곳만 맞추고 도착은 다음 단계(Via 방식). 지도 핀을 움직여 맞출 때 */
 .trip-input--pickup .trip-input__stop--start .trip-input__mark::before { border: 0; background: var(--color-bg-map-pin); }
 
-/* 이동 수단 타일 — 홈에서 이동 수단 · 서비스로 들어가는 큰 누름 칸. 이름은 하는 일로(결정 7)
+/* 이동 수단 타일 — 홈에서 이동 수단 · 서비스로 들어가는 큰 누름 칸. 이름은 하는 일로
  *   <a class="transport-tile" href="…"><span class="transport-tile__icon"><svg …/></span><span class="transport-tile__name">버스 부르기</span><span class="transport-tile__desc">부르면 찾아오는 버스</span></a>
  *   시안: A 큰 타일 하나 .transport-tile--primary(추천, 쉬운 화면) · B 격자 .transport-tiles(큰 타일 줄 + 작은 타일 줄 .transport-tile--sm) · C 줄 타일 .transport-tile--row(시간 · 요금 .transport-tile__meta)
  *   타일 전체가 누르는 곳 하나(a 또는 button). 그림은 DS 아이콘만 */
@@ -170,7 +170,7 @@
  *   <div class="map-btns"><button class="btn btn--secondary btn--outlined fab fab--icon" aria-label="내 위치로 이동"><svg/></button> …</div>
  *   버튼 시안: A 하나씩 세로 줄 .map-btns(추천) · B 붙은 묶음 .map-btns--group · C 글자 알약(.fab 글자 버튼을 같은 줄에)
  *   이름표 시안: A 진한 면 + 꼬리 .map-label(추천) · B 흰 면 + 테두리 + 핀 점 .map-label--outline · C 누르는 이름표 .map-label--action
- *   지도 위 글자는 늘 단색 면 위에 둠(결정 14) — 지도 그림 위에 글자만 두지 않음 */
+ *   지도 위 글자는 늘 단색 면 위에 둠 — 지도 그림 위에 글자만 두지 않음 */
 .map-btns { display: flex; flex-direction: column; align-items: flex-end; gap: var(--spacing-8); }
 .map-btns > .fab:not(.fab--icon) { min-height: var(--size-touch); font-size: var(--body-sm); }   /* 시안 C 글자 알약 — 지도를 덜 가리게 누름 기준 높이 */
 
