@@ -1,0 +1,61 @@
+import { Meta, Unstyled, Controls } from '@storybook/addon-docs/blocks';
+import { PageHead, Section, Card } from './_blocks.js';
+import * as S from './MultiSelect.stories.js';
+
+<Meta of={S} />
+
+<Unstyled>
+<div className="ds-page">
+<PageHead eyebrow="Form" title="Multi Select" lead="옵션 목록에서 여러 값을 선택하는 다중 선택 드롭다운입니다. 하나만 선택할 때는 Input의 셀렉트를 씁니다." />
+<Section title="구성" en="Spec">
+<table className="ds-table ds-props">
+<thead><tr><th>구분</th><th>클래스 · 속성</th><th>설명</th></tr></thead>
+<tbody>
+<tr><td><b>컨테이너</b></td><td><code>.checkSelect</code></td><td>트리거와 옵션 목록을 감쌉니다. 너비는 필드를 따라 100%입니다. 여닫기 · 표시 글자는 <code>js/multiselect.js</code>가 맡습니다.</td></tr>
+<tr><td><b>트리거</b></td><td><code>.selected-text</code> › <code>.selected-text__value</code> · <code>.selected-text__more</code></td><td>선택한 값을 표시하는 필드입니다. 하나면 선택한 값, 두 개 이상이면 「첫 값 외 N」, 없으면 「전체」(placeholder)를 표시합니다. 첫 값은 넘치면 말줄임, 「외 N」은 늘 보이는 개수 배지입니다. 높이 · 테두리 · 모서리 · 화살표(16, <code>--color-icon-muted</code>)는 <a className="ds-link" href="./?path=/docs/form-input--docs" target="_top">Input</a>의 셀렉트와 같은 토큰이고, 열린 동안은 Focused 모양 + 위를 향한 화살표입니다.</td></tr>
+<tr><td><b>옵션 목록</b></td><td><code>.options</code> · <code>.show</code><span className="ds-muted">Figma Option group</span></td><td>트리거 바로 아래에 붙는 팝오버입니다. 포커스 테두리 색 1px로 트리거와 이어져 보입니다. 안쪽 여백 없이 옵션 행이 테두리에 붙습니다. 최대 높이 220이고, 넘으면 목록만 스크롤합니다.</td></tr>
+<tr><td><b>검색</b></td><td><code>data-searchBox="true"</code> → <code>.search-text</code><span className="ds-muted">선택 사항</span></td><td>옵션이 많을 때 목록 위에 두는 검색 필드입니다. 원래 select에 속성을 붙이면 스크립트가 만듭니다. 포커스는 아래 선만 브랜드색이고, 스크롤해도 위에 남습니다.</td></tr>
+<tr><td><b>옵션</b></td><td><code>.option</code> = label + 체크박스 + 글자<span className="ds-muted">Figma Option Type=Check · 높이 28</span></td><td>체크박스 16으로 여러 개를 선택하는 목록임을 표시합니다. 행 어디를 눌러도 선택 · 해제됩니다. 선택한 항목 = 옅은 브랜드 바탕(<code>--color-bg-brand-subtle</code>) + 반굵은 글자, Hovered도 같은 바탕이고 누르는 동안은 회색 바탕입니다. 키보드 포커스는 행 안쪽 글로우입니다.</td></tr>
+<tr><td><b>비활성</b></td><td><code>disabled</code><span className="ds-muted">원래 select · option에</span></td><td>select에 붙이면 트리거가 비활성 모양(<code>aria-disabled="true"</code>)이 되고 열리지 않습니다. option에 붙이면 해당 행의 체크박스만 비활성입니다.</td></tr>
+<tr><td><b>원래 select</b></td><td><code>{'<select class="checkSelect" multiple>'}</code></td><td>스크립트가 원래 select를 트리거와 체크박스 목록으로 바꿉니다. 값 · 이름 · 폼 제출은 숨긴 원래 select가 맡고, 목록을 닫을 때 값이 바뀌었으면 change를 한 번 보냅니다.</td></tr>
+<tr><td><b>접근성</b></td><td><code>role="button"</code> · <code>aria-expanded</code> · <code>aria-label</code> · <code>title</code></td><td>트리거의 이름은 보이는 글자에 나머지 값을 괄호로 붙입니다(「작업현황: 작업 중 외 2 (검토 중, 승인)」). 선택한 값 전체는 <code>title</code>에도 넣어 마우스를 올리면 보입니다.</td></tr>
+<tr><td><b>브랜드가 바꾸는 것</b></td><td><code>--size-input</code> · <code>--radius-input</code> · <code>--radius-chip</code> · 글자 · 색 토큰</td><td>칸 높이 · 모서리 · 칩 모서리 · 글자 크기 · 색입니다. 시안은 Default = A 첫 값 외 N, OOTB = B 칸 아래 칩입니다.</td></tr>
+</tbody>
+</table>
+<p className="ds-sec__desc ds-after">Figma UI Kit의 「Option」(행) · 「Option group」(옵션 목록)과 짝입니다.</p>
+</Section>
+<Section title="키보드" en="Keyboard">
+<table className="ds-table ds-props">
+<thead><tr><th>키</th><th>동작</th></tr></thead>
+<tbody>
+<tr><td><code>Enter</code> · <code>Space</code> · <code>↓</code></td><td>트리거에서 옵션 목록을 열고 첫 칸(검색 필드 또는 첫 옵션)으로 이동합니다.</td></tr>
+<tr><td><code>↑</code> <code>↓</code></td><td>옵션 사이를 이동합니다. 검색 필드가 있으면 첫 옵션에서 <code>↑</code>를 눌러 검색 필드로 돌아갑니다.</td></tr>
+<tr><td><code>Tab</code> · <code>Shift</code> + <code>Tab</code></td><td>검색 필드와 옵션 사이를 이동합니다. 목록 밖으로 나가면 목록이 닫힙니다.</td></tr>
+<tr><td><code>Space</code></td><td>옵션을 선택 · 해제합니다. 목록은 열린 채로 있습니다.</td></tr>
+<tr><td><code>Esc</code></td><td>목록을 닫고 트리거로 돌아갑니다.</td></tr>
+</tbody>
+</table>
+<p className="ds-sec__desc ds-after">옵션 사이 이동(<code>↑</code> <code>↓</code>)은 <a className="ds-link" href="./?path=/docs/form-input--docs" target="_top">Input</a>의 셀렉트와 같습니다. 여러 개를 선택하는 목록이라 <code>Space</code>로 선택해도 목록이 닫히지 않습니다. 셀렉트는 <code>Enter</code>로 선택하면 목록이 닫힙니다.</p>
+</Section>
+<Section title="시안" en="Options">
+<Card of={S.기본} title="A · 첫 값 외 N" tag="추천" desc="검색 조건처럼 칸 높이를 한 줄로 지켜야 할 때 사용합니다." basis="여러 값을 골라도 칸 높이가 바뀌지 않아 검색 조건 줄이 흔들리지 않습니다. 고른 값 전체는 화면 읽기 이름과 title로 알립니다(DS-ADR-022)." />
+<Card of={S.시안_칸_아래_칩} title="B · 칸 아래 칩" desc="기본보다 고른 값을 한눈에 보고 하나씩 빼야 할 때 사용합니다. 결재선 · 권한처럼 고른 값이 결과인 폼에 씁니다." basis="Carbon Multiselect · Ant Design Select의 태그 방식입니다. 칩은 칸 밖(아래)에 둡니다 — 누르는 칸(role=button) 안에 빼기 버튼을 넣으면 버튼 안에 버튼이 생겨 화면 읽기 · 키보드가 칩에 닿지 못합니다. 칩을 빼면 포커스가 다음 칩, 마지막이면 칸으로 갑니다." />
+</Section>
+<Section title="예시" en="Examples">
+<Card of={S.기본} title="선택 값 요약" en="Summary" desc="트리거를 누르면 목록이 열립니다. 두 개 이상 선택하면 「첫 값 외 N」으로 요약하고, 선택하지 않으면 「전체」로 표시합니다." />
+<Card of={S.펼친_모습} title="펼친 모습" en="Open" desc="검색 필드와 옵션 목록입니다. 선택한 항목은 체크박스 선택 + 옅은 브랜드 바탕입니다." />
+<Card of={S.검색_없이} title="검색 필드 없는 목록" en="Without search" desc="옵션이 목록 높이 안에 모두 보이면 검색 필드 없이 씁니다. 옵션이 4개까지면 다중 선택 대신 체크박스 그룹을 씁니다." />
+</Section>
+<Section title="Do · Don't">
+<Card of={S.사용_지침} code={false} />
+</Section>
+<Section title="전체 상태" en="States" desc="Hovered · Focused는 상호작용 상태를 고정해 표시한 것입니다.">
+<Card of={S.전체_상태} title="트리거 · 옵션 행" />
+</Section>
+<Section title="Playground" desc="아래 표에서 값을 바꾸면 미리보기와 「코드 보기」가 함께 바뀝니다. 미리보기에서 직접 열고 골라 볼 수도 있습니다.">
+<Card of={S.Playground}>
+<Controls of={S.Playground} />
+</Card>
+</Section>
+</div>
+</Unstyled>

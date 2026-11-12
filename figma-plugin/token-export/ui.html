@@ -1,0 +1,18 @@
+<style>
+  body { font: 12px/1.5 Inter, -apple-system, sans-serif; margin: 16px; color: #14171B; }
+  button { height: 32px; padding: 0 16px; border: 0; border-radius: 4px; background: #0064E0; color: #fff; font-weight: 600; cursor: pointer; }
+  p { margin: 8px 0 0; }
+  a { color: #0064E0; }
+</style>
+<button id="go">변수 내보내기</button>
+<p id="msg">Foundation 파일에서 누르면 export.json 을 받습니다.</p>
+<script>
+  document.getElementById('go').onclick = () => parent.postMessage({ pluginMessage: { type: 'export' } }, '*');
+  onmessage = e => {
+    const m = e.data.pluginMessage;
+    if (!m || m.type !== 'done') return;
+    const url = URL.createObjectURL(new Blob([m.json], { type: 'application/json' }));
+    document.getElementById('msg').innerHTML =
+      `컬렉션 ${m.collections}개 · 변수 ${m.count}개 — <a href="${url}" download="export.json">export.json 받기</a><br>저장소 tokens/figma/export.json 에 넣어 커밋하면 CI 가 대조합니다.`;
+  };
+</script>

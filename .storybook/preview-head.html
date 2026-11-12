@@ -1,0 +1,324 @@
+<script>document.documentElement.lang = 'ko';</script>
+<!-- 배포 직후: 열려 있던(캐시된) 화면이 새 배포에서 지워진 조각(chunk)을 부르다 실패하면 한 번만 새로고침.
+     30초 안에 또 실패하면 멈춤(무한 새로고침 방지). 저장소를 못 쓰는 창(비공개 모드 등)에서는 새로고침하지 않음 -->
+<script>
+  window.addEventListener('vite:preloadError', function (e) {
+    var KEY = 'ds-preload-reload', now = Date.now();
+    try {
+      if (now - Number(sessionStorage.getItem(KEY) || 0) < 30000) return;
+      sessionStorage.setItem(KEY, String(now));
+    } catch (_) { return; }
+    e.preventDefault();
+    location.reload();
+  });
+</script>
+<!-- JSP와 같은 방식으로 일반 스크립트로 불러온다 -->
+<script src="ds-js/datepicker.js"></script>
+<script src="ds-js/select.js"></script>
+<script src="ds-js/multiselect.js"></script>
+<script src="ds-js/modal.js"></script>
+<script src="ds-js/tabs.js"></script>
+<script src="ds-js/chips.js"></script>
+<script src="ds-js/number-input.js"></script>
+<script src="ds-js/app-bar.js"></script>
+<script src="ds-js/motion.js"></script>
+<script src="ds-js/clear.js"></script>
+<style>
+  .sb-ds { background: var(--color-bg-base); color: var(--color-text-base); padding: 24px; min-height: 100%; box-sizing: border-box; }
+  /* 단독 스토리 화면은 캔버스 전체를 채움 (다크에서 아래쪽이 흰색으로 남지 않게). Docs 안 견본은 그대로 */
+  #storybook-root > .sb-ds { min-height: 100vh; }
+  .sb-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  .sb-grid { display: grid; gap: 12px 16px; align-items: center; }
+  .sb-h { font-size: 12px; color: var(--color-text-muted); }
+  /* 상태 · 조합 표 (Button · Input · Selection 「전체」 예시 공용) */
+  .sb-table { border-collapse: collapse; border: 1px solid var(--color-border-base); background: var(--color-bg-base); }
+  .sb-table th, .sb-table td { border: 1px solid var(--color-border-subtle); padding: 12px 16px; text-align: center; vertical-align: middle; }
+  .sb-table thead th { background: var(--color-bg-header); color: var(--color-text-muted); font-size: 12px; font-weight: 600; white-space: nowrap; }
+  .sb-table tbody th { text-align: left; font-size: 13px; font-weight: 500; white-space: nowrap; }
+  .sb-table .sb-wide { width: 200px; }
+  .sb-table--full { width: 100%; table-layout: fixed; }
+  .sb-table--full thead th:first-child, .sb-table--full tbody th { width: 180px; }
+  .sb-table code { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 12px; color: var(--color-text-brand); }
+  .sb-note { font-size: 12px; line-height: 1.6; color: var(--color-text-muted); }
+  .sb-field { max-width: 280px; }   /* 시안 견본 폭 — 칸 하나 (TD-187) */
+  .sb-field--wide { max-width: 480px; }   /* 칸 둘 · 카드 묶음 */
+  .sb-frame { position: relative; max-width: 760px; height: 440px; overflow: hidden; transform: translateZ(0); border: 1px solid var(--color-border-base); border-radius: var(--radius-card); }   /* 창 견본 틀 — 고정 위치 층을 틀 안에 가둠 (TD-187) */
+  .sb-frame--wide { max-width: 1040px; }   /* 옆 패널 견본 — 뒤 목록이 보이게 */
+  .sb-frame--short { height: 200px; }   /* 토스트 견본 */
+  .sb-field--table { max-width: 760px; }   /* 표 견본 */
+  .sb-stage { display: flex; align-items: flex-end; gap: 8px; min-height: 150px; padding: 8px 24px; }   /* 툴팁 견본 — 위에 툴팁 자리 */
+  .sb-stage--center { justify-content: center; max-width: 400px; }   /* 넓은 툴팁 — 가운데 */
+  .dp-static > .datepicker--static { position: static; display: block; width: auto; box-shadow: none; }   /* 달력 견본 — 실제 달력을 옮겨 그린 정지 그림 */
+  /* Do · Don't (stories/_dodont.js) — 두 칸 한 줄, 머리 선 색 + ✓ · ✕ 글자 */
+  .sb-dd { display: grid; gap: 20px; }
+  .sb-dd__row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .sb-dd__title { grid-column: 1 / -1; margin: 0; font-size: 13px; font-weight: 600; color: var(--color-text-base); }
+  .sb-dd__pane { display: flex; flex-direction: column; border: 1px solid var(--color-border-base); border-top: 3px solid; border-radius: var(--radius-card); overflow: hidden; background: var(--color-bg-base); }
+  .sb-dd__pane--do { border-top-color: var(--color-border-success); }
+  .sb-dd__pane--dont { border-top-color: var(--color-border-danger); }
+  .sb-dd__view { flex: 1; display: flex; flex-wrap: wrap; align-items: flex-start; align-content: flex-start; gap: 8px; min-height: 72px; padding: 20px 16px; background: var(--color-bg-base); }   /* 미리보기 = 실제 카드와 같은 바탕 */
+  .sb-dd__text { margin: 0; padding: 10px 12px; border-top: 1px solid var(--color-border-subtle); background: var(--color-bg-muted); font-size: 12px; line-height: 1.6; color: var(--color-text-muted); }
+  .sb-dd__text b { display: block; font-weight: 600; }
+  .sb-dd__pane--do .sb-dd__text b { color: var(--color-text-success-bold); }   /* 12px 굵은 글자 — success(라이트 4.37)는 AA 미달 */
+  .sb-dd__pane--dont .sb-dd__text b { color: var(--color-text-danger-bold); }
+
+  /* ── 문서 페이지 (MDX) ─────────────────────────────────────────────
+   * 페이지 머리(.ds-head) → 섹션(.ds-sec) → 예시 카드(.ds-card: 머리 · 미리보기 · 코드 보기). 블록은 stories/_blocks.js
+   * 문서 틀은 브랜드 · 모드와 상관없이 밝은 회색 톤으로 고정하고, 카드 안 미리보기(.sb-ds)만 도구 막대를 따른다 */
+  .sbdocs-content { max-width: 1120px !important; }
+  .ds-page { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; line-height: 1.6; color: #1f2328; word-break: keep-all; }
+  .ds-page code { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 12px; color: #0550ae; }
+  body.dark-mode .ds-page .sb-ds code { color: var(--color-text-brand); }   /* 다크 미리보기 안 코드 글자 = 토큰 색. 문서 틀 색(#0550ae)이 어두운 바탕에서 대비 2.0이던 것. 라이트는 그대로 */
+  body.dark-mode .ds-page .sb-ds .ds-table code { color: #0550ae; }   /* 미리보기 안 문서 표(흰 바탕)는 다크에서도 문서 틀 색 */
+  /* Controls 표 입력칸 = 문서 틀처럼 밝게 고정. DS globals 의 input 바탕(다크 = 어두움)이 스토리북 입력칸에도 닿아 다크에서 글자가 안 보이던 것 */
+  .docblock-argstable input[type="number"], .docblock-argstable input[type="text"], .docblock-argstable textarea { background-color: #f6f9fc; color: #2e3338; }
+  .ds-head { padding: 8px 0 24px; border-bottom: 1px solid #e6e8eb; }
+  .ds-eyebrow { margin: 0 0 6px; font-size: 12px; font-weight: 600; letter-spacing: .04em; color: #6e7781; }
+  .ds-head h1 { margin: 0 0 8px; font-size: 32px; line-height: 1.25; font-weight: 700; color: #111418; }
+  .ds-lead { margin: 0; max-width: 760px; font-size: 15px; color: #57606a; text-wrap: pretty; }   /* 마지막 줄 한 단어 · 말 중간 끊김 줄임 — 설명은 한 문장 · 한 줄 안쪽 */
+  .ds-sec { margin-top: 40px; }
+  .ds-sec > h2 { margin: 0 0 4px; font-size: 20px; line-height: 1.4; font-weight: 700; color: #111418; }
+  .ds-sec > h2 + :not(.ds-sec__desc) { margin-top: 16px; }   /* 설명 줄 없는 절 — 제목과 내용 사이를 설명 → 내용 간격(16)과 같게. 소개 「적용 환경 · 원칙」 제목이 「적용 환경」에 붙어 보이던 것 (TD-101) */
+  .ds-en { margin-left: 8px; font-size: .75em; font-weight: 500; color: #656d76; }
+  .ds-sec__desc { margin: 0 0 16px; color: #57606a; }
+  .ds-card { margin: 0 0 16px; border: 1px solid #e1e4e8; border-radius: 6px; background: #fff; overflow: hidden; }
+  .ds-card__head { padding: 12px 16px; background: #f6f8fa; border-bottom: 1px solid #e1e4e8; }
+  .ds-card__title { margin: 0; font-size: 14px; line-height: 1.5; font-weight: 600; color: #111418; }
+  .ds-card__desc { margin: 2px 0 0; font-size: 12px; line-height: 1.6; color: #57606a; }
+  .ds-card__tag { display: inline-block; margin-left: 8px; padding: 0 8px; border-radius: 10px; background: #ddf4ff; color: #0550ae; font-size: 11px; line-height: 18px; font-weight: 600; vertical-align: 1px; }   /* 시안 「추천」 (디자인 필수 가이드 7장) */
+  .ds-card__basis { margin: 2px 0 0; font-size: 12px; line-height: 1.6; color: #656d76; }
+  .ds-card__basis > b { font-weight: 600; color: #424a53; }
+  .ds-card__body > * { margin: 0 !important; }
+  .ds-card__extra { border-top: 1px solid #e1e4e8; padding: 4px 16px 12px; }
+  .ds-card__code { border-top: 1px solid #e1e4e8; background: #f6f8fa; }
+  .ds-card__code > summary { display: flex; align-items: center; gap: 8px; padding: 8px 16px; font-size: 12px; font-weight: 500; color: #424a53; cursor: pointer; list-style: none; user-select: none; }
+  .ds-card__code > summary::-webkit-details-marker { display: none; }
+  .ds-card__code > summary::before { content: ''; width: 5px; height: 5px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: rotate(-45deg); transition: transform .15s; }
+  .ds-card__code[open] > summary::before { transform: rotate(45deg); }
+  .ds-card__code .docblock-source { margin: 0 !important; border: 0 !important; border-top: 1px solid #e1e4e8 !important; border-radius: 0 !important; box-shadow: none !important; }
+  /* 개요 · 참고 표 */
+  .ds-table { width: 100%; border-collapse: separate; border-spacing: 0; border: 1px solid #e1e4e8; border-radius: 6px; overflow: hidden; font-size: 13px; background: #fff; color: #1f2328; }   /* 문서 표는 다크 미리보기 안에서도 밝은 문서 색 */
+  .ds-table th { padding: 10px 16px; text-align: left; font-weight: 600; color: #424a53; background: #f6f8fa; border-bottom: 1px solid #e1e4e8; white-space: nowrap; }
+  .ds-table td { padding: 12px 16px; vertical-align: top; border-bottom: 1px solid #eef0f2; }
+  .ds-table tr:last-child td { border-bottom: 0; }
+  .ds-table td:first-child { white-space: nowrap; }
+  .ds-table--wrap td:first-child { white-space: normal; }   /* 첫 칸도 설명 글인 표 — 칸이 문서 폭을 넘지 않게 */
+  /* 참고 자료 링크 아이콘 (GitHub · Figma · Notion 공식 아이콘 파일, assets/links/) */
+  .ds-res-icon { width: 20px; height: 20px; margin-right: 8px; vertical-align: -5px; border-radius: 4px; }
+  .ds-res-icon--light { box-shadow: 0 0 0 1px #d0d7de; }   /* 흰 바탕 아이콘(Notion)이 표 바탕에 묻히지 않게 */
+  .ds-muted { display: block; margin-top: 2px; font-size: 12px; color: #656d76; }
+  .ds-note { margin: 16px 0 0; padding: 12px 16px; border: 1px solid #cfe1fb; border-radius: 6px; background: #f2f7ff; font-size: 13px; }
+  .ds-page .docblock-source { margin: 0; }
+  .ds-props td:nth-child(2) code { font-size: 13px; }
+  .ds-props td:nth-child(2) { white-space: nowrap; }
+  .ds-props--wrap td:nth-child(2) { white-space: normal; width: 34%; }   /* 클래스가 많은 자리(Screens 「쓰인 것」)는 줄바꿈 — 설명 칸이 좁아지지 않게 */
+  .ds-after { margin-top: 12px; }
+  .ds-table + .ds-card { margin-top: 24px; }
+  .ds-uses { display: flex; flex-wrap: wrap; gap: 4px 20px; margin: 0 0 12px; font-size: 13px; color: #59636e; }   /* Screens 섹션 — 이 화면에 쓴 블록 · 컴포넌트 (TD-122) */
+  .ds-uses b { margin-right: 8px; font-weight: 600; color: #1f2328; }   /* 표 바로 아래 예시 카드 — 붙어 보이던 것(Motion 인터랙션 표 → 처리 중 글자) */
+  .ds-subhead { margin: 24px 0 8px; font-size: 15px; font-weight: 600; color: #111418; }   /* 절 안 두 번째 · 세 번째 박스의 소제목 — 박스를 나눌 때는 박스마다 머리를 둔다 (TD-108) */
+  .ds-sec > h2 + .ds-subhead, .ds-sec__desc + .ds-subhead { margin-top: 0; }
+  /* 소개 */
+  .ds-meta { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 0; padding: 0; list-style: none; }
+  .ds-meta li { padding: 2px 10px; border: 1px solid #d0d7de; border-radius: 999px; background: #fff; font-size: 12px; color: #424a53; }
+  .ds-cats { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; }
+  .ds-layer { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 16px; align-items: start; }
+  .ds-layer__label { margin: 14px 0 0; font-size: 14px; font-weight: 700; color: #111418; }
+  .ds-layer__label span { display: block; font-size: 12px; font-weight: 500; color: #656d76; }
+  .ds-cats--wide { grid-template-columns: minmax(0, 1fr); }
+  .ds-layer__arrow { margin: 10px 0 10px 128px; font-size: 12px; color: #57606a; }
+  @media (max-width: 720px) { .ds-layer { grid-template-columns: 1fr; gap: 4px; } .ds-layer__arrow { margin-left: 0; } }
+  .ds-cat { padding: 16px; border: 1px solid #e1e4e8; border-radius: 6px; background: #fff; }
+  .ds-cat.is-soon { background: #f6f8fa; }
+  .ds-cat h3 { margin: 0; font-size: 16px; line-height: 1.4; font-weight: 700; color: #111418; }
+  .ds-cat h3 span { margin-left: 6px; font-size: 12px; font-weight: 500; color: #656d76; }
+  .ds-cat p { margin: 6px 0 12px; font-size: 13px; color: #57606a; }
+  .ds-cat ul { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
+  .ds-cat a, .ds-cat li > span { display: inline-block; padding: 2px 8px; border: 1px solid #e1e4e8; border-radius: 4px; background: #f6f8fa; font-size: 12px; color: #0550ae; text-decoration: none; }
+  .ds-cat li > span { color: #656d76; }
+  .ds-cat a .ds-cat__app { margin-left: 4px; padding: 0 4px; border-radius: 3px; background: #ddf4ff; font-size: 11px; font-weight: 600; color: #0a3069; }   /* 모바일 앱 화면용 표시 (TD-191) — 링크 글자 대비 0a3069/ddf4ff */
+  .ds-cat a:hover { border-color: #0550ae; }
+  .ds-dl { margin: 0; border: 1px solid #e1e4e8; border-radius: 6px; background: #fff; }
+  .ds-dl > div { display: grid; grid-template-columns: 140px 1fr; gap: 16px; padding: 12px 16px; border-top: 1px solid #eef0f2; }
+  .ds-dl > div:first-child { border-top: 0; }
+  .ds-dl dt { font-weight: 600; color: #111418; }
+  .ds-dl dd { margin: 0; color: #57606a; }
+  /* 소개 미리보기 (stories/IntroPreview.stories.js) — 카드 안은 브랜드 · 모드를 따르므로 토큰만 쓴다 */
+  .intro-demo__search { display: flex; flex-wrap: wrap; align-items: center; gap: var(--spacing-8); margin-bottom: var(--spacing-8); }
+  .intro-demo__search .input { width: 200px; }
+  .intro-demo__search .select { width: 140px; }
+  .intro-demo__no { font-size: var(--body-sm); color: var(--color-text-muted); font-variant-numeric: tabular-nums; }
+  /* 소개 맨 위 「바로 보기」 — 포트폴리오로 보는 사람이 Figma 원본부터 열게 */
+  /* 문서 안 도구 막대(Toolbar 블록) — 화면 맨 위 Storybook 도구 막대에서 잰 값 그대로 */
+  .ds-tbrow { margin: 0; }
+  .ds-tbrow + .ds-card { border-top: 0; border-radius: 0 0 6px 6px; }   /* 막대 아래에 미리보기가 붙음 — 실제 화면처럼 막대 + 캔버스 한 덩어리 */
+  .ds-tb { display: flex; align-items: center; gap: 6px; box-sizing: border-box; width: 100%; height: 40px; padding: 0 10px; border: 1px solid #e1e4e8; border-bottom: 0; border-radius: 6px 6px 0 0; background: #fff; box-shadow: inset 0 -1px 0 rgba(38, 74, 115, .15); font-family: "Nunito Sans", -apple-system, ".SFNSText-Regular", "San Francisco", BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 12px; line-height: 1; vertical-align: middle; }
+  .ds-tb__figma { display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 0 10px 0 6px; border-radius: 6px; background: #161616; color: #fff !important; font-weight: 600; text-decoration: none !important; white-space: nowrap; }
+  .ds-tb__figma img { display: block; border-radius: 4px; }
+  .ds-tb__sep { width: 1px; height: 20px; margin: 0 2px 0 6px; background: rgba(38, 74, 115, .15); }   /* 실제 막대: Figma 끝 → 선 12 · 선 → 브랜드 8 */
+  .ds-tbsel { position: relative; display: inline-flex; }
+  .ds-tbsel__btn { display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 0 7px; border: 0; border-radius: 4px; background: rgba(0, 109, 235, .07); color: rgb(0, 85, 184); font: inherit; font-weight: 700; white-space: nowrap; cursor: pointer; }
+  .ds-tbsel__btn:hover { background: rgba(0, 109, 235, .14); }
+  /* 처음 온 사람에게 「여기를 눌러 보세요」(TD-42 08:35 ④ 제안) — 브랜드색 고리가 세 번 번지고 멈춤 + 말풍선, 한 번 누르면 둘 다 사라짐. 모션 줄이기 = 고리 없이 테두리만 */
+  .ds-tb__sels { display: inline-flex; align-items: center; gap: 6px; border-radius: 6px; }
+  .ds-tb__deco { display: inline-flex; align-items: center; gap: 6px; margin-right: 8px; }
+  .ds-tb__end { margin: 0 0 0 auto; }
+  .ds-tb__ico { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 4px; color: rgb(92, 101, 112); }
+  .ds-tb--hint .ds-tb__sels { animation: ds-tb-ring 1.6s ease-out 3 both; }   /* 두 버튼을 한 고리로 — 따로 두면 고리끼리 겹쳐 번짐 */
+  @keyframes ds-tb-ring { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--brand-500) 55%, transparent); } 100% { box-shadow: 0 0 0 10px color-mix(in srgb, var(--brand-500) 0%, transparent); } }
+  .ds-tb__hint { position: relative; display: inline-flex; align-items: center; height: 24px; padding: 0 8px; margin-left: 10px; border-radius: 4px; background: #1f2328; color: #fff; font-size: 12px; font-weight: 600; white-space: nowrap; animation: ds-tb-hint-in .3s ease-out both; }
+  .ds-tb__hint::before { content: ''; position: absolute; left: -5px; top: 50%; margin-top: -5px; border: 5px solid transparent; border-left: 0; border-right-color: #1f2328; }
+  @media (max-width: 600px) { .ds-tb__deco, .ds-tb__hint { display: none; } }   /* 휴대폰 폭 — 장식 아이콘 · 말풍선을 빼야 막대가 한 줄에 들어감(빼지 않으면 문서 전체가 가로 스크롤) */
+  @keyframes ds-tb-hint-in { from { opacity: 0; transform: translateX(-4px); } }
+  @media (prefers-reduced-motion: reduce) { .ds-tb--hint .ds-tb__sels { animation: none; box-shadow: 0 0 0 2px var(--brand-500); } .ds-tb__hint { animation: none; } }
+  .ds-tbsel__btn svg { flex: none; }
+  .ds-tbsel__list { position: absolute; z-index: 30; top: calc(100% + 8px); left: 0; display: block; min-width: 180px; padding: 4px; border-radius: 6px; background: rgba(255, 255, 255, .95); filter: drop-shadow(0 5px 5px rgba(0, 0, 0, .05)) drop-shadow(0 1px 3px rgba(0, 0, 0, .1)); outline: none; }
+  .ds-tbsel__opt { display: flex; align-items: center; gap: 8px; height: 32px; padding: 0 9px; border-radius: 4px; color: rgb(46, 51, 56); font-weight: 400; line-height: 16px; white-space: nowrap; cursor: pointer; }
+  .ds-tbsel__opt[aria-selected="true"] { color: rgb(0, 85, 184); font-weight: 700; }
+  .ds-tbsel__opt.is-active { background: rgba(0, 0, 0, .05); }
+  .ds-tbsel__btn:focus-visible, .ds-tb__figma:focus-visible, .ds-tbsel__list:focus-visible { outline: 2px solid rgb(0, 109, 235); outline-offset: 2px; }
+  .ds-byline { margin: 10px 0 0; font-size: 13px; color: #424a53; }
+  .ds-hero { margin: 24px 0 8px; }
+  .ds-hero__mains { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .ds-page a.ds-hero__main { display: flex; align-items: center; gap: 16px; padding: 18px 20px; border-radius: 10px; background: #161616; color: #fff; text-decoration: none; }
+  .ds-page a.ds-hero__main:hover { background: #2c2c2c; }
+  .ds-hero__main img { flex-shrink: 0; border-radius: 8px; }
+  .ds-hero__text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+  .ds-hero__text b { font-size: 18px; line-height: 1.4; }
+  .ds-hero__text span { font-size: 13px; color: #c9ced6; }
+  .ds-hero__go { flex-shrink: 0; padding: 6px 12px; border-radius: 6px; background: #fff; color: #161616; font-size: 13px; font-weight: 700; }
+  .ds-page a.ds-hero__main--light { background: #fff; color: #1f2328; box-shadow: inset 0 0 0 1px #d0d7de; }
+  .ds-page a.ds-hero__main--light:hover { background: #f6f8fa; box-shadow: inset 0 0 0 1px #0550ae; }
+  .ds-hero__main--light .ds-hero__text span { color: #57606a; }
+  .ds-hero__main--light .ds-hero__go { background: #161616; color: #fff; }
+  .ds-hero__dot--lg { flex-shrink: 0; width: 40px !important; height: 40px !important; border-radius: 8px !important; }
+  .ds-hero__subs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 12px; }
+  .ds-page .ds-hero__subs a { display: grid; grid-template-columns: 20px 1fr; align-items: center; column-gap: 8px; row-gap: 2px; padding: 12px 14px; border: 1px solid #d0d7de; border-radius: 8px; background: #fff; color: #1f2328; text-decoration: none; }
+  .ds-page .ds-hero__subs a:hover { border-color: #0550ae; }
+  .ds-hero__subs img, .ds-hero__dot { border-radius: 4px; }
+  .ds-hero__dot { width: 20px; height: 20px; background: linear-gradient(135deg, #0064e0, #6d4ae0 55%, #007380); }
+  .ds-hero__subs b { font-size: 14px; }
+  .ds-hero__subs span:not(.ds-hero__dot) { grid-column: 2; font-size: 12px; color: #57606a; }
+  .ds-hero__note { margin: 10px 0 0; font-size: 12px; color: #57606a; }
+  @media (max-width: 720px) { .ds-hero__mains, .ds-hero__subs { grid-template-columns: 1fr; } .ds-hero__go { display: none; } }
+  /* 소개 — 문 세 개 · 결정 과정 카드 · 적용 환경 / 원칙 · 운영 흐름 (TD-50 두 페이지 안) */
+  /* 시작하기 — 이전 · 이후 코드 한 쌍과 화면 비교 (TD-118) */
+  .ds-pair { display: grid; gap: 12px; margin: 8px 0 16px; }   /* 위아래 — 한 줄 코드가 잘리지 않게 */
+  .ds-page .ds-pair__label { margin: 0 0 6px; font-size: 13px; font-weight: 600; color: #1f2328; }
+  .ds-pair .docblock-source { margin: 0 !important; }
+  .ds-shots { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin: 8px 0 12px; }
+  .ds-shots figure { margin: 0; display: grid; gap: 8px; align-content: start; }
+  .ds-shots img { display: block; width: 100%; height: auto; border: 1px solid #d0d7de; border-radius: 6px; }
+  .ds-page .ds-shots figcaption { font-size: 12px; color: #57606a; line-height: 1.5; }
+  .ds-shots figcaption b { display: block; font-size: 13px; color: #1f2328; }
+  @media (max-width: 720px) { .ds-shots { grid-template-columns: minmax(0, 1fr); } }
+  /* 소개 첫머리 (TD-117) — 목표 · 결과 · 내 기여 이름표 + 결과 = 키워드 한 줄 네 칸. 다른 문서와 같은 밝은 톤, 문서 화면 색이라 토큰이 아닌 고정 값 */
+  .ds-page .ds-brief { display: grid; gap: 16px; margin: 24px 0 8px; padding: 0 0 24px; border-bottom: 1px solid #d8dee4; }
+  .ds-brief__row { display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: 16px; align-items: start; }
+  .ds-page .ds-brief dt { margin: 0; padding-top: 2px; font-size: 13px; font-weight: 700; color: #57606a; }
+  .ds-page .ds-brief dd { margin: 0; }
+  .ds-page .ds-brief dd > p { margin: 0; font-size: 14px; line-height: 1.7; color: #1f2328; }
+  .ds-page .ds-brief .ds-brief__goal { font-size: 16px; font-weight: 600; line-height: 1.6; }
+  .ds-keys { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 0; padding: 0; list-style: none; }
+  .ds-keys li { display: flex; flex-direction: column; gap: 4px; padding: 14px 16px 12px; border: 1px solid #d0d7de; border-radius: 8px; background: #fff; }
+  .ds-keys li b { font-size: 15px; line-height: 1.4; color: #1f2328; }
+  .ds-keys__en { font-size: 11px; color: #57606a; }
+  .ds-page .ds-keys li p { margin: 4px 0 0; flex: 1; font-size: 13px; line-height: 1.6; color: #424a53; }
+  .ds-page a.ds-keys__link { align-self: flex-start; margin-top: 4px; font-size: 12px; font-weight: 600; color: #0550ae; text-decoration: none; }
+  .ds-page a.ds-keys__link:hover { text-decoration: underline; }
+  @media (max-width: 1000px) { .ds-keys { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 720px) { .ds-keys { grid-template-columns: minmax(0, 1fr); } .ds-brief__row { grid-template-columns: minmax(0, 1fr); gap: 6px; } }
+  /* 소개 · 시작하기 — 절 내용을 한 상자로 묶고, 꼭 봐야 하는 것은 꼬리표 · 강조로 구분 */
+  .ds-box { padding: 20px 24px; border: 1px solid #e1e4e8; border-radius: 10px; background: #f6f8fa; }
+  .ds-page .ds-brief.ds-box { margin: 24px 0 0; padding: 20px 24px; border-bottom: 1px solid #e1e4e8; }
+  .ds-box .ds-layer__label { margin-top: 14px; }
+  .ds-box .ds-tl-wrap { margin: 0 0 16px; }
+  .ds-box .ds-tl__no-circle { background: #f6f8fa; }
+  .ds-quick { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 0; padding: 0; list-style: none; }
+  .ds-page a.ds-quick__a { display: inline-flex; align-items: center; gap: 8px; padding: 5px 14px 5px 6px; border: 1px solid #d0d7de; border-radius: 999px; background: #fff; font-size: 13px; font-weight: 600; color: #1f2328; text-decoration: none; }
+  .ds-page a.ds-quick__a:hover { border-color: #0550ae; color: #0550ae; }
+  .ds-quick__a img, .ds-quick__a .ds-hero__dot, .ds-quick__ico { flex-shrink: 0; width: 20px !important; height: 20px !important; border-radius: 5px !important; }
+  /* 소개 첫 화면(TD-186) — 화면 카드 머리에 제목 + 브랜드 버튼을 한 줄로. 버튼 = 그 브랜드 색 점, 고르면 그 색으로 채움(색은 _blocks.js 가 resolved.json 에서 넣음) */
+  .ds-showcase { margin: 24px 0 0; }
+  .ds-showcase__head { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding: 12px 16px; border-bottom: 1px solid #e1e4e8; background: #f6f8fa; }
+  .ds-page .ds-showcase__title { margin: 0; padding: 0; border: 0; font-size: 14px; line-height: 1.4; font-weight: 600; color: #1f2328; }
+  .ds-brandsw { display: inline-flex; align-items: center; gap: 10px; }
+  .ds-brandsw__label { font-size: 13px; font-weight: 600; color: #59636e; }
+  .ds-brandsw__list { display: inline-flex; gap: 6px; }
+  .ds-brandsw__btn { display: inline-flex; align-items: center; gap: 8px; height: 32px; padding: 0 14px 0 10px; border: 1px solid #d0d7de; border-radius: 999px; background: #fff; color: #1f2328; font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; }
+  .ds-brandsw__btn:hover { border-color: var(--ds-sw-brand); }
+  .ds-brandsw__dot { width: 12px; height: 12px; border-radius: 50%; background: var(--ds-sw-brand); }
+  .ds-brandsw__btn[aria-pressed="true"] { border-color: var(--ds-sw-brand); background: var(--ds-sw-brand); color: var(--ds-sw-on); }
+  .ds-brandsw__btn[aria-pressed="true"] .ds-brandsw__dot { background: var(--ds-sw-on); }
+  .ds-brandsw__btn:focus-visible { outline: 2px solid #0969da; outline-offset: 2px; }
+  .ds-hard { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 0; padding: 0; list-style: none; }
+  .ds-hard > li { display: flex; flex-direction: column; gap: 8px; padding: 18px 20px; border: 1px solid #e1e4e8; border-radius: 10px; background: #fff; }
+  .ds-hard__no { font-size: 12px; font-weight: 700; letter-spacing: .04em; color: #3f56a8; }
+  .ds-hard h3 { margin: 0; font-size: 16px; line-height: 1.4; color: #111418; }
+  .ds-page .ds-hard__q { margin: 0; font-size: 13px; line-height: 1.65; color: #57606a; }
+  .ds-page .ds-hard__a { flex: 1; margin: 4px 0 0; padding: 10px 12px; border-left: 3px solid #3f56a8; border-radius: 0 6px 6px 0; background: #f2f5fc; font-size: 13px; line-height: 1.65; color: #1f2328; }
+  .ds-hard__a::before { content: "푼 방법"; display: block; margin-bottom: 2px; font-size: 12px; font-weight: 700; color: #3f56a8; }
+  .ds-hard > li > a, .ds-hard > li > span:last-child { font-size: 12px; }
+  @media (max-width: 1000px) { .ds-hard { grid-template-columns: minmax(0, 1fr); } }
+  .ds-compare .is-now th, .ds-compare .is-now td { background: #f2f5fc; }
+  .ds-compare .is-now th { box-shadow: inset 3px 0 0 #3f56a8; color: #111418; }
+  .ds-compare .ds-compare__key { border-left: 1px solid #e1e4e8; border-right: 1px solid #e1e4e8; text-align: center; }
+  .ds-compare td.ds-compare__key { font-size: 15px; }
+  .ds-compare .is-now td.ds-compare__key b { color: #3f56a8; }
+  .ds-tag { display: inline-block; padding: 1px 8px; border-radius: 999px; font-size: 12px; font-weight: 600; white-space: nowrap; }
+  .ds-tag--ok { background: #dafbe1; color: #116329; }
+  .ds-tag--warn { background: #fff1e5; color: #953800; }
+  .ds-scope { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 16px 0 0; }
+  .ds-scope > div { display: flex; flex-direction: column; gap: 8px; padding: 16px; border: 1px solid #e1e4e8; border-radius: 10px; background: #fff; }
+  .ds-scope .ds-tag { align-self: flex-start; }
+  .ds-scope h4 { margin: 0; font-size: 14px; line-height: 1.4; color: #111418; }
+  .ds-scope ul { margin: 0; padding-left: 18px; font-size: 13px; line-height: 1.7; color: #424a53; }
+  @media (max-width: 1000px) { .ds-scope { grid-template-columns: minmax(0, 1fr); } }
+  .ds-cases { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+  .ds-case { display: flex; flex-direction: column; gap: 6px; padding: 16px; border: 1px solid #e1e4e8; border-radius: 8px; background: #fff; }
+  .ds-case__kind { align-self: flex-start; padding: 1px 8px; border-radius: 999px; background: #eef4ff; color: #0550ae; font-size: 12px; font-weight: 600; }
+  .ds-case h3 { margin: 4px 0 0; font-size: 16px; line-height: 1.4; color: #111418; }
+  .ds-case p { margin: 0; font-size: 13px; color: #57606a; }
+  .ds-case a { margin-top: auto; padding-top: 6px; font-size: 13px; font-weight: 600; }
+  .ds-two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; align-items: start; }
+  .ds-two h3 { margin: 0 0 8px; font-size: 15px; color: #111418; }
+  .ds-two h3 small { margin-left: 6px; font-size: 12px; font-weight: 500; color: #656d76; }
+  .ds-two .ds-dl > div { grid-template-columns: 96px 1fr; }
+  .ds-flow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0 0 16px; padding: 0; list-style: none; counter-reset: f; }
+  .ds-flow li { padding: 6px 12px; border: 1px solid #d0d7de; border-radius: 999px; background: #fff; font-size: 13px; font-weight: 600; color: #1f2328; }
+  .ds-flow li { position: relative; }
+  .ds-note + .ds-dl { margin-top: 16px; }
+  .ds-flow li + li { margin-left: 22px; }
+  .ds-flow li + li::before { content: '→'; position: absolute; left: -23px; top: 50%; transform: translateY(-50%); color: #656d76; font-weight: 400; }
+  @media (max-width: 720px) { .ds-cases, .ds-two { grid-template-columns: 1fr; } }
+  /* 좁은 화면(휴대폰) — 표가 페이지 밖으로 밀어 가로 스크롤이 생기던 것 → 표 안에서만 가로로 밀리게, 칸 패딩도 줄임 */
+  @media (max-width: 720px) { .ds-page .ds-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; } .ds-table th, .ds-table td { padding: 8px 10px; } }
+  /* 글 속 링크 = 색 + 밑줄(색만으로 구분하지 않음 — WCAG 1.4.1). 문서 틀 회색 #656d76 = 흰 바탕 5.2 · 회색 머리 #f6f8fa 4.9 */
+  .ds-page a.ds-link { color: #0550ae; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  .ds-page a.ds-link:hover { text-decoration-thickness: 2px; }
+  /* Controls 표 켜기/끄기 스위치의 꺼진 쪽 글자(스토리북 기본 50% 투명 = 대비 2.8) */
+  .docblock-argstable label > input[role="switch"]:checked + span,
+  .docblock-argstable label > input[role="switch"]:not(:checked) + span + span { color: #5c636a; }
+  .ds-tl-wrap { overflow-x: auto; padding-bottom: 8px; }
+  .ds-tl { position: relative; display: grid; grid-template-columns: 88px repeat(7, minmax(108px, 1fr)); column-gap: 12px; row-gap: 12px; min-width: 928px; align-items: stretch; margin: 8px 0 0; }
+  .ds-tl::before { content: ""; position: absolute; top: 26px; height: 0; left: calc(100px + (100% - 172px) / 14); right: calc((100% - 172px) / 14); border-top: 2px dotted #c9d2e3; z-index: 0; pointer-events: none; }
+  .ds-tl::after { content: "END"; position: absolute; right: 0; top: 18px; font-size: 12px; color: #656d76; }
+  .ds-tl__start { align-self: start; padding-top: 14px; font-size: 12px; color: #656d76; }
+  .ds-tl__head { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; padding-bottom: 4px; }
+  .ds-tl__no-circle { width: 52px; height: 52px; border-radius: 50%; background: #fff; border: 2px solid #5b72c4; color: #3f56a8; display: grid; place-items: center; font-size: 15px; font-weight: 700; }
+  .ds-tl__num { font-size: 12px; color: #656d76; letter-spacing: 0.04em; }
+  .ds-tl__title { font-size: 14px; font-weight: 700; color: #111418; min-height: 40px; text-wrap: balance; }
+  .ds-tl__lg { align-self: center; font-size: 13px; font-weight: 700; color: #111418; }
+  .ds-tl__lg span { display: block; font-size: 12px; font-weight: 500; color: #656d76; }
+  .ds-tl__card { box-sizing: border-box; min-width: 0; padding: 12px; border-radius: 10px; font-size: 13px; line-height: 1.5; overflow-wrap: anywhere; }
+  .ds-tl__card--human { background: #fff; border: 1px solid #d5dcea; color: #111418; }
+  .ds-tl__card--ai { background: #5b72c4; border: 1px solid #5b72c4; color: #fff; }
+  .ds-tl__card small { display: block; margin-top: 8px; font-size: 11px; line-height: 1.4; color: #656d76; }
+  .ds-tl__card--ai small { color: #fff; }   /* 흰 글자 그대로 4.52:1 — 투명도 0.85면 3.75:1로 AA 미달이었음 */
+  @media (max-width: 760px) { .ds-tl { grid-template-columns: minmax(0, 1fr); } .ds-tl::before, .ds-tl::after, .ds-tl__start, .ds-tl__lg { display: none; } .ds-tl__head { flex-direction: row; text-align: left; } .ds-tl__title { min-height: 0; } }
+  /* 운영 방식 시작 · 끝 강조 — START는 테두리 알약, 마지막 단계는 채운 원 + 「v1.0 완료」 알약(제목 아래). 오른쪽 끝 END 글자는 없앰 */
+  .ds-tl::after { content: none; }
+  .ds-tl__start { justify-self: start; margin-top: 12px; padding: 3px 10px; border: 1px solid #c9d2e3; border-radius: 999px; background: #fff; font-weight: 600; }
+  .ds-tl__head:nth-child(8) .ds-tl__no-circle { background: #3f56a8; border-color: #3f56a8; color: #fff; }
+  .ds-tl__head:nth-child(8)::after { content: "v1.0 완료"; margin-top: -4px; padding: 2px 10px; border-radius: 999px; background: #3f56a8; color: #fff; font-size: 12px; font-weight: 700; }
+</style>

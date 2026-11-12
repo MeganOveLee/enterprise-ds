@@ -1,0 +1,28 @@
+import { Meta, Unstyled } from '@storybook/addon-docs/blocks';
+import { PageHead, Section, Card } from './_blocks.js';
+import * as S from './RouteSummary.stories.js';
+
+<Meta of={S} />
+
+<Unstyled>
+<div className="ds-page">
+<PageHead eyebrow="Blocks · 모바일 앱" title="Route Summary" lead="이용 내역 · 호출 확인 화면 본문 첫 카드에서 출발 · 경유 · 도착을 세로로 보여 주는 경로 요약입니다. 상단 바 제목에는 경로를 쓰지 않습니다." />
+<Section title="구성" en="Spec">
+<table className="ds-table ds-props">
+<thead><tr><th>구분</th><th>클래스 · 속성</th><th>설명</th></tr></thead>
+<tbody>
+<tr><td><b>목록</b></td><td><code>ol.route-summary</code></td><td>순서가 있는 목록입니다. 화면 읽기 프로그램이 「이동 경로, 3개 항목」으로 읽습니다.</td></tr>
+<tr><td><b>한 곳</b></td><td><code>.route-summary__stop--start</code> · <code>--via</code> · <code>--end</code></td><td>점 · 「출발 · 경유 · 도착」 글자 · 장소 · 시각입니다. 점 색만으로 구분하지 않고 글자를 함께 둡니다. 긴 장소 이름은 자르지 않고 줄을 바꿉니다.</td></tr>
+<tr><td><b>경유 둘 이상</b></td><td><code>details.route-summary__vias</code></td><td>「○○ 외 1곳」으로 접고, 누르면 펼칩니다. 스크립트 없이 열고 닫힙니다.</td></tr>
+<tr><td><b>좁은 칸</b></td><td>컨테이너 쿼리 <code>17em</code></td><td>놓인 칸이 좁으면(글자를 키운 휴대폰) 시각이 장소 아래 줄로 내려갑니다. 기준이 글자 크기 비율이라 글자를 따라 바뀝니다.</td></tr>
+<tr><td><b>파일</b></td><td><code>css/blocks/mobility.css</code></td><td>모바일 앱 전용 조합이라 따로 둡니다. PLM 화면은 이 파일을 링크하지 않습니다.</td></tr>
+<tr><td><b>브랜드가 바꾸는 것</b></td><td><code>--color-border-brand</code> · <code>--color-bg-map-pin</code> · <code>--radius-card</code> · 글자 크기</td><td>출발 점 · 도착 점 색 · 카드 모서리 · 글자 크기입니다. 모바일 앱 브랜드(Mobility)에서 씁니다.</td></tr>
+</tbody>
+</table>
+</Section>
+<Section title="예시" en="Examples">
+<Card of={S.경유_하나} title="경유 하나" desc="출발 · 경유 · 도착이 세 줄로 다 보일 때 사용합니다." basis="네이버지도 · 티맵 · 카카오T · 구글 지도 모두 경로를 세로로 쌓습니다. 「에서 · 거쳐」 같은 문장으로 잇는 앱은 없습니다." />
+<Card of={S.경유_둘_이상} title="경유 둘 이상은 접기" desc="기본보다 경유가 둘 이상일 때 사용합니다." basis="티맵 「2개의 경유지」 · 카카오T 「○○ 외 1개」처럼 접어 두고 누르면 펼칩니다." />
+</Section>
+</div>
+</Unstyled>

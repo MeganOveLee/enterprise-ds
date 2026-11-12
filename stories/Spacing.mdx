@@ -1,0 +1,43 @@
+import { Meta, Unstyled } from '@storybook/addon-docs/blocks';
+import { PageHead, Section, Card } from './_blocks.js';
+import * as S from './Spacing.stories.js';
+import resolved from '../tokens/build/resolved.json';
+
+export const DENSITY_BRANDS = [['default', 'Default', 'PLM 웹'], ['ootb', 'OOTB', 'Windchill 화면'], ['mobility', 'Mobility', '모바일 앱']];
+export const DENSITY_ROWS = [['size-input', '입력 칸 · 버튼 높이'], ['size-touch', '누름 영역 최소 높이'], ['size-btn-lg', '큰 버튼 높이'], ['body-md', '본문 글자'], ['body-sm', '작은 글자'], ['radius-btn', '버튼 모서리'], ['radius-input', '입력 칸 모서리'], ['size-grid-row', '목록 표 줄 높이']];
+export const densityValue = (v) => v === undefined ? '—' : /rem$/.test(v) ? parseFloat(v) * 16 + 'px' : parseInt(v, 10) > 999 ? '완전히 둥글게' : v;
+
+<Meta of={S} />
+
+<Unstyled>
+<div className="ds-page">
+<PageHead eyebrow="Foundation" title="Spacing · Radius · Size" lead="간격 · 모서리 · 높이 단계이고, 모서리와 높이는 브랜드가 바꿀 수 있습니다." />
+<Section title="개요" en="Overview">
+<table className="ds-table">
+<thead><tr><th>구분</th><th>설명</th><th>사용처</th><th>기본값</th><th>브랜드가 바꾸는 값</th></tr></thead>
+<tbody>
+<tr><td><b>간격</b><span className="ds-muted">Spacing</span></td><td><code>--spacing-2</code> ~ <code>--spacing-48</code></td><td>요소 사이 · 카드 안 여백 · 섹션 사이</td><td>2 · 4 · 8 · 12 · 16 · 24 · 32 · 48px</td><td>—</td></tr>
+<tr><td><b>모서리 단계</b><span className="ds-muted">Radius — 고정</span></td><td>단계 토큰 <code>--radius-none</code> · <code>-sm</code> · <code>-md</code> · <code>-lg</code> · <code>-rounded</code>. 모든 브랜드에서 같습니다</td><td>역할 토큰이 가리키는 값</td><td>0 · 2 · 4 · 8px · 완전 둥근(rounded)</td><td>—</td></tr>
+<tr><td><b>모서리 역할</b><span className="ds-muted">Radius role — 브랜드 재정의 가능</span></td><td><code>--radius-btn</code> · <code>-input</code> · <code>-card</code> …. 컴포넌트는 역할 토큰 이름만 씁니다</td><td>버튼 · 입력 필드 · 체크박스 · 칩 · 행 · 카드 · 영역 · 팝오버 · 스켈레톤</td><td>버튼 4 · 입력 필드 2 · 체크박스 2 · 칩 rounded · 행 2 · 카드 8 · 영역 4 · 팝오버 4 · 스켈레톤 2px</td><td><b>Mobility</b> 버튼 · 칩 rounded · 입력 필드 · 카드 · 영역 · 팝오버 8 · 체크박스 · 행 · 스켈레톤 4px<br /><b>OOTB</b> 모두 0</td></tr>
+<tr><td><b>높이</b><span className="ds-muted">Size — 브랜드 재정의 가능</span></td><td><code>--size-input</code> · <code>--size-btn</code> · <code>--size-btn-sm</code></td><td>입력 필드 · 버튼 · 작은 버튼</td><td>입력 필드 28 · 버튼 28 · 작은 버튼 26px</td><td><b>OOTB</b> 입력 필드 32 · 버튼 32 · 작은 버튼 28px</td></tr>
+<tr><td><b>그림 자산</b><span className="ds-muted">Art — 브랜드 재정의 가능</span></td><td><code>--art-solid</code><br /><code>--art-line</code><span className="ds-muted">둘 중 하나만 block</span></td><td>빈 상태 일러스트 · 폴더 트리 아이콘 · 첨부 파일 형식 아이콘의 모양(<a className="ds-link" href="./?path=/docs/feedback-empty--docs" target="_top">Empty</a> 문서 「일러스트」)</td><td>솔리드<span className="ds-muted">solid block · line none</span></td><td><b>Mobility · OOTB</b> 라인<span className="ds-muted">solid none · line block</span></td></tr>
+</tbody>
+</table>
+<p className="ds-note"><b>브랜드</b>를 바꾸면 모서리 역할과 높이의 「지금 값」이 바뀝니다. 브랜드 파일이 바꾸는 것은 브랜드 색과 형태(모서리 역할 · 높이) · 그림 자산 모양(솔리드 · 라인)뿐입니다.</p>
+</Section>
+<Section title="단계" en="Scale">
+<Card of={S.간격} title="간격" en="Spacing" desc="막대 길이 = 실제 값" />
+<Card of={S.모서리} title="모서리" en="Radius" desc="위는 단계(고정), 아래는 역할(브랜드 재정의 가능)이고, 역할의 「지금 값」은 선택한 브랜드의 값입니다" />
+<Card of={S.높이} title="높이" en="Size" desc="입력 필드 · 버튼 · 작은 버튼 — 같은 줄에 놓이는 입력 필드와 버튼은 높이가 같습니다" />
+</Section>
+<Section title="브랜드별 밀도" en="Density" desc="같은 컴포넌트가 브랜드마다 다른 밀도로 그려집니다. PLM 웹과 Windchill 화면은 하루 종일 표를 보는 업무 화면이라 촘촘하게, 모바일 앱은 고령 이용자가 손가락으로 누르는 화면이라 크게 둡니다. 값은 브랜드 파일 한 장에서 바뀌고, 컴포넌트 CSS는 같습니다(DS-ADR-020 · 046 · 047).">
+<table className="ds-table ds-props">
+<thead><tr><th>토큰</th><th>쓰는 곳</th>{DENSITY_BRANDS.map(([k, n, d]) => <th key={k}>{n}<span className="ds-muted">{d}</span></th>)}</tr></thead>
+<tbody>
+{DENSITY_ROWS.map(([t, use]) => <tr key={t}><td><code>--{t}</code></td><td>{use}</td>{DENSITY_BRANDS.map(([k]) => <td key={k}>{densityValue(resolved[k + '/light'][t])}</td>)}</tr>)}
+</tbody>
+</table>
+<p className="ds-sec__desc ds-after">표의 값은 토큰 원본(<code>tokens/build/resolved.json</code>)에서 읽습니다. 위쪽 견본은 맨 위 도구 막대에서 고른 브랜드의 값으로 그려집니다. 목록 표는 웹 화면에만 씁니다.</p>
+</Section>
+</div>
+</Unstyled>

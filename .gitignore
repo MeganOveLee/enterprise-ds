@@ -1,0 +1,19 @@
+node_modules/
+storybook-static/
+*.log
+
+# 공개하지 않는 것 (고객사 원본 · 내부 도구 · 내부 문서)
+source-*/
+css/brands/*
+!css/brands/default.css
+!css/brands/mobility.css
+!css/brands/ootb.css
+tokens/brands/*
+!tokens/brands/_template.json
+!tokens/brands/default.json
+!tokens/brands/mobility.json
+!tokens/brands/ootb.json
+tools/
+README.internal.md
+*.png
+!assets/brand/*.png

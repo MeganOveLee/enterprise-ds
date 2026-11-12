@@ -1,0 +1,41 @@
+{
+  "$description": "/* ============================================================================\n * LAYER 5 — VENDOR BRIDGE (벤더 CSS 계약 이름)\n *\n * 벤더 파일(quill.snow.css · AUIGrid_custom_style.css)이 직접 읽는 이름만 남긴 층.\n * 우리 CSS 에서는 쓰지 말 것 — 값은 전부 Layer 4 시맨틱을 가리키기만 함.\n *\n * ⚠️ :root 가 아니라 body 에 선언하는 이유:\n *   커스텀 속성의 var() 는 '선언된 요소'에서 계산돼 그 결과가 상속됨. :root 에 두면 라이트 값으로 굳은 채\n *   body.dark-mode 아래로 내려가서 다크에서 안 뒤집힘(구 버전: 5개 중 4개 해당, --def-text-color 만\n *   다크 블록에 중복 선언해 막고 있었음). body 에 두면 body.dark-mode 의 시맨틱 값으로 다시 계산됨.\n *   벤더 요소(에디터·그리드)는 전부 body 안이라 범위 문제 없음 (Legacy 별칭 종결)\n *\n * 구 Layer 5 의 --sidebar-width/-toggle-width 는 Layer 3 --size-sidebar* 로 이동.\n * 구 --gray-* · --carbon-* deprecated 별칭 21개는 사용처 0 확인 후 삭제.\n * ============================================================================ */",
+  "$extensions": {
+    "eds": {
+      "selector": "body"
+    }
+  },
+  "def-text-color": {
+    "$value": "{color-text-base}",
+    "$extensions": {
+      "eds": {
+        "before": [
+          "/* 벤더 CSS(우리가 못 고치는 파일)가 참조하는 이름 2개 — quill.snow.css 전용.\n   quill 교체 전까지 유지. 우리 CSS에서는 쓰지 말 것. */"
+        ]
+      }
+    }
+  },
+  "grid-border-color": {
+    "$value": "{color-border-base}"
+  },
+  "grid-header-color2": {
+    "$value": "transparent",
+    "$type": "color",
+    "$extensions": {
+      "eds": {
+        "before": [
+          "/* AUIGrid 테마(AUIGrid_custom_style.css)가 참조하는 이름 3개.\n   그리드 벤더 클래스와 물려 있어 이름 유지, 값만 이전 버전 시멘틱 참조. */",
+          "/* AUIGrid 셀 하이라이트 배경. 벤더가 헤더·필터·선택셀에 칠하는 자기 배경을 끄는 용도라 기본 transparent.\n   다크는 AUIGrid_custom_style.css 에서 #2E2E38, BOM편집기만 overrides 에서 연파랑으로 켬.\n   이름이 '헤더색2'라 역할과 안 맞지만 벤더 테마 25곳이 참조해 유지 */"
+        ]
+      }
+    }
+  },
+  "aui-grid-contents-color": {
+    "$value": "{color-text-base}",
+    "$description": "셀 글자"
+  },
+  "aui-grid-contents-event-color": {
+    "$value": "{color-text-base}",
+    "$description": "선택 행 num/글자"
+  }
+}

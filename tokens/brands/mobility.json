@@ -1,0 +1,216 @@
+{
+  "$description": "/* ============================================================================\n * 브랜드 — Mobility · 모빌리티 서비스 (가상 산업 브랜드 · TD-125)  ← 공개용 데모 브랜드\n * 사용자: 수요응답 교통(DRT) 이용자 — 고령층 포함\n *\n * 선택자: :root.theme-mobility  →  <html class=\"theme-mobility\">\n * 멀티 브랜드가 \"브랜드 파일 하나 + html 클래스 하나\"로 바뀌는 것을 보여주는 가상 브랜드.\n * 이 파일이 여는 토큰 = 색 + 모서리 역할 + 그림 자산 모양 (DS-ADR-003 · 020 · 037, 목록은 _template.css). 글꼴 · 글자 크기 · 굵기 · 누름 높이는 고령 이용자 기준(Mobility 결정 22 · DS-ADR-052) — 나눔스퀘어 네오 · 본문 18 · 굵기 700 이상 · 누름 48 · 큰 버튼 64.\n * 형태: 둥근 모서리 — 버튼 · 칩 알약, 입력칸 · 카드 · 영역 · 떠 있는 층 8, 체크박스 · 행 · 스켈레톤 4.\n *   반대쪽 끝은 ootb.css(직각 · 높이 32).\n * 그림 자산: 라인 — 빈 상태 일러스트 · 폴더 · 파일 형식 아이콘을 선 모양으로 (DS-ADR-037)\n * 색: 기존 모빌리티 앱 실측 램프 — 500 = 주 버튼 · 700 = 로고 · 800 · 900 = 고른 칩 · 떠 있는 버튼, accent = 로고 초록(흰 바탕 위 아이콘 · 점에만). 고른 칩 · 떠 있는 버튼은 선택 면 역할로 800(DS-ADR-051)\n * 대비 (흰 바탕): 500 5.12 · 600 6.93 · 800 12.56 · 900 15.41 — 색을 바꾸면 다시 잰다\n * ============================================================================ */",
+  "$extensions": {
+    "eds": {
+      "selector": ":root.theme-mobility"
+    }
+  },
+  "brand-50": {
+    "$value": "#F3F6FF",
+    "$type": "color",
+    "$description": "안내 상자 바탕 — 기존 앱 실측"
+  },
+  "brand-100": {
+    "$value": "#E0EAFF",
+    "$type": "color"
+  },
+  "brand-200": {
+    "$value": "#C1D4FF",
+    "$type": "color"
+  },
+  "brand-300": {
+    "$value": "#97B5FE",
+    "$type": "color"
+  },
+  "brand-400": {
+    "$value": "#638CFB",
+    "$type": "color"
+  },
+  "brand-500": {
+    "$value": "#3661EE",
+    "$type": "color",
+    "$description": "주 버튼(행동) — 기존 앱 실측"
+  },
+  "brand-600": {
+    "$value": "#2A4DCC",
+    "$type": "color"
+  },
+  "brand-700": {
+    "$value": "#234090",
+    "$type": "color",
+    "$description": "로고 · 진한 브랜드 면 — 기존 앱 실측"
+  },
+  "brand-800": {
+    "$value": "#1B2E70",
+    "$type": "color",
+    "$description": "선택 면(고른 칩) — 기존 앱 실측"
+  },
+  "brand-900": {
+    "$value": "#142150",
+    "$type": "color",
+    "$description": "떠 있는 버튼 — 기존 앱 실측"
+  },
+  "accent-500": {
+    "$value": "#4F9444",
+    "$type": "color"
+  },
+  "color-bg-selected-strong": {
+    "$value": "{brand-800}",
+    "$extensions": {
+      "eds": {
+        "before": [
+          "/* --- 선택 면 (DS-ADR-051) — 행동 = 파랑(브랜드 면), 고른 칩 · 떠 있는 버튼 = 진남색. 다크 = 밝은 남색 채움 + 진한 글자 ---------- */"
+        ]
+      }
+    }
+  },
+  "color-bg-selected-strong-dark": {
+    "$value": "{brand-200}"
+  },
+  "color-text-on-selected-strong-dark": {
+    "$value": "{brand-900}"
+  },
+  "color-icon-on-selected-strong-dark": {
+    "$value": "{brand-900}"
+  },
+  "radius-btn": {
+    "$value": "{radius-rounded}",
+    "$extensions": {
+      "eds": {
+        "before": [
+          "/* --- 형태 (모서리 역할 → 단계, DS-ADR-020) ------------------------------- */"
+        ]
+      }
+    }
+  },
+  "radius-input": {
+    "$value": "{radius-lg}"
+  },
+  "radius-checkbox": {
+    "$value": "{radius-md}"
+  },
+  "radius-chip": {
+    "$value": "{radius-rounded}"
+  },
+  "radius-item": {
+    "$value": "{radius-md}"
+  },
+  "radius-card": {
+    "$value": "{radius-lg}"
+  },
+  "radius-panel": {
+    "$value": "{radius-lg}"
+  },
+  "radius-popover": {
+    "$value": "{radius-lg}"
+  },
+  "radius-skeleton": {
+    "$value": "{radius-md}"
+  },
+  "size-input": {
+    "$value": "44px",
+    "$extensions": {
+      "eds": {
+        "before": [
+          "/* --- 높이 (DS-ADR-020 · 049) — 고령 이용자 기준(컨트롤 44 · 누름 48 · 큰 버튼 64, Mobility 결정 22). 컨트롤은 최소 높이라 글자를 따라 커짐 ---------- */"
+        ]
+      }
+    }
+  },
+  "size-btn": {
+    "$value": "44px"
+  },
+  "size-btn-lg": {
+    "$value": "64px"
+  },
+  "size-touch": {
+    "$value": "48px"
+  },
+  "body-lg": {
+    "$value": "1.25rem",
+    "$extensions": {
+      "eds": {
+        "before": [
+          "/* --- 글자 크기 (DS-ADR-046) — 본문 18(body-md) · 쉬운 화면은 한 단계 위(body-lg 20). 단계 순서 유지, Mobility 결정 22 ---------- */"
+        ]
+      }
+    }
+  },
+  "body-md": {
+    "$value": "1.125rem"
+  },
+  "body-sm": {
+    "$value": "1rem"
+  },
+  "body-xs": {
+    "$value": "0.875rem"
+  },
+  "heading-2xl": {
+    "$value": "2.25rem"
+  },
+  "heading-xl": {
+    "$value": "1.875rem"
+  },
+  "heading-lg": {
+    "$value": "1.625rem"
+  },
+  "heading-md": {
+    "$value": "1.375rem"
+  },
+  "heading-sm": {
+    "$value": "1.25rem"
+  },
+  "heading-xs": {
+    "$value": "1.125rem"
+  },
+  "font-family-base": {
+    "$value": "'NanumSquare Neo', -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', '맑은 고딕', Helvetica, Arial, sans-serif",
+    "$extensions": {
+      "eds": {
+        "before": [
+          "/* --- 글꼴 (DS-ADR-047) — 나눔스퀘어 네오(OFL). 등록은 css/fonts/nanum-square-neo.css, 이 브랜드 CSS 옆에 링크 ---------- */"
+        ]
+      }
+    }
+  },
+  "font-weight-semibold": {
+    "$value": "700",
+    "$extensions": {
+      "eds": {
+        "before": [
+          "/* --- 굵기 (DS-ADR-052) — 글꼴에 600이 없음, 제목 · 주요 숫자 700 이상(고령 이용자 기준) ---------- */"
+        ]
+      }
+    }
+  },
+  "font-weight-bold": {
+    "$value": "800"
+  },
+  "font-weight-emphasis": {
+    "$value": "{font-weight-bold}",
+    "$description": "강조 굵기 = bold(800) — 큰 버튼 · 떠 있는 버튼 · 앱 상단 바 · 아래 시트 제목"
+  },
+  "icon-stroke": {
+    "$value": "2.4",
+    "$extensions": {
+      "eds": {
+        "before": [
+          "/* --- 아이콘 선 굵기 (TD-172) — 기존 앱 지도 버튼 아이콘이 굵음. 작은 아이콘도 흐려지지 않게 ---------- */"
+        ]
+      }
+    }
+  },
+  "art-solid": {
+    "$value": "none",
+    "$extensions": {
+      "eds": {
+        "before": [
+          "/* --- 그림 자산 (DS-ADR-037) — 하나만 block -------------------------------- */"
+        ]
+      }
+    }
+  },
+  "art-line": {
+    "$value": "block"
+  }
+}
