@@ -6,7 +6,7 @@ import * as S from './MapControls.stories.js';
 
 <Unstyled>
 <div className="ds-page">
-<PageHead eyebrow="Blocks · 모바일 앱" title="Map Controls" lead="지도 위에 뜨는 버튼 묶음 · 정류장 이름표 · 차 태그입니다. 지도 위 글자는 늘 단색 면 위에 둡니다." />
+<PageHead eyebrow="Blocks · 모바일 앱" title="Map Controls" lead="지도 위에 뜨는 버튼 묶음 · 정류장 이름표 · 차 태그입니다. 지도 위 글자는 단색 면 위에 둡니다." />
 <Section title="구성" en="Spec">
 <table className="ds-table ds-props">
 <thead><tr><th>구분</th><th>클래스 · 속성</th><th>설명</th></tr></thead>
@@ -24,12 +24,12 @@ import * as S from './MapControls.stories.js';
 <Section title="버튼 시안" en="Button options">
 <Card of={S.버튼_하나씩} title="A · 하나씩 세로 줄" tag="추천" desc="지도 위 버튼이 둘 안팎이고 하나하나 크게 눌러야 할 때 사용합니다." basis="네이버지도 · Via는 원형 버튼을 하나씩 띄웁니다. 버튼마다 그림자가 있어 지도 위에서 떨어져 보입니다." />
 <Card of={S.버튼_묶음} title="B · 붙은 묶음" desc="기본보다 버튼이 셋 이상이라 지도를 덜 가려야 할 때 사용합니다." basis="Uber는 지도 오른쪽 버튼을 한 판에 붙여 둡니다. 판 하나만 그림자를 둡니다." />
-<Card of={S.글자_알약} title="C · 글자 알약" desc="기본보다 아이콘만으로 뜻이 분명하지 않은 동작이 있을 때 사용합니다." basis="아이콘 + 글자 알약 버튼입니다. 지도를 덜 가리게 누름 기준 높이(--size-touch)를 씁니다." />
+<Card of={S.글자_알약} title="C · 글자 알약" desc="기본보다 아이콘만으로 뜻이 읽히지 않는 동작이 있을 때 사용합니다." basis="아이콘 + 글자 알약 버튼입니다. 지도를 덜 가리게 누름 기준 높이(--size-touch)를 씁니다." />
 </Section>
 <Section title="이름표 시안" en="Label options">
 <Card of={S.이름표_진한_면} title="A · 진한 면 + 꼬리" tag="추천" desc="지도에 타는 곳 하나를 분명히 보여야 할 때 사용합니다." basis="Via는 핀 말풍선에 정류장 이름을 둡니다. 진한 면 위 글자라 지도 그림과 섞이지 않습니다." />
 <Card of={S.이름표_흰_면} title="B · 흰 면 + 핀 점" desc="기본보다 지도에 핀이 여럿이라 이름표를 덜 무겁게 해야 할 때 사용합니다." basis="Uber 「Pickup spot」 이름표처럼 흰 면 + 테두리 이름표 아래 핀 점을 둡니다." />
-<Card of={S.누르는_이름표} title="C · 누르는 이름표" desc="기본보다 지도에서 바로 출발 · 도착을 정하게 할 때 사용합니다." basis="카카오 T는 핀마다 「출발 › · 도착 ›」 이름표를 두고 누르면 그 곳으로 정합니다." />
+<Card of={S.누르는_이름표} title="C · 누르는 이름표" desc="기본보다 지도를 눌러 출발 · 도착을 정하게 할 때 사용합니다." basis="카카오 T는 핀마다 「출발 › · 도착 ›」 이름표를 두고 누르면 그 곳으로 정합니다." />
 </Section>
 <Section title="예시" en="Examples">
 <Card of={S.차_태그} title="차 태그" desc="부른 차가 오는 동안 지도 위 차 옆에 차량 번호와 도착 범위를 보일 때 사용합니다." basis="네이버지도 · 카카오 T는 차 위치 옆에 번호 · 남은 시간을 붙입니다." />

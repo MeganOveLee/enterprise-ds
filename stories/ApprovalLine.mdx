@@ -8,7 +8,7 @@ import * as S from './ApprovalLine.stories.js';
 <div className="ds-page">
 <PageHead eyebrow="Blocks" title="Approval Line" lead="등록 창의 결재선 지정 섹션과, 섹션 헤더의 [결재선 지정]으로 여는 결재선 지정 창입니다. 결재 받을 사람을 역할(합의 · 승인 · 수신)별로 지정합니다." />
 <Section title="시안" en="Options">
-<Card of={S.결재선_지정} title="A · 결재선 표" tag="추천" desc="결재 요청 전에 결재자와 순서를 정할 때 사용합니다." basis="조직도에서 사람을 골라 역할별 표에 옮기는 이전 버전 방식 그대로입니다." />
+<Card of={S.결재선_지정} title="A · 결재선 표" tag="추천" desc="결재 요청 전에 결재자와 순서를 정할 때 사용합니다." basis="조직도에서 사람을 골라 역할별 표에 옮기는 이전 버전과 같은 방식입니다." />
 <Card of={S.시안_가로_단계} title="B · 가로 단계 흐름" desc="기본보다 상세 창 위쪽에서 결재가 어디까지 왔는지 한 줄로 보일 때 사용합니다." basis="Progress 단계 목록과 같은 계열입니다. 단계마다 역할 · 이름 · 상태 글자를 두어 표식 색만으로 읽지 않게 하고, 지금 단계는 aria-current로 알립니다." />
 <Card of={S.시안_세로_타임라인} title="C · 세로 타임라인" desc="기본보다 결재 의견 · 시각까지 함께 보는 모바일 결재함에서 사용합니다." basis="위에서 아래로 시간 순서이고, 의견은 그 단계 아래에 붙습니다. 폭이 좁아도 이름이 잘리지 않습니다." />
 </Section>

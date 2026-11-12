@@ -6,7 +6,7 @@ import * as S from './Pagination.stories.js';
 
 <Unstyled>
 <div className="ds-page">
-<PageHead eyebrow="Navigation" title="Pagination" lead="긴 목록을 페이지로 나누어 이동하는 요소입니다. 목록 바로 아래 가운데에 둡니다." />
+<PageHead eyebrow="Navigation" title="Pagination" lead="긴 목록을 페이지로 나누어 이동하는 요소입니다. 목록 아래 가운데에 둡니다." />
 <Section title="구성" en="Spec">
 <table className="ds-table ds-props">
 <thead><tr><th>구분</th><th>클래스 · 속성</th><th>설명</th></tr></thead>
@@ -23,14 +23,14 @@ import * as S from './Pagination.stories.js';
 <p className="ds-sec__desc ds-after">Figma UI Kit의 「Pagination page」 · 「Pagination control」과 같은 짝입니다. 높이 · 모서리 토큰은 <a className="ds-link" href="./?path=/docs/foundation-spacing-·-radius-·-size--docs" target="_top">Foundation › Spacing · Radius · Size</a>에 있습니다.</p>
 </Section>
 <Section title="시안" en="Options">
-<Card of={S.기본} title="A · 번호" tag="추천" desc="업무 화면의 검색 결과 표 아래에서 사용합니다." basis="번호를 눌러 원하는 쪽으로 바로 가고, 지금 쪽이 몇 번째인지 늘 보입니다. 이전 버전 검색 화면과 같은 자리 · 모양입니다." />
+<Card of={S.기본} title="A · 번호" tag="추천" desc="업무 화면의 검색 결과 표 아래에서 사용합니다." basis="번호를 눌러 원하는 쪽으로 이동하고, 지금 쪽이 몇 번째인지 보입니다. 이전 버전 검색 화면과 같은 자리 · 모양입니다." />
 <Card of={S.시안_더_보기} title="B · 더 보기" desc="기본보다 손가락으로 내려 보는 모바일 목록에서 사용합니다." basis="버튼을 누르면 다음 묶음이 아래에 붙어, 읽던 자리를 잃지 않습니다. 끝없이 자동으로 붙이는 방식은 맨 아래 내용에 닿지 못해 쓰지 않습니다(Baymard 「Load more」). 몇 건 중 몇 건인지 함께 알립니다." />
 <Card of={S.시안_쪽_수_줄} title="C · 쪽 수 줄" desc="기본보다 줄이 많은 촘촘한 표에서 쪽 수와 한 쪽에 보일 줄 수를 함께 정할 때 사용합니다." basis="Carbon Pagination과 같은 방식입니다. 번호 대신 「3 / 12쪽」 하나라 폭이 좁고, 한 쪽 줄 수를 바꿀 수 있습니다." />
 </Section>
 <Section title="예시" en="Examples">
-<Card of={S.기본} title="번호 모두 보기" en="All pages" desc="페이지가 7개 이하면 번호를 모두 보여 줍니다." />
+<Card of={S.기본} title="번호 모두 보기" en="All pages" desc="페이지가 7개 이하면 모든 번호를 보여 줍니다." />
 <Card of={S.줄임표} title="줄임표" en="Ellipsis" desc="현재 페이지가 앞 · 가운데 · 뒤에 있을 때의 모습입니다. 처음 · 끝 · 현재 페이지 앞뒤만 남겨 번호 · 줄임표를 7개로 유지합니다." />
-<Card of={S.목록_아래} title="놓는 자리" en="Placement" desc="목록 바로 아래 가운데에 둡니다. 검색 화면 구조(.searchLayout .table_list)에서 목록 상자 밖에 두고, 목록과 8 · 화면 아래와 16을 띄웁니다. 회색 틀은 화면 영역입니다." />
+<Card of={S.목록_아래} title="놓는 자리" en="Placement" desc="목록 아래 가운데에 둡니다. 검색 화면 구조(.searchLayout .table_list)에서 목록 상자 밖에 두고, 목록과 8 · 화면 아래와 16을 띄웁니다. 회색 틀은 화면 영역입니다." />
 </Section>
 <Section title="Do · Don't">
 <Card of={S.사용_지침} code={false} />
