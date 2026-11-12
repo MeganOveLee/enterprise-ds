@@ -1,5 +1,5 @@
-/** 위쪽 도구 막대 「Figma ↗」 — 처음 보는 사람이 어느 페이지에서든 Figma 원본(UI Kit 첫 페이지 = 한 장 요약)으로 바로 가게 
- * 페이지마다 링크를 달지 않는다는 결정(입구는 소개 하나)은 그대로 — 이건 페이지 밖, 도구 막대 한 곳 */
+/** 위쪽 도구 막대 「Figma ↗」: 처음 보는 사람이 어느 페이지에서든 Figma 원본(UI Kit 첫 페이지 = 한 장 요약)으로 바로 가게 
+ * 페이지마다 링크를 달지 않는다는 결정(입구는 소개 하나)은 그대로: 이건 페이지 밖, 도구 막대 한 곳 */
 import React from 'react';
 import { addons, types } from 'storybook/manager-api';
 
@@ -16,7 +16,7 @@ addons.register('ds-figma-link', () => {
       href: FIGMA,
       target: '_blank',
       rel: 'noreferrer',
-      title: 'Figma UI Kit — 첫 페이지가 한 장 요약입니다 (새 탭)',
+      title: 'Figma UI Kit: 첫 페이지가 한 장 요약입니다 (새 탭)',
       style: {
         display: 'inline-flex', alignItems: 'center', gap: 6, alignSelf: 'center', height: 28, margin: '0 4px 0 8px', padding: '0 10px 0 6px',
         borderRadius: 6, background: '#161616', color: '#fff', fontSize: 12, fontWeight: 600, lineHeight: 1, textDecoration: 'none', whiteSpace: 'nowrap',

@@ -1,4 +1,4 @@
-/** Enterprise DS — Storybook 설정 (HTML 프레임워크, 리액트 없음) */
+/** Enterprise DS: Storybook 설정 (HTML 프레임워크, 리액트 없음) */
 export default {
   stories: ['../stories/**/*.mdx', '../stories/**/*.stories.js'],
   addons: ['@storybook/addon-docs', '@storybook/addon-a11y'],
