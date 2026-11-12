@@ -2,7 +2,7 @@
 
 v1.0 · 설계 · 퍼블리싱 이세영
 
-전담 프론트엔드 개발자가 없는 엔터프라이즈 백오피스 화면을 표준화하고, 다른 사람이 이어받아 관리할 수 있게 유지하는 CSS 디자인 시스템입니다.
+엔터프라이즈 백오피스(PLM) 화면을 위한 CSS 디자인 시스템입니다. 기존 화면의 개발 코드는 그대로 두고, CSS 클래스만 붙여 적용합니다.
 
 **바로 보기** — [Figma UI Kit (한 장 요약)](https://www.figma.com/design/99ff5JQYQPCdY3xRBWHHlO/?node-id=8111-5) · [Figma Foundation](https://www.figma.com/design/Mf4XTC6dNUOH0anjOMcRPi) · [Storybook](https://meganovelee.github.io/enterprise-ds/) · [화면 예시](https://meganovelee.github.io/enterprise-ds/?path=/docs/screens-plm-%ED%99%94%EB%A9%B4--docs) · [결정 기록(ADR)](https://app.notion.com/p/3eda8196682d8126967fcc86f796fcb4)
 
