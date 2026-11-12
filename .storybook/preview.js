@@ -6,7 +6,7 @@ import '../css/fonts/nanum-square-neo.css';   // Mobility 본문 글꼴 등록 �
 import '../css/brands/ootb.css';
 import '../css/globals.css';
 import '../css/components.css';
-import '../css/blocks/mobility.css';   // 모바일 앱 전용 Blocks — PLM 화면은 링크하지 않음 (TD-172)
+import '../css/blocks/mobility.css';   // 모바일 앱 전용 Blocks — PLM 화면은 링크하지 않음
 import './fonts.css';
 
 /** 브랜드 = <html class="theme-*">, 다크 = <body class="dark-mode"> — 실제 화면과 같은 스위치 */
@@ -29,7 +29,7 @@ export default {
     brand: {
       description: '브랜드',
       toolbar: { title: '브랜드', icon: 'paintbrush', dynamicTitle: true,
-        items: [{ value: 'default', title: 'Default · PLM 웹', icon: 'browser' }, { value: 'mobility', title: 'Mobility · 모바일 앱', icon: 'mobile' }, { value: 'ootb', title: 'OOTB · Windchill 화면 리디자인', icon: 'browser' }] },   // 아이콘 = 쓰는 기기(웹 창 · 휴대폰, TD-172)
+        items: [{ value: 'default', title: 'Default · PLM 웹', icon: 'browser' }, { value: 'mobility', title: 'Mobility · 모바일 앱', icon: 'mobile' }, { value: 'ootb', title: 'OOTB · Windchill 화면 리디자인', icon: 'browser' }] },   // 아이콘 = 쓰는 기기(웹 창 · 휴대폰)
     },
     mode: {
       description: '화면 모드 (라이트 / 다크)',

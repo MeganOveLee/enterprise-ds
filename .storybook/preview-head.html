@@ -40,9 +40,9 @@
   .sb-table--full thead th:first-child, .sb-table--full tbody th { width: 180px; }
   .sb-table code { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 12px; color: var(--color-text-brand); }
   .sb-note { font-size: 12px; line-height: 1.6; color: var(--color-text-muted); }
-  .sb-field { max-width: 280px; }   /* 시안 견본 폭 — 칸 하나 (TD-187) */
+  .sb-field { max-width: 280px; }   /* 시안 견본 폭 — 칸 하나 */
   .sb-field--wide { max-width: 480px; }   /* 칸 둘 · 카드 묶음 */
-  .sb-frame { position: relative; max-width: 760px; height: 440px; overflow: hidden; transform: translateZ(0); border: 1px solid var(--color-border-base); border-radius: var(--radius-card); }   /* 창 견본 틀 — 고정 위치 층을 틀 안에 가둠 (TD-187) */
+  .sb-frame { position: relative; max-width: 760px; height: 440px; overflow: hidden; transform: translateZ(0); border: 1px solid var(--color-border-base); border-radius: var(--radius-card); }   /* 창 견본 틀 — 고정 위치 층을 틀 안에 가둠 */
   .sb-frame--wide { max-width: 1040px; }   /* 옆 패널 견본 — 뒤 목록이 보이게 */
   .sb-frame--short { height: 200px; }   /* 토스트 견본 */
   .sb-field--table { max-width: 760px; }   /* 표 견본 */
@@ -78,7 +78,7 @@
   .ds-lead { margin: 0; max-width: 760px; font-size: 15px; color: #57606a; text-wrap: pretty; }   /* 마지막 줄 한 단어 · 말 중간 끊김 줄임 — 설명은 한 문장 · 한 줄 안쪽 */
   .ds-sec { margin-top: 40px; }
   .ds-sec > h2 { margin: 0 0 4px; font-size: 20px; line-height: 1.4; font-weight: 700; color: #111418; }
-  .ds-sec > h2 + :not(.ds-sec__desc) { margin-top: 16px; }   /* 설명 줄 없는 절 — 제목과 내용 사이를 설명 → 내용 간격(16)과 같게. 소개 「적용 환경 · 원칙」 제목이 「적용 환경」에 붙어 보이던 것 (TD-101) */
+  .ds-sec > h2 + :not(.ds-sec__desc) { margin-top: 16px; }   /* 설명 줄 없는 절 — 제목과 내용 사이를 설명 → 내용 간격(16)과 같게. 소개 「적용 환경 · 원칙」 제목이 「적용 환경」에 붙어 보이던 것 */
   .ds-en { margin-left: 8px; font-size: .75em; font-weight: 500; color: #656d76; }
   .ds-sec__desc { margin: 0 0 16px; color: #57606a; }
   .ds-card { margin: 0 0 16px; border: 1px solid #e1e4e8; border-radius: 6px; background: #fff; overflow: hidden; }
@@ -114,9 +114,9 @@
   .ds-props--wrap td:nth-child(2) { white-space: normal; width: 34%; }   /* 클래스가 많은 자리(Screens 「쓰인 것」)는 줄바꿈 — 설명 칸이 좁아지지 않게 */
   .ds-after { margin-top: 12px; }
   .ds-table + .ds-card { margin-top: 24px; }
-  .ds-uses { display: flex; flex-wrap: wrap; gap: 4px 20px; margin: 0 0 12px; font-size: 13px; color: #59636e; }   /* Screens 섹션 — 이 화면에 쓴 블록 · 컴포넌트 (TD-122) */
+  .ds-uses { display: flex; flex-wrap: wrap; gap: 4px 20px; margin: 0 0 12px; font-size: 13px; color: #59636e; }   /* Screens 섹션 — 이 화면에 쓴 블록 · 컴포넌트 */
   .ds-uses b { margin-right: 8px; font-weight: 600; color: #1f2328; }   /* 표 바로 아래 예시 카드 — 붙어 보이던 것(Motion 인터랙션 표 → 처리 중 글자) */
-  .ds-subhead { margin: 24px 0 8px; font-size: 15px; font-weight: 600; color: #111418; }   /* 절 안 두 번째 · 세 번째 박스의 소제목 — 박스를 나눌 때는 박스마다 머리를 둔다 (TD-108) */
+  .ds-subhead { margin: 24px 0 8px; font-size: 15px; font-weight: 600; color: #111418; }   /* 절 안 두 번째 · 세 번째 박스의 소제목 — 박스를 나눌 때는 박스마다 머리를 둔다 */
   .ds-sec > h2 + .ds-subhead, .ds-sec__desc + .ds-subhead { margin-top: 0; }
   /* 소개 */
   .ds-meta { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 0; padding: 0; list-style: none; }
@@ -136,7 +136,7 @@
   .ds-cat ul { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
   .ds-cat a, .ds-cat li > span { display: inline-block; padding: 2px 8px; border: 1px solid #e1e4e8; border-radius: 4px; background: #f6f8fa; font-size: 12px; color: #0550ae; text-decoration: none; }
   .ds-cat li > span { color: #656d76; }
-  .ds-cat a .ds-cat__app { margin-left: 4px; padding: 0 4px; border-radius: 3px; background: #ddf4ff; font-size: 11px; font-weight: 600; color: #0a3069; }   /* 모바일 앱 화면용 표시 (TD-191) — 링크 글자 대비 0a3069/ddf4ff */
+  .ds-cat a .ds-cat__app { margin-left: 4px; padding: 0 4px; border-radius: 3px; background: #ddf4ff; font-size: 11px; font-weight: 600; color: #0a3069; }   /* 모바일 앱 화면용 표시 — 링크 글자 대비 0a3069/ddf4ff */
   .ds-cat a:hover { border-color: #0550ae; }
   .ds-dl { margin: 0; border: 1px solid #e1e4e8; border-radius: 6px; background: #fff; }
   .ds-dl > div { display: grid; grid-template-columns: 140px 1fr; gap: 16px; padding: 12px 16px; border-top: 1px solid #eef0f2; }
@@ -148,7 +148,7 @@
   .intro-demo__search .input { width: 200px; }
   .intro-demo__search .select { width: 140px; }
   .intro-demo__no { font-size: var(--body-sm); color: var(--color-text-muted); font-variant-numeric: tabular-nums; }
-  /* 소개 맨 위 「바로 보기」 — 포트폴리오로 보는 사람이 Figma 원본부터 열게 */
+  /* 소개 맨 위 「바로 보기」 — 처음 보는 사람이 Figma 원본부터 열게 */
   /* 문서 안 도구 막대(Toolbar 블록) — 화면 맨 위 Storybook 도구 막대에서 잰 값 그대로 */
   .ds-tbrow { margin: 0; }
   .ds-tbrow + .ds-card { border-top: 0; border-radius: 0 0 6px 6px; }   /* 막대 아래에 미리보기가 붙음 — 실제 화면처럼 막대 + 캔버스 한 덩어리 */
@@ -159,7 +159,7 @@
   .ds-tbsel { position: relative; display: inline-flex; }
   .ds-tbsel__btn { display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 0 7px; border: 0; border-radius: 4px; background: rgba(0, 109, 235, .07); color: rgb(0, 85, 184); font: inherit; font-weight: 700; white-space: nowrap; cursor: pointer; }
   .ds-tbsel__btn:hover { background: rgba(0, 109, 235, .14); }
-  /* 처음 온 사람에게 「여기를 눌러 보세요」(TD-42 08:35 ④ 제안) — 브랜드색 고리가 세 번 번지고 멈춤 + 말풍선, 한 번 누르면 둘 다 사라짐. 모션 줄이기 = 고리 없이 테두리만 */
+  /* 처음 온 사람에게 「여기를 눌러 보세요」(:35 ④ 제안) — 브랜드색 고리가 세 번 번지고 멈춤 + 말풍선, 한 번 누르면 둘 다 사라짐. 모션 줄이기 = 고리 없이 테두리만 */
   .ds-tb__sels { display: inline-flex; align-items: center; gap: 6px; border-radius: 6px; }
   .ds-tb__deco { display: inline-flex; align-items: center; gap: 6px; margin-right: 8px; }
   .ds-tb__end { margin: 0 0 0 auto; }
@@ -201,8 +201,8 @@
   .ds-hero__subs span:not(.ds-hero__dot) { grid-column: 2; font-size: 12px; color: #57606a; }
   .ds-hero__note { margin: 10px 0 0; font-size: 12px; color: #57606a; }
   @media (max-width: 720px) { .ds-hero__mains, .ds-hero__subs { grid-template-columns: 1fr; } .ds-hero__go { display: none; } }
-  /* 소개 — 문 세 개 · 결정 과정 카드 · 적용 환경 / 원칙 · 운영 흐름 (TD-50 두 페이지 안) */
-  /* 시작하기 — 이전 · 이후 코드 한 쌍과 화면 비교 (TD-118) */
+  /* 소개 — 문 세 개 · 결정 과정 카드 · 적용 환경 / 원칙 · 운영 흐름 (두 페이지 안) */
+  /* 시작하기 — 이전 · 이후 코드 한 쌍과 화면 비교 */
   .ds-pair { display: grid; gap: 12px; margin: 8px 0 16px; }   /* 위아래 — 한 줄 코드가 잘리지 않게 */
   .ds-page .ds-pair__label { margin: 0 0 6px; font-size: 13px; font-weight: 600; color: #1f2328; }
   .ds-pair .docblock-source { margin: 0 !important; }
@@ -212,7 +212,7 @@
   .ds-page .ds-shots figcaption { font-size: 12px; color: #57606a; line-height: 1.5; }
   .ds-shots figcaption b { display: block; font-size: 13px; color: #1f2328; }
   @media (max-width: 720px) { .ds-shots { grid-template-columns: minmax(0, 1fr); } }
-  /* 소개 첫머리 (TD-117) — 목표 · 결과 · 내 기여 이름표 + 결과 = 키워드 한 줄 네 칸. 다른 문서와 같은 밝은 톤, 문서 화면 색이라 토큰이 아닌 고정 값 */
+  /* 소개 첫머리 — 목표 · 결과 · 내 기여 이름표 + 결과 = 키워드 한 줄 네 칸. 다른 문서와 같은 밝은 톤, 문서 화면 색이라 토큰이 아닌 고정 값 */
   .ds-page .ds-brief { display: grid; gap: 16px; margin: 24px 0 8px; padding: 0 0 24px; border-bottom: 1px solid #d8dee4; }
   .ds-brief__row { display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: 16px; align-items: start; }
   .ds-page .ds-brief dt { margin: 0; padding-top: 2px; font-size: 13px; font-weight: 700; color: #57606a; }
@@ -238,7 +238,7 @@
   .ds-page a.ds-quick__a { display: inline-flex; align-items: center; gap: 8px; padding: 5px 14px 5px 6px; border: 1px solid #d0d7de; border-radius: 999px; background: #fff; font-size: 13px; font-weight: 600; color: #1f2328; text-decoration: none; }
   .ds-page a.ds-quick__a:hover { border-color: #0550ae; color: #0550ae; }
   .ds-quick__a img, .ds-quick__a .ds-hero__dot, .ds-quick__ico { flex-shrink: 0; width: 20px !important; height: 20px !important; border-radius: 5px !important; }
-  /* 소개 첫 화면(TD-186) — 화면 카드 머리에 제목 + 브랜드 버튼을 한 줄로. 버튼 = 그 브랜드 색 점, 고르면 그 색으로 채움(색은 _blocks.js 가 resolved.json 에서 넣음) */
+  /* 소개 첫 화면 — 화면 카드 머리에 제목 + 브랜드 버튼을 한 줄로. 버튼 = 그 브랜드 색 점, 고르면 그 색으로 채움(색은 _blocks.js 가 resolved.json 에서 넣음) */
   .ds-showcase { margin: 24px 0 0; }
   .ds-showcase__head { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding: 12px 16px; border-bottom: 1px solid #e1e4e8; background: #f6f8fa; }
   .ds-page .ds-showcase__title { margin: 0; padding: 0; border: 0; font-size: 14px; line-height: 1.4; font-weight: 600; color: #1f2328; }
