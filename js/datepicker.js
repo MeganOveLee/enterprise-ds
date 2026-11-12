@@ -247,7 +247,7 @@
             + '</div>'
             + '<div class="datepicker__header">'
             +   '<button type="button" class="datepicker__nav" data-act="prev" aria-label="이전 달">'
-            +     '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15.5 4.5 8 12 15.5 19.5"/></svg>'   /* Figma caret-left 24 (TD-108) */
+            +     '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15.5 4.5 8 12 15.5 19.5"/></svg>'   /* Figma caret-left 24 */
             +   '</button>'
             +   '<div class="datepicker__title-area" id="' + this.dialogId + '-title" aria-live="polite">'
             +     '<button type="button" class="datepicker__month-btn" data-act="month-toggle" aria-haspopup="listbox" aria-expanded="false" aria-label="월 선택, ' + (month + 1) + '월">' + MONTHS_EN[month] + '</button>'
@@ -470,7 +470,7 @@
         var self = this;
         var dd = document.createElement('div');
         dd.className = 'datepicker__dropdown datepicker__dropdown--year is-open';   /* 폭 68 (Figma Year dropdown) */
-        /* 연도 범위 = input 의 min / max 연도. 없으면 보는 해 기준 30년 전 ~ 10년 뒤 — 목록은 12개 높이에서 스크롤 (TD-120).
+        /* 연도 범위 = input 의 min / max 연도. 없으면 보는 해 기준 30년 전 ~ 10년 뒤 — 목록은 12개 높이에서 스크롤.
          * 구: 보는 해 -6 ~ +5 고정 12개 — 2020년 이전을 고를 수 없었음. 이전 버전(AXISJ 달력)은 연도 화면에서 12년씩 넘겨 범위 제한 없음 */
         var minD = parseDate(this.input.getAttribute('min')), maxD = parseDate(this.input.getAttribute('max'));
         var startYear = minD ? minD.getFullYear() : Math.min(self.viewYear, self.today.getFullYear()) - 30;
