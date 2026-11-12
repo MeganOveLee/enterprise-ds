@@ -6,7 +6,7 @@ import * as S from './Chip.stories.js';
 
 <Unstyled>
 <div className="ds-page">
-<PageHead eyebrow="Form · 모바일 앱" title="Chip" lead="자주 가는 곳으로 바로 가거나, 조건을 하나 또는 여럿 고르는 누르는 칩입니다. 상태를 표시만 하는 칩은 Status Chip입니다." />
+<PageHead eyebrow="Form · 모바일 앱" title="Chip" lead="자주 가는 곳으로 이동하거나, 조건을 하나 또는 여럿 고르는 누르는 칩입니다. 상태를 표시만 하는 칩은 Status Chip입니다." />
 <Section title="구성" en="Spec">
 <table className="ds-table ds-props">
 <thead><tr><th>구분</th><th>클래스 · 속성</th><th>설명</th></tr></thead>
@@ -35,7 +35,7 @@ import * as S from './Chip.stories.js';
 <Card of={S.필터_여럿_고르기} title="필터 여럿 고르기" desc="기본보다 조건을 여럿 겹쳐 거를 때 사용합니다." />
 </Section>
 <Section title="가로 넘김" en="Scroll">
-<Card of={S.넘김_화살표} title="2 · 흐림 + 있는 쪽 화살표" tag="추천" desc="칩이 많아 화면 위쪽 한 줄에 모아 둘 때 사용합니다. 숨은 칩이 있는 쪽에만 화살표가 생깁니다." basis="고령 초심자는 밀기보다 누르기를 더 잘 해냅니다(누르기 70% · 밀기 45%, Leitão 2013). 마지막 칩이 잘리고 화살표가 있는 방식을 권합니다(Baymard 2023)." />
+<Card of={S.넘김_화살표} title="2 · 흐림 + 있는 쪽 화살표" tag="추천" desc="칩이 많아 화면 위쪽 한 줄에 모아 둘 때 사용합니다. 숨은 칩이 있는 쪽에만 화살표가 생깁니다." basis="고령 초심자는 밀기보다 누르기 성공률이 높습니다(누르기 70% · 밀기 45%, Leitão 2013). 마지막 칩이 잘리고 화살표가 있는 방식을 권합니다(Baymard 2023)." />
 <Card of={S.넘김_끝_흐림} title="1 · 끝 흐림" desc="기본보다 화살표 없이 화면을 가볍게 둘 때 사용합니다." basis="흐림만으로 넘김을 알아본다는 사용성 근거는 찾지 못했습니다. 흐린 칩이 누를 수 없는 칩처럼 보일 수 있어 다른 신호와 함께 씁니다." />
 <Card of={S.넘김_끝_칩_잘림} title="3 · 끝 칩 잘림 + 첫 진입 힌트" desc="기본보다 화면 끝까지 칩을 채워 둘 때 사용합니다. 처음 한 번 줄이 살짝 밀렸다 돌아옵니다." basis="끝 칩이 잘려 보이는 것이 가장 강한 신호입니다(NN/g Mobile carousels). 자동 움직임만으로는 알아채지 못하므로 보조로 둡니다. 움직임 줄이기 설정이면 움직이지 않습니다." />
 </Section>

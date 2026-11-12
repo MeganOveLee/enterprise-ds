@@ -24,11 +24,11 @@ import * as S from './Link.stories.js';
 </Section>
 <Section title="시안" en="Options">
 <Card of={S.본문_링크} title="A · 올리면 밑줄" tag="추천" desc="업무 화면의 표 · 폼 옆처럼 링크가 몇 개뿐인 곳에서 사용합니다." basis="이전 버전 규칙대로 평소에는 굵은 브랜드 글자, 마우스 · 키보드가 닿으면 밑줄입니다(DS-ADR-027)." />
-<Card of={S.시안_늘_밑줄} title="B · 늘 밑줄" desc="기본보다 문장 안에 링크가 섞인 안내 · 도움말 글에서 사용합니다." basis="문장 안 링크를 색만으로 구분하지 않게 늘 밑줄을 긋습니다(WCAG 1.4.1, GOV.UK Links)." />
+<Card of={S.시안_늘_밑줄} title="B · 밑줄 고정" desc="기본보다 문장 안에 링크가 섞인 안내 · 도움말 글에서 사용합니다." basis="문장 안 링크를 색만으로 구분하지 않게 밑줄을 긋습니다(WCAG 1.4.1, GOV.UK Links)." />
 <Card of={S.시안_화살표_링크} title="C · 화살표 링크" desc="기본보다 목록 · 카드 끝에서 전체 목록으로 옮겨 갈 때 사용합니다." basis="같은 창에서 옮겨 가므로 새 창 표시(↗) 대신 →를 붙입니다. 링크 글자는 「전체 보기」만이 아니라 무엇의 전체인지 씁니다(WCAG 2.4.4)." />
 </Section>
 <Section title="예시" en="Examples">
-<Card of={S.그리드_링크} title="그리드 링크" en="Grid link" desc="행마다 식별자 하나만 늘 밑줄을 표시합니다. 선택한 행 위에서는 글자가 한 단계 진해집니다." />
+<Card of={S.그리드_링크} title="그리드 링크" en="Grid link" desc="행마다 식별자 하나만 밑줄을 켜 둡니다. 선택한 행 위에서는 글자가 한 단계 진해집니다." />
 <Card of={S.본문_링크} title="본문 링크" en="Text link" desc="다른 창으로 여는 링크와 내려받기 링크입니다." />
 <Card of={S.위치_표시} title="브레드크럼" en="Breadcrumb" desc="GNB 안과 페이지 헤더 안의 브레드크럼입니다." />
 </Section>
@@ -36,7 +36,7 @@ import * as S from './Link.stories.js';
 <Card of={S.사용_지침} code={false} />
 </Section>
 <Section title="전체 상태" en="States" desc="Hovered · Focused는 상호작용 상태를 고정해 표시한 것입니다.">
-<Card of={S.전체_상태} title="그리드 링크" desc="표 칸과 같은 글자 크기입니다. 세 상태 모두 글자 크기 · 굵기 · 폭이 같고, Focused는 글자 바깥 1px 띄운 2px 테두리만 더해져 커 보일 수 있습니다." />
+<Card of={S.전체_상태} title="그리드 링크" desc="표 칸과 같은 글자 크기입니다. 세 상태는 글자 크기 · 굵기 · 폭이 같고, Focused는 글자 바깥 1px 띄운 2px 테두리만 더해져 커 보일 수 있습니다." />
 <Card of={S.본문_링크_상태} title="본문 링크" />
 </Section>
 </div>

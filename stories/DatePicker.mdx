@@ -6,7 +6,7 @@ import * as S from './DatePicker.stories.js';
 
 <Unstyled>
 <div className="ds-page">
-<PageHead eyebrow="Form" title="Date Picker" lead="날짜나 기간을 직접 입력하거나 달력에서 선택하는 필드입니다. 키보드로도 조작할 수 있습니다." />
+<PageHead eyebrow="Form" title="Date Picker" lead="날짜나 기간을 칸에 입력하거나 달력에서 선택하는 필드입니다. 키보드로도 조작할 수 있습니다." />
 <Section title="구성" en="Spec">
 <table className="ds-table ds-props">
 <thead><tr><th>구분</th><th>클래스 · 속성</th><th>설명</th></tr></thead>
@@ -38,7 +38,7 @@ import * as S from './DatePicker.stories.js';
 </table>
 </Section>
 <Section title="시안" en="Options">
-<Card of={S.시안_펼침_달력} title="A · 칸 + 펼침 달력" tag="추천" desc="업무 화면에서 납기일 · 검색 기간처럼 날짜를 고르거나 칠 때 사용합니다." basis="칸에 직접 치거나 달력에서 고를 수 있고, 키보드로 날짜를 옮길 수 있습니다(DS-ADR-016)." />
+<Card of={S.시안_펼침_달력} title="A · 칸 + 펼침 달력" tag="추천" desc="업무 화면에서 납기일 · 검색 기간처럼 날짜를 고르거나 칠 때 사용합니다." basis="칸에 치거나 달력에서 고를 수 있고, 키보드로 날짜를 옮길 수 있습니다(DS-ADR-016)." />
 <Card of={S.시안_아래_시트_달력} title="B · 아래 시트 달력" desc="기본보다 화면이 좁아 칸 아래에 달력을 펼칠 자리가 없는 모바일 화면에서 사용합니다." basis="같은 달력을 아래 시트에 담아 화면 폭 전체를 씁니다. 고른 날은 아래 주 버튼으로 정해 한 번 더 확인합니다. 시트 동작은 Bottom Sheet와 같습니다." />
 <Card of={S.시안_세_칸} title="C · 연 · 월 · 일 세 칸" desc="기본보다 생년월일처럼 이미 아는 날짜를 칠 때 사용합니다." basis="아는 날짜는 달력을 넘기는 것보다 숫자를 치는 쪽이 빠릅니다(GOV.UK Date input). 칸마다 숫자 자판이 뜨고, 칸 폭은 들어갈 자리 수에 맞춥니다." />
 </Section>

@@ -8,12 +8,12 @@ import * as S from './SearchForm.stories.js';
 <div className="ds-page">
 <PageHead eyebrow="Blocks" title="Search Form" lead="목록 화면 위의 검색 조건 영역입니다. 섹션 헤더와, 라벨 위 · 필드 아래 한 쌍의 조건 필드로 이루어집니다." />
 <Section title="시안" en="Options">
-<Card of={S.모두_보기} title="A · 칸 여러 줄" tag="추천" desc="업무 화면에서 번호 · 이름 · 기간처럼 직접 치는 조건이 많을 때 사용합니다." basis="이전 버전 검색 화면 대부분이 두 줄 안이라 모두 보이고, 넘으면 첫 줄만 두고 접습니다(DS-ADR-044)." />
+<Card of={S.모두_보기} title="A · 칸 여러 줄" tag="추천" desc="업무 화면에서 번호 · 이름 · 기간처럼 글자로 치는 조건이 많을 때 사용합니다." basis="이전 버전 검색 화면 대부분이 두 줄 안이라 접지 않고, 넘으면 첫 줄만 두고 접습니다(DS-ADR-044)." />
 <Card of={S.시안_필터_칩} title="B · 필터 칩 한 줄" desc="기본보다 조건이 서너 개뿐인 모바일 · 간단한 목록에서 사용합니다." basis="검색 칸 하나 + 누르면 켜지는 칩으로 한 번 누르기에 거릅니다(Polaris Filters). 칩은 Form › Chip과 같습니다." />
-<Card of={S.시안_왼쪽_필터_패널} title="C · 왼쪽 필터 패널" desc="기본보다 조건 값이 작업현황 · 분류처럼 정해진 목록이고 여러 개를 겹쳐 거를 때 사용합니다." basis="Carbon · Polaris 필터 패널과 같은 방식입니다. 항목마다 체크로 고르고 결과가 옆에서 바로 바뀝니다. 놓인 칸이 좁으면 패널이 결과 위로 내려갑니다." />
+<Card of={S.시안_왼쪽_필터_패널} title="C · 왼쪽 필터 패널" desc="기본보다 조건 값이 작업현황 · 분류처럼 정해진 목록이고 여러 개를 겹쳐 거를 때 사용합니다." basis="Carbon · Polaris 필터 패널과 같은 방식입니다. 항목마다 체크로 고르고 결과가 옆에서 바뀝니다. 놓인 칸이 좁으면 패널이 결과 위로 내려갑니다." />
 </Section>
 <Section title="예시" en="Examples" desc={<>한 행에 조건을 최대 6칸 둡니다. 조건이 두 행을 넘으면 첫 행만 보이고 나머지는 상세 검색으로 접습니다. <a className="ds-link" href="https://app.notion.com/p/3ffa8196682d81f7b73de9981ab21fe3" target="_blank" rel="noreferrer">DS-ADR-044 ↗</a></>}>
-<Card of={S.모두_보기} title="모두 보기" en="All conditions" desc="조건을 모두 한 격자에 둡니다. 접을 조건이 없으므로 펼치기 버튼을 두지 않습니다. 그림의 번호는 아래 표의 이름 · 클래스입니다.">
+<Card of={S.모두_보기} title="모두 보기" en="All conditions" desc="모든 조건을 한 격자에 둡니다. 접을 조건이 없으므로 펼치기 버튼을 두지 않습니다. 그림의 번호는 아래 표의 이름 · 클래스입니다.">
 <table className="ds-table ds-props anno-list">
 <thead><tr><th>번호</th><th>이름</th><th>클래스</th><th>설명</th></tr></thead>
 <tbody>

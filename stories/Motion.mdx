@@ -31,7 +31,7 @@ import * as S from './Motion.stories.js';
 <tr><td><b>단계 목록</b><span className="ds-muted">기다림</span></td><td>여러 단계 중 어디까지 왔는지입니다. 끝난 단계는 체크, 지금 단계는 도는 고리입니다.</td><td>일괄 등록 · BOM 비교 · 배포</td><td><code>.steps</code> › <code>.steps__item.is-done</code> · <code>.is-current</code></td></tr>
 </tbody>
 </table>
-<Card of={S.처리_중_글자} title="처리 중 글자" en="Working text" desc="몇 초 걸리는 처리에서 스피너 + 안내 문구를 씁니다(Loading 시간 규칙 3 ~ 10초). 빛은 Shimmer와 같은 한 바퀴(지나감 + 쉼)이고, 바탕 글자와 빛 모두 글자 대비 4.5:1 이상입니다." />
+<Card of={S.처리_중_글자} title="처리 중 글자" en="Working text" desc="몇 초 걸리는 처리에서 스피너 + 안내 문구를 씁니다(Loading 시간 규칙 3 ~ 10초). 빛은 Shimmer와 같은 한 바퀴(지나감 + 쉼)이고, 바탕 글자와 빛은 글자 대비 4.5:1 이상입니다." />
 <Card of={S.단계_목록} title="단계 목록" en="Steps" desc="기본보다 단계가 여럿이고 각 단계가 끝나는 것을 보여 줄 때. 감싸는 .loading(role=&quot;status&quot;)이 바뀐 단계를 읽고, 끝난 단계 끝에는 숨김 글자 「완료」가 있습니다." />
 </Section>
 <Section title="로고 로더" en="Logo loader" desc="페이지 전체를 처음 불러올 때(로그인 직후 · 화면 전환)만 쓰는 로고 로더의 움직임입니다. 한 바퀴 2.4초이고, 동작 줄이기 설정에서는 멈추지 않고 6초로 느리게 돕니다. 마크는 가상 제품의 그림이고, 배경 네모 없이 조각과 고리만 브랜드색으로 그립니다. 쓰는 곳은 Feedback › Loading에 있습니다.">
