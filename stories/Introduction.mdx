@@ -25,12 +25,12 @@ import githubIcon from '../assets/links/github.svg';
     「개발 코드를 건드리지 않고」 → 서버 로직은 그대로, 화면 층(마크업 클래스 · CSS)만 — JSP 마크업은 클래스를 더하고 감싸는 태그를 넣었으므로.
     내 기여 = 디자이너가 한 일만(역할 분담은 「운영 방식」). 「직접 수정 · 자체 구현」 같은 혼자 쓴 것으로 읽히는 말은 쓰지 않는다 */}
 <dl className="ds-brief ds-box" aria-label="목표 · 결과 · 내 기여">
-<div className="ds-brief__row"><dt>목표</dt><dd><p className="ds-brief__goal">서버 로직은 그대로 두고 화면 층(마크업의 클래스 · CSS)만 바꿉니다. 컴포넌트는 한 벌이고, 브랜드마다 토큰 값만 바꿔 디자인을 입힙니다. 같은 컴포넌트로 모바일 앱 화면까지 만듭니다.</p></dd></div>
+<div className="ds-brief__row"><dt>목표</dt><dd><p className="ds-brief__goal">서버 로직은 바꾸지 않고 화면 층(마크업의 클래스 · CSS)만 바꿉니다. 컴포넌트는 한 벌이고, 브랜드마다 토큰 값만 바꿔 디자인을 입힙니다. 같은 컴포넌트로 모바일 앱 화면까지 만듭니다.</p></dd></div>
 <div className="ds-brief__row">
 <dt>결과</dt>
 <dd>
 <ul className="ds-keys" aria-label="결과 — 핵심 키워드">
-<li><b>이전 버전 위에 얹기</b><span className="ds-keys__en">Non-invasive</span><p>서버 코드와 화면 동작(<code>id</code> · <code>name</code> · 이벤트)은 그대로 두고, 마크업에는 클래스를 더하거나 감싸는 태그만 넣어 이전 버전 화면을 바꿉니다.</p><a className="ds-keys__link" href="https://app.notion.com/p/3fea8196682d81a68e89e1b3cbfb8194" target="_blank" rel="noreferrer">DS-ADR-032 ↗</a></li>
+<li><b>이전 버전 위에 얹기</b><span className="ds-keys__en">Non-invasive</span><p>서버 코드와 화면 동작(<code>id</code> · <code>name</code> · 이벤트)은 바꾸지 않고, 마크업에는 클래스를 더하거나 감싸는 태그만 넣어 이전 버전 화면을 바꿉니다.</p><a className="ds-keys__link" href="https://app.notion.com/p/3fea8196682d81a68e89e1b3cbfb8194" target="_blank" rel="noreferrer">DS-ADR-032 ↗</a></li>
 <li><b>멀티 브랜드</b><span className="ds-keys__en">Multi-brand</span><p>모든 브랜드가 컴포넌트 한 벌을 함께 쓰고, 브랜드 파일 하나(<code>{'css/brands/{브랜드}.css'}</code>)만 바꾸면 색 · 모서리 · 높이 · 그림 자산이 바뀝니다.</p><a className="ds-keys__link" href="https://app.notion.com/p/3f8a8196682d8140b3e6fa865faa6fb8" target="_blank" rel="noreferrer">DS-ADR-020 ↗</a></li>
 <li><b>Figma = CSS 한 기준</b><span className="ds-keys__en">Single source</span><p>Figma 변수와 CSS 토큰은 같은 이름 · 같은 값을 쓰고, 다르게 둔 곳은 이유를 결정 기록에 남겼습니다.</p><a className="ds-keys__link" href="https://app.notion.com/p/3ffa8196682d81faae5cdf9867c03238" target="_blank" rel="noreferrer">DS-ADR-038 ↗</a></li>
 <li><b>계산으로 지키는 접근성</b><span className="ds-keys__en">Accessibility by calculation</span><p>WCAG 2.1 AA 기준을 대비 계산과 자동 검사로 모든 브랜드 × 라이트 · 다크에서 확인합니다.</p><a className="ds-keys__link" href="https://app.notion.com/p/3f1a8196682d813e88aac97cf15d7267" target="_blank" rel="noreferrer">DS-ADR-013 ↗</a></li>
@@ -51,9 +51,9 @@ import githubIcon from '../assets/links/github.svg';
 <Section title="이전 버전과 비교" en="Before and after" desc={<>문서 검색 화면 기준입니다. 지금 화면은 <a className="ds-link" href="./?path=/docs/screens-plm-화면--docs" target="_top">PLM 화면</a>에 있습니다.</>}>
 <table className="ds-table">
 <tbody>
-<tr><td><b>다시 생각한 것</b></td><td>모든 조건을 펼친 두 줄 검색 조건 → 자주 쓰는 조건 한 줄 + [상세 검색 펼치기]. 모든 상태가 같은 빨간 글자이던 작업현황 → 상태마다 색이 다른 상태 칩. 같은 그림이던 파일 열 → 형식별 아이콘.</td></tr>
+<tr><td><b>바꾼 것</b></td><td>모든 조건을 펼친 두 줄 검색 조건 → 자주 쓰는 조건 한 줄 + [상세 검색 펼치기]. 모든 상태가 같은 빨간 글자이던 작업현황 → 상태마다 색이 다른 상태 칩. 같은 그림이던 파일 열 → 형식별 아이콘.</td></tr>
 <tr><td><b>지킨 것</b></td><td>화면 배치(LNB 레일 · 서브 패널 · 검색 조건 · 결과 표)와 클래스 이름(<code>.mainTable</code> · <code>.seach_arm</code> · <code>.table_list</code>), 표 밀도(머리 34 · 줄 30, 이전 버전 그리드 값). <a className="ds-link" href="https://app.notion.com/p/3fca8196682d812c989fcaa39abcef25" target="_blank" rel="noreferrer">DS-ADR-030 ↗</a></td></tr>
-<tr><td><b>잘라낸 것</b></td><td>화면마다 따로 쓰던 버튼 클래스와 옛 이름 별칭 — 버튼은 <code>.btn</code> 하나에 중요도 × 모양으로 정리했습니다. <a className="ds-link" href="https://app.notion.com/p/3efa8196682d8190a8eaf1c60196737f" target="_blank" rel="noreferrer">DS-ADR-009 ↗</a> · <a className="ds-link" href="https://app.notion.com/p/3eda8196682d81de90ebe6eae0a32d30" target="_blank" rel="noreferrer">002 ↗</a></td></tr>
+<tr><td><b>잘라낸 것</b></td><td>화면별 버튼 클래스와 옛 이름 별칭 — 버튼은 <code>.btn</code> 하나에 중요도 × 모양으로 정리했습니다. <a className="ds-link" href="https://app.notion.com/p/3efa8196682d8190a8eaf1c60196737f" target="_blank" rel="noreferrer">DS-ADR-009 ↗</a> · <a className="ds-link" href="https://app.notion.com/p/3eda8196682d81de90ebe6eae0a32d30" target="_blank" rel="noreferrer">002 ↗</a></td></tr>
 <tr><td><b>규칙을 굽힌 곳</b></td><td>조회 버튼은 보조(secondary)가 규칙이지만, 검색 조건 영역에서는 [검색]이 핵심 동작이라 [검색]만 주 버튼(primary)으로 둡니다. <a className="ds-link" href="https://app.notion.com/p/3efa8196682d8190a8eaf1c60196737f" target="_blank" rel="noreferrer">DS-ADR-009 ↗</a></td></tr>
 </tbody>
 </table>
@@ -85,7 +85,7 @@ import githubIcon from '../assets/links/github.svg';
 <div className="ds-layer">
 <p className="ds-layer__label">조합<span>Blocks</span></p>
 <div className="ds-cats ds-cats--wide">
-<div className="ds-cat"><h3>Blocks<span>조합</span></h3><p>여러 컴포넌트를 조합한 화면 단위 블록입니다. 화면에 그대로 배치해 사용합니다. 「앱」 표시는 모바일 앱 화면에서 쓰는 것입니다.</p><ul><li><a href="./?path=/docs/blocks-search-form--docs" target="_top">Search Form</a></li><li><a href="./?path=/docs/blocks-bom-compare--docs" target="_top">BOM Compare</a></li><li><a href="./?path=/docs/blocks-approval-line--docs" target="_top">Approval Line</a></li><li><a href="./?path=/docs/blocks-trip-input--docs" target="_top">Trip Input<span className="ds-cat__app">앱</span></a></li><li><a href="./?path=/docs/blocks-transport-tile--docs" target="_top">Transport Tile<span className="ds-cat__app">앱</span></a></li><li><a href="./?path=/docs/blocks-route-summary--docs" target="_top">Route Summary<span className="ds-cat__app">앱</span></a></li><li><a href="./?path=/docs/blocks-map-controls--docs" target="_top">Map Controls<span className="ds-cat__app">앱</span></a></li></ul></div>
+<div className="ds-cat"><h3>Blocks<span>조합</span></h3><p>여러 컴포넌트를 조합한 화면 단위 블록입니다. 화면에 배치해 사용합니다. 「앱」 표시는 모바일 앱 화면에서 쓰는 것입니다.</p><ul><li><a href="./?path=/docs/blocks-search-form--docs" target="_top">Search Form</a></li><li><a href="./?path=/docs/blocks-bom-compare--docs" target="_top">BOM Compare</a></li><li><a href="./?path=/docs/blocks-approval-line--docs" target="_top">Approval Line</a></li><li><a href="./?path=/docs/blocks-trip-input--docs" target="_top">Trip Input<span className="ds-cat__app">앱</span></a></li><li><a href="./?path=/docs/blocks-transport-tile--docs" target="_top">Transport Tile<span className="ds-cat__app">앱</span></a></li><li><a href="./?path=/docs/blocks-route-summary--docs" target="_top">Route Summary<span className="ds-cat__app">앱</span></a></li><li><a href="./?path=/docs/blocks-map-controls--docs" target="_top">Map Controls<span className="ds-cat__app">앱</span></a></li></ul></div>
 </div>
 </div>
 <p className="ds-layer__arrow">↑ 컴포넌트를 조합해 블록을 구성합니다</p>
