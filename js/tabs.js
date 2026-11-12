@@ -8,7 +8,7 @@
  *   나중에 그린 탭 줄은 window.dsTabsInit(영역) 으로 직접 붙임
  *   탭 선택(누름 · ← → · Home · End)은 화면의 탭 스크립트가 맡는다. 이 스크립트는 보이는 범위만 맞춤
  *
- * Enterprise DS v1.0 (TD-108 28번 — Carbon · Cloudscape Tabs 의 넘침 버튼과 같은 방식)
+ * Enterprise DS v1.0 (— Carbon · Cloudscape Tabs 의 넘침 버튼과 같은 방식)
  *   - 넘칠 때만 버튼을 보임(.tab.is-overflow). 끝에 닿은 쪽 버튼은 disabled. 탭 이름은 한 줄 고정(CSS)
  *   - 버튼 = 아이콘 버튼(.btn--secondary.btn--transparent.btn--icon) · aria-label 「이전 탭 보기」 「다음 탭 보기」.
  *     키보드는 ← →로 탭을 옮기면 목록이 따라 밀리므로 버튼은 Tab 순서에 넣지 않음(tabindex="-1")

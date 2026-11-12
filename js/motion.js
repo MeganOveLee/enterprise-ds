@@ -13,7 +13,7 @@
  *   dsMotion.reorderInit(영역)              나중에 그린 [data-ds-reorder] 목록에 붙임
  *   dsMotion.announce(문장)                 화면 읽기 프로그램 알림(role="status" 자리 하나를 같이 씀)
  *
- * Enterprise DS v1.0 (DS-ADR-041, TD-108 44번)
+ * Enterprise DS v1.0 (DS-ADR-041)
  *   - 동작 줄이기 설정(prefers-reduced-motion)이면 움직이지 않고 결과만 — 숫자는 바로 바뀌고 줄은 바로 자리를 바꿈
  *   - 움직임은 꾸밈이고 뜻은 글자가 맡는다: 숫자 · 상태 · 결과는 글자로도 읽히게 둔다
  * ===================================================================== */

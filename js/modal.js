@@ -1,7 +1,7 @@
 /* =====================================================================
  * modal.js - 확인 창(.modal) 열기 · 닫기 · 포커스 가두기 · Esc
  * 같은 페이지 위에 뜨는 확인 창을 연다. 열린 동안 Tab 은 창 안에서만 돌고, Esc 는 취소,
- * 닫으면 창을 연 버튼으로 포커스가 돌아간다 (WAI-ARIA APG Dialog (Modal) 패턴, TD-108).
+ * 닫으면 창을 연 버튼으로 포커스가 돌아간다 (WAI-ARIA APG Dialog (Modal) 패턴).
  *
  * 마크업 (모양은 components.css 「확인 창 — Modal」):
  *   <div class="modal" id="unsaved-modal" hidden>

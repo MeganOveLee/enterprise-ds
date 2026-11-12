@@ -9,7 +9,7 @@
  *   값 · 이름 · 폼 제출은 원래 select 가 그대로 맡는다(숨겨서 둠, option.selected 를 맞춤). change 는 목록을 닫을 때 값이 바뀌었으면 한 번
  *   포함하지 않는 것: 서버에 물어 옵션을 채우는 사람 검색(이전 버전 data-url) — 서버 주소 · 응답 형식이 시스템마다 달라 각 시스템이 맡음
  *
- * Enterprise DS v1.0 (TD-101) — 이전 버전 화면 스크립트(다중 선택 변환)에서 화면 동작만 옮기고 접근성을 덧붙임
+ * Enterprise DS v1.0 — 이전 버전 화면 스크립트(다중 선택 변환)에서 화면 동작만 옮기고 접근성을 덧붙임
  *   - 표시 상자 = role="button" + aria-haspopup · aria-expanded · aria-controls, 목록 = role="group"(체크박스 묶음, 이름 = 칸 이름)
  *   - 표시 글자 = 하나면 그 값, 두 개 이상이면 「첫 값 외 N」(DS-ADR-022). 화면 읽기 이름 = 「칸 이름: 보이는 글자 (나머지 값)」, 고른 값 전체는 title
  *   - 키보드: 표시 상자 Enter · Space · ↓ = 열고 첫 칸(검색 또는 첫 옵션)으로 / 목록 ↑ ↓ = 옵션 사이 이동, Space = 고르기 · 풀기, Tab = 다음 옵션
@@ -35,7 +35,7 @@
         var name = nameOf(sel);
         var empty = sel.getAttribute('placeholder') || '전체';
         var withSearch = sel.getAttribute('data-searchBox') === 'true' || sel.getAttribute('data-searchbox') === 'true';
-        var asChips = sel.getAttribute('data-display') === 'chips';   // 시안 B — 고른 값을 칸 아래 칩으로 (TD-187)
+        var asChips = sel.getAttribute('data-display') === 'chips';   // 시안 B — 고른 값을 칸 아래 칩으로
 
         var wrap = document.createElement('div');
         wrap.className = 'checkSelect';
