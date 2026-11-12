@@ -1,23 +1,23 @@
 @charset "UTF-8";
-/* ⚙️ 생성 파일 — 고치지 말 것. 원본은 tokens/core.json · vendor.json · dark.json, 만들기는 npm run tokens (DS-ADR-045) */
+/* ⚙️ 생성 파일: 고치지 말 것. 원본은 tokens/core.json · vendor.json · dark.json, 만들기는 npm run tokens (DS-ADR-045) */
 /* ============================================================================
- * Enterprise DS v1.0 — 디자인 토큰 (통합)
+ * Enterprise DS v1.0: 디자인 토큰 (통합)
  *
  * 5 Layer 토큰 시스템을 한 파일에 모두 정의.
- * 한 번 만들고 거의 안 건드림 — 디자인 톤 바뀔 때만 수정.
+ * 한 번 만들고 거의 안 건드림: 디자인 톤 바뀔 때만 수정.
  *
- *   Layer 1 — Primitive Colors    (원천 색상 8 색군 + base + transparent)
- *   Layer 2 — Typography          (font/heading/body/weight/line-height)
- *   Layer 3 — Measurement         (spacing/radius/border-width/component-size)
- *   Layer 4 — Semantic Aliases    (bg/text/border/icon × 역할 × 상태)
- *   Layer 5 — Vendor Bridge + Dark (벤더 CSS가 읽는 이름 + body.dark-mode)
+ *   Layer 1: Primitive Colors    (원천 색상 8 색군 + base + transparent)
+ *   Layer 2: Typography          (font/heading/body/weight/line-height)
+ *   Layer 3: Measurement         (spacing/radius/border-width/component-size)
+ *   Layer 4: Semantic Aliases    (bg/text/border/icon × 역할 × 상태)
+ *   Layer 5: Vendor Bridge + Dark (벤더 CSS가 읽는 이름 + body.dark-mode)
  *
  * 출처: Colors.svg (Figma 최신), Font style.pdf, Foundation 가이드
  * 작성일: 2026-06-02
  * ============================================================================ */
 
 /* ============================================================================
- * LAYER 1 — PRIMITIVE COLORS (원천 컬러 칩)
+ * LAYER 1: PRIMITIVE COLORS (원천 컬러 칩)
  * ============================================================================ */
 
 :root {
@@ -25,7 +25,7 @@
   --white: #FFFFFF;
   --black: #000000;
 
-  /* --- Blue (브랜드) — 600이 brand primary ----------------------------------- */
+  /* --- Blue (브랜드): 600이 brand primary ----------------------------------- */
   --blue-50: #E6F1FB;
   --blue-100: #CCE3F7;
   --blue-200: #9BC6EE;
@@ -37,13 +37,13 @@
   --blue-800: #1A4A8F;
   --blue-900: #12305F;                        /* 800보다 어둡게 (제안 A). 옛 #385898은 800(#1A4A8F)보다 밝아 다크 정보 칩(bg-info-subtle) 글자 대비 3.87 → 7.25 */
 
-  /* --- Neutral (중립 회색 — 면·보더·글자·다크 면 전부 이 한 벌) -------------------
+  /* --- Neutral (중립 회색: 면·보더·글자·다크 면 전부 이 한 벌) -------------------
    * v1.0 ADR "중립 회색 통합". 이전엔 gray(면·보더) · neutral(글자) · carbon(다크 면)
    * 세 벌이었으나 다크 화면 한 장에 색상각 248° / 무채색 / 286° 가 섞였고,
    * border-subtle 이 바탕과 대비 1.01 로 사라지는 문제가 있었음 → 한 벌로 합침.
    *
    *   온도는 이름이 아니라 값이 정한다. 브랜드가 쿨(그린·블루)이면 아래 쿨 값, 웜이면 웜 값으로 이 13줄만 교체.
-   *   채도 상한 0.010(OKLCH) — 이전 버전 때 "글자에 색기 = 지저분"의 원인은 채도(Open Color 0.015)였음.
+   *   채도 상한 0.010(OKLCH): 이전 버전 때 "글자에 색기 = 지저분"의 원인은 채도(Open Color 0.015)였음.
    *   750 · 850 · 950 = 다크 면 위계용 중간 단계 (carbon 이 하던 일).
    *
    *   단계  L(OKLCH)  쿨(255°)   웜(75°)
@@ -81,7 +81,7 @@
    *   전환: <html class="theme-{브랜드}">. 클래스가 없으면 brands/default.css(기본 브랜드).
    *   html 에 거는 이유: 아래 Layer 4 시맨틱이 :root(=html) 에서 계산되므로 body 클래스로는 안 바뀜.
    *   국가별 오버라이드가 필요해지면 brands/{브랜드}.{국가}.css 를 이 순서 바로 뒤에 (현재 없음).
-   *   브랜드 파일이 여는 것 = 색(필수) + 형태(선택 — Layer 3 모서리 역할 · 높이, DS-ADR-020). 목록은 tokens/brands/_template.json.
+   *   브랜드 파일이 여는 것 = 색(필수) + 형태(선택: Layer 3 모서리 역할 · 높이, DS-ADR-020). 목록은 tokens/brands/_template.json.
    * ────────────────────────────────────────────────────────── */
 
   /* --- Red (danger 신호) ----------------------------------------------------- */
@@ -120,10 +120,10 @@
   --yellow-800: #8F5B00;
   --yellow-900: #664100;
 
-  /* --- 장소 색 원천 램프 — 상태 색(빨강 · 노랑 · 초록 · 파랑)과 별개인 분류용 색. 장소 종류 역할만 읽고 화면 CSS는 직접 쓰지 않는다
+  /* --- 장소 색 원천 램프: 상태 색(빨강 · 노랑 · 초록 · 파랑)과 별개인 분류용 색. 장소 종류 역할만 읽고 화면 CSS는 직접 쓰지 않는다
    *     명도 단계는 green 램프와 같게(OKLCH), 색상각만 다르게 만듦 (DS-ADR-050) */
 
-  /* --- Orange (장소 색 — 시장 · 마트, DS-ADR-050) ------------------------------------- */
+  /* --- Orange (장소 색: 시장 · 마트, DS-ADR-050) ------------------------------------- */
   --orange-50: #FFF0E8;
   --orange-100: #FEDDCB;
   --orange-200: #FDBE9A;
@@ -135,7 +135,7 @@
   --orange-800: #723202;
   --orange-900: #522200;
 
-  /* --- Purple (장소 색 — 복지관 · 경로당, DS-ADR-050) ----------------------------------- */
+  /* --- Purple (장소 색: 복지관 · 경로당, DS-ADR-050) ----------------------------------- */
   --purple-50: #F6F1FE;
   --purple-100: #ECDDFF;
   --purple-200: #DBBFFE;
@@ -147,7 +147,7 @@
   --purple-800: #57327B;
   --purple-900: #3D2257;
 
-  /* --- Teal (장소 색 — 관공서 · 은행, DS-ADR-050) -------------------------------------- */
+  /* --- Teal (장소 색: 관공서 · 은행, DS-ADR-050) -------------------------------------- */
   --teal-50: #E9F7F5;
   --teal-100: #CEECE7;
   --teal-200: #9DDCD3;
@@ -162,11 +162,11 @@
   /* --- Transparent (shadow / overlay 용) ------------------------------------- */
   --transparent-12: rgba(0, 0, 0, 0.12);
   --transparent-08: rgba(0, 0, 0, 0.08);
-  --transparent-32: rgba(0, 0, 0, 0.32);      /* 덮개 라이트(--color-bg-overlay) — Figma transparent/32 */
+  --transparent-32: rgba(0, 0, 0, 0.32);      /* 덮개 라이트(--color-bg-overlay): Figma transparent/32 */
   --transparent-60: rgba(0, 0, 0, 0.6);       /* 덮개 다크 */
 
   /* ==========================================================================
-   * LAYER 2 — TYPOGRAPHY (옵션 ① — 모두 SemiBold + 120%)
+   * LAYER 2: TYPOGRAPHY (옵션 ①: 모두 SemiBold + 120%)
    * ========================================================================== */
   --font-family-base: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', '맑은 고딕', Helvetica, Arial, sans-serif;
   --font-family-accent: 'Montserrat Alternates', 'Pretendard', sans-serif;
@@ -174,7 +174,7 @@
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
-  --font-weight-emphasis: var(--font-weight-semibold); /* 강조 굵기 — 큰 버튼 · 떠 있는 버튼 · 앱 상단 바 제목 · 아래 시트 제목. 기본 = SemiBold, 브랜드 파일이 덮을 수 있음(플렉시블, DS-ADR-049) */
+  --font-weight-emphasis: var(--font-weight-semibold); /* 강조 굵기: 큰 버튼 · 떠 있는 버튼 · 앱 상단 바 제목 · 아래 시트 제목. 기본 = SemiBold, 브랜드 파일이 덮을 수 있음(플렉시블, DS-ADR-049) */
   --icon-stroke: 1.8;                         /* 아이콘 선 굵기(24 기준 그리기 칸에서). 모바일 앱 컴포넌트의 선 아이콘이 읽음. 브랜드 파일이 덮을 수 있음 */
 
   /* 제목 6단계 = h1~h6 기본값 (DS-ADR-012). 본문(--body-*)과 값이 겹쳐도 이름은 따로 */
@@ -187,7 +187,7 @@
   --body-lg: 1rem;                            /* 16px */
   --body-md: 0.875rem;                        /* 14px ← 기본 본문 */
   --body-sm: 0.75rem;                         /* 12px */
-  --body-xs: 0.6875rem;                       /* 11px · 가장 작은 글자 — 레일 메뉴 이름 · 개수 배지 · 표 안 진행률 숫자 같은 보조 표시. 한글 라벨이 읽히는 가장 작은 크기라 10 이하는 두지 않음 (Figma Body/xs) */
+  --body-xs: 0.6875rem;                       /* 11px · 가장 작은 글자: 레일 메뉴 이름 · 개수 배지 · 표 안 진행률 숫자 같은 보조 표시. 한글 라벨이 읽히는 가장 작은 크기라 10 이하는 두지 않음 (Figma Body/xs) */
 
   /* 제목 행간 = 스펙의 120%. 정의가 없어 제목 6곳(page h1·greeting h1·card-title·팝업 h3·
      검색폼 h4·mainTable th)의 line-height 선언이 무효였던 것 복구 */
@@ -195,28 +195,28 @@
   --line-height-base: 1.6;                    /* 본문 글줄 간격 = body 기본값. 이전 버전 body 값. 고정 높이 컴포넌트(입력칸 · 버튼)는 자기 높이 그대로 */
 
   /* ==========================================================================
-   * LAYER 3 — MEASUREMENT
+   * LAYER 3: MEASUREMENT
    * ========================================================================== */
 
-  /* 실사용 단계만 유지. 미사용 단계(radius-xl·2xl, border-width 3종, spacing-1·40·64)는 삭제 —
+  /* 실사용 단계만 유지. 미사용 단계(radius-xl·2xl, border-width 3종, spacing-1·40·64)는 삭제 : 
      색 램프와 달리 치수 스케일은 팔레트 교체와 무관해 세트로 둘 이유가 없음 */
-  --radius-none: 0;                           /* 직각 — 브랜드 파일이 역할 값을 단계로 가리킬 때 (DS-ADR-020) */
+  --radius-none: 0;                           /* 직각: 브랜드 파일이 역할 값을 단계로 가리킬 때 (DS-ADR-020) */
   --radius-sm: 2px;
   --radius-md: 4px;
   --radius-lg: 8px;
   --radius-rounded: 99999px;
 
-  /* 모서리 역할 (DS-ADR-020) — 컴포넌트는 위 단계가 아니라 이 이름을 쓴다.
+  /* 모서리 역할 (DS-ADR-020): 컴포넌트는 위 단계가 아니라 이 이름을 쓴다.
      위 단계(sm · md · lg · rounded)는 값 사전 = 스태틱. 브랜드 파일은 단계를 덮지 않고 이 역할만 덮는다(플렉시블).
      원형(50%) · 알약(rounded) · 로고 마크 · 진행 막대 · 상태 막대 · 팝업 제목 문서 유형 칸은 역할이 없다 = 모든 브랜드 같음. */
-  --radius-btn: var(--radius-md);             /* 모든 버튼 — 크기와 상관없이 하나: 표준 · 아이콘(닫기 · 페이지 번호 · 달력 화살표 · 파일 받기) · 작은 버튼 · 달력 날짜 · 타일 */
-  --radius-input: var(--radius-sm);           /* 입력칸 계열 — .input · .select · .textarea · 날짜 · 다중 선택 · 트리 검색 · 읽기 전용 (DS-ADR-019) */
+  --radius-btn: var(--radius-md);             /* 모든 버튼: 크기와 상관없이 하나: 표준 · 아이콘(닫기 · 페이지 번호 · 달력 화살표 · 파일 받기) · 작은 버튼 · 달력 날짜 · 타일 */
+  --radius-input: var(--radius-sm);           /* 입력칸 계열: .input · .select · .textarea · 날짜 · 다중 선택 · 트리 검색 · 읽기 전용 (DS-ADR-019) */
   --radius-checkbox: var(--radius-sm);        /* 체크박스 표식 (라디오는 원형이라 제외) */
-  --radius-chip: var(--radius-rounded);       /* 칩 = Figma Chip · Status chip — 버전 표시 등. Badge(점 · 숫자)는 도형이라 역할 없음 (DS-ADR-020) */
-  --radius-item: var(--radius-sm);            /* 목록 · 메뉴 안의 행 — 카드 목록 · 파일 행 · 드롭다운 항목 */
+  --radius-chip: var(--radius-rounded);       /* 칩 = Figma Chip · Status chip: 버전 표시 등. Badge(점 · 숫자)는 도형이라 역할 없음 (DS-ADR-020) */
+  --radius-item: var(--radius-sm);            /* 목록 · 메뉴 안의 행: 카드 목록 · 파일 행 · 드롭다운 항목 */
   --radius-card: var(--radius-lg);            /* 카드 · 스켈레톤 카드 */
-  --radius-panel: var(--radius-md);           /* 화면 안 영역 박스 — 그리드 목록 · 검색 폼 · 왼쪽 패널 · 첨부 영역 */
-  --radius-popover: var(--radius-md);         /* 떠 있는 층 — 달력 · 드롭다운 · GNB 메뉴 (다중 선택 펼침은 표시 상자에 붙어 아래 모서리만 radius-input) */
+  --radius-panel: var(--radius-md);           /* 화면 안 영역 박스: 그리드 목록 · 검색 폼 · 왼쪽 패널 · 첨부 영역 */
+  --radius-popover: var(--radius-md);         /* 떠 있는 층: 달력 · 드롭다운 · GNB 메뉴 (다중 선택 펼침은 표시 상자에 붙어 아래 모서리만 radius-input) */
   --radius-skeleton: var(--radius-sm);        /* 스켈레톤 조각(줄 · 제목 · 블록) */
   --spacing-0: 0;
   --spacing-2: 2px;
@@ -228,48 +228,48 @@
   --spacing-32: 32px;
   --spacing-48: 48px;
 
-  /* 높이 역할 — 브랜드 파일이 덮을 수 있음(플렉시블, DS-ADR-020). size = 높이, 정사각 아이콘 버튼만 가로도 같은 값.
+  /* 높이 역할: 브랜드 파일이 덮을 수 있음(플렉시블, DS-ADR-020). size = 높이, 정사각 아이콘 버튼만 가로도 같은 값.
      input · btn 은 같은 줄에 놓이므로 같은 값. 앱 틀(GNB 막대 안 버튼)은 이 토큰을 쓰지 않고 높이 고정 */
   --size-input: 28px;                         /* 인풋 높이 */
   --size-btn: 28px;                           /* 버튼 기본 (인풋 매칭) · 아이콘 버튼 가로세로. 옛 md(32px)는 실사용 없어 삭제 */
-  --size-input-lg: 44px;                      /* 큰 칸 — 화면에 폼 하나만 있는 단독 폼(로그인 · 임시 비밀번호 발급 — 이전 버전 login.css 큰 칸 · 큰 버튼을 쓰던 두 화면) (제안 E). 브랜드가 바꾸지 않음(스태틱) */
-  --size-btn-lg: 44px;                        /* 큰 버튼 — 단독 폼의 주 동작 · 모바일 화면의 주 행동(호출 · 즐겨찾기). 브랜드 파일이 덮을 수 있음(플렉시블, DS-ADR-049) */
-  --size-btn-sm: 26px;                        /* 작은 버튼 = Figma 「Small Button」 — .btn--sm · 첨부 삭제. 최소 누름 영역 24 이상 (DS-ADR-020) */
-  --size-touch: var(--size-btn);              /* 누름 기준 높이 — 모바일 컴포넌트(앱 상단 바 · 하단 탭 · 목록 행 · 칩)의 최소 높이. 기본 = 표준 버튼 높이, 브랜드 파일이 덮을 수 있음(플렉시블, DS-ADR-049) */
+  --size-input-lg: 44px;                      /* 큰 칸: 화면에 폼 하나만 있는 단독 폼(로그인 · 임시 비밀번호 발급: 이전 버전 login.css 큰 칸 · 큰 버튼을 쓰던 두 화면) (제안 E). 브랜드가 바꾸지 않음(스태틱) */
+  --size-btn-lg: 44px;                        /* 큰 버튼: 단독 폼의 주 동작 · 모바일 화면의 주 행동(호출 · 즐겨찾기). 브랜드 파일이 덮을 수 있음(플렉시블, DS-ADR-049) */
+  --size-btn-sm: 26px;                        /* 작은 버튼 = Figma 「Small Button」: .btn--sm · 첨부 삭제. 최소 누름 영역 24 이상 (DS-ADR-020) */
+  --size-touch: var(--size-btn);              /* 누름 기준 높이: 모바일 컴포넌트(앱 상단 바 · 하단 탭 · 목록 행 · 칩)의 최소 높이. 기본 = 표준 버튼 높이, 브랜드 파일이 덮을 수 있음(플렉시블, DS-ADR-049) */
 
-  /* 표 높이 역할 — 브랜드 파일이 덮을 수 있음(DS-ADR-047). 값 = DS-ADR-030(머리 34 · 줄 30 · 편집 줄 40).
-     조건: 줄 높이 ≥ 작은 버튼(--size-btn-sm) + 2 — 칸 안 버튼 상한이 줄 높이 − 2 */
+  /* 표 높이 역할: 브랜드 파일이 덮을 수 있음(DS-ADR-047). 값 = DS-ADR-030(머리 34 · 줄 30 · 편집 줄 40).
+     조건: 줄 높이 ≥ 작은 버튼(--size-btn-sm) + 2: 칸 안 버튼 상한이 줄 높이 − 2 */
   --size-grid-header: 34px;                   /* 표 머리 높이 (.grid-table th) */
   --size-grid-row: 30px;                      /* 표 줄 높이 (.grid-table td) · 편집 줄 안 입력칸 높이 · 칸 안 버튼 상한(이 값 − 2) */
   --size-grid-row-edit: 40px;                 /* 편집 표 줄 높이 (.grid-table--edit td) */
   --size-sidebar-toggle: 0.4375rem;           /* LNB 오른쪽 리사이즈 손잡이 폭 */
   --size-sidebar: calc(13.875rem - var(--size-sidebar-toggle)); /* LNB 폭 = 사이드 영역 222px − 손잡이.
-                                                                   구 Layer 5 --sidebar-width/-toggle-width 를 치수 층으로 올림 — 이름만 있고 아무도 안 쓰고
+                                                                   구 Layer 5 --sidebar-width/-toggle-width 를 치수 층으로 올림: 이름만 있고 아무도 안 쓰고
                                                                    components 는 같은 숫자를 직접 적고 있었음 (Legacy 별칭 종결).
-                                                                   size 층에서 폭을 담는 토큰은 이 둘(sidebar · sidebar-toggle)뿐 — 「size = 높이」의 예외.
+                                                                   size 층에서 폭을 담는 토큰은 이 둘(sidebar · sidebar-toggle)뿐: 「size = 높이」의 예외.
                                                                    이름은 그대로 둔다: 바꾸면 이전 버전 덮어쓰기 파일도 같이 바꿔야 함 */
 
-  /* 모션 — 값은 여기 한 곳. 컴포넌트 transition · animation 은 이 토큰을 쓴다.
+  /* 모션: 값은 여기 한 곳. 컴포넌트 transition · animation 은 이 토큰을 쓴다.
      fast · base = 이전 버전 tokens 의 모션 토큰 그대로(이전 버전에 함께 있던 ease-standard 는 쓰는 곳이 없어 안 옮김).
      shimmer · pulse · loop = 반복 움직임. 무엇을 알려 주는 움직임인지는 스토리북 Foundation › Motion.
-     모션 줄이기(prefers-reduced-motion)는 컴포넌트마다 — 빛 · 깜빡임은 멈춤, 스피너 · 로고 로더는 느리게만 */
+     모션 줄이기(prefers-reduced-motion)는 컴포넌트마다: 빛 · 깜빡임은 멈춤, 스피너 · 로고 로더는 느리게만 */
   --duration-fast: .12s;                      /* 색 · 테두리 바뀜(메뉴 · 탭 · 입력 필드 포커스) · 툴팁 나타남 · 스위치 손잡이 */
   --duration-base: .2s;                       /* 펼침 화살표 회전 · 상세 검색 펼침 · 사용자 메뉴 안 바탕 · 화면 모드 스위치 */
   --duration-shimmer: 2.4s;                   /* Shimmer 한 바퀴 = 지나감 1.8초 + 쉼 0.6초. 업로더 올리는 중 막대 · 스켈레톤 */
-  --duration-pulse: 1.2s;                     /* Pulse 한 바퀴 = 두근 · 두근 · 쉼 — 지연 상태 표시 막대(statusPulse, 밝기만)와 같은 줄 진행률 막대(ds-alert-glow · ds-alert-sweep, 두 박동에 한 번). 구 1.6s 부드러운 진함 ↔ 흐림 */
+  --duration-pulse: 1.2s;                     /* Pulse 한 바퀴 = 두근 · 두근 · 쉼: 지연 상태 표시 막대(statusPulse, 밝기만)와 같은 줄 진행률 막대(ds-alert-glow · ds-alert-sweep, 두 박동에 한 번). 구 1.6s 부드러운 진함 ↔ 흐림 */
   --duration-fill: 1.6s;                      /* 진행률 막대 채움이 늘어나는 시간(값이 바뀔 때 한 번) */
-  --ease-loop: ease-in-out;                   /* 반복 움직임 곡선 — 빛 · 깜빡임 · 스켈레톤 · 그림 한 장 로고 로더 */
+  --ease-loop: ease-in-out;                   /* 반복 움직임 곡선: 빛 · 깜빡임 · 스켈레톤 · 그림 한 장 로고 로더 */
 
-  /* 인터랙션 — 누른 결과 · 바뀐 곳을 알려 주는 한 번짜리 움직임 (DS-ADR-041) */
+  /* 인터랙션: 누른 결과 · 바뀐 곳을 알려 주는 한 번짜리 움직임 (DS-ADR-041) */
   --duration-slow: .4s;                       /* 숫자 굴러가기 · 상태 칩 전환 */
-  --duration-once: 1.6s;                      /* 한 번 일어나고 끝나는 알림 — 방금 바뀐 행이 옅어짐 · 다음 차이 테두리 · 빈 상태 배지 */
-  --duration-undo: 5s;                        /* 되돌리기 시간 — 삭제 뒤 [되돌리기]가 남아 있는 시간(마우스 · 포커스가 있으면 멈춤) */
-  --ease-standard: cubic-bezier(.2, 0, 0, 1); /* 자리 이동 곡선 — 탭 밑줄 · 숫자 · 끌어 놓은 줄 · 누름 · 로고 로더 조각. 빨리 출발해 부드럽게 멈춤 */
+  --duration-once: 1.6s;                      /* 한 번 일어나고 끝나는 알림: 방금 바뀐 행이 옅어짐 · 다음 차이 테두리 · 빈 상태 배지 */
+  --duration-undo: 5s;                        /* 되돌리기 시간: 삭제 뒤 [되돌리기]가 남아 있는 시간(마우스 · 포커스가 있으면 멈춤) */
+  --ease-standard: cubic-bezier(.2, 0, 0, 1); /* 자리 이동 곡선: 탭 밑줄 · 숫자 · 끌어 놓은 줄 · 누름 · 로고 로더 조각. 빨리 출발해 부드럽게 멈춤 */
   --scale-press: .96;                         /* 누르는 동안 버튼 · 페이지 번호 크기 */
 
-  /* 그림 자산 — 솔리드 문서 아이콘의 형식 색(종이 · 아래 띠). Figma ✨ Icons › 솔리드 — 파일 형식과 같은 값.
-     모양 = 색 종이 + 흰 줄 3개 + 아래 띠에 흰 형식 글자 — 모든 형식이 같은 모양이고 색만 다름. 남의 로고(Office · Acrobat) 모양은 쓰지 않음.
-     형식을 알아보는 그림 색이라 브랜드 · 화면 모드와 상관없이 같음(다크에서도 흰 줄 · 글자가 읽히게). 띠 위 흰 글자 대비 4.5:1 이상(TXT만 3.4 — 옆 파일 이름이 뜻을 맡음) */
+  /* 그림 자산: 솔리드 문서 아이콘의 형식 색(종이 · 아래 띠). Figma ✨ Icons › 솔리드: 파일 형식과 같은 값.
+     모양 = 색 종이 + 흰 줄 3개 + 아래 띠에 흰 형식 글자: 모든 형식이 같은 모양이고 색만 다름. 남의 로고(Office · Acrobat) 모양은 쓰지 않음.
+     형식을 알아보는 그림 색이라 브랜드 · 화면 모드와 상관없이 같음(다크에서도 흰 줄 · 글자가 읽히게). 띠 위 흰 글자 대비 4.5:1 이상(TXT만 3.4: 옆 파일 이름이 뜻을 맡음) */
   --art-file-pdf: #E5484D;
   --art-file-pdf-band: #B42318;
   --art-file-xls: #1F9D55;
@@ -290,7 +290,7 @@
   --art-file-file-band: #6F7682;
 
   /* ==========================================================================
-   * LAYER 4 — SEMANTIC ALIASES (이전 프로젝트 v12 패턴)
+   * LAYER 4: SEMANTIC ALIASES (이전 프로젝트 v12 패턴)
    * ========================================================================== */
 
   /* Background */
@@ -318,7 +318,7 @@
   --color-text-on-panel: var(--brand-50);
   --color-text-on-panel-2: var(--brand-200);  /* 패널 위 보조 글자 */
 
-  /* 신호 — default = 강한 톤, -subtle = 약한 톤
+  /* 신호: default = 강한 톤, -subtle = 약한 톤
    * ⚠️ 지금 안 쓰는 칸이 있어도 지우지 말 것. 신호 4색(danger/info/success/warning) × 3층(bg/text/border)은
    *    세트로 쓰는 스케일이고, 작업상태 뱃지(완료·진행·지연·예정)를 -subtle 배경 + -bold 글씨로 만들 때 필요함. */
   --color-bg-danger: var(--red-700);
@@ -330,22 +330,22 @@
   --color-bg-warning: var(--yellow-500);
   --color-bg-warning-subtle: var(--yellow-50);
 
-  /* 선택됨 — '지금 이게 골라져 있다' 표시 전용(페이지네이션 현재 페이지, 열려있는 datepicker).
+  /* 선택됨: '지금 이게 골라져 있다' 표시 전용(페이지네이션 현재 페이지, 열려있는 datepicker).
    * 호버는 --color-bg-muted, 눌림은 --color-bg-subtle, 뱃지는 --color-bg-info-subtle 로 각각 나눠 씀 */
   --color-bg-selected: var(--brand-50);       /* 선택 상태(달력·현재 페이지) = 브랜드 역할 (DS-ADR-005) */
 
-  /* 선택 면 (DS-ADR-051) — 행동(주 버튼 = 브랜드 면)과 선택(고른 칩 · 떠 있는 버튼)을 다른 색으로 쓸 수 있게.
+  /* 선택 면 (DS-ADR-051): 행동(주 버튼 = 브랜드 면)과 선택(고른 칩 · 떠 있는 버튼)을 다른 색으로 쓸 수 있게.
    * 기본값 = 브랜드 면 · 브랜드 면 위 글자라 브랜드 파일이 덮지 않으면 지금과 같다. 하단 탭 지금 화면 표시는 쓰지 않는다 */
-  --color-bg-selected-strong: var(--color-bg-brand); /* 선택 면 — 고른 칩 · 떠 있는 버튼의 채운 바탕. 기본 = 브랜드 면 (DS-ADR-051) */
+  --color-bg-selected-strong: var(--color-bg-brand); /* 선택 면: 고른 칩 · 떠 있는 버튼의 채운 바탕. 기본 = 브랜드 면 (DS-ADR-051) */
   --color-text-on-selected-strong: var(--color-text-on-color);
   --color-icon-on-selected-strong: var(--color-icon-on-color);
 
-  /* 덮개 — 확인 창(.modal) 뒤 화면을 가리는 반투명 층. 브랜드와 상관없이 검정 투명 */
+  /* 덮개: 확인 창(.modal) 뒤 화면을 가리는 반투명 층. 브랜드와 상관없이 검정 투명 */
   --color-bg-overlay: var(--transparent-32);
 
   /* Foreground (text) */
   --color-text-base: var(--neutral-900);
-  --color-text-muted: var(--neutral-600);     /* 보조 글자 단일 단계. 구 text-subtle(600)과 합침 — 구 muted(700)는 subtle과 한 단계 차이라 구분 안 됨 (DS-ADR-008) */
+  --color-text-muted: var(--neutral-600);     /* 보조 글자 단일 단계. 구 text-subtle(600)과 합침: 구 muted(700)는 subtle과 한 단계 차이라 구분 안 됨 (DS-ADR-008) */
   --color-text-disabled: var(--neutral-400);
   --color-text-inverse: var(--white);
   --color-text-label: var(--brand-600);       /* 폼 라벨(th·detail-label) 단일 출처. 이전 버전 라벨 = 그 브랜드의 진한 메인색(심볼색보다 어두움) · semibold → DS 는 같은 진하기인 600 (구 500 · 그 전 brand-800).
@@ -363,13 +363,13 @@
 
   /* Border */
   --color-border-base: var(--neutral-300);    /* 진하게 (40-50대 대상 가독성) */
-  --color-border-subtle: var(--neutral-200);  /* 카드 안쪽 구분선. base 보다 한 단계 옅음 — 리스트 항목 사이처럼 '나누기만' 하는 선 */
+  --color-border-subtle: var(--neutral-200);  /* 카드 안쪽 구분선. base 보다 한 단계 옅음: 리스트 항목 사이처럼 '나누기만' 하는 선 */
   --color-border-strong: var(--neutral-400);
   --color-border-lnb: var(--color-border-base); /* LNB 레일 오른쪽 선 = Figma color/border/lnb. 다크는 strong(LNB ↔ 본문 구분) */
   --color-border-lnb-sub: var(--color-border-base); /* LNB 서브 패널 오른쪽 선 = Figma color/border/lnb-sub. 다크는 subtle */
   --color-border-disabled: var(--neutral-300);
-  --color-border-input: var(--neutral-500);   /* 입력칸·체크박스·라디오 테두리. 흰 바탕 4.77 — 비텍스트 대비 3:1 (WCAG 1.4.11). base(300)는 1.48이라 분리 (DS-ADR-013) */
-  --color-border-input-hover: var(--neutral-700); /* 입력칸 hover — 기본보다 한 단계 진하게 */
+  --color-border-input: var(--neutral-500);   /* 입력칸·체크박스·라디오 테두리. 흰 바탕 4.77: 비텍스트 대비 3:1 (WCAG 1.4.11). base(300)는 1.48이라 분리 (DS-ADR-013) */
+  --color-border-input-hover: var(--neutral-700); /* 입력칸 hover: 기본보다 한 단계 진하게 */
   --color-border-brand: var(--brand-500);     /* 브랜드 보더. 이름과 값(brand-500)을 맞춤 */
   --color-border-focus: var(--brand-500);     /* 포커스 링 = 브랜드색. 구 blue-600 이라 인풋 포커스(초록)와 어긋났음 → 통일, 팔레트 교체 시 같이 따라옴 */
   --color-border-danger: var(--red-700);
@@ -385,13 +385,13 @@
   --color-icon-brand: var(--brand-500);
 
   /* 포커스 링 · 색 면 위 전경 · 즐겨찾기 (DS-ADR-004)
-   * focus-ring — 포커스 보더(--color-border-focus) 바깥 3px 번짐. 라이트 = 브랜드 500 22%, 다크 = 400 35%(아래 다크 블록 — 22%는 다크 바탕 위 1.2:1로 거의 안 보임)
-   * on-color — 채색 면(브랜드·체크·상태 점) 위 글자/아이콘. 두 모드 모두 흰색이라 다크 재정의 없음
+   * focus-ring: 포커스 보더(--color-border-focus) 바깥 3px 번짐. 라이트 = 브랜드 500 22%, 다크 = 400 35%(아래 다크 블록: 22%는 다크 바탕 위 1.2:1로 거의 안 보임)
+   * on-color: 채색 면(브랜드·체크·상태 점) 위 글자/아이콘. 두 모드 모두 흰색이라 다크 재정의 없음
    *               (inverse 와 다름: inverse 는 다크에서 뒤집힘)
-   * favorite — 즐겨찾기 별. 경고(warning)와 의미가 달라 따로 둠 */
+   * favorite: 즐겨찾기 별. 경고(warning)와 의미가 달라 따로 둠 */
   --color-focus-ring: color-mix(in srgb, var(--brand-500) 22%, transparent);
   --color-text-on-color: var(--white);
-  --color-text-grid-header: var(--color-text-on-color); /* 표 머리 글자 — 머리 바탕(--color-bg-grid-header) 위 4.5:1 이상 (DS-ADR-047) */
+  --color-text-grid-header: var(--color-text-on-color); /* 표 머리 글자: 머리 바탕(--color-bg-grid-header) 위 4.5:1 이상 (DS-ADR-047) */
   --color-icon-on-color: var(--white);
   --color-icon-favorite: var(--yellow-500);
   --color-icon-link-visited: var(--neutral-500);
@@ -400,7 +400,7 @@
   --color-icon-success: var(--green-700);
   --color-icon-warning: var(--yellow-700);
 
-  /* 반전 바탕(bg-inverse, 토스트 · 툴팁) 위 상태 아이콘 — 라이트는 바탕이 어두워 밝은 단계, 다크는 바탕이 밝아 진한 단계.
+  /* 반전 바탕(bg-inverse, 토스트 · 툴팁) 위 상태 아이콘: 라이트는 바탕이 어두워 밝은 단계, 다크는 바탕이 밝아 진한 단계.
      대비(아이콘 기준 3:1): 라이트 성공 5.80 · 경고 8.54 · 위험 4.05 / 다크 성공 5.67 · 경고 3.48 · 위험 5.50 */
   --color-icon-on-inverse-success: var(--green-400);
   --color-icon-on-inverse-warning: var(--yellow-400);
@@ -410,15 +410,15 @@
   --color-bg-grid-header: var(--neutral-800); /* 헤더 */
   --color-bg-row-alt: var(--neutral-100);     /* zebra alt */
   --color-border-grid-outer: var(--color-border-base); /* 외곽 보더 */
-  --color-bg-grid-row-hover: var(--brand-50); /* 행 hover — 브랜드 역할 (DS-ADR-005) */
-  --color-bg-grid-row-selected: var(--brand-100); /* 행 선택·체크 — 브랜드 역할 (DS-ADR-005) */
+  --color-bg-grid-row-hover: var(--brand-50); /* 행 hover: 브랜드 역할 (DS-ADR-005) */
+  --color-bg-grid-row-selected: var(--brand-100); /* 행 선택·체크: 브랜드 역할 (DS-ADR-005) */
 
   /* LNB hover / active */
   --color-bg-lnb-hover: var(--brand-50);
   --color-bg-lnb-active: var(--brand-100);
-  --color-text-lnb-active: var(--brand-600);  /* 활성 메뉴 글자 — 600(바탕 100 위 Default 4.92 · OOTB 5.74 · Mobility는 색 확정 뒤 다시 잰다, 500은 Default 4.08 미달). 다크는 흰색 — 아이콘(흰 마스크)과 톤을 맞춰야 함 */
+  --color-text-lnb-active: var(--brand-600);  /* 활성 메뉴 글자: 600(바탕 100 위 Default 4.92 · OOTB 5.74 · Mobility는 색 확정 뒤 다시 잰다, 500은 Default 4.08 미달). 다크는 흰색: 아이콘(흰 마스크)과 톤을 맞춰야 함 */
 
-  /* 버튼 — primary(등록 · 저장)
+  /* 버튼: primary(등록 · 저장)
    * primary = 그 영역의 마무리 동작 1개 = 브랜드색. 동작 종류(CRUD)로 색을 정하지 않는다 (DS-ADR-005).
    * Default 에서 brand-600 = blue-700 (#0457CB) 이라 값 그대로 */
   --color-bg-btn-primary: var(--brand-600);
@@ -430,7 +430,7 @@
   /* 버튼 상태·역할
    * 버튼 = .btn + .btn--{primary|secondary|destructive} + .btn--{filled|outlined|transparent}
    * 이름은 피그마 변수와 같다 (color/bg/interactive/… = --color-bg-interactive-…). pressed = :active */
-  --color-bg-interactive-primary-pressed: var(--brand-900); /* 800 아님 — 고객사 A는 800 = 500(라벨용)이라 hover 보다 밝아짐 */
+  --color-bg-interactive-primary-pressed: var(--brand-900); /* 800 아님: 고객사 A는 800 = 500(라벨용)이라 hover 보다 밝아짐 */
   --color-text-interactive-primary-hover: var(--brand-700);
   --color-text-interactive-primary-pressed: var(--brand-900);
   --color-border-interactive-primary-hover: var(--brand-700);
@@ -461,12 +461,12 @@
   --color-border-interactive-danger-pressed: var(--red-900);
   --color-text-interactive-danger: var(--red-700); /* 테두리 · 투명 위험 버튼 글자 (새 토큰). 올림 · 누름 글자는 text-danger-bold */
 
-  /* 선택됨 위 hover·pressed (페이지네이션 현재 페이지, 토글 버튼 켜짐) — 브랜드 역할 (DS-ADR-005) */
+  /* 선택됨 위 hover·pressed (페이지네이션 현재 페이지, 토글 버튼 켜짐): 브랜드 역할 (DS-ADR-005) */
   --color-bg-interactive-selected-hover: var(--brand-100);
   --color-bg-interactive-selected-pressed: var(--brand-200);
-  --color-bg-interactive-primary-tint-pressed: var(--brand-100); /* primary outlined · transparent 누름 — 옅은 브랜드 한 단계 진하게 (Button 제안 ⑫) */
+  --color-bg-interactive-primary-tint-pressed: var(--brand-100); /* primary outlined · transparent 누름: 옅은 브랜드 한 단계 진하게 (Button 제안 ⑫) */
 
-  /* 버튼 — Excel (.btn_excel) */
+  /* 버튼: Excel (.btn_excel) */
   --color-bg-btn-excel: #1E7E34;
   --color-text-btn-excel: var(--white);
   --color-text-btn-excel-hover: var(--white); /* 올림 · 누름 글자 */
@@ -483,7 +483,7 @@
   --color-border-grid-cell: var(--color-border-base);
   --color-border-grid-header-bottom: var(--color-border-base);
 
-  /* 차트 시리즈 — 브랜드색 진→연 5단계(단조 감소). 홈 도넛은 1~3, 과거차 통계 파이는 1~5 */
+  /* 차트 시리즈: 브랜드색 진→연 5단계(단조 감소). 홈 도넛은 1~3, 과거차 통계 파이는 1~5 */
   --chart-1: var(--brand-500);
   --chart-2: var(--brand-300);
   --chart-3: var(--brand-200);
@@ -491,7 +491,7 @@
   --chart-5: var(--brand-50);
   --chart-track: var(--brand-50);             /* 링 바닥(빈 구간) */
 
-  /* 장소 종류 색 (DS-ADR-050) — 장소 칩 · 장소 아이콘 전용. 상태 색(danger · warning · success · info)을 빌려 쓰지 않는다
+  /* 장소 종류 색 (DS-ADR-050): 장소 칩 · 장소 아이콘 전용. 상태 색(danger · warning · success · info)을 빌려 쓰지 않는다
    *   종류 = home 집 · medical 병원 · 약국 · market 시장 · 마트 · welfare 복지관 · 경로당 · public 관공서 · 은행
    *   역할 = -subtle 옅은 바탕 · (없음) 채움 · border 테두리 · icon 아이콘 · text-on 채움 위 글자
    *   대비: 테두리 · 채움 ↔ 화면 바탕 3:1, 채움 위 글자 · 옅은 바탕 위 글자 4.5:1 (라이트 · 다크)
@@ -531,7 +531,7 @@
   --color-icon-place-public: var(--teal-600);
   --color-text-on-place-public: var(--white);
 
-  /* 다크 칸 — body.dark-mode 가 읽는 값. :root 에 두어 브랜드 파일이 다크 값도 덮을 수 있게 (DS-ADR-050 · 051) */
+  /* 다크 칸: body.dark-mode 가 읽는 값. :root 에 두어 브랜드 파일이 다크 값도 덮을 수 있게 (DS-ADR-050 · 051) */
   --color-bg-place-home-subtle-dark: var(--yellow-900);
   --color-bg-place-home-dark: var(--yellow-300);
   --color-border-place-home-dark: var(--yellow-400);
@@ -558,20 +558,20 @@
   --color-icon-place-public-dark: var(--teal-300);
   --color-text-on-place-public-dark: var(--neutral-950);
 
-  /* 선택 면 다크 칸 (DS-ADR-051) — 다크에서는 면을 밝게 채우고 글자를 진하게. 브랜드 파일이 단계를 덮을 수 있다 */
-  --color-bg-selected-strong-dark: var(--brand-300); /* 다크 칸 — 밝은 브랜드 단계로 채워 카드 · 바닥과 3:1 (브랜드 면 500은 다크 카드와 2.8:1) */
+  /* 선택 면 다크 칸 (DS-ADR-051): 다크에서는 면을 밝게 채우고 글자를 진하게. 브랜드 파일이 단계를 덮을 수 있다 */
+  --color-bg-selected-strong-dark: var(--brand-300); /* 다크 칸: 밝은 브랜드 단계로 채워 카드 · 바닥과 3:1 (브랜드 면 500은 다크 카드와 2.8:1) */
   --color-text-on-selected-strong-dark: var(--neutral-950);
   --color-icon-on-selected-strong-dark: var(--neutral-950);
 
-  /* 지도 핀 (DS-ADR-051) — 모바일 앱 Blocks 전용. 지도 그림 위에 놓이므로 다크도 같은 값 */
+  /* 지도 핀 (DS-ADR-051): 모바일 앱 Blocks 전용. 지도 그림 위에 놓이므로 다크도 같은 값 */
   --color-bg-map-pin: var(--red-600);         /* 지도 위 고른 위치 핀 · 이름표. 오류 색(--color-bg-danger)과 따로 (DS-ADR-051, 모바일 앱 Blocks) */
   --color-text-on-map-pin: var(--white);
 
-  /* 알림 배지 — 새 소식 점 · 읽지 않은 수. 개수 글자가 작아 4.5:1을 라이트 · 다크 따로 맞춤 */
-  --color-bg-notify: var(--red-700);          /* 알림 배지(점 · 개수 · 새 표시) 바탕. 주의를 끄는 색 — 오류 문구 색과 이름을 나눠 다크 값을 따로 맞춤 */
+  /* 알림 배지: 새 소식 점 · 읽지 않은 수. 개수 글자가 작아 4.5:1을 라이트 · 다크 따로 맞춤 */
+  --color-bg-notify: var(--red-700);          /* 알림 배지(점 · 개수 · 새 표시) 바탕. 주의를 끄는 색: 오류 문구 색과 이름을 나눠 다크 값을 따로 맞춤 */
   --color-text-on-notify: var(--white);
 
-  /* 진행률 5상태 그라데이션 (라이트/다크 공용 — 의미 컬러) */
+  /* 진행률 5상태 그라데이션 (라이트/다크 공용: 의미 컬러) */
   --color-progress-done-start: #34D399;
   --color-progress-done-end: #10B981;
   --color-progress-progress-start: #60A5FA;
@@ -583,10 +583,10 @@
   --color-progress-hold-start: #FBBF24;
   --color-progress-hold-end: #F59E0B;
 
-  /* Shadow — 역할 3단계 (제안 A안: 값은 이전 버전 화면에서 쓰던 것을 모음). 모서리 역할(--radius-popover)과 같은 이름
+  /* Shadow: 역할 3단계 (제안 A안: 값은 이전 버전 화면에서 쓰던 것을 모음). 모서리 역할(--radius-popover)과 같은 이름
    * core    = 카드 · 달력 화살표처럼 바닥에서 살짝 뜬 면
-   * popover = 떠 있는 층 — 드롭다운 · 달력 · 다중 선택 목록 · GNB 드롭다운 (구 rgba 직접 값 6곳)
-   * modal   = 덮개 층 — 인페이지 팝업 */
+   * popover = 떠 있는 층: 드롭다운 · 달력 · 다중 선택 목록 · GNB 드롭다운 (구 rgba 직접 값 6곳)
+   * modal   = 덮개 층: 인페이지 팝업 */
   --shadow-core: 0 1px 2px  var(--transparent-12);
   --shadow-popover: 0 4px 16px var(--transparent-12);
   --shadow-modal: 0 12px 32px var(--transparent-12), 0 2px 8px var(--transparent-08);
@@ -594,10 +594,10 @@
 
 
 /* ============================================================================
- * LAYER 5 — VENDOR BRIDGE (벤더 CSS 계약 이름)
+ * LAYER 5: VENDOR BRIDGE (벤더 CSS 계약 이름)
  *
  * 벤더 파일(quill.snow.css · AUIGrid_custom_style.css)이 직접 읽는 이름만 남긴 층.
- * 우리 CSS 에서는 쓰지 말 것 — 값은 전부 Layer 4 시맨틱을 가리키기만 함.
+ * 우리 CSS 에서는 쓰지 말 것: 값은 전부 Layer 4 시맨틱을 가리키기만 함.
  *
  * ⚠️ :root 가 아니라 body 에 선언하는 이유:
  *   커스텀 속성의 var() 는 '선언된 요소'에서 계산돼 그 결과가 상속됨. :root 에 두면 라이트 값으로 굳은 채
@@ -610,7 +610,7 @@
  * ============================================================================ */
 
 body {
-  /* 벤더 CSS(우리가 못 고치는 파일)가 참조하는 이름 2개 — quill.snow.css 전용.
+  /* 벤더 CSS(우리가 못 고치는 파일)가 참조하는 이름 2개: quill.snow.css 전용.
      quill 교체 전까지 유지. 우리 CSS에서는 쓰지 말 것. */
   --def-text-color: var(--color-text-base);
   --grid-border-color: var(--color-border-base);
@@ -628,39 +628,39 @@ body {
 
 
 /* ============================================================================
- * DARK MODE — body.dark-mode 토글 시 Layer 4 Semantic Aliases override
+ * DARK MODE: body.dark-mode 토글 시 Layer 4 Semantic Aliases override
  *
- * 디자인 정책 — 라이트 모드의 위계 의미를 유지:
+ * 디자인 정책: 라이트 모드의 위계 의미를 유지:
  *   subtle (페이지 바닥, 가장 가라앉음) → base (카드, 약간 들림) → muted (호버, 더 들림)
  *
  *   - 페이지 바닥(subtle):   neutral-950
  *   - 카드(base):            neutral-800
  *   - 호버/elevation(muted): neutral-750
  *   - 섹션 헤더·그리드 헤더: neutral-850
- *   - 브랜드:                brand-400  (다크 배경에 살아남도록 한 단계 옅게) — 보더·아이콘. 글자는 300(AA 4.5, DS-ADR-014). 흰 글자를 얹는 채색 면(bg-brand)은 500 (DS-ADR-004)
+ *   - 브랜드:                brand-400  (다크 배경에 살아남도록 한 단계 옅게): 보더·아이콘. 글자는 300(AA 4.5, DS-ADR-014). 흰 글자를 얹는 채색 면(bg-brand)은 500 (DS-ADR-004)
  *   Vendor Bridge(Layer 5)는 body 에 선언돼 있어 여기서 다시 쓸 필요 없음.
  * ============================================================================ */
 
 body.dark-mode {
-  /* ⚠️ 여기는 '값'을 만들지 않는다 — Layer 1 팔레트(--neutral-* / --brand-* / 신호색)를 참조만.
+  /* ⚠️ 여기는 '값'을 만들지 않는다: Layer 1 팔레트(--neutral-* / --brand-* / 신호색)를 참조만.
    *   토큰 이름은 라이트와 동일. 이름은 그대로 두고 가리키는 팔레트 단계만 바꾸는 게 이 층의 역할.
    *   ⚠️ Halation(어두운 배경 위 흰 글자 번짐) 방지로 subtle(바닥)↔base(카드) 명도차를 일부러 벌려 뒀음. */
-  /* Background — 라이트 모드와 동일 위계 의미 (subtle 가장 가라앉음 → muted 가장 들림) */
+  /* Background: 라이트 모드와 동일 위계 의미 (subtle 가장 가라앉음 → muted 가장 들림) */
   --color-bg-base: var(--neutral-800);
   --color-bg-muted: var(--neutral-750);
-  --color-bg-subtle: var(--neutral-950);      /* 페이지 바닥. 입력칸(neutral-900)과 한 단계 벌려야 함 —
+  --color-bg-subtle: var(--neutral-950);      /* 페이지 바닥. 입력칸(neutral-900)과 한 단계 벌려야 함 : 
                                                  같은 값이면 편집그리드에서 '회색 판 위 입력칸'이 안 보임 */
   --color-bg-header: var(--neutral-850);
   --color-bg-disabled: var(--neutral-750);
 
-  /* 라이트와 반전 관계 — 라이트: 입력=흰색 / 읽기전용=회색(어둡게).
+  /* 라이트와 반전 관계: 라이트: 입력=흰색 / 읽기전용=회색(어둡게).
    *                      다크 : 입력=파인 어두운 칸 / 읽기전용=떠 있는 밝은 칸.
    * 어느 쪽이든 '입력 가능한 칸'이 배경에서 더 멀어지는 방향 */
-  --color-bg-input: var(--neutral-900);       /* 입력칸 — 카드보다 확실히 파이게 */
-  --color-bg-readonly: var(--neutral-750);    /* 읽기전용 — 카드보다 밝게 떠서 '건드릴 수 없는 칸' */
+  --color-bg-input: var(--neutral-900);       /* 입력칸: 카드보다 확실히 파이게 */
+  --color-bg-readonly: var(--neutral-750);    /* 읽기전용: 카드보다 밝게 떠서 '건드릴 수 없는 칸' */
   --color-bg-inverse: var(--neutral-100);
   --color-bg-inverse-soft: var(--neutral-200);
-  --color-bg-brand: var(--brand-500);         /* 다크도 500 — 채색 면 위에 흰 글자(on-color)가 올라감. 400 은 흰 글자 대비 Default 4.27 · 고객사 A 3.91 로 AA 미달.
+  --color-bg-brand: var(--brand-500);         /* 다크도 500: 채색 면 위에 흰 글자(on-color)가 올라감. 400 은 흰 글자 대비 Default 4.27 · 고객사 A 3.91 로 AA 미달.
                                                  '다크 브랜드 = 400' 은 다크 바탕 위 글자·보더용 (DS-ADR-004) */
   --color-bg-brand-subtle: color-mix(in srgb, var(--brand-500) 30%, transparent);
   --color-text-on-brand-subtle: var(--brand-200); /* 300(#5CA3DD)은 옅은 브랜드 칩 위에서 어두워 뱃지 글씨가 묻힘 */
@@ -673,14 +673,14 @@ body.dark-mode {
   --color-bg-warning: var(--yellow-400);
   --color-bg-warning-subtle: var(--yellow-900);
   --color-bg-selected: var(--neutral-700);
-  --color-bg-selected-strong: var(--color-bg-selected-strong-dark); /* 선택 면 — 다크 칸을 읽음 (DS-ADR-051) */
+  --color-bg-selected-strong: var(--color-bg-selected-strong-dark); /* 선택 면: 다크 칸을 읽음 (DS-ADR-051) */
   --color-text-on-selected-strong: var(--color-text-on-selected-strong-dark);
   --color-icon-on-selected-strong: var(--color-icon-on-selected-strong-dark);
-  --color-bg-overlay: var(--transparent-60);  /* 어두운 화면 위 덮개 — 32%는 뒤 화면과 구분이 안 됨. 다크 그림자(--shadow-modal 0.6)와 같은 농도 */
+  --color-bg-overlay: var(--transparent-60);  /* 어두운 화면 위 덮개: 32%는 뒤 화면과 구분이 안 됨. 다크 그림자(--shadow-modal 0.6)와 같은 농도 */
 
   /* Foreground */
   --color-text-base: var(--neutral-200);      /* components.css:2333 에 !important 로 중복돼 있던 값 흡수 (구 neutral-100) */
-  --color-text-muted: var(--neutral-400);     /* 구 text-subtle 다크값. 구 muted(300)와 subtle(400)은 한 단계 차이라 구분되지 않았음 — 이전 버전 다크에서는 대비 1.01 (DS-ADR-001 · 008) */
+  --color-text-muted: var(--neutral-400);     /* 구 text-subtle 다크값. 구 muted(300)와 subtle(400)은 한 단계 차이라 구분되지 않았음: 이전 버전 다크에서는 대비 1.01 (DS-ADR-001 · 008) */
   --color-text-disabled: var(--neutral-600);
   --color-text-inverse: var(--neutral-900);
   --color-text-label: var(--brand-300);       /* 다크는 brand-800(잉크)이 배경에 묻혀서 밝은 단계로. 400은 카드 위 3.5 → 300 (5.5, DS-ADR-014) */
@@ -695,7 +695,7 @@ body.dark-mode {
   --color-text-warning: var(--yellow-400);
   --color-text-warning-bold: var(--yellow-300);
 
-  /* 진행 상태 「예정」 — 라이트 값(#111827 → 거의 검정)이 다크 바탕에 묻힘(1.18) → 중립 밝은 단계 (제안 B). 나머지 4색은 다크 바탕 위 3:1 근처라 그대로 */
+  /* 진행 상태 「예정」: 라이트 값(#111827 → 거의 검정)이 다크 바탕에 묻힘(1.18) → 중립 밝은 단계 (제안 B). 나머지 4색은 다크 바탕 위 3:1 근처라 그대로 */
   --color-progress-plan-start: var(--neutral-500);
   --color-progress-plan-end: var(--neutral-400); /* 다크 카드 위 6.51 */
 
@@ -710,7 +710,7 @@ body.dark-mode {
   --color-border-input-hover: var(--neutral-400); /* 다크는 밝아지는 쪽이 강조 */
   --color-border-brand: var(--brand-400);     /* 다크모드 브랜드 보더 */
   --color-border-focus: var(--brand-400);
-  --color-focus-ring: color-mix(in srgb, var(--brand-400) 35%, transparent); /* 다크 번짐 — 바탕 위 1.5~1.7:1(22%는 1.2). 표시는 테두리가 맡고 번짐은 보조 */
+  --color-focus-ring: color-mix(in srgb, var(--brand-400) 35%, transparent); /* 다크 번짐: 바탕 위 1.5~1.7:1(22%는 1.2). 표시는 테두리가 맡고 번짐은 보조 */
   --color-border-danger: var(--red-500);
   --color-border-info: var(--blue-400);
   --color-border-success: var(--green-500);
@@ -733,31 +733,31 @@ body.dark-mode {
 
   /* AUI Grid */
   --color-bg-grid-header: var(--neutral-850);
-  --color-bg-row-alt: var(--neutral-850);     /* 짝수행 — 카드보다 살짝 가라앉게.
+  --color-bg-row-alt: var(--neutral-850);     /* 짝수행: 카드보다 살짝 가라앉게.
                                                  구 #15151A 는 줄무늬가 너무 셌고, 실제로는 components.css 가
                                                  #1E2822(옅은 그린)로 덮고 있어 트리 짝수행이 초록으로 떴음 */
   --color-border-grid-outer: var(--color-border-base);
-  --color-bg-grid-row-hover: var(--neutral-750); /* 다크는 명도차만으로 구분 — 어두운 배경이 채도를 먹어서 틴트를 줘도 잘 안 보임 */
-  --color-bg-grid-row-selected: color-mix(in srgb, var(--brand-500) 14%, var(--neutral-800)); /* 선택만 브랜드 틴트 — 호버와 구분되고 인풋과도 분리.
+  --color-bg-grid-row-hover: var(--neutral-750); /* 다크는 명도차만으로 구분: 어두운 배경이 채도를 먹어서 틴트를 줘도 잘 안 보임 */
+  --color-bg-grid-row-selected: color-mix(in srgb, var(--brand-500) 14%, var(--neutral-800)); /* 선택만 브랜드 틴트: 호버와 구분되고 인풋과도 분리.
                                                                                                  구 #243044 하드코딩 → 브랜드 추종 (DS-ADR-003). Default 에서 rgb(30,48,68) ≈ 구 값 rgb(36,48,68) */
 
-  /* LNB hover / active — 다크 위 옅은 브랜드 반투명. 옛 브랜드(빨강) 하드코딩 rgba(239,0,16,…) 이었던 것 → 브랜드 추종 */
+  /* LNB hover / active: 다크 위 옅은 브랜드 반투명. 옛 브랜드(빨강) 하드코딩 rgba(239,0,16,…) 이었던 것 → 브랜드 추종 */
 
-  /* 다크 LNB — 사이드바가 순검정(#000)이라 반투명 브랜드색은 다 먹힘.
+  /* 다크 LNB: 사이드바가 순검정(#000)이라 반투명 브랜드색은 다 먹힘.
    * 호버 = 명도만, 활성 = 채도 100 짜리 진한 파랑 블록 + 흰 글자 */
   --color-bg-lnb-hover: var(--neutral-750);
-  --color-bg-lnb-active: var(--brand-700);    /* #00347F — s100 딥블루 */
+  --color-bg-lnb-active: var(--brand-700);    /* #00347F: s100 딥블루 */
   --color-text-lnb-active: var(--brand-50);   /* 딥 브랜드 면 위 글자 = --color-text-on-panel 과 같은 처지라 같은 단계로.
                                                  흰색으로 두면 이 토큰만 브랜드 계열을 벗어남 */
 
-  /* 버튼 — primary(등록 · 저장) */
+  /* 버튼: primary(등록 · 저장) */
   --color-bg-btn-primary: color-mix(in srgb, var(--brand-500) 35%, transparent); /* 구 rgba(21,93,252,.35) 하드코딩 → 브랜드 추종 (DS-ADR-005) */
   --color-text-btn-primary: var(--white);
   --color-border-btn-primary: var(--brand-400); /* 다크 브랜드 = 400 (다크 머리말 규칙). 500 은 고객사 A 그린에서 바탕에 묻힘 */
   --color-bg-btn-primary-hover: color-mix(in srgb, var(--brand-500) 45%, transparent);
   --color-border-btn-primary-hover: var(--brand-300);
 
-  /* 버튼 상태·역할 — 다크 (P2 Button). 다크 브랜드 글자·보더 = 400 → hover 300 → pressed 200 */
+  /* 버튼 상태·역할: 다크 (P2 Button). 다크 브랜드 글자·보더 = 400 → hover 300 → pressed 200 */
   --color-bg-interactive-primary-pressed: color-mix(in srgb, var(--brand-500) 55%, transparent);
   --color-text-interactive-primary-hover: var(--brand-200); /* 기본 글자가 300으로 올라가 한 칸씩 (DS-ADR-014) */
   --color-text-interactive-primary-pressed: var(--brand-100);
@@ -776,7 +776,7 @@ body.dark-mode {
   --color-border-interactive-secondary-hover: var(--neutral-500);
   --color-border-interactive-secondary-pressed: var(--neutral-400);
   --color-bg-interactive-danger: var(--red-600);
-  --color-bg-interactive-danger-hover: var(--red-700); /* 흰 글자 대비 유지 — 밝게 가면 4.5 아래로 떨어짐 */
+  --color-bg-interactive-danger-hover: var(--red-700); /* 흰 글자 대비 유지: 밝게 가면 4.5 아래로 떨어짐 */
   --color-bg-interactive-danger-pressed: var(--red-800);
   --color-border-interactive-danger: var(--red-400);
   --color-border-interactive-danger-hover: var(--red-300);
@@ -786,7 +786,7 @@ body.dark-mode {
   --color-bg-interactive-selected-pressed: var(--neutral-500);
   --color-bg-interactive-primary-tint-pressed: color-mix(in srgb, var(--brand-500) 45%, transparent); /* 다크 = hover(bg-brand-subtle 30%)보다 진한 브랜드. selected-hover(회색)를 쓰면 누를 때 회색이 됨 (Button 제안 ⑫) */
 
-  /* 버튼 — Excel (.btn_excel) Soft Green + 컬러 보더 */
+  /* 버튼: Excel (.btn_excel) Soft Green + 컬러 보더 */
   --color-bg-btn-excel: rgba(34, 197, 94, 0.20);
   --color-text-btn-excel: var(--green-300);
   --color-text-btn-excel-hover: var(--green-100); /* 올림 30% · 누름 40% 바탕 위 green-300 = 4.14 · 3.36(AA 미달) → green-100 6.69 · 5.43 */
@@ -802,12 +802,12 @@ body.dark-mode {
   --color-border-grid-cell: var(--neutral-750);
   --color-border-grid-header-bottom: var(--neutral-950);
 
-  /* Shadow — 다크에선 더 진하게 (modal = 구 다크 떠 있는 층 묶음 값) */
+  /* Shadow: 다크에선 더 진하게 (modal = 구 다크 떠 있는 층 묶음 값) */
   --shadow-core: 0 1px 2px  rgba(0, 0, 0, 0.4);
   --shadow-popover: 0 4px 16px rgba(0, 0, 0, 0.5);
   --shadow-modal: 0 16px 48px rgba(0, 0, 0, 0.6), 0 4px 12px rgba(0, 0, 0, 0.4);
 
-  /* 장소 종류 색 (DS-ADR-050) — :root 의 -dark 칸을 읽음 */
+  /* 장소 종류 색 (DS-ADR-050): :root 의 -dark 칸을 읽음 */
   --color-bg-place-home-subtle: var(--color-bg-place-home-subtle-dark);
   --color-bg-place-home: var(--color-bg-place-home-dark);
   --color-border-place-home: var(--color-border-place-home-dark);
@@ -835,6 +835,6 @@ body.dark-mode {
   --color-text-on-place-public: var(--color-text-on-place-public-dark);
 
   /* 알림 배지 */
-  --color-bg-notify: var(--red-400);          /* 다크 알림 배지 — 밝은 빨강 + 진한 글자. 500 위 흰 글자는 4.11로 미달 */
+  --color-bg-notify: var(--red-400);          /* 다크 알림 배지: 밝은 빨강 + 진한 글자. 500 위 흰 글자는 4.11로 미달 */
   --color-text-on-notify: var(--neutral-950);
 }
