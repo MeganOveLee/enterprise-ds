@@ -1,4 +1,4 @@
-// Enterprise DS — Figma 변수 내보내기 (DS-ADR-045)
+// Enterprise DS: Figma 변수 내보내기 (DS-ADR-045)
 // Foundation 파일에서 실행 → 모든 로컬 변수 컬렉션 · 모드 · 값을 JSON 한 파일로 받는다.
 // 변수를 읽기만 하고 고치지 않는다(두 번 돌려도 결과가 같음). 받은 파일은 저장소 tokens/figma/export.json 에 넣고
 // npm run tokens:figma 로 tokens/build/resolved.json 과 대조한다.

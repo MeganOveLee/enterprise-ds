@@ -13,6 +13,6 @@
     if (!m || m.type !== 'done') return;
     const url = URL.createObjectURL(new Blob([m.json], { type: 'application/json' }));
     document.getElementById('msg').innerHTML =
-      `컬렉션 ${m.collections}개 · 변수 ${m.count}개 — <a href="${url}" download="export.json">export.json 받기</a><br>저장소 tokens/figma/export.json 에 넣어 커밋하면 CI 가 대조합니다.`;
+      `컬렉션 ${m.collections}개 · 변수 ${m.count}개: <a href="${url}" download="export.json">export.json 받기</a><br>저장소 tokens/figma/export.json 에 넣어 커밋하면 CI 가 대조합니다.`;
   };
 </script>
