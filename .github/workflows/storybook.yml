@@ -26,9 +26,9 @@ jobs:
       - run: npm ci
       - run: npm run tokens:check
       - run: npm run build-storybook
-      # 시작하기 문서의 「파일 내려받기」 링크: 배포하는 버전의 CSS · JS · 토큰을 zip 하나로
+      # 시작하기 문서의 「파일 내려받기」 링크: 화면에 적용할 CSS · JS와 불러오는 순서(README)를 zip 하나로
       - name: 디자인 시스템 파일 묶기
-        run: zip -qr storybook-static/enterprise-ds-v1.0.zip README.md css js tokens -x 'tokens/figma/*'
+        run: zip -qr storybook-static/enterprise-ds-v1.0.zip README.md css js
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
