@@ -87,7 +87,26 @@
         function buildOptions() {
             menu.innerHTML = '';
             items = [];
+            var lastGroup = null, groupBox = null;   // <optgroup label> = 묶음 제목 줄 + role=group (DS-ADR-056)
             [].forEach.call(sel.options, function (o, idx) {
+                var og = o.parentNode && o.parentNode.tagName === 'OPTGROUP' ? o.parentNode : null;
+                if (og !== lastGroup) {
+                    lastGroup = og;
+                    groupBox = null;
+                    if (og) {
+                        groupBox = document.createElement('div');
+                        groupBox.className = 'ui-select__group';
+                        groupBox.setAttribute('role', 'group');
+                        var gl = document.createElement('div');
+                        gl.className = 'ui-select__group-label';
+                        gl.id = uid + '-grp-' + idx;
+                        gl.setAttribute('role', 'presentation');
+                        gl.textContent = og.label;
+                        groupBox.setAttribute('aria-labelledby', gl.id);
+                        groupBox.appendChild(gl);
+                        menu.appendChild(groupBox);
+                    }
+                }
                 var d = document.createElement('div');
                 d.className = 'ui-select__option';
                 d.id = uid + '-opt-' + idx;
@@ -97,7 +116,7 @@
                 d.textContent = o.label || o.textContent || o.innerText;
                 d.addEventListener('click', function () { if (!o.disabled) { choose(idx); close(true); } });
                 d.addEventListener('mousemove', function () { if (!o.disabled) setActive(idx, false); });
-                menu.appendChild(d);
+                (groupBox || menu).appendChild(d);
                 items.push(d);
             });
         }
