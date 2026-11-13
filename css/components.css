@@ -4185,7 +4185,8 @@ body.dark-mode .empty-illo__badge  { fill: var(--color-bg-muted); }
  * 작업현황 · 진행 상태를 글자 + 색으로 보여 주는 칩(모서리 --radius-chip: Default · Mobility 알약, OOTB 직각). 이전 버전 값 그대로(덮어쓰기 1072 ~ 1079줄,  남은 넷)
  *   높이 20 · 안쪽 0 8(이전 9) · 글자 12 반굵게 · 앞에 6 점(글자색) · 옅은 바탕 + 진한 글자
  *   색 = 상태 토큰(bg-*-subtle + text-*-bold). 이전 버전은 고정 색 · 성공 = 브랜드색 → DS 는 성공 토큰
- *   상태 이름: --neutral · --info · --success · --warning · --danger (이전 버전 --error 도 받음) */
+ *   상태 이름: --neutral · --info · --success · --warning · --danger (이전 버전 --error 도 받음) · --closed
+ *   단계 짝(DS-ADR-056): 대기 neutral · 진행 info · 확인 필요 warning · 완료 success · 문제 danger · 종료 closed */
 .status-chip {
     --chip-bg: var(--color-bg-muted);
     --chip-fg: var(--color-text-muted);
@@ -4209,6 +4210,9 @@ body.dark-mode .empty-illo__badge  { fill: var(--color-bg-muted); }
 .status-chip--warning { --chip-bg: var(--color-bg-warning-subtle); --chip-fg: var(--color-text-warning-bold); }
 .status-chip--danger,
 .status-chip--error   { --chip-bg: var(--color-bg-danger-subtle);  --chip-fg: var(--color-text-danger-bold); }
+/* 종료: 취소 · 폐기처럼 더 쓰지 않는 상태. 대기(중립)와 색이 아니라 모양으로 가름: 바탕 없이 테두리, 점은 속이 빔 (DS-ADR-056) */
+.status-chip--closed  { --chip-bg: transparent; --chip-fg: var(--color-text-muted); box-shadow: inset 0 0 0 1px var(--color-border-base); }
+.status-chip--closed::before { background: transparent; box-shadow: inset 0 0 0 1px currentColor; }
 @media (forced-colors: active) { .status-chip { border: 1px solid CanvasText; } }
 /* ═════════════════════════════════════════════════════════════════════════
  * 알림: Alert(화면 안 줄) · Toast(잠깐 뜨는 알림) · Tooltip(짧은 설명)
@@ -5455,6 +5459,7 @@ body.dark-mode .empty-illo__badge  { fill: var(--color-bg-muted); }
 
 /* Status Chip B: 점 + 글자: 바탕 없이. 표 칸처럼 칩이 줄마다 반복되는 촘촘한 곳 */
 .status-chip.status-chip--dot { --chip-bg: transparent; padding-left: 0; }
+.status-chip--dot.status-chip--closed { box-shadow: none; }   /* 점 + 글자 시안에서 종료는 속 빈 점으로만 가름 */
 /* Status Chip C: 진한 채움: 꼭 봐야 할 상태 하나를 강조(지연 · 반려). 한 화면에 몇 개만 */
 .status-chip--bold { --chip-bg: var(--color-bg-inverse); --chip-fg: var(--color-text-inverse); }
 .status-chip--bold.status-chip--success { --chip-bg: var(--color-bg-success); --chip-fg: var(--color-text-on-color); }
@@ -5462,6 +5467,7 @@ body.dark-mode .empty-illo__badge  { fill: var(--color-bg-muted); }
 .status-chip--bold.status-chip--error { --chip-bg: var(--color-bg-interactive-danger); --chip-fg: var(--color-text-on-color); }   /* = 위험 채운 버튼 바탕: 흰 글자 4.5:1(라이트 · 다크) */
 .status-chip--bold.status-chip--info { --chip-bg: var(--color-bg-info); --chip-fg: var(--color-text-on-color); }
 .status-chip--bold.status-chip--warning { --chip-bg: var(--color-bg-warning); --chip-fg: var(--color-text-base); }   /* 노랑 위는 진한 글자 */
+.status-chip--bold.status-chip--closed { --chip-bg: transparent; --chip-fg: var(--color-text-muted); }   /* 종료는 강조하지 않음: 테두리 모양 그대로 */
 body.dark-mode .status-chip--bold:is(.status-chip--success, .status-chip--warning) { --chip-fg: var(--color-text-inverse); }   /* 다크 = 상태 색이 밝아져 진한 글자(4.5:1). 정보 파랑 · 위험 빨강은 흰 글자 그대로 */
 
 /* Alert B: 왼쪽 띠: 바탕 · 테두리 대신 왼쪽 굵은 띠. 폼 안처럼 상자가 이미 많은 곳 */
