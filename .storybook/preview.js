@@ -26,6 +26,12 @@ const withTheme = (Story, ctx) => {
 
 export default {
   globalTypes: {
+    // 기기를 먼저 고른다: 왼쪽 메뉴는 고른 기기에서 쓰는 컴포넌트만 남는다(.storybook/manager.js, DS-ADR-055)
+    device: {
+      description: '기기',
+      toolbar: { title: '기기', icon: 'browser', dynamicTitle: true,
+        items: [{ value: 'web', title: 'PLM 웹', icon: 'browser' }, { value: 'mobile', title: '모바일 앱', icon: 'mobile' }] },
+    },
     brand: {
       description: '브랜드',
       toolbar: { title: '브랜드', icon: 'paintbrush', dynamicTitle: true,
@@ -37,7 +43,7 @@ export default {
         items: [{ value: 'light', title: '라이트' }, { value: 'dark', title: '다크' }] },
     },
   },
-  initialGlobals: { brand: 'default', mode: 'light' },
+  initialGlobals: { device: 'web', brand: 'default', mode: 'light' },
   decorators: [withTheme],
   parameters: {
     layout: 'fullscreen',

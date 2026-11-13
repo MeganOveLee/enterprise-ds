@@ -24,3 +24,25 @@ addons.register('ds-figma-link', () => {
     }, h('img', { src: ICON, alt: '', width: 18, height: 18, style: { display: 'block', borderRadius: 4 } }), 'Figma에서 보기 ↗'),
   });
 });
+
+/** 기기 고르기(DS-ADR-055): 고른 기기에서 쓰지 않는 컴포넌트를 왼쪽 메뉴에서 거른다.
+ * 스토리 파일 meta tags: device-mobile = 모바일 앱 전용, device-web = PLM 웹 전용, 표시 없음 = 공통 · 문서 · Foundation
+ * 기기를 바꾸면 그 기기의 대표 브랜드로 함께 바꾼다. 브랜드는 그 뒤에 따로 바꿀 수 있다 */
+const DEVICE_BRAND = { web: 'default', mobile: 'mobility' };
+const BRAND_DEVICE = { default: 'web', ootb: 'web', mobility: 'mobile' };
+
+addons.register('ds-device-filter', (api) => {
+  let current;
+  const apply = ({ globals } = {}) => {
+    if (!globals) return;
+    const device = globals.device === 'mobile' ? 'mobile' : 'web';
+    if (device === current) return;
+    const changed = current !== undefined;
+    current = device;
+    const hide = device === 'mobile' ? 'device-web' : 'device-mobile';
+    api.experimental_setFilter('ds-device', (item) => !(item.tags || []).includes(hide));
+    if (changed && BRAND_DEVICE[globals.brand] !== device) api.updateGlobals({ brand: DEVICE_BRAND[device] });
+  };
+  api.on('setGlobals', apply);
+  api.on('globalsUpdated', apply);
+});

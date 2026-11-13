@@ -101,7 +101,7 @@ const list = () => '<div class="main-content"><div class="searchLayout"><div cla
 
 export default {
   title: 'Screens/Drawing Register',   // 블록이 아니라 화면(등록 창): 블록 이름은 UI 기능으로(검색 조건 · 결재선 · BOM 비교 표)
-  tags: ['!dev', '!autodocs'],   // 메뉴에는 문서 한 장만, 문서는 DrawingRegister.mdx
+  tags: ['!dev', '!autodocs', 'device-web'],   // 쓰는 기기 = PLM 웹 (DS-ADR-055), 메뉴에는 문서 한 장만, 문서는 DrawingRegister.mdx
   parameters: { controls: { disable: true }, docs: { source: { language: 'html' } } },
 };
 
