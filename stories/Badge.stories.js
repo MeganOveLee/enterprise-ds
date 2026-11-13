@@ -8,7 +8,7 @@ const row = (title, badges, desc) => '<li><a class="list-item" href="#"><span cl
 
 export default {
   title: 'Data Display/Badge',
-  tags: ['!dev', '!autodocs'],
+  tags: ['!dev', '!autodocs', 'device-mobile'],   // 쓰는 기기 = 모바일 앱 (DS-ADR-055)
   parameters: { docs: { source: { language: 'html' } } },
 };
 

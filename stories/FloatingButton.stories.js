@@ -9,7 +9,7 @@ const fabExt = (collapsed, pos) => '<button type="button" class="btn btn--primar
 
 export default {
   title: 'Form/Floating Button',
-  tags: ['!dev', '!autodocs'],
+  tags: ['!dev', '!autodocs', 'device-mobile'],   // 쓰는 기기 = 모바일 앱 (DS-ADR-055)
   parameters: { docs: { source: { language: 'html' } } },
 };
 

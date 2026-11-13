@@ -16,7 +16,7 @@ const history = () => '<ul class="list-items" aria-label="이용 내역">' + [
 
 export default {
   title: 'Navigation/App Bar',
-  tags: ['!dev', '!autodocs'],
+  tags: ['!dev', '!autodocs', 'device-mobile'],   // 쓰는 기기 = 모바일 앱 (DS-ADR-055)
   parameters: { docs: { source: { language: 'html' } } },
 };
 

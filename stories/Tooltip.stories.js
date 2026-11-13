@@ -22,7 +22,7 @@ const stage = (inner, h = 120, align = 'end', center = false) => '<div style="di
 
 export default {
   title: 'Feedback/Tooltip',
-  tags: ['!dev', '!autodocs'],   // 메뉴에는 문서 한 장만, 문서는 Tooltip.mdx
+  tags: ['!dev', '!autodocs', 'device-web'],   // 쓰는 기기 = PLM 웹 (DS-ADR-055), 메뉴에는 문서 한 장만, 문서는 Tooltip.mdx
   parameters: { docs: { source: { language: 'html' } } },
 };
 

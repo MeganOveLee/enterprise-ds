@@ -99,7 +99,7 @@ const menu = () =>
 const W = 1240, H = 600;
 export default {
   title: 'Blocks/BOM Compare',
-  tags: ['!dev', '!autodocs'],   // 메뉴에는 문서 한 장만, 문서는 BomCompare.mdx
+  tags: ['!dev', '!autodocs', 'device-web'],   // 쓰는 기기 = PLM 웹 (DS-ADR-055), 메뉴에는 문서 한 장만, 문서는 BomCompare.mdx
   parameters: { controls: { disable: true }, docs: { source: { language: 'html' } } },
 };
 

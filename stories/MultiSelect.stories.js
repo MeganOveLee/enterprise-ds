@@ -55,7 +55,7 @@ const live = (html, minH = 0) => {
 
 export default {
   title: 'Form/Multi Select',
-  tags: ['!dev', '!autodocs'],   // 메뉴에는 문서 한 장만, 문서는 MultiSelect.mdx
+  tags: ['!dev', '!autodocs', 'device-web'],   // 쓰는 기기 = PLM 웹 (DS-ADR-055), 메뉴에는 문서 한 장만, 문서는 MultiSelect.mdx
   parameters: { docs: { source: { language: 'html' } } },
 };
 

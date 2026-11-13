@@ -16,7 +16,7 @@ const swap = '<button type="button" class="btn btn--secondary btn--transparent b
 
 export default {
   title: 'Blocks/Trip Input',
-  tags: ['!dev', '!autodocs'],
+  tags: ['!dev', '!autodocs', 'device-mobile'],   // 쓰는 기기 = 모바일 앱 (DS-ADR-055)
   parameters: { docs: { source: { language: 'html' } } },
 };
 

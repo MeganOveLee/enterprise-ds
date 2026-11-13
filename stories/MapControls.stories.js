@@ -13,7 +13,7 @@ const car = '<span class="map-tag sb-at sb-at--car"><span class="map-tag__plate"
 
 export default {
   title: 'Blocks/Map Controls',
-  tags: ['!dev', '!autodocs'],
+  tags: ['!dev', '!autodocs', 'device-mobile'],   // 쓰는 기기 = 모바일 앱 (DS-ADR-055)
   parameters: { docs: { source: { language: 'html' } } },
 };
 

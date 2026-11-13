@@ -8,7 +8,7 @@ const tile = (icon, name, desc = '', cls = '', meta = '') => '<a class="transpor
 
 export default {
   title: 'Blocks/Transport Tile',
-  tags: ['!dev', '!autodocs'],
+  tags: ['!dev', '!autodocs', 'device-mobile'],   // 쓰는 기기 = 모바일 앱 (DS-ADR-055)
   parameters: { docs: { source: { language: 'html' } } },
 };
 

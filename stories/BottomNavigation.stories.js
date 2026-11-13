@@ -13,7 +13,7 @@ const FIVE = [['home', '홈'], ['bus', '호출'], ['star', '즐겨찾기'], ['li
 
 export default {
   title: 'Navigation/Bottom Navigation',
-  tags: ['!dev', '!autodocs'],
+  tags: ['!dev', '!autodocs', 'device-mobile'],   // 쓰는 기기 = 모바일 앱 (DS-ADR-055)
   parameters: { docs: { source: { language: 'html' } } },
 };
 

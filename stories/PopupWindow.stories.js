@@ -79,7 +79,7 @@ const win = (inner, h = 440) =>
 
 export default {
   title: 'Overlay/Popup Window',
-  tags: ['!dev', '!autodocs'],   // 메뉴에는 문서 한 장만, 문서는 PopupWindow.mdx
+  tags: ['!dev', '!autodocs', 'device-web'],   // 쓰는 기기 = PLM 웹 (DS-ADR-055), 메뉴에는 문서 한 장만, 문서는 PopupWindow.mdx
   parameters: { docs: { source: { language: 'html' } } },
 };
 

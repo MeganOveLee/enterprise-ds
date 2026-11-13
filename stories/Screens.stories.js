@@ -467,7 +467,7 @@ const playable = (el, play, trigger, note) => {
 
 export default {
   title: 'Screens/PLM 화면',
-  tags: ['!dev', '!autodocs'],   // 메뉴에는 문서 한 장만, 문서는 Screens.mdx
+  tags: ['!dev', '!autodocs', 'device-web'],   // 쓰는 기기 = PLM 웹 (DS-ADR-055), 메뉴에는 문서 한 장만, 문서는 Screens.mdx
   parameters: { layout: 'fullscreen' },
 };
 

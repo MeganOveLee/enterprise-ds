@@ -51,7 +51,7 @@ const html = (code) => ({ controls: { disable: true }, docs: { source: { languag
 
 export default {
   title: 'Data Display/Accordion',
-  tags: ['!dev', '!autodocs'],   // 메뉴에는 문서 한 장만, 문서는 Accordion.mdx
+  tags: ['!dev', '!autodocs', 'device-web'],   // 쓰는 기기 = PLM 웹 (DS-ADR-055), 메뉴에는 문서 한 장만, 문서는 Accordion.mdx
   parameters: { docs: { source: { language: 'html' } } },
 };
 

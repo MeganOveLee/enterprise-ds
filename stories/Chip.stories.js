@@ -21,7 +21,7 @@ const label = (t) => '<p class="sb-label">' + t + '</p>';
 
 export default {
   title: 'Form/Chip',
-  tags: ['!dev', '!autodocs'],
+  tags: ['!dev', '!autodocs', 'device-mobile'],   // 쓰는 기기 = 모바일 앱 (DS-ADR-055)
   parameters: { docs: { source: { language: 'html' } } },
 };
 
