@@ -428,6 +428,16 @@
     font-weight: var(--font-weight-semibold);
     font-size: 14px;
 }
+
+/* CI 마크(가상 제품 로고 심볼): 시스템 화면(레일 · 로고형 GNB · 로그인)은 타일 없이 심볼만 쓴다 (DS-ADR-054)
+ *   조각 넷 = 바탕 글자색, 오른쪽 위 조각 하나 = 브랜드 색: 브랜드를 바꾸면 그 조각만 따라 바뀐다. Figma CI LOGO Theme=On Light · On Dark
+ *   어두운 면(로그인 브랜드 패널 · 어두운 앱 바) = .ci-mark--on-dark. 타일 마크(.ci-app-icon)는 작업 표시줄 · 브라우저 탭 아이콘 전용 */
+.ci-mark__piece { fill: var(--color-icon-base); }
+.ci-mark--on-dark .ci-mark__piece { fill: var(--color-icon-on-color); }
+.ci-mark__piece.ci-mark__piece--brand { fill: var(--color-icon-brand); }
+.ci-app-icon__tile { fill: var(--color-bg-brand); }
+.ci-app-icon .ci-mark__piece { fill: var(--color-icon-on-color); }
+
 /* 브랜드 로고 이미지 (img·svg): 고객사 로고 */
 .gnb .brand-logo {
     height: 28px;

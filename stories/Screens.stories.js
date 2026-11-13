@@ -85,6 +85,7 @@ const field = (label, control, { req = false, span = 0, id = '', cls = '' } = {}
 const LNB = [['work', '업무 관리'], ['doc', '문서 관리'], ['drawing', '도면 관리'], ['part', '부품 관리'], ['project', '프로젝트'], ['change', '설계 변경']];
 // 가상 제품 로고(모든 브랜드 레일 · 로그인). 그림 설명은 ./_lnbicons.js
 const LOGO = lnbLogo('Enterprise PLM', 'scr-logo');
+const LOGO_ON_DARK = lnbLogo('Enterprise PLM', 'scr-logo', 'dark');   // 로그인 브랜드 패널(어두운 면)
 // active = 지금 메뉴 이름. 홈(대시보드)은 로고가 홈이라 켜진 메뉴 없음
 // LNB 레일 = 제품 마크업 그대로(li › .menu_icon_box › .menu_icon › a + span). 아이콘은 mask 그림(--lnb-icon) 한 장을 글자색으로 칠함
 // 링크 이름은 a 의 aria-label, 화면에 보이는 이름(span)은 읽기에서 뺌(두 번 읽지 않게)
@@ -394,7 +395,7 @@ const MOLECULE =
 const loginScreen = () =>
   '<div class="scr-login">' +
   '<section class="scr-login__panel" aria-label="서비스 소개">' + MOLECULE +
-  '<div class="scr-login__brand">' + LOGO + '<span>Enterprise PLM</span></div>' +
+  '<div class="scr-login__brand">' + LOGO_ON_DARK + '<span>Enterprise PLM</span></div>' +
   '<div class="scr-login__hero"><p class="scr-login__eyebrow">PLM SYSTEM</p><h2>Product Lifecycle<br>Management</h2>' +
   '<p>제품 개발의 전 과정을 하나로 잇는 통합 PLM 플랫폼.</p></div>' +
   '<div class="scr-login__contact"><p class="scr-login__eyebrow">SERVICE CONTACT</p><p>기술 지원 · help@example.com</p><p>CAD 지원 · cad@example.com</p></div>' +
