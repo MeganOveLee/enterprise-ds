@@ -12,7 +12,8 @@ import * as S from './StatusChip.stories.js';
 <thead><tr><th>구분</th><th>클래스 · 속성</th><th>설명</th></tr></thead>
 <tbody>
 <tr><td><b>모양</b></td><td><code>.status-chip</code><span className="ds-muted">높이 20</span></td><td>앞에 점(6) + 12px 반굵은 글자입니다. 옅은 바탕에 진한 글자입니다. 모서리는 <code>--radius-chip</code>입니다(브랜드마다 다릅니다).</td></tr>
-<tr><td><b>상태</b></td><td><code>--neutral</code> · <code>--info</code> · <code>--success</code> · <code>--warning</code> · <code>--danger</code><span className="ds-muted">클래스가 없는 것이 기본(중립)입니다</span></td><td>상태별 뜻은 아래 「상태 색」 표에 있습니다. 같은 상태는 모든 화면에서 같은 색을 쓰고, 색만으로 뜻을 전하지 않도록 글자를 함께 씁니다.</td></tr>
+<tr><td><b>상태</b></td><td><code>--neutral</code> · <code>--info</code> · <code>--warning</code> · <code>--success</code> · <code>--danger</code> · <code>--closed</code><span className="ds-muted">클래스가 없으면 대기(neutral)입니다</span></td><td>대기 · 진행 · 확인 필요 · 완료 · 문제 · 종료 여섯 단계입니다. 칩 색은 상태 이름이 아니라 뜻으로 고릅니다. 단계별 뜻은 아래 「상태 여섯 단계」 표에 있습니다. 같은 상태는 모든 화면에서 같은 색을 쓰고, 색만으로 뜻을 전하지 않도록 글자를 함께 씁니다.</td></tr>
+<tr><td><b>종료</b></td><td><code>--closed</code></td><td>취소 · 폐기처럼 더 쓰지 않는 상태입니다. 바탕 없이 테두리만 두고 점은 속을 비웁니다. 대기와 같은 회색 바탕을 쓰면 시작 전 상태와 구분되지 않습니다.</td></tr>
 <tr><td><b>브랜드가 바꾸는 것</b></td><td><code>--radius-chip</code> · 상태 색 토큰</td><td>모서리 · 상태 색입니다. 상태 이름과 색의 짝은 모든 브랜드가 같습니다. 시안은 Default · Mobility = A 옅은 바탕, OOTB = B 점 + 글자입니다.</td></tr>
 </tbody>
 <tr><td><b>바뀜</b></td><td><code>.is-changed</code> · <code>dsMotion.pop</code></td><td>결재 · 승인 · 반려 직후 글자와 색을 바꾼 뒤 칩이 한 번 튑니다. 상태는 글자가 알리고 움직임은 시선만 모읍니다. <a className="ds-link" href="./?path=/docs/foundation-interaction--docs" target="_top">Foundation › Interaction</a></td></tr>
@@ -31,8 +32,8 @@ import * as S from './StatusChip.stories.js';
 <Section title="Do · Don't">
 <Card of={S.사용_지침} code={false} />
 </Section>
-<Section title="상태 색" en="Tones">
-<Card of={S.전체_상태} title="상태 다섯 가지" desc="상태별 뜻 · 클래스 · 토큰" />
+<Section title="상태 여섯 단계" en="Tones">
+<Card of={S.전체_상태} title="상태 여섯 단계" desc="단계마다 뜻 · Windchill 상태 · 클래스 · 토큰입니다. 세 브랜드가 같은 짝을 씁니다. 회색(neutral)은 대기에만 씁니다." />
 </Section>
 <Section title="Playground" desc="아래 표에서 값을 바꾸면 미리보기와 「코드 보기」가 함께 바뀝니다.">
 <Card of={S.Playground}>
