@@ -79,6 +79,47 @@ export const 지우기 = {
   render: () => '<div style="max-width:480px">' + CLEAR.join('') + '</div>',
 };
 
+// ── 칸 뒤 아이콘 버튼 · 묶음 제목 (DS-ADR-056) ──
+const SEARCH = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg>';
+const ACTION = [
+  '<div class="form-grid-2">',
+  '  <div class="ff-field"><label class="search-label" for="in-act-part">부품</label><div class="td"><span class="field-action-wrap"><input class="input" id="in-act-part" placeholder="부품 번호 입력"><button type="button" class="field-action" aria-label="부품 찾기">' + SEARCH + '</button></span></div></div>',
+  '  <div class="ff-field"><label class="search-label" for="in-act-doc">문서 번호</label><div class="td"><span class="field-action-wrap"><input class="input" id="in-act-doc" value="DOC-2610" data-ds-clear><button type="button" class="field-action" aria-label="문서 찾기">' + SEARCH + '</button></span></div></div>',
+  '</div>',
+];
+export const 칸_뒤_버튼 = {
+  parameters: html(ACTION),
+  render: () => '<div style="max-width:480px">' + ACTION.join('') + '</div>',
+};
+
+const GROUPS = [['최근 본 보기', ['내 작업', '이번 주 변경']], ['모든 보기', ['전체', '작업 중', '승인']]];
+const GROUP_SRC = [
+  '<select class="select" id="in-view">',
+  ...GROUPS.map(([g, os]) => '  <optgroup label="' + g + '">' + os.map((o) => '<option>' + o + '</option>').join('') + '</optgroup>'),
+  '</select>',
+  '',
+  '<!-- js/select.js 가 그린 목록: 묶음마다 role=group, 제목 줄은 누르지 않음 -->',
+  '<div class="ui-select__group" role="group" aria-labelledby="…-grp-0"><div class="ui-select__group-label" id="…-grp-0" role="presentation">최근 본 보기</div><div class="ui-select__option" role="option">내 작업</div> …</div>',
+];
+let gi = 0;
+const openGroups = () => '<div class="ui-select"><div class="ui-select__trigger is-open" role="combobox" tabindex="0" aria-haspopup="listbox" aria-expanded="true" aria-label="보기 열린 모습"><span class="ui-select__value">전체</span><span class="ui-select__chevron">' + CHEV + '</span></div>' +
+  '<div class="ui-select__menu show" role="listbox" aria-label="보기 열린 모습">' +
+  GROUPS.map(([g, os], k) => '<div class="ui-select__group" role="group" aria-labelledby="in-grp-' + k + '"><div class="ui-select__group-label" id="in-grp-' + k + '" role="presentation">' + g + '</div>' +
+    os.map((o) => '<div class="ui-select__option' + (o === '전체' ? ' is-selected' : '') + '" role="option" aria-selected="' + (o === '전체') + '">' + o + '</div>').join('') + '</div>').join('') + '</div></div>';
+export const 묶음_제목 = {
+  parameters: html(GROUP_SRC),
+  render: () => {
+    const el = document.createElement('div');
+    const id = 'in-grp-live-' + (gi++);
+    el.innerHTML = matrix(['눌러 보기', '열린 모습'], [
+      ['미리보기', ['<div style="width:220px;text-align:left"><select class="select" id="' + id + '" aria-label="보기">' + GROUPS.map(([g, os]) => '<optgroup label="' + g + '">' + os.map((o) => '<option' + (o === '전체' ? ' selected' : '') + '>' + o + '</option>').join('') + '</optgroup>').join('') + '</select></div>',
+        '<div style="width:220px;min-height:250px;text-align:left">' + openGroups() + '</div>']],
+    ], { full: true });
+    setTimeout(() => { const sel = el.querySelector('#' + id); if (sel && window.buildCustomSelect) window.buildCustomSelect(sel); }, 0);
+    return el;
+  },
+};
+
 export const Locked = {
   parameters: html(LOCKED),
   render: () => matrix(['비활성', '읽기 전용'], [
