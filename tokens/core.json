@@ -571,7 +571,7 @@
       "eds": {
         "before": [
           "/* ==========================================================================\n * LAYER 3: MEASUREMENT\n * ========================================================================== */",
-          "/* 실사용 단계만 유지. 미사용 단계(radius-xl·2xl, border-width 3종, spacing-1·40·64)는 삭제 : \n   색 램프와 달리 치수 스케일은 팔레트 교체와 무관해 세트로 둘 이유가 없음 */"
+          "/* 실사용 단계만 유지. 미사용 단계(radius-xl·2xl, spacing-1·40·64)는 삭제 : \n   색 램프와 달리 치수 스케일은 팔레트 교체와 무관해 세트로 둘 이유가 없음 */"
         ]
       }
     },
@@ -592,6 +592,28 @@
   "radius-rounded": {
     "$value": "99999px",
     "$type": "dimension"
+  },
+  "border-width-sm": {
+    "$value": "1px",
+    "$type": "dimension",
+    "$extensions": {
+      "eds": {
+        "before": [
+          "/* 테두리 두께 = Figma border/width/sm · md · lg (DS-ADR-057). 한 번 지웠다가 Windchill 상자 탭 위 선 · 칸 선이 숫자로 남아 다시 엶 */"
+        ]
+      }
+    },
+    "$description": "기본 선: 칸 · 상자 · 표"
+  },
+  "border-width-md": {
+    "$value": "2px",
+    "$type": "dimension",
+    "$description": "강조 선: 선택 탭 위 선 · 포커스 테두리"
+  },
+  "border-width-lg": {
+    "$value": "4px",
+    "$type": "dimension",
+    "$description": "굵은 표시 선: 상태 막대"
   },
   "radius-btn": {
     "$value": "{radius-md}",
@@ -908,6 +930,10 @@
   "color-bg-header": {
     "$value": "{neutral-100}",
     "$description": "섹션 헤더 바. muted 와 subtle 사이 빈 자리. 다크는 body.dark-mode서 재정의 → 자동전환"
+  },
+  "color-bg-panel-header": {
+    "$value": "{color-bg-muted}",
+    "$description": "카드 · 패널 머리 바탕(아래 선 = color-border-base). 세 브랜드 같은 값. 다크는 dark.json에서 다시 계산 (DS-ADR-057)"
   },
   "color-bg-disabled": {
     "$value": "{neutral-300}"

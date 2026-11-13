@@ -75,6 +75,7 @@ export const Background = {
     ['color-bg-muted', '살짝 가라앉은 면'],
     ['color-bg-subtle', '페이지 바닥'],
     ['color-bg-header', '섹션 머리 띠'],
+    ['color-bg-panel-header', '카드 · 패널 머리'],
     ['color-bg-input', '입력 가능한 칸'],
     ['color-bg-readonly', '읽기 전용 칸'],
     ['color-bg-disabled', '쓸 수 없는 요소'],
