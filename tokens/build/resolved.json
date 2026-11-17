@@ -1817,7 +1817,7 @@
     "color-text-interactive-secondary-hover": "#23272B",
     "color-text-interactive-secondary-pressed": "#14171B",
     "color-text-inverse": "#FFFFFF",
-    "color-text-label": "#006570",
+    "color-text-label": "#14171B",
     "color-text-link-visited": "#6F7379",
     "color-text-lnb-active": "#006570",
     "color-text-muted": "#54585E",

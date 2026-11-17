@@ -82,6 +82,17 @@
     "$value": "{color-text-base}",
     "$description": "머리 위 12.11:1"
   },
+  "color-text-label": {
+    "$value": "{color-text-base}",
+    "$extensions": {
+      "eds": {
+        "before": [
+          "/* --- 폼 라벨 (DS-ADR-059): Windchill 폼 라벨처럼 진한 기본 글자. 다크는 tokens.css 다크 값 그대로 ---------- */"
+        ]
+      }
+    },
+    "$description": "라벨 = 기본 글자색(브랜드색 라벨은 Default의 이전 버전 규칙)"
+  },
   "radius-btn": {
     "$value": "0",
     "$type": "dimension",
