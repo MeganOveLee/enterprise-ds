@@ -939,8 +939,8 @@
     "$value": "{neutral-300}"
   },
   "color-bg-readonly": {
-    "$value": "{neutral-200}",
-    "$description": "input[readonly]·textarea·그리드 읽기전용셀 공통"
+    "$value": "{neutral-100}",
+    "$description": "input[readonly]·textarea·그리드 읽기전용셀 공통. 200 → 100 (DS-ADR-062): 폼에 읽기 전용 칸이 여럿이면 200은 무겁다. 글자(text-muted) 대비 6.45, 비활성(300)과 두 단계 차이"
   },
   "color-bg-input": {
     "$value": "{color-bg-base}",
