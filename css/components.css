@@ -1687,6 +1687,12 @@ body.dark-mode .pop .contents .pro_table:not(:has(.form-grid-2)):not(.seach_arm:
     font-size: var(--body-sm);
     text-align: left;
 }
+.resumable:not(.center) .fileList .file-item.file-item--sm {   /* 작은 파일 줄 = 폼 안 파일 칸(파일 하나). 높이 = 입력 칸(--size-input)이라 파일을 고르기 전 빈 칸과 높이가 같다(DS-ADR-064). 빼기 버튼(--size-btn-sm)이 안에 들어가 위아래 여백 없음 */
+    min-height: var(--size-input);
+    padding: 0 var(--spacing-8);
+}
+.resumable:not(.center) .fileList .file-item.file-item--sm .file-icon,
+.resumable:not(.center) .fileList .file-item.file-item--sm .file-icon img { width: 16px; height: 16px; }   /* 아이콘 16: 아래 가장자리 진행 선(--border-width-lg)이 아이콘을 덮지 않게 */
 .resumable:not(.center) .fileList .file-item .file-icon { flex: 0 0 auto; width: 20px; height: 20px; display: inline-flex; align-items: center; justify-content: center; }
 .resumable:not(.center) .fileList .file-item .file-icon img { width: 20px; height: 20px; object-fit: contain; }
 .resumable:not(.center) .fileList .file-item .file-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--color-text-base); text-decoration: none; }
