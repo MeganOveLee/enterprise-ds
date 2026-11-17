@@ -1693,7 +1693,7 @@ body.dark-mode .pop .contents .pro_table:not(:has(.form-grid-2)):not(.seach_arm:
 /* 기존 파일 이름은 다운로드 링크(<a>): 카드 톤 유지, hover 시에만 밑줄 */
 .resumable:not(.center) .fileList .file-item a.file-name:hover { text-decoration: underline; color: var(--color-text-base); }
 .resumable:not(.center) .fileList .file-item .file-size { flex: 0 0 auto; color: var(--color-text-muted); font-variant-numeric: tabular-nums; }
-/* 올리는 중 막대 = 기본 <progress> 를 DS 색으로(채움 = 브랜드) + 빛. 자리 = 파일 줄 상자 아래 가장자리를 따라 지나가는 선(높이 border-width-md, DS-ADR-063).
+/* 올리는 중 막대 = 기본 <progress> 를 DS 색으로(채움 = 브랜드) + 빛. 자리 = 파일 줄 상자 아래 가장자리를 따라 지나가는 선(높이 border-width-lg = 굵은 표시 선, DS-ADR-063).
  * 이름 옆 작은 막대(70 · 6)는 이름이 긴 파일에서 이름을 줄이고, 이전 버전(Windchill)도 파일 이름 칸 아래 선이라 자리를 옮김. 트랙은 투명(상자 아랫선이 보임), 퍼센트는 .file-size 글자
  * 빛 = 시스템이 지금 처리 중일 때만: 채운 부분 안에서만 흰 띠가 왼쪽 → 오른쪽(한 바퀴 --duration-shimmer).
  * 저장된 값(프로젝트 진행률 막대 .progress-bar)에는 넣지 않음. 모션 줄이기면 빛 없이 멈춘 막대. 화면 읽기 이름(aria-label)은 그대로
@@ -1702,7 +1702,7 @@ body.dark-mode .pop .contents .pro_table:not(:has(.form-grid-2)):not(.seach_arm:
 @property --progress-shimmer-x { syntax: '<percentage>'; inherits: true; initial-value: -60%; }
 .resumable:not(.center) .fileList .file-item progress {
     position: absolute; left: 0; right: 0; bottom: 0;
-    width: 100%; height: var(--border-width-md);
+    width: 100%; height: var(--border-width-lg);
     -webkit-appearance: none; appearance: none;
     border: 0; border-radius: 0; overflow: hidden;
     background: transparent;   /* 트랙(Firefox) */
