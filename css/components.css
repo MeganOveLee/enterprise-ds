@@ -5666,3 +5666,76 @@ body.dark-mode .status-chip--bold:is(.status-chip--success, .status-chip--warnin
 .ui-menu__item--danger > svg { color: currentColor; }
 .ui-menu__divider { height: 1px; margin: var(--spacing-4) 0; background: var(--color-border-subtle); flex-shrink: 0; }
 @media (forced-colors: active) { .ui-menu__item:focus-visible { outline: 2px solid Highlight; } }
+
+/* ============================================================
+ * 상자 탭 · 표 패널 · 바로 가기 줄 (DS-ADR-058, TD-204)
+ *   Figma UI Kit: Tabs/Box · Tab item/Box(Size=Panel) · Table panel/Head · Toolbar · Footer. 새 토큰 없음
+ * ============================================================ */
+
+/* 탭 상자: 상자 탭 줄 + 내용 상자를 한 테두리로 묶음. 홈처럼 탭 아래 내용이 길게 이어지는 화면
+ *   <section class="tab-box">
+ *     <div class="tab tab--box"><ul role="tablist" aria-label="…"><li role="tab" aria-selected="true" class="is-active">…</li> …</ul></div>
+ *     <div class="tab-box__panel" role="tabpanel">…</div>
+ *   </section> */
+.tab-box { display: flex; flex-direction: column; background: var(--color-bg-base); border: var(--border-width-sm) solid var(--color-border-base); }
+.tab-box__panel { display: flex; flex-direction: column; gap: var(--spacing-12); padding: var(--spacing-12); background: var(--color-bg-base); }
+
+/* 상자 탭: 칸마다 테두리를 두른 탭. 고른 탭 = 흰 면 + 위 굵은 브랜드 선(색만으로 구분하지 않음) */
+.tab.tab--box { display: block; min-height: 0; padding: var(--spacing-8) 0 0; border: 0; border-bottom: var(--border-width-sm) solid var(--color-border-base); background: var(--color-bg-base); }
+.tab.tab--box ul {
+    display: flex;
+    align-items: flex-end;
+    gap: var(--spacing-4);
+    min-width: 0;
+    margin: 0;
+    padding: 0 var(--spacing-12);
+    list-style: none;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+.tab.tab--box ul::-webkit-scrollbar { display: none; }
+.tab.tab--box li {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    padding: var(--spacing-8) var(--spacing-12);   /* 높이 = 패널 탭(.main-sub-tabs .sub-tab)과 같은 방식: 위아래 8 + 글줄 (Figma Size=Panel 36) */
+    border: var(--border-width-sm) solid var(--color-border-base);
+    background: var(--color-bg-subtle);
+    color: var(--color-text-muted);
+    font-size: var(--body-sm);
+    font-weight: var(--font-weight-regular);
+    white-space: nowrap;
+    cursor: pointer;
+    transition: color var(--duration-fast), background-color var(--duration-fast);
+}
+.tab.tab--box li:hover { color: var(--color-text-brand); background: var(--color-bg-lnb-hover); }   /* 탭 상태 = LNB 메뉴와 같은 규칙 (DS-ADR-023) */
+.tab.tab--box li.is-active,
+.tab.tab--box li[aria-selected="true"] {
+    padding-inline: var(--spacing-16);
+    border-bottom-color: transparent;
+    background: var(--color-bg-base);
+    box-shadow: inset 0 var(--border-width-lg) 0 var(--color-border-brand);   /* 위 굵은 브랜드 선 */
+}
+.tab.tab--box li:focus-visible { outline: none; box-shadow: inset 0 0 0 1px var(--color-border-focus), inset 0 0 0 4px var(--color-focus-ring); }
+
+/* 표 패널: 머리(접기 + 제목 + 거르기) · 도구 줄 · 표 · 바닥(선택 개수)을 한 상자로. 안쪽 표는 .grid-table
+ *   <section class="table-panel">
+ *     <header class="table-panel__head"><h3 class="table-panel__title">내 작업</h3> …</header>
+ *     <div class="table-panel__toolbar">…</div>
+ *     <table class="grid-table">…</table>
+ *     <footer class="table-panel__footer">0개 선택됨</footer>
+ *   </section> */
+.table-panel { display: flex; flex-direction: column; overflow: hidden; background: var(--color-bg-base); border: var(--border-width-sm) solid var(--color-border-base); border-radius: var(--radius-panel); }
+.table-panel__head { display: flex; align-items: center; gap: var(--spacing-12); padding: var(--spacing-4) var(--spacing-12); background: var(--color-bg-panel-header); border-bottom: var(--border-width-sm) solid var(--color-border-base); }
+.table-panel__title { margin: 0; font-size: var(--heading-xs); font-weight: var(--font-weight-semibold); color: var(--color-text-base); }
+.table-panel__toolbar { display: flex; align-items: center; gap: var(--spacing-4); padding: var(--spacing-4) var(--spacing-12); }
+.table-panel__footer { padding: var(--spacing-4) var(--spacing-12); border-top: var(--border-width-sm) solid var(--color-border-base); font-size: var(--body-xs); color: var(--color-text-muted); }
+
+/* 바로 가기 줄: 같은 화면 안의 패널로 내려가는 링크. 순서가 없어 화살표를 두지 않고 세로선으로 나눔
+ *   <nav class="jump-links" aria-label="바로 가기"><a href="#notice" aria-current="location">공지사항</a><a href="#my-work">내 작업</a> …</nav> */
+.jump-links { display: flex; flex-wrap: wrap; align-items: center; gap: var(--spacing-12); font-size: var(--body-sm); }
+.jump-links > a { display: inline-flex; align-items: center; gap: var(--spacing-12); color: var(--color-text-base); text-decoration: none; }
+.jump-links > a + a::before { content: ""; width: var(--border-width-sm); height: var(--spacing-12); background: var(--color-border-base); }   /* 링크 사이 세로선: 마크업 없이 */
+.jump-links > a:hover { color: var(--color-text-brand); }
+.jump-links > a[aria-current="location"] { color: var(--color-text-brand); font-weight: var(--font-weight-semibold); text-decoration: underline; text-underline-offset: 3px; }   /* 지금 보는 패널 = Figma Link Type=Identifier */
+.jump-links > a:focus-visible { outline: 2px solid var(--color-border-focus); outline-offset: 2px; border-radius: 2px; }

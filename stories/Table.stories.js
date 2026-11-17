@@ -162,3 +162,9 @@ const optSrc = (code) => ({ controls: { disable: true }, docs: { source: { langu
 const optTable = (cls) => '<div class="table_list"><div class="list">' + table(ROWS.map((r, i) => row(r, i)).join('')).replace('class="grid-table"', 'class="grid-table ' + cls + '"') + '</div></div>';
 export const 시안_줄_선 = { parameters: optSrc(optTable('grid-table--lined')), render: () => '<div class="sb-field--table">' + optTable('grid-table--lined') + '</div>' };
 export const 시안_넓게 = { parameters: optSrc(optTable('grid-table--relaxed')), render: () => '<div class="sb-field--table">' + optTable('grid-table--relaxed') + '</div>' };
+
+// ── 표 패널: 머리 · 도구 줄 · 표 · 바닥을 한 상자로 (DS-ADR-058) ──
+const PANEL = '<section class="table-panel"><header class="table-panel__head"><h3 class="table-panel__title">내 작업</h3></header>' +
+  '<div class="table-panel__toolbar"><button type="button" class="btn btn--secondary btn--transparent">작업</button></div>' +
+  optTable('') + '<footer class="table-panel__footer">0개 선택됨</footer></section>';
+export const 표_패널 = { parameters: optSrc(PANEL), render: () => PANEL };

@@ -154,3 +154,9 @@ const PILL = ['<div class="tab tab--pill">', '  <ul role="tablist" aria-label="�
   ...['전체', '이번 달', '취소한 이용'].map((t, i) => '    <li role="tab" tabindex="' + (i ? -1 : 0) + '" aria-selected="' + !i + '"' + (i ? '' : ' class="is-active"') + '>' + t + '</li>'),
   '  </ul>', '</div>'];
 export const 시안_알약_탭 = { parameters: { controls: { disable: true }, docs: { source: { language: 'html', code: PILL.join('\n') } } }, render: () => live(PILL.join(''), '480px') };
+
+// ── 상자 탭: 탭 상자(.tab-box) 안에서 칸마다 테두리를 두른 탭. 고른 탭 = 흰 면 + 위 굵은 브랜드 선 (DS-ADR-058) ──
+const BOX = ['<section class="tab-box">', '  <div class="tab tab--box">', '    <ul role="tablist" aria-label="홈">',
+  ...['내 홈', '프로젝트'].map((t, i) => '      <li role="tab" tabindex="' + (i ? -1 : 0) + '" aria-selected="' + !i + '"' + (i ? '' : ' class="is-active"') + '>' + t + '</li>'),
+  '    </ul>', '  </div>', '  <div class="tab-box__panel" role="tabpanel">탭 내용</div>', '</section>'];
+export const 상자_탭 = { parameters: { controls: { disable: true }, docs: { source: { language: 'html', code: BOX.join('\n') } } }, render: () => live(BOX.join(''), '720px') };

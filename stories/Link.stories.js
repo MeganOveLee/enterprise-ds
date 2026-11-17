@@ -102,3 +102,7 @@ const UNDER = ['<p class="sb-note">첨부 파일 형식은 <a href="#" class="te
 const ARROW = ['<a href="#" class="text-link text-link--arrow">최근 문서 전체 보기</a>'];
 export const 시안_늘_밑줄 = { parameters: html(UNDER), render: () => UNDER.join('') };
 export const 시안_화살표_링크 = { parameters: html(ARROW), render: () => ARROW.join('') };
+
+// ── 바로 가기 줄: 같은 화면 안 패널로 내려가는 링크. 링크 사이 세로선은 CSS가 그림, 지금 보는 패널 = aria-current="location" (DS-ADR-058) ──
+const JUMP = ['<nav class="jump-links" aria-label="바로 가기">', '  <a href="#notice" aria-current="location">공지사항</a>', '  <a href="#my-work">내 작업</a>', '  <a href="#checked-out">체크 아웃된 작업</a>', '  <a href="#updates">업데이트</a>', '</nav>'];
+export const 바로_가기_줄 = { parameters: html(JUMP), render: () => JUMP.join('') };
