@@ -61,6 +61,18 @@ const MINUS = '<path d="M6 12h12"/>';
 const sectionHead = (title, right = '') =>
   '<div class="seach_arm"><div class="leftbt"><button type="button" class="section-toggle" aria-expanded="true" aria-label="' + title + ' 접기">' + svg(MINUS, 16) + '</button><h4>' + title + '</h4></div>' +
   (right ? '<div class="rightbt">' + right + '</div>' : '') + '</div>';
+// 첨부 파일 섹션 = 업로더(.resumable). 파일 줄: pct 가 있으면 올리는 중(줄 아래 가장자리 선 + 퍼센트 글자, DS-ADR-063), 없으면 올린 파일(이름 = 내려받기 링크)
+const UPLOADS = [['캘리퍼 조립 사양서_A.2.pdf', undefined, '1.2 MB'], ['체결 토크 시험 결과.xlsx', 64, '840 KB']];
+const upFile = ([n, pct, size]) => '<li class="file-item">' + fileIcon(n) +
+  (pct === undefined ? '<a href="#" class="file-name">' + n + '</a>'
+    : '<span class="file-name">' + n + '</span><progress max="100" value="' + pct + '" aria-label="' + n + ' 올리는 중">' + pct + '%</progress>') +
+  '<span class="file-size">' + (pct === undefined ? size : pct + '% · ' + size) + '</span>' +
+  '<button type="button" class="remove-btn" aria-label="' + n + ' 빼기">' + svg(I.close, 14) + '</button></li>';
+const attachSection = () => sectionHead('첨부 파일') +
+  '<div class="resumable"><div class="resumable-bar"><span class="resumable-help">여러 개 · 파일당 100 MB까지</span>' +
+  '<div class="resumable-bar__right">' + btn('파일 선택', 'btn--secondary btn--outlined') + '</div></div>' +
+  '<div class="resumable-drop" role="button" tabindex="0"><span class="drop-cta">파일을 여기로 끌어다 놓거나 눌러서 선택해 주십시오</span></div>' +
+  '<ul class="fileList">' + UPLOADS.map(upFile).join('') + '</ul></div>';
 const registerPop = ({ title = '문서 등록' } = {}, u = 'pw' + (++uid)) =>
   top({ title, version: '', buttons: btn('임시 저장', 'btn--secondary btn--outlined') + btn('등록', 'btn--primary btn--filled') }) +
   '<div class="contents">' + sectionHead('기본 정보', '<span class="section-meta"><span class="required" aria-hidden="true"></span> 필수</span>') +
@@ -70,7 +82,7 @@ const registerPop = ({ title = '문서 등록' } = {}, u = 'pw' + (++uid)) =>
   field('문서 명', '<input class="input" id="' + u + '-name" aria-required="true" placeholder="문서 명 입력">', { req: true, id: u + '-name' }) +
   field('작업현황', '<select class="select" id="' + u + '-state"><option>작업 중</option><option>검토 중</option></select>', { id: u + '-state' }) +
   field('설명', '<textarea class="textarea" id="' + u + '-desc" rows="3" placeholder="문서의 목적 · 변경 내용 입력"></textarea>', { id: u + '-desc', col2: true }) +
-  '</div></div></div>';
+  '</div></div>' + attachSection() + '</div>';
 
 // 창 크기를 정한 틀: 제품의 새 창 한 장. 좁은 화면에서는 틀 안에서 가로로 밀림(.pop 최소 폭 600)
 const win = (inner, h = 440) =>
@@ -90,7 +102,7 @@ export const 상세_창 = {
 };
 export const 등록_창 = {
   parameters: { docs: { source: { code: '<div class="pop">\n  ' + registerPop() + '\n</div>' } } },
-  render: () => win(registerPop(), 400),
+  render: () => win(registerPop(), 640),
 };
 
 // ── Do · Don't: 미리보기만. 작은 틀이라 .pop 최소 폭(600)만 풀어 둠 ──

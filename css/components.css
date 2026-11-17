@@ -1678,6 +1678,7 @@ body.dark-mode .pop .contents .pro_table:not(:has(.form-grid-2)):not(.seach_arm:
 /* 선택된 파일 카드 리스트 */
 .resumable:not(.center) .fileList { list-style: none; margin: 0; padding: 0; width: 100%; display: flex; flex-direction: column; gap: 6px; }
 .resumable:not(.center) .fileList .file-item {
+    position: relative; overflow: hidden;   /* 올리는 중 선(progress)을 줄 아래 가장자리에 붙이고 모서리 둥글기 안으로 자름 */
     display: flex; align-items: center; gap: 8px;
     padding: 7px 10px;
     background: var(--color-bg-base);
@@ -1692,29 +1693,31 @@ body.dark-mode .pop .contents .pro_table:not(:has(.form-grid-2)):not(.seach_arm:
 /* 기존 파일 이름은 다운로드 링크(<a>): 카드 톤 유지, hover 시에만 밑줄 */
 .resumable:not(.center) .fileList .file-item a.file-name:hover { text-decoration: underline; color: var(--color-text-base); }
 .resumable:not(.center) .fileList .file-item .file-size { flex: 0 0 auto; color: var(--color-text-muted); font-variant-numeric: tabular-nums; }
-/* 올리는 중 막대 = 기본 <progress> 를 DS 색으로(트랙 = 섹션 머리 회색, 채움 = 브랜드) + 빛.
+/* 올리는 중 막대 = 기본 <progress> 를 DS 색으로(채움 = 브랜드) + 빛. 자리 = 파일 줄 상자 아래 가장자리를 따라 지나가는 선(높이 border-width-md, DS-ADR-063).
+ * 이름 옆 작은 막대(70 · 6)는 이름이 긴 파일에서 이름을 줄이고, 이전 버전(Windchill)도 파일 이름 칸 아래 선이라 자리를 옮김. 트랙은 투명(상자 아랫선이 보임), 퍼센트는 .file-size 글자
  * 빛 = 시스템이 지금 처리 중일 때만: 채운 부분 안에서만 흰 띠가 왼쪽 → 오른쪽(한 바퀴 --duration-shimmer).
  * 저장된 값(프로젝트 진행률 막대 .progress-bar)에는 넣지 않음. 모션 줄이기면 빛 없이 멈춘 막대. 화면 읽기 이름(aria-label)은 그대로
  * 움직임은 막대(<progress>)에 걸고 채움 의사 요소는 위치 변수만 받음: 크로미엄은 ::-webkit-progress-value 에 건 animation 을 돌리지 않음
  * -webkit- · -moz- 의사 요소는 한 규칙에 묶으면 모르는 쪽 브라우저가 규칙 전체를 버림 → 따로 씀 */
 @property --progress-shimmer-x { syntax: '<percentage>'; inherits: true; initial-value: -60%; }
 .resumable:not(.center) .fileList .file-item progress {
-    flex: 0 0 70px; height: 6px;
+    position: absolute; left: 0; right: 0; bottom: 0;
+    width: 100%; height: var(--border-width-md);
     -webkit-appearance: none; appearance: none;
-    border: 0; border-radius: var(--radius-rounded); overflow: hidden;
-    background: var(--color-bg-header);   /* 트랙(Firefox) */
+    border: 0; border-radius: 0; overflow: hidden;
+    background: transparent;   /* 트랙(Firefox) */
     animation: ds-progress-shimmer var(--duration-shimmer) var(--ease-loop) infinite;
 }
-.resumable:not(.center) .fileList .file-item progress::-webkit-progress-bar { background: var(--color-bg-header); border-radius: var(--radius-rounded); }
+.resumable:not(.center) .fileList .file-item progress::-webkit-progress-bar { background: transparent; border-radius: 0; }
 .resumable:not(.center) .fileList .file-item progress::-webkit-progress-value {
-    border-radius: var(--radius-rounded);
+    border-radius: 0;
     background-color: var(--color-bg-brand);
     background-image: linear-gradient(90deg, transparent 0%, color-mix(in srgb, var(--white) 45%, transparent) 50%, transparent 100%);
     background-size: 40% 100%; background-repeat: no-repeat;
     background-position: var(--progress-shimmer-x) 0;
 }
 .resumable:not(.center) .fileList .file-item progress::-moz-progress-bar {
-    border-radius: var(--radius-rounded);
+    border-radius: 0;
     background-color: var(--color-bg-brand);
     background-image: linear-gradient(90deg, transparent 0%, color-mix(in srgb, var(--white) 45%, transparent) 50%, transparent 100%);
     background-size: 40% 100%; background-repeat: no-repeat;
