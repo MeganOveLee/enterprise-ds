@@ -5618,10 +5618,13 @@ body.dark-mode .status-chip--bold:is(.status-chip--success, .status-chip--warnin
 .approval-flow--label .approval-flow__name { font-weight: var(--font-weight-regular); }
 .approval-flow--label .is-current > .approval-flow__name { color: var(--color-text-brand); font-weight: var(--font-weight-semibold); }
 .approval-flow--label .approval-flow__step:not(.is-done):not(.is-current):not(.is-rejected) > .approval-flow__name { color: var(--color-text-muted); }
-/* 단계가 넘어가는 움직임(한 번, DS-ADR-067): 방금 끝난 단계의 체크가 그려지고 → 다음 단계로 가는 선이 왼쪽부터 채워지고 → 그 단계 표식이 한 번 커졌다 돌아옴
- * 대상 = 지금 단계(.is-current) · 반려 단계(.is-rejected)와 그 바로 앞 끝난 단계. 그보다 앞 단계는 움직이지 않음. 시간 · 곡선 = 모션 토큰 */
-.approval-flow:not(.approval-flow--vertical) .is-done:has(+ :is(.is-current, .is-rejected)) > .approval-flow__mark svg { stroke-dasharray: 21; stroke-dashoffset: 21; animation: ds-draw var(--duration-base) var(--ease-standard) forwards; }
-.approval-flow:not(.approval-flow--vertical) .is-done + :is(.is-current, .is-rejected)::before { animation: ds-flow-track calc(var(--duration-base) + var(--duration-slow)) step-end; }
+/* 단계가 넘어가는 움직임(한 번, DS-ADR-067): 방금 끝난 단계의 체크가 그려지고 → 다음 단계로 가는 선이 왼쪽부터 채워지고 → 선이 닿으면 그 단계의 고리가 닿은 쪽부터 한 바퀴 그려지고 → 안쪽 점이 나타남
+ * 대상 = 지금 단계(.is-current) · 반려 단계(.is-rejected)와 그 바로 앞 끝난 단계. 그보다 앞 단계는 움직이지 않음. 고리가 그려지기 전에는 남은 단계와 같은 고리
+ * 시간 = 모션 토큰의 배수(--flow-*), 곡선 = --ease-standard. 고리만 같은 빠르기(linear)로 돌아 그려지는 것이 보임 */
+@property --approval-ring { syntax: "<angle>"; inherits: false; initial-value: 360deg; }
+.approval-flow { --flow-wait: var(--duration-base); --flow-check: var(--duration-slow); --flow-line: calc(var(--duration-slow) * 2); --flow-ring: calc(var(--duration-slow) * 1.5); }
+.approval-flow:not(.approval-flow--vertical) .is-done:has(+ :is(.is-current, .is-rejected)) > .approval-flow__mark svg { stroke-dasharray: 21; stroke-dashoffset: 21; animation: ds-draw var(--flow-check) var(--ease-standard) var(--flow-wait) forwards; }
+.approval-flow:not(.approval-flow--vertical) .is-done + :is(.is-current, .is-rejected)::before { animation: ds-flow-track calc(var(--flow-wait) + var(--flow-check) + var(--flow-line)) step-end; }
 .approval-flow:not(.approval-flow--vertical) .is-done + :is(.is-current, .is-rejected)::after {   /* 채워지는 선 */
     content: "";
     position: absolute;
@@ -5630,13 +5633,28 @@ body.dark-mode .status-chip--bold:is(.status-chip--success, .status-chip--warnin
     left: calc(-50% + 1em);
     border-top: 2px solid var(--color-border-brand);
     transform-origin: left;
-    animation: ds-flow-fill var(--duration-slow) var(--ease-standard) var(--duration-base) backwards;
+    animation: ds-flow-fill var(--flow-line) var(--ease-standard) calc(var(--flow-wait) + var(--flow-check)) backwards;
 }
-.approval-flow:not(.approval-flow--vertical) .is-done + :is(.is-current, .is-rejected) > .approval-flow__mark { animation: ds-pop var(--duration-slow) var(--ease-standard) calc(var(--duration-base) + var(--duration-slow)); }
+.approval-flow:not(.approval-flow--vertical) .is-done + :is(.is-current, .is-rejected) > .approval-flow__mark { position: relative; animation: ds-flow-hold calc(var(--flow-wait) + var(--flow-check) + var(--flow-line) + var(--flow-ring)) step-end, ds-flow-dot var(--duration-slow) var(--ease-standard) calc(var(--flow-wait) + var(--flow-check) + var(--flow-line) + var(--flow-ring)); }
+.approval-flow:not(.approval-flow--vertical) .is-done + :is(.is-current, .is-rejected).is-rejected > .approval-flow__mark { animation: ds-flow-hold calc(var(--flow-wait) + var(--flow-check) + var(--flow-line) + var(--flow-ring)) step-end, ds-pop var(--duration-slow) var(--ease-standard) calc(var(--flow-wait) + var(--flow-check) + var(--flow-line) + var(--flow-ring)); }
+.approval-flow:not(.approval-flow--vertical) .is-done + :is(.is-current, .is-rejected) > .approval-flow__mark::after {   /* 그려지는 고리: 선이 닿는 왼쪽에서 시작 */
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border: 2px solid var(--color-border-brand);
+    border-radius: inherit;
+    -webkit-mask: conic-gradient(from -90deg, black var(--approval-ring), transparent 0);
+            mask: conic-gradient(from -90deg, black var(--approval-ring), transparent 0);
+    animation: ds-flow-ring var(--flow-ring) linear calc(var(--flow-wait) + var(--flow-check) + var(--flow-line)) backwards;
+}
+.approval-flow:not(.approval-flow--vertical) .is-done + :is(.is-current, .is-rejected).is-rejected > .approval-flow__mark::after { border-color: var(--color-bg-interactive-danger); }
 @keyframes ds-flow-track { from { border-top-color: var(--color-border-subtle); } }
 @keyframes ds-flow-fill { from { transform: scaleX(0); } }
+@keyframes ds-flow-hold { from { border-color: var(--color-border-input); background-color: var(--color-bg-base); box-shadow: none; } }
+@keyframes ds-flow-ring { from { --approval-ring: 0deg; } }
+@keyframes ds-flow-dot { from { box-shadow: inset 0 0 0 10px var(--color-bg-base), inset 0 0 0 10px var(--color-bg-brand); } }
 @media (prefers-reduced-motion: reduce) {
-    .approval-flow .approval-flow__step::before, .approval-flow .approval-flow__step::after, .approval-flow .approval-flow__mark { animation: none; }
+    .approval-flow .approval-flow__step::before, .approval-flow .approval-flow__step::after, .approval-flow .approval-flow__mark, .approval-flow .approval-flow__mark::after { animation: none; }
     .approval-flow .approval-flow__mark svg { animation: none; stroke-dashoffset: 0; }
 }
 /* C 세로 타임라인: 표식 왼쪽, 이름 · 상태 · 의견 오른쪽 */
