@@ -2164,13 +2164,13 @@ body.dark-mode .resumable:not(.center) .fileList .file-item { background: var(--
 /* 바깥 틀 안에서 목록이 길면 머리는 위에 붙어 있음(그리드 라이브러리와 같게) */
 .table_list .list .grid-table th { position: sticky; top: 0; z-index: 1; }
 /* 편집 표 .grid-table--edit: 이전 버전 편집 그리드(overrides .ui-grid-edit) 그대로:
- *   줄 40(그리드 설정 상수) · 칸 안쪽 좌우 4 · 칸 바탕 = 회색 판(bg-subtle, 짝수 줄은 얼룩 row-alt)
+ *   줄 40(그리드 설정 상수) · 칸 안쪽 좌우 4 · 칸 바탕 = 회색 판(--color-bg-grid-edit, 짝수 줄은 얼룩 row-alt)
  *   입력칸 = DS .input · .select 를 칸 너비로, 높이 30(이전 버전 편집 칸 상자) · 읽기 전용 값은 .input[readonly](DS 읽기 전용 모양)
  *   번호 · 체크 칸은 상자 없이 가운데. 마우스 올림 · 선택 바탕은 읽기 표와 같음(입력칸은 흰 상자 그대로) */
 .grid-table--edit td {
     height: var(--size-grid-row-edit);   /* 기본 40 (DS-ADR-047) */
     padding: 0 var(--spacing-4);
-    background: var(--color-bg-subtle);
+    background: var(--color-bg-grid-edit);   /* 기본 = bg-subtle. OOTB는 bg-muted (DS-ADR-071) */
 }
 .grid-table--edit td > :is(.input, .select) { min-height: var(--size-grid-row); }   /* 편집 칸 상자 = 읽기 줄 높이(기본 30, DS-ADR-047) */
 /* 검색 페이지에서만 .list 가 .table_list 의 남은 공간 차지 (그리드 화면 가득) */

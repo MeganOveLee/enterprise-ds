@@ -300,6 +300,10 @@
     "$value": "{neutral-850}",
     "$description": "짝수행: 카드보다 살짝 가라앉게.\n구 #15151A 는 줄무늬가 너무 셌고, 실제로는 components.css 가\n#1E2822(옅은 그린)로 덮고 있어 트리 짝수행이 초록으로 떴음"
   },
+  "color-bg-grid-edit": {
+    "$value": "{color-bg-subtle}",
+    "$description": "편집 표 칸 바탕: 다크는 페이지 바닥 그대로(세 브랜드 같은 값)"
+  },
   "color-border-grid-outer": {
     "$value": "{color-border-base}"
   },

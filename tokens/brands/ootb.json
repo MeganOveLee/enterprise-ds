@@ -82,6 +82,17 @@
     "$value": "{color-text-base}",
     "$description": "머리 위 12.11:1"
   },
+  "color-bg-grid-edit": {
+    "$value": "{color-bg-muted}",
+    "$extensions": {
+      "eds": {
+        "before": [
+          "/* --- 편집 표 칸 바탕 (DS-ADR-071): 머리가 밝은 회색이라 첫 줄을 가장 옅은 회색으로, 짝수 줄(row-alt)이 한 단계 진하게. 다크는 tokens.css 다크 값 그대로 ---------- */"
+        ]
+      }
+    },
+    "$description": "홀수 줄 = 가장 옅은 회색 판. 짝수 줄 row-alt보다 한 단계 밝음"
+  },
   "color-text-label": {
     "$value": "{color-text-base}",
     "$extensions": {
