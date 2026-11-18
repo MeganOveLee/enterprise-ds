@@ -52,7 +52,7 @@ const viewPop = ({ title, version, withTabs = true } = {}) =>
   (withTabs ? tabs(TABS, VIEW_ACTIONS) : '') +
   '<div class="contents">' + dl() + '</div>';
 
-// 등록 창: 탭 없음. 제목 줄 버튼 = 임시 저장 · 등록, 내용(.contents) = 접는 섹션 상자(섹션 헤더 + 폼, 배경 bg-muted). Screens 등록 창과 같은 구성
+// 등록 창: 탭 없음. 제목 줄 버튼 = 임시 저장 · 등록, 내용(.contents) = 접는 섹션 상자(회색 섹션 헤더 + 흰 폼). Screens 등록 창과 같은 구성
 const field = (label, control, { req = false, id = '', col2 = false } = {}) =>
   '<div class="ff-field' + (col2 ? ' col-2' : '') + '"><label class="search-label"' + (id ? ' for="' + id + '"' : '') + '>' + label +
   (req ? '<span class="required" aria-hidden="true"></span>' : '') + '</label><div class="td">' + control + '</div></div>';

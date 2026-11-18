@@ -2840,48 +2840,47 @@ body.dark-mode .select {   /* = --color-icon-muted 다크 값(neutral-300). 구:
 .section-toggle[aria-expanded="false"]:hover::before { background: var(--color-icon-muted); border-color: var(--color-icon-muted); }
 .section-toggle[aria-expanded="false"]:focus-visible::before { border-color: var(--color-border-focus); }
 
-/* 접는 섹션 = 머리 + 내용이 한 상자, 바탕 bg-muted: 상세 화면 · 등록 창(.pop) 공통.
- * 근거 = 이전 버전 캡처 08 · 09: 상자 바탕 #F8F9FA(= bg-muted) · 1px 테두리 · 머리가 상자 안. 접히면 머리 단독 상자.
- * 내용 = 폼(.pro_table) · 표(.table_list) · 첨부(.resumable). 입력칸 · 표 · 첨부 칸은 흰 바탕 그대로라 상자 위에서 구분된다.
- * 구: 등록 창은 바탕 없는 제목줄 + 흰 내용, 상세 화면은 bg-header 머리 + 흰 내용: 오류 글자 대비 때문에 흰 바탕을 썼음.
- * 대비: 상자 안 오류 글자는 danger-bold(라이트 7.66:1 · 다크 7.34:1). danger(red-600)는 bg-muted 위 4.37:1 로 AA 미달.
- *        다크에서 펼침 토글 네모 테두리(border-input)는 bg-muted 위 2.67:1 → 상자 안에서는 icon-muted(다크 9:1 이상) */
+/* 접는 섹션 = 머리 + 내용이 한 상자: 상세 화면 · 등록 창(.pop) 공통 (DS-ADR-068). 머리 바탕은 panel-header, 아래 선으로 내용과 나누고, 내용은 흰 바탕.
+ * 근거 = 3.1 최종 코드(결재 상세 카드: 회색 머리 + 아래 선 + 흰 내용, 등록 · 검색 창: 머리 아래 선) · 이전 버전 캡처 09(회색 머리 아래 흰 표).
+ *        카드 · 패널 머리와 같은 규칙(DS-ADR-057 .table-panel__head). 접히면 머리 단독 상자.
+ * 내용 = 폼(.pro_table) · 표(.table_list) · 첨부(.resumable). 읽기 전용 칸(bg-readonly)은 흰 내용 위에서 회색 칸으로 구분된다.
+ * 구(11/18까지): 머리 · 내용 모두 bg-muted 한 상자, 사이 선 없음. 캡처 08을 근거로 들었으나 08은 머리가 상자 밖인 접지 않는 섹션이었음.
+ * 대비: 상자 안 오류 글자는 danger-bold(흰 바탕에서도 AA 이상).
+ *        다크에서 펼침 토글 네모 테두리(border-input)는 회색 머리 위 대비가 낮아 icon-muted(다크 9:1 이상) */
 .seach_arm:has(.section-toggle),
 .pop .seach_arm:has(.section-toggle),
 .pop form .seach_arm:has(.section-toggle) {
     margin: var(--spacing-12) 0 0;
     padding: var(--spacing-12) var(--spacing-16);
-    background: var(--color-bg-muted);
-    border: 1px solid var(--color-border-base);
-    border-bottom: none;
-    border-radius: var(--radius-panel) var(--radius-panel) 0 0;
+    background: var(--color-bg-panel-header);
+    border: var(--border-width-sm) solid var(--color-border-base);
+    border-radius: var(--radius-panel) var(--radius-panel) 0 0;   /* 아래 선 = 머리와 내용 구분 */
 }
 .seach_arm:has(.section-toggle[aria-expanded="false"]),
 .pop .seach_arm:has(.section-toggle[aria-expanded="false"]),
 .pop form .seach_arm:has(.section-toggle[aria-expanded="false"]) {
-    border-bottom: 1px solid var(--color-border-base);
     border-radius: var(--radius-panel);
 }
 .seach_arm:has(.section-toggle) + :is(.pro_table, .table_list, .resumable),
 .pop .product .seach_arm:has(.section-toggle) + :is(.pro_table, .table_list, .resumable) {
     margin: 0;
-    padding: var(--spacing-8) var(--spacing-16) var(--spacing-16);   /* 위 8 = Figma Accordion 내용(Contents container 8/16/16/16)과 같음. 구: 0 */
-    background: var(--color-bg-muted);
-    border: 1px solid var(--color-border-base);
+    padding: var(--spacing-16);   /* 머리 아래 선이 생겨 위도 16. 구: 8 16 16(같은 바탕일 때 Figma Accordion 내용 값) */
+    background: var(--color-bg-base);
+    border: var(--border-width-sm) solid var(--color-border-base);
     border-top: none;
     border-radius: 0 0 var(--radius-panel) var(--radius-panel);
 }
-body.dark-mode .seach_arm:has(.section-toggle) + :is(.pro_table, .table_list, .resumable) { background: var(--color-bg-muted) !important; border-color: var(--color-border-base) !important; }   /* 다크 .pro_table(bg-base !important)보다 세게 */
+body.dark-mode .seach_arm:has(.section-toggle) + :is(.pro_table, .table_list, .resumable) { background: var(--color-bg-base) !important; border-color: var(--color-border-base) !important; }   /* 다크 .pro_table 규칙보다 세게 */
 .seach_arm:has(.section-toggle) + :is(.pro_table, .table_list, .resumable) .field-error-msg { color: var(--color-text-danger-bold); }
 body.dark-mode .seach_arm:has(.section-toggle) .section-toggle[aria-expanded="true"]::before { border-color: var(--color-icon-muted); }
 .contents > .seach_arm:has(.section-toggle):first-child, .pop .contents > .seach_arm:has(.section-toggle):first-child { margin-top: 0; }   /* 첫 섹션은 위 여백 없이 */
-/* 섹션 상자 안 표: 흰 표 + 테두리는 표(.list)가, 상자 바탕은 섹션이 맡는다. 창 내용은 스크롤되므로 표는 줄지 않고 행 높이만큼 (flex: none) */
+/* 섹션 상자 안 표: 테두리는 표(.list)가 맡는다. 창 내용은 스크롤되므로 표는 줄지 않고 행 높이만큼 (flex: none) */
 .seach_arm:has(.section-toggle) + .table_list { flex: none; overflow: visible; }
-/* 섹션 상자(접기 없음) .section-box: 접는 섹션과 같은 상자(bg-muted · 테두리 · radius-panel)에 헤더(.seach_arm) + 내용. 결재선 역할 상자 · Template 목록처럼 접지 않는 묶음 (Figma 섹션 상자 toggle 없음과 짝) */
-.section-box { display: flex; flex-direction: column; min-width: 0; padding: 0 var(--spacing-16) var(--spacing-16); background: var(--color-bg-muted); border: 1px solid var(--color-border-base); border-radius: var(--radius-panel); }
-.section-box > .seach_arm, .pop .section-box > .seach_arm { margin: 0; padding: var(--spacing-12) 0; min-height: 52px; box-sizing: border-box; background: none; border: 0; }
+/* 섹션 상자(접기 없음) .section-box: 접는 섹션과 같은 상자(panel-header 머리 + 아래 선 · 흰 내용 · 테두리 · radius-panel)에 헤더(.seach_arm) + 내용. 결재선 역할 상자 · Template 목록처럼 접지 않는 묶음 (Figma 섹션 상자 toggle 없음과 짝) */
+.section-box { display: flex; flex-direction: column; min-width: 0; padding: 0 var(--spacing-16) var(--spacing-16); background: var(--color-bg-base); border: var(--border-width-sm) solid var(--color-border-base); border-radius: var(--radius-panel); overflow: hidden; }
+.section-box > .seach_arm, .pop .section-box > .seach_arm { margin: 0 calc(-1 * var(--spacing-16)) var(--spacing-16); padding: var(--spacing-12) var(--spacing-16); min-height: 52px; box-sizing: border-box; background: var(--color-bg-panel-header); border: 0; border-bottom: var(--border-width-sm) solid var(--color-border-base); }   /* 머리는 상자 폭 끝까지 + 아래 선, 내용과 16 띄움 */
 .section-box > .seach_arm + .table_list { margin-top: 0; }
-body.dark-mode .section-box { background: var(--color-bg-muted); }
+body.dark-mode .section-box { background: var(--color-bg-base); }
 .seach_arm:has(.section-toggle) + .table_list > .list { background: var(--color-bg-base); border: 1px solid var(--color-border-grid-outer); border-radius: var(--radius-panel); overflow: hidden; }
 /* 제목줄(접기 없음) 바로 아래 표: 간격 8. .product · .searchLayout 은 이미 flex gap 12 라 빼고 (: 결과 0건 · 결재선 영역에서 머리와 표가 붙어 있던 것) */
 :not(.product):not(.searchLayout) > .seach_arm:not(:has(.section-toggle)) + .table_list { margin-top: var(--spacing-8); }

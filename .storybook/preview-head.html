@@ -50,18 +50,22 @@
   .sb-stage { display: flex; align-items: flex-end; gap: 8px; min-height: 150px; padding: 8px 24px; }   /* 툴팁 견본: 위에 툴팁 자리 */
   .sb-stage--center { justify-content: center; max-width: 400px; }   /* 넓은 툴팁: 가운데 */
   .dp-static > .datepicker--static { position: static; display: block; width: auto; box-shadow: none; }   /* 달력 견본: 실제 달력을 옮겨 그린 정지 그림 */
-  /* Do · Don't (stories/_dodont.js): 두 칸 한 줄, 머리 선 색 + ✓ · ✕ 글자 */
+  /* Do · Don't (stories/_dodont.js): 두 칸 한 줄. 판정 선은 그림과 설명 사이, 설명 칸은 판정 색 옅은 바탕, 머리 = 원형 아이콘 + 판정 글자(색만으로 구분하지 않음).
+   * 레퍼런스 = Atlassian 사용법 문서의 Do · Don't 카드(11/18 세영 요청, 노션 2-1 「11/18 Do · Don't 카드 표시 방식」) */
   .sb-dd { display: grid; gap: 20px; }
   .sb-dd__row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
   .sb-dd__title { grid-column: 1 / -1; margin: 0; font-size: 13px; font-weight: 600; color: var(--color-text-base); }
-  .sb-dd__pane { display: flex; flex-direction: column; border: 1px solid var(--color-border-base); border-top: 3px solid; border-radius: var(--radius-card); overflow: hidden; background: var(--color-bg-base); }
-  .sb-dd__pane--do { border-top-color: var(--color-border-success); }
-  .sb-dd__pane--dont { border-top-color: var(--color-border-danger); }
+  .sb-dd__pane { display: flex; flex-direction: column; border: var(--border-width-sm) solid var(--color-border-base); border-radius: var(--radius-card); overflow: hidden; background: var(--color-bg-base); }
   .sb-dd__view { flex: 1; display: flex; flex-wrap: wrap; align-items: flex-start; align-content: flex-start; gap: 8px; min-height: 72px; padding: 20px 16px; background: var(--color-bg-base); }   /* 미리보기 = 실제 카드와 같은 바탕 */
-  .sb-dd__text { margin: 0; padding: 10px 12px; border-top: 1px solid var(--color-border-subtle); background: var(--color-bg-muted); font-size: 12px; line-height: 1.6; color: var(--color-text-muted); }
-  .sb-dd__text b { display: block; font-weight: 600; }
-  .sb-dd__pane--do .sb-dd__text b { color: var(--color-text-success-bold); }   /* 12px 굵은 글자: success(라이트 4.37)는 AA 미달 */
-  .sb-dd__pane--dont .sb-dd__text b { color: var(--color-text-danger-bold); }
+  .sb-dd__text { margin: 0; padding: 12px 16px 14px; border-top: var(--border-width-lg) solid; font-size: 12px; line-height: 1.6; color: var(--color-text-base); }
+  .sb-dd__pane--do .sb-dd__text { border-top-color: var(--color-border-success); background: var(--color-bg-success-subtle); }
+  .sb-dd__pane--dont .sb-dd__text { border-top-color: var(--color-border-danger); background: var(--color-bg-danger-subtle); }
+  .sb-dd__verdict { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; font-size: 14px; font-weight: 700; line-height: 20px; }
+  .sb-dd__verdict svg { flex: none; width: 18px; height: 18px; }
+  .sb-dd__pane--do .sb-dd__verdict { color: var(--color-text-success-bold); }   /* 굵은 글자: success(라이트 4.37)는 AA 미달이라 -bold */
+  .sb-dd__pane--dont .sb-dd__verdict { color: var(--color-text-danger-bold); }
+  .sb-dd__pane--do .sb-dd__verdict svg { color: var(--color-icon-success); }
+  .sb-dd__pane--dont .sb-dd__verdict svg { color: var(--color-icon-danger); }
 
   /* ── 문서 페이지 (MDX) ─────────────────────────────────────────────
    * 페이지 머리(.ds-head) → 섹션(.ds-sec) → 예시 카드(.ds-card: 머리 · 미리보기 · 코드 보기). 블록은 stories/_blocks.js
