@@ -5613,6 +5613,11 @@ body.dark-mode .status-chip--bold:is(.status-chip--success, .status-chip--warnin
 .approval-flow__state { font-size: var(--body-xs); color: var(--color-text-muted); }
 .is-current > .approval-flow__state { color: var(--color-text-brand); font-weight: var(--font-weight-semibold); }
 .is-rejected > .approval-flow__state { color: var(--color-text-danger-bold); font-weight: var(--font-weight-semibold); }
+/* 단계 이름 한 줄(.approval-flow--label): 등록 마법사처럼 역할 · 상태 없이 단계 이름만 둘 때. Figma Step flow / Step 과 같음(DS-ADR-066)
+ * 이름 = 보통 굵기, 지금 단계 = 브랜드색 반굵게, 남은 단계 = 보조 글자색 */
+.approval-flow--label .approval-flow__name { font-weight: var(--font-weight-regular); }
+.approval-flow--label .is-current > .approval-flow__name { color: var(--color-text-brand); font-weight: var(--font-weight-semibold); }
+.approval-flow--label .approval-flow__step:not(.is-done):not(.is-current):not(.is-rejected) > .approval-flow__name { color: var(--color-text-muted); }
 /* C 세로 타임라인: 표식 왼쪽, 이름 · 상태 · 의견 오른쪽 */
 .approval-flow--vertical { flex-direction: column; }
 .approval-flow--vertical .approval-flow__step { grid-template-columns: 1.5em minmax(0, 1fr); justify-items: start; column-gap: var(--spacing-12); row-gap: var(--spacing-2); padding-bottom: var(--spacing-16); text-align: start; }
