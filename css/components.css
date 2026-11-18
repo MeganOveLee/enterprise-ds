@@ -995,6 +995,7 @@
 /* 상태: 입력칸(.input)과 같은 규칙을 칸을 감싸는 상자에 건다. 새 토큰 없음 (DS-ADR-016 · 017)
  * 오류 = 칸에 aria-invalid="true" · 비활성 = disabled · 읽기 전용 = readonly. 비활성 · 읽기 전용이면 datepicker.js가 달력을 열지 않고 아이콘 버튼에 disabled */
 .ui-datepicker:has(.ui-datepicker__input[aria-invalid="true"]) { border-color: var(--color-border-danger); }
+.ui-datepicker:has(.ui-datepicker__input[aria-invalid="true"]) .ui-datepicker__icon { background: var(--color-bg-danger-subtle); border-right-color: var(--color-border-danger); }   /* 오류면 아이콘 칸도 옅은 빨강 + 칸 오른쪽 선 빨강: Figma Date Field State=Error. 구: 회색 칸 그대로라 오류 테두리와 따로 놀았음 */
 .ui-datepicker:has(.ui-datepicker__input:disabled) {
     background-color: var(--color-bg-disabled);
     border-color: var(--color-border-disabled);
