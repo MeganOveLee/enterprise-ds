@@ -15,11 +15,13 @@ export const PageHead = ({ eyebrow, title, lead, children }) =>
     children);
 
 // 제목 옆 영어 라벨(en)은 그리지 않는다: 제목을 영어로 되풀이하는 부연 설명이라서. mdx의 en 속성은 남겨 둔다
+// 대제목(h2)은 섹션 상자의 머리 띠 안에 둔다: 제목이 상자 밖에 떠 있지 않게(문서 제목 규칙 대 · 중 · 소, preview-head.html)
 export const Section = ({ title, desc, children }) =>
   h('section', { className: 'ds-sec' },
-    h('h2', null, title),
-    desc ? h('p', { className: 'ds-sec__desc' }, desc) : null,
-    children);
+    h('header', { className: 'ds-sec__head' },
+      h('h2', null, title),
+      desc ? h('p', { className: 'ds-sec__desc' }, desc) : null),
+    h('div', { className: 'ds-sec__body' }, children));
 
 // tag = 제목 옆 표시(「추천」), basis = 시안 근거 한 줄(디자인 필수 가이드 7장)
 export const Card = ({ of, title, desc, tag, basis, code = true, children }) =>
