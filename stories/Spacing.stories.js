@@ -28,7 +28,7 @@ export const 간격 = {
 export const 모서리 = {
   parameters: css(['/* 컴포넌트는 역할 이름을 쓴다: 값은 단계를 가리키고, 브랜드 파일이 바꿀 수 있다 */', '.btn   { border-radius: var(--radius-btn); }    /* 기본 = var(--radius-md) */', '.input { border-radius: var(--radius-input); }  /* 기본 = var(--radius-sm) */', ':root.theme-ootb { --radius-btn: var(--radius-none); --radius-input: var(--radius-none); }']),
   render: () => mount(`
-    <p class="fd-lead">단계: 값 사전입니다. 모든 브랜드가 같은 값을 씁니다.</p>
+    <section class="fd-group"><p class="fd-group__head">단계<span>값 사전입니다. 모든 브랜드가 같은 값을 씁니다.</span></p><div class="fd-group__body">
     <div class="fd-boxes">${[
       ['none', '직각: 브랜드가 역할을 0으로 둘 때'], ['sm', '입력 필드 · 체크박스 · 작은 표식의 기본'], ['md', '버튼 · 영역 · 팝오버의 기본'], ['lg', '카드의 기본'], ['rounded', '완전 둥근 모서리: 칩 · 스위치'],
     ].map(([n, use]) => `
@@ -37,7 +37,8 @@ export const 모서리 = {
         <span class="fd-name">--radius-${n}</span><span class="fd-val" data-read="radius"></span>
         <span class="fd-val">${use}</span>
       </div>`).join('')}</div>
-    <p class="fd-lead" style="margin-top:32px">역할: 컴포넌트는 역할 토큰 이름을 씁니다. 브랜드가 값을 바꿀 수 있습니다.</p>
+    </div></section>
+    <section class="fd-group"><p class="fd-group__head">역할<span>컴포넌트는 역할 토큰 이름을 씁니다. 브랜드가 값을 바꿀 수 있습니다.</span></p><div class="fd-group__body">
     <div class="fd-row fd-head" style="padding-top:0;align-items:center"><span>토큰 · 기본 단계</span><span>지금 값</span><span>쓰는 곳</span></div>
     ${[
       ['btn', 'md', '모든 버튼: 표준 · 아이콘(닫기 · 페이지 번호 · 달력 화살표) · 작은 버튼'],
@@ -57,7 +58,8 @@ export const 모서리 = {
           <div class="fd-sw" style="width:56px;height:28px;flex-shrink:0;background:var(--color-bg-brand-subtle);border:1px solid var(--color-border-brand);border-radius:var(--radius-${n})"></div>
           <span class="fd-use">${use}</span></div>
       </div>`).join('')}
-    <p class="fd-use" style="margin:12px 0 0">원형(라디오 · 스피너) · 완전 둥근 모서리(스위치 · 개수 배지) · 로고 마크는 역할이 없어 모든 브랜드가 같습니다.</p>`),
+    <p class="fd-use" style="margin:12px 0 0">원형(라디오 · 스피너) · 완전 둥근 모서리(스위치 · 개수 배지) · 로고 마크는 역할이 없어 모든 브랜드가 같습니다.</p>    </div></section>
+  `),
 };
 
 export const 높이 = {

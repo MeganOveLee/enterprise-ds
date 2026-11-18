@@ -22,7 +22,7 @@ export const Brand = {
     '.badge { background: var(--color-bg-brand-subtle); color: var(--color-text-brand); }',
   ]),
   render: () => ramps([
-    { prefix: 'brand', steps: STEPS },
+    { name: '브랜드', note: '500 = 메인', prefix: 'brand', steps: STEPS },
     { name: '포인트', note: 'Accent: 작은 강조 한 가지', prefix: 'accent', steps: [500] },
   ]),
 };

@@ -96,13 +96,10 @@ export const 단계_목록 = {
 // ── 로고 로더 (DS-ADR-043 · 069) ── 페이지 전체 첫 로딩. 심볼 조각 다섯이 바깥에서 차례로 모여 맞물림
 const LOADER_PIECES = '<span class="brand-loader" aria-hidden="true">' + '<svg viewBox="0 0 130 129">' + MARK_PATHS.map((d, i) => '<path class="brand-loader__piece brand-loader__piece--' + (i + 1) + '" d="' + d + '"/>').join('') + '</svg>' + '</span>';
 const LOADER_CODE = '<span class="brand-loader" aria-hidden="true">\n    <svg viewBox="0 0 130 129">\n' + [1, 2, 3, 4, 5].map((n) => '      <path class="brand-loader__piece brand-loader__piece--' + n + '" d="…"/>').join('\n') + '\n    </svg>\n  </span>';   // 코드 보기: 조각 좌표는 줄임
-const loaderFig = (inner, t, d) => '<figure style="margin:0;display:grid;justify-items:center;gap:10px;padding:24px 12px;border:1px solid var(--color-border-base);border-radius:var(--radius-card);background:var(--color-bg-base);text-align:center">' +
-  inner + '<figcaption style="font-size:var(--body-sm);color:var(--color-text-muted);line-height:1.5"><b style="display:block;color:var(--color-text-base);font-size:var(--body-md);font-weight:var(--font-weight-semibold)">' + t + '</b>' + d + '</figcaption></figure>';
 export const 로고_로더 = {
   parameters: { controls: { disable: true }, docs: { source: { language: 'html', code:
     '<div class="loading loading--overlay" role="status" aria-live="polite">\n  ' + LOADER_PIECES + '\n  <p class="loading__text">화면을 불러오는 중입니다</p>\n</div>' } } },
-  render: () => '<div style="display:grid;grid-template-columns:minmax(0,240px)">' +
-    loaderFig(LOADER_PIECES, '조각이 맞물리는 로고 .brand-loader', '심볼 조각 다섯이 바깥에서 차례로 모여 하나로 맞물립니다. 흩어진 정보가 한 화면으로 모이는 모습입니다.') + '</div>',
+  render: () => '<div style="display:flex;padding:8px 0">' + LOADER_PIECES + '</div>',   // 이름 · 설명은 카드 머리에(그림 아래 같은 제목을 되풀이하지 않음)
 };
 
 // Do · Don't: 근거: 규칙 「Shimmer는 처리 중에만 사용합니다」 · 「한 자리에는 박자 하나만 둡니다」

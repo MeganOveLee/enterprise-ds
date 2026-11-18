@@ -26,8 +26,10 @@ const STYLE = [
   '.dt-sw.is-inverse { background: var(--color-bg-inverse); }',
   '.dt-copy { height: 24px; padding: 0 10px; white-space: nowrap; border: 1px solid var(--color-border-base); border-radius: var(--radius-sm); background: var(--color-bg-base); color: var(--color-text-muted); font: inherit; font-size: 12px; cursor: pointer; }',
   '.dt-copy:hover { border-color: var(--color-border-strong); color: var(--color-text-base); }',
-  '.dt-fam + .dt-fam { margin-top: 20px; }',
-  '.dt-fam__name { margin: 0 0 8px; font-size: 13px; font-weight: var(--font-weight-semibold); }',
+  '.dt-fam + .dt-fam { margin-top: 16px; }',
+  '.dt-fam:has(> .dt-fam__name) { border: 1px solid var(--color-border-base); border-radius: var(--radius-card); }',   /* 이름 있는 가족 = 상자 + 머리 띠(제목이 바탕 위에 떠 있지 않게) */
+  '.dt-fam:has(> .dt-fam__name) > .dt-ramp { padding: 12px 16px 16px; }',
+  '.dt-fam__name { margin: 0; padding: 8px 16px; background: var(--color-bg-panel-header); border-bottom: 1px solid var(--color-border-base); border-radius: var(--radius-card) var(--radius-card) 0 0; font-size: 13px; font-weight: var(--font-weight-semibold); }',
   '.dt-fam__name span { margin-left: 8px; font-size: 12px; font-weight: 400; color: var(--color-text-muted); }',
   '.dt-ramp { display: grid; grid-template-columns: repeat(var(--n, 10), minmax(0, 1fr)); gap: 8px; }',
   '.dt-tile__sw { height: 48px; border-radius: var(--radius-md); border: 1px solid var(--color-border-subtle); }',

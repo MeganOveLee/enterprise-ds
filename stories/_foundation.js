@@ -4,6 +4,12 @@
 const STYLE = `
 .fd { font-size: var(--body-md); }
 .fd-lead { margin: 0 0 16px; color: var(--color-text-muted); }
+/* 한 카드 안 묶음이 둘 이상이면 묶음마다 상자 + 머리 띠(문서 제목 규칙 소제목). 제목이 바탕 위에 떠 있지 않게 */
+.fd-group { border: 1px solid var(--color-border-base); border-radius: var(--radius-card); background: var(--color-bg-base); }
+.fd-group + .fd-group { margin-top: 16px; }
+.fd-group__head { margin: 0; padding: 8px 16px; background: var(--color-bg-panel-header); border-bottom: 1px solid var(--color-border-base); border-radius: var(--radius-card) var(--radius-card) 0 0; font-size: var(--body-sm); font-weight: var(--font-weight-semibold); }
+.fd-group__head span { margin-left: 8px; font-weight: var(--font-weight-regular); color: var(--color-text-muted); }
+.fd-group__body { padding: 16px; }
 .fd-ramp { display: grid; grid-template-columns: repeat(auto-fill, minmax(88px, 1fr)); gap: 12px; }
 .fd-ramp .fd-sw { height: 56px; border-radius: var(--radius-md); border: 1px solid var(--color-border-subtle); }
 .fd-name { display: block; margin-top: 6px; font-weight: var(--font-weight-semibold); font-size: var(--body-sm); }

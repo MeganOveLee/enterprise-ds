@@ -20,15 +20,16 @@ const fit = (html, w, h) => {
 };
 // 을 / 를: 버튼 이름 마지막 글자의 받침으로 고름([등록]을 · [BOM 비교]를)
 const josa = (t) => { const c = t.replace(/[\]\s]+$/, '').slice(-1).charCodeAt(0) - 0xac00; return c >= 0 && c < 11172 && c % 28 === 0 ? '를' : '을'; };
-const label = (no, title, where) => '<p class="flow__label"><span class="flow__no" aria-hidden="true">' + no + '</span><b>' + title + '</b><span>' + where + '</span></p>';
+// 단계 이름 = 아래 그림 틀의 머리 띠: 폭도 그림 틀과 같게(실제 크기 w + 테두리 2)
+const label = (no, title, where, w) => '<p class="flow__label" style="max-width:' + (w + 2) + 'px"><span class="flow__no" aria-hidden="true">' + no + '</span><b>' + title + '</b><span>' + where + '</span></p>';
 
 export const flow = ({ base, open, trigger, how }) => {
   const root = document.createElement('div');
   root.className = 'flow';
-  root.insertAdjacentHTML('beforeend', label(1, base.title || '기본 화면', base.where));
+  root.insertAdjacentHTML('beforeend', label(1, base.title || '기본 화면', base.where, base.w));
   root.appendChild(fit(base.html, base.w, base.h));
   root.insertAdjacentHTML('beforeend', '<p class="flow__arrow">' + DOWN + '<span><b>' + trigger + '</b>' + josa(trigger) + ' 누르면 ' + how + '</span></p>');
-  root.insertAdjacentHTML('beforeend', label(2, open.title || '열리는 창', open.where));
+  root.insertAdjacentHTML('beforeend', label(2, open.title || '열리는 창', open.where, open.w));
   root.appendChild(fit(open.html, open.w, open.h));
   return root;
 };

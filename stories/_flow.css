@@ -2,7 +2,8 @@
  * 1단 = 기본 화면에서 누르는 곳이 보이는 만큼, 2단 = 열리는 창 · 화면. 둘 다 실제 크기로 그리고, 칸보다 넓으면 줄여 맞춤(.flow__fit)
  * 색 · 글자는 토큰: 도구 막대의 브랜드 · 화면 모드를 따름 */
 .flow { display: flex; flex-direction: column; gap: var(--spacing-8); font-family: var(--font-family-base); color: var(--color-text-base); }
-.flow__label { display: flex; align-items: center; flex-wrap: wrap; gap: var(--spacing-8); margin: 0; font-size: var(--body-sm); }
+.flow__label { box-sizing: border-box; width: 100%; display: flex; align-items: center; flex-wrap: wrap; gap: var(--spacing-8); margin: 0; padding: var(--spacing-8) var(--spacing-12); background: var(--color-bg-panel-header); border: 1px solid var(--color-border-base); border-bottom: 0; border-radius: var(--radius-card) var(--radius-card) 0 0; font-size: var(--body-sm); }   /* 단계 이름 = 바로 아래 그림 틀의 머리 띠 */
+.flow__label + .flow__fit { margin-top: calc(-1 * var(--spacing-8)); border-top-left-radius: 0; border-top-right-radius: 0; }
 .flow__label b { font-weight: var(--font-weight-semibold); }
 .flow__label span:last-child { color: var(--color-text-muted); }
 .flow__no {

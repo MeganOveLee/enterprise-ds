@@ -190,7 +190,8 @@
 
 /* 상세 머리 상태 카드(보기 · 편집 중 · 잠김): 문서용 배치. 머리 하나씩 흰 판에 */
 .scr-states { display: grid; gap: var(--spacing-12); }
-.scr-state__label { margin: 0 0 var(--spacing-4); font-size: var(--body-sm); color: var(--color-text-muted); }
+.scr-state__label { margin: 0; padding: var(--spacing-8) var(--spacing-12); background: var(--color-bg-panel-header); border: 1px solid var(--color-border-base); border-bottom: 0; border-radius: var(--radius-card) var(--radius-card) 0 0; font-size: var(--body-sm); font-weight: var(--font-weight-semibold); color: var(--color-text-base); }   /* 상태 이름 = 아래 상자의 머리 띠 */
+.scr-state__label + .scr-state__box { border-top-left-radius: 0; border-top-right-radius: 0; }
 .scr-state__box .detail-header { border-bottom: 0; padding-bottom: 0; }
 .scr-state__box { overflow: visible; background: var(--color-bg-base); border: 1px solid var(--color-border-base); border-radius: var(--radius-card); padding: var(--spacing-16); }
 /* 잠김 이유: 제목 줄 안 흐린 작은 글자 + 자물쇠. 편집 버튼이 aria-describedby 로 이 문구를 읽음 */

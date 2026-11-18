@@ -87,7 +87,9 @@ export const AFTER = [
 <tr><td><b>4. 브랜드 · 다크 모드</b></td><td>브랜드 파일과 클래스를 적용하고 다크 모드를 켭니다.</td><td><span className="ds-tag ds-tag--ok">없음</span></td></tr>
 </tbody>
 </table>
+<div className="ds-group">
 <h3 className="ds-subhead">바뀌는 범위</h3>
+<div className="ds-group__body">
 <p className="ds-sec__desc">화면 코드의 동작: <code>id</code> · <code>name</code> · 이벤트 · 서버 주소: 은 바꾸지 않고, 클래스를 더하거나 감싸는 태그를 넣어 화면을 바꿉니다. 아래는 이전 버전 문서 검색 화면의 「문서 번호」 칸입니다.</p>
 <div className="ds-pair">
 <div><p className="ds-pair__label">이전 버전</p><Source language="html" code={BEFORE} /></div>
@@ -97,6 +99,8 @@ export const AFTER = [
 <div><span className="ds-tag ds-tag--ok">화면 코드 수정 없음</span><h4>불러오기만 해도 바뀌는 것</h4><ul><li>글꼴 · 글자색</li><li>제목 <code>h1</code>~<code>h6</code></li><li>입력 필드 높이 <code>input</code> · <code>select</code></li><li>체크박스 색</li><li><code>select.js</code>를 함께 불러오면 화면의 모든 선택 목록</li></ul></div>
 <div><span className="ds-tag ds-tag--ok">화면 코드 수정 없음</span><h4>이전 버전과 이름이 같아 CSS만 불러오면 바뀌는 것</h4><ul><li>목록 표 <code>.table_list</code></li><li>등록 창 섹션 <code>.pro_table</code></li><li>다중 선택 <code>.checkSelect</code></li><li>첨부 <code>.resumable</code></li></ul></div>
 <div><span className="ds-tag ds-tag--warn">화면마다 클래스 수정</span><h4>새 클래스로 바꿔야 하는 것</h4><ul><li>버튼 <code>{'.btn_*'}</code> → <code>{'.btn--*'}</code></li><li>입력 필드 → <code>.input</code> · <code>.select</code> · <code>.textarea</code></li><li>체크박스 · 라디오 → <code>.checkbox</code> · <code>.radio</code></li></ul></div>
+</div>
+</div>
 </div>
 </Section>
 <Section title="지원 범위" en="What the system covers" desc="디자인 시스템은 화면의 모양(CSS 토큰 · 클래스)과 모양에 필요한 스크립트만 제공합니다. 마크업을 디자인 시스템이 정할 수 없는 곳은 아래처럼 나눠 맡습니다.">
