@@ -1262,8 +1262,12 @@
     "$description": "zebra alt"
   },
   "color-bg-grid-edit": {
+    "$value": "{color-bg-row-alt}",
+    "$description": "편집 표 홀수 줄 바탕(옅은 회색 판). 첫 줄이 밝고 짝수 줄이 한 단계 진함. 브랜드가 덮을 수 있음 (DS-ADR-071)"
+  },
+  "color-bg-grid-edit-alt": {
     "$value": "{color-bg-subtle}",
-    "$description": "편집 표 칸 바탕(회색 판). 짝수 줄은 row-alt. 브랜드가 덮을 수 있음 (DS-ADR-071)"
+    "$description": "편집 표 짝수 줄 바탕 (DS-ADR-071)"
   },
   "color-border-grid-outer": {
     "$value": "{color-border-base}",

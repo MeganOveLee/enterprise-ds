@@ -415,7 +415,8 @@
   /* AUI Grid */
   --color-bg-grid-header: var(--neutral-800); /* 헤더 */
   --color-bg-row-alt: var(--neutral-100);     /* zebra alt */
-  --color-bg-grid-edit: var(--color-bg-subtle); /* 편집 표 칸 바탕(회색 판). 짝수 줄은 row-alt. 브랜드가 덮을 수 있음 (DS-ADR-071) */
+  --color-bg-grid-edit: var(--color-bg-row-alt); /* 편집 표 홀수 줄 바탕(옅은 회색 판). 첫 줄이 밝고 짝수 줄이 한 단계 진함. 브랜드가 덮을 수 있음 (DS-ADR-071) */
+  --color-bg-grid-edit-alt: var(--color-bg-subtle); /* 편집 표 짝수 줄 바탕 (DS-ADR-071) */
   --color-border-grid-outer: var(--color-border-base); /* 외곽 보더 */
   --color-bg-grid-row-hover: var(--brand-50); /* 행 hover: 브랜드 역할 (DS-ADR-005) */
   --color-bg-grid-row-selected: var(--brand-100); /* 행 선택·체크: 브랜드 역할 (DS-ADR-005) */
@@ -746,6 +747,7 @@ body.dark-mode {
                                                  구 #15151A 는 줄무늬가 너무 셌고, 실제로는 components.css 가
                                                  #1E2822(옅은 그린)로 덮고 있어 트리 짝수행이 초록으로 떴음 */
   --color-bg-grid-edit: var(--color-bg-subtle); /* 편집 표 칸 바탕: 다크는 페이지 바닥 그대로(세 브랜드 같은 값) */
+  --color-bg-grid-edit-alt: var(--color-bg-row-alt); /* 편집 표 짝수 줄: 다크는 일반 표 짝수 줄과 같음(세 브랜드 같은 값) */
   --color-border-grid-outer: var(--color-border-base);
   --color-bg-grid-row-hover: var(--neutral-750); /* 다크는 명도차만으로 구분: 어두운 배경이 채도를 먹어서 틴트를 줘도 잘 안 보임 */
   --color-bg-grid-row-selected: color-mix(in srgb, var(--brand-500) 14%, var(--neutral-800)); /* 선택만 브랜드 틴트: 호버와 구분되고 인풋과도 분리.

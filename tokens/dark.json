@@ -304,6 +304,10 @@
     "$value": "{color-bg-subtle}",
     "$description": "편집 표 칸 바탕: 다크는 페이지 바닥 그대로(세 브랜드 같은 값)"
   },
+  "color-bg-grid-edit-alt": {
+    "$value": "{color-bg-row-alt}",
+    "$description": "편집 표 짝수 줄: 다크는 일반 표 짝수 줄과 같음(세 브랜드 같은 값)"
+  },
   "color-border-grid-outer": {
     "$value": "{color-border-base}"
   },

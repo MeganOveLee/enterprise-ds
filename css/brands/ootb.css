@@ -42,8 +42,9 @@
   --color-bg-grid-header: var(--neutral-300); /* 밝은 회색 머리(Figma 시안의 color/bg/disabled와 같은 값). 줄무늬 row-alt와 1.34:1로 갈림 */
   --color-text-grid-header: var(--color-text-base); /* 머리 위 12.11:1 */
 
-  /* --- 편집 표 칸 바탕 (DS-ADR-071): 머리가 밝은 회색이라 첫 줄을 가장 옅은 회색으로, 짝수 줄(row-alt)이 한 단계 진하게. 다크는 tokens.css 다크 값 그대로 ---------- */
-  --color-bg-grid-edit: var(--color-bg-muted); /* 홀수 줄 = 가장 옅은 회색 판. 짝수 줄 row-alt보다 한 단계 밝음 */
+  /* --- 편집 표 칸 바탕 (DS-ADR-071): 머리가 밝은 회색이라 기본 브랜드보다 한 단계씩 옅게. 다크는 tokens.css 다크 값 그대로 ---------- */
+  --color-bg-grid-edit: var(--color-bg-muted); /* 홀수 줄 = 가장 옅은 회색 판 */
+  --color-bg-grid-edit-alt: var(--color-bg-row-alt); /* 짝수 줄 = 일반 표 짝수 줄과 같음 */
 
   /* --- 폼 라벨 (DS-ADR-059): Windchill 폼 라벨처럼 진한 기본 글자. 다크는 tokens.css 다크 값 그대로 ---------- */
   --color-text-label: var(--color-text-base); /* 라벨 = 기본 글자색(브랜드색 라벨은 Default의 이전 버전 규칙) */
