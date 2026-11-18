@@ -1984,6 +1984,10 @@ body.dark-mode .resumable:not(.center) .fileList .file-item { background: var(--
 /* hover · 포커스: input 을 투명하게 숨기므로 포커스 링은 표식(.radio__mark)에 그린다. 없으면 키보드 위치가 안 보임 */
 .radio input[type="radio"]:hover:not(:disabled):not(:checked) + .radio__mark,
 .radio input[type="radio"]:active:not(:disabled):not(:checked) + .radio__mark { border-color: var(--color-border-input-hover); }   /* 누르는 동안 = 올림과 같음 (Figma Radio Pressed) */
+/* 오류(Figma Radio State=Error, DS-ADR-068): 라디오 묶음에 role="radiogroup" aria-invalid="true"(또는 input 에 aria-invalid="true")
+ *   안 고른 것 = 고리만 위험 색, 고른 것 = 고리 · 칠 위험 색. 오류 문구는 묶음 아래 .field-error-msg 로 함께 둠 */
+.radio input[type="radio"]:is([aria-invalid="true"], [aria-invalid="true"] *):not(:disabled):not(:checked) + .radio__mark { border-color: var(--color-border-danger); }
+.radio input[type="radio"]:is([aria-invalid="true"], [aria-invalid="true"] *):not(:disabled):checked + .radio__mark { border-color: var(--color-border-interactive-danger); background: var(--color-bg-interactive-danger); }
 .radio input[type="radio"]:focus-visible + .radio__mark {
     outline: 2px solid transparent;   /* 강제 색 모드(고대비)에서만 보임: box-shadow 가 꺼지는 환경 대비 */
     border-color: var(--color-border-focus);
