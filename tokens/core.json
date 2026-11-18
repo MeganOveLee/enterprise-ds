@@ -796,7 +796,7 @@
   },
   "ease-loop": {
     "$value": "ease-in-out",
-    "$description": "반복 움직임 곡선: 빛 · 깜빡임 · 스켈레톤 · 그림 한 장 로고 로더"
+    "$description": "반복 움직임 곡선: 빛 · 깜빡임 · 스켈레톤"
   },
   "duration-slow": {
     "$value": ".4s",

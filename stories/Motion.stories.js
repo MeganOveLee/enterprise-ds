@@ -93,19 +93,16 @@ export const 단계_목록 = {
   },
 };
 
-// ── 로고 로더 (DS-ADR-043) ── 페이지 전체 첫 로딩. 심볼 조각 다섯이 바깥에서 차례로 모여 맞물림 · 그림 한 장 로고는 왼쪽부터 채움
-const IMG_LOGO = new URL('../assets/brand/default-logo.svg', import.meta.url).href;   // 가상 제품 마크(그림 한 장으로 쓸 때의 견본)
+// ── 로고 로더 (DS-ADR-043 · 069) ── 페이지 전체 첫 로딩. 심볼 조각 다섯이 바깥에서 차례로 모여 맞물림
 const LOADER_PIECES = '<span class="brand-loader" aria-hidden="true">' + '<svg viewBox="0 0 130 129">' + MARK_PATHS.map((d, i) => '<path class="brand-loader__piece brand-loader__piece--' + (i + 1) + '" d="' + d + '"/>').join('') + '</svg>' + '</span>';
 const LOADER_CODE = '<span class="brand-loader" aria-hidden="true">\n    <svg viewBox="0 0 130 129">\n' + [1, 2, 3, 4, 5].map((n) => '      <path class="brand-loader__piece brand-loader__piece--' + n + '" d="…"/>').join('\n') + '\n    </svg>\n  </span>';   // 코드 보기: 조각 좌표는 줄임
-const LOADER_IMAGE = (src) => '<span class="brand-loader brand-loader--image" style="--brand-loader-width:72px" aria-hidden="true"><img class="brand-loader__base" src="' + src + '" alt=""><img class="brand-loader__fill" src="' + src + '" alt=""></span>';
 const loaderFig = (inner, t, d) => '<figure style="margin:0;display:grid;justify-items:center;gap:10px;padding:24px 12px;border:1px solid var(--color-border-base);border-radius:var(--radius-card);background:var(--color-bg-base);text-align:center">' +
   inner + '<figcaption style="font-size:var(--body-sm);color:var(--color-text-muted);line-height:1.5"><b style="display:block;color:var(--color-text-base);font-size:var(--body-md);font-weight:var(--font-weight-semibold)">' + t + '</b>' + d + '</figcaption></figure>';
 export const 로고_로더 = {
   parameters: { controls: { disable: true }, docs: { source: { language: 'html', code:
-    '<div class="loading loading--overlay" role="status" aria-live="polite">\n  ' + LOADER_PIECES + '\n  <p class="loading__text">화면을 불러오는 중입니다</p>\n</div>\n\n<!-- 로고가 그림 한 장뿐인 브랜드 -->\n' + LOADER_IMAGE('logo.png') } } },
-  render: () => '<div style="display:grid;grid-template-columns:repeat(2,minmax(0,240px));gap:16px">' +
-    loaderFig(LOADER_PIECES, '조각이 맞물리는 로고 .brand-loader', '심볼 조각 다섯이 바깥에서 차례로 모여 하나로 맞물립니다. 흩어진 정보가 한 화면으로 모이는 모습입니다.') +
-    loaderFig(LOADER_IMAGE(IMG_LOGO), '그림 한 장 로고 .brand-loader--image', '로고가 그림 파일 한 장뿐인 브랜드는 흐린 로고 위로 원래 로고가 왼쪽부터 채워집니다.') + '</div>',
+    '<div class="loading loading--overlay" role="status" aria-live="polite">\n  ' + LOADER_PIECES + '\n  <p class="loading__text">화면을 불러오는 중입니다</p>\n</div>' } } },
+  render: () => '<div style="display:grid;grid-template-columns:minmax(0,240px)">' +
+    loaderFig(LOADER_PIECES, '조각이 맞물리는 로고 .brand-loader', '심볼 조각 다섯이 바깥에서 차례로 모여 하나로 맞물립니다. 흩어진 정보가 한 화면으로 모이는 모습입니다.') + '</div>',
 };
 
 // Do · Don't: 근거: 규칙 「Shimmer는 처리 중에만 사용합니다」 · 「한 자리에는 박자 하나만 둡니다」
