@@ -5618,6 +5618,27 @@ body.dark-mode .status-chip--bold:is(.status-chip--success, .status-chip--warnin
 .approval-flow--label .approval-flow__name { font-weight: var(--font-weight-regular); }
 .approval-flow--label .is-current > .approval-flow__name { color: var(--color-text-brand); font-weight: var(--font-weight-semibold); }
 .approval-flow--label .approval-flow__step:not(.is-done):not(.is-current):not(.is-rejected) > .approval-flow__name { color: var(--color-text-muted); }
+/* 단계가 넘어가는 움직임(한 번, DS-ADR-067): 방금 끝난 단계의 체크가 그려지고 → 다음 단계로 가는 선이 왼쪽부터 채워지고 → 그 단계 표식이 한 번 커졌다 돌아옴
+ * 대상 = 지금 단계(.is-current) · 반려 단계(.is-rejected)와 그 바로 앞 끝난 단계. 그보다 앞 단계는 움직이지 않음. 시간 · 곡선 = 모션 토큰 */
+.approval-flow:not(.approval-flow--vertical) .is-done:has(+ :is(.is-current, .is-rejected)) > .approval-flow__mark svg { stroke-dasharray: 21; stroke-dashoffset: 21; animation: ds-draw var(--duration-base) var(--ease-standard) forwards; }
+.approval-flow:not(.approval-flow--vertical) .is-done + :is(.is-current, .is-rejected)::before { animation: ds-flow-track calc(var(--duration-base) + var(--duration-slow)) step-end; }
+.approval-flow:not(.approval-flow--vertical) .is-done + :is(.is-current, .is-rejected)::after {   /* 채워지는 선 */
+    content: "";
+    position: absolute;
+    top: 0.75em;
+    right: calc(50% + 1em);
+    left: calc(-50% + 1em);
+    border-top: 2px solid var(--color-border-brand);
+    transform-origin: left;
+    animation: ds-flow-fill var(--duration-slow) var(--ease-standard) var(--duration-base) backwards;
+}
+.approval-flow:not(.approval-flow--vertical) .is-done + :is(.is-current, .is-rejected) > .approval-flow__mark { animation: ds-pop var(--duration-slow) var(--ease-standard) calc(var(--duration-base) + var(--duration-slow)); }
+@keyframes ds-flow-track { from { border-top-color: var(--color-border-subtle); } }
+@keyframes ds-flow-fill { from { transform: scaleX(0); } }
+@media (prefers-reduced-motion: reduce) {
+    .approval-flow .approval-flow__step::before, .approval-flow .approval-flow__step::after, .approval-flow .approval-flow__mark { animation: none; }
+    .approval-flow .approval-flow__mark svg { animation: none; stroke-dashoffset: 0; }
+}
 /* C 세로 타임라인: 표식 왼쪽, 이름 · 상태 · 의견 오른쪽 */
 .approval-flow--vertical { flex-direction: column; }
 .approval-flow--vertical .approval-flow__step { grid-template-columns: 1.5em minmax(0, 1fr); justify-items: start; column-gap: var(--spacing-12); row-gap: var(--spacing-2); padding-bottom: var(--spacing-16); text-align: start; }
