@@ -276,3 +276,19 @@ const OPT_C = ['<div class="form-grid-2">', floatField('in-c-no', '문서 번호
 export const 시안_윤곽_칸 = { parameters: html(OPT_A), render: () => '<div class="sb-field--wide">' + OPT_A.join('') + '</div>' };
 export const 시안_채운_칸 = { parameters: html(OPT_B), render: () => '<div class="sb-field--wide">' + OPT_B.join('') + '</div>' };
 export const 시안_올라가는_라벨 = { parameters: html(OPT_C), render: () => '<div class="sb-field--wide">' + OPT_C.join('') + '</div>' };
+
+// ── 내용 보기 상자: 긴 읽기 전용 본문 + 오른쪽 위 크게 보기 아이콘 버튼 (DS-ADR-072) ──
+const EXPAND_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>';
+const VIEWBOX = [
+  '<div class="form-grid-2">',
+  '  <div class="ff-field col-2"><label class="search-label" for="in-view">변경 사유</label>',
+  '    <div class="td"><div class="view-box">',
+  '      <textarea class="textarea" id="in-view" readonly>제동 브래킷 두께를 3.0에서 3.5로 올립니다.\n시험 3회에서 피로 수명이 기준 아래로 나왔고, 협력사 공정 능력 검토 결과 같은 금형으로 대응할 수 있습니다.\n도면 DWG-20417 Rev.B에 반영하고 이전 개정은 배포 대상에서 뺍니다.</textarea>',
+  '      <button type="button" class="btn btn--secondary btn--transparent btn--icon view-box__expand" aria-label="변경 사유 크게 보기">' + EXPAND_ICON + '</button>',
+  '    </div></div></div>',
+  '</div>',
+];
+export const 내용_보기_상자 = {
+  parameters: html(VIEWBOX),
+  render: () => '<div style="max-width:560px">' + VIEWBOX.join('') + '</div>',
+};

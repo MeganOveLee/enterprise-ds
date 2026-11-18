@@ -160,3 +160,27 @@ const BOX = ['<section class="tab-box">', '  <div class="tab tab--box">', '    <
   ...['내 홈', '프로젝트'].map((t, i) => '      <li role="tab" tabindex="' + (i ? -1 : 0) + '" aria-selected="' + !i + '"' + (i ? '' : ' class="is-active"') + '>' + t + '</li>'),
   '    </ul>', '  </div>', '  <div class="tab-box__panel" role="tabpanel">탭 내용</div>', '</section>'];
 export const 상자_탭 = { parameters: { controls: { disable: true }, docs: { source: { language: 'html', code: BOX.join('\n') } } }, render: () => live(BOX.join(''), '720px') };
+
+// ── 닫을 수 있는 상자 탭: 탭마다 닫기 ×, 탭 줄 끝에 더하기 + (DS-ADR-072). 닫기 · 더하기 동작은 화면이 맡고, 스토리는 눌러 볼 수 있게 짧은 스크립트만 붙임 ──
+const CLOSE_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+const ADD_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>';
+const CLOSABLE = ['<section class="tab-box">', '  <div class="tab tab--box">', '    <ul role="tablist" aria-label="열어 둔 문서">',
+  ...['공지사항', '설계 변경 요청', '도면 검토'].map((t, i) => '      <li role="tab" tabindex="' + (i ? -1 : 0) + '" aria-selected="' + !i + '" class="has-close' + (i ? '' : ' is-active') + '">' + t +
+    '<button type="button" class="tab__close" aria-label="' + t + ' 탭 닫기">' + CLOSE_ICON + '</button></li>'),
+  '      <li class="tab__add" role="presentation"><button type="button" class="tab__add-btn" aria-label="탭 추가">' + ADD_ICON + '</button></li>',
+  '    </ul>', '  </div>', '  <div class="tab-box__panel" role="tabpanel">탭 내용</div>', '</section>'];
+export const 닫을_수_있는_탭 = {
+  parameters: { controls: { disable: true }, docs: { source: { language: 'html', code: CLOSABLE.join('\n') } } },
+  render: () => {
+    const el = live(CLOSABLE.join(''), '720px');
+    el.addEventListener('click', (e) => {
+      const b = e.target.closest('.tab__close'); if (!b) return;
+      e.stopPropagation();
+      const li = b.closest('li'); const next = li.nextElementSibling && li.nextElementSibling.getAttribute('role') === 'tab' ? li.nextElementSibling : li.previousElementSibling;
+      const was = li.classList.contains('is-active'); li.remove();
+      if (was && next) { next.classList.add('is-active'); next.setAttribute('aria-selected', 'true'); next.tabIndex = 0; next.focus(); }
+    }, true);
+    return el;
+  },
+};
+
