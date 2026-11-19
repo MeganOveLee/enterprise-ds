@@ -166,7 +166,29 @@ export const 시안_넓게 = { parameters: optSrc(optTable('grid-table--relaxed'
 // ── 머리와 정렬: 1 짙은 머리 · 가운데 정렬(이전 버전 그리드와 같은 모양) · 2 옅은 머리 · 글 왼쪽 정렬(추천). 두 번째 행 선택 ──
 const headTable = (cls) => '<div class="table_list"><div class="list">' + table(ROWS.map((r, i) => row(r, i, { sel: i === 1 })).join('')).replace('class="grid-table"', 'class="grid-table' + (cls ? ' ' + cls : '') + '"') + '</div></div>';
 export const 머리_짙게 = { parameters: optSrc(headTable('')), render: () => '<div class="sb-field--table">' + headTable('') + '</div>' };
-export const 머리_옅게 = { parameters: optSrc(headTable('grid-table--subtle')), render: () => '<div class="sb-field--table">' + headTable('grid-table--subtle') + '</div>' };
+// 2 = 옅은 머리 + 줄 상태 선(.status-row--*) + 선택 띠(.selection-bar). 줄을 고르면 결과 머리 줄이 선택 띠로 바뀜
+const srow = (r, i, sel) => row(r, i, { sel }).replace('<tr', '<tr data-row').replace(/<tr data-row( class="([^"]*)")?/, (m, c, cls) => '<tr class="' + [cls, 'status-row--' + STATUS[r[3]][0]].filter(Boolean).join(' ') + '"');
+const selBar = (n) => '<div class="selection-bar" role="region" aria-label="선택한 줄"' + (n ? '' : ' hidden') + '><p class="selection-bar__count" aria-live="polite">' + n + '개 선택됨</p>' +
+  '<div class="selection-bar__actions"><button type="button" class="btn">선택 일괄 결재</button><button type="button" class="btn">' + XLS + 'Excel</button><span class="selection-bar__sep"></span><button type="button" class="btn" data-clear>선택 취소</button></div></div>';
+const subtle = (picked) => resultHead(ROWS.length).replace('class="seach_arm"', 'class="seach_arm"' + (picked.length ? ' hidden' : '')) + selBar(picked.length) +
+  '<div class="table_list"><div class="list">' + table(ROWS.map((r, i) => srow(r, i, picked.includes(i))).join('')).replace('class="grid-table"', 'class="grid-table grid-table--subtle"') + '</div></div>';
+const wireSelection = (el) => {
+  const head = el.querySelector('.seach_arm'), bar = el.querySelector('.selection-bar'), all = el.querySelector('thead input[type="checkbox"]');
+  const boxes = [...el.querySelectorAll('tbody input[type="checkbox"]')];
+  const sync = () => {
+    const n = boxes.filter((b) => b.checked).length;
+    boxes.forEach((b) => { const tr = b.closest('tr'); tr.classList.toggle('is-selected', b.checked); tr.setAttribute('aria-selected', String(b.checked)); });
+    all.checked = n === boxes.length; all.indeterminate = n > 0 && n < boxes.length;
+    bar.querySelector('.selection-bar__count').textContent = n + '개 선택됨'; bar.hidden = !n; head.hidden = !!n;
+  };
+  el.addEventListener('change', (e) => { if (e.target === all) boxes.forEach((b) => { b.checked = all.checked; }); sync(); });
+  bar.querySelector('[data-clear]').addEventListener('click', () => { boxes.forEach((b) => { b.checked = false; }); sync(); });
+  sync();
+  return el;
+};
+const subtleStory = (picked) => ({ parameters: optSrc(subtle(picked)), render: () => { const el = document.createElement('div'); el.className = 'sb-field--table'; el.innerHTML = subtle(picked); return wireSelection(el); } });
+export const 머리_옅게 = subtleStory([]);
+export const 머리_옅게_줄_선택 = subtleStory([1, 2]);
 
 // ── 표 패널: 머리 · 도구 줄 · 표 · 바닥을 한 상자로 (DS-ADR-058) ──
 const PANEL = '<section class="table-panel"><header class="table-panel__head"><h3 class="table-panel__title">내 작업</h3></header>' +

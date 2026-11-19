@@ -5470,7 +5470,7 @@ body.dark-mode .empty-illo__badge  { fill: var(--color-bg-muted); }
 
 /* ============================================================
  * Data Display · Feedback 시안: 기존 컴포넌트의 변형 클래스 (묶음 3)
- *   Card B .card--filled · C .card--elevated / Table B .grid-table--lined · C .grid-table--relaxed · 머리와 정렬 2 .grid-table--subtle / Status Chip B .status-chip--dot · C .status-chip--bold
+ *   Card B .card--filled · C .card--elevated / Table B .grid-table--lined · C .grid-table--relaxed · 머리와 정렬 2 .grid-table--subtle · 줄 상태 선 .status-row--* · 선택 띠 .selection-bar / Search Form 위계 2 .form-grid--neutral-label / Status Chip B .status-chip--dot · C .status-chip--bold
  *   Alert B .alert--stripe · C .alert--banner / Toast B .toast-region--bottom · C .toast-region--top / Tooltip B .tooltip--light · C .tooltip--rich
  *   Progress C .progress-ring / Skeleton B .skeleton--pulse · C .skeleton--static. 새 토큰 없음
  * ============================================================ */
@@ -5486,12 +5486,42 @@ body.dark-mode .empty-illo__badge  { fill: var(--color-bg-muted); }
 .grid-table--lined td { border-right-color: transparent; }
 /* Table C: 넓게: 줄 높이 + 8. 줄 수가 적고 오래 읽는 표. 촘촘함은 브랜드 줄 높이 토큰이 맡음(DS-ADR-047) */
 .grid-table--relaxed td { height: calc(var(--size-grid-row) + var(--spacing-8)); }
-/* Table 머리와 정렬 2: 옅은 머리 · 글 왼쪽 정렬. 머리가 내용보다 앞서 보이지 않게 옅은 바탕 + 본문 글자색, 칸 사이 세로선 없이 글의 첫 글자를 한 줄로 맞춤
- *   체크박스 칸만 가운데. 수량 · 금액처럼 자릿수를 견주는 칸은 .is-right. 줄 시안(A 얼룩 줄 · B 줄 선 · C 넓게)과 함께 쓸 수 있음 */
-.grid-table--subtle th { background: var(--color-bg-subtle); color: var(--color-text-base); }
+/* Table 머리와 정렬 2: 옅은 머리 · 글 왼쪽 정렬. 열 경계는 머리에만 두고 줄은 가로선과 얼룩 줄로 따라감
+ *   머리 = 옅은 바탕 + 굵고 흐린 글자, 머리 칸 사이에 칸 높이 절반의 짧은 세로선. 내용 칸은 세로선 없음
+ *   체크박스 칸만 가운데. 수량 · 금액처럼 자릿수를 견주는 칸은 .is-right */
+.grid-table--subtle th { background: var(--color-bg-subtle); color: var(--color-text-muted); font-weight: var(--font-weight-bold); }
 .grid-table--subtle :is(th, td) { text-align: left; border-right: 0; }
+.grid-table--subtle th + th { background-image: linear-gradient(var(--color-border-strong), var(--color-border-strong)); background-size: 1px 50%; background-position: left center; background-repeat: no-repeat; }
 .grid-table--subtle :is(th, td):has(> .checkbox) { padding: 0; text-align: center; }
 .grid-table .is-right { text-align: right; }
+/* 줄 상태 선: 줄 왼쪽 끝에 상태 색 굵은 선. 상태 칩을 그대로 두고 함께 씀(선만으로는 무슨 상태인지 읽히지 않음)
+ *   <tr class="status-row--warning"><td>…</td> … <td><span class="status-chip status-chip--warning">검토 중</span></td></tr> */
+.grid-table tbody tr[class*="status-row--"] > td:first-child { box-shadow: inset var(--spacing-4) 0 0 var(--status-row-line); }
+.status-row--info { --status-row-line: var(--color-border-info); }
+.status-row--success { --status-row-line: var(--color-border-success); }
+.status-row--warning { --status-row-line: var(--color-border-warning); }
+.status-row--danger { --status-row-line: var(--color-border-danger); }
+/* 선택 띠: 줄을 하나라도 고르면 결과 머리 줄(.seach_arm) 자리에 나타나는 채운 띠. 왼쪽 = 고른 개수, 오른쪽 = 고른 줄에 하는 동작 + 선택 취소
+ *   <div class="selection-bar" role="region" aria-label="선택한 줄"><p class="selection-bar__count" aria-live="polite">2개 선택됨</p>
+ *     <div class="selection-bar__actions"><button type="button" class="btn">선택 일괄 결재</button><span class="selection-bar__sep"></span><button type="button" class="btn">선택 취소</button></div></div>
+ *   고른 줄이 없으면 hidden. 높이는 결과 머리 줄과 같게 두어 표가 위아래로 밀리지 않음 */
+.selection-bar { display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-12); min-height: calc(var(--size-btn) + var(--spacing-8)); padding: 0 var(--spacing-4) 0 var(--spacing-12); background: var(--color-bg-btn-primary); color: var(--color-text-on-color); font-size: var(--body-sm); font-weight: var(--font-weight-semibold); }
+.selection-bar[hidden] { display: none; }
+.seach_arm[hidden] { display: none; }   /* 선택 띠가 나타난 동안 결과 머리 줄은 숨김 */
+.selection-bar__count { margin: 0; }
+.selection-bar__actions { display: flex; align-items: center; gap: var(--spacing-4); }
+.selection-bar__sep { align-self: stretch; width: 1px; margin: var(--spacing-8) var(--spacing-4); background: color-mix(in srgb, currentColor 40%, transparent); }
+.selection-bar .btn { background: transparent; border-color: transparent; color: inherit; }
+.selection-bar .btn:hover { background: color-mix(in srgb, currentColor 16%, transparent); }
+.selection-bar .btn:active { background: color-mix(in srgb, currentColor 28%, transparent); }
+.selection-bar .btn:focus-visible { outline: 2px solid currentColor; outline-offset: -2px; box-shadow: none; }
+
+/* Search Form 라벨과 버튼 위계 2: 중립 라벨 · 채운 버튼 하나. 라벨을 보조 글자색 · 중간 굵기로 낮춰 입력한 값과 [검색]이 앞서 보이게
+ *   <div class="form-grid-2 form-grid--6 form-grid--neutral-label">…</div>
+ *   결과 줄: 묶음 동작은 윤곽 버튼(.btn--primary.btn--outlined), Excel 은 보조 윤곽 버튼 + 초록 아이콘(.btn__icon--excel) */
+.form-grid-2.form-grid--neutral-label .ff-field > .search-label { color: var(--color-text-muted); font-weight: var(--font-weight-medium); }
+.btn .btn__icon--excel { color: var(--color-icon-success); }
+.btn:is(:disabled, [aria-disabled="true"]) .btn__icon--excel { color: currentColor; }
 
 /* Status Chip B: 점 + 글자: 바탕 없이. 표 칸처럼 칩이 줄마다 반복되는 촘촘한 곳 */
 .status-chip.status-chip--dot { --chip-bg: transparent; padding-left: 0; }
