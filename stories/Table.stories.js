@@ -166,23 +166,25 @@ export const 시안_넓게 = { parameters: optSrc(optTable('grid-table--relaxed'
 // ── 머리와 정렬: 1 짙은 머리 · 가운데 정렬(이전 버전 그리드와 같은 모양) · 2 옅은 머리 · 글 왼쪽 정렬(추천). 두 번째 행 선택 ──
 const headTable = (cls) => '<div class="table_list"><div class="list">' + table(ROWS.map((r, i) => row(r, i, { sel: i === 1 })).join('')).replace('class="grid-table"', 'class="grid-table' + (cls ? ' ' + cls : '') + '"') + '</div></div>';
 export const 머리_짙게 = { parameters: optSrc(headTable('')), render: () => '<div class="sb-field--table">' + headTable('') + '</div>' };
-// 2 = 옅은 머리 + 줄 상태 선(.status-row--*) + 선택 띠(.selection-bar). 줄을 고르면 결과 머리 줄이 선택 띠로 바뀜
-const srow = (r, i, sel) => row(r, i, { sel }).replace('<tr', '<tr data-row').replace(/<tr data-row( class="([^"]*)")?/, (m, c, cls) => '<tr class="' + [cls, 'status-row--' + STATUS[r[3]][0]].filter(Boolean).join(' ') + '"');
-const selBar = (n) => '<div class="selection-bar" role="region" aria-label="선택한 줄"' + (n ? '' : ' hidden') + '><p class="selection-bar__count" aria-live="polite">' + n + '개 선택됨</p>' +
-  '<div class="selection-bar__actions"><button type="button" class="btn">선택 일괄 결재</button><button type="button" class="btn">' + XLS + 'Excel</button><span class="selection-bar__sep"></span><button type="button" class="btn" data-clear>선택 취소</button></div></div>';
-const subtle = (picked) => resultHead(ROWS.length).replace('class="seach_arm"', 'class="seach_arm"' + (picked.length ? ' hidden' : '')) + selBar(picked.length) +
-  '<div class="table_list"><div class="list">' + table(ROWS.map((r, i) => srow(r, i, picked.includes(i))).join('')).replace('class="grid-table"', 'class="grid-table grid-table--subtle"') + '</div></div>';
+// 2 = 표 패널(.table-panel) 안에 옅은 머리 표 + 줄 상태 선(.status-row--*). 줄을 고르면 패널 머리가 선택 상태(.is-selected)로 바뀜
+const srow = (r, i, sel) => row(r, i, { sel }).replace(/<tr( class="([^"]*)")?/, (m, c, cls) => '<tr class="' + [cls, 'status-row--' + STATUS[r[3]][0]].filter(Boolean).join(' ') + '"');
+const subtle = (picked) => { const n = picked.length; return '<section class="table-panel">' +
+  '<header class="table-panel__head' + (n ? ' is-selected' : '') + '"><h3 class="table-panel__title" aria-live="polite">' + (n ? n + '개 선택됨' : '검색 결과 ' + ROWS.length) + '</h3>' +
+  '<button type="button" class="btn btn--secondary btn--transparent" data-clear' + (n ? '' : ' hidden') + '>선택 취소</button>' +
+  '<div class="table-panel__actions"><button type="button" class="btn btn--primary btn--outlined" data-bulk' + (n ? '' : ' hidden') + '>선택 일괄 결재</button><button type="button" class="btn btn--excel">' + XLS + 'Excel</button></div></header>' +
+  table(ROWS.map((r, i) => srow(r, i, picked.includes(i))).join('')).replace('class="grid-table"', 'class="grid-table grid-table--subtle"') + '</section>'; };
 const wireSelection = (el) => {
-  const head = el.querySelector('.seach_arm'), bar = el.querySelector('.selection-bar'), all = el.querySelector('thead input[type="checkbox"]');
+  const head = el.querySelector('.table-panel__head'), title = el.querySelector('.table-panel__title'), all = el.querySelector('thead input[type="checkbox"]');
   const boxes = [...el.querySelectorAll('tbody input[type="checkbox"]')];
   const sync = () => {
     const n = boxes.filter((b) => b.checked).length;
     boxes.forEach((b) => { const tr = b.closest('tr'); tr.classList.toggle('is-selected', b.checked); tr.setAttribute('aria-selected', String(b.checked)); });
     all.checked = n === boxes.length; all.indeterminate = n > 0 && n < boxes.length;
-    bar.querySelector('.selection-bar__count').textContent = n + '개 선택됨'; bar.hidden = !n; head.hidden = !!n;
+    head.classList.toggle('is-selected', n > 0); title.textContent = n ? n + '개 선택됨' : '검색 결과 ' + boxes.length;
+    head.querySelectorAll('[data-clear], [data-bulk]').forEach((b) => { b.hidden = !n; });
   };
   el.addEventListener('change', (e) => { if (e.target === all) boxes.forEach((b) => { b.checked = all.checked; }); sync(); });
-  bar.querySelector('[data-clear]').addEventListener('click', () => { boxes.forEach((b) => { b.checked = false; }); sync(); });
+  head.querySelector('[data-clear]').addEventListener('click', () => { boxes.forEach((b) => { b.checked = false; }); sync(); });
   sync();
   return el;
 };

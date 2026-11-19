@@ -5470,7 +5470,7 @@ body.dark-mode .empty-illo__badge  { fill: var(--color-bg-muted); }
 
 /* ============================================================
  * Data Display · Feedback 시안: 기존 컴포넌트의 변형 클래스 (묶음 3)
- *   Card B .card--filled · C .card--elevated / Table B .grid-table--lined · C .grid-table--relaxed · 머리와 정렬 2 .grid-table--subtle · 줄 상태 선 .status-row--* · 선택 띠 .selection-bar / Search Form 위계 2 .form-grid--neutral-label / Status Chip B .status-chip--dot · C .status-chip--bold
+ *   Card B .card--filled · C .card--elevated / Table B .grid-table--lined · C .grid-table--relaxed · 머리와 정렬 2 .grid-table--subtle · 줄 상태 선 .status-row--* / Search Form 위계 2 .form-grid--neutral-label / Status Chip B .status-chip--dot · C .status-chip--bold
  *   Alert B .alert--stripe · C .alert--banner / Toast B .toast-region--bottom · C .toast-region--top / Tooltip B .tooltip--light · C .tooltip--rich
  *   Progress C .progress-ring / Skeleton B .skeleton--pulse · C .skeleton--static. 새 토큰 없음
  * ============================================================ */
@@ -5501,20 +5501,6 @@ body.dark-mode .empty-illo__badge  { fill: var(--color-bg-muted); }
 .status-row--success { --status-row-line: var(--color-border-success); }
 .status-row--warning { --status-row-line: var(--color-border-warning); }
 .status-row--danger { --status-row-line: var(--color-border-danger); }
-/* 선택 띠: 줄을 하나라도 고르면 결과 머리 줄(.seach_arm) 자리에 나타나는 채운 띠. 왼쪽 = 고른 개수, 오른쪽 = 고른 줄에 하는 동작 + 선택 취소
- *   <div class="selection-bar" role="region" aria-label="선택한 줄"><p class="selection-bar__count" aria-live="polite">2개 선택됨</p>
- *     <div class="selection-bar__actions"><button type="button" class="btn">선택 일괄 결재</button><span class="selection-bar__sep"></span><button type="button" class="btn">선택 취소</button></div></div>
- *   고른 줄이 없으면 hidden. 높이는 결과 머리 줄과 같게 두어 표가 위아래로 밀리지 않음 */
-.selection-bar { display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-12); min-height: calc(var(--size-btn) + var(--spacing-8)); padding: 0 var(--spacing-4) 0 var(--spacing-12); background: var(--color-bg-btn-primary); color: var(--color-text-on-color); font-size: var(--body-sm); font-weight: var(--font-weight-semibold); }
-.selection-bar[hidden] { display: none; }
-.seach_arm[hidden] { display: none; }   /* 선택 띠가 나타난 동안 결과 머리 줄은 숨김 */
-.selection-bar__count { margin: 0; }
-.selection-bar__actions { display: flex; align-items: center; gap: var(--spacing-4); }
-.selection-bar__sep { align-self: stretch; width: 1px; margin: var(--spacing-8) var(--spacing-4); background: color-mix(in srgb, currentColor 40%, transparent); }
-.selection-bar .btn { background: transparent; border-color: transparent; color: inherit; }
-.selection-bar .btn:hover { background: color-mix(in srgb, currentColor 16%, transparent); }
-.selection-bar .btn:active { background: color-mix(in srgb, currentColor 28%, transparent); }
-.selection-bar .btn:focus-visible { outline: 2px solid currentColor; outline-offset: -2px; box-shadow: none; }
 
 /* Search Form 라벨과 버튼 위계 2: 중립 라벨 · 채운 버튼 하나. 라벨을 보조 글자색 · 중간 굵기로 낮춰 입력한 값과 [검색]이 앞서 보이게
  *   <div class="form-grid-2 form-grid--6 form-grid--neutral-label">…</div>
@@ -5842,6 +5828,18 @@ body.dark-mode .status-chip--bold:is(.status-chip--success, .status-chip--warnin
 .table-panel__title { margin: 0; font-size: var(--heading-xs); font-weight: var(--font-weight-semibold); color: var(--color-text-base); }
 .table-panel__toolbar { display: flex; align-items: center; gap: var(--spacing-4); padding: var(--spacing-4) var(--spacing-12); }
 .table-panel__footer { padding: var(--spacing-4) var(--spacing-12); border-top: var(--border-width-sm) solid var(--color-border-base); font-size: var(--body-xs); color: var(--color-text-muted); }
+/* 표 패널 머리의 동작 묶음과 선택 상태: 줄을 하나라도 고르면 머리가 채운 띠로 바뀜. 제목 자리에 고른 개수(같은 글자 크기) + [선택 취소], 오른쪽 동작 묶음에는 고른 줄에 하는 동작이 앞에 나타남
+ *   늘 있는 동작(Excel)은 오른쪽 끝 제자리에 그대로 두어 버튼이 밀리지 않음. 머리 높이도 그대로라 표가 위아래로 밀리지 않음
+ *   <header class="table-panel__head is-selected"><h3 class="table-panel__title" aria-live="polite">2개 선택됨</h3><button type="button" class="btn">선택 취소</button>
+ *     <div class="table-panel__actions"><button type="button" class="btn">선택 일괄 결재</button><button type="button" class="btn btn--excel">Excel</button></div></header> */
+.table-panel__actions { display: flex; align-items: center; gap: var(--spacing-4); margin-left: auto; }
+.table-panel__head .btn[hidden] { display: none; }   /* 고른 줄이 없을 때 숨기는 동작: .btn 의 display 가 hidden 을 덮지 않게 */
+.table-panel__head.is-selected { background: var(--color-bg-btn-primary); border-bottom-color: var(--color-bg-btn-primary); color: var(--color-text-on-color); }
+.table-panel__head.is-selected .table-panel__title { color: inherit; }
+.table-panel__head.is-selected .btn { background: transparent; border-color: transparent; color: inherit; }
+.table-panel__head.is-selected .btn:hover { background: color-mix(in srgb, currentColor 16%, transparent); }
+.table-panel__head.is-selected .btn:active { background: color-mix(in srgb, currentColor 28%, transparent); }
+.table-panel__head.is-selected .btn:focus-visible { outline: 2px solid currentColor; outline-offset: -2px; box-shadow: none; }
 
 /* 바로 가기 줄: 같은 화면 안의 패널로 내려가는 링크. 순서가 없어 화살표를 두지 않고 세로선으로 나눔
  *   <nav class="jump-links" aria-label="바로 가기"><a href="#notice" aria-current="location">공지사항</a><a href="#my-work">내 작업</a> …</nav> */
