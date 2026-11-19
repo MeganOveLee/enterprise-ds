@@ -4,6 +4,7 @@ import '../css/brands/default.css';
 import '../css/brands/mobility.css';
 import '../css/fonts/nanum-square-neo.css';   // Mobility 본문 글꼴 등록: 브랜드 CSS 옆에 링크 (DS-ADR-052)
 import '../css/brands/ootb.css';
+import '../css/fonts/ibm-plex-sans-kr.css';   // OOTB 본문 글꼴 등록: 브랜드 CSS 옆에 링크 (DS-ADR-047)
 import '../css/globals.css';
 import '../css/components.css';
 import '../css/blocks/mobility.css';   // 모바일 앱 전용 Blocks: PLM 화면은 링크하지 않음

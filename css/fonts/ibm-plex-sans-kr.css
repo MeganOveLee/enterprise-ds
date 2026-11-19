@@ -1,0 +1,9 @@
+@charset "UTF-8";
+/* ════════════════════════════════════════════════════════════════════════════
+ * 글꼴 등록: IBM Plex Sans KR (OOTB 브랜드 본문 글꼴, DS-ADR-047)
+ *   브랜드 CSS(css/brands/ootb.css) 옆에 링크. 빌드는 @font-face 를 만들지 않음
+ *   굵기 400 · 500 · 600 · 700 이 글꼴에 있어 굵기 토큰은 기본 브랜드와 같음
+ *   파일: Google Fonts 배포 주소. 라이선스 = SIL Open Font License 1.1
+ *   인터넷이 막힌 환경에서는 같은 이름('IBM Plex Sans KR')으로 글꼴 파일을 등록한 CSS 로 바꿔 링크
+ * ════════════════════════════════════════════════════════════════════════════ */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap');

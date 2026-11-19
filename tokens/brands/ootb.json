@@ -165,6 +165,16 @@
     "$type": "dimension",
     "$description": "28 → 26 (DS-ADR-060). 기본 브랜드와 같은 값, 누름 영역 24 이상"
   },
+  "font-family-base": {
+    "$value": "'IBM Plex Sans KR', -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', '맑은 고딕', Helvetica, Arial, sans-serif",
+    "$extensions": {
+      "eds": {
+        "before": [
+          "/* --- 글꼴 (DS-ADR-047): IBM Plex Sans KR(OFL). 등록은 css/fonts/ibm-plex-sans-kr.css, 이 브랜드 CSS 옆에 링크 ---------- */"
+        ]
+      }
+    }
+  },
   "art-solid": {
     "$value": "block",
     "$extensions": {

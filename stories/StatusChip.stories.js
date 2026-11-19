@@ -63,3 +63,4 @@ const OPT_TONES = [['success', '승인'], ['warning', '결재 대기'], ['danger
 const optChips = (cls) => '<div class="sb-row">' + OPT_TONES.map(([t, l]) => '<span class="status-chip status-chip--' + t + ' ' + cls + '">' + l + '</span>').join('') + '</div>';
 export const 시안_점_글자 = { parameters: optSrc(optChips('status-chip--dot')), render: () => optChips('status-chip--dot') };
 export const 시안_진한_채움 = { parameters: optSrc(optChips('status-chip--bold')), render: () => optChips('status-chip--bold') };
+export const 테두리 = { parameters: optSrc(optChips('status-chip--outlined')), render: () => optChips('status-chip--outlined') };

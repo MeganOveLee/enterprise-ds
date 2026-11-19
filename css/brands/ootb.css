@@ -63,6 +63,9 @@
   --size-btn: 28px;
   --size-btn-sm: 26px;                        /* 28 → 26 (DS-ADR-060). 기본 브랜드와 같은 값, 누름 영역 24 이상 */
 
+  /* --- 글꼴 (DS-ADR-047): IBM Plex Sans KR(OFL). 등록은 css/fonts/ibm-plex-sans-kr.css, 이 브랜드 CSS 옆에 링크 ---------- */
+  --font-family-base: 'IBM Plex Sans KR', -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', '맑은 고딕', Helvetica, Arial, sans-serif;
+
   /* --- 그림 자산 (DS-ADR-037): 하나만 block -------------------------------- */
   --art-solid: block;
   --art-line: none;                           /* 라인 → 솔리드 (DS-ADR-061). 원래 화면의 노란 채움 폴더와 같은 모양. 일반 UI 아이콘은 그대로 선 */
