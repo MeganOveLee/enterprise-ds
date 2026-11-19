@@ -1233,7 +1233,7 @@
      * .product 있는 팝업은 .product(overrides 1239)가 먼저 스크롤하므로 여기엔 스크롤바가 안 생김.
      * .product 없는 팝업(selectRole 등)만 이 규칙이 받아준다: 화면별 예외 불필요 */
 /* .pop 이 스크롤 컨테이너가 됐으므로 타이틀바는 sticky 로 고정. 배경은 overrides 408 이 이미 흰색 지정 */
-.pop > .top { position: sticky; top: 0; z-index: 20; }
+.pop > .top { position: sticky; top: 0; z-index: var(--z-index-sticky); }
 .pop .top {
     display: flex;
     align-items: center;
@@ -2531,7 +2531,7 @@ body.dark-mode .select {   /* = --color-icon-muted 다크 값(neutral-300). 구:
  * ===================================================================== */
 .datepicker {
     position: absolute;
-    z-index: 1000;
+    z-index: var(--z-index-popover);
     width: max(250px, 19em);   /* 250 = Figma Calendar. 글자를 키운 브랜드(Mobility)는 요일 일곱 칸이 넘치지 않게 글자 크기를 따라 넓어짐 */
     background: var(--color-bg-base);
     border-radius: var(--radius-popover);
@@ -2722,7 +2722,7 @@ body.dark-mode .select {   /* = --color-icon-muted 다크 값(neutral-300). 구:
     border: 1px solid var(--color-border-base);
     border-radius: var(--radius-popover);
     box-shadow: var(--shadow-popover);   /* 구 0 8px 16px 12% */
-    z-index: 1001;
+    z-index: calc(var(--z-index-popover) + 1);
     overflow-y: auto;
     padding: 8px 0;
     display: none;
@@ -3340,7 +3340,7 @@ body.dark-mode .progress-bar {
     box-shadow: var(--shadow-popover);   /* 구 0 2px 8px 18% */
     border-radius: var(--radius-popover);
     width: max-content;
-    z-index: 100;
+    z-index: var(--z-index-menu);
 }
 .gnb .dropdown-content.show { display: flex; }
 /* ═══ GNB 헤더 잔여 이관 (styles.css 437~554 header-actions 블록): 최종 리허설서 발견: menu-container 레이아웃 + 설정드롭다운(.dropdown-content-top) 기본 숨김·절대위치(없으면 컷 시 in-flow로 펼쳐져 menu-container 482 팽창) + 로고높이 ═══ */
@@ -3709,7 +3709,7 @@ body.dark-mode .dropdown-content-top:has(.logoutBtn) .section-title > #theme-tog
     position: absolute;
     top: calc(var(--size-input) + 4px);
     left: 0;
-    z-index: 100;
+    z-index: var(--z-index-menu);
     display: none;
     flex-direction: column;
     gap: 0;   /* 옵션 행이 테두리에 붙음: Figma Option group padding 0 · 행 간격 0. 구: 여백 4 · 간격 2 */
@@ -3836,7 +3836,7 @@ body.dark-mode .checkSelect .search-text {   /* = --color-icon-muted 다크 값.
     position: absolute;
     top: calc(100% + 4px);
     left: 0;
-    z-index: 1000;
+    z-index: var(--z-index-popover);
     display: none;
     flex-direction: column;
     gap: 0;
@@ -4304,7 +4304,7 @@ body.dark-mode .empty-illo__badge  { fill: var(--color-bg-muted); }
     position: fixed;
     right: var(--spacing-24);
     bottom: var(--spacing-24);
-    z-index: 1100;
+    z-index: var(--z-index-toast);
     display: flex;
     flex-direction: column;
     align-items: flex-end;
@@ -4365,7 +4365,7 @@ body.dark-mode .empty-illo__badge  { fill: var(--color-bg-muted); }
 .has-tooltip { position: relative; display: inline-flex; }
 .tooltip {
     position: absolute;
-    z-index: 1200;
+    z-index: var(--z-index-tooltip);
     left: 50%;
     bottom: calc(100% + 8px);
     transform: translateX(-50%);
@@ -4500,7 +4500,7 @@ body.dark-mode .empty-illo__badge  { fill: var(--color-bg-muted); }
 .modal {
     position: fixed;
     inset: 0;
-    z-index: 900;   /* GNB 메뉴(100) · 창 제목 줄(20) 위, 창 안에서 여는 달력 · 선택 목록(1000) · 토스트(1100) · 툴팁(1200) 아래 */
+    z-index: var(--z-index-overlay);   /* 메뉴 · 고정 머리 위, 창 안에서 여는 팝오버 · 토스트 · 툴팁 아래 */
     display: flex;
     padding: var(--spacing-16);
     box-sizing: border-box;
@@ -4663,7 +4663,7 @@ body.dark-mode .empty-illo__badge  { fill: var(--color-bg-muted); }
 .reorder-handle:focus-visible { outline: 2px solid var(--color-border-focus); outline-offset: 1px; }
 [data-ds-reorder] > .is-dragging { position: relative; z-index: 2; outline: 1px solid var(--color-border-brand); box-shadow: var(--shadow-popover); cursor: grabbing; }
 [data-ds-reorder] > .is-dragging > td { background: var(--color-bg-base); }
-.reorder-drop { position: fixed; z-index: 1100; height: 2px; background: var(--color-border-brand); border-radius: 1px; pointer-events: none; }
+.reorder-drop { position: fixed; z-index: var(--z-index-toast); height: 2px; background: var(--color-border-brand); border-radius: 1px; pointer-events: none; }
 .reorder-drop::before { content: ""; position: absolute; left: -4px; top: -3px; width: 8px; height: 8px; box-sizing: border-box; border: 2px solid var(--color-border-brand); border-radius: 50%; background: var(--color-bg-base); }
 
 /* 11 되돌리기 시간 막대 .toast--undo: 삭제 뒤 확인 창 대신 [되돌리기]가 든 토스트를 --duration-undo 동안 두고, 아래 막대로 남은 시간을 보임.
@@ -5446,7 +5446,7 @@ body.dark-mode .empty-illo__badge  { fill: var(--color-bg-muted); }
     top: 0;
     right: 0;
     bottom: 0;
-    z-index: 900;
+    z-index: var(--z-index-overlay);
     display: flex;
     flex-direction: column;
     width: min(560px, 100%);
@@ -5669,7 +5669,7 @@ body.dark-mode .status-chip--bold:is(.status-chip--success, .status-chip--warnin
  * ============================================================ */
 .ui-menu { position: relative; display: inline-flex; }
 .ui-menu__list {
-    position: absolute; top: calc(100% + 4px); left: 0; z-index: 1000;
+    position: absolute; top: calc(100% + 4px); left: 0; z-index: var(--z-index-popover);
     display: flex; flex-direction: column;
     min-width: 160px; max-height: 320px; overflow-y: auto;
     padding: var(--spacing-4) 0;
