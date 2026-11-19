@@ -5470,7 +5470,7 @@ body.dark-mode .empty-illo__badge  { fill: var(--color-bg-muted); }
 
 /* ============================================================
  * Data Display · Feedback 시안: 기존 컴포넌트의 변형 클래스 (묶음 3)
- *   Card B .card--filled · C .card--elevated / Table B .grid-table--lined · C .grid-table--relaxed / Status Chip B .status-chip--dot · C .status-chip--bold
+ *   Card B .card--filled · C .card--elevated / Table B .grid-table--lined · C .grid-table--relaxed · 머리와 정렬 2 .grid-table--subtle / Status Chip B .status-chip--dot · C .status-chip--bold
  *   Alert B .alert--stripe · C .alert--banner / Toast B .toast-region--bottom · C .toast-region--top / Tooltip B .tooltip--light · C .tooltip--rich
  *   Progress C .progress-ring / Skeleton B .skeleton--pulse · C .skeleton--static. 새 토큰 없음
  * ============================================================ */
@@ -5486,6 +5486,12 @@ body.dark-mode .empty-illo__badge  { fill: var(--color-bg-muted); }
 .grid-table--lined td { border-right-color: transparent; }
 /* Table C: 넓게: 줄 높이 + 8. 줄 수가 적고 오래 읽는 표. 촘촘함은 브랜드 줄 높이 토큰이 맡음(DS-ADR-047) */
 .grid-table--relaxed td { height: calc(var(--size-grid-row) + var(--spacing-8)); }
+/* Table 머리와 정렬 2: 옅은 머리 · 글 왼쪽 정렬. 머리가 내용보다 앞서 보이지 않게 옅은 바탕 + 본문 글자색, 칸 사이 세로선 없이 글의 첫 글자를 한 줄로 맞춤
+ *   체크박스 칸만 가운데. 수량 · 금액처럼 자릿수를 견주는 칸은 .is-right. 줄 시안(A 얼룩 줄 · B 줄 선 · C 넓게)과 함께 쓸 수 있음 */
+.grid-table--subtle th { background: var(--color-bg-subtle); color: var(--color-text-base); }
+.grid-table--subtle :is(th, td) { text-align: left; border-right: 0; }
+.grid-table--subtle :is(th, td):has(> .checkbox) { padding: 0; text-align: center; }
+.grid-table .is-right { text-align: right; }
 
 /* Status Chip B: 점 + 글자: 바탕 없이. 표 칸처럼 칩이 줄마다 반복되는 촘촘한 곳 */
 .status-chip.status-chip--dot { --chip-bg: transparent; padding-left: 0; }
