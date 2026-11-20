@@ -5470,7 +5470,7 @@ body.dark-mode .empty-illo__badge  { fill: var(--color-bg-muted); }
 
 /* ============================================================
  * Data Display · Feedback 시안: 기존 컴포넌트의 변형 클래스 (묶음 3)
- *   Card B .card--filled · C .card--elevated / Table B .grid-table--lined · C .grid-table--relaxed · 머리와 정렬 2 .grid-table--subtle · 줄 상태 선 .status-row--* / Search Form 위계 2 .form-grid--neutral-label / Status Chip B .status-chip--dot · C .status-chip--bold
+ *   Card B .card--filled · C .card--elevated / Table B .grid-table--lined · C .grid-table--relaxed · 머리와 정렬 2 .grid-table--subtle · 줄 상태 선 .status-row--* / Search Form 위계 2 .form-grid--focus-label / Status Chip B .status-chip--dot · C .status-chip--bold
  *   Alert B .alert--stripe · C .alert--banner / Toast B .toast-region--bottom · C .toast-region--top / Tooltip B .tooltip--light · C .tooltip--rich
  *   Progress C .progress-ring / Skeleton B .skeleton--pulse · C .skeleton--static. 새 토큰 없음
  * ============================================================ */
@@ -5502,12 +5502,13 @@ body.dark-mode .empty-illo__badge  { fill: var(--color-bg-muted); }
 .status-row--warning { --status-row-line: var(--color-border-warning); }
 .status-row--danger { --status-row-line: var(--color-border-danger); }
 
-/* Search Form 라벨과 버튼 위계 2: 중립 라벨 · 채운 버튼 하나. 라벨을 보조 글자색 · 중간 굵기로 낮춰 입력한 값과 [검색]이 앞서 보이게
- *   <div class="form-grid-2 form-grid--6 form-grid--neutral-label">…</div>
- *   결과 줄: 묶음 동작은 윤곽 버튼(.btn--primary.btn--outlined), Excel 은 보조 윤곽 버튼 + 초록 아이콘(.btn__icon--excel) */
-.form-grid-2.form-grid--neutral-label .ff-field > .search-label { color: var(--color-text-muted); font-weight: var(--font-weight-medium); }
-.btn .btn__icon--excel { color: var(--color-icon-success); }
-.btn:is(:disabled, [aria-disabled="true"]) .btn__icon--excel { color: currentColor; }
+/* Search Form 라벨과 버튼 위계 2: 라벨은 평소 보조 글자색 · 중간 굵기, 지금 고르는 칸의 라벨만 브랜드색 · 굵게. 입력한 값과 [검색]이 라벨보다 앞서 보임
+ *   <div class="form-grid-2 form-grid--6 form-grid--focus-label">…</div>
+ *   결과 쪽: 표 패널 도구 줄(.table-panel__toolbar)에 걸린 조건을 지울 수 있는 칩(ul.checkSelect__chips)으로 보이고 오른쪽 끝(.table-panel__actions)에 [필터 초기화] */
+.form-grid-2.form-grid--focus-label .ff-field > .search-label { color: var(--color-text-muted); font-weight: var(--font-weight-medium); }
+.form-grid-2.form-grid--focus-label .ff-field:focus-within > .search-label { color: var(--color-text-label); font-weight: var(--font-weight-semibold); }
+.table-panel__toolbar > .checkSelect__chips { margin: 0; }   /* 도구 줄 안의 조건 칩: 칸 아래에 둘 때의 위 여백 없이 */
+.product + .table-panel { margin-top: var(--spacing-8); }   /* 검색 조건 영역 바로 아래의 결과 표 패널: 결과 머리 줄(.seach_arm)과 같은 간격 */
 
 /* Status Chip B: 점 + 글자: 바탕 없이. 표 칸처럼 칩이 줄마다 반복되는 촘촘한 곳 */
 .status-chip.status-chip--dot { --chip-bg: transparent; padding-left: 0; }

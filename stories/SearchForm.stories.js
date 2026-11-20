@@ -78,3 +78,24 @@ const OPT_PANEL = '<div class="filter-layout"><aside class="filter-panel" aria-l
   OPT_ROWS.map(([n, t, s]) => '<tr><td><a href="#" class="grid-custom-rows-link">' + n + '</a></td><td class="is-left">' + t + '</td><td>' + s + '</td></tr>').join('') + '</tbody></table></div></div></div></div>';
 export const 시안_필터_칩 = { parameters: optSrc(OPT_CHIPS), render: () => '<div class="sb-field--wide">' + OPT_CHIPS + '</div>' };
 export const 시안_왼쪽_필터_패널 = { parameters: optSrc(OPT_PANEL), render: () => '<div class="sb-field--table">' + OPT_PANEL + '</div>' };
+
+// ── 라벨과 버튼 위계: 1 브랜드색 라벨(이전 버전 검색 화면과 같은 모양) · 2 지금 고르는 칸만 브랜드색 라벨 + 걸린 조건 칩(추천). 검색 조건 + 결과 머리를 함께 ──
+const LIST = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/></svg>';
+const XLS = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9l4 6M11 9l-4 6M14.5 9H18M14.5 12H18M14.5 15H18"/></svg>';
+const X = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+const RANK_ROWS = [['DOC-2610-0012', '브레이크 캘리퍼 조립 사양서', '검토 중', '김도윤', '2026-09-24'], ['DOC-2610-0007', '캘리퍼 피스톤 씰 재질 검토', '검토 중', '김도윤', '2026-09-11'], ['DOC-2610-0003', '캘리퍼 브래킷 체결 토크 기준', '검토 중', '김도윤', '2026-09-02']];
+const rankTable = (cls) => '<table class="grid-table' + cls + '" aria-label="검색 결과"><thead><tr><th scope="col">문서 번호</th><th scope="col">문서 명</th><th scope="col">작업현황</th><th scope="col">등록자</th><th scope="col">등록일</th></tr></thead><tbody>' +
+  RANK_ROWS.map(([n, t, st, w, d]) => '<tr><td><a href="#" class="grid-custom-rows-link">' + n + '</a></td><td class="is-left">' + t + '</td><td><span class="status-chip status-chip--warning">' + st + '</span></td><td>' + w + '</td><td>' + d + '</td></tr>').join('') + '</tbody></table>';
+const APPLIED = ['문서 번호: DOC-2610', '문서 명: 캘리퍼', '작업현황: 검토 중', '등록일: 2026-09-01 ~ 2026-09-30', '등록자: 김도윤'];
+const appliedChip = (t) => '<li class="checkSelect__chip"><span>' + t + '</span><button type="button" class="checkSelect__chip-remove" aria-label="' + t + ' 조건 빼기">' + X + '</button></li>';
+const rankBefore = () => searchForm({ all: true, v: true }) +
+  '<div class="seach_arm"><div class="leftbt">' + LIST + '<h4>검색 결과 (' + RANK_ROWS.length + ')</h4></div><div class="rightbt"><button type="button" class="btn btn--primary btn--filled">선택 일괄 결재</button>' +
+  '<button type="button" class="btn btn--excel">' + XLS + 'Excel</button><button type="button" class="btn btn--secondary btn--transparent">' + ico(RESET) + '필터 초기화</button></div></div>' +
+  '<div class="table_list"><div class="list">' + rankTable('') + '</div></div>';
+const rankAfter = () => searchForm({ all: true, v: true }).replace('form-grid-2 form-grid--6', 'form-grid-2 form-grid--6 form-grid--focus-label') +
+  '<section class="table-panel"><header class="table-panel__head"><h3 class="table-panel__title">검색 결과 ' + RANK_ROWS.length + '</h3><div class="table-panel__actions"><button type="button" class="btn btn--excel">' + XLS + 'Excel</button></div></header>' +
+  '<div class="table-panel__toolbar"><ul class="checkSelect__chips" aria-label="걸린 조건">' + APPLIED.map(appliedChip).join('') + '</ul>' +
+  '<div class="table-panel__actions"><button type="button" class="btn btn--secondary btn--transparent">' + ico(RESET) + '필터 초기화</button></div></div>' + rankTable(' grid-table--subtle') + '</section>';
+export const 위계_브랜드_라벨 = { parameters: optSrc(rankBefore()), render: () => stage(rankBefore()) };
+export const 위계_고르는_칸_라벨 = { parameters: optSrc(rankAfter()), render: () => stage(rankAfter()) };
+
