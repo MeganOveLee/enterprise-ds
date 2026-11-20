@@ -14,6 +14,7 @@ import * as S from './SearchForm.stories.js';
 </Section>
 <Section title="라벨과 버튼 위계" en="Hierarchy">
 <Card of={S.위계_고르는_칸_라벨} title="2 · 고르는 칸만 브랜드색 라벨" tag="추천" desc="새로 만드는 검색 화면에 사용합니다. 라벨은 평소 흐린 글자이고, 칸을 누르면 그 칸의 라벨만 브랜드색이 됩니다. 걸린 조건은 결과 위에 칩으로 보이고 하나씩 뺄 수 있습니다." basis="지금 고르는 조건의 이름만 브랜드색으로 두는 방식은 Lusha의 필터, 결과 위에 걸린 조건을 모아 보이고 오른쪽에 초기화를 두는 방식은 Dealfront에서 가져왔습니다. 채운 버튼은 [검색] 하나입니다(SAP Fiori Filter Bar의 [Go])." />
+<Card of={S.위계_아래_선_칸} title="3 · 아래 선 입력칸과 아이콘 묶음" desc="2보다 조건 칸이 많아 상자 테두리가 겹쳐 보이는 검색 화면에 사용합니다. 입력칸은 옅은 바탕에 아래 선만 두고, 결과 표의 동작은 아이콘 묶음으로 모아 세로선으로 나눕니다." basis="아래 선으로 칸을 보이는 입력칸과, 표 위 동작을 성격별로 세로선으로 나눈 아이콘 묶음은 SAP Fiori Filter Bar에서 가져왔습니다. 입력칸은 Form › Input의 B 채운 칸과 같습니다." />
 <Card of={S.위계_브랜드_라벨} title="1 · 브랜드색 라벨" desc="이전 버전 화면과 모양을 맞춰야 하는 검색 화면에 사용합니다." basis="이전 버전 검색 라벨 값입니다(브랜드색 · 굵은 글자). 결과 머리 줄에 [선택 일괄 결재] · Excel · [필터 초기화]를 나란히 둡니다." />
 </Section>
 <Section title="예시" en="Examples" desc={<>한 행에 조건을 최대 6칸 둡니다. 조건이 두 행을 넘으면 첫 행만 보이고 나머지는 상세 검색으로 접습니다. <a className="ds-link" href="https://app.notion.com/p/3ffa8196682d81f7b73de9981ab21fe3" target="_blank" rel="noreferrer">DS-ADR-044 ↗</a></>}>

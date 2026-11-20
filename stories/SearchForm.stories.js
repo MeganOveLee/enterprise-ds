@@ -99,3 +99,12 @@ const rankAfter = () => searchForm({ all: true, v: true }).replace('form-grid-2 
 export const 위계_브랜드_라벨 = { parameters: optSrc(rankBefore()), render: () => stage(rankBefore()) };
 export const 위계_고르는_칸_라벨 = { parameters: optSrc(rankAfter()), render: () => stage(rankAfter()) };
 
+// 3 = 2와 같은 구성에 입력칸을 채운 칸(옅은 바탕 + 아래 선)으로, 결과 표 패널의 동작은 아이콘 묶음 + 세로 구분선으로
+const REFRESH = '<path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/>';
+const COLUMNS = '<rect x="4" y="5" width="16" height="14" rx="2"/><path d="M10 5v14M15 5v14"/>';
+const iconBtn = (label, d) => '<button type="button" class="btn btn--secondary btn--transparent btn--icon" aria-label="' + label + '">' + ico(d) + '</button>';
+const rankUnderline = () => rankAfter().replaceAll('class="input"', 'class="input input--filled"').replaceAll('class="select"', 'class="select select--filled"').replaceAll('class="ui-datepicker"', 'class="ui-datepicker ui-datepicker--filled"')
+  .replace('<div class="table-panel__actions"><button type="button" class="btn btn--excel">' + XLS + 'Excel</button></div>',
+    '<div class="table-panel__actions">' + iconBtn('새로 고침', REFRESH) + iconBtn('열 설정', COLUMNS) + '<span class="table-panel__sep"></span><button type="button" class="btn btn--excel">' + XLS + 'Excel</button></div>');
+export const 위계_아래_선_칸 = { parameters: optSrc(rankUnderline()), render: () => stage(rankUnderline()) };
+

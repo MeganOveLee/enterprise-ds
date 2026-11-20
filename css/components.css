@@ -5509,6 +5509,19 @@ body.dark-mode .empty-illo__badge  { fill: var(--color-bg-muted); }
 .form-grid-2.form-grid--focus-label .ff-field:focus-within > .search-label { color: var(--color-text-label); font-weight: var(--font-weight-semibold); }
 .table-panel__toolbar > .checkSelect__chips { margin: 0; }   /* 도구 줄 안의 조건 칩: 칸 아래에 둘 때의 위 여백 없이 */
 .product + .table-panel { margin-top: var(--spacing-8); }   /* 검색 조건 영역 바로 아래의 결과 표 패널: 결과 머리 줄(.seach_arm)과 같은 간격 */
+/* 채운 칸의 날짜 칸: Input B(.input--filled)와 같은 옅은 바탕 + 아래 선. 달력 단추는 바탕 · 구분선 없이 아이콘만
+ *   <div class="ui-datepicker ui-datepicker--filled">…</div> */
+.ui-datepicker.ui-datepicker--filled { background-color: var(--color-bg-subtle); border-color: transparent transparent var(--color-border-input); border-radius: var(--radius-input) var(--radius-input) 0 0; }
+.ui-datepicker.ui-datepicker--filled:hover { border-bottom-color: var(--color-border-input-hover); }
+.ui-datepicker.ui-datepicker--filled:focus-within { border-color: var(--color-border-focus); }
+.ui-datepicker--filled .ui-datepicker__icon { background: transparent; border-right-color: transparent; }
+/* 채운 칸의 선택 목록: js/select.js 가 바꾼 목록 칸(.ui-select__trigger)도 원래 select 의 .select--filled 를 따라감 */
+.ui-select:has(> .select--filled) .ui-select__trigger { background-color: var(--color-bg-subtle); border-color: transparent transparent var(--color-border-input); border-radius: var(--radius-input) var(--radius-input) 0 0; }
+.ui-select:has(> .select--filled) .ui-select__trigger:hover { border-bottom-color: var(--color-border-input-hover); }
+.ui-select:has(> .select--filled) .ui-select__trigger:is(:focus, .is-open) { border-color: var(--color-border-focus); }
+/* 표 패널 동작 묶음의 세로 구분선: 성격이 다른 동작 묶음 사이에 둠(보기 설정 | 내보내기)
+ *   <div class="table-panel__actions"><button class="btn btn--icon" aria-label="새로 고침">…</button><span class="table-panel__sep"></span><button …>Excel</button></div> */
+.table-panel__sep { align-self: stretch; width: var(--border-width-sm); margin: var(--spacing-4) var(--spacing-4); background: var(--color-border-strong); }
 
 /* Status Chip B: 점 + 글자: 바탕 없이. 표 칸처럼 칩이 줄마다 반복되는 촘촘한 곳 */
 .status-chip.status-chip--dot { --chip-bg: transparent; padding-left: 0; }
