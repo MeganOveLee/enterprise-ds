@@ -5880,6 +5880,27 @@ body.dark-mode .status-chip--bold:is(.status-chip--success, .status-chip--warnin
 .table-panel__head.is-selected .btn:hover { background: color-mix(in srgb, currentColor 16%, transparent); }
 .table-panel__head.is-selected .btn:active { background: color-mix(in srgb, currentColor 28%, transparent); }
 .table-panel__head.is-selected .btn:focus-visible { outline: 2px solid currentColor; outline-offset: -2px; box-shadow: none; }
+/* 선택 동작 막대 .action-bar (TD-204, DS-ADR-077): Table 「선택 동작」 2. 줄을 고르면 표 패널 아래쪽 가운데에 떠서 고른 개수와 묶음 동작을 보임
+ *   패널 머리는 바뀌지 않고, 막대가 표 위에 떠서 줄을 밀지 않음. 고른 줄이 없으면 hidden
+ *   <section class="table-panel"> … <div class="action-bar" role="toolbar" aria-label="고른 줄 동작" hidden>
+ *     <span class="action-bar__count" aria-live="polite"><b>2</b>개 선택됨</span><span class="action-bar__divider"></span>
+ *     <button type="button" class="btn btn--secondary btn--transparent btn--on-inverse"><svg …/>상태 변경</button> …
+ *     <span class="action-bar__divider"></span><button type="button" class="btn btn--secondary btn--transparent btn--icon btn--on-inverse" aria-label="선택 취소"><svg …/></button></div></section>
+ *   표가 화면보다 길면 .action-bar--fixed 로 화면 아래에 붙임 */
+.table-panel:has(> .action-bar) { position: relative; }
+.action-bar {
+    position: absolute; left: 50%; bottom: var(--spacing-16); z-index: var(--z-index-sticky); transform: translateX(-50%);
+    display: inline-flex; align-items: center; gap: var(--spacing-4);
+    padding: var(--spacing-4) var(--spacing-8);
+    background: var(--color-bg-inverse); color: var(--color-text-inverse);
+    border-radius: var(--radius-panel); box-shadow: var(--shadow-popover);
+    font-size: var(--body-sm); white-space: nowrap;
+}
+.action-bar[hidden] { display: none; }
+.action-bar--fixed { position: fixed; bottom: var(--spacing-24); }
+.action-bar__count { display: inline-flex; align-items: center; gap: var(--spacing-4); padding: 0 var(--spacing-4); }
+.action-bar__count b { min-width: var(--spacing-24); padding: 0 var(--spacing-4); text-align: center; font-weight: var(--font-weight-semibold); background: color-mix(in srgb, currentColor 16%, transparent); border-radius: var(--radius-sm); }
+.action-bar__divider { width: var(--border-width-sm); height: var(--spacing-16); margin: 0 var(--spacing-4); background: color-mix(in srgb, currentColor 32%, transparent); }
 
 /* 바로 가기 줄: 같은 화면 안의 패널로 내려가는 링크. 순서가 없어 화살표를 두지 않고 세로선으로 나눔
  *   <nav class="jump-links" aria-label="바로 가기"><a href="#notice" aria-current="location">공지사항</a><a href="#my-work">내 작업</a> …</nav> */

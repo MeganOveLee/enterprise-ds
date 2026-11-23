@@ -192,6 +192,39 @@ const subtleStory = (picked) => ({ parameters: optSrc(subtle(picked)), render: (
 export const 머리_옅게 = subtleStory([]);
 export const 머리_옅게_줄_선택 = subtleStory([1, 2]);
 
+// 선택 동작 2 = 아래에 뜨는 동작 막대(.action-bar, DS-ADR-077). 패널 머리는 바뀌지 않고, 막대가 표 위에 떠서 줄을 밀지 않음
+const abIcon = (d) => '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + d + '</svg>';
+const AB = {
+  sign: abIcon('<path d="M4 20h4L19 9l-4-4L4 16z"/>'),
+  user: abIcon('<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>'),
+  del: abIcon('<path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/>'),
+  x: abIcon('<path d="M6 6l12 12M18 6L6 18"/>'),
+};
+const abBtn = (ic, t) => '<button type="button" class="btn btn--secondary btn--transparent btn--on-inverse">' + AB[ic] + t + '</button>';
+const actionBar = (n) => '<div class="action-bar" role="toolbar" aria-label="고른 줄 동작"' + (n ? '' : ' hidden') + '>' +
+  '<span class="action-bar__count" aria-live="polite"><b>' + n + '</b>개 선택됨</span><span class="action-bar__divider"></span>' +
+  abBtn('sign', '선택 일괄 결재') + abBtn('user', '담당자 변경') + abBtn('del', '삭제') +
+  '<span class="action-bar__divider"></span><button type="button" class="btn btn--secondary btn--transparent btn--icon btn--on-inverse" aria-label="선택 취소" data-clear>' + AB.x + '</button></div>';
+const barPanel = (picked) => '<section class="table-panel">' +
+  '<header class="table-panel__head"><h3 class="table-panel__title">검색 결과 ' + ROWS.length + '</h3><div class="table-panel__actions"><button type="button" class="btn btn--excel">' + XLS + 'Excel</button></div></header>' +
+  table(ROWS.map((r, i) => srow(r, i, picked.includes(i))).join('')).replace('class="grid-table"', 'class="grid-table grid-table--subtle"') +
+  '<footer class="table-panel__footer">검색 결과 ' + ROWS.length + '건</footer>' + actionBar(picked.length) + '</section>';
+const wireBar = (el) => {
+  const bar = el.querySelector('.action-bar'), num = bar.querySelector('b'), all = el.querySelector('thead input[type="checkbox"]');
+  const boxes = [...el.querySelectorAll('tbody input[type="checkbox"]')];
+  const sync = () => {
+    const n = boxes.filter((b) => b.checked).length;
+    boxes.forEach((b) => { const tr = b.closest('tr'); tr.classList.toggle('is-selected', b.checked); tr.setAttribute('aria-selected', String(b.checked)); });
+    all.checked = n === boxes.length; all.indeterminate = n > 0 && n < boxes.length;
+    bar.hidden = !n; num.textContent = n;
+  };
+  el.addEventListener('change', (e) => { if (e.target === all) boxes.forEach((b) => { b.checked = all.checked; }); sync(); });
+  bar.querySelector('[data-clear]').addEventListener('click', () => { boxes.forEach((b) => { b.checked = false; }); sync(); });
+  sync();
+  return el;
+};
+export const 선택_동작_막대 = { parameters: optSrc(barPanel([1, 2])), render: () => { const el = document.createElement('div'); el.className = 'sb-field--table'; el.innerHTML = barPanel([1, 2]); return wireBar(el); } };
+
 // ── 표 패널: 머리 · 도구 줄 · 표 · 바닥을 한 상자로 (DS-ADR-058) ──
 const PANEL = '<section class="table-panel"><header class="table-panel__head"><h3 class="table-panel__title">내 작업</h3></header>' +
   '<div class="table-panel__toolbar"><button type="button" class="btn btn--secondary btn--transparent">작업</button></div>' +
