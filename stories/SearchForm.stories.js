@@ -149,3 +149,12 @@ const barOnly = (open) => '<div class="search-bar"><input class="input search-ba
   fsel('작업현황', ['작업 중', '검토 중', '승인', '반려', '폐기']) + fsel('등록자', ['김도윤', '이서연', '박지호', '최민준', '정하은'], [], true) + filterPop(open) +
   '<div class="search-bar__actions"><button type="button" class="btn btn--primary btn--filled">' + ico(SEARCH) + '검색</button><button type="button" class="btn btn--secondary btn--transparent">' + ico(RESET) + '초기화</button></div></div>';
 export const 필터_패널_펼침 = { parameters: optSrc(barOnly(false)), render: () => stageBar(barOnly(true), 460) };
+// 필터 더 보기: [필터 더 보기] 체크 목록에서 조건 이름을 고르면 그 조건 단추가 바에 나타남(js/filter-panel.js). 처음 = 작업현황 · 등록자 + 문서 분류(골라 둠)
+const fsel2 = (name, items, picked = [], search = false, on = true) => fsel(name, items, picked, search).replace('<select ', '<select data-filter-field="' + name + '" ');
+const MORE = [['문서 분류', ['설계 문서', '시험 문서', '회의록', '검토 보고서', '도면'], ['설계 문서'], true], ['수정자', ['김도윤', '이서연', '박지호', '최민준', '정하은'], [], true], ['프로젝트', ['PJT-2601 전동 캘리퍼', 'PJT-2604 경량 하우징', 'PJT-2607 커넥터 표준화'], [], true], ['담당 부서', ['설계1팀', '설계2팀', '시험팀', '품질팀', '생산기술팀'], [], false], ['버전', ['최신 버전', '모든 버전'], [], false]];
+const barMore = () => '<div class="search-bar"><input class="input search-bar__query" type="search" aria-label="문서 검색" placeholder="문서 번호 또는 문서 명">' +
+  fsel('작업현황', ['작업 중', '검토 중', '승인', '반려', '폐기'], ['검토 중']) + fsel('등록자', ['김도윤', '이서연', '박지호', '최민준', '정하은'], [], true) +
+  MORE.map(([n, items, picked, s]) => fsel2(n, items, picked, s)).join('') +
+  '<select class="checkSelect" multiple data-display="add" data-searchBox="true" data-placeholder="필터 검색" placeholder="필터 더 보기" aria-label="필터 더 보기">' + MORE.map(([n], i) => '<option value="' + n + '"' + (i === 0 ? ' selected' : '') + '>' + n + '</option>').join('') + '</select>' +
+  '<div class="search-bar__actions"><button type="button" class="btn btn--primary btn--filled">' + ico(SEARCH) + '검색</button><button type="button" class="btn btn--secondary btn--transparent">' + ico(RESET) + '초기화</button></div></div>';
+export const 필터_더_보기 = { parameters: optSrc(barMore()), render: () => stageBar(barMore(), 320) };

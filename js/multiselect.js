@@ -6,6 +6,7 @@
  *   불러오기만 하면 화면의 select.checkSelect[multiple] 이 모두 바뀜(이전 버전과 같은 방식)
  *   목록 위 검색 칸 = data-searchBox="true"(옵션 안에서 거르기), 아무것도 고르지 않았을 때 글자 = placeholder(없으면 「전체」)
  *   보이는 모양 = data-display: 없음 = 칸(시안 A) · "chips" = 칸 아래 칩(시안 B) · "filter" = 라벨과 값이 한 단추(시안 C, 검색 조건 한 줄 바)
+ *                 · "add" = 필터 더 보기 단추(옵션 = 조건 이름, 고르면 바에 그 조건 단추가 나타남: js/filter-panel.js)
  *   나중에 그린 select 는 window.buildMultiSelect(select) · window.enhanceMultiSelects(영역)
  *   값 · 이름 · 폼 제출은 원래 select 가 그대로 맡는다(숨겨서 둠, option.selected 를 맞춤). change 는 목록을 닫을 때 값이 바뀌었으면 한 번
  *   포함하지 않는 것: 서버에 물어 옵션을 채우는 사람 검색(이전 버전 data-url): 서버 주소 · 응답 형식이 시스템마다 달라 각 시스템이 맡음
@@ -38,9 +39,10 @@
         var withSearch = sel.getAttribute('data-searchBox') === 'true' || sel.getAttribute('data-searchbox') === 'true';
         var asChips = sel.getAttribute('data-display') === 'chips';   // 시안 B: 고른 값을 칸 아래 칩으로
         var asFilter = sel.getAttribute('data-display') === 'filter';   // 시안 C: 라벨과 값이 한 단추(검색 조건 한 줄 바)
+        var asAdd = sel.getAttribute('data-display') === 'add';   // 필터 더 보기: 단추 글자는 늘 같음, 고른 조건은 바에 단추로 나타남(js/filter-panel.js)
 
         var wrap = document.createElement('div');
-        wrap.className = 'checkSelect' + (asFilter ? ' checkSelect--filter' : '');
+        wrap.className = 'checkSelect' + (asFilter ? ' checkSelect--filter' : '') + (asAdd ? ' checkSelect--filter checkSelect--add' : '');
         if (sel.getAttribute('data-width')) wrap.style.width = sel.getAttribute('data-width');
 
         var box = document.createElement('div');
@@ -119,6 +121,11 @@
         function render() {
             if (asChips) { renderChips(); return; }
             var p = picked();
+            if (asAdd) {   // 단추 글자 = placeholder(없으면 「필터 더 보기」), 고른 수는 화면 읽기 이름에만
+                box.innerHTML = '<span class="selected-text__label">' + esc(sel.getAttribute('placeholder') || '필터 더 보기') + '</span>';
+                box.setAttribute('aria-label', (sel.getAttribute('placeholder') || '필터 더 보기') + (p.length ? ': ' + p.join(', ') : ''));
+                return;
+            }
             if (asFilter) {   // 단추 글자 = 라벨 + 값(없으면 「전체」) + 둘 이상이면 「외 N」. 값을 고르면 .is-applied
                 box.innerHTML = '<span class="selected-text__label">' + esc(name) + '</span><span class="selected-text__value">' + esc(p.length ? p[0] : empty) + '</span>' +
                     (p.length > 1 ? '<span class="selected-text__more">외 ' + (p.length - 1) + '</span>' : '');

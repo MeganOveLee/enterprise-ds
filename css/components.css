@@ -5368,6 +5368,11 @@ body.dark-mode .empty-illo__badge  { fill: var(--color-bg-muted); }
 .checkSelect--filter.is-applied :is(.selected-text__label, .selected-text__value) { color: var(--color-text-brand); }
 .checkSelect--filter.is-applied .selected-text::after { background-color: var(--color-text-brand); }   /* 화살표도 글자와 같은 색 */
 .checkSelect--filter.is-applied .selected-text__more { background: var(--color-bg-base); }   /* 같은 옅은 브랜드 바탕 위라 흰 알약으로 */
+.checkSelect--filter[hidden] { display: none; }
+/* 필터 더 보기(data-display="add"): 글자 단추 모양(테두리 · 바탕 없음, 올리면 회색 바탕). 고른 조건은 바에 단추로 보여 이 단추는 걸린 모양을 쓰지 않음 */
+.checkSelect--add .selected-text { border-color: transparent; background-color: transparent; }
+.checkSelect--add .selected-text:hover { border-color: transparent; background-color: var(--color-bg-interactive-secondary-hover); }
+.checkSelect--add .selected-text__label { color: var(--color-text-base); }
 .checkSelect--filter .options {
     top: calc(100% + var(--spacing-4));
     width: max-content;
