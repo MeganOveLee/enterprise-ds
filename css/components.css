@@ -5375,6 +5375,11 @@ body.dark-mode .empty-illo__badge  { fill: var(--color-bg-muted); }
 .checkSelect--filter.is-applied .selected-text::after { background-color: var(--color-text-brand); }   /* 화살표도 글자와 같은 색 */
 .checkSelect--filter.is-applied .selected-text__more { background: var(--color-bg-base); }   /* 같은 옅은 브랜드 바탕 위라 흰 알약으로 */
 .checkSelect--filter[hidden] { display: none; }
+/* 걸린 조건 단추 · 걸린 [필터] 단추에 마우스를 올리면 브랜드 테두리를 안쪽으로 한 겹 더(두 겹): 바탕은 그대로라 글자 대비가 값 있음과 같음.
+ * 누르거나 목록이 열리면 기본 단추와 같은 포커스 선 + 번짐(.checkSelect:has(.options.show) .selected-text) */
+.checkSelect--filter.is-applied .selected-text:hover,
+.filter-trigger.is-applied:hover { box-shadow: inset 0 0 0 1px var(--color-border-brand); }
+.filter-trigger.is-applied:active { background-color: var(--color-bg-brand-subtle); box-shadow: 0 0 0 3px var(--color-focus-ring); }
 /* 필터 더 보기(data-display="add"): 글자 단추 모양(테두리 · 바탕 없음, 올리면 회색 바탕). 고른 조건은 바에 단추로 보여 이 단추는 걸린 모양을 쓰지 않음 */
 .checkSelect--add .selected-text { border-color: transparent; background-color: transparent; }
 .checkSelect--add .selected-text:hover { border-color: transparent; background-color: var(--color-bg-interactive-secondary-hover); }
@@ -5406,6 +5411,8 @@ body.dark-mode .empty-illo__badge  { fill: var(--color-bg-muted); }
  *   왼쪽 = 조건 목록(고른 줄 = 옅은 브랜드 바탕 + 왼쪽 브랜드 막대, 걸린 값 수 배지) · 오른쪽 = 고른 조건의 칸(찾기 칸 + 체크 목록 · 날짜 · 입력칸)
  *   「필터」 단추 = 값이 걸린 조건 수, 걸리면 조건 단추와 같은 옅은 브랜드 모양. 틀은 떠 있는 목록(.ui-select__menu)과 같은 테두리 · 모서리 · 그림자 */
 .filter-pop-wrap { position: relative; display: inline-block; vertical-align: middle; }
+.filter-trigger:not(.is-applied) { border-color: var(--color-border-input); color: var(--color-text-base); }   /* 값 없음 = 조건 단추(.checkSelect--filter)와 같은 테두리 · 글자 */
+.filter-trigger:not(.is-applied):hover { border-color: var(--color-border-input-hover); }
 .filter-trigger.is-applied { background-color: var(--color-bg-brand-subtle); border-color: var(--color-border-brand); color: var(--color-text-brand); }
 :is(.filter-trigger__count, .filter-pop__count) {
     display: inline-flex;
@@ -5471,6 +5478,7 @@ body.dark-mode .empty-illo__badge  { fill: var(--color-bg-muted); }
 .filter-pop__options > [hidden] { display: none; }
 .filter-pop__pane-foot { display: flex; margin-top: auto; }
 .filter-pop__foot { display: flex; align-items: center; padding: var(--spacing-8) var(--spacing-12); border-top: 1px solid var(--color-border-subtle); }
+.filter-pop__apply { margin-left: auto; }   /* [모두 지우기] 왼쪽 · [적용] 오른쪽 끝 */
 body.dark-mode .filter-pop { background-color: var(--color-bg-muted); }   /* 떠 있는 층 = 다중 선택 목록 · 달력과 같은 바탕 */
 
 /* Search Form 조건 그룹(고급 검색): 속성 · 연산자 · 값으로 조건 줄을 쌓고, 그룹 안 조건을 「및 · 또는」으로 잇는다. 그룹 안에 하위 그룹을 둘 수 있다(PLM 고급 검색 「조건」, js/filter-panel.js)
@@ -5768,13 +5776,10 @@ body.dark-mode .status-chip--bold:is(.status-chip--success, .status-chip--warnin
 
 /* ============================================================
  * Blocks 시안 (묶음 4)
- *   Search Form C .search-chips / Approval Line B .approval-flow · C .approval-flow--vertical
+ *   Approval Line B .approval-flow · C .approval-flow--vertical
  *   BOM Compare B 한 표 비교 .compare-change. 새 토큰 없음
  * ============================================================ */
 
-/* Search Form C: 검색 칸 + 필터 칩 한 줄. 조건이 서너 개뿐인 모바일 · 간단한 목록
- *   <div class="search-chips"><input class="input" type="search" aria-label="…"><div class="chip-group" role="group" aria-label="빠른 조건"> button.chip[aria-pressed] … </div></div> */
-.search-chips { display: grid; gap: var(--spacing-8); }
 
 /* Approval Line B · C: 결재 진행 흐름: 누가 어디까지 했는지(상세 창 · 모바일 결재함)
  *   <ol class="approval-flow" aria-label="결재 진행"><li class="approval-flow__step is-done"><span class="approval-flow__mark" aria-hidden="true">✓</span>

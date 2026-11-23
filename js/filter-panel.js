@@ -11,7 +11,7 @@
  *         <div class="filter-pop__fields" role="tablist" aria-orientation="vertical"> <button role="tab" class="filter-pop__field" aria-controls="칸ID">이름<span class="filter-pop__count" hidden></span></button> … </div>
  *         <div class="filter-pop__pane" role="tabpanel" id="칸ID"> 찾기 칸(.filter-pop__search) · .filter-pop__options(.checkbox) · 날짜 · 입력칸 · [data-filter-clear] </div> …
  *       </div>
- *       <div class="filter-pop__foot"><button data-filter-clear-all>모두 지우기</button> …</div>
+ *       <div class="filter-pop__foot"><button data-filter-clear-all>모두 지우기</button><button class="… filter-pop__apply" data-filter-apply>적용</button></div>
  *     </div>
  *   </div>
  *   불러오기만 하면 화면의 .filter-pop-wrap 이 모두 동작. 나중에 그린 것은 window.enhanceFilterPanels(영역)
@@ -20,6 +20,7 @@
  * 자리: 단추 왼쪽 끝에 맞춰 열고, 오른쪽이 화면이나 넘침을 자르는 조상 상자 밖으로 나가면 오른쪽 끝에 맞춤(.filter-pop--end). 마크업에 --end 를 붙이면 늘 오른쪽 끝
  * 필터 더 보기(다른 방법): 바에 [필터 더 보기] 체크 목록(js/multiselect.js data-display="add")을 두고, 고른 조건의 단추(select[data-filter-field])만 바에 보인다
  * 조건 그룹(고급 검색): .criteria-group 안 조건 줄(속성 · 연산자 · 값, 속성 종류에 따라 값 칸이 바뀜)과 하위 그룹을 더하고 빼며, 맨 바깥 그룹 앞 .criteria-expr 에 괄호식을 쓴다
+ * 닫기: [적용] · Esc · 바깥 누르기. 고른 값은 고르는 즉시 걸리고(개수 배지), 닫아도 남는다
  * 키보드: 「필터」 단추 Enter · Space = 열고 고른 조건으로 / 조건 목록 ↑ ↓ = 조건 바꾸기 / Esc = 닫고 「필터」 단추로 / 바깥을 누르면 닫힘
  * ===================================================================== */
 (function () {
@@ -103,6 +104,7 @@
         });
         pop.addEventListener('change', update);
         pop.addEventListener('click', function (e) {
+            if (e.target.closest('[data-filter-apply]')) { close(true); return; }   // [적용] = 닫고 [필터] 단추로. 검색 실행은 화면 스크립트가 같은 click 으로 받음
             var one = e.target.closest('[data-filter-clear]'), all = e.target.closest('[data-filter-clear-all]');
             if (!one && !all) return;
             (all ? panes : [one.closest('.filter-pop__pane')]).forEach(function (p) {

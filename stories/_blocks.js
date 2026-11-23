@@ -24,11 +24,15 @@ export const Section = ({ title, desc, children }) =>
     h('div', { className: 'ds-sec__body' }, children));
 
 // tag = 제목 옆 표시(「추천」), basis = 시안 근거 한 줄(디자인 필수 가이드 7장)
-export const Card = ({ of, title, desc, tag, basis, code = true, children }) =>
+// why = 「추천」 카드에서 추천하는 이유: Do 판정과 같은 초록 원 체크 + 굵은 「추천하는 이유」, 옅은 초록 바탕 칸(.ds-card__why)
+const WHY_ICON = h('svg', { viewBox: '0 0 24 24', 'aria-hidden': true }, h('circle', { cx: 12, cy: 12, r: 11, fill: 'currentColor' }),
+  h('path', { d: 'M7.5 12.5l3 3 6-6.5', fill: 'none', stroke: 'var(--color-icon-inverse)', strokeWidth: 2.25, strokeLinecap: 'round', strokeLinejoin: 'round' }));
+export const Card = ({ of, title, desc, tag, why, basis, code = true, children }) =>
   h('section', { className: 'ds-card' },
     title ? h('header', { className: 'ds-card__head' },
       h('h3', { className: 'ds-card__title' }, title, tag ? h('span', { className: 'ds-card__tag' }, tag) : null),
       desc ? h('p', { className: 'ds-card__desc' }, desc) : null,
+      why ? h('p', { className: 'ds-card__why' }, h('span', { className: 'ds-card__why-head' }, WHY_ICON, '추천하는 이유'), why) : null,
       basis ? h('p', { className: 'ds-card__basis' }, h('b', null, '근거'), ' ', basis) : null) : null,
     of ? h('div', { className: 'ds-card__body' }, h(Story, { of })) : null,
     children ? h('div', { className: 'ds-card__extra' }, children) : null,
