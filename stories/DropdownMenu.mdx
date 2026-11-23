@@ -16,10 +16,18 @@ import * as S from './DropdownMenu.stories.js';
 <tr><td><b>목록</b></td><td><code>.ui-menu__list</code> · <code>role="menu"</code> · <code>hidden</code></td><td>바탕 <code>--color-bg-base</code> · 테두리 <code>--color-border-base</code> · 그림자 <code>--shadow-popover</code> · 모서리 <code>--radius-popover</code>, 최소 폭 160입니다.</td></tr>
 <tr><td><b>항목</b></td><td><code>.ui-menu__item</code> · <code>role="menuitem"</code></td><td>높이 28 · 글자 12 · 아이콘 16입니다. 마우스를 올리면 표 줄 올림과 같은 <code>--color-bg-grid-row-hover</code>입니다. 막힌 항목은 <code>aria-disabled="true"</code>, 되돌릴 수 없는 동작은 <code>.ui-menu__item--danger</code>입니다.</td></tr>
 <tr><td><b>구분선</b></td><td><code>.ui-menu__divider</code> · <code>role="separator"</code></td><td>동작 묶음 사이에 둡니다.</td></tr>
+<tr><td><b>찾기 칸</b></td><td><code>.ui-menu__search</code> › <code>input.input</code><span className="ds-muted">시안 B</span></td><td>목록 맨 위에 붙어 목록을 내려도 남습니다. 메뉴를 열면 찾기 칸에 포커스가 가고, 글자를 넣으면 맞지 않는 항목 · 묶음 제목 · 구분선이 숨습니다. ↓로 첫 항목에 갑니다.</td></tr>
+<tr><td><b>묶음 제목</b></td><td><code>.ui-menu__group-label</code> · <code>role="presentation"</code><span className="ds-muted">시안 B</span></td><td>동작 묶음 위에 흐린 굵은 작은 글자(<code>--color-text-muted</code> · <code>--font-weight-bold</code> · <code>--body-xs</code>)로 둡니다. 누르는 항목이 아니어서 키보드 이동에 들지 않습니다.</td></tr>
+<tr><td><b>단축키</b></td><td><code>.ui-menu__shortcut</code><span className="ds-muted">시안 B</span></td><td>항목 오른쪽 끝에 흐린 작은 글자로 둡니다. 화면이 단축키를 실제로 받는 동작에만 적습니다.</td></tr>
+<tr><td><b>찾는 결과 없음</b></td><td><code>.ui-menu__empty</code> · <code>hidden</code></td><td>찾기 칸 글자에 맞는 항목이 하나도 없을 때 「찾는 항목이 없습니다」를 보입니다.</td></tr>
 <tr><td><b>스크립트</b></td><td><code>js/menu.js</code></td><td>여닫기 · 화살표 · Esc · 바깥 누름 닫기를 맡습니다. 문서에 한 번 걸어 두어 나중에 그린 메뉴도 따로 초기화하지 않습니다.</td></tr>
-<tr><td><b>브랜드가 바꾸는 것</b></td><td><code>--radius-popover</code> · <code>--shadow-popover</code> · 색 토큰</td><td>모서리 · 그림자 · 색입니다. 항목 높이와 키보드 동작은 모든 브랜드가 같습니다.</td></tr>
+<tr><td><b>브랜드가 바꾸는 것</b></td><td><code>--radius-popover</code> · <code>--shadow-popover</code> · 색 토큰</td><td>모서리 · 그림자 · 색입니다. 항목 높이와 키보드 동작은 모든 브랜드가 같습니다. 시안은 Default · OOTB 모두 A이고, 항목이 묶음 둘 이상으로 나뉘는 메뉴만 B를 씁니다.</td></tr>
 </tbody>
 </table>
+</Section>
+<Section title="시안" en="Options">
+<Card of={S.예시} title="A · 동작 목록" tag="추천" desc="동작이 몇 개뿐인 메뉴에서 사용합니다." basis="이전 버전 「작업」 메뉴와 같은 구성입니다. 아이콘 · 이름 · 구분선만 두어 메뉴가 짧을 때 가장 빨리 읽힙니다." />
+<Card of={S.시안_찾기와_묶음} title="B · 찾기와 묶음" desc="기본보다 동작이 많아 묶음 둘 이상으로 나뉠 때 사용합니다." basis="Jira 업무 상세의 더하기 메뉴와 같은 구성입니다. 맨 위 찾기 칸 · 묶음 제목 · 오른쪽 단축키를 두고, 브랜드색은 찾기 칸 포커스 테두리에만 씁니다." />
 </Section>
 <Section title="예시" en="Examples">
 <Card of={S.예시} title="작업 메뉴" en="Action menu" desc="상세 화면 위쪽 「작업」 버튼처럼 동작 여러 개를 버튼 하나에 모을 때 사용합니다. 자주 쓰는 동작 하나는 메뉴에 넣지 않고 버튼으로 꺼내 둡니다." />
