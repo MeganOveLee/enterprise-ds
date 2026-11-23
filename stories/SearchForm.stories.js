@@ -108,3 +108,16 @@ const rankUnderline = () => rankAfter().replaceAll('class="input"', 'class="inpu
     '<div class="table-panel__actions">' + iconBtn('새로 고침', REFRESH) + iconBtn('열 설정', COLUMNS) + '<span class="table-panel__sep"></span><button type="button" class="btn btn--excel">' + XLS + 'Excel</button></div>');
 export const 위계_아래_선_칸 = { parameters: optSrc(rankUnderline()), render: () => stage(rankUnderline()) };
 
+// 4 = 한 줄 바: 검색 칸 + 조건 단추(Multi Select C, .checkSelect--filter) 한 줄, 오른쪽 끝 [검색] · [초기화]. 결과 표 패널은 2와 같음
+const fsel = (name, items, picked = [], search = false) => '<select class="checkSelect" multiple data-display="filter" aria-label="' + name + '"' + (search ? ' data-searchBox="true"' : '') + '>' +
+  items.map((t) => '<option' + (picked.includes(t) ? ' selected' : '') + '>' + t + '</option>').join('') + '</select>';
+const BAR_APPLIED = ['작업현황: 검토 중', '등록자: 김도윤'];
+const rankBar = () => '<section class="product" style="padding:0"><div class="search-bar"><input class="input search-bar__query" type="search" aria-label="문서 검색" placeholder="문서 번호 또는 문서 명" value="캘리퍼" data-ds-clear>' +
+  fsel('작업현황', ['작업 중', '검토 중', '승인', '반려', '폐기'], ['검토 중']) + fsel('문서 분류', ['설계 사양서', '시험 성적서', '도면', '회의록', '검토 보고서']) +
+  fsel('등록자', ['김도윤', '이서연', '박지호', '최민준', '정하은'], ['김도윤'], true) +
+  '<div class="search-bar__actions"><button type="button" class="btn btn--primary btn--filled">' + ico(SEARCH) + '검색</button><button type="button" class="btn btn--secondary btn--transparent">' + ico(RESET) + '초기화</button></div></div>' +
+  '<section class="table-panel"><header class="table-panel__head"><h3 class="table-panel__title">검색 결과 ' + RANK_ROWS.length + '</h3><div class="table-panel__actions"><button type="button" class="btn btn--excel">' + XLS + 'Excel</button></div></header>' +
+  '<div class="table-panel__toolbar"><ul class="checkSelect__chips" aria-label="걸린 조건">' + ['문서 명: 캘리퍼'].concat(BAR_APPLIED).map(appliedChip).join('') + '</ul>' +
+  '<div class="table-panel__actions"><button type="button" class="btn btn--secondary btn--transparent">' + ico(RESET) + '필터 초기화</button></div></div>' + rankTable(' grid-table--subtle') + '</section></section>';
+const stageBar = (html) => { const el = stage(html); setTimeout(() => el.querySelectorAll('select.checkSelect').forEach((sel) => window.buildMultiSelect && window.buildMultiSelect(sel)), 0); return el; };
+export const 위계_한_줄_바 = { parameters: optSrc(rankBar()), render: () => stageBar(rankBar()) };
