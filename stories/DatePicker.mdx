@@ -17,6 +17,7 @@ import * as S from './DatePicker.stories.js';
 <tr><td><b>오류</b></td><td><code>aria-invalid="true"</code><span className="ds-muted">날짜 필드(input)에</span></td><td>형식이 맞지 않거나 검증을 통과하지 못한 상태입니다. 감싸는 상자의 테두리가 빨강이 되고, 아이콘 칸도 옅은 빨강 바탕(<code>--color-bg-danger-subtle</code>)과 빨간 칸 선이 됩니다.</td></tr>
 <tr><td><b>비활성 · 읽기 전용</b></td><td><code>disabled</code> · <code>readonly</code></td><td>입력할 수 없는 상태입니다. 달력이 열리지 않고 아이콘 버튼도 누를 수 없습니다. 정의는 Input과 같습니다. 아이콘 칸은 회색 칸이고, 아이콘은 비활성이면 흐린 색 · 읽기 전용이면 값과 같은 보조 글자색입니다.</td></tr>
 <tr><td><b>날짜 칸 상태</b></td><td><code>.datepicker__day</code><span className="ds-muted">.is-today · .is-selected · .is-in-range · .is-range-end · .is-disabled · .is-outside</span></td><td>오늘 · 고른 날 · 기간 사이 · 기간의 다른 쪽 끝 · 선택 가능 범위 밖 · 앞뒤 달 날짜입니다. 스크립트가 붙이며, 아래 「펼친 달력」에서 모습을 볼 수 있습니다.</td></tr>
+<tr><td><b>언어</b></td><td><code>lang="ko"</code><span className="ds-muted">입력칸이나 감싸는 요소에</span></td><td>달력 머리가 한국어가 됩니다. 연 · 월 순서로 「2026년」 「10월」을 보이고, 요일은 월 ∼ 일, 오늘 버튼은 「오늘」입니다. lang이 없거나 ko가 아니면 영어(「October」 「2026」, Mon ∼ Sun, Today)입니다. 날짜 칸의 낭독 이름(「2026년 10월 6일 화요일」)은 언어와 관계없이 한국어입니다.</td></tr>
 <tr><td><b>스크립트</b></td><td><code>js/datepicker.js</code><span className="ds-muted">페이지에 한 번</span></td><td>불러오면 <code>.ui-datepicker__input</code>마다 달력이 연결됩니다. 화면을 나중에 그렸다면 <code>datepickerInit()</code>을 호출합니다.</td></tr>
 <tr><td><b>동작</b></td><td><span className="ds-muted">열기 · 선택 · 닫기</span></td><td>필드를 누르면 달력이 열리고 포커스는 필드에 남아 키보드로 입력할 수 있습니다. 날짜를 누르면 값이 입력되고 달력이 닫힙니다(취소 · 적용 버튼은 없습니다).</td></tr>
 <tr><td><b>브랜드가 바꾸는 것</b></td><td><code>--size-input</code> · <code>--radius-input</code> · 글자 · 색 토큰</td><td>칸 높이 · 모서리 · 글자 크기 · 색입니다. 달력의 날짜 칸 크기는 모든 브랜드가 같습니다. 시안은 Default · OOTB = A 칸 + 펼침 달력, Mobility = B 아래 시트 달력입니다. 생년월일처럼 아는 날짜는 브랜드와 관계없이 C 세 칸을 씁니다.</td></tr>
@@ -48,6 +49,7 @@ import * as S from './DatePicker.stories.js';
 <Card of={S.지우기} title="값 지우기" en="Clear" desc="기본보다 조회 조건의 기간에 값이 있을 때 사용합니다. 틀 안 맨 끝 ×로 값을 비웁니다(Input 「값 지우기」와 같은 규칙, DS-ADR-042)." />
 <Card of={S.고를_수_있는_범위} title="선택 가능 범위" en="Min · Max" desc="필드에 min · max를 주면 범위 밖의 날짜는 달력에서 비활성이고, 연도 목록도 범위 안의 해만 보입니다. 견본 값(min 2026-10-10 · max 2026-10-25)은 모양을 보이려고 정한 예시이고 업무 규칙이 아닙니다. 범위는 화면이 정합니다(예: 희망일은 오늘 이후)." />
 <Card of={S.펼친_달력} title="펼친 달력" en="Calendar" desc="왼쪽 시작일 필드의 달력을 연 모습입니다. 고른 날 · 기간 사이 · 다른 쪽 끝 · 선택 가능 범위 밖 · 앞뒤 달 날짜를 한 화면에 보여 줍니다." />
+<Card of={S.한국어_달력} title="한국어 달력" en="Korean" desc="기본보다 화면 글이 한국어인 시스템에 넣을 때 사용합니다. 감싸는 요소에 lang=&quot;ko&quot;를 주면 달력 머리가 연 · 월 순서의 한국어가 됩니다." />
 </Section>
 <Section title="Do · Don't">
 <Card of={S.사용_지침} code={false} />

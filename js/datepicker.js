@@ -13,6 +13,7 @@
  *     키보드로 열기 = 달력 아이콘 버튼(Tab 으로 도달) 또는 입력칸에서 Alt+↓
  *   - 고를 수 없는 날짜: input 의 min / max (YYYY-MM-DD). .ui-datepicker-range 안 두 칸은 서로의 min/max 를 자동으로 잡아
  *     기간이 뒤집히지 않게 하고, 그 사이 날짜를 .is-in-range, 다른 쪽 끝 날짜를 .is-range-end 로 표시
+ *   - 달력 머리 언어: 입력칸이나 감싸는 요소에 lang="ko" 가 있으면 「2026년 11월」 · 요일 월 ∼ 일 · 오늘, 없으면 영어
  * ===================================================================== */
 (function() {
     'use strict';
@@ -20,6 +21,16 @@
     var MONTHS_EN = ['January','February','March','April','May','June','July','August','September','October','November','December'];
     var WEEKDAYS = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
     var WEEKDAYS_KO = ['일','월','화','수','목','금','토'];
+    /* 달력 머리 글자: 입력칸이나 감싸는 요소의 lang 이 ko 로 시작하면 한국어(연 · 월 순서), 그 밖에는 영어 */
+    var TEXT = {
+        en: { months: MONTHS_EN, weekdays: WEEKDAYS, today: 'Today', yearFirst: false, year: function (y) { return '' + y; } },
+        ko: { months: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+              weekdays: ['월','화','수','목','금','토','일'], today: '오늘', yearFirst: true, year: function (y) { return y + '년'; } }
+    };
+    function textOf(input) {
+        var el = input.closest('[lang]');
+        return el && /^ko(-|$)/i.test(el.getAttribute('lang')) ? TEXT.ko : TEXT.en;
+    }
     function labelOf(d) { return d.getFullYear() + '년 ' + (d.getMonth()+1) + '월 ' + d.getDate() + '일 ' + WEEKDAYS_KO[d.getDay()] + '요일'; }
     function addDays(d, n) { return new Date(d.getFullYear(), d.getMonth(), d.getDate() + n); }
     function addMonths(d, n) {   /* 31일 → 다음 달 말일처럼 넘치면 그 달 마지막 날로 */
@@ -193,6 +204,7 @@
 
     Datepicker.prototype.buildHTML = function() {
         var year = this.viewYear, month = this.viewMonth;
+        var T = textOf(this.input);
         var firstDay = new Date(year, month, 1);
         var lastDay = new Date(year, month + 1, 0);
         var startOffset = (firstDay.getDay() + 6) % 7;   /* Mon 시작 = 0 */
@@ -240,18 +252,19 @@
                 + ' data-year="' + cellDate.getFullYear() + '" data-month="' + cellDate.getMonth() + '" data-day="' + cellDate.getDate() + '">' + cellDate.getDate() + '</button>';
             if (i % 7 === 6) daysHTML += '</div>';
         }
-        var weekdaysHTML = WEEKDAYS.map(function(w, i) { return '<div class="datepicker__weekday" role="columnheader" aria-label="' + WEEKDAYS_KO[(i + 1) % 7] + '요일">' + w + '</div>'; }).join('');
+        var monthBtn = '<button type="button" class="datepicker__month-btn" data-act="month-toggle" aria-haspopup="listbox" aria-expanded="false" aria-label="월 선택, ' + (month + 1) + '월">' + T.months[month] + '</button>';
+        var yearBtn = '<button type="button" class="datepicker__year-btn" data-act="year-toggle" aria-haspopup="listbox" aria-expanded="false" aria-label="연도 선택, ' + year + '년">' + T.year(year) + '</button>';
+        var weekdaysHTML = T.weekdays.map(function(w, i) { return '<div class="datepicker__weekday" role="columnheader" aria-label="' + WEEKDAYS_KO[(i + 1) % 7] + '요일">' + w + '</div>'; }).join('');
         return ''
             + '<div class="datepicker__topbar">'
-            +   '<button type="button" class="btn btn--secondary btn--filled datepicker__today-btn" data-act="today">Today</button>'   /* .btn 체계 (DS-ADR-016) */
+            +   '<button type="button" class="btn btn--secondary btn--filled datepicker__today-btn" data-act="today">' + T.today + '</button>'   /* .btn 체계 (DS-ADR-016) */
             + '</div>'
             + '<div class="datepicker__header">'
             +   '<button type="button" class="datepicker__nav" data-act="prev" aria-label="이전 달">'
             +     '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15.5 4.5 8 12 15.5 19.5"/></svg>'   /* Figma caret-left 24 */
             +   '</button>'
             +   '<div class="datepicker__title-area" id="' + this.dialogId + '-title" aria-live="polite">'
-            +     '<button type="button" class="datepicker__month-btn" data-act="month-toggle" aria-haspopup="listbox" aria-expanded="false" aria-label="월 선택, ' + (month + 1) + '월">' + MONTHS_EN[month] + '</button>'
-            +     '<button type="button" class="datepicker__year-btn" data-act="year-toggle" aria-haspopup="listbox" aria-expanded="false" aria-label="연도 선택, ' + year + '년">' + year + '</button>'
+            +     (T.yearFirst ? yearBtn + monthBtn : monthBtn + yearBtn)
             +   '</div>'
             +   '<button type="button" class="datepicker__nav" data-act="next" aria-label="다음 달">'
             +     '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="8.5 4.5 16 12 8.5 19.5"/></svg>'   /* Figma caret-right 24 */
@@ -448,9 +461,9 @@
         var self = this;
         var dd = document.createElement('div');
         dd.className = 'datepicker__dropdown datepicker__dropdown--month is-open';   /* 폭 112 (Figma Month dropdown) */
-        var html = '';
+        var html = '', months = textOf(self.input).months;
         for (var i = 0; i < 12; i++) {
-            html += '<button type="button" role="option" aria-selected="' + (i === self.viewMonth) + '" class="datepicker__dropdown-item ' + (i === self.viewMonth ? 'is-selected' : '') + '" data-m="' + i + '">' + MONTHS_EN[i] + '</button>';
+            html += '<button type="button" role="option" aria-selected="' + (i === self.viewMonth) + '" class="datepicker__dropdown-item ' + (i === self.viewMonth ? 'is-selected' : '') + '" data-m="' + i + '">' + months[i] + '</button>';
         }
         dd.innerHTML = html;
         this.popup.appendChild(dd);

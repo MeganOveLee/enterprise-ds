@@ -70,6 +70,30 @@ export const 펼친_달력 = {
   },
 };
 
+// ── 한국어 달력: 감싸는 요소에 lang="ko". 펼친 달력과 같은 방식으로 한 번 열어 옆에 고정 ──
+export const 한국어_달력 = {
+  parameters: { controls: { disable: true }, docs: { source: { language: 'html', code: [
+    '<div lang="ko">   <!-- 입력칸이나 감싸는 요소 어디든 -->',
+    '  <div class="ui-datepicker">…</div>',
+    '</div>',
+  ].join('\n') } } },
+  render: () => {
+    const el = document.createElement('div');
+    el.style.cssText = 'display:flex;gap:32px;align-items:flex-start;flex-wrap:wrap';
+    el.innerHTML = '<div lang="ko" style="width:200px">' + dp('납기일', '2026-10-06') + '</div><div class="dp-static" inert aria-hidden="true" style="min-height:300px"></div>';
+    setTimeout(() => {
+      const inp = el.querySelector('.ui-datepicker__input'); if (!inp) return;
+      inp.click();
+      setTimeout(() => {
+        const pop = document.querySelector('.datepicker.is-open');
+        if (pop) { const c = pop.cloneNode(true); c.removeAttribute('id'); c.querySelectorAll('[id]').forEach((n) => n.removeAttribute('id')); c.style.cssText = 'position:static;display:block'; el.querySelector('.dp-static').appendChild(c); }
+        document.body.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
+      }, 250);
+    }, 500);
+    return el;
+  },
+};
+
 // ── Do · Don't (① ②): 미리보기만 ──
 const wide = (h) => '<div style="width:100%;max-width:360px">' + h + '</div>';
 const noHint = (h) => h.replace(' placeholder="YYYY-MM-DD"', '');
