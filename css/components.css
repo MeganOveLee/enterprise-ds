@@ -1611,6 +1611,18 @@ body.dark-mode .pop .contents .pro_table:not(:has(.form-grid-2)):not(.seach_arm:
 /* === 인풋 상태 디자인 ===
  * 입력칸(편집 가능) = 흰 바탕 + border-input + hover/focus 반응 → '여기 입력'
  * 읽기 전용 값(.ff-readonly) = bg-readonly 바탕 + border-base 실선 + text-muted, hover 반응 없음 → '편집 불가' (DS-ADR-017) */
+/* 폼 틀 밖(표 칸 · 속성 줄)의 읽기 전용 값도 같은 상자: 읽기 전용 입력칸(.input[readonly])과 같은 값
+ *   <span class="ff-readonly">제품 A</span> */
+.ff-readonly {
+    display: flex; align-items: center;
+    width: 100%; min-height: var(--size-input); box-sizing: border-box;
+    padding: 0 var(--spacing-8);
+    border: var(--border-width-sm) solid var(--color-border-base);
+    border-radius: var(--radius-input);
+    background-color: var(--color-bg-readonly);
+    color: var(--color-text-muted); font-size: var(--body-sm); word-break: break-all;
+    cursor: default;
+}
 .form-grid-2 .ff-readonly {
     display: flex; align-items: center;
     width: 100%; min-height: var(--size-input); box-sizing: border-box;
