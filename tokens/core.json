@@ -763,6 +763,11 @@
     "$type": "dimension",
     "$description": "작은 버튼 = Figma 「Small Button」: .btn--sm · 첨부 삭제. 최소 누름 영역 24 이상 (DS-ADR-020)"
   },
+  "size-step": {
+    "$value": "112px",
+    "$type": "dimension",
+    "$description": "단계 이름 한 줄(.approval-flow--label)의 단계 한 칸 폭 = Figma Step flow / Step"
+  },
   "size-touch": {
     "$value": "{size-btn}",
     "$type": "dimension",
@@ -1293,6 +1298,10 @@
       }
     },
     "$description": "헤더"
+  },
+  "color-bg-grid-header-hover": {
+    "$value": "{neutral-750}",
+    "$description": "표 머리 올림: 정렬하는 머리 · 열 메뉴가 든 머리. 머리 바탕보다 한 단계 밝게, 머리 글자 4.5:1 이상. 브랜드가 덮을 수 있음"
   },
   "color-bg-row-alt": {
     "$value": "{neutral-100}",

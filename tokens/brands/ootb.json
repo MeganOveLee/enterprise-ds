@@ -82,6 +82,10 @@
     "$value": "{color-text-base}",
     "$description": "머리 위 12.11:1"
   },
+  "color-bg-grid-header-hover": {
+    "$value": "{neutral-400}",
+    "$description": "밝은 머리보다 한 단계 진하게. 머리 글자 7.79:1"
+  },
   "color-bg-grid-edit": {
     "$value": "{color-bg-muted}",
     "$extensions": {

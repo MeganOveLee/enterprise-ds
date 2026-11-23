@@ -292,6 +292,9 @@
       }
     }
   },
+  "color-bg-grid-header-hover": {
+    "$value": "{neutral-750}"
+  },
   "color-text-grid-header": {
     "$value": "{color-text-on-color}",
     "$description": "다크 머리 바탕은 모든 브랜드가 어두운 값이라 흰 글자로 되돌림(OOTB 라이트의 진한 글자가 물려 내려오지 않게, DS-ADR-057)"

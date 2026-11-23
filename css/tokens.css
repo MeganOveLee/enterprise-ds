@@ -249,6 +249,7 @@
   --size-input-lg: 44px;                      /* 큰 칸: 화면에 폼 하나만 있는 단독 폼(로그인 · 임시 비밀번호 발급: 이전 버전 login.css 큰 칸 · 큰 버튼을 쓰던 두 화면) (제안 E). 브랜드가 바꾸지 않음(스태틱) */
   --size-btn-lg: 44px;                        /* 큰 버튼: 단독 폼의 주 동작 · 모바일 화면의 주 행동(호출 · 즐겨찾기). 브랜드 파일이 덮을 수 있음(플렉시블, DS-ADR-049) */
   --size-btn-sm: 26px;                        /* 작은 버튼 = Figma 「Small Button」: .btn--sm · 첨부 삭제. 최소 누름 영역 24 이상 (DS-ADR-020) */
+  --size-step: 112px;                         /* 단계 이름 한 줄(.approval-flow--label)의 단계 한 칸 폭 = Figma Step flow / Step */
   --size-touch: var(--size-btn);              /* 누름 기준 높이: 모바일 컴포넌트(앱 상단 바 · 하단 탭 · 목록 행 · 칩)의 최소 높이. 기본 = 표준 버튼 높이, 브랜드 파일이 덮을 수 있음(플렉시블, DS-ADR-049) */
 
   /* 표 높이 역할: 브랜드 파일이 덮을 수 있음(DS-ADR-047). 값 = DS-ADR-030(머리 34 · 줄 30 · 편집 줄 40).
@@ -423,6 +424,7 @@
 
   /* AUI Grid */
   --color-bg-grid-header: var(--neutral-800); /* 헤더 */
+  --color-bg-grid-header-hover: var(--neutral-750); /* 표 머리 올림: 정렬하는 머리 · 열 메뉴가 든 머리. 머리 바탕보다 한 단계 밝게, 머리 글자 4.5:1 이상. 브랜드가 덮을 수 있음 */
   --color-bg-row-alt: var(--neutral-100);     /* zebra alt */
   --color-bg-grid-edit: var(--color-bg-row-alt); /* 편집 표 홀수 줄 바탕(옅은 회색 판). 첫 줄이 밝고 짝수 줄이 한 단계 진함. 브랜드가 덮을 수 있음 (DS-ADR-071) */
   --color-bg-grid-edit-alt: var(--color-bg-subtle); /* 편집 표 짝수 줄 바탕 (DS-ADR-071) */
@@ -751,6 +753,7 @@ body.dark-mode {
 
   /* AUI Grid */
   --color-bg-grid-header: var(--neutral-850);
+  --color-bg-grid-header-hover: var(--neutral-750);
   --color-text-grid-header: var(--color-text-on-color); /* 다크 머리 바탕은 모든 브랜드가 어두운 값이라 흰 글자로 되돌림(OOTB 라이트의 진한 글자가 물려 내려오지 않게, DS-ADR-057) */
   --color-bg-row-alt: var(--neutral-850);     /* 짝수행: 카드보다 살짝 가라앉게.
                                                  구 #15151A 는 줄무늬가 너무 셌고, 실제로는 components.css 가
