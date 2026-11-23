@@ -158,41 +158,29 @@ const barMore = () => '<div class="search-bar"><input class="input search-bar__q
   '<select class="checkSelect" multiple data-display="add" data-searchBox="true" data-placeholder="필터 검색" placeholder="필터 더 보기" aria-label="필터 더 보기">' + MORE.map(([n], i) => '<option value="' + n + '"' + (i === 0 ? ' selected' : '') + '>' + n + '</option>').join('') + '</select>' +
   '<div class="search-bar__actions"><button type="button" class="btn btn--primary btn--filled">' + ico(SEARCH) + '검색</button><button type="button" class="btn btn--secondary btn--transparent">' + ico(RESET) + '초기화</button></div></div>';
 export const 필터_더_보기 = { parameters: optSrc(barMore()), render: () => stageBar(barMore(), 320) };
-// 조건 줄: 고급 검색처럼 조건을 골라 더해 가며 찾을 때(Jira 업무 목록 필터 「고급」). 조건 하나 = 이름 · 연산자 · 값 한 상자, 첫 줄 「유형」은 빼기 없음.
-// [필터 추가] = Dropdown Menu 시안 B(찾기 칸)에서 줄로 두지 않은 조건을 고르면 줄이 나타남, [모두 지우기] = 첫 줄만 남기고 값을 비움(js/filter-panel.js)
-let frId = 0;
+// 조건 묶음: 고급 검색의 「조건」(PLM 고급 검색과 같은 구성). 묶음 머리 = 및 · 또는 + [조건 추가] · [하위 묶음 추가], 조건 줄 = 속성 · 연산자 · 값 + 빼기(×).
+// 칸 순서 · 폭 = Figma 고급 검색 조건 묶음. 줄마다 빼기와 글자 단추는 Jira 업무 목록 필터 「고급」. 묶음 위 괄호식은 값이 바뀔 때 js/filter-panel.js 가 다시 씀
 const PLUS = '<path d="M12 5v14M5 12h14"/>';
-const ms = (name, items, picked = [], search = false) => '<select class="checkSelect" multiple aria-label="' + name + ' 값"' + (search ? ' data-searchBox="true"' : '') + '>' +
-  items.map((t) => '<option' + (picked.includes(t) ? ' selected' : '') + '>' + t + '</option>').join('') + '</select>';
-const OPS = { list: ['=', '≠'], text: ['포함', '='], date: ['=', '≠'] };
-const PEOPLE = ['김도윤', '이서연', '박지호', '최민준', '정하은'];
-// [이름, 연산자 종류, 값 칸, 처음에 보임]
-const FR = [
-  ['유형', 'list', () => select('유형 값', ['문서', '부품', '도면', '변경 요청'], '문서'), true],
-  ['작업현황', 'list', () => ms('작업현황', ['작업 중', '검토 중', '승인', '반려', '폐기'], ['검토 중', '승인']), true],
-  ['등록일', 'date', () => range('등록일', '2026-09-01', '2026-09-30'), true],
-  ['문서 번호', 'text', () => '<input class="input" aria-label="문서 번호 값" placeholder="문서 번호 입력">'],
-  ['문서 명', 'text', () => '<input class="input" aria-label="문서 명 값" placeholder="문서 명 입력">'],
-  ['등록자', 'list', () => ms('등록자', PEOPLE, [], true)],
-  ['수정자', 'list', () => ms('수정자', PEOPLE, [], true)],
-  ['수정일', 'date', () => range('수정일')],
-  ['프로젝트', 'list', () => ms('프로젝트', ['PJT-2601 전동 캘리퍼', 'PJT-2604 경량 하우징', 'PJT-2607 커넥터 표준화'], [], true)],
-  ['담당 부서', 'list', () => ms('담당 부서', ['설계1팀', '설계2팀', '시험팀', '품질팀', '생산기술팀'])],
-];
-const filterRow = ([name, op, value, shown], i) => '<div class="filter-row' + (i === 0 ? ' filter-row--fixed' : '') + '" data-filter-row="' + name + '" role="group" aria-label="' + name + ' 조건"' + (shown ? '' : ' hidden') + '>' +
-  '<div class="filter-row__box"><span class="filter-row__field">' + name + '</span>' +
-  '<select class="select filter-row__op" aria-label="' + name + ' 연산자">' + OPS[op].map((o) => '<option>' + o + '</option>').join('') + '</select>' +
-  '<div class="filter-row__value">' + value() + '</div></div>' +
-  (i === 0 ? '' : '<button type="button" class="btn btn--secondary btn--transparent btn--icon filter-row__remove" aria-label="' + name + ' 조건 빼기">' + ico(X.replace(/<svg[^>]*>|<\/svg>/g, '')) + '</button>') + '</div>';
-const filterRows = () => {
-  const id = 'fr-' + (++frId);
-  return '<section class="product" style="padding:0"><div class="seach_arm" style="margin-top:0"><div class="leftbt">' + lnbSvg('sliders', 18) + '<h4>검색 조건</h4></div>' +
-    '<div class="rightbt"><button type="button" class="btn btn--primary btn--filled">' + ico(SEARCH) + '검색</button></div></div>' +
-    '<div class="pro_table"><div class="filter-rows">' + FR.map(filterRow).join('') +
-    '<div class="ui-menu filter-rows__add"><button type="button" class="btn btn--secondary btn--transparent" id="' + id + '-btn" aria-haspopup="menu" aria-expanded="false" aria-controls="' + id + '">' + ico(PLUS) + '필터 추가</button>' +
-    '<div class="ui-menu__list" role="menu" id="' + id + '" aria-labelledby="' + id + '-btn" hidden><div class="ui-menu__search"><input type="search" class="input" aria-label="필터 찾기" placeholder="필터 찾기"></div>' +
-    FR.slice(1).map(([name]) => '<button type="button" class="ui-menu__item" role="menuitem" tabindex="-1" data-filter-add="' + name + '">' + name + '</button>').join('') +
-    '<div class="ui-menu__empty" hidden>찾는 필터가 없습니다</div></div></div>' +
-    '<div class="filter-rows__foot"><button type="button" class="btn btn--secondary btn--transparent" data-filter-rows-clear>모두 지우기</button></div></div></div></section>';
-};
-export const 조건_줄 = { parameters: optSrc(filterRows()), render: () => stageBar(filterRows(), 360) };
+const FOLDER_PLUS = '<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M12 10v6M9 13h6"/>';
+const TRASH = '<path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/>';
+const ATTRS = ['문서 번호', '문서 명', '작업현황', '등록자', '등록일', '수정일', '프로젝트'];
+const OPS2 = ['=', '≠'];
+const crSel = (cls, label, items, pick) => '<select class="select ' + cls + '" aria-label="' + label + '">' + items.map((o) => '<option' + (o === pick ? ' selected' : '') + '>' + o + '</option>').join('') + '</select>';
+const crRow = (attr, value) => '<div class="criteria-row" role="group" aria-label="조건">' + crSel('criteria-row__field', '속성', ATTRS, attr) + crSel('criteria-row__op', '연산자', OPS2, '=') +
+  '<div class="criteria-row__value">' + value + '</div>' +
+  '<button type="button" class="btn btn--secondary btn--transparent btn--icon criteria-row__remove" data-criteria="remove-row" aria-label="조건 빼기" title="조건 빼기">' + ico(X.replace(/<svg[^>]*>|<\/svg>/g, '')) + '</button></div>';
+const crHead = (join, sub) => '<div class="criteria-group__head">' + crSel('criteria-group__join', '조건 잇기', ['및', '또는'], join) +
+  '<button type="button" class="btn btn--secondary btn--transparent" data-criteria="add-row">' + ico(PLUS) + '조건 추가</button>' +
+  '<button type="button" class="btn btn--secondary btn--transparent" data-criteria="add-group">' + ico(FOLDER_PLUS) + '하위 묶음 추가</button>' +
+  (sub ? '<button type="button" class="btn btn--secondary btn--transparent btn--icon criteria-group__remove" data-criteria="remove-group" aria-label="하위 묶음 지우기" title="하위 묶음 지우기">' + ico(TRASH) + '</button>' : '') + '</div>';
+const crInput = (label, v = '') => '<input class="input" aria-label="' + label + '"' + (v ? ' value="' + v + '"' : '') + ' data-ds-clear>';
+const crStatus = (pick) => select('작업현황 값', ['작업 중', '검토 중', '승인', '반려'], pick);
+const criteria = () => '<section class="product" style="padding:0"><div class="seach_arm" style="margin-top:0"><div class="leftbt">' + lnbSvg('sliders', 18) + '<h4>조건</h4></div></div>' +
+  '<div class="pro_table"><p class="criteria-expr" aria-live="polite">( )</p><div class="criteria-group">' + crHead('및', false) + '<div class="criteria-group__body">' +
+  crRow('등록자', '<span class="field-action-wrap"><input class="input" aria-label="등록자 값" value="김도윤"><button type="button" class="field-action" aria-label="사용자 찾기">' + ico(SEARCH) + '</button></span>') +
+  crRow('문서 번호', crInput('문서 번호 값', 'DOC-2610')) +
+  '<div class="criteria-group">' + crHead('또는', true) + '<div class="criteria-group__body">' + crRow('작업현황', crStatus('검토 중')) + crRow('작업현황', crStatus('승인')) + '</div></div>' +
+  crRow('등록일', range('등록일 값', '2026-09-01', '2026-09-30')) +
+  '</div><template class="criteria-template">' + crRow('문서 명', crInput('조건 값')) + '<div class="criteria-group">' + crHead('또는', true) + '<div class="criteria-group__body"></div></div></template></div>' +
+  '<div class="criteria-actions"><button type="button" class="btn btn--primary btn--filled">' + ico(SEARCH) + '검색</button><button type="button" class="btn btn--secondary btn--outlined">이 검색 저장</button></div></div></section>';
+export const 조건_묶음 = { parameters: optSrc(criteria()), render: () => stageBar(criteria()) };

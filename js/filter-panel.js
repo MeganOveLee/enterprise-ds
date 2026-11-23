@@ -19,7 +19,7 @@
  * 개수: 조건 줄 배지 = 그 조건에 고른 값 수(체크 수, 입력칸 · 날짜 칸은 값이 든 칸마다 1). 「필터」 단추 = 값이 걸린 조건 수(Jira 업무 목록과 같음)
  * 자리: 단추 왼쪽 끝에 맞춰 열고, 오른쪽이 화면 밖으로 나가면 오른쪽 끝에 맞춤(.filter-pop--end). 마크업에 --end 를 붙이면 늘 오른쪽 끝
  * 필터 더 보기(다른 방법): 바에 [필터 더 보기] 체크 목록(js/multiselect.js data-display="add")을 두고, 고른 조건의 단추(select[data-filter-field])만 바에 보인다
- * 조건 줄(다른 방법, 고급 검색): .filter-rows 안 조건마다 「이름 · 연산자 · 값」 한 상자 줄(.filter-row[data-filter-row]), [필터 추가] 목록(js/menu.js, 항목 data-filter-add)에서 고른 줄을 보이고 빼기(×)로 숨긴다
+ * 조건 묶음(고급 검색): .criteria-group 안 조건 줄(속성 · 연산자 · 값)과 하위 묶음을 더하고 빼며, 맨 바깥 묶음 위 .criteria-expr 에 괄호식을 쓴다
  * 키보드: 「필터」 단추 Enter · Space = 열고 고른 조건으로 / 조건 목록 ↑ ↓ = 조건 바꾸기 / Esc = 닫고 「필터」 단추로 / 바깥을 누르면 닫힘
  * ===================================================================== */
 (function () {
@@ -132,55 +132,62 @@
     }
     document.addEventListener('change', function (e) { if (e.target.matches && e.target.matches('select[data-display="add"]')) syncAdd(e.target); });
 
-    // 조건 줄(.filter-rows): [필터 추가] 목록에서 고른 조건의 줄(.filter-row[data-filter-row])을 보이고, 빼기(×)는 줄을 숨기며 값을 비운다.
-    // 목록에는 숨긴 줄의 조건만 원래 순서로 둔다(쓰는 조건은 목록에서 뺌). [모두 지우기] = 고정 줄(.filter-row--fixed)만 남기고 값을 비움
-    function clearRow(row) {
-        row.querySelectorAll('input, select, textarea').forEach(function (f) {
-            if (f.type === 'checkbox' || f.type === 'radio') f.checked = f.hasAttribute('data-filter-default');
-            else if (f.tagName === 'SELECT') { if (f.multiple) [].forEach.call(f.options, function (o) { o.selected = false; }); else f.selectedIndex = 0; }
-            else f.value = '';
-            f.dispatchEvent(new Event('change', { bubbles: true }));   // 다중 선택 단추 글자 · 지우기(×) 표시를 다시 그림
-        });
+    // 조건 묶음(.criteria-group): [조건 추가] = 묶음 끝에 새 조건 줄, [하위 묶음 추가] = 묶음 안에 새 묶음(조건 줄 하나). 둘 다 맨 바깥 묶음 안 template.criteria-template 의 줄 · 묶음을 복제,
+    // [묶음 지우기] = 하위 묶음을 통째로 뺌, 빼기(×) = 조건 줄 하나만 뺌. 값이 바뀔 때마다 맨 바깥 묶음 위 식(.criteria-expr)을 다시 씀
+    function txt(el) {
+        if (!el) return '';
+        if (el.tagName === 'SELECT') return el.multiple ? [].map.call(el.selectedOptions, function (o) { return o.text; }).join(', ') : (el.selectedOptions[0] ? el.selectedOptions[0].text : '');
+        return el.value.trim();
     }
-    function wireRows(box) {
-        if (!box || box.dataset.rowsDone) return;
-        box.dataset.rowsDone = '1';
-        var list = box.querySelector('.filter-rows__add .ui-menu__list');
-        var addBtn = box.querySelector('.filter-rows__add [aria-haspopup="menu"]');
-        var items = list ? [].slice.call(list.querySelectorAll('.ui-menu__item[data-filter-add]')) : [];
-        var empty = list && list.querySelector('.ui-menu__empty');
-        function row(name) { return box.querySelector('.filter-row[data-filter-row="' + name.replace(/"/g, '\\"') + '"]'); }
-        function sync() {
-            var left = 0;
-            items.forEach(function (it) { if (it.parentNode) it.parentNode.removeChild(it); });
-            items.forEach(function (it) { var r = row(it.getAttribute('data-filter-add')); if (r && r.hidden) { list.insertBefore(it, empty); left++; } });
-            if (addBtn) addBtn.disabled = !left;   // 더할 조건이 없으면 [필터 추가]를 끔
+    function rowExpr(row) {
+        var val = row.querySelector('.criteria-row__value');
+        var parts = val ? [].filter.call(val.querySelectorAll('input, select'), function (f) { return f.type !== 'search' && f.type !== 'hidden'; }).map(txt).filter(Boolean) : [];
+        if (!parts.length) return '';
+        return txt(row.querySelector('.criteria-row__field')) + ' ' + txt(row.querySelector('.criteria-row__op')) + ' ' + parts.join(' ~ ');
+    }
+    function groupExpr(g) {
+        var join = ' ' + (txt(g.querySelector(':scope > .criteria-group__head .criteria-group__join')) || '및') + ' ';
+        var body = g.querySelector(':scope > .criteria-group__body');
+        var items = body ? [].map.call(body.children, function (c) { return c.classList.contains('criteria-row') ? rowExpr(c) : c.classList.contains('criteria-group') ? groupExpr(c) : ''; }).filter(function (t) { return t && t !== '( )'; }) : [];
+        return '(' + (items.length ? items.join(join) : ' ') + ')';
+    }
+    function wireCriteria(root) {
+        if (!root || root.dataset.criteriaDone || (root.parentElement && root.parentElement.closest('.criteria-group'))) return;   // 맨 바깥 묶음에만 건다
+        root.dataset.criteriaDone = '1';
+        var expr = root.previousElementSibling && root.previousElementSibling.classList.contains('criteria-expr') ? root.previousElementSibling : null;
+        var tpl = root.querySelector('template.criteria-template');
+        var seq = 0;
+        function update() { if (expr) expr.textContent = groupExpr(root); }
+        function enhance(el) { if (window.enhanceSelects) window.enhanceSelects(el); }
+        function newRow() {
+            var row = tpl.content.querySelector('.criteria-row').cloneNode(true);
+            row.querySelectorAll('[id]').forEach(function (x) { x.id += '-' + (++seq); });
+            return row;
         }
-        function focusIn(r) {
-            var f = [].filter.call(r.querySelectorAll('.filter-row__value [tabindex="0"], .filter-row__value input, .filter-row__value select'), function (x) { return x.offsetParent !== null; })[0];
-            (f || r.querySelector('.filter-row__op')).focus();
-        }
-        box.addEventListener('click', function (e) {
-            var add = e.target.closest('[data-filter-add]'), rm = e.target.closest('.filter-row__remove'), all = e.target.closest('[data-filter-rows-clear]');
-            if (add) {   // 목록 닫기 · 포커스 되돌리기(js/menu.js)가 끝난 뒤에 줄을 보임: 항목을 목록에서 먼저 빼면 메뉴가 닫히지 않음
-                var r = row(add.getAttribute('data-filter-add'));
-                if (r) setTimeout(function () { r.hidden = false; sync(); focusIn(r); }, 0);
-            } else if (rm) {
-                var x = rm.closest('.filter-row');
-                clearRow(x); x.hidden = true; sync();
-                if (addBtn) addBtn.focus();
-            } else if (all) {
-                box.querySelectorAll('.filter-row').forEach(function (fr) { clearRow(fr); if (!fr.classList.contains('filter-row--fixed')) fr.hidden = true; });
-                sync();
+        function firstField(el) { var f = el.querySelector('.criteria-row__field'); var t = f && f.parentElement.querySelector('.ui-select__trigger'); (t || f).focus(); }
+        root.addEventListener('click', function (e) {
+            var btn = e.target.closest('[data-criteria]');
+            if (!btn || !root.contains(btn)) return;
+            var g = btn.closest('.criteria-group'), body = g.querySelector(':scope > .criteria-group__body'), kind = btn.getAttribute('data-criteria');
+            if (kind === 'add-row' && tpl) { var r = newRow(); body.appendChild(r); enhance(r); firstField(r); }
+            else if (kind === 'add-group' && tpl) {
+                var sub = tpl.content.querySelector('.criteria-group').cloneNode(true);
+                sub.querySelector('.criteria-group__body').appendChild(newRow());
+                body.appendChild(sub); enhance(sub); firstField(sub);
             }
+            else if (kind === 'remove-group' && g !== root) { var add = g.parentElement.closest('.criteria-group').querySelector(':scope > .criteria-group__head [data-criteria="add-group"]'); g.remove(); if (add) add.focus(); }
+            else if (kind === 'remove-row') { var row = btn.closest('.criteria-row'), next = g.querySelector(':scope > .criteria-group__head [data-criteria="add-row"]'); row.remove(); if (next) next.focus(); }
+            update();
         });
-        if (list) sync();
+        root.addEventListener('change', update);
+        root.addEventListener('input', update);
+        update();
     }
 
     function enhanceFilterPanels(root) {
         (root || document).querySelectorAll('.filter-pop-wrap').forEach(wire);
         (root || document).querySelectorAll('select[data-display="add"]').forEach(syncAdd);
-        (root || document).querySelectorAll('.filter-rows').forEach(wireRows);
+        (root || document).querySelectorAll('.criteria-group').forEach(wireCriteria);
     }
     window.enhanceFilterPanels = enhanceFilterPanels;
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { enhanceFilterPanels(document); });
