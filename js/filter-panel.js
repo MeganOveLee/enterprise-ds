@@ -17,6 +17,7 @@
  *   불러오기만 하면 화면의 .filter-pop-wrap 이 모두 동작. 나중에 그린 것은 window.enhanceFilterPanels(영역)
  *
  * 개수: 조건 줄 배지 = 그 조건에 고른 값 수(체크 수, 입력칸 · 날짜 칸은 값이 든 칸마다 1). 「필터」 단추 = 값이 걸린 조건 수(Jira 업무 목록과 같음)
+ * 걸린 값: 조건 줄 이름 아래 .filter-pop__value 에 고른 값 글자(첫 값 외 N · 시작 ~ 끝). Jira 업무 목록은 개수만 보여, 무엇으로 걸렀는지는 줄마다 열어야 보임
  * 자리: 단추 왼쪽 끝에 맞춰 열고, 오른쪽이 화면이나 넘침을 자르는 조상 상자 밖으로 나가면 오른쪽 끝에 맞춤(.filter-pop--end). 마크업에 --end 를 붙이면 늘 오른쪽 끝
  * 필터 더 보기(다른 방법): 바에 [필터 더 보기] 체크 목록(js/multiselect.js data-display="add")을 두고, 고른 조건의 단추(select[data-filter-field])만 바에 보인다
  * 조건 그룹(고급 검색): .criteria-group 안 조건 줄(속성 · 연산자 · 값, 속성 종류에 따라 값 칸이 바뀜)과 하위 그룹을 더하고 빼며, 맨 바깥 그룹 앞 .criteria-expr 에 괄호식을 쓴다
@@ -36,6 +37,15 @@
         return n;
     }
     function setCount(el, n) { if (!el) return; el.textContent = n ? String(n) : ''; el.hidden = !n; }
+    // 걸린 값 글자: 체크 = 고른 이름(둘 이상이면 「첫 값 외 N」, Multi Select 와 같음 DS-ADR-022) · 날짜 칸 둘 = 「시작 ~ 끝」 · 입력칸 = 넣은 글자
+    function summary(pane) {
+        var picked = [].filter.call(pane.querySelectorAll('input[type="checkbox"], input[type="radio"]'), function (el) { return el.checked && !el.hasAttribute('data-filter-default'); })
+            .map(function (el) { return (el.closest('label') || el).textContent.trim(); });
+        if (picked.length) return picked[0] + (picked.length > 1 ? ' 외 ' + (picked.length - 1) : '');
+        var vals = [].filter.call(pane.querySelectorAll('input:not([type="checkbox"]):not([type="radio"]):not(.filter-pop__search), textarea'), function (el) { return el.value && el.value.trim(); })
+            .map(function (el) { return el.value.trim(); });
+        return pane.querySelector('.ui-datepicker-range') ? vals.join(' ~ ') : vals.join(', ');
+    }
 
     function wire(wrap) {
         if (!wrap || wrap.dataset.filterDone) return;
@@ -49,7 +59,13 @@
 
         function update() {
             var fields = 0;
-            tabs.forEach(function (t, i) { var n = panes[i] ? valuesIn(panes[i]) : 0; setCount(t.querySelector('.filter-pop__count'), n); if (n) fields++; });
+            tabs.forEach(function (t, i) {
+                var n = panes[i] ? valuesIn(panes[i]) : 0, v = t.querySelector('.filter-pop__value');
+                setCount(t.querySelector('.filter-pop__count'), n);
+                if (!v) { v = document.createElement('span'); v.className = 'filter-pop__value'; t.appendChild(v); }   // 조건 이름 아래 걸린 값: 패널을 닫았다 열어도 무엇으로 걸렀는지 보임
+                v.textContent = n ? summary(panes[i]) : ''; v.hidden = !n;
+                if (n) fields++;
+            });
             setCount(trigger.querySelector('.filter-trigger__count'), fields);
             trigger.classList.toggle('is-applied', fields > 0);
             trigger.setAttribute('aria-label', '필터' + (fields ? ': 걸린 조건 ' + fields + '개' : ''));
