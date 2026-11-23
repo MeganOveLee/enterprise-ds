@@ -12,6 +12,11 @@ import * as S from './SearchForm.stories.js';
 <Card of={S.시안_필터_칩} title="B · 필터 칩 한 줄" desc="기본보다 조건이 서너 개뿐인 모바일 · 간단한 목록에서 사용합니다." basis="검색 칸 하나 + 누르면 켜지는 칩으로 한 번 누르기에 거릅니다(Polaris Filters). 칩은 Form › Chip과 같습니다." />
 <Card of={S.시안_왼쪽_필터_패널} title="C · 왼쪽 필터 패널" desc="기본보다 조건 값이 작업현황 · 분류처럼 정해진 목록이고 여러 개를 겹쳐 거를 때 사용합니다." basis="Carbon · Polaris 필터 패널과 같은 방식입니다. 항목마다 체크로 고르고 결과가 옆에서 바뀝니다. 놓인 칸이 좁으면 패널이 결과 위로 내려갑니다." />
 </Section>
+<Section title="라벨과 버튼 위계" en="Hierarchy">
+<Card of={S.위계_고르는_칸_라벨} title="2 · 고르는 칸만 브랜드색 라벨" tag="추천" desc="새로 만드는 검색 화면에 사용합니다. 라벨은 평소 흐린 글자이고, 칸을 누르면 그 칸의 라벨만 브랜드색이 됩니다. 걸린 조건은 결과 위에 칩으로 보이고 하나씩 뺄 수 있습니다." basis="지금 고르는 조건의 이름만 브랜드색으로 두는 방식은 Lusha의 필터, 결과 위에 걸린 조건을 모아 보이고 오른쪽에 초기화를 두는 방식은 Dealfront에서 가져왔습니다. 채운 버튼은 [검색] 하나입니다(SAP Fiori Filter Bar의 [Go])." />
+<Card of={S.위계_아래_선_칸} title="3 · 아래 선 입력칸과 아이콘 묶음" desc="2보다 조건 칸이 많아 상자 테두리가 겹쳐 보이는 검색 화면에 사용합니다. 입력칸은 옅은 바탕에 아래 선만 두고, 결과 표의 동작은 아이콘 묶음으로 모아 세로선으로 나눕니다." basis="아래 선으로 칸을 보이는 입력칸과, 표 위 동작을 성격별로 세로선으로 나눈 아이콘 묶음은 SAP Fiori Filter Bar에서 가져왔습니다. 입력칸은 Form › Input의 B 채운 칸과 같습니다." />
+<Card of={S.위계_브랜드_라벨} title="1 · 브랜드색 라벨" desc="이전 버전 화면과 모양을 맞춰야 하는 검색 화면에 사용합니다." basis="이전 버전 검색 라벨 값입니다(브랜드색 · 굵은 글자). 결과 머리 줄에 [선택 일괄 결재] · Excel · [필터 초기화]를 나란히 둡니다." />
+</Section>
 <Section title="예시" en="Examples" desc={<>한 행에 조건을 최대 6칸 둡니다. 조건이 두 행을 넘으면 첫 행만 보이고 나머지는 상세 검색으로 접습니다. <a className="ds-link" href="https://app.notion.com/p/3ffa8196682d81f7b73de9981ab21fe3" target="_blank" rel="noreferrer">DS-ADR-044 ↗</a></>}>
 <Card of={S.모두_보기} title="모두 보기" en="All conditions" desc="모든 조건을 한 격자에 둡니다. 접을 조건이 없으므로 펼치기 버튼을 두지 않습니다. 그림의 번호는 아래 표의 이름 · 클래스입니다.">
 <table className="ds-table ds-props anno-list">
@@ -22,7 +27,8 @@ import * as S from './SearchForm.stories.js';
 <tr><td><span className="flow__no">3</span></td><td><b>조건 격자</b></td><td><code>.form-grid-2.form-grid--6</code></td><td>6열 격자입니다. 한 행에 조건을 최대 6칸 둡니다. 놓인 칸이 480px보다 좁으면 2칸, 280px보다 좁으면 1칸으로 줄어듭니다.</td></tr>
 <tr><td><span className="flow__no">4</span></td><td><b>조건 필드</b></td><td><code>.ff-field</code> › <code>.search-label</code> + <code>.td</code></td><td>라벨 위 · 필드 아래 한 쌍입니다. 입력 필드는 placeholder로 입력할 내용을 안내합니다.</td></tr>
 <tr><td><span className="flow__no">5</span></td><td><b>두 칸 필드</b></td><td><code>.span-2</code></td><td>기간(<code>.ui-datepicker-range</code>) · 라디오 묶음(<code>.radio-group</code>)은 두 칸을 씁니다.</td></tr>
-<tr><td><b>브랜드가 바꾸는 것</b></td><td>입력칸 · 칩 · 카드 토큰</td><td>칸 높이 · 모서리 · 글자 크기 · 색입니다. 조건 접기 규칙(두 줄 넘으면 첫 줄만)은 모든 브랜드가 같습니다. 시안은 Default = A 칸 여러 줄, Mobility = B 필터 칩, OOTB = C 왼쪽 필터 패널입니다.</td></tr>
+<tr><td><b>라벨과 버튼 위계</b></td><td><code>.form-grid--focus-label</code> · <code>.table-panel__toolbar</code> › <code>ul.checkSelect__chips</code></td><td>조건 격자에 붙이면 라벨이 보조 글자색(<code>--color-text-muted</code>)이 되고, 지금 고르는 칸의 라벨만 라벨 색(<code>--color-text-label</code>)이 됩니다. 걸린 조건은 결과 표 패널의 도구 줄에 지울 수 있는 칩으로 두고, 오른쪽 끝에 [필터 초기화]를 둡니다.</td></tr>
+<tr><td><b>브랜드가 바꾸는 것</b></td><td>입력칸 · 칩 · 카드 토큰</td><td>칸 높이 · 모서리 · 글자 크기 · 색입니다. 조건 접기 규칙(두 줄 넘으면 첫 줄만)은 모든 브랜드가 같습니다. 시안은 Default = A 칸 여러 줄, Mobility = B 필터 칩, OOTB = C 왼쪽 필터 패널입니다. 라벨과 버튼 위계는 세 브랜드가 1을 쓰고, 새로 만드는 화면에는 2를 권합니다.</td></tr>
 </tbody>
 </table>
 </Card>
