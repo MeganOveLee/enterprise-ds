@@ -111,11 +111,41 @@ export const 위계_아래_선_칸 = { parameters: optSrc(rankUnderline()), rend
 // 4 = 한 줄 바: 검색 칸 + 조건 단추(Multi Select C, .checkSelect--filter) 한 줄, 오른쪽 끝 [검색] · [초기화]. 걸린 조건은 단추 색으로만 보이고, 결과 패널 머리에는 결과 개수만(Jira 서비스 큐와 같음)
 const fsel = (name, items, picked = [], search = false) => '<select class="checkSelect" multiple data-display="filter" aria-label="' + name + '"' + (search ? ' data-searchBox="true"' : '') + '>' +
   items.map((t) => '<option' + (picked.includes(t) ? ' selected' : '') + '>' + t + '</option>').join('') + '</select>';
+// 필터 패널: 바에 둔 조건 단추 밖의 나머지 조건(문서 검색 = 검색 칸 · 작업현황 · 등록자 + 아래 8개). open = 펼친 모습(예시 카드)
+const SLIDERS = '<path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/>';
+let fpId = 0;
+const ck = (name, t, on = false) => '<label class="checkbox"><input type="checkbox"' + (on ? ' checked' : '') + '>' + t + '</label>';
+const rd = (name, t, on = false, def = false) => '<label class="radio"><input type="radio" name="' + name + '"' + (on ? ' checked' : '') + (def ? ' data-filter-default' : '') + '><span class="radio__mark"></span>' + t + '</label>';
+const FP_FIELDS = [
+  ['문서 분류', (id) => '<input class="input filter-pop__search" type="search" aria-label="문서 분류 검색" placeholder="문서 분류 검색"><div class="filter-pop__options">' + [['설계 문서', true], ['시험 문서'], ['회의록'], ['검토 보고서'], ['도면']].map(([t, on]) => ck(id, t, on)).join('') + '</div>'],
+  ['문서 번호', () => '<input class="input" aria-label="문서 번호" placeholder="문서 번호 입력" data-ds-clear>'],
+  ['버전', (id) => '<div class="filter-pop__options" role="radiogroup" aria-label="버전">' + rd(id + '-v', '최신 버전', true, true) + rd(id + '-v', '모든 버전') + '</div>'],
+  ['등록일', () => range('등록일', '2026-09-01', '2026-09-30')],
+  ['수정자', (id) => '<input class="input filter-pop__search" type="search" aria-label="수정자 검색" placeholder="수정자 검색"><div class="filter-pop__options">' + ['김도윤', '이서연', '박지호', '최민준', '정하은'].map((t) => ck(id, t)).join('') + '</div>'],
+  ['수정일', () => range('수정일')],
+  ['프로젝트', (id) => '<input class="input filter-pop__search" type="search" aria-label="프로젝트 검색" placeholder="프로젝트 검색"><div class="filter-pop__options">' + ['PJT-2601 전동 캘리퍼', 'PJT-2604 경량 하우징', 'PJT-2607 커넥터 표준화'].map((t) => ck(id, t)).join('') + '</div>'],
+  ['담당 부서', (id) => '<div class="filter-pop__options">' + ['설계1팀', '설계2팀', '시험팀', '품질팀', '생산기술팀'].map((t) => ck(id, t)).join('') + '</div>'],
+];
+const filterPop = (open = false) => {
+  const id = 'fp-' + (++fpId);
+  const tabs = FP_FIELDS.map(([t], i) => '<button type="button" role="tab" class="filter-pop__field" id="' + id + '-t' + i + '" aria-controls="' + id + '-p' + i + '" aria-selected="' + (i === 0) + '" tabindex="' + (i === 0 ? 0 : -1) + '">' + t + '<span class="filter-pop__count" hidden></span></button>').join('');
+  const panes = FP_FIELDS.map(([t, body], i) => '<div class="filter-pop__pane" role="tabpanel" id="' + id + '-p' + i + '" aria-labelledby="' + id + '-t' + i + '"' + (i === 0 ? '' : ' hidden') + '>' + body(id + '-' + i) +
+    '<div class="filter-pop__pane-foot"><button type="button" class="btn btn--secondary btn--transparent btn--sm" data-filter-clear>지우기</button></div></div>').join('');
+  return '<div class="filter-pop-wrap"><button type="button" class="btn btn--secondary btn--outlined filter-trigger" aria-haspopup="dialog" aria-expanded="' + open + '" aria-controls="' + id + '">' + ico(SLIDERS) + '필터<span class="filter-trigger__count" hidden></span></button>' +
+    '<div class="filter-pop" id="' + id + '" role="dialog" aria-label="필터"' + (open ? '' : ' hidden') + '><div class="filter-pop__main"><div class="filter-pop__fields" role="tablist" aria-orientation="vertical" aria-label="조건">' + tabs + '</div>' + panes + '</div>' +
+    '<div class="filter-pop__foot"><button type="button" class="btn btn--secondary btn--transparent" data-filter-clear-all>모두 지우기</button></div></div></div>';
+};
 const rankBar = () => '<section class="product" style="padding:0"><div class="search-bar"><input class="input search-bar__query" type="search" aria-label="문서 검색" placeholder="문서 번호 또는 문서 명" value="캘리퍼" data-ds-clear>' +
-  fsel('작업현황', ['작업 중', '검토 중', '승인', '반려', '폐기'], ['검토 중']) + fsel('문서 분류', ['설계 사양서', '시험 성적서', '도면', '회의록', '검토 보고서']) +
-  fsel('등록자', ['김도윤', '이서연', '박지호', '최민준', '정하은'], ['김도윤'], true) +
+  fsel('작업현황', ['작업 중', '검토 중', '승인', '반려', '폐기'], ['검토 중']) +
+  fsel('등록자', ['김도윤', '이서연', '박지호', '최민준', '정하은'], ['김도윤'], true) + filterPop() +
   '<div class="search-bar__actions"><button type="button" class="btn btn--primary btn--filled">' + ico(SEARCH) + '검색</button><button type="button" class="btn btn--secondary btn--transparent">' + ico(RESET) + '초기화</button></div></div>' +
   '<section class="table-panel"><header class="table-panel__head"><h3 class="table-panel__title">검색 결과 ' + RANK_ROWS.length + '</h3><div class="table-panel__actions"><button type="button" class="btn btn--excel">' + XLS + 'Excel</button></div></header>' +
   rankTable(' grid-table--subtle') + '</section></section>';
-const stageBar = (html) => { const el = stage(html); setTimeout(() => el.querySelectorAll('select.checkSelect').forEach((sel) => window.buildMultiSelect && window.buildMultiSelect(sel)), 0); return el; };
+const stageBar = (html, minH = 0) => { const el = stage(html); if (minH) el.style.minHeight = minH + 'px';
+  setTimeout(() => { el.querySelectorAll('select.checkSelect').forEach((sel) => window.buildMultiSelect && window.buildMultiSelect(sel)); if (window.enhanceFilterPanels) window.enhanceFilterPanels(el); }, 0); return el; };
 export const 위계_한_줄_바 = { parameters: optSrc(rankBar()), render: () => stageBar(rankBar()) };
+// 필터 패널을 펼친 모습: 「필터」 단추를 누른 뒤. 걸린 조건(문서 분류 · 등록일)마다 배지, 단추에는 걸린 조건 수
+const barOnly = (open) => '<div class="search-bar"><input class="input search-bar__query" type="search" aria-label="문서 검색" placeholder="문서 번호 또는 문서 명">' +
+  fsel('작업현황', ['작업 중', '검토 중', '승인', '반려', '폐기']) + fsel('등록자', ['김도윤', '이서연', '박지호', '최민준', '정하은'], [], true) + filterPop(open) +
+  '<div class="search-bar__actions"><button type="button" class="btn btn--primary btn--filled">' + ico(SEARCH) + '검색</button><button type="button" class="btn btn--secondary btn--transparent">' + ico(RESET) + '초기화</button></div></div>';
+export const 필터_패널_펼침 = { parameters: optSrc(barOnly(false)), render: () => stageBar(barOnly(true), 460) };
