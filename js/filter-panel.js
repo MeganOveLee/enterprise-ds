@@ -19,6 +19,7 @@
  * 개수: 조건 줄 배지 = 그 조건에 고른 값 수(체크 수, 입력칸 · 날짜 칸은 값이 든 칸마다 1). 「필터」 단추 = 값이 걸린 조건 수(Jira 업무 목록과 같음)
  * 자리: 단추 왼쪽 끝에 맞춰 열고, 오른쪽이 화면 밖으로 나가면 오른쪽 끝에 맞춤(.filter-pop--end). 마크업에 --end 를 붙이면 늘 오른쪽 끝
  * 필터 더 보기(다른 방법): 바에 [필터 더 보기] 체크 목록(js/multiselect.js data-display="add")을 두고, 고른 조건의 단추(select[data-filter-field])만 바에 보인다
+ * 조건 줄(다른 방법, 고급 검색): .filter-rows 안 조건마다 「이름 · 연산자 · 값」 한 상자 줄(.filter-row[data-filter-row]), [필터 추가] 목록(js/menu.js, 항목 data-filter-add)에서 고른 줄을 보이고 빼기(×)로 숨긴다
  * 키보드: 「필터」 단추 Enter · Space = 열고 고른 조건으로 / 조건 목록 ↑ ↓ = 조건 바꾸기 / Esc = 닫고 「필터」 단추로 / 바깥을 누르면 닫힘
  * ===================================================================== */
 (function () {
@@ -131,9 +132,55 @@
     }
     document.addEventListener('change', function (e) { if (e.target.matches && e.target.matches('select[data-display="add"]')) syncAdd(e.target); });
 
+    // 조건 줄(.filter-rows): [필터 추가] 목록에서 고른 조건의 줄(.filter-row[data-filter-row])을 보이고, 빼기(×)는 줄을 숨기며 값을 비운다.
+    // 목록에는 숨긴 줄의 조건만 원래 순서로 둔다(쓰는 조건은 목록에서 뺌). [모두 지우기] = 고정 줄(.filter-row--fixed)만 남기고 값을 비움
+    function clearRow(row) {
+        row.querySelectorAll('input, select, textarea').forEach(function (f) {
+            if (f.type === 'checkbox' || f.type === 'radio') f.checked = f.hasAttribute('data-filter-default');
+            else if (f.tagName === 'SELECT') { if (f.multiple) [].forEach.call(f.options, function (o) { o.selected = false; }); else f.selectedIndex = 0; }
+            else f.value = '';
+            f.dispatchEvent(new Event('change', { bubbles: true }));   // 다중 선택 단추 글자 · 지우기(×) 표시를 다시 그림
+        });
+    }
+    function wireRows(box) {
+        if (!box || box.dataset.rowsDone) return;
+        box.dataset.rowsDone = '1';
+        var list = box.querySelector('.filter-rows__add .ui-menu__list');
+        var addBtn = box.querySelector('.filter-rows__add [aria-haspopup="menu"]');
+        var items = list ? [].slice.call(list.querySelectorAll('.ui-menu__item[data-filter-add]')) : [];
+        var empty = list && list.querySelector('.ui-menu__empty');
+        function row(name) { return box.querySelector('.filter-row[data-filter-row="' + name.replace(/"/g, '\\"') + '"]'); }
+        function sync() {
+            var left = 0;
+            items.forEach(function (it) { if (it.parentNode) it.parentNode.removeChild(it); });
+            items.forEach(function (it) { var r = row(it.getAttribute('data-filter-add')); if (r && r.hidden) { list.insertBefore(it, empty); left++; } });
+            if (addBtn) addBtn.disabled = !left;   // 더할 조건이 없으면 [필터 추가]를 끔
+        }
+        function focusIn(r) {
+            var f = [].filter.call(r.querySelectorAll('.filter-row__value [tabindex="0"], .filter-row__value input, .filter-row__value select'), function (x) { return x.offsetParent !== null; })[0];
+            (f || r.querySelector('.filter-row__op')).focus();
+        }
+        box.addEventListener('click', function (e) {
+            var add = e.target.closest('[data-filter-add]'), rm = e.target.closest('.filter-row__remove'), all = e.target.closest('[data-filter-rows-clear]');
+            if (add) {   // 목록 닫기 · 포커스 되돌리기(js/menu.js)가 끝난 뒤에 줄을 보임: 항목을 목록에서 먼저 빼면 메뉴가 닫히지 않음
+                var r = row(add.getAttribute('data-filter-add'));
+                if (r) setTimeout(function () { r.hidden = false; sync(); focusIn(r); }, 0);
+            } else if (rm) {
+                var x = rm.closest('.filter-row');
+                clearRow(x); x.hidden = true; sync();
+                if (addBtn) addBtn.focus();
+            } else if (all) {
+                box.querySelectorAll('.filter-row').forEach(function (fr) { clearRow(fr); if (!fr.classList.contains('filter-row--fixed')) fr.hidden = true; });
+                sync();
+            }
+        });
+        if (list) sync();
+    }
+
     function enhanceFilterPanels(root) {
         (root || document).querySelectorAll('.filter-pop-wrap').forEach(wire);
         (root || document).querySelectorAll('select[data-display="add"]').forEach(syncAdd);
+        (root || document).querySelectorAll('.filter-rows').forEach(wireRows);
     }
     window.enhanceFilterPanels = enhanceFilterPanels;
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { enhanceFilterPanels(document); });

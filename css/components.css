@@ -5467,6 +5467,64 @@ body.dark-mode .empty-illo__badge  { fill: var(--color-bg-muted); }
 .filter-pop__foot { display: flex; align-items: center; padding: var(--spacing-8) var(--spacing-12); border-top: 1px solid var(--color-border-subtle); }
 body.dark-mode .filter-pop { background-color: var(--color-bg-muted); }   /* 떠 있는 층 = 다중 선택 목록 · 달력과 같은 바탕 */
 
+/* Search Form 조건 줄: 조건 하나 = 「이름 · 연산자 · 값」 한 상자, 아래 [필터 추가]로 줄을 더한다(Jira 업무 목록 필터 「고급」). 조건을 골라 더해 가며 찾는 고급 검색에 (js/filter-panel.js)
+ *   <div class="filter-rows">
+ *     <div class="filter-row filter-row--fixed" data-filter-row="유형" role="group"><div class="filter-row__box"><span class="filter-row__field">유형</span><select class="select filter-row__op">…</select><div class="filter-row__value">셀렉트 · 다중 선택 · 입력칸 · 기간</div></div></div>
+ *     <div class="filter-row" data-filter-row="작업현황" role="group"> … <button class="btn btn--secondary btn--transparent btn--icon filter-row__remove" aria-label="작업현황 조건 빼기">×</button></div> …
+ *     <div class="ui-menu filter-rows__add"> [필터 추가] + .ui-menu__list(찾기 칸, 항목 data-filter-add="조건 이름") </div>
+ *     <div class="filter-rows__foot"><button data-filter-rows-clear>모두 지우기</button></div>
+ *   </div>
+ *   상자 하나가 입력칸 모양(테두리 · 올리면 한 단계 진하게 · 누르면 포커스 선 + 번짐)이고, 상자 안 값 칸은 테두리 · 바탕을 지운다. 연산자 셀렉트만 안쪽 상자로 남겨 이름과 값을 가른다 */
+.filter-rows { display: flex; flex-direction: column; align-items: stretch; gap: var(--spacing-8); }
+.filter-row { display: flex; align-items: center; gap: var(--spacing-8); }
+.filter-row[hidden] { display: none; }
+.filter-row--fixed::after { content: ""; flex: none; width: var(--size-btn); }   /* 빼기 단추 자리: 상자 오른쪽 끝을 다른 줄과 맞춤 */
+.filter-row__box {
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;   /* 놓인 칸이 좁으면 값 칸이 다음 줄로 (DS-ADR-048) */
+    align-items: center;
+    gap: var(--spacing-4) var(--spacing-8);
+    min-width: 0;
+    padding: var(--spacing-4) var(--spacing-4) var(--spacing-4) var(--spacing-12);
+    box-sizing: border-box;
+    border: 1px solid var(--color-border-input);
+    border-radius: var(--radius-input);
+    background-color: var(--color-bg-input);
+    transition: border-color var(--duration-fast), box-shadow var(--duration-fast);
+}
+.filter-row__box:hover { border-color: var(--color-border-input-hover); }
+.filter-row__box:focus-within { border-color: var(--color-border-focus); box-shadow: 0 0 0 3px var(--color-focus-ring); }
+.filter-row__field {
+    flex: none;
+    width: 7em;
+    overflow: hidden;
+    color: var(--color-text-base);
+    font-size: var(--body-sm);
+    font-weight: var(--font-weight-semibold);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+/* 연산자 칸: 셀렉트를 꾸민 .ui-select(js/select.js)와 꾸미기 전 select 둘 다. 글자 폭만큼, 번짐은 상자에만 두고 연산자 칸은 포커스 선으로 */
+.filter-row__box > :is(.filter-row__op, .ui-select:has(> .filter-row__op)) { flex: none; width: auto; min-width: 72px; }
+.filter-row .filter-row__op:focus,
+.filter-row .ui-select:has(> .filter-row__op) .ui-select__trigger:is(:focus, .is-open) { box-shadow: none; }
+.filter-row__value { flex: 1 1 160px; min-width: 0; }
+/* 상자 안 값 칸: 테두리 · 바탕 · 번짐을 지움(상자가 대신 보임). 상태 규칙(.input:hover · :focus, 다중 선택 열림)보다 세게 */
+.filter-row .filter-row__value :is(.input, .select, .ui-datepicker, .ui-select__trigger),
+.filter-row .filter-row__value :is(.input, .select, .ui-datepicker, .ui-select__trigger):is(:hover, :focus, :focus-within, .is-open),
+.filter-row .filter-row__value .checkSelect .selected-text,
+.filter-row .filter-row__value .checkSelect .selected-text:is(:hover, :focus-visible),
+.filter-row .filter-row__value .checkSelect:has(.options.show) .selected-text {
+    border-color: transparent;
+    background-color: transparent;
+    box-shadow: none;
+}
+.filter-row__remove { flex: none; }
+.filter-rows__add { align-self: flex-start; }
+.filter-rows__add .ui-menu__list { min-width: 200px; }
+.filter-rows__foot { display: flex; align-items: center; padding-top: var(--spacing-8); border-top: 1px solid var(--color-border-subtle); }
+
 /* Button: 타일 버튼: 아이콘 위 · 글자 아래. 큰 동작 몇 개를 나란히 고르게 둘 때(바로가기 · 등록 종류 고르기)
  *   <button class="btn btn--secondary btn--outlined btn--tile"><svg …></svg>문서 등록</button> */
 .btn.btn--tile {
