@@ -30,7 +30,7 @@ jobs:
       - name: 디자인 시스템 파일 묶기
         run: zip -qr storybook-static/enterprise-ds-v1.0.zip README.md css js
       - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: storybook-static
       - id: deployment
