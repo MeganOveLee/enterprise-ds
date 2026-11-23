@@ -66,6 +66,18 @@ export const Label = {
   parameters: html(LABEL),
   render: () => '<div style="max-width:480px">' + LABEL.join('') + '</div>',
 };
+// 고르는 칸만 라벨색: 칸이 많은 검색 조건에서 라벨은 평소 보조 글자색, 지금 고르는 칸의 라벨만 라벨색(.form-grid--focus-label)
+const LABEL_FOCUS = [
+  '<div class="form-grid-2 form-grid--focus-label">',
+  '  <div class="ff-field"><label class="search-label" for="in-lf-no">문서 번호</label><div class="td"><input class="input" id="in-lf-no" value="DOC-2610"></div></div>',
+  '  <div class="ff-field"><label class="search-label" for="in-lf-name">문서 명</label><div class="td"><input class="input" id="in-lf-name" placeholder="문서 명 입력"></div></div>',
+  '  <div class="ff-field"><label class="search-label" for="in-lf-state">작업현황</label><div class="td"><select class="select" id="in-lf-state"><option>전체</option><option selected>검토 중</option></select></div></div>',
+  '</div>',
+];
+export const 라벨_고르는_칸 = {
+  parameters: html(LABEL_FOCUS),
+  render: () => '<div class="sb-field--wide">' + LABEL_FOCUS.join('') + '</div>',
+};
 
 // 지우기(×): 조회 조건 칸에 값이 있을 때만(DS-ADR-042). data-ds-clear 를 달면 js/clear.js 가 버튼을 붙임. 편집 폼 · 읽기 전용 칸에는 붙지 않음
 const CLEAR = [
@@ -270,7 +282,8 @@ const OPT_A = ['<div class="form-grid-2">',
   optPair('in-a-kind', '문서 분류', '<select class="select" id="in-a-kind">' + KINDS2 + '</select>'), '</div>'];
 const OPT_B = ['<div class="form-grid-2">',
   optPair('in-b-no', '문서 번호', '<input class="input input--filled" id="in-b-no" placeholder="문서 번호 입력" value="DOC-2610">'),
-  optPair('in-b-kind', '문서 분류', '<select class="select select--filled" id="in-b-kind">' + KINDS2 + '</select>'), '</div>'];
+  optPair('in-b-name', '문서 명', '<input class="input input--filled" id="in-b-name" placeholder="문서 명 입력">'),
+  optPair('in-b-kind', '문서 분류', '<select class="select select--filled" id="in-b-kind"><option>전체</option>' + KINDS2.replace('<option>설계 문서', '<option selected>설계 문서') + '</select>'), '</div>'];   // 입력함(흰 바탕) · 비어 있음(옅은 회색) · 셀렉트
 const floatField = (id, lab, value = '') => '  <div class="input-float"><input class="input" id="' + id + '" placeholder=" " value="' + value + '"><label for="' + id + '">' + lab + '</label></div>';
 const OPT_C = ['<div class="form-grid-2">', floatField('in-c-no', '문서 번호', 'DOC-2610'), floatField('in-c-name', '문서 명'), '</div>'];
 export const 시안_윤곽_칸 = { parameters: html(OPT_A), render: () => '<div class="sb-field--wide">' + OPT_A.join('') + '</div>' };

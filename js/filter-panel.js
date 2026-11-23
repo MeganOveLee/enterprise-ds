@@ -17,9 +17,9 @@
  *   불러오기만 하면 화면의 .filter-pop-wrap 이 모두 동작. 나중에 그린 것은 window.enhanceFilterPanels(영역)
  *
  * 개수: 조건 줄 배지 = 그 조건에 고른 값 수(체크 수, 입력칸 · 날짜 칸은 값이 든 칸마다 1). 「필터」 단추 = 값이 걸린 조건 수(Jira 업무 목록과 같음)
- * 자리: 단추 왼쪽 끝에 맞춰 열고, 오른쪽이 화면 밖으로 나가면 오른쪽 끝에 맞춤(.filter-pop--end). 마크업에 --end 를 붙이면 늘 오른쪽 끝
+ * 자리: 단추 왼쪽 끝에 맞춰 열고, 오른쪽이 화면이나 넘침을 자르는 조상 상자 밖으로 나가면 오른쪽 끝에 맞춤(.filter-pop--end). 마크업에 --end 를 붙이면 늘 오른쪽 끝
  * 필터 더 보기(다른 방법): 바에 [필터 더 보기] 체크 목록(js/multiselect.js data-display="add")을 두고, 고른 조건의 단추(select[data-filter-field])만 바에 보인다
- * 조건 묶음(고급 검색): .criteria-group 안 조건 줄(속성 · 연산자 · 값)과 하위 묶음을 더하고 빼며, 맨 바깥 묶음 위 .criteria-expr 에 괄호식을 쓴다
+ * 조건 그룹(고급 검색): .criteria-group 안 조건 줄(속성 · 연산자 · 값, 속성 종류에 따라 값 칸이 바뀜)과 하위 그룹을 더하고 빼며, 맨 바깥 그룹 앞 .criteria-expr 에 괄호식을 쓴다
  * 키보드: 「필터」 단추 Enter · Space = 열고 고른 조건으로 / 조건 목록 ↑ ↓ = 조건 바꾸기 / Esc = 닫고 「필터」 단추로 / 바깥을 누르면 닫힘
  * ===================================================================== */
 (function () {
@@ -62,7 +62,11 @@
         function place() {   // 오른쪽이 화면 밖으로 나가면 단추 오른쪽 끝에 맞춰 왼쪽으로 펼침(.filter-pop--end)
             if (autoEnd.fixed) return;
             pop.classList.remove('filter-pop--end');
-            if (pop.getBoundingClientRect().right > document.documentElement.clientWidth - 8) pop.classList.add('filter-pop--end');
+            var edge = document.documentElement.clientWidth - 8;   // 넘침을 자르는 조상 상자(카드 · 창 · 패널)가 있으면 그 오른쪽 끝까지만
+            for (var a = wrap.parentElement; a && a !== document.body; a = a.parentElement) {
+                if (/(hidden|auto|scroll|clip)/.test(getComputedStyle(a).overflowX)) edge = Math.min(edge, a.getBoundingClientRect().right - 8);
+            }
+            if (pop.getBoundingClientRect().right > edge) pop.classList.add('filter-pop--end');
         }
         function open() {
             if (isOpen()) return;
@@ -132,54 +136,109 @@
     }
     document.addEventListener('change', function (e) { if (e.target.matches && e.target.matches('select[data-display="add"]')) syncAdd(e.target); });
 
-    // 조건 묶음(.criteria-group): [조건 추가] = 묶음 끝에 새 조건 줄, [하위 묶음 추가] = 묶음 안에 새 묶음(조건 줄 하나). 둘 다 맨 바깥 묶음 안 template.criteria-template 의 줄 · 묶음을 복제,
-    // [묶음 지우기] = 하위 묶음을 통째로 뺌, 빼기(×) = 조건 줄 하나만 뺌. 값이 바뀔 때마다 맨 바깥 묶음 위 식(.criteria-expr)을 다시 씀
+    // 조건 그룹(.criteria-group, 고급 검색): 그룹 머리 = 및 · 또는 + [속성 추가](목록에서 고른 속성의 줄) · [조건 추가](첫 속성 줄) · [그룹 추가](안에 그룹) · [그룹 제거](하위 그룹만).
+    // 줄 = 속성 · 연산자 · 값. 속성 옵션의 data-type 에 따라 연산자와 값 칸이 바뀐다(아래 OPS, 맨 바깥 그룹 안 template.criteria-template 의 [data-criteria-value]).
+    //   text 글자 · number 숫자 · bool 예/아니요 · list 목록(옵션 data-values="값|값") · user 사람(찾기 단추) · date 날짜(어제 · 오늘 · 내일 · 날짜 범위 선택 · 일 범위 선택)
+    // 값이 바뀔 때마다 맨 바깥 그룹 앞 .criteria-expr 에 괄호식을 쓴다
+    var OPS = { text: ['=', '≠'], number: ['=', '≠', '<', '≤', '>', '≥'], bool: ['=', '≠'], list: ['=', '≠'], user: ['=', '≠'], date: ['='] };
     function txt(el) {
         if (!el) return '';
-        if (el.tagName === 'SELECT') return el.multiple ? [].map.call(el.selectedOptions, function (o) { return o.text; }).join(', ') : (el.selectedOptions[0] ? el.selectedOptions[0].text : '');
+        if (el.tagName === 'SELECT') { var o = el.selectedOptions[0]; return o && !o.hasAttribute('data-empty') ? o.text : ''; }   // 「-선택-」처럼 data-empty 옵션 = 값 없음
         return el.value.trim();
     }
+    function q(v) { return "'" + v + "'"; }
     function rowExpr(row) {
-        var val = row.querySelector('.criteria-row__value');
-        var parts = val ? [].filter.call(val.querySelectorAll('input, select'), function (f) { return f.type !== 'search' && f.type !== 'hidden'; }).map(txt).filter(Boolean) : [];
-        if (!parts.length) return '';
-        return txt(row.querySelector('.criteria-row__field')) + ' ' + txt(row.querySelector('.criteria-row__op')) + ' ' + parts.join(' ~ ');
+        var field = row.querySelector('.criteria-row__field'), val = row.querySelector('.criteria-row__value');
+        if (!field || !val) return '';
+        var type = field.selectedOptions[0] ? field.selectedOptions[0].getAttribute('data-type') : 'text', v = '';
+        if (type === 'date') {
+            var kind = txt(val.querySelector('.criteria-date'));
+            var shown = val.querySelector('.criteria-date__part:not([hidden])');
+            var parts = shown ? [].map.call(shown.querySelectorAll('input'), txt) : [];
+            if (!shown) v = kind;
+            else if (parts.every(Boolean)) v = shown.getAttribute('data-range') === '일 범위 선택' ? parts[0] + '일 전 ~ ' + parts[1] + '일 후' : q(parts[0]) + ' ~ ' + q(parts[1]);
+        } else {
+            var f = val.querySelector('input:not([type="hidden"]), select');
+            v = f ? txt(f) : '';
+            if (v) v = type === 'number' ? v : q(v);
+        }
+        return v ? txt(field) + ' ' + txt(row.querySelector('.criteria-row__op')) + ' ' + v : '';
     }
     function groupExpr(g) {
         var join = ' ' + (txt(g.querySelector(':scope > .criteria-group__head .criteria-group__join')) || '및') + ' ';
         var body = g.querySelector(':scope > .criteria-group__body');
         var items = body ? [].map.call(body.children, function (c) { return c.classList.contains('criteria-row') ? rowExpr(c) : c.classList.contains('criteria-group') ? groupExpr(c) : ''; }).filter(function (t) { return t && t !== '( )'; }) : [];
-        return '(' + (items.length ? items.join(join) : ' ') + ')';
+        return items.length ? '( ' + items.join(join) + ' )' : '( )';
     }
     function wireCriteria(root) {
-        if (!root || root.dataset.criteriaDone || (root.parentElement && root.parentElement.closest('.criteria-group'))) return;   // 맨 바깥 묶음에만 건다
+        if (!root || root.dataset.criteriaDone || (root.parentElement && root.parentElement.closest('.criteria-group'))) return;   // 맨 바깥 그룹에만 건다
         root.dataset.criteriaDone = '1';
         var expr = root.previousElementSibling && root.previousElementSibling.classList.contains('criteria-expr') ? root.previousElementSibling : null;
         var tpl = root.querySelector('template.criteria-template');
-        var seq = 0;
         function update() { if (expr) expr.textContent = groupExpr(root); }
-        function enhance(el) { if (window.enhanceSelects) window.enhanceSelects(el); }
-        function newRow() {
+        function enhance(el) {
+            if (window.enhanceSelects) window.enhanceSelects(el);
+            if (window.datepickerInit && el.querySelector('.ui-datepicker__input')) window.datepickerInit();
+            if (window.dsClearInit) window.dsClearInit(el);
+        }
+        // 속성에 맞춰 연산자 옵션과 값 칸을 다시 그림. 값 칸 견본 = template 의 [data-criteria-value="종류"]
+        function setType(row) {
+            var field = row.querySelector('.criteria-row__field'), opt = field.selectedOptions[0];
+            var type = (opt && opt.getAttribute('data-type')) || 'text', op = row.querySelector('.criteria-row__op'), val = row.querySelector('.criteria-row__value');
+            op.innerHTML = OPS[type].map(function (o) { return '<option>' + o + '</option>'; }).join('');
+            var src = tpl && tpl.content.querySelector('[data-criteria-value="' + type + '"]');
+            val.innerHTML = src ? src.innerHTML : '';
+            val.setAttribute('data-type', type);
+            if (type === 'list') {
+                var sel = val.querySelector('select');
+                sel.insertAdjacentHTML('beforeend', (opt.getAttribute('data-values') || '').split('|').filter(Boolean).map(function (v) { return '<option>' + v + '</option>'; }).join(''));
+            }
+            val.querySelectorAll('[aria-label]').forEach(function (x) { x.setAttribute('aria-label', x.getAttribute('aria-label').replace('값', opt.text + ' 값')); });
+            showDate(val);
+        }
+        function showDate(val) {
+            var kind = val.querySelector('.criteria-date');
+            if (!kind) return;
+            var k = kind.selectedOptions[0] ? kind.selectedOptions[0].text : '';
+            val.querySelectorAll('.criteria-date__part').forEach(function (p) { p.hidden = p.getAttribute('data-range') !== k; });
+        }
+        function newRow(attr) {
             var row = tpl.content.querySelector('.criteria-row').cloneNode(true);
-            row.querySelectorAll('[id]').forEach(function (x) { x.id += '-' + (++seq); });
+            var field = row.querySelector('.criteria-row__field');
+            if (attr) [].forEach.call(field.options, function (o) { o.selected = o.text === attr; });
+            setType(row);
             return row;
         }
-        function firstField(el) { var f = el.querySelector('.criteria-row__field'); var t = f && f.parentElement.querySelector('.ui-select__trigger'); (t || f).focus(); }
+        function focusValue(r) {
+            var f = [].filter.call(r.querySelectorAll('.criteria-row__value .ui-select__trigger, .criteria-row__value input, .criteria-row__value select'), function (x) { return x.offsetParent !== null; })[0];
+            if (f) f.focus();
+        }
         root.addEventListener('click', function (e) {
+            var pick = e.target.closest('[data-criteria-attr]');
+            if (pick && root.contains(pick)) {   // 속성 추가 목록: 메뉴가 닫히고 포커스를 되돌린 뒤(js/menu.js) 줄을 더함
+                var body0 = pick.closest('.criteria-group').querySelector(':scope > .criteria-group__body'), attr = pick.getAttribute('data-criteria-attr');
+                setTimeout(function () { var r = newRow(attr); body0.appendChild(r); enhance(r); focusValue(r); update(); }, 0);
+                return;
+            }
             var btn = e.target.closest('[data-criteria]');
             if (!btn || !root.contains(btn)) return;
             var g = btn.closest('.criteria-group'), body = g.querySelector(':scope > .criteria-group__body'), kind = btn.getAttribute('data-criteria');
-            if (kind === 'add-row' && tpl) { var r = newRow(); body.appendChild(r); enhance(r); firstField(r); }
+            if (kind === 'add-row' && tpl) { var r = newRow(); body.appendChild(r); enhance(r); var f = r.querySelector('.criteria-row__field'); var t = f.parentElement.querySelector('.ui-select__trigger'); (t || f).focus(); }
             else if (kind === 'add-group' && tpl) {
                 var sub = tpl.content.querySelector('.criteria-group').cloneNode(true);
                 sub.querySelector('.criteria-group__body').appendChild(newRow());
-                body.appendChild(sub); enhance(sub); firstField(sub);
+                body.appendChild(sub); enhance(sub); var f2 = sub.querySelector('.criteria-row__field'); var t2 = f2.parentElement.querySelector('.ui-select__trigger'); (t2 || f2).focus();
             }
             else if (kind === 'remove-group' && g !== root) { var add = g.parentElement.closest('.criteria-group').querySelector(':scope > .criteria-group__head [data-criteria="add-group"]'); g.remove(); if (add) add.focus(); }
             else if (kind === 'remove-row') { var row = btn.closest('.criteria-row'), next = g.querySelector(':scope > .criteria-group__head [data-criteria="add-row"]'); row.remove(); if (next) next.focus(); }
             update();
         });
-        root.addEventListener('change', update);
+        root.addEventListener('change', function (e) {
+            var row = e.target.closest('.criteria-row');
+            if (row && e.target.classList.contains('criteria-row__field')) { setType(row); enhance(row); }
+            else if (e.target.classList.contains('criteria-date')) showDate(e.target.closest('.criteria-row__value'));
+            update();
+        });
         root.addEventListener('input', update);
         update();
     }

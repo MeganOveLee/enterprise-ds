@@ -163,7 +163,7 @@ export const 시안_칸_아래_칩 = {
   },
 };
 
-// 시안 C: 라벨과 값이 한 단추. 검색 조건 한 줄 바(Blocks › Search Form 「라벨과 버튼 위계」 4)에 늘어놓음. 값을 고른 단추 = .is-applied
+// 시안 C: 라벨과 값이 한 단추. 검색 조건 한 줄 바(Blocks › Search Form 시안 B)에 늘어놓음. 값을 고른 단추 = .is-applied
 const fsel = (name, items, picked = [], search = false) => '<select class="checkSelect" multiple data-display="filter" aria-label="' + name + '"' + (search ? ' data-searchBox="true"' : '') + '>\n' +
   items.map((t) => '  <option' + (picked.includes(t) ? ' selected' : '') + '>' + t + '</option>').join('\n') + '\n</select>';
 const SRC_FILTER = [fsel('작업현황', STATUS, ['작업 중', '검토 중']), fsel('문서 분류', KINDS), fsel('등록자', ['김도윤', '이서연', '박지호', '최민준', '정하은'], ['김도윤'], true)].join('\n');

@@ -5248,6 +5248,12 @@ body.dark-mode .empty-illo__badge  { fill: var(--color-bg-muted); }
 .textarea.textarea--filled:disabled { background-color: var(--color-bg-disabled); border-bottom-color: var(--color-border-disabled); }
 .input.input--filled[readonly],
 .textarea.textarea--filled[readonly] { background-color: var(--color-bg-readonly); border-bottom-color: var(--color-border-base); }
+/* 채운 칸 상태: 비어 있음 = 옅은 회색 바탕(위) · 입력함 = 흰 바탕 + 아래 선 · 입력 중 = 흰 바탕 + 포커스 선 + 번짐(.input:focus).
+ *   입력함: placeholder 가 사라진 칸, 지우기(×)가 보이는 칸(js/clear.js), 첫 옵션(「전체」 · 「-선택-」)이 아닌 값을 고른 셀렉트 */
+.input.input--filled:is(:focus, :not(:placeholder-shown)),
+.field-clear-wrap:has(> .field-clear:not([hidden])) > .input.input--filled,
+.textarea.textarea--filled:is(:focus, :not(:placeholder-shown)),
+.select.select--filled:is(:focus, :has(option:checked:not(:first-child))) { background-color: var(--color-bg-input); }
 
 /* Input C: 칸 안 라벨이 입력을 시작하면 위로 올라감. 칸 높이 = 큰 칸
  *   <div class="input-float"><input class="input" id="…" placeholder=" "><label for="…">문서 번호</label></div>
@@ -5467,17 +5473,17 @@ body.dark-mode .empty-illo__badge  { fill: var(--color-bg-muted); }
 .filter-pop__foot { display: flex; align-items: center; padding: var(--spacing-8) var(--spacing-12); border-top: 1px solid var(--color-border-subtle); }
 body.dark-mode .filter-pop { background-color: var(--color-bg-muted); }   /* 떠 있는 층 = 다중 선택 목록 · 달력과 같은 바탕 */
 
-/* Search Form 조건 묶음: 고급 검색에서 속성 · 연산자 · 값으로 조건을 쌓고, 조건끼리 「및 · 또는」으로 묶는다(PLM 고급 검색 「조건」). 묶음 안에 하위 묶음을 둘 수 있다 (js/filter-panel.js)
- *   <p class="criteria-expr">(작업현황 = 검토 중 및 등록일 = 2026-09-01 ~ 2026-09-30)</p>
+/* Search Form 조건 그룹(고급 검색): 속성 · 연산자 · 값으로 조건 줄을 쌓고, 그룹 안 조건을 「및 · 또는」으로 잇는다. 그룹 안에 하위 그룹을 둘 수 있다(PLM 고급 검색 「조건」, js/filter-panel.js)
+ *   <p class="criteria-expr">( 등록자 = '김도윤' 및 … )</p>
  *   <div class="criteria-group">
- *     <div class="criteria-group__head"> <select class="select criteria-group__join">및 · 또는</select> [조건 추가] [하위 묶음 추가] (하위 묶음만 [묶음 지우기]) </div>
+ *     <div class="criteria-group__head"> select.criteria-group__join(및 · 또는) · .ui-menu.criteria-add [속성 추가](찾기 칸 + 속성 목록, 항목 data-criteria-attr) · [조건 추가] · [그룹 추가] · 하위 그룹만 [그룹 제거] </div>
  *     <div class="criteria-group__body">
- *       <div class="criteria-row" role="group"> <select class="select criteria-row__field">속성</select> <select class="select criteria-row__op">=</select> <div class="criteria-row__value">입력칸 · 셀렉트 · 기간</div> <button class="… criteria-row__remove" aria-label="… 조건 빼기">×</button> </div> …
- *       <div class="criteria-group"> 하위 묶음 </div>
+ *       <div class="criteria-row"> select.criteria-row__field(옵션 data-type · data-values) · select.criteria-row__op · .criteria-row__value · [×] </div> … 하위 .criteria-group …
  *     </div>
- *     <template class="criteria-template">새 조건 줄</template>
+ *     <template class="criteria-template"> 새 줄 · 새 하위 그룹 · 값 칸 견본([data-criteria-value="text · number · bool · list · user · date"]) </template>
  *   </div>
- *   칸 순서와 폭은 Figma 고급 검색 조건 묶음(속성 · 연산자 · 값). 줄마다 빼기(×)와 글자 단추는 Jira 업무 목록 필터 「고급」에서 가져옴 */
+ *   속성 종류별 연산자 · 값 칸: 글자 · 사람 · 예/아니요 · 목록 = · ≠, 숫자 = · ≠ · < · ≤ · > · ≥, 날짜 = 하나 + 범위 셀렉트(어제 · 오늘 · 내일 · 날짜 범위 선택 · 일 범위 선택)
+ *   줄마다 늘 보이는 빼기(×)와 글자를 붙인 그룹 단추는 Jira 업무 목록 필터 「고급」에서 가져옴 */
 .criteria-expr { margin: 0 0 var(--spacing-8); color: var(--color-text-muted); font-size: var(--body-sm); word-break: keep-all; }
 .criteria-group {
     display: flex;
@@ -5488,19 +5494,26 @@ body.dark-mode .filter-pop { background-color: var(--color-bg-muted); }   /* 떠
     border-radius: var(--radius-panel);
     background-color: var(--color-bg-base);
 }
-.criteria-group .criteria-group { background-color: var(--color-bg-subtle); }   /* 하위 묶음 = 한 단계 옅은 회색 바탕으로 바깥 묶음과 가름 */
+.criteria-group .criteria-group { background-color: var(--color-bg-subtle); }   /* 하위 그룹 = 한 단계 옅은 회색 바탕으로 바깥 그룹과 가름 */
 .criteria-group__head { display: flex; flex-wrap: wrap; align-items: center; gap: var(--spacing-4); }
 .criteria-group__head > :is(.criteria-group__join, .ui-select:has(> .criteria-group__join)) { flex: none; width: 96px; margin-right: var(--spacing-4); }
+.criteria-add .ui-menu__list { min-width: 220px; }
 .criteria-group__remove { margin-left: auto; }
 .criteria-group__body { display: flex; flex-direction: column; gap: var(--spacing-8); }
 .criteria-row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--spacing-8); }   /* 놓인 칸이 좁으면 값 칸이 다음 줄로 (DS-ADR-048) */
 .criteria-row > :is(.criteria-row__field, .ui-select:has(> .criteria-row__field)) { flex: 0 1 240px; min-width: 140px; }
 .criteria-row > :is(.criteria-row__op, .ui-select:has(> .criteria-row__op)) { flex: none; width: 72px; }
-.criteria-row__value { flex: 0 1 240px; min-width: 160px; }
-.criteria-row__value:has(.ui-datepicker-range) { flex-basis: 320px; }   /* 기간 = 날짜 칸 둘 */
+.criteria-row__value { display: flex; flex-wrap: wrap; align-items: center; gap: var(--spacing-8); flex: 0 1 240px; min-width: 160px; }
+.criteria-row__value > :is(.input, .select, .ui-select, .field-action-wrap, .field-clear-wrap) { flex: 1; min-width: 0; }
+.criteria-row__value[data-type="date"] { flex-basis: 480px; }   /* 날짜 = 범위 셀렉트 + 날짜 칸 둘 */
+.criteria-row__value[data-type="date"] > :is(.criteria-date, .ui-select:has(> .criteria-date)) { flex: none; width: 140px; }
+.criteria-date__part { display: flex; flex: 1; align-items: center; gap: var(--spacing-8); min-width: 0; color: var(--color-text-base); font-size: var(--body-sm); white-space: nowrap; }
+.criteria-date__part[hidden] { display: none; }
+.criteria-date__part > .ui-datepicker-range { flex: 1; min-width: 0; }
+.criteria-date__part .criteria-days { flex: none; width: 56px; }   /* 일 범위 = 숫자 칸 둘: 「N 일 전에서 지금부터 N 일 후」 */
 .criteria-row__remove { flex: none; }
 .criteria-template { display: none; }
-.criteria-actions { display: flex; justify-content: flex-end; gap: var(--spacing-8); margin-top: var(--spacing-12); }   /* 아래 [검색] · [이 검색 저장]: Figma 고급 검색 */
+.criteria-actions { display: flex; justify-content: flex-end; gap: var(--spacing-8); margin-top: var(--spacing-12); }   /* 아래 [검색] · [이 검색 저장] */
 
 /* Button: 타일 버튼: 아이콘 위 · 글자 아래. 큰 동작 몇 개를 나란히 고르게 둘 때(바로가기 · 등록 종류 고르기)
  *   <button class="btn btn--secondary btn--outlined btn--tile"><svg …></svg>문서 등록</button> */
@@ -5640,7 +5653,7 @@ body.dark-mode .filter-pop { background-color: var(--color-bg-muted); }   /* 떠
 
 /* ============================================================
  * Data Display · Feedback 시안: 기존 컴포넌트의 변형 클래스 (묶음 3)
- *   Card B .card--filled · C .card--elevated / Table B .grid-table--lined · C .grid-table--relaxed · 머리와 정렬 2 .grid-table--subtle · 줄 상태 선 .status-row--* / Search Form 위계 2 .form-grid--focus-label / Status Chip B .status-chip--dot · C .status-chip--bold
+ *   Card B .card--filled · C .card--elevated / Table B .grid-table--lined · C .grid-table--relaxed · 머리와 정렬 2 .grid-table--subtle · 줄 상태 선 .status-row--* / Input 라벨 고르는 칸만 라벨색 .form-grid--focus-label / Status Chip B .status-chip--dot · C .status-chip--bold
  *   Alert B .alert--stripe · C .alert--banner / Toast B .toast-region--bottom · C .toast-region--top / Tooltip B .tooltip--light · C .tooltip--rich
  *   Progress C .progress-ring / Skeleton B .skeleton--pulse · C .skeleton--static. 새 토큰 없음
  * ============================================================ */
@@ -5672,12 +5685,10 @@ body.dark-mode .filter-pop { background-color: var(--color-bg-muted); }   /* 떠
 .status-row--warning { --status-row-line: var(--color-border-warning); }
 .status-row--danger { --status-row-line: var(--color-border-danger); }
 
-/* Search Form 라벨과 버튼 위계 2: 라벨은 평소 보조 글자색 · 중간 굵기, 지금 고르는 칸의 라벨만 브랜드색 · 굵게. 입력한 값과 [검색]이 라벨보다 앞서 보임
- *   <div class="form-grid-2 form-grid--6 form-grid--focus-label">…</div>
- *   결과 쪽: 표 패널 도구 줄(.table-panel__toolbar)에 걸린 조건을 지울 수 있는 칩(ul.checkSelect__chips)으로 보이고 오른쪽 끝(.table-panel__actions)에 [필터 초기화] */
+/* Input 라벨 · 고르는 칸만 라벨색: 라벨은 평소 보조 글자색 · 중간 굵기, 지금 고르는 칸의 라벨만 라벨색(--color-text-label) · 굵게. 입력한 값이 라벨보다 앞서 보임
+ *   <div class="form-grid-2 form-grid--6 form-grid--focus-label">…</div> */
 .form-grid-2.form-grid--focus-label .ff-field > .search-label { color: var(--color-text-muted); font-weight: var(--font-weight-medium); }
 .form-grid-2.form-grid--focus-label .ff-field:focus-within > .search-label { color: var(--color-text-label); font-weight: var(--font-weight-semibold); }
-.table-panel__toolbar > .checkSelect__chips { margin: 0; }   /* 도구 줄 안의 조건 칩: 칸 아래에 둘 때의 위 여백 없이 */
 .product + .table-panel { margin-top: var(--spacing-8); }   /* 검색 조건 영역 바로 아래의 결과 표 패널: 결과 머리 줄(.seach_arm)과 같은 간격 */
 /* 채운 칸의 날짜 칸: Input B(.input--filled)와 같은 옅은 바탕 + 아래 선. 달력 단추는 바탕 · 구분선 없이 아이콘만
  *   <div class="ui-datepicker ui-datepicker--filled">…</div> */
@@ -5689,6 +5700,9 @@ body.dark-mode .filter-pop { background-color: var(--color-bg-muted); }   /* 떠
 .ui-select:has(> .select--filled) .ui-select__trigger { background-color: var(--color-bg-subtle); border-color: transparent transparent var(--color-border-input); border-radius: var(--radius-input) var(--radius-input) 0 0; }
 .ui-select:has(> .select--filled) .ui-select__trigger:hover { border-bottom-color: var(--color-border-input-hover); }
 .ui-select:has(> .select--filled) .ui-select__trigger:is(:focus, .is-open) { border-color: var(--color-border-focus); }
+.ui-select:has(> .select--filled) .ui-select__trigger:is(:focus, .is-open),
+.ui-select:has(> .select--filled option:checked:not(:first-child)) .ui-select__trigger,
+.ui-datepicker.ui-datepicker--filled:is(:focus-within, :has(.ui-datepicker__input:not(:placeholder-shown))) { background-color: var(--color-bg-input); }   /* 입력함 · 입력 중 = 흰 바탕(위 「채운 칸 상태」) */
 /* 표 패널 동작 묶음의 세로 구분선: 성격이 다른 동작 묶음 사이에 둠(보기 설정 | 내보내기)
  *   <div class="table-panel__actions"><button class="btn btn--icon" aria-label="새로 고침">…</button><span class="table-panel__sep"></span><button …>Excel</button></div> */
 .table-panel__sep { align-self: stretch; width: var(--border-width-sm); margin: var(--spacing-4) var(--spacing-4); background: var(--color-border-strong); }
@@ -5754,25 +5768,13 @@ body.dark-mode .status-chip--bold:is(.status-chip--success, .status-chip--warnin
 
 /* ============================================================
  * Blocks 시안 (묶음 4)
- *   Search Form B .search-chips · C .filter-layout + .filter-panel / Approval Line B .approval-flow · C .approval-flow--vertical
+ *   Search Form C .search-chips / Approval Line B .approval-flow · C .approval-flow--vertical
  *   BOM Compare B 한 표 비교 .compare-change. 새 토큰 없음
  * ============================================================ */
 
-/* Search Form B: 검색 칸 + 필터 칩 한 줄. 조건이 서너 개뿐인 모바일 · 간단한 목록
+/* Search Form C: 검색 칸 + 필터 칩 한 줄. 조건이 서너 개뿐인 모바일 · 간단한 목록
  *   <div class="search-chips"><input class="input" type="search" aria-label="…"><div class="chip-group" role="group" aria-label="빠른 조건"> button.chip[aria-pressed] … </div></div> */
 .search-chips { display: grid; gap: var(--spacing-8); }
-
-/* Search Form C: 왼쪽 필터 패널: 항목별 체크로 거르고 오른쪽 결과가 바로 바뀜. 조건 값이 정해진 목록(작업현황 · 분류)일 때
- *   <div class="filter-layout"><aside class="filter-panel" aria-label="조건"> 머리 + fieldset.filter-panel__group … </aside><div class="filter-layout__main"> 결과 표 </div></div>
- *   놓인 칸이 좁으면 패널이 결과 위로 내려감(줄바꿈 배치, DS-ADR-048) */
-.filter-layout { display: flex; flex-wrap: wrap; align-items: flex-start; gap: var(--spacing-16); }
-.filter-panel { flex: 1 1 13rem; display: grid; gap: var(--spacing-16); padding: var(--spacing-16); box-sizing: border-box; border: 1px solid var(--color-border-base); border-radius: var(--radius-card); background: var(--color-bg-base); }
-.filter-layout__main { flex: 999 1 30rem; min-width: 0; }
-.filter-panel__head { display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-8); }
-.filter-panel__title { margin: 0; font-size: var(--heading-xs); font-weight: var(--font-weight-semibold); }
-.filter-panel__group { display: grid; gap: var(--spacing-8); min-width: 0; margin: 0; padding: var(--spacing-16) 0 0; border: 0; border-top: 1px solid var(--color-border-subtle); }
-.filter-panel__group > legend { float: left; width: 100%; padding: 0; margin-bottom: var(--spacing-4); font-size: var(--body-sm); font-weight: var(--font-weight-semibold); color: var(--color-text-base); }   /* float = legend 를 grid 칸 안에 */
-.filter-panel__group .checkbox { margin-right: 0; }
 
 /* Approval Line B · C: 결재 진행 흐름: 누가 어디까지 했는지(상세 창 · 모바일 결재함)
  *   <ol class="approval-flow" aria-label="결재 진행"><li class="approval-flow__step is-done"><span class="approval-flow__mark" aria-hidden="true">✓</span>

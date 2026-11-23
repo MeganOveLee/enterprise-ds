@@ -64,51 +64,24 @@ export const 펼치고_값_넣기 = {
 };
 const optSrc = (code) => ({ controls: { disable: true }, docs: { source: { language: 'html', code } } });
 
-// ── 시안: A 칸 여러 줄(추천, 위 「모두 보기」) · B 필터 칩 한 줄 · C 왼쪽 필터 패널 ──
+// ── 배치 시안: A 칸 여러 줄(추천, 위 「접고 펴기」) · B 조건 단추 한 줄 바(아래) · C 필터 칩 한 줄(모바일) ──
 const optChip = (t, on = false) => '<button type="button" class="chip" aria-pressed="' + on + '">' + t + '</button>';
 const OPT_CHIPS = '<div class="search-chips"><input class="input" type="search" aria-label="문서 검색" placeholder="문서 번호 또는 문서 명">' +
   '<div class="chip-group" role="group" aria-label="빠른 조건">' + optChip('내 문서', true) + optChip('작업 중') + optChip('결재 대기') + optChip('이번 달') + '</div></div>';
-const optCk = (t, on = false) => '<label class="checkbox"><input type="checkbox"' + (on ? ' checked' : '') + '>' + t + '</label>';
-const optGroup = (legend, items) => '<fieldset class="filter-panel__group"><legend>' + legend + '</legend>' + items.map(([t, on]) => optCk(t, on)).join('') + '</fieldset>';
-const OPT_ROWS = [['DOC-2610-0013', '브레이크 캘리퍼 조립 사양서', '작업 중'], ['DOC-2610-0011', '커넥터 핀 배열 설계 기준', '작업 중'], ['DOC-2610-0008', '하우징 주조 공정 기준서', '작업 중']];
-const OPT_PANEL = '<div class="filter-layout"><aside class="filter-panel" aria-label="조건">' +
-  '<div class="filter-panel__head"><h3 class="filter-panel__title">조건</h3><button type="button" class="btn btn--secondary btn--transparent">초기화</button></div>' +
-  optGroup('작업현황', [['작업 중', true], ['결재 대기'], ['승인'], ['반려']]) + optGroup('문서 분류', [['설계 문서', true], ['시험 문서'], ['회의록']]) + '</aside>' +
-  '<div class="filter-layout__main"><div class="table_list"><div class="list"><table class="grid-table" aria-label="검색 결과"><thead><tr><th scope="col">문서 번호</th><th scope="col">문서 명</th><th scope="col">작업현황</th></tr></thead><tbody>' +
-  OPT_ROWS.map(([n, t, s]) => '<tr><td><a href="#" class="grid-custom-rows-link">' + n + '</a></td><td class="is-left">' + t + '</td><td>' + s + '</td></tr>').join('') + '</tbody></table></div></div></div></div>';
 export const 시안_필터_칩 = { parameters: optSrc(OPT_CHIPS), render: () => '<div class="sb-field--wide">' + OPT_CHIPS + '</div>' };
-export const 시안_왼쪽_필터_패널 = { parameters: optSrc(OPT_PANEL), render: () => '<div class="sb-field--table">' + OPT_PANEL + '</div>' };
 
-// ── 라벨과 버튼 위계: 1 브랜드색 라벨(이전 버전 검색 화면과 같은 모양) · 2 지금 고르는 칸만 브랜드색 라벨 + 걸린 조건 칩(추천). 검색 조건 + 결과 머리를 함께 ──
-const LIST = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/></svg>';
+// 시안 B 결과 표: 결과 머리 = 결과 개수 + 아이콘 묶음(새로 고침 · 열 설정) | Excel, 표 = 옅은 머리(Table 머리와 정렬 2)
 const XLS = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9l4 6M11 9l-4 6M14.5 9H18M14.5 12H18M14.5 15H18"/></svg>';
 const X = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
 const RANK_ROWS = [['DOC-2610-0012', '브레이크 캘리퍼 조립 사양서', '검토 중', '김도윤', '2026-09-24'], ['DOC-2610-0007', '캘리퍼 피스톤 씰 재질 검토', '검토 중', '김도윤', '2026-09-11'], ['DOC-2610-0003', '캘리퍼 브래킷 체결 토크 기준', '검토 중', '김도윤', '2026-09-02']];
 const rankTable = (cls) => '<table class="grid-table' + cls + '" aria-label="검색 결과"><thead><tr><th scope="col">문서 번호</th><th scope="col">문서 명</th><th scope="col">작업현황</th><th scope="col">등록자</th><th scope="col">등록일</th></tr></thead><tbody>' +
   RANK_ROWS.map(([n, t, st, w, d]) => '<tr><td><a href="#" class="grid-custom-rows-link">' + n + '</a></td><td class="is-left">' + t + '</td><td><span class="status-chip status-chip--warning">' + st + '</span></td><td>' + w + '</td><td>' + d + '</td></tr>').join('') + '</tbody></table>';
-const APPLIED = ['문서 번호: DOC-2610', '문서 명: 캘리퍼', '작업현황: 검토 중', '등록일: 2026-09-01 ~ 2026-09-30', '등록자: 김도윤'];
-const appliedChip = (t) => '<li class="checkSelect__chip"><span>' + t + '</span><button type="button" class="checkSelect__chip-remove" aria-label="' + t + ' 조건 빼기">' + X + '</button></li>';
-const rankBefore = () => searchForm({ all: true, v: true }) +
-  '<div class="seach_arm"><div class="leftbt">' + LIST + '<h4>검색 결과 (' + RANK_ROWS.length + ')</h4></div><div class="rightbt"><button type="button" class="btn btn--primary btn--filled">선택 일괄 결재</button>' +
-  '<button type="button" class="btn btn--excel">' + XLS + 'Excel</button><button type="button" class="btn btn--secondary btn--transparent">' + ico(RESET) + '필터 초기화</button></div></div>' +
-  '<div class="table_list"><div class="list">' + rankTable('') + '</div></div>';
-const rankAfter = () => searchForm({ all: true, v: true }).replace('form-grid-2 form-grid--6', 'form-grid-2 form-grid--6 form-grid--focus-label') +
-  '<section class="table-panel"><header class="table-panel__head"><h3 class="table-panel__title">검색 결과 ' + RANK_ROWS.length + '</h3><div class="table-panel__actions"><button type="button" class="btn btn--excel">' + XLS + 'Excel</button></div></header>' +
-  '<div class="table-panel__toolbar"><ul class="checkSelect__chips" aria-label="걸린 조건">' + APPLIED.map(appliedChip).join('') + '</ul>' +
-  '<div class="table-panel__actions"><button type="button" class="btn btn--secondary btn--transparent">' + ico(RESET) + '필터 초기화</button></div></div>' + rankTable(' grid-table--subtle') + '</section>';
-export const 위계_브랜드_라벨 = { parameters: optSrc(rankBefore()), render: () => stage(rankBefore()) };
-export const 위계_고르는_칸_라벨 = { parameters: optSrc(rankAfter()), render: () => stage(rankAfter()) };
 
-// 3 = 2와 같은 구성에 입력칸을 채운 칸(옅은 바탕 + 아래 선)으로, 결과 표 패널의 동작은 아이콘 묶음 + 세로 구분선으로
 const REFRESH = '<path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/>';
 const COLUMNS = '<rect x="4" y="5" width="16" height="14" rx="2"/><path d="M10 5v14M15 5v14"/>';
 const iconBtn = (label, d) => '<button type="button" class="btn btn--secondary btn--transparent btn--icon" aria-label="' + label + '">' + ico(d) + '</button>';
-const rankUnderline = () => rankAfter().replaceAll('class="input"', 'class="input input--filled"').replaceAll('class="select"', 'class="select select--filled"').replaceAll('class="ui-datepicker"', 'class="ui-datepicker ui-datepicker--filled"')
-  .replace('<div class="table-panel__actions"><button type="button" class="btn btn--excel">' + XLS + 'Excel</button></div>',
-    '<div class="table-panel__actions">' + iconBtn('새로 고침', REFRESH) + iconBtn('열 설정', COLUMNS) + '<span class="table-panel__sep"></span><button type="button" class="btn btn--excel">' + XLS + 'Excel</button></div>');
-export const 위계_아래_선_칸 = { parameters: optSrc(rankUnderline()), render: () => stage(rankUnderline()) };
 
-// 4 = 한 줄 바: 검색 칸 + 조건 단추(Multi Select C, .checkSelect--filter) 한 줄, 오른쪽 끝 [검색] · [초기화]. 걸린 조건은 단추 색으로만 보이고, 결과 패널 머리에는 결과 개수만(Jira 서비스 큐와 같음)
+// 시안 B = 한 줄 바: 검색 칸 + 조건 단추(Multi Select C, .checkSelect--filter) 한 줄, 오른쪽 끝 [검색] · [초기화]. 걸린 조건은 단추 색으로만 보이고, 결과 패널 머리에는 결과 개수만(Jira 서비스 큐와 같음)
 const fsel = (name, items, picked = [], search = false) => '<select class="checkSelect" multiple data-display="filter" aria-label="' + name + '"' + (search ? ' data-searchBox="true"' : '') + '>' +
   items.map((t) => '<option' + (picked.includes(t) ? ' selected' : '') + '>' + t + '</option>').join('') + '</select>';
 // 필터 패널: 바에 둔 조건 단추 밖의 나머지 조건(문서 검색 = 검색 칸 · 작업현황 · 등록자 + 아래 8개). open = 펼친 모습(예시 카드)
@@ -139,11 +112,11 @@ const rankBar = () => '<section class="product" style="padding:0"><div class="se
   fsel('작업현황', ['작업 중', '검토 중', '승인', '반려', '폐기'], ['검토 중']) +
   fsel('등록자', ['김도윤', '이서연', '박지호', '최민준', '정하은'], ['김도윤'], true) + filterPop() +
   '<div class="search-bar__actions"><button type="button" class="btn btn--primary btn--filled">' + ico(SEARCH) + '검색</button><button type="button" class="btn btn--secondary btn--transparent">' + ico(RESET) + '초기화</button></div></div>' +
-  '<section class="table-panel"><header class="table-panel__head"><h3 class="table-panel__title">검색 결과 ' + RANK_ROWS.length + '</h3><div class="table-panel__actions"><button type="button" class="btn btn--excel">' + XLS + 'Excel</button></div></header>' +
+  '<section class="table-panel"><header class="table-panel__head"><h3 class="table-panel__title">검색 결과 ' + RANK_ROWS.length + '</h3><div class="table-panel__actions">' + iconBtn('새로 고침', REFRESH) + iconBtn('열 설정', COLUMNS) + '<span class="table-panel__sep"></span><button type="button" class="btn btn--excel">' + XLS + 'Excel</button></div></header>' +
   rankTable(' grid-table--subtle') + '</section></section>';
 const stageBar = (html, minH = 0) => { const el = stage(html); if (minH) el.style.minHeight = minH + 'px';
   setTimeout(() => { el.querySelectorAll('select.checkSelect').forEach((sel) => window.buildMultiSelect && window.buildMultiSelect(sel)); if (window.enhanceFilterPanels) window.enhanceFilterPanels(el); }, 0); return el; };
-export const 위계_한_줄_바 = { parameters: optSrc(rankBar()), render: () => stageBar(rankBar()) };
+export const 시안_한_줄_바 = { parameters: optSrc(rankBar()), render: () => stageBar(rankBar(), 460) };   // 460 = [필터]를 연 패널이 카드 안에 들어가는 높이
 // 필터 패널을 펼친 모습: 「필터」 단추를 누른 뒤. 걸린 조건(문서 분류 · 등록일)마다 배지, 단추에는 걸린 조건 수
 const barOnly = (open) => '<div class="search-bar"><input class="input search-bar__query" type="search" aria-label="문서 검색" placeholder="문서 번호 또는 문서 명">' +
   fsel('작업현황', ['작업 중', '검토 중', '승인', '반려', '폐기']) + fsel('등록자', ['김도윤', '이서연', '박지호', '최민준', '정하은'], [], true) + filterPop(open) +
@@ -158,29 +131,53 @@ const barMore = () => '<div class="search-bar"><input class="input search-bar__q
   '<select class="checkSelect" multiple data-display="add" data-searchBox="true" data-placeholder="필터 검색" placeholder="필터 더 보기" aria-label="필터 더 보기">' + MORE.map(([n], i) => '<option value="' + n + '"' + (i === 0 ? ' selected' : '') + '>' + n + '</option>').join('') + '</select>' +
   '<div class="search-bar__actions"><button type="button" class="btn btn--primary btn--filled">' + ico(SEARCH) + '검색</button><button type="button" class="btn btn--secondary btn--transparent">' + ico(RESET) + '초기화</button></div></div>';
 export const 필터_더_보기 = { parameters: optSrc(barMore()), render: () => stageBar(barMore(), 320) };
-// 조건 묶음: 고급 검색의 「조건」(PLM 고급 검색과 같은 구성). 묶음 머리 = 및 · 또는 + [조건 추가] · [하위 묶음 추가], 조건 줄 = 속성 · 연산자 · 값 + 빼기(×).
-// 칸 순서 · 폭 = Figma 고급 검색 조건 묶음. 줄마다 빼기와 글자 단추는 Jira 업무 목록 필터 「고급」. 묶음 위 괄호식은 값이 바뀔 때 js/filter-panel.js 가 다시 씀
+// 조건 그룹: 고급 검색의 「조건」(PLM 고급 검색과 같은 구성). 그룹 머리 = 및 · 또는 + [속성 추가] · [조건 추가] · [그룹 추가] · 하위 그룹만 [그룹 제거],
+// 줄 = 속성 · 연산자 · 값 + 빼기(×). 속성 종류(data-type)에 따라 연산자와 값 칸이 바뀜(js/filter-panel.js). 줄마다 빼기와 글자 단추는 Jira 업무 목록 필터 「고급」
 const PLUS = '<path d="M12 5v14M5 12h14"/>';
 const FOLDER_PLUS = '<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M12 10v6M9 13h6"/>';
 const TRASH = '<path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/>';
-const ATTRS = ['문서 번호', '문서 명', '작업현황', '등록자', '등록일', '수정일', '프로젝트'];
-const OPS2 = ['=', '≠'];
-const crSel = (cls, label, items, pick) => '<select class="select ' + cls + '" aria-label="' + label + '">' + items.map((o) => '<option' + (o === pick ? ' selected' : '') + '>' + o + '</option>').join('') + '</select>';
-const crRow = (attr, value) => '<div class="criteria-row" role="group" aria-label="조건">' + crSel('criteria-row__field', '속성', ATTRS, attr) + crSel('criteria-row__op', '연산자', OPS2, '=') +
-  '<div class="criteria-row__value">' + value + '</div>' +
-  '<button type="button" class="btn btn--secondary btn--transparent btn--icon criteria-row__remove" data-criteria="remove-row" aria-label="조건 빼기" title="조건 빼기">' + ico(X.replace(/<svg[^>]*>|<\/svg>/g, '')) + '</button></div>';
-const crHead = (join, sub) => '<div class="criteria-group__head">' + crSel('criteria-group__join', '조건 잇기', ['및', '또는'], join) +
+const STATUS_LIST = '작업 중|검토 중|승인|반려|폐기';
+// [속성, 종류, 목록 값]: 종류 = text 글자 · number 숫자 · bool 예/아니요 · list 목록 · user 사람 · date 날짜
+const ATTRS = [['문서 번호', 'text'], ['문서 명', 'text'], ['작업현황', 'list', STATUS_LIST], ['문서 분류', 'list', '설계 문서|시험 문서|회의록|검토 보고서|도면'], ['등록자', 'user'], ['수정자', 'user'],
+  ['등록일', 'date'], ['수정일', 'date'], ['첨부 파일 수', 'number'], ['최신 버전', 'bool']];
+const TYPE_NAME = { text: '글자', number: '숫자', date: '날짜', bool: '예/아니요', list: '목록', user: '사람' };
+const OPS = { text: ['=', '≠'], number: ['=', '≠', '<', '≤', '>', '≥'], bool: ['=', '≠'], list: ['=', '≠'], user: ['=', '≠'], date: ['='] };
+const opts = (items, pick, empty) => (empty ? '<option data-empty' + (pick ? '' : ' selected') + '>' + empty + '</option>' : '') + items.map((o) => '<option' + (o === pick ? ' selected' : '') + '>' + o + '</option>').join('');
+const DATE_KINDS = ['어제', '오늘', '내일', '날짜 범위 선택', '일 범위 선택'];
+// 값 칸: 속성 종류별. 날짜 = 범위 셀렉트 + 「날짜 범위 선택」 날짜 칸 둘 · 「일 범위 선택」 숫자 칸 둘
+const VALUE = {
+  text: (v = '') => '<input class="input" aria-label="값"' + (v ? ' value="' + v + '"' : '') + ' data-ds-clear>',
+  number: (v = '') => '<input class="input" inputmode="numeric" aria-label="값"' + (v ? ' value="' + v + '"' : '') + '>',
+  bool: (v = '') => '<select class="select" aria-label="값">' + opts(['아니요', '예', '정의되지 않음'], v, '-선택-') + '</select>',
+  list: (v = '', list = '') => '<select class="select" aria-label="값">' + opts(list.split('|').filter(Boolean), v, '-선택-') + '</select>',
+  user: (v = '') => '<span class="field-action-wrap"><input class="input" aria-label="값"' + (v ? ' value="' + v + '"' : '') + '><button type="button" class="field-action" aria-label="사용자 찾기">' + ico(SEARCH) + '</button></span>',
+  date: (kind = '날짜 범위 선택', a = '', b = '') => '<select class="select criteria-date" aria-label="날짜 범위 종류">' + opts(DATE_KINDS, kind) + '</select>' +
+    '<span class="criteria-date__part" data-range="날짜 범위 선택"' + (kind === '날짜 범위 선택' ? '' : ' hidden') + '>' + range('값', a, b) + '</span>' +
+    '<span class="criteria-date__part" data-range="일 범위 선택"' + (kind === '일 범위 선택' ? '' : ' hidden') + '><input class="input criteria-days" inputmode="numeric" aria-label="며칠 전">일 전에서 지금부터<input class="input criteria-days" inputmode="numeric" aria-label="며칠 후">일 후</span>',
+};
+const attrOpts = (pick) => ATTRS.map(([n, t, l]) => '<option data-type="' + t + '"' + (l ? ' data-values="' + l + '"' : '') + (n === pick ? ' selected' : '') + '>' + n + '</option>').join('');
+const crRow = (attr, value) => { const [, t] = ATTRS.find(([n]) => n === attr); return '<div class="criteria-row" role="group" aria-label="조건">' +
+  '<select class="select criteria-row__field" aria-label="속성">' + attrOpts(attr) + '</select>' +
+  '<select class="select criteria-row__op" aria-label="연산자">' + opts(OPS[t], OPS[t][0]) + '</select>' +
+  '<div class="criteria-row__value" data-type="' + t + '">' + value.replaceAll('aria-label="값"', 'aria-label="' + attr + ' 값"') + '</div>' +
+  '<button type="button" class="btn btn--secondary btn--transparent btn--icon criteria-row__remove" data-criteria="remove-row" aria-label="조건 빼기" title="조건 빼기">' + ico(X.replace(/<svg[^>]*>|<\/svg>/g, '')) + '</button></div>'; };
+let crId = 0;
+const addMenu = () => { const id = 'cr-add-' + (++crId); return '<div class="ui-menu criteria-add"><button type="button" class="btn btn--secondary btn--transparent" id="' + id + '-btn" aria-haspopup="menu" aria-expanded="false" aria-controls="' + id + '">' + ico(PLUS) + '속성 추가</button>' +
+  '<div class="ui-menu__list" role="menu" id="' + id + '" aria-labelledby="' + id + '-btn" hidden><div class="ui-menu__search"><input type="search" class="input" aria-label="속성 찾기" placeholder="속성 찾기"></div>' +
+  Object.keys(TYPE_NAME).map((t, k) => { const its = ATTRS.filter(([, tt]) => tt === t); return its.length ? (k ? '<div class="ui-menu__divider" role="separator"></div>' : '') + '<div class="ui-menu__group-label" role="presentation">' + TYPE_NAME[t] + '</div>' +
+    its.map(([n]) => '<button type="button" class="ui-menu__item" role="menuitem" tabindex="-1" data-criteria-attr="' + n + '">' + n + '</button>').join('') : ''; }).join('') +
+  '<div class="ui-menu__empty" hidden>찾는 속성이 없습니다</div></div></div>'; };
+const crHead = (join, sub) => '<div class="criteria-group__head"><select class="select criteria-group__join" aria-label="조건 잇기">' + opts(['및', '또는'], join) + '</select>' + addMenu() +
   '<button type="button" class="btn btn--secondary btn--transparent" data-criteria="add-row">' + ico(PLUS) + '조건 추가</button>' +
-  '<button type="button" class="btn btn--secondary btn--transparent" data-criteria="add-group">' + ico(FOLDER_PLUS) + '하위 묶음 추가</button>' +
-  (sub ? '<button type="button" class="btn btn--secondary btn--transparent btn--icon criteria-group__remove" data-criteria="remove-group" aria-label="하위 묶음 지우기" title="하위 묶음 지우기">' + ico(TRASH) + '</button>' : '') + '</div>';
-const crInput = (label, v = '') => '<input class="input" aria-label="' + label + '"' + (v ? ' value="' + v + '"' : '') + ' data-ds-clear>';
-const crStatus = (pick) => select('작업현황 값', ['작업 중', '검토 중', '승인', '반려'], pick);
+  '<button type="button" class="btn btn--secondary btn--transparent" data-criteria="add-group">' + ico(FOLDER_PLUS) + '그룹 추가</button>' +
+  (sub ? '<button type="button" class="btn btn--secondary btn--transparent criteria-group__remove" data-criteria="remove-group">' + ico(TRASH) + '그룹 제거</button>' : '') + '</div>';
+const crTemplate = () => '<template class="criteria-template">' + crRow(ATTRS[0][0], VALUE.text()) + '<div class="criteria-group">' + crHead('또는', true) + '<div class="criteria-group__body"></div></div>' +
+  Object.keys(VALUE).map((t) => '<div data-criteria-value="' + t + '">' + VALUE[t]() + '</div>').join('') + '</template>';
 const criteria = () => '<section class="product" style="padding:0"><div class="seach_arm" style="margin-top:0"><div class="leftbt">' + lnbSvg('sliders', 18) + '<h4>조건</h4></div></div>' +
   '<div class="pro_table"><p class="criteria-expr" aria-live="polite">( )</p><div class="criteria-group">' + crHead('및', false) + '<div class="criteria-group__body">' +
-  crRow('등록자', '<span class="field-action-wrap"><input class="input" aria-label="등록자 값" value="김도윤"><button type="button" class="field-action" aria-label="사용자 찾기">' + ico(SEARCH) + '</button></span>') +
-  crRow('문서 번호', crInput('문서 번호 값', 'DOC-2610')) +
-  '<div class="criteria-group">' + crHead('또는', true) + '<div class="criteria-group__body">' + crRow('작업현황', crStatus('검토 중')) + crRow('작업현황', crStatus('승인')) + '</div></div>' +
-  crRow('등록일', range('등록일 값', '2026-09-01', '2026-09-30')) +
-  '</div><template class="criteria-template">' + crRow('문서 명', crInput('조건 값')) + '<div class="criteria-group">' + crHead('또는', true) + '<div class="criteria-group__body"></div></div></template></div>' +
+  crRow('등록자', VALUE.user('김도윤')) + crRow('문서 번호', VALUE.text('DOC-2610')) +
+  '<div class="criteria-group">' + crHead('또는', true) + '<div class="criteria-group__body">' + crRow('작업현황', VALUE.list('검토 중', STATUS_LIST)) + crRow('작업현황', VALUE.list('승인', STATUS_LIST)) + '</div></div>' +
+  crRow('등록일', VALUE.date('날짜 범위 선택', '2026-09-01', '2026-09-30')) + crRow('최신 버전', VALUE.bool('예')) + crRow('첨부 파일 수', VALUE.number('1')) +
+  '</div>' + crTemplate() + '</div>' +
   '<div class="criteria-actions"><button type="button" class="btn btn--primary btn--filled">' + ico(SEARCH) + '검색</button><button type="button" class="btn btn--secondary btn--outlined">이 검색 저장</button></div></div></section>';
-export const 조건_묶음 = { parameters: optSrc(criteria()), render: () => stageBar(criteria()) };
+export const 조건_그룹 = { parameters: optSrc(criteria()), render: () => stageBar(criteria(), 560) };
