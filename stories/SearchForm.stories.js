@@ -4,7 +4,6 @@
 import './_flow.css';
 import { wireSearchDetail, EXPAND_LABEL } from './_search.js';
 import { lnbSvg } from './_lnbicons.js';
-import { matrix } from './_matrix.js';
 import { enablePseudo } from './_pseudo.js';
 
 const ico = (d) => '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + d + '</svg>';
@@ -55,18 +54,27 @@ export const 모두_보기 = {
   parameters: { docs: { source: { code: searchForm({ all: true }) } } },
   render: () => stage(searchForm({ all: true, n: true })),
 };
-// 상태 표: 행 = 값 없음 · 마우스 올림 · 누름(입력 중) · 값 있음 · 값 있음 + 마우스 올림. 정지 화면은 _pseudo.js 의 .ps-* 클래스
-const STATES = [['값 없음', '', false], ['마우스 올림', 'hover', false], ['누름 · 입력 중', 'focus', false], ['값 있음', '', true], ['값 있음 + 마우스 올림', 'hover', true]];
+// 시안 A 본보기: 검색 조건 안 칸마다 상태를 다르게 두고, 칸 위 오른쪽에 상태 이름표(data-state, _flow.css .anno).
+// 값 없음 · 마우스 올림 · 입력 중 · 값 있음 · 값 있음 + 마우스 올림. 정지 화면은 _pseudo.js 의 .ps-* 클래스. 「코드 보기」는 상태 없는 마크업
 const CHEV = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>';
-const trig = (value, cls, open) => '<div class="ui-select"><div class="ui-select__trigger' + (cls ? ' ' + cls : '') + (open ? ' is-open' : '') + '" role="combobox" tabindex="-1" aria-haspopup="listbox" aria-expanded="' + !!open + '" aria-label="작업현황 상태 예시"><span class="ui-select__value">' + value + '</span><span class="ui-select__chevron">' + CHEV + '</span></div></div>';
-const stInput = (st, v) => '<input class="input' + (st ? ' ps-' + st : '') + '" aria-label="문서 번호 상태 예시" placeholder="문서 번호 입력"' + (v ? ' value="DOC-2610" data-ds-clear' : '') + '>';
-const stDate = (st, v) => '<div class="ui-datepicker' + (st === 'hover' ? ' ps-hover' : st === 'focus' ? ' ps-focus-within' : '') + '"><button type="button" class="ui-datepicker__icon" aria-label="등록일 달력" tabindex="-1">' + ico(CAL) + '</button>' +
-  '<input class="ui-datepicker__input" aria-label="등록일 상태 예시" placeholder="YYYY-MM-DD"' + (v ? ' value="2026-09-01" data-ds-clear' : '') + '></div>';
-const statesA = () => { enablePseudo(); return '<div class="sb-states">' + matrix(['입력칸', '셀렉트', '날짜 칸'], STATES.map(([n, st, v]) =>
-  [n, [stInput(st, v), trig(v ? '검토 중' : '전체', st ? 'ps-' + st : '', st === 'focus'), stDate(st, v)]]), { full: true }) + '</div>'; };
+const trig = (label, value, cls) => '<div class="ui-select"><div class="ui-select__trigger' + (cls ? ' ' + cls : '') + '" role="combobox" tabindex="0" aria-haspopup="listbox" aria-expanded="false" aria-label="' + label + '"><span class="ui-select__value">' + value + '</span><span class="ui-select__chevron">' + CHEV + '</span></div></div>';
+const demoField = (label, control, state, span) => '<div class="ff-field' + (span ? ' span-' + span : '') + '"><label class="search-label">' + label + '</label><div class="td" data-state="' + state + '">' + control + '</div></div>';
+const demoA = () => {
+  const id = 'sf-detail-' + (++uid);
+  return '<section class="product" style="padding:0"><div class="seach_arm" style="margin-top:0"><div class="leftbt">' + lnbSvg('sliders', 18) + '<h4>검색 조건</h4></div><div class="rightbt">' +
+    '<button type="button" class="btn btn--primary btn--filled">' + ico(SEARCH) + '검색</button><button type="button" class="btn btn--secondary btn--outlined btn--expand" aria-expanded="false" aria-controls="' + id + '">' + EXPAND_LABEL + '</button>' +
+    '<button type="button" class="btn btn--secondary btn--transparent">' + ico(RESET) + '검색 조건 초기화</button></div></div>' +
+    '<div class="pro_table"><div class="form-grid-2 form-grid--6">' +
+    demoField('작업현황', trig('작업현황', '전체', ''), '값 없음') +
+    demoField('문서 명', '<input class="input ps-hover" aria-label="문서 명" placeholder="문서 명 입력">', '마우스 올림') +
+    demoField('문서 번호', '<input class="input ps-focus" aria-label="문서 번호" placeholder="문서 번호 입력" value="DOC-26">', '입력 중') +
+    demoField('등록자', trig('등록자', '김도윤', ''), '값 있음') +
+    demoField('등록일', range('등록일', '2026-09-01', '2026-09-30').replaceAll('class="ui-datepicker"', 'class="ui-datepicker ps-hover"'), '값 있음 + 마우스 올림', 2) +
+    '</div><div class="search-detail" id="' + id + '" hidden><div class="form-grid-2 form-grid--6"><div class="search-divider">상세 검색</div>' + docDetail(id) + '</div></div></div></section>';
+};
 export const 접고_펴기 = {
   parameters: { docs: { source: { code: searchForm({}) } } },
-  render: () => { const el = stage(searchForm({})); el.insertAdjacentHTML('beforeend', statesA()); return el; },
+  render: () => { enablePseudo(); const el = stage(demoA()); el.classList.add('anno--state'); return el; },
 };
 // 펼치고 값을 넣은 모습: 상세 검색을 펼치고 첫 줄 · 상세 조건에 값을 넣어 검색하기 직전. 값이 있는 칸에는 지우기(×)
 export const 펼치고_값_넣기 = {
@@ -123,13 +131,19 @@ const rankBar = () => '<section class="product" style="padding:0"><div class="se
   rankTable(' grid-table--subtle') + '</section></section>';
 const stageBar = (html, minH = 0) => { const el = stage(html); if (minH) el.style.minHeight = minH + 'px';
   setTimeout(() => { el.querySelectorAll('select.checkSelect').forEach((sel) => window.buildMultiSelect && window.buildMultiSelect(sel)); if (window.enhanceFilterPanels) window.enhanceFilterPanels(el); }, 0); return el; };
-// 시안 B 상태 표: 검색 칸 · 조건 단추(값 없음 = 흰 바탕 · 회색 테두리 「전체」, 값 있음 = 옅은 브랜드 바탕) · [필터] 단추(값 있음 = 걸린 조건 수)
-const stQuery = (st, v) => '<input class="input search-bar__query' + (st ? ' ps-' + st : '') + '" type="search" aria-label="문서 검색 상태 예시" placeholder="문서 번호 또는 문서 명"' + (v ? ' value="캘리퍼"' : '') + '>';
-const stCond = (st, v) => '<div class="checkSelect checkSelect--filter' + (v ? ' is-applied' : '') + '"><div class="selected-text' + (v ? '' : ' is-placeholder') + (st === 'hover' ? ' ps-hover' : st === 'focus' ? ' ps-focus-visible' : '') + '" role="button" tabindex="-1" aria-expanded="' + (st === 'focus') + '" aria-label="작업현황 상태 예시">' +
-  '<span class="selected-text__label">작업현황</span><span class="selected-text__value">' + (v ? '검토 중' : '전체') + '</span></div></div>';
-const stTrigger = (st, v) => '<button type="button" class="btn btn--secondary btn--outlined filter-trigger' + (v ? ' is-applied' : '') + (st === 'hover' ? ' ps-hover' : st === 'focus' ? ' ps-active' : '') + '" tabindex="-1" aria-label="필터 상태 예시">' + ico(SLIDERS) + '필터' + (v ? '<span class="filter-trigger__count">2</span>' : '') + '</button>';
-const statesB = () => { enablePseudo(); return '<div class="sb-states">' + matrix(['검색 칸', '조건 단추', '[필터] 단추'], STATES.map(([n, st, v]) => [n, [stQuery(st, v), stCond(st, v), stTrigger(st, v)]]), { full: true }) + '</div>'; };
-export const 시안_한_줄_바 = { parameters: optSrc(rankBar()), render: () => { const el = stageBar(rankBar(), 460); el.insertAdjacentHTML('beforeend', statesB()); return el; } };   // 460 = [필터]를 연 패널이 카드 안에 들어가는 높이
+// 시안 B 본보기: 검색 칸 · 조건 단추 · [필터]마다 상태를 다르게 두고 위에 상태 이름표(data-state). 조건 단추 · 지우기 감싸개는 스크립트가 그린 뒤 이름표 · 상태 클래스를 옮겨 붙임
+const demoSel = (name, items, picked, state, ps, search) => fsel(name, items, picked, search).replace('<select ', '<select data-demo-state="' + state + '"' + (ps ? ' data-demo-ps="' + ps + '"' : '') + ' ');
+const demoB = () => rankBar().replace(/<input class="input search-bar__query"[^>]*>/, '<input class="input search-bar__query ps-focus" data-demo-state="입력 중" type="search" aria-label="문서 검색" placeholder="문서 번호 또는 문서 명" value="캘리" data-ds-clear>')
+  .replace(fsel('작업현황', ['작업 중', '검토 중', '승인', '반려', '폐기'], ['검토 중']) + fsel('등록자', ['김도윤', '이서연', '박지호', '최민준', '정하은'], ['김도윤'], true),
+    demoSel('작업현황', ['작업 중', '검토 중', '승인', '반려', '폐기'], [], '값 없음') + demoSel('문서 분류', ['설계 문서', '시험 문서', '회의록'], [], '마우스 올림', 'hover') +
+    demoSel('등록자', ['김도윤', '이서연', '박지호', '최민준', '정하은'], ['김도윤'], '값 있음', '', true) + demoSel('프로젝트', ['PJT-2601 전동 캘리퍼', 'PJT-2604 경량 하우징'], ['PJT-2601 전동 캘리퍼'], '값 있음 + 마우스 올림', 'hover', true))
+  .replace('<div class="filter-pop-wrap">', '<div class="filter-pop-wrap" data-state="값 있음">');
+export const 시안_한_줄_바 = { parameters: optSrc(rankBar()), render: () => { enablePseudo(); const el = stageBar(demoB(), 460); el.classList.add('anno--state');
+  setTimeout(() => {
+    el.querySelectorAll('select[data-demo-state]').forEach((sel) => { const w = sel.parentElement && sel.parentElement.closest('.checkSelect'); if (!w) return; w.dataset.state = sel.dataset.demoState; if (sel.dataset.demoPs) w.querySelector('.selected-text').classList.add('ps-' + sel.dataset.demoPs); });
+    const q = el.querySelector('input[data-demo-state]'); if (q) (q.closest('.field-clear-wrap') || q).dataset.state = q.dataset.demoState;
+  }, 60);
+  return el; } };   // 460 = [필터]를 연 패널이 카드 안에 들어가는 높이   // 460 = [필터]를 연 패널이 카드 안에 들어가는 높이
 // 필터 패널을 펼친 모습: 「필터」 단추를 누른 뒤. 걸린 조건(문서 분류 · 등록일)마다 배지, 단추에는 걸린 조건 수
 const barOnly = (open) => '<div class="search-bar"><input class="input search-bar__query" type="search" aria-label="문서 검색" placeholder="문서 번호 또는 문서 명">' +
   fsel('작업현황', ['작업 중', '검토 중', '승인', '반려', '폐기']) + fsel('등록자', ['김도윤', '이서연', '박지호', '최민준', '정하은'], [], true) + filterPop(open) +

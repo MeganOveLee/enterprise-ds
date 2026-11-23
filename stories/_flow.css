@@ -40,4 +40,15 @@
 }
 .anno [data-no][data-mid]::after { top: 50%; transform: translateY(-50%); }
 .anno-list { margin: var(--spacing-8) 0 0; }
+/* 상태 이름표: 시안 본보기 안 칸 · 단추마다 상태를 다르게 둘 때 위에 상태 이름(값 없음 · 마우스 올림 · 입력 중 · 값 있음). Blocks › Search Form 시안 A · B */
+.anno--state { padding-top: 28px; }
+.anno--state .search-bar { padding-top: 32px; }
+.anno--state .form-grid-2 { row-gap: 28px; }
+.anno--state [data-state] { position: relative; }
+.anno--state [data-state]::after {
+  content: attr(data-state); position: absolute; bottom: calc(100% + 6px); right: 0; z-index: 3;
+  padding: 0 6px; border-radius: var(--radius-chip); background: var(--color-bg-inverse); color: var(--color-text-inverse);
+  font-size: 11px; font-weight: 600; line-height: 18px; white-space: nowrap; pointer-events: none;
+}
+.anno--state .search-bar [data-state]::after { right: auto; left: 0; }
 .anno-list td:first-child { width: 40px; }
