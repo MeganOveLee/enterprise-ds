@@ -7,6 +7,28 @@ import * as S from './Card.stories.js';
 <Unstyled>
 <div className="ds-page">
 <PageHead eyebrow="Data Display" title="Card" lead="한 주제를 헤더(제목 · 개수)와 짧은 목록으로 묶어 표시하는 컨테이너입니다." />
+<Section title="고르는 기준" en="Which to use" desc="카드가 놓이는 바탕에 따라 고릅니다.">
+<Card title="A · 테두리 카드, B · 채운 카드, C · 떠 있는 카드" code={false}>
+<table className="ds-table ds-props ds-props--wrap">
+<thead><tr><th>항목</th><th>A · 테두리 카드</th><th>B · 채운 카드</th><th>C · 떠 있는 카드</th></tr></thead>
+<tbody>
+<tr><td><b>언제 쓰나</b></td><td>흰 바탕 위에 카드를 나란히 두는 대시보드입니다.</td><td>카드가 여럿 붙어 테두리가 겹쳐 보일 때입니다.</td><td>지도 · 사진처럼 바탕이 복잡한 곳 위입니다.</td></tr>
+<tr><td><b>브랜드 기본</b></td><td>Default · OOTB</td><td>필요한 화면에서 고름</td><td>Mobility</td></tr>
+</tbody>
+</table>
+</Card>
+</Section>
+<Section title="A · 테두리 카드" en="Outlined">
+<Card of={S.목록_카드} title="기본" tag="추천" why="테두리와 옅은 그림자로 경계가 보이고, 이전 버전 메인 화면 카드와 같은 층입니다." desc="헤더(제목 · 개수 · 전체 보기 링크)와 최근 5건을 보입니다." />
+<Card of={S.빈_카드} title="빈 카드" en="Empty" desc="보일 항목이 없으면 목록 대신 빈 상태를 둡니다." />
+<Card of={S.카드_그리드} title="카드 그리드 3열" en="Grid" desc="대시보드 한 줄이고, 좁은 화면에서는 2열로 줄어듭니다." />
+</Section>
+<Section title="B · 채운 카드" en="Filled">
+<Card of={S.시안_채운_카드} title="기본" desc="테두리 대신 옅은 바탕으로 묶어 선이 줄어듭니다." basis="Material 3 Filled card" />
+</Section>
+<Section title="C · 떠 있는 카드" en="Elevated">
+<Card of={S.시안_떠_있는_카드} title="기본" desc="떠 있는 층 그림자로 바탕과 떨어져 보입니다." basis="Material 3 Elevated card" />
+</Section>
 <Section title="구성" en="Spec">
 <table className="ds-table ds-props">
 <thead><tr><th>구분</th><th>클래스 · 속성</th><th>설명</th></tr></thead>
@@ -22,16 +44,6 @@ import * as S from './Card.stories.js';
 </tbody>
 </table>
 <p className="ds-sec__desc ds-after">Figma UI Kit의 Card와 짝입니다. 목록은 행 전체가 링크라 마우스와 키보드가 같은 영역을 누릅니다.</p>
-</Section>
-<Section title="시안" en="Options">
-<Card of={S.목록_카드} title="A · 테두리 카드" tag="추천" desc="업무 화면의 메인 대시보드처럼 흰 바탕 위에 카드를 나란히 둘 때 사용합니다." basis="테두리와 옅은 그림자로 카드 경계가 보입니다. 이전 버전 메인 화면 카드와 같은 층입니다." />
-<Card of={S.시안_채운_카드} title="B · 채운 카드" desc="기본보다 카드가 여럿 붙어 테두리가 겹쳐 보일 때 사용합니다." basis="Material 3 Filled card와 같은 방식입니다. 테두리 대신 옅은 바탕으로 묶어 선이 줄어듭니다." />
-<Card of={S.시안_떠_있는_카드} title="C · 떠 있는 카드" desc="기본보다 지도 · 사진처럼 바탕이 복잡한 곳 위에 카드를 둘 때 사용합니다." basis="Material 3 Elevated card와 같은 방식입니다. 떠 있는 층 그림자로 바탕과 떨어져 보입니다." />
-</Section>
-<Section title="예시" en="Examples">
-<Card of={S.목록_카드} title="목록 카드" en="List" desc="헤더(제목 · 개수 · 전체 보기 링크)와 최근 5건을 표시합니다." />
-<Card of={S.빈_카드} title="빈 카드" en="Empty" desc="표시할 항목이 없으면 목록 대신 빈 상태를 둡니다." />
-<Card of={S.카드_그리드} title="카드 그리드 3열" en="Grid" desc="대시보드 한 행입니다. 좁은 화면에서는 2열로 줄어듭니다." />
 </Section>
 <Section title="Do · Don't">
 <Card of={S.사용_지침} code={false} />
