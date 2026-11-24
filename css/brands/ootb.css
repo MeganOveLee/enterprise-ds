@@ -70,4 +70,14 @@
   /* --- 그림 자산 (DS-ADR-037): 하나만 block -------------------------------- */
   --art-solid: block;
   --art-line: none;                           /* 라인 → 솔리드 (DS-ADR-061). 원래 화면의 노란 채움 폴더와 같은 모양. 일반 UI 아이콘은 그대로 선 */
+
+  /* --- GNB · 레일 (TD-214): 시안 TOBE-A01-4 = GNB와 레일을 같은 어두운 띠로. 다크는 tokens.css 다크 값 그대로 ---------- */
+  --color-bg-gnb: var(--color-bg-inverse);    /* Figma GNB · LNB/Rail: Windchill = color/bg/inverse */
+  --color-bg-rail: var(--color-bg-inverse);
+  --color-bg-rail-logo: var(--color-bg-inverse);
+  --color-text-gnb: var(--color-text-inverse);
+  --color-text-gnb-muted: var(--neutral-300); /* 반전 바탕 위 보조 글자. 바탕(bg-inverse)과 10.1:1 */
+  --color-icon-gnb: var(--color-icon-inverse);
+  --color-bg-gnb-count: var(--color-bg-base); /* 어두운 띠 위 흰 알약 */
+  --color-text-gnb-count: var(--color-text-base);
 }

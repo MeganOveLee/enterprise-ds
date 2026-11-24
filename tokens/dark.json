@@ -29,6 +29,37 @@
   "color-bg-panel-header": {
     "$value": "{color-bg-muted}"
   },
+  "color-bg-gnb": {
+    "$value": "transparent",
+    "$extensions": {
+      "eds": {
+        "before": [
+          "/* GNB · 레일 (TD-214): 라이트와 같은 참조를 다시 적어 body에서 다크 값으로 계산. OOTB 다크도 이 값 */"
+        ]
+      }
+    }
+  },
+  "color-bg-rail": {
+    "$value": "{color-bg-base}"
+  },
+  "color-bg-rail-logo": {
+    "$value": "{color-bg-muted}"
+  },
+  "color-text-gnb": {
+    "$value": "{color-text-base}"
+  },
+  "color-text-gnb-muted": {
+    "$value": "{color-text-muted}"
+  },
+  "color-icon-gnb": {
+    "$value": "{color-icon-base}"
+  },
+  "color-bg-gnb-count": {
+    "$value": "{color-bg-inverse}"
+  },
+  "color-text-gnb-count": {
+    "$value": "{color-text-inverse}"
+  },
   "color-bg-disabled": {
     "$value": "{neutral-750}"
   },

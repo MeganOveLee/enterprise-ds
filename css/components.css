@@ -174,7 +174,7 @@
     align-items: center;
     gap: var(--spacing-8);
     font-size: var(--body-md);
-    color: var(--color-text-muted);
+    color: var(--color-text-gnb-muted);
     font-weight: var(--font-weight-medium);
 }
 /* 상단 바의 지금 화면 칸은 다른 칸과 같은 글자: 이전 버전 화면 그대로. 지금 위치는 aria-current 로 읽힘 */
@@ -192,7 +192,7 @@
     border: 1px solid transparent;   /* 보이는 테두리는 없음: 키보드 포커스 때만 포커스 테두리 색이 들어옴 */
     background: transparent;
     border-radius: var(--radius-btn);
-    color: var(--color-text-muted);
+    color: var(--color-text-gnb-muted);
     cursor: pointer;
     display: inline-flex;
     align-items: center;
@@ -200,10 +200,10 @@
     transition: color var(--duration-fast), border-color var(--duration-fast);
 }
 .gnb .nav-history-btn:hover {
-    color: var(--color-text-base);   /* 이전 버전: 바탕 없이 글자만 진하게 */
+    color: var(--color-text-gnb);   /* 이전 버전: 바탕 없이 글자만 진하게 */
 }
 .gnb .nav-history-btn:active {
-    color: var(--color-text-base);
+    color: var(--color-text-gnb);
 }
 .gnb .nav-history-btn svg {
     width: 14px;
@@ -227,11 +227,11 @@
 .main-menu {
     width: 60px;
     height: 100vh;
-    background: var(--color-bg-base);
+    background: var(--color-bg-rail);   /* Default · Mobility = bg-base · OOTB = GNB와 같은 어두운 띠 (TD-214) */
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
-    color: var(--color-icon-base);   /* 아이콘 = Figma Rail item 아이콘 색 icon-base (구 icon-muted). 이름 색은 아래 span */
+    color: var(--color-icon-gnb);   /* 아이콘 = Figma Rail item 아이콘 색 icon-base (구 icon-muted). 이름 색은 아래 span */
     border-right: 1px solid var(--color-border-lnb);   /* 라이트 base · 다크 strong (구: 다크 덮어쓰기 규칙) */
 }
 .main-menu nav {
@@ -251,7 +251,7 @@
     width: 100%; height: 56px; flex-shrink: 0;
     padding: var(--spacing-4) 0;
     border-bottom: 1px solid var(--color-border-base);
-    background: var(--color-bg-muted);
+    background: var(--color-bg-rail-logo);   /* Default · Mobility = bg-muted · OOTB = 레일 바탕 그대로(로고를 색 칸에 넣지 않음) */
     color: inherit;
 }
 .main-menu .lnb-logo:hover { background: var(--color-bg-lnb-hover); }   /* 바탕이 이미 bg-muted 라 올림은 메뉴 항목 올림과 같은 옅은 브랜드 (구: 투명 → bg-muted) */
@@ -268,7 +268,7 @@
     cursor: pointer;
     transition: background-color var(--duration-fast), color var(--duration-fast);
 }
-.main-menu > nav > ul > li:hover { background: var(--color-bg-lnb-hover); }
+.main-menu > nav > ul > li:hover { background: var(--color-bg-lnb-hover); color: var(--color-icon-base); }   /* 올림 면은 옅은 브랜드라 아이콘은 어두운 바탕 위 색(icon-gnb)이 아니라 icon-base */
 .main-menu > nav > ul > li:hover > span { color: var(--color-text-brand); }
 .main-menu > nav > ul > li:has(a.active, a[aria-current="page"]) {
     background: var(--color-bg-lnb-active);
@@ -302,7 +302,7 @@
     text-align: center;
     word-break: keep-all;        /* 줄은 띄어쓰기에서 나눔: 「벤치마킹 관리」 → 벤치마킹 / 관리 (구: 한 줄 고정 nowrap: 긴 이름이 레일 밖으로 넘침) */
     overflow-wrap: anywhere;     /* 띄어쓰기 없이 레일 폭보다 긴 낱말만 글자 단위로 */
-    color: var(--color-text-base);   /* 이름 = Figma Rail item 이름 색 text-base (구 icon-muted 를 물려받음) */
+    color: var(--color-text-gnb);   /* 이름 = Figma Rail item 이름 색 text-base (구 icon-muted 를 물려받음) */
 }
 @media (forced-colors: active) { .main-menu .menu_icon::before { background-color: CanvasText; } }
 /* ─── 폴더 탭 상단 컨트롤 (사업구분 select + 폴더 검색 input) ── */
@@ -401,7 +401,7 @@
  * ============================================================ */
 .gnb {
     height: 56px;
-    background: transparent;   /* 놓인 면(내용 영역 bg-subtle)을 그대로: 이전 버전 화면과 같음, 아래 선으로만 나눔 (구 bg-base) */
+    background: var(--color-bg-gnb);   /* Default · Mobility = 투명: 놓인 면(내용 영역 bg-subtle)을 그대로, 아래 선으로만 나눔 (구 bg-base). OOTB = 레일과 같은 어두운 띠 (TD-214) */
     border-bottom: 1px solid var(--color-border-base);
     display: flex;
     align-items: center;
@@ -433,6 +433,7 @@
  *   조각 넷 = 바탕 글자색, 오른쪽 위 조각 하나 = 브랜드 색: 브랜드를 바꾸면 그 조각만 따라 바뀐다. Figma CI LOGO Theme=On Light · On Dark
  *   어두운 면(로그인 브랜드 패널 · 어두운 앱 바) = .ci-mark--on-dark. 타일 마크(.ci-app-icon)는 작업 표시줄 · 브라우저 탭 아이콘 전용 */
 .ci-mark__piece { fill: var(--color-icon-base); }
+:is(.gnb, .main-menu) .ci-mark:not(.ci-mark--on-dark) .ci-mark__piece:not(.ci-mark__piece--brand) { fill: var(--color-icon-gnb); }   /* GNB · 레일 위 = 띠 바탕을 따름(OOTB 어두운 띠면 흰 조각) */
 .ci-mark--on-dark .ci-mark__piece { fill: var(--color-icon-on-color); }
 .ci-mark__piece.ci-mark__piece--brand { fill: var(--color-icon-brand); }
 .ci-app-icon__tile { fill: var(--color-bg-brand); }
@@ -449,11 +450,11 @@
     font-family: var(--font-family-accent);
     font-weight: var(--font-weight-semibold);
     font-size: var(--heading-md);
-    color: var(--color-text-base);
+    color: var(--color-text-gnb);
 }
 .gnb .logo-version {
     font-size: var(--body-sm);
-    color: var(--color-text-muted);
+    color: var(--color-text-gnb-muted);
     margin-left: var(--spacing-4);
 }
 .gnb .header-actions { display: flex; align-items: center; gap: var(--spacing-16); height: 100%; font-size: var(--body-md); }  /* font-size=styles.css 459 이관(컷 시 14→16 방지) */
@@ -500,25 +501,25 @@
     cursor: pointer;
     border-radius: var(--radius-btn);
     font-family: var(--font-family-base);
-    color: var(--color-text-base);
+    color: var(--color-text-gnb);
     font-size: var(--body-md);
     white-space: nowrap;            /* 폰트 폭 차이로 줄바꿈 방지 */
 }
 /* 사용자 메뉴 버튼: 사용자 아이콘 24 · icon-base = Figma GNB/Top bar › user. 구: 20 · icon-muted(이전 버전 아이콘 #656565 자리) */
-.menu-toggle > svg { width: 24px; height: 24px; color: var(--color-icon-base); }
+.menu-toggle > svg { width: 24px; height: 24px; color: var(--color-icon-gnb); }
 .menu-toggle:has(> :is(svg, img):only-child) { width: 24px; height: 24px; justify-content: center; }   /* 아이콘만 든 버튼 = 아이콘 크기 24 정사각: 오른쪽 묶음 간격 16이 아이콘에서 바로 잼, 포커스 테두리도 정사각 (구 32) */
 /* .menu-toggle hover 배경 제거: 원래(styles.css) hover 배경 없었음, 우리가 추가한 것 되돌림 */
 .menu-toggle .title {
     margin: 0;
-    color: var(--color-text-base);   /* 결재업무 · 활동업무 제목 = Figma text-base. 구: text-muted */
+    color: var(--color-text-gnb);   /* 결재업무 · 활동업무 제목 = Figma text-base. 구: text-muted */
     font-weight: var(--font-weight-medium);
     line-height: 1;
     white-space: nowrap;
 }
 .menu-toggle .count {
     margin: 0;
-    background: var(--color-bg-inverse);
-    color: var(--color-text-inverse);
+    background: var(--color-bg-gnb-count);   /* GNB 바탕과 반대 톤 알약: Default 어두운 알약 · OOTB 흰 알약 */
+    color: var(--color-text-gnb-count);
     border-radius: var(--radius-rounded);
     padding: 0 var(--spacing-8);
     font-size: var(--body-xs);   /* 11: 이전 버전 값, 토큰 Body/xs */

@@ -977,6 +977,44 @@
     "$value": "{color-bg-muted}",
     "$description": "카드 · 패널 머리 바탕(아래 선 = color-border-base). 세 브랜드 같은 값. 다크는 dark.json에서 다시 계산 (DS-ADR-057)"
   },
+  "color-bg-gnb": {
+    "$value": "transparent",
+    "$extensions": {
+      "eds": {
+        "before": [
+          "/* GNB · 레일 (TD-214): 앱 위 띠와 왼쪽 레일. 다크는 dark.json에서 다시 계산 */"
+        ]
+      }
+    },
+    "$description": "GNB 바탕. 놓인 면(내용 영역)이 그대로 보임. OOTB는 반전 바탕"
+  },
+  "color-bg-rail": {
+    "$value": "{color-bg-base}",
+    "$description": "LNB 레일 바탕. OOTB는 GNB와 같은 반전 바탕"
+  },
+  "color-bg-rail-logo": {
+    "$value": "{color-bg-muted}",
+    "$description": "레일 맨 위 로고 칸 바탕. OOTB는 레일과 같은 바탕(로고를 색 칸에 넣지 않음)"
+  },
+  "color-text-gnb": {
+    "$value": "{color-text-base}",
+    "$description": "GNB · 레일 위 글자"
+  },
+  "color-text-gnb-muted": {
+    "$value": "{color-text-muted}",
+    "$description": "GNB 위 보조 글자(경로 · 버전 · 이전 · 다음)"
+  },
+  "color-icon-gnb": {
+    "$value": "{color-icon-base}",
+    "$description": "GNB · 레일 위 아이콘 · CI 마크"
+  },
+  "color-bg-gnb-count": {
+    "$value": "{color-bg-inverse}",
+    "$description": "GNB 업무 개수 알약 바탕. GNB 바탕과 반대 톤"
+  },
+  "color-text-gnb-count": {
+    "$value": "{color-text-inverse}"
+  },
   "color-bg-disabled": {
     "$value": "{neutral-300}"
   },

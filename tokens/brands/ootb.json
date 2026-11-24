@@ -192,5 +192,39 @@
   "art-line": {
     "$value": "none",
     "$description": "라인 → 솔리드 (DS-ADR-061). 원래 화면의 노란 채움 폴더와 같은 모양. 일반 UI 아이콘은 그대로 선"
+  },
+  "color-bg-gnb": {
+    "$value": "{color-bg-inverse}",
+    "$extensions": {
+      "eds": {
+        "before": [
+          "/* --- GNB · 레일 (TD-214): 시안 TOBE-A01-4 = GNB와 레일을 같은 어두운 띠로. 다크는 tokens.css 다크 값 그대로 ---------- */"
+        ]
+      }
+    },
+    "$description": "Figma GNB · LNB/Rail: Windchill = color/bg/inverse"
+  },
+  "color-bg-rail": {
+    "$value": "{color-bg-inverse}"
+  },
+  "color-bg-rail-logo": {
+    "$value": "{color-bg-inverse}"
+  },
+  "color-text-gnb": {
+    "$value": "{color-text-inverse}"
+  },
+  "color-text-gnb-muted": {
+    "$value": "{neutral-300}",
+    "$description": "반전 바탕 위 보조 글자. 바탕(bg-inverse)과 10.1:1"
+  },
+  "color-icon-gnb": {
+    "$value": "{color-icon-inverse}"
+  },
+  "color-bg-gnb-count": {
+    "$value": "{color-bg-base}",
+    "$description": "어두운 띠 위 흰 알약"
+  },
+  "color-text-gnb-count": {
+    "$value": "{color-text-base}"
   }
 }
