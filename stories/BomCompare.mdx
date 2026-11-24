@@ -7,13 +7,23 @@ import * as S from './BomCompare.stories.js';
 <Unstyled>
 <div className="ds-page">
 <PageHead eyebrow="Blocks" title="BOM Compare" lead="두 BOM을 좌우에 놓고 같은 품목을 같은 행에 맞춰 차이를 표시하는 화면입니다. 부품 관리 메뉴의 BOM 조회 › BOM 비교에서 엽니다." />
-<Section title="시안" en="Options">
-<Card of={S.두_BOM_비교} title="A · 나란한 두 표" tag="추천" desc="넓은 화면에서 두 BOM의 구조를 함께 보며 비교할 때 사용합니다." basis="이전 버전 비교 화면처럼 왼쪽 기준 · 오른쪽 비교를 같은 줄에 맞춰, 다른 줄이 양쪽에서 같은 높이에 보입니다." />
-<Card of={S.시안_한_표_비교} title="B · 한 표 비교" desc="기본보다 화면이 좁거나 바뀐 곳만 빠르게 볼 때 사용합니다." basis="두 BOM을 한 줄에 겹쳐 바뀐 수량만 「기준 → 비교」로 씁니다. 한쪽에만 있는 품목은 「기준에만 · 비교에만」 글자로 알립니다. 트리 비교는 스크립트가 커서 두지 않습니다." />
+<Section title="고르는 기준" en="Which to use" desc="화면 폭과 보려는 것에 따라 고릅니다.">
+<Card title="A · 나란한 두 표, B · 한 표 비교" code={false}>
+<table className="ds-table ds-props ds-props--wrap">
+<thead><tr><th>항목</th><th>A · 나란한 두 표</th><th>B · 한 표 비교</th></tr></thead>
+<tbody>
+<tr><td><b>언제 쓰나</b></td><td>넓은 화면에서 두 BOM의 구조를 함께 볼 때입니다.</td><td>화면이 좁거나 바뀐 곳만 빠르게 볼 때입니다.</td></tr>
+<tr><td><b>브랜드 기본</b></td><td>Default · OOTB</td><td>브랜드와 관계없이 좁은 화면</td></tr>
+</tbody>
+</table>
+</Card>
 </Section>
-<Section title="예시" en="Examples">
-<Card of={S.두_BOM_비교} title="두 BOM 나란히 비교" en="Side by side" desc="버전 · Baseline 사이에 품목과 수량이 어떻게 바뀌었는지 볼 때 사용합니다. 양쪽에 품목과 버전을 선택한 뒤 [검색]을 누릅니다. 다른 행은 빨간 바탕 · 테두리로 표시합니다." />
-<Card of={S.차이만_보기} title="차이만 보기" en="Differences only" desc="바뀐 품목만 볼 때 사용합니다. 조회 옵션에서 「같음」을 끄면 수량 다름 · 한쪽에만 있음 행만 남습니다." />
+<Section title="A · 나란한 두 표" en="Side by side">
+<Card of={S.두_BOM_비교} title="기본" tag="추천" why="왼쪽 기준과 오른쪽 비교를 같은 줄에 맞춰, 다른 줄이 양쪽에서 같은 높이에 보입니다." desc="양쪽에 품목과 버전을 고르고 [검색]을 누릅니다. 다른 줄은 빨간 바탕과 테두리로 보입니다." />
+<Card of={S.차이만_보기} title="차이만 보기" en="Differences only" desc="조회 옵션에서 「같음」을 끄면 수량 다름 · 한쪽에만 있음 줄만 남습니다." />
+</Section>
+<Section title="B · 한 표 비교" en="Single table">
+<Card of={S.시안_한_표_비교} title="기본" desc="두 BOM을 한 줄에 겹쳐 바뀐 수량만 「기준 → 비교」로 씁니다. 한쪽에만 있는 품목은 글자로 알립니다." />
 </Section>
 <Section title="구성" en="Spec">
 <table className="ds-table ds-props ds-props--wrap">

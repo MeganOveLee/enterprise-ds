@@ -5,7 +5,7 @@
 // 이전 버전과 다르게 한 것: 범례 색과 줄 색을 같은 토큰으로(이전: 범례 Unassigned 노랑 · 줄 빨강), 색만으로 알리지 않게 「비교」 칸에 글자,
 //   열 머리 [검색]은 [찾기] secondary로(화면의 primary는 위 [검색] 하나), 범례 · 옵션 이름은 우리말(이전 이름은 구성 표에)
 // 배치 클래스 .ui-compare · .ui-field-addon · .compare-legend 는 components.css 「Blocks」(이전 버전과 같은 이름)
-import { flow, shot, MARK } from './_flow.js';
+import { shot } from './_flow.js';
 import { doDont } from './_dodont.js';
 import { lnbSvg } from './_lnbicons.js';
 
@@ -86,16 +86,6 @@ const screen = ({ show = [true, true, true] } = {}) => {
 };
 const body = (inner) => '<div class="main-content"><div class="searchLayout">' + inner + '</div></div>';
 
-// 기본 화면: 부품 관리 메뉴 패널. 지금 화면 = 부품 검색, 누르는 곳 = BOM 조회 › BOM 비교
-const menu = () =>
-  '<aside class="main-sub" aria-label="부품 관리 메뉴"><div class="main-sub-header"><h3>부품 관리</h3>' +
-  '<button type="button" class="sub-close" aria-label="메뉴 닫기">' + svg(I.close, 14) + '</button></div>' +
-  '<div class="main-sub-content"><div class="ui-submenu"><ul>' +
-  '<li class="ui-submenu-flat"><a href="#" aria-current="page">부품 검색</a></li><li class="ui-submenu-flat"><a href="#">부품 등록</a></li>' +
-  '<li class="ui-submenu-group"><h4 class="ui-submenu-title"><a href="#">BOM 조회</a></h4><ul class="ui-submenu-list">' +
-  '<li><a href="#">정전개</a></li><li><a href="#" class="' + MARK + '">BOM 비교</a></li></ul></li>' +
-  '</ul></div></div></aside>';
-
 const W = 1240, H = 600;
 export default {
   title: 'Blocks/BOM Compare',
@@ -105,11 +95,7 @@ export default {
 
 export const 두_BOM_비교 = {
   parameters: { docs: { source: { code: screen() } } },
-  render: () => flow({
-    base: { html: menu(), w: 215, h: 300, where: '부품 관리 메뉴 패널' },
-    open: { html: body(screen()), w: W, h: H, title: '열리는 화면', where: 'BOM 비교 › 본문 영역' },
-    trigger: '[BOM 비교]', how: '본문이 비교 화면으로 바뀝니다(새 창으로 열지 않습니다)',
-  }),
+  render: () => shot(body(screen()), W, H),
 };
 // 조회 옵션에서 「같음」을 끔: 차이 줄만 남음
 export const 차이만_보기 = {
