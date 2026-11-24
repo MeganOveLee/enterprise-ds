@@ -7,6 +7,27 @@ import * as S from './StatusChip.stories.js';
 <Unstyled>
 <div className="ds-page">
 <PageHead eyebrow="Data Display" title="Status Chip" lead="작업현황 · 진행 상태를 짧은 글자와 색으로 표시하는 칩입니다." />
+<Section title="고르는 기준" en="Which to use" desc="상태를 얼마나 강하게 보일지에 따라 고릅니다.">
+<Card title="A · 옅은 바탕, B · 점 + 글자, C · 진한 채움" code={false}>
+<table className="ds-table ds-props ds-props--wrap">
+<thead><tr><th>항목</th><th>A · 옅은 바탕</th><th>B · 점 + 글자</th><th>C · 진한 채움</th></tr></thead>
+<tbody>
+<tr><td><b>언제 쓰나</b></td><td>표 칸 · 카드 목록입니다.</td><td>칩이 줄마다 반복되는 촘촘한 표입니다.</td><td>지연 · 반려처럼 놓치면 안 되는 상태 하나를 강조할 때입니다.</td></tr>
+<tr><td><b>브랜드 기본</b></td><td>세 브랜드(OOTB는 테두리)</td><td>필요한 화면에서 고름</td><td>필요한 화면에서 고름</td></tr>
+</tbody>
+</table>
+</Card>
+</Section>
+<Section title="A · 옅은 바탕" en="Subtle">
+<Card of={S.작업_현황} title="기본" tag="추천" why="옅은 바탕 · 진한 글자 · 점으로 상태 색이 바탕에 묻히지 않습니다." desc="문서 · 도면의 결재 단계입니다." basis="Atlassian Lozenge subtle" />
+<Card of={S.진행_상태} title="진행 상태" en="Progress" desc="프로젝트 · 태스크의 진행 상태입니다." />
+</Section>
+<Section title="B · 점 + 글자" en="Dot">
+<Card of={S.시안_점_글자} title="기본" desc="바탕을 빼고 점 색과 글자로 상태를 알립니다." basis="Carbon Tag" />
+</Section>
+<Section title="C · 진한 채움" en="Bold">
+<Card of={S.시안_진한_채움} title="기본" desc="진한 상태 색 바탕에 흰 글자입니다. 한 화면에 몇 개만 둡니다." basis="Atlassian Lozenge bold" />
+</Section>
 <Section title="구성" en="Spec">
 <table className="ds-table ds-props">
 <thead><tr><th>구분</th><th>클래스 · 속성</th><th>설명</th></tr></thead>
@@ -23,15 +44,6 @@ import * as S from './StatusChip.stories.js';
 <Section title="테두리" en="Outlined">
 <Card of={S.테두리} title="옅은 바탕 + 테두리" desc="얼룩 줄 표처럼 칩 바탕이 줄 바탕에 묻힐 때 사용합니다." />
 <p className="ds-sec__desc ds-after"><code>.status-chip</code>에 <code>.status-chip--outlined</code>를 붙이면 상태 색 선(<code>--border-width-sm</code>)이 칩 안쪽에 생깁니다. 선 색은 <code>--color-border-info</code> · <code>--color-border-success</code> · <code>--color-border-warning</code> · <code>--color-border-danger</code>이고, 대기는 <code>--color-border-strong</code>입니다. 칩 크기는 같습니다.</p>
-</Section>
-<Section title="시안" en="Options">
-<Card of={S.작업_현황} title="A · 옅은 바탕" tag="추천" desc="표 칸 · 카드 목록에서 상태를 보일 때 사용합니다." basis="옅은 바탕 + 진한 글자 + 점으로 상태 색이 바탕에 묻히지 않습니다(Atlassian Lozenge subtle)." />
-<Card of={S.시안_점_글자} title="B · 점 + 글자" desc="기본보다 칩이 줄마다 반복되는 촘촘한 표에서 사용합니다." basis="바탕을 빼 칸이 가벼워지고, 상태는 점 색과 글자로 함께 알립니다(Carbon Tag)." />
-<Card of={S.시안_진한_채움} title="C · 진한 채움" desc="기본보다 지연 · 반려처럼 놓치면 안 되는 상태 하나를 강조할 때 사용합니다." basis="진한 상태 색 바탕 + 흰 글자(노랑 위는 진한 글자)입니다(Atlassian Lozenge bold). 한 화면에 몇 개만 둡니다." />
-</Section>
-<Section title="예시" en="Examples">
-<Card of={S.작업_현황} title="작업현황" en="Workflow" desc="문서 · 도면의 결재 단계입니다." />
-<Card of={S.진행_상태} title="진행 상태" en="Progress" desc="프로젝트 · 태스크의 진행 상태입니다." />
 </Section>
 <Section title="Do · Don't">
 <Card of={S.사용_지침} code={false} />
