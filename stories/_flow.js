@@ -34,6 +34,16 @@ export const flow = ({ base, open, trigger, how }) => {
   return root;
 };
 
+// 열리는 창을 기본 화면 위에 겹쳐 그림(TD-204): 기본 화면 위 어두운 막(--color-bg-overlay) + 가운데 창. 처음에는 열린 모습.
+// 기본 화면의 MARK 단추를 누르면 열리고, 창의 닫기(.pop-close) · data-flow-close 단추를 누르면 닫힘. w · h = 틀 전체 실제 크기
+export const overlay = ({ base, open, w, h }) => {
+  const el = fit('<div class="flow__base">' + base + '</div><div class="flow__dim"><div class="flow__popup" style="width:' + open.w + 'px;height:' + open.h + 'px">' + open.html + '</div></div>', w, h);
+  const dim = el.querySelector('.flow__dim');
+  el.querySelectorAll('.flow__base .' + MARK).forEach((b) => b.addEventListener('click', () => { dim.hidden = false; }));
+  el.querySelectorAll('.flow__popup .pop-close, .flow__popup [data-flow-close]').forEach((b) => b.addEventListener('click', () => { dim.hidden = true; }));
+  return el;
+};
+
 // 한 장만 실제 크기로(흐름 없이): 같은 창의 다른 상태 카드
 export const shot = (html, w, h) => fit(html, w, h);
 

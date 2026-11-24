@@ -41,3 +41,10 @@
 .anno [data-no][data-mid]::after { top: 50%; transform: translateY(-50%); }
 .anno-list { margin: var(--spacing-8) 0 0; }
 .anno-list td:first-child { width: 40px; }
+
+/* 겹쳐 그리기(overlay): 기본 화면 위에 어두운 막 + 가운데 열리는 창 (TD-204) */
+.flow__base { position: absolute; inset: 0; isolation: isolate; z-index: 0; }   /* 기본 화면 안 sticky 머리 · 제목 줄이 막 위로 올라오지 않게 */
+.flow__base > .pop, .flow__popup > .pop { height: 100%; min-width: 0; }
+.flow__dim { position: absolute; inset: 0; z-index: 1; display: flex; align-items: center; justify-content: center; background: var(--color-bg-overlay); }
+.flow__dim[hidden] { display: none; }
+.flow__popup { overflow: hidden; border-radius: var(--radius-card); box-shadow: var(--shadow-popover); }

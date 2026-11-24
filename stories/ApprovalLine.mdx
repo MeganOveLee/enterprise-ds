@@ -7,14 +7,15 @@ import * as S from './ApprovalLine.stories.js';
 <Unstyled>
 <div className="ds-page">
 <PageHead eyebrow="Blocks" title="Approval Line" lead="등록 창의 결재선 지정 섹션과, 섹션 헤더의 [결재선 지정]으로 여는 결재선 지정 창입니다. 결재 받을 사람을 역할(합의 · 승인 · 수신)별로 지정합니다." />
-<Section title="시안" en="Options">
-<Card of={S.결재선_지정} title="A · 결재선 표" tag="추천" desc="결재 요청 전에 결재자와 순서를 정할 때 사용합니다." basis="조직도에서 사람을 골라 역할별 표에 옮기는 이전 버전과 같은 방식입니다." />
-<Card of={S.시안_가로_단계} title="B · 가로 단계 흐름" desc="기본보다 상세 창 위쪽에서 결재가 어디까지 왔는지 한 줄로 보일 때 사용합니다." basis="Progress 단계 목록과 같은 계열입니다. 단계마다 역할 · 이름 · 상태 글자를 두어 표식 색만으로 읽지 않게 하고, 지금 단계는 aria-current로 알립니다. 등록 마법사처럼 단계 이름만 둘 때는 .approval-flow--label을 더해 지금 단계 이름만 브랜드색 반굵게 보입니다. 단계가 넘어가면 끝난 단계의 체크가 그려지고 선이 지금 단계까지 채워진 뒤, 선이 닿은 쪽부터 지금 단계의 고리가 그려집니다. 한 번 움직이고 멈추며, 동작 줄이기 설정에서는 결과만 보입니다." />
-<Card of={S.시안_세로_타임라인} title="C · 세로 타임라인" desc="기본보다 결재 의견 · 시각까지 함께 보는 모바일 결재함에서 사용합니다." basis="위에서 아래로 시간 순서이고, 의견은 그 단계 아래에 붙습니다. 폭이 좁아도 이름이 잘리지 않습니다." />
+<Section title="A · 결재선 표" en="Approver table">
+<Card of={S.결재선_지정} title="기본" tag="추천" why="조직도에서 골라 역할별 표에 옮기는 이전 버전과 같은 방식이라 새로 익히지 않아도 됩니다." desc="등록 창에서 [결재선 지정]을 누르면 결재선 지정 창이 뜹니다. 조직도에서 담당자를 체크하고 [합의 ›] · [승인 ›] · [수신 ›]로 넣습니다." />
+<Card of={S.저장한_결재선_불러오기} title="저장한 결재선 불러오기" en="From a template" desc="결재선 Template 탭에서 고르고 [적용]을 누르면 역할 상자가 한 번에 채워집니다." />
 </Section>
-<Section title="예시" en="Examples">
-<Card of={S.결재선_지정} title="결재선 지정" en="Pick approvers" desc="조직도에서 부서를 선택하고 담당자를 체크한 뒤 가운데 [합의 ›] · [승인 ›] · [수신 ›]로 넣거나, 역할 상자로 끌어다 놓습니다. 넣은 사람은 줄 끝 ×로 뺍니다." />
-<Card of={S.저장한_결재선_불러오기} title="저장한 결재선 불러오기" en="From a template" desc="같은 결재선을 자주 쓸 때 사용합니다. 결재선 Template 탭에서 선택하고 [적용]을 누르면 역할 상자가 한 번에 채워집니다." />
+<Section title="B · 가로 단계 흐름" en="Horizontal steps">
+<Card of={S.시안_가로_단계} title="기본" desc="상세 창 위쪽에서 결재가 어디까지 왔는지 한 줄로 보입니다." />
+</Section>
+<Section title="C · 세로 타임라인" en="Timeline">
+<Card of={S.시안_세로_타임라인} title="기본" desc="모바일 결재함에서 단계마다 의견 · 시각까지 함께 봅니다." />
 </Section>
 <Section title="구성" en="Spec">
 <table className="ds-table ds-props ds-props--wrap">

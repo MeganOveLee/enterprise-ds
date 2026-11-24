@@ -3,7 +3,7 @@
 // 넣은 사람은 줄 끝 ×로 뺌 (이전 버전 캡처 「10_결재선 지정 조직 탭」처럼 가운데 이동 버튼. 구: 역할 상자 머리 [추가]: 다른 Template 목록이 뜰 것처럼 읽힘)
 // 역할 상자 세 개는 너비 · 높이가 같고, 표 최소 높이 = 머리 + 데이터 3줄
 // 상자 = 접는 섹션 상자 · 섹션 상자(.section-box, 접기 없음). 두 칸 배치(왼쪽 | 역할 상자)만 이 블록의 inline grid
-import { flow, shot, MARK, wireSections, toggleIcon } from './_flow.js';
+import { overlay, shot, MARK, wireSections, toggleIcon } from './_flow.js';
 import { doDont } from './_dodont.js';
 
 const svg = (d, s = 16) => '<svg width="' + s + '" height="' + s + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + d + '</svg>';
@@ -123,10 +123,11 @@ export default {
 
 export const 결재선_지정 = {
   parameters: { docs: { source: { code: area() + '\n\n<!-- [결재선 지정]을 누르면 여는 창 -->\n' + pop() } } },
-  render: () => wireSections(flow({
-    base: { html: area(), w: 1000, h: 408, where: '문서 등록 창 › 결재선 지정 섹션(등록 · 결재 요청 화면 공통)' },
-    open: { html: pop(), w: 1200, h: 800, where: '결재선 지정 새 창' },
-    trigger: '[결재선 지정]', how: '새 창이 열립니다. [결재선 적용]을 누르면 고른 사람이 등록 창 표에 들어갑니다',
+  // 등록 창 위에 결재선 지정 창을 겹쳐 그림. [결재선 지정]을 누르면 열리고 ✕ · [결재선 적용]을 누르면 닫힘
+  render: () => wireSections(overlay({
+    base: area(),
+    open: { html: pop().replace('>결재선 적용<', ' data-flow-close>결재선 적용<'), w: 1200, h: 800 },
+    w: 1280, h: 880,
   })),
 };
 export const 저장한_결재선_불러오기 = {
