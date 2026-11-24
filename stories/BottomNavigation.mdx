@@ -7,6 +7,28 @@ import * as S from './BottomNavigation.stories.js';
 <Unstyled>
 <div className="ds-page">
 <PageHead eyebrow="Navigation · 모바일 앱" title="Bottom Navigation" lead="모바일 앱 화면 아래에 붙어, 첫 단계 화면 사이를 한 번 눌러 오가게 하는 탭입니다." />
+<Section title="고르는 기준" en="Which to use" desc="화면 바탕에 따라 고릅니다.">
+<Card title="A · 막대, B · 알약 표시, C · 떠 있는 알약" code={false}>
+<table className="ds-table ds-props ds-props--wrap">
+<thead><tr><th>항목</th><th>A · 막대</th><th>B · 알약 표시</th><th>C · 떠 있는 알약</th></tr></thead>
+<tbody>
+<tr><td><b>언제 쓰나</b></td><td>앱의 첫 단계 화면 사이를 오갈 때입니다.</td><td>지금 화면을 더 크게 표시할 때입니다.</td><td>지도처럼 화면 끝까지 그림이 차는 화면입니다.</td></tr>
+<tr><td><b>브랜드</b></td><td colSpan={3}>Mobility = C(지도 화면), Default · OOTB = A입니다.</td></tr>
+</tbody>
+</table>
+</Card>
+</Section>
+<Section title="A · 막대" en="Bar">
+<Card of={S.막대} title="기본" tag="추천" why="선 · 채움 짝이 같은 모양이라 지금 화면을 알아보기 쉽습니다." desc="지금 화면은 채운 아이콘, 나머지는 같은 모양의 선 아이콘입니다." basis="Apple HIG 탭 막대" />
+<Card of={S.항목_셋} title="항목 셋" desc="앱의 첫 단계 화면이 셋일 때 사용합니다." />
+<Card of={S.항목_다섯} title="항목 다섯" desc="기본보다 첫 단계 화면이 많을 때 사용합니다. 다섯을 넘으면 내 정보 화면 안으로 옮깁니다." />
+</Section>
+<Section title="B · 알약 표시" en="Indicator">
+<Card of={S.알약_표시} title="기본" desc="아이콘 뒤 바탕으로 지금 화면과 누름 영역을 보입니다." basis="Material 3 Navigation bar" />
+</Section>
+<Section title="C · 떠 있는 알약" en="Floating">
+<Card of={S.떠_있는_알약} title="기본" desc="지도 위에 떠 있는 하단 탭입니다." basis="DS-ADR-051" />
+</Section>
 <Section title="구성" en="Spec">
 <table className="ds-table ds-props">
 <thead><tr><th>구분</th><th>클래스 · 속성</th><th>설명</th></tr></thead>
@@ -19,15 +41,6 @@ import * as S from './BottomNavigation.stories.js';
 <tr><td><b>브랜드가 바꾸는 것</b></td><td><code>--size-touch</code> · <code>--body-sm</code> · <code>--color-text-brand</code> · <code>--icon-stroke</code></td><td>누름 높이 · 글자 크기 · 지금 화면 색 · 아이콘 선 굵기입니다. 아이콘은 글자 크기를 따라 커집니다. 시안은 Mobility = C(지도 화면 위) 또는 A, Default · OOTB = A입니다.</td></tr>
 </tbody>
 </table>
-</Section>
-<Section title="시안" en="Options">
-<Card of={S.막대} title="A · 막대" tag="추천" desc="앱의 첫 단계 화면 사이를 오갈 때 사용합니다." basis="Apple HIG 탭 막대는 지금 화면에 채운 아이콘을 권합니다. 선 · 채움 짝은 같은 모양이라 알아보기 쉽습니다." />
-<Card of={S.알약_표시} title="B · 알약 표시" desc="기본보다 지금 화면을 더 크게 표시할 때 사용합니다." basis="Material 3 Navigation bar의 active indicator입니다. 아이콘 뒤 바탕으로 누름 영역이 보입니다." />
-<Card of={S.떠_있는_알약} title="C · 떠 있는 알약" desc="기본보다 지도처럼 화면 끝까지 그림이 차는 화면에서 사용합니다." basis="네이버지도 6.12의 떠 있는 하단 탭 · 기존 모빌리티 앱의 글자 색 채운 아이콘입니다(DS-ADR-051)." />
-</Section>
-<Section title="예시" en="Examples">
-<Card of={S.항목_셋} title="항목 셋" desc="앱의 첫 단계 화면이 셋일 때 사용합니다." />
-<Card of={S.항목_다섯} title="항목 다섯" desc="기본보다 첫 단계 화면이 많을 때 사용합니다. 다섯을 넘으면 내 정보 화면 안으로 옮깁니다." />
 </Section>
 </div>
 </Unstyled>
