@@ -5499,7 +5499,7 @@ body.dark-mode .filter-pop { background-color: var(--color-bg-muted); }   /* 떠
  *     <template class="criteria-template"> 새 줄 · 새 하위 그룹 · 값 칸 견본([data-criteria-value="text · number · bool · list · user · date"]) </template>
  *   </div>
  *   속성 종류별 연산자 · 값 칸: 글자 · 사람 · 예/아니요 · 목록 = · ≠, 숫자 = · ≠ · < · ≤ · > · ≥, 날짜 = 하나 + 범위 셀렉트(어제 · 오늘 · 내일 · 날짜 범위 선택 · 일 범위 선택)
- *   줄마다 늘 보이는 빼기(×)와 글자를 붙인 그룹 단추는 Jira 업무 목록 필터 「고급」에서 가져옴 */
+ *   줄마다 늘 보이는 빼기(×)와 글자를 붙인 그룹 단추, 값 칸이 남은 폭을 채우는 줄은 Jira 업무 목록 필터 「고급」에서 가져옴 */
 .criteria-expr { margin: 0 0 var(--spacing-8); color: var(--color-text-muted); font-size: var(--body-sm); word-break: keep-all; }
 .criteria-group {
     display: flex;
@@ -5510,7 +5510,13 @@ body.dark-mode .filter-pop { background-color: var(--color-bg-muted); }   /* 떠
     border-radius: var(--radius-panel);
     background-color: var(--color-bg-base);
 }
-.criteria-group .criteria-group { background-color: var(--color-bg-subtle); }   /* 하위 그룹 = 한 단계 옅은 회색 바탕으로 바깥 그룹과 가름 */
+.criteria-group .criteria-group {   /* 하위 그룹 = 왼쪽 세로 선 + 들여쓰기. 바탕 · 테두리 · 안 여백이 없어 줄 끝 빼기(×)가 바깥 그룹과 한 세로줄에 선다 */
+    padding: 0 0 0 var(--spacing-24);
+    border: 0;
+    border-left: var(--border-width-md) solid var(--color-border-base);
+    border-radius: 0;
+    background-color: transparent;
+}
 .criteria-group__head { display: flex; flex-wrap: wrap; align-items: center; gap: var(--spacing-4); }
 .criteria-group__head > :is(.criteria-group__join, .ui-select:has(> .criteria-group__join)) { flex: none; width: 96px; margin-right: var(--spacing-4); }
 .criteria-add .ui-menu__list { min-width: 220px; }
@@ -5519,7 +5525,7 @@ body.dark-mode .filter-pop { background-color: var(--color-bg-muted); }   /* 떠
 .criteria-row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--spacing-8); }   /* 놓인 칸이 좁으면 값 칸이 다음 줄로 (DS-ADR-048) */
 .criteria-row > :is(.criteria-row__field, .ui-select:has(> .criteria-row__field)) { flex: 0 1 240px; min-width: 140px; }
 .criteria-row > :is(.criteria-row__op, .ui-select:has(> .criteria-row__op)) { flex: none; width: 72px; }
-.criteria-row__value { display: flex; flex-wrap: wrap; align-items: center; gap: var(--spacing-8); flex: 0 1 240px; min-width: 160px; }
+.criteria-row__value { display: flex; flex-wrap: wrap; align-items: center; gap: var(--spacing-8); flex: 1 1 240px; min-width: 160px; }   /* 값 칸이 남은 폭을 채워 빼기(×)가 줄 끝에 선다 */
 .criteria-row__value > :is(.input, .select, .ui-select, .field-action-wrap, .field-clear-wrap) { flex: 1; min-width: 0; }
 .criteria-row__value[data-type="date"] { flex-basis: 480px; }   /* 날짜 = 범위 셀렉트 + 날짜 칸 둘 */
 .criteria-row__value[data-type="date"] > :is(.criteria-date, .ui-select:has(> .criteria-date)) { flex: none; width: 140px; }
