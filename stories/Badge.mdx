@@ -7,6 +7,26 @@ import * as S from './Badge.stories.js';
 <Unstyled>
 <div className="ds-page">
 <PageHead eyebrow="Data Display · 모바일 앱" title="Badge" lead="아이콘 · 글자 옆에 붙어 새 소식이 있는지, 몇 개인지, 짧은 상태를 알리는 표시입니다. 누르지 않습니다. 고르고 거르는 것은 Chip, 상태를 칸에 표시하는 것은 Status Chip입니다." />
+<Section title="고르는 기준" en="Which to use" desc="알릴 것이 있다는 것인지, 수인지, 상태인지에 따라 고릅니다.">
+<Card title="A · 점, B · 개수, C · 글자" code={false}>
+<table className="ds-table ds-props ds-props--wrap">
+<thead><tr><th>항목</th><th>A · 점</th><th>B · 개수</th><th>C · 글자</th></tr></thead>
+<tbody>
+<tr><td><b>언제 쓰나</b></td><td>새 것이 있다는 것만 알릴 때입니다.</td><td>확인할 수가 중요할 때입니다.</td><td>짧은 상태를 단어로 알릴 때입니다.</td></tr>
+<tr><td><b>브랜드</b></td><td colSpan={3}>세 브랜드 공통으로 쓰임에 따라 고릅니다. 하단 탭은 개수, 상단 바는 점, 목록 줄은 글자입니다.</td></tr>
+</tbody>
+</table>
+</Card>
+</Section>
+<Section title="A · 점" en="Dot">
+<Card of={S.점} title="기본" desc="아이콘 오른쪽 위 작은 점 하나입니다." basis="Siemens iX Badge" />
+</Section>
+<Section title="B · 개수" en="Count">
+<Card of={S.개수} title="기본" tag="추천" why="확인할 것이 몇 개인지 눌러 보기 전에 알 수 있습니다." desc="읽지 않은 알림 수를 두 자리까지 보이고, 넘으면 「99+」입니다." basis="Apple HIG Notifications" />
+</Section>
+<Section title="C · 글자" en="Label">
+<Card of={S.글자} title="기본" desc="회색 바탕에 브랜드 글자 · 테두리입니다. 노선 종류처럼 브랜드와 상관없는 색 분류에는 쓰지 않습니다." />
+</Section>
 <Section title="구성" en="Spec">
 <table className="ds-table ds-props">
 <thead><tr><th>구분</th><th>클래스 · 속성</th><th>설명</th></tr></thead>
@@ -20,11 +40,6 @@ import * as S from './Badge.stories.js';
 <tr><td><b>브랜드가 바꾸는 것</b></td><td><code>--body-xs</code> · <code>--radius-chip</code> · 브랜드 색</td><td>글자 크기(배지 크기가 함께 바뀜) · 글자 배지 모서리 · 색입니다. 시안은 세 브랜드 공통으로 A · B · C를 쓰임에 따라 고릅니다: 하단 탭은 개수, 상단 바는 점, 목록 줄은 글자입니다.</td></tr>
 </tbody>
 </table>
-</Section>
-<Section title="시안" en="Options">
-<Card of={S.점} title="A · 점" desc="새 것이 있다는 것만 알릴 때 사용합니다." basis="아이콘 오른쪽 위 작은 점입니다. 수가 중요하지 않을 때 화면에 더하는 것이 점 하나뿐입니다(Siemens iX Badge)." />
-<Card of={S.개수} title="B · 개수" tag="추천" desc="기본보다 확인할 수가 중요할 때 사용합니다." basis="숫자는 읽지 않은 알림에만 씁니다. 두 자리까지 · 넘으면 「99+」(Apple HIG Notifications)." />
-<Card of={S.글자} title="C · 글자" desc="기본보다 짧은 상태를 단어로 알릴 때 사용합니다." basis="기존 앱의 「1대 운행중」 배지처럼 회색 바탕 + 브랜드 글자 · 테두리입니다. 노선 종류처럼 브랜드와 상관없는 색 분류에는 쓰지 않습니다." />
 </Section>
 </div>
 </Unstyled>
