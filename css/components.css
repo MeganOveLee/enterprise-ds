@@ -498,7 +498,7 @@
 .menu-toggle {
     background: transparent;
     border: 1px solid transparent;
-    height: 32px;
+    height: var(--size-btn);        /* GNB 컨트롤 = Figma Button Size=Default 높이 (TD-214. 구: 32 숫자) */
     line-height: 1;                 /* 폰트 fallback 시 글자 ↕ 튀는 거 방지 */
     padding: 0;    /* hover 제거로 좌우 padding(hover 박스용) 불필요 → 0. styles.css .menu-toggle(패딩0)과 동일 너비로 복귀 */
     display: inline-flex;
