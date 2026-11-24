@@ -1,6 +1,6 @@
 // Blocks/Search Form: 문서 화면은 SearchForm.mdx. 검색 조건 영역 = 섹션 헤더(.seach_arm) + 조건 영역(.pro_table > .form-grid-2.form-grid--6)
-// 예시 카드 두 개 = 모두 보기 · 접고 펴기(눌러서 펼침). 한 행에 조건 최대 6칸. 동작은 ./_search.js (Screens 문서 검색과 같음)
-// 첫 카드 그림에 번호 표시(data-no). 번호별 이름 · 클래스 표는 SearchForm.mdx 카드 아래: 구성 표를 따로 두지 않음 (Figma 🧱 Blocks 「Search Form」과 같은 구성)
+// 문서 = 방식별 섹션: A 칸 여러 줄(기본 · 접고 펴기) · B 조건 단추 한 줄 바(기본 · 필터 더 보기) · 고급 검색(조건 그룹). 한 행에 조건 최대 6칸. 동작은 ./_search.js (Screens 문서 검색과 같음)
+// A · B 기본 본보기 = 칸 · 단추마다 상태를 다르게 둔 그림 + 번호 표시(data-no). 번호별 이름 · 클래스 표(해부표)는 SearchForm.mdx 기본 카드 아래 (Figma 🧱 Blocks 「Search Form」과 같은 구성)
 import './_flow.css';
 import { wireSearchDetail, EXPAND_LABEL } from './_search.js';
 import { lnbSvg } from './_lnbicons.js';
@@ -50,26 +50,22 @@ const searchForm = ({ all = false, open = false, n = false, v = false }) => {
 };
 // 미리보기 바탕 = 목록 화면의 내용 영역(bg-subtle). 「코드 보기」에는 검색 영역만
 const stage = (html) => { const el = document.createElement('div'); el.className = 'anno'; el.innerHTML = html; return wireSearchDetail(el); };
-export const 모두_보기 = {
-  parameters: { docs: { source: { code: searchForm({ all: true }) } } },
-  render: () => stage(searchForm({ all: true, n: true })),
-};
 // 시안 A 본보기: 검색 조건 안 칸마다 상태를 다르게 둠(이름표 없이 모양으로 구별).
 // 값 없음 · 마우스 올림 · 입력 중 · 값 있음 · 값 있음 + 마우스 올림. 정지 화면은 _pseudo.js 의 .ps-* 클래스. 「코드 보기」는 상태 없는 마크업
 const CHEV = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>';
 const trig = (label, value, cls) => '<div class="ui-select"><div class="ui-select__trigger' + (cls ? ' ' + cls : '') + '" role="combobox" tabindex="0" aria-haspopup="listbox" aria-expanded="false" aria-label="' + label + '"><span class="ui-select__value">' + value + '</span><span class="ui-select__chevron">' + CHEV + '</span></div></div>';
-const demoField = (label, control, state, span) => '<div class="ff-field' + (span ? ' span-' + span : '') + '"><label class="search-label">' + label + '</label><div class="td">' + control + '</div></div>';   // state = 이 칸에 둔 상태(코드 읽는 사람용)
+const demoField = (label, control, state, span, no) => '<div class="ff-field' + (span ? ' span-' + span : '') + '"' + (no ? ' data-no="' + no + '"' : '') + '><label class="search-label">' + label + '</label><div class="td">' + control + '</div></div>';   // state = 이 칸에 둔 상태(코드 읽는 사람용)
 const demoA = () => {
   const id = 'sf-detail-' + (++uid);
-  return '<section class="product" style="padding:0"><div class="seach_arm" style="margin-top:0"><div class="leftbt">' + lnbSvg('sliders', 18) + '<h4>검색 조건</h4></div><div class="rightbt">' +
+  return '<section class="product" style="padding:0"><div class="seach_arm" style="margin-top:0" data-no="1" data-mid><div class="leftbt">' + lnbSvg('sliders', 18) + '<h4>검색 조건</h4></div><div class="rightbt">' +
     '<button type="button" class="btn btn--primary btn--filled">' + ico(SEARCH) + '검색</button><button type="button" class="btn btn--secondary btn--outlined btn--expand" aria-expanded="false" aria-controls="' + id + '">' + EXPAND_LABEL + '</button>' +
     '<button type="button" class="btn btn--secondary btn--transparent">' + ico(RESET) + '검색 조건 초기화</button></div></div>' +
-    '<div class="pro_table"><div class="form-grid-2 form-grid--6">' +
+    '<div class="pro_table" data-no="2"><div class="form-grid-2 form-grid--6" data-no="3">' +
     demoField('작업현황', trig('작업현황', '전체', ''), '값 없음') +
     demoField('문서 명', '<input class="input ps-hover" aria-label="문서 명" placeholder="문서 명 입력">', '마우스 올림') +
     demoField('문서 번호', '<input class="input ps-focus" aria-label="문서 번호" placeholder="문서 번호 입력" value="DOC-26">', '입력 중') +
-    demoField('등록자', trig('등록자', '김도윤', ''), '값 있음') +
-    demoField('등록일', range('등록일', '2026-09-01', '2026-09-30').replaceAll('class="ui-datepicker"', 'class="ui-datepicker ps-hover"'), '값 있음 + 마우스 올림', 2) +
+    demoField('등록자', trig('등록자', '김도윤', ''), '값 있음', 0, 4) +
+    demoField('등록일', range('등록일', '2026-09-01', '2026-09-30').replaceAll('class="ui-datepicker"', 'class="ui-datepicker ps-hover"'), '값 있음 + 마우스 올림', 2, 5) +
     '</div><div class="search-detail" id="' + id + '" hidden><div class="form-grid-2 form-grid--6"><div class="search-divider">상세 검색</div>' + docDetail(id) + '</div></div></div></section>';
 };
 export const 접고_펴기 = {
@@ -83,7 +79,7 @@ export const 펼치고_값_넣기 = {
 };
 const optSrc = (code) => ({ controls: { disable: true }, docs: { source: { language: 'html', code } } });
 
-// ── 배치 시안: A 칸 여러 줄(추천, 위 「접고 펴기」) · B 조건 단추 한 줄 바(아래). 시안마다 본보기 아래에 상태 표 ──
+// ── B 조건 단추 한 줄 바: 기본(시안_한_줄_바, 칸 · 단추마다 상태 + 번호) · 필터 더 보기 ──
 
 // 시안 B 결과 표: 결과 머리 = 결과 개수 + 아이콘 묶음(새로 고침 · 열 설정) | Excel, 표 = 옅은 머리(Table 머리와 정렬 2)
 const XLS = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9l4 6M11 9l-4 6M14.5 9H18M14.5 12H18M14.5 15H18"/></svg>';
