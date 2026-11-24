@@ -255,7 +255,7 @@ const optCell = (text, { cls = '', sel = false, dis = false } = {}) =>
   '<div class="ui-select__option' + (sel ? ' is-selected' : '') + (cls ? ' ' + cls : '') + '" role="option" aria-selected="' + sel + '"' + (dis ? ' aria-disabled="true"' : '') + '>' + text + '</div></div>';
 export const 옵션_상태 = {
   parameters: html([
-    '<!-- 상태는 select.js 가 붙인다: 고른 항목 .is-selected + aria-selected="true" · 키보드 위치 .is-active · 막힌 항목 aria-disabled="true" -->',
+    '<!-- 상태는 select.js 가 붙인다: 고른 항목 .is-selected + aria-selected="true" · 지금 가리키는 항목(마우스 · 키보드) .is-active · 막힌 항목 aria-disabled="true" -->',
     '<div class="ui-select__option is-selected" role="option" aria-selected="true">검토 중</div>',
     '<div class="ui-select__option" role="option" aria-selected="false" aria-disabled="true">폐기</div>',
   ]),
@@ -265,7 +265,7 @@ export const 옵션_상태 = {
       ['Default', [optCell('작업 중'), optCell('검토 중', { sel: true })]],
       ['Hovered', [optCell('작업 중', { cls: 'ps-hover' }), optCell('검토 중', { sel: true, cls: 'ps-hover' })]],
       ['Pressed', [optCell('작업 중', { cls: 'ps-active' }), optCell('검토 중', { sel: true, cls: 'ps-active' })]],
-      ['키보드 위치 (.is-active)', [optCell('작업 중', { cls: 'is-active' }), optCell('검토 중', { sel: true, cls: 'is-active' })]],
+      ['가리키는 항목 (.is-active)', [optCell('작업 중', { cls: 'is-active' }), optCell('검토 중', { sel: true, cls: 'is-active' })]],
       ['Disabled', [optCell('폐기', { dis: true }), optCell('폐기', { sel: true, dis: true })]],
     ], { full: true });
   },

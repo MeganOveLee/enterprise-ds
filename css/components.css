@@ -3929,9 +3929,10 @@ body.dark-mode .checkSelect .search-text {   /* = --color-icon-muted 다크 값.
     white-space: nowrap;
     cursor: pointer;
 }
-.ui-select__option:hover,
-.ui-select__option.is-active { background-color: var(--color-bg-brand-subtle); }
-.ui-select__option.is-active { box-shadow: inset 0 0 0 1px var(--color-border-focus); }   /* 키보드로 옮긴 지금 항목: 포커스는 상자에 있고 목록 안 위치만 표시 */
+.ui-select__option:hover { background-color: var(--color-bg-grid-row-hover); }   /* 스크립트가 없을 때 = 바탕만. 구: brand-subtle(고른 항목과 같은 바탕이라 헷갈림) */
+/* 지금 가리키는 항목 = 드롭다운 메뉴 .ui-menu__item.is-current 와 같은 모양(DS-ADR-084). select.js 가 마우스를 올린 항목과 키보드로 옮긴 항목 하나에 단다.
+ * 고른 항목 위에서는 바탕은 고른 모양(brand-subtle)을 두고 왼쪽 선만 더한다. 구: brand-subtle + 안쪽 1 border-focus */
+.ui-select__option.is-active { background-color: var(--color-bg-grid-row-hover); box-shadow: inset var(--border-width-md) 0 0 var(--color-border-brand); }
 .ui-select__option:active { background-color: var(--color-bg-interactive-secondary-pressed); color: var(--color-text-interactive-secondary-pressed); }   /* 누르는 동안 = Figma Option Pressed. 글자는 바탕의 짝 토큰: 다크 덮개 층(누름 500) 위에서도 4.5 */
 /* 고른 항목 = 옅은 브랜드 바탕 + 브랜드 반굵은 글자 + 오른쪽 ✓: Figma Option Type=Text · Selected=True(text/brand). 구: 글자 text-base */
 .ui-select__option.is-selected { background-color: var(--color-bg-brand-subtle); color: var(--color-text-on-brand-subtle); font-weight: var(--font-weight-semibold); }   /* 글자 = 옅은 브랜드 바탕의 짝 토큰: 라이트는 text-brand 와 같은 brand-500, 다크는 대비 4.5 넘는 brand-200 */
