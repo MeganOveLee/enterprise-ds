@@ -5431,9 +5431,6 @@ body.dark-mode .empty-illo__badge  { fill: var(--color-bg-muted); }
     line-height: 1;
 }
 :is(.filter-trigger__count, .filter-pop__count)[hidden] { display: none; }
-.filter-pop__value { grid-column: 1 / -1; overflow: hidden; color: var(--color-text-muted); font-size: var(--body-xs); font-weight: var(--font-weight-regular); text-overflow: ellipsis; white-space: nowrap; }
-.filter-pop__value[hidden] { display: none; }
-.filter-pop__field[aria-selected="true"] .filter-pop__value { color: var(--color-text-brand); }
 .filter-pop {
     position: absolute;
     top: calc(100% + var(--spacing-4));
@@ -5454,13 +5451,13 @@ body.dark-mode .empty-illo__badge  { fill: var(--color-bg-muted); }
 .filter-pop__main { display: flex; min-height: 240px; max-height: 360px; }
 .filter-pop__fields { flex: none; width: 180px; padding: var(--spacing-8) 0; border-right: 1px solid var(--color-border-subtle); overflow-y: auto; }
 .filter-pop__field {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;   /* 이름 · 개수 배지 / 아래 줄 걸린 값 */
+    display: flex;
     align-items: center;
-    column-gap: var(--spacing-8);
+    justify-content: space-between;
+    gap: var(--spacing-8);
     width: 100%;
-    min-height: var(--size-btn);
-    padding: var(--spacing-4) var(--spacing-12);
+    height: var(--size-btn);
+    padding: 0 var(--spacing-12);
     border: 0;
     border-left: 2px solid transparent;
     background: transparent;
@@ -5479,6 +5476,7 @@ body.dark-mode .empty-illo__badge  { fill: var(--color-bg-muted); }
 .filter-pop__options .checkbox,
 .filter-pop__options .radio { margin-right: 0; font-size: var(--body-sm); }
 .filter-pop__options > [hidden] { display: none; }
+.filter-pop__picked { margin: 0; }   /* 조건 칸 맨 위 고른 값 칩: 칸 사이 간격은 .filter-pop__pane gap */
 .filter-pop__pane-foot { display: flex; margin-top: auto; }
 .filter-pop__foot { display: flex; align-items: center; padding: var(--spacing-8) var(--spacing-12); border-top: 1px solid var(--color-border-subtle); }
 .filter-pop__apply { margin-left: auto; }   /* [모두 지우기] 왼쪽 · [적용] 오른쪽 끝 */

@@ -17,7 +17,7 @@
  *   불러오기만 하면 화면의 .filter-pop-wrap 이 모두 동작. 나중에 그린 것은 window.enhanceFilterPanels(영역)
  *
  * 개수: 조건 줄 배지 = 그 조건에 고른 값 수(체크 수, 입력칸 · 날짜 칸은 값이 든 칸마다 1). 「필터」 단추 = 값이 걸린 조건 수(Jira 업무 목록과 같음)
- * 걸린 값: 조건 줄 이름 아래 .filter-pop__value 에 고른 값 글자(첫 값 외 N · 시작 ~ 끝). Jira 업무 목록은 개수만 보여, 무엇으로 걸렀는지는 줄마다 열어야 보임
+ * 고른 값: 조건 칸 맨 위 .filter-pop__picked 칩(Multi Select B 칩), 칩의 ×로 값 하나를 뺌. Jira 업무 목록 패널에는 없음(목록 체크로만 보임)
  * 자리: 단추 왼쪽 끝에 맞춰 열고, 오른쪽이 화면이나 넘침을 자르는 조상 상자 밖으로 나가면 오른쪽 끝에 맞춤(.filter-pop--end). 마크업에 --end 를 붙이면 늘 오른쪽 끝
  * 필터 더 보기(다른 방법): 바에 [필터 더 보기] 체크 목록(js/multiselect.js data-display="add")을 두고, 고른 조건의 단추(select[data-filter-field])만 바에 보인다
  * 조건 그룹(고급 검색): .criteria-group 안 조건 줄(속성 · 연산자 · 값, 속성 종류에 따라 값 칸이 바뀜)과 하위 그룹을 더하고 빼며, 맨 바깥 그룹 앞 .criteria-expr 에 괄호식을 쓴다
@@ -37,14 +37,33 @@
         return n;
     }
     function setCount(el, n) { if (!el) return; el.textContent = n ? String(n) : ''; el.hidden = !n; }
-    // 걸린 값 글자: 체크 = 고른 이름(둘 이상이면 「첫 값 외 N」, Multi Select 와 같음 DS-ADR-022) · 날짜 칸 둘 = 「시작 ~ 끝」 · 입력칸 = 넣은 글자
-    function summary(pane) {
-        var picked = [].filter.call(pane.querySelectorAll('input[type="checkbox"], input[type="radio"]'), function (el) { return el.checked && !el.hasAttribute('data-filter-default'); })
-            .map(function (el) { return (el.closest('label') || el).textContent.trim(); });
-        if (picked.length) return picked[0] + (picked.length > 1 ? ' 외 ' + (picked.length - 1) : '');
-        var vals = [].filter.call(pane.querySelectorAll('input:not([type="checkbox"]):not([type="radio"]):not(.filter-pop__search), textarea'), function (el) { return el.value && el.value.trim(); })
-            .map(function (el) { return el.value.trim(); });
-        return pane.querySelector('.ui-datepicker-range') ? vals.join(' ~ ') : vals.join(', ');
+    // 고른 값 칩: 조건 칸 맨 위에 고른 값을 모두 칩으로(Multi Select B 와 같은 .checkSelect__chips), 칩의 ×로 그 값만 뺀다.
+    // 체크 = 고른 항목마다 칩 하나, 날짜 칸 둘 = 「시작 ~ 끝」 칩 하나, 입력칸 = 넣은 글자 칩 하나. 기본값 라디오(data-filter-default)는 칩을 두지 않음
+    var CHIP_X = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+    function chip(text, undo) {
+        var li = document.createElement('li'), span = document.createElement('span'), btn = document.createElement('button');
+        li.className = 'checkSelect__chip'; span.textContent = text;
+        btn.type = 'button'; btn.className = 'checkSelect__chip-remove'; btn.setAttribute('aria-label', text + ' 빼기'); btn.innerHTML = CHIP_X;
+        btn.addEventListener('click', function (e) { e.stopPropagation(); undo(); });
+        li.appendChild(span); li.appendChild(btn); return li;
+    }
+    function drawPicked(pane) {
+        var ul = pane.querySelector(':scope > .filter-pop__picked');
+        if (!ul) { ul = document.createElement('ul'); ul.className = 'checkSelect__chips filter-pop__picked'; ul.setAttribute('aria-label', '고른 값'); pane.insertBefore(ul, pane.firstChild); }
+        ul.textContent = '';
+        var fire = function (el) { el.dispatchEvent(new Event('change', { bubbles: true })); };
+        pane.querySelectorAll('input[type="checkbox"], input[type="radio"]').forEach(function (el) {
+            if (!el.checked || el.hasAttribute('data-filter-default')) return;
+            ul.appendChild(chip((el.closest('label') || el).textContent.trim(), function () {
+                if (el.type === 'radio') { var d = pane.querySelector('input[data-filter-default]'); if (d) d.checked = true; } else el.checked = false;
+                fire(el);
+            }));
+        });
+        var range = pane.querySelector('.ui-datepicker-range');
+        var texts = [].filter.call(pane.querySelectorAll('input:not([type="checkbox"]):not([type="radio"]):not(.filter-pop__search), textarea'), function (el) { return !el.closest('.filter-pop__picked'); });
+        var filled = texts.filter(function (el) { return el.value && el.value.trim(); });
+        if (range && filled.length) ul.appendChild(chip(texts.map(function (el) { return el.value.trim(); }).join(' ~ '), function () { texts.forEach(function (el) { el.value = ''; }); fire(texts[0]); }));
+        else filled.forEach(function (el) { ul.appendChild(chip(el.value.trim(), function () { el.value = ''; fire(el); })); });
     }
 
     function wire(wrap) {
@@ -59,13 +78,7 @@
 
         function update() {
             var fields = 0;
-            tabs.forEach(function (t, i) {
-                var n = panes[i] ? valuesIn(panes[i]) : 0, v = t.querySelector('.filter-pop__value');
-                setCount(t.querySelector('.filter-pop__count'), n);
-                if (!v) { v = document.createElement('span'); v.className = 'filter-pop__value'; t.appendChild(v); }   // 조건 이름 아래 걸린 값: 패널을 닫았다 열어도 무엇으로 걸렀는지 보임
-                v.textContent = n ? summary(panes[i]) : ''; v.hidden = !n;
-                if (n) fields++;
-            });
+            tabs.forEach(function (t, i) { var n = panes[i] ? valuesIn(panes[i]) : 0; setCount(t.querySelector('.filter-pop__count'), n); if (n) fields++; if (panes[i]) drawPicked(panes[i]); });
             setCount(trigger.querySelector('.filter-trigger__count'), fields);
             trigger.classList.toggle('is-applied', fields > 0);
             trigger.setAttribute('aria-label', '필터' + (fields ? ': 걸린 조건 ' + fields + '개' : ''));
