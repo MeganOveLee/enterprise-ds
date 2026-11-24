@@ -289,6 +289,13 @@ const OPT_C = ['<div class="form-grid-2">', floatField('in-c-no', '문서 번호
 export const 시안_윤곽_칸 = { parameters: html(OPT_A), render: () => '<div class="sb-field--wide">' + OPT_A.join('') + '</div>' };
 export const 시안_채운_칸 = { parameters: html(OPT_B), render: () => '<div class="sb-field--wide">' + OPT_B.join('') + '</div>' };
 export const 시안_올라가는_라벨 = { parameters: html(OPT_C), render: () => '<div class="sb-field--wide">' + OPT_C.join('') + '</div>' };
+// 걸린 조건(DS-ADR-085): 표를 거르는 셀렉트에 data-ds-filter. 첫 값(전체)이 아니면 select.js가 상자에 .is-applied
+const FILTER_OPTS = ['전체', '미결', '진행 중', '완료'];
+const filterSel = (pick) => '<select class="select" data-ds-filter aria-label="보기">' + FILTER_OPTS.map((o) => '<option' + (o === pick ? ' selected' : '') + '>' + o + '</option>').join('') + '</select>';
+export const 걸린_조건 = {
+  parameters: html([filterSel('미결')]),
+  render: () => matrix(['전체', '값을 고름'], [['미리보기', [filterSel('전체'), filterSel('미결')]]], { full: true }),
+};
 // 잠긴 칸 위계: 1 = 이전 버전(비활성 바탕이 읽기 전용보다 짙음) · 2 = 폼을 .form-disabled--subtle로 묶어 비활성을 읽기 전용보다 옅게(추천, DS-ADR-082)
 // 열 = 상태(빈 칸 · 값을 넣은 칸 · 입력 중 · 읽기 전용 · 비활성 칸 · 비활성 셀렉트). 편집할 수 있는 세 상태를 함께 두어 잠긴 칸과 견준다
 // 비활성 칸은 안내 글자 없이 값만 둔다(안내 글자는 입력할 수 있는 칸으로 읽힘). 입력 중 = 정지 포커스(ps-focus, _pseudo.js)

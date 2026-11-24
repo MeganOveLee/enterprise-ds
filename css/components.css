@@ -3883,6 +3883,11 @@ body.dark-mode .checkSelect .search-text {   /* = --color-icon-muted 다크 값.
 .ui-select__trigger:hover:where(:not(:focus, .is-open, [aria-disabled="true"])) { background-color: var(--color-bg-input-hover); }   /* hover 바탕 한 단계 (DS-ADR-079). 채운 칸은 뒤 규칙이 이김 */
 .ui-select__trigger:focus,
 .ui-select__trigger.is-open { outline: none; border-color: var(--color-border-focus); box-shadow: 0 0 0 3px var(--color-focus-ring); }   /* .select:focus 와 같음 */
+/* 걸린 조건 (DS-ADR-085): 표를 거르는 셀렉트(<select data-ds-filter>)에서 첫 값(전체)이 아닌 값을 고르면 select.js가 .is-applied.
+ * 바탕 bg-brand-subtle · 테두리 border-brand · 값 글자와 꺾쇠 text-brand 반굵게. 마우스 올림 · 포커스에도 바탕 · 테두리 그대로(포커스 번짐만 더함) */
+.ui-select__trigger.is-applied { background-color: var(--color-bg-brand-subtle); border-color: var(--color-border-brand); }
+.ui-select__trigger.is-applied .ui-select__value { color: var(--color-text-brand); font-weight: var(--font-weight-semibold); }
+.ui-select__trigger.is-applied .ui-select__chevron { color: var(--color-text-brand); }
 .ui-select__trigger.is-open .ui-select__chevron { transform: rotate(180deg); }
 .ui-select__trigger[aria-invalid="true"] { border-color: var(--color-border-danger); }
 .ui-select__trigger[aria-disabled="true"] { background-color: var(--color-bg-disabled); border-color: var(--color-border-disabled); color: var(--color-text-disabled); cursor: not-allowed; box-shadow: none; }
@@ -6094,6 +6099,7 @@ body.dark-mode .status-chip--bold:is(.status-chip--success, .status-chip--warnin
 .table-panel__title { margin: 0; font-size: var(--heading-xs); font-weight: var(--font-weight-semibold); color: var(--color-text-base); }
 .table-panel__toolbar { display: flex; align-items: center; gap: var(--spacing-4); padding: var(--spacing-4) var(--spacing-12); }
 .table-panel__footer { padding: var(--spacing-4) var(--spacing-12); border-top: var(--border-width-sm) solid var(--color-border-base); font-size: var(--body-xs); color: var(--color-text-muted); }
+.table-panel__footer.is-selected { color: var(--color-text-brand); font-weight: var(--font-weight-semibold); }   /* 줄을 하나라도 고르면 바닥 줄 「N개 선택됨」을 브랜드색 반굵게 (DS-ADR-085). 클래스는 화면 스크립트가 붙임 */
 /* 표 패널 머리의 동작 묶음과 선택 상태: 줄을 하나라도 고르면 머리가 채운 띠로 바뀜. 제목 자리에 고른 개수(같은 글자 크기) + [선택 취소], 오른쪽 동작 묶음에는 고른 줄에 하는 동작이 앞에 나타남
  *   늘 있는 동작(Excel)은 오른쪽 끝 제자리에 그대로 두어 버튼이 밀리지 않음. 머리 높이도 그대로라 표가 위아래로 밀리지 않음
  *   <header class="table-panel__head is-selected"><h3 class="table-panel__title" aria-live="polite">2개 선택됨</h3><button type="button" class="btn">선택 취소</button>

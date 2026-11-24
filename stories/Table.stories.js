@@ -230,3 +230,8 @@ const PANEL = '<section class="table-panel"><header class="table-panel__head"><h
   '<div class="table-panel__toolbar"><button type="button" class="btn btn--secondary btn--transparent">작업</button></div>' +
   optTable('') + '<footer class="table-panel__footer">0개 선택됨</footer></section>';
 export const 표_패널 = { parameters: optSrc(PANEL), render: () => PANEL };
+// 바닥 줄 선택 개수(DS-ADR-085): 2 · 옅은 머리 표(줄 상태 선 포함)에서 줄을 고르면 바닥 줄 「N개 선택됨」이 브랜드색 반굵게(.is-selected). 패널 머리는 그대로
+const PANEL_PICKED = '<section class="table-panel"><header class="table-panel__head"><h3 class="table-panel__title">내 작업</h3></header>' +
+  table(ROWS.map((r, i) => srow(r, i, i === 1 || i === 2)).join('')).replace('class="grid-table"', 'class="grid-table grid-table--subtle"') +
+  '<footer class="table-panel__footer is-selected" aria-live="polite">2개 선택됨</footer></section>';
+export const 바닥_선택_개수 = { parameters: optSrc(PANEL_PICKED), render: () => '<div class="sb-field--table">' + PANEL_PICKED + '</div>' };

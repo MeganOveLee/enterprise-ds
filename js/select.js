@@ -8,6 +8,7 @@
  *   제외 = class="no-ui" · multiple(다중 선택은 multiselect.js) · 숨은 select(라이브러리가 자기 위젯으로 쓰는 것)
  *   나중에 그린 select 는 window.buildCustomSelect(select) 또는 window.enhanceSelects(영역) 으로 직접 바꿈
  *   값 · 이름 · 폼 제출 · onchange 는 원래 select 가 그대로 맡는다(숨겨서 둠). 고르면 select.value 를 바꾸고 change 를 보냄
+ *   걸린 조건(DS-ADR-085): <select data-ds-filter> 는 첫 값(전체)이 아닌 값을 고르면 상자에 .is-applied
  *
  * Enterprise DS v1.0: 이전 버전 화면 스크립트(커스텀 단일 셀렉트)를 옮기고 접근성 · 키보드를 덧붙임
  *   - 역할: 상자 role="combobox"(aria-haspopup="listbox" · aria-expanded · aria-controls) + 목록 role="listbox" + 항목 role="option"(aria-selected)
@@ -125,6 +126,7 @@
             var opt = sel.options[sel.selectedIndex];
             valueSpan.textContent = opt ? (opt.label || opt.textContent) : '';
             valueSpan.classList.toggle('is-placeholder', !opt || opt.value === '');
+            if (sel.hasAttribute('data-ds-filter')) trigger.classList.toggle('is-applied', sel.selectedIndex > 0);
             items.forEach(function (d, i) {
                 var on = i === sel.selectedIndex;
                 d.classList.toggle('is-selected', on);
