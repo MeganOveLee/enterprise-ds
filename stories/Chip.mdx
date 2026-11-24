@@ -7,6 +7,26 @@ import * as S from './Chip.stories.js';
 <Unstyled>
 <div className="ds-page">
 <PageHead eyebrow="Form · 모바일 앱" title="Chip" lead="자주 가는 곳으로 이동하거나, 조건을 하나 또는 여럿 고르는 누르는 칩입니다. 상태를 표시만 하는 칩은 Status Chip입니다." />
+<Section title="고르는 기준" en="Which to use" desc="칩 수와 글씨 크기에 따라 고릅니다.">
+<Card title="A · 장소 칩, B · 원형 아이콘 칩, C · 큰 타일" code={false}>
+<table className="ds-table ds-props ds-props--wrap">
+<thead><tr><th>항목</th><th>A · 장소 칩</th><th>B · 원형 아이콘 칩</th><th>C · 큰 타일</th></tr></thead>
+<tbody>
+<tr><td><b>언제 쓰나</b></td><td>자주 가는 곳을 한 번 눌러 고를 때입니다.</td><td>칩이 많아 색 면을 줄여야 할 때입니다.</td><td>누름 영역을 크게 두어야 하는 큰 글씨 화면입니다.</td></tr>
+<tr><td><b>브랜드</b></td><td colSpan={3}>Mobility = A 장소 칩(큰 글씨 화면은 C 큰 타일), Default · OOTB = 필터 칩 · B 원형 아이콘 칩입니다.</td></tr>
+</tbody>
+</table>
+</Card>
+</Section>
+<Section title="A · 장소 칩" en="Place">
+<Card of={S.장소_칩} title="기본" tag="추천" why="색과 그림으로 장소 종류를 먼저 읽을 수 있습니다." desc="옅은 장소 바탕에 장소 색 테두리를 더해 바탕과 경계가 보입니다." basis="DS-ADR-050" />
+</Section>
+<Section title="B · 원형 아이콘 칩" en="Icon">
+<Card of={S.원형_아이콘_칩} title="기본" desc="장소 색은 앞의 원에만 두고 바탕은 흰색 · 회색 테두리입니다." />
+</Section>
+<Section title="C · 큰 타일" en="Tile">
+<Card of={S.큰_타일} title="기본" desc="아이콘 위 · 글자 아래로 누름 영역이 가장 크고, 한 줄에 넷까지 둡니다." />
+</Section>
 <Section title="구성" en="Spec">
 <table className="ds-table ds-props">
 <thead><tr><th>구분</th><th>클래스 · 속성</th><th>설명</th></tr></thead>
@@ -22,11 +42,6 @@ import * as S from './Chip.stories.js';
 <tr><td><b>브랜드가 바꾸는 것</b></td><td><code>--radius-chip</code> · <code>--body-md</code> · <code>--size-touch</code> · <code>--color-bg-selected-strong</code> · 장소 종류 색 · <code>--icon-stroke</code></td><td>모서리 · 글자 크기 · 높이 · 고른 칩 색 · 장소 색 · 아이콘 선 굵기입니다. 좌우 여백은 글자 크기를 따라 함께 커집니다. 시안은 Mobility = A 장소 칩(큰 글씨 화면은 C 큰 타일), Default · OOTB = 필터 칩 · B 원형 아이콘 칩입니다.</td></tr>
 </tbody>
 </table>
-</Section>
-<Section title="시안" en="Options">
-<Card of={S.장소_칩} title="A · 장소 칩" tag="추천" desc="자주 가는 곳을 한 번 눌러 고를 때 사용합니다." basis="옅은 장소 바탕만으로는 바탕과 경계가 보이지 않아(1.05–1.15:1) 장소 색 테두리를 더했습니다. 고령 이용자는 색 · 구체적인 그림으로 종류를 먼저 읽습니다(Leung 2011 · DS-ADR-050)." />
-<Card of={S.원형_아이콘_칩} title="B · 원형 아이콘 칩" desc="기본보다 칩이 많은 화면에서 색 면을 줄여 차분하게 보일 때 사용합니다." basis="장소 색은 앞의 원에만 두고 바탕은 흰색 · 회색 테두리입니다. 색 면이 작아 다른 강조 요소와 겹치지 않습니다." />
-<Card of={S.큰_타일} title="C · 큰 타일" desc="기본보다 누름 영역을 크게 두어야 하는 큰 글씨 화면에서 사용합니다." basis="아이콘 위 · 글자 아래로 누름 영역이 가장 큽니다. 한 줄에 넷까지 둡니다. 기존 모빌리티 앱의 이동 수단 타일과 같은 층입니다." />
 </Section>
 <Section title="고르기" en="Selection">
 <Card of={S.장소_종류_하나_고르기} title="장소 종류 하나 고르기" desc="즐겨찾기를 더할 때처럼 종류를 하나만 고를 때 사용합니다." />
