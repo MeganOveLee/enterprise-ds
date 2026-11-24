@@ -27,6 +27,10 @@ import * as S from './Input.stories.js';
 <Section title="C · 올라가는 라벨" en="Floating label">
 <Card of={S.시안_올라가는_라벨} title="기본" desc="라벨이 칸 안에 있다가 입력을 시작하면 위로 올라가 작아집니다." basis="Material 3 Text fields" />
 </Section>
+<Section title="잠긴 칸 위계" en="Locked fields">
+<Card of={S.잠긴_위계_옅게} title="2 · 옅은 비활성" tag="추천" why="값을 보여 주는 읽기 전용 칸이 지금 쓸 수 없는 칸보다 먼저 읽힙니다." desc="폼을 .form-disabled--subtle로 묶으면 비활성 칸의 바탕이 읽기 전용 칸보다 옅어집니다." basis="DS-ADR-082" />
+<Card of={S.잠긴_위계_짙게} title="1 · 짙은 비활성" desc="이전 버전 화면과 같은 모양이고, 클래스 없이 쓰는 기본입니다." basis="DS-ADR-082" />
+</Section>
 <Section title="쓰임" en="Usage">
 <Card of={S.Kind} title="종류" en="Kind" desc="한 줄 입력 · 옵션 목록에서 하나 선택 · 여러 줄 입력의 세 가지입니다. 고르는 기준은 Form › 고르는 법에 있습니다." />
 <Card of={S.Label} title="라벨" en="Label" desc="라벨을 위, 필드를 아래에 둔 한 쌍입니다. 검색 조건 · 등록 폼이 같은 쌍을 씁니다. 라벨은 작은 굵은 글자이고 색은 라벨색(--color-text-label)이라 브랜드가 바꿉니다. 이전 버전 화면은 브랜드색 라벨입니다." />

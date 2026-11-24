@@ -289,6 +289,25 @@ const OPT_C = ['<div class="form-grid-2">', floatField('in-c-no', '문서 번호
 export const 시안_윤곽_칸 = { parameters: html(OPT_A), render: () => '<div class="sb-field--wide">' + OPT_A.join('') + '</div>' };
 export const 시안_채운_칸 = { parameters: html(OPT_B), render: () => '<div class="sb-field--wide">' + OPT_B.join('') + '</div>' };
 export const 시안_올라가는_라벨 = { parameters: html(OPT_C), render: () => '<div class="sb-field--wide">' + OPT_C.join('') + '</div>' };
+// 잠긴 칸 위계: 1 = 이전 버전(비활성 바탕이 읽기 전용보다 짙음) · 2 = 폼을 .form-disabled--subtle로 묶어 비활성을 읽기 전용보다 옅게(추천, DS-ADR-082)
+// 열 = 상태(빈 칸 · 값을 넣은 칸 · 입력 중 · 읽기 전용 · 비활성 칸 · 비활성 셀렉트). 편집할 수 있는 세 상태를 함께 두어 잠긴 칸과 견준다
+// 비활성 칸은 안내 글자 없이 값만 둔다(안내 글자는 입력할 수 있는 칸으로 읽힘). 입력 중 = 정지 포커스(ps-focus, _pseudo.js)
+const LOCK_CELLS = [
+  field({ kind: 'input', state: '', value: '', placeholder: '문서 명 입력' }),
+  field({ kind: 'input', state: '', value: '캘리퍼 조립도', placeholder: '문서 명' }),
+  field({ kind: 'input', state: '', value: '캘리퍼 조립', placeholder: '문서 명', cls: 'ps-focus' }),
+  field({ kind: 'input', state: 'readonly', value: 'DOC-2610', placeholder: '문서 번호' }),
+  field({ kind: 'input', state: 'disabled', value: '최초 등록', placeholder: '개정 사유' }),
+  field({ kind: 'select', state: 'disabled', value: '순차 결재', placeholder: '결재 방식' }),
+];
+const LOCK_CODE = LOCK_CELLS.map((c) => c.replace(' ps-focus', ''));
+const lockTable = (bg, dark) => matrix(['빈 칸', '값을 넣은 칸', '입력 중', '읽기 전용', '비활성 칸', '비활성 셀렉트'], [
+  ['미리보기', LOCK_CELLS],
+  ['바탕', [code('--color-bg-input'), code('--color-bg-input'), code('--color-bg-input'), code('--color-bg-readonly'), code(bg) + (dark ? '<br>' + note('다크 ' + code(dark)) : ''), code(bg) + (dark ? '<br>' + note('다크 ' + code(dark)) : '')]],
+], { full: true });
+const LOCK_2 = ['<form class="form-disabled--subtle">', ...LOCK_CODE.map((c) => '  ' + c), '</form>'];
+export const 잠긴_위계_짙게 = { parameters: html(LOCK_CODE), render: () => { enablePseudo(); return lockTable('--color-bg-disabled'); } };
+export const 잠긴_위계_옅게 = { parameters: html(LOCK_2), render: () => { enablePseudo(); return '<div class="form-disabled--subtle">' + lockTable('--color-bg-muted', '--color-bg-base') + '</div>'; } };
 
 // ── 내용 보기 상자: 긴 읽기 전용 본문 + 오른쪽 위 크게 보기 아이콘 버튼 (DS-ADR-072) ──
 const EXPAND_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>';

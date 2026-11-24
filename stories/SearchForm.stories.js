@@ -67,6 +67,12 @@ const demoA = () => {
     demoField('등록일', range('등록일', '2026-09-01', '2026-09-30'), '값 있음', 2, 5) +
     '</div><div class="search-detail" id="' + id + '" hidden><div class="form-grid-2 form-grid--6"><div class="search-divider">상세 검색</div>' + docDetail(id) + '</div></div></div></section>';
 };
+// 가로 라벨: 라벨 왼쪽 · 칸 오른쪽 짝을 한 행에 세 쌍(.form-grid--label-side, DS-ADR-083). 조건 전체를 한 격자에 두어 열마다 라벨 폭이 맞음
+const sideForm = () => searchForm({ all: true }).replace('form-grid-2 form-grid--6"', 'form-grid-2 form-grid--6 form-grid--label-side"');
+export const 가로_라벨 = {
+  parameters: { docs: { source: { code: sideForm() } } },
+  render: () => stage(sideForm()),
+};
 export const 접고_펴기 = {
   parameters: { docs: { source: { code: searchForm({}) } } },
   render: () => stage(demoA()),

@@ -1589,6 +1589,31 @@ body.dark-mode .pop .contents .pro_table:not(:has(.form-grid-2)):not(.seach_arm:
     .form-grid-2.form-grid--6 { grid-template-columns: minmax(0, 1fr); }
     .form-grid-2.form-grid--6 .ff-field.span-2 { grid-column: 1 / -1; }   /* 1칸에서 span 2 는 없는 열을 만들므로 한 줄 전체로 */
 }
+/* 가로 라벨 (DS-ADR-083): 라벨 왼쪽 · 칸 오른쪽 짝을 한 행에 세 쌍. 이전 버전 검색 표(.mainTable)의 라벨 왼쪽 배치를 표 선 없이 격자로
+ * 짝(.ff-field)을 풀어(display: contents) 라벨 · 칸이 바깥 격자의 열에 바로 놓인다 → 라벨 열 폭 = 그 열에서 가장 긴 라벨, 위아래 칸 왼쪽 끝이 맞음
+ * 라벨과 칸 사이 8 = 열 간격. 짝 사이 24 = 열 간격 8 + 라벨 앞 여백 16. 첫 열 라벨 앞 16은 격자를 왼쪽으로 16 당겨 지움
+ * 두 칸 필드(.span-2)의 칸 = 칸 + 다음 짝(라벨 · 칸)까지 세 열. 날짜 범위는 이 세 열을 나눠 써서(subgrid) 시작 칸 오른쪽 끝 = 위 칸, 「~」 = 라벨 열, 끝 칸 오른쪽 끝 = 그다음 칸
+ * 놓인 칸이 480 미만이면 한 행에 한 쌍
+ *   <div class="form-grid-2 form-grid--6 form-grid--label-side"> <div class="ff-field"><label class="search-label">…</label><div class="td">…</div></div> … */
+.form-grid-2.form-grid--6.form-grid--label-side {
+    grid-template-columns: repeat(3, max-content minmax(0, 1fr));
+    column-gap: var(--spacing-8);
+    align-items: center;
+    width: calc(100% + var(--spacing-16));
+    margin-left: calc(var(--spacing-16) * -1);
+}
+.form-grid-2.form-grid--label-side > .ff-field { display: contents; }
+.form-grid-2.form-grid--label-side > .ff-field > .search-label { padding-left: var(--spacing-16); white-space: nowrap; }
+.form-grid-2.form-grid--label-side > .ff-field.span-2 > .td { grid-column: span 3; }
+.form-grid-2.form-grid--label-side > .ff-field.span-2 > .td:has(> .ui-datepicker-range) { display: grid; grid-template-columns: subgrid; align-items: center; }
+.form-grid-2.form-grid--label-side > .ff-field.span-2 > .td > .ui-datepicker-range { display: contents; }
+.form-grid-2.form-grid--label-side > .ff-field.span-2 .ui-datepicker-range__sep { justify-self: center; }
+@container search-form (max-width: 479px) {
+    .form-grid-2.form-grid--6.form-grid--label-side { grid-template-columns: max-content minmax(0, 1fr); }
+    .form-grid-2.form-grid--label-side > .ff-field.span-2 > .td { grid-column: auto; }
+    .form-grid-2.form-grid--label-side > .ff-field.span-2 > .td:has(> .ui-datepicker-range) { display: block; }
+    .form-grid-2.form-grid--label-side > .ff-field.span-2 > .td > .ui-datepicker-range { display: inline-flex; }
+}
 .form-grid-2 .ff-field > .search-label { margin: 0; display: block; font-size: var(--body-sm); font-weight: var(--font-weight-semibold); color: var(--color-text-label); }   /* 라벨 = 작은 브랜드색 굵은 글자(이전 버전 검색 라벨 값). 구: Screens 에만 있던 값(medium)을 DS 로 */
 .form-grid-2 .ff-field .td { width: 100%; display: block; padding: 0; }
 .form-grid-2 .ff-field .checkSelect { width: 100%; }
@@ -2305,6 +2330,17 @@ body.dark-mode .select {   /* = --color-icon-muted 다크 값(neutral-300). 구:
 .textarea[readonly]:focus { border-color: var(--color-border-base); box-shadow: none; }
 .input[readonly]:focus-visible,
 .textarea[readonly]:focus-visible { box-shadow: 0 0 0 3px var(--color-focus-ring); }
+/* 잠긴 칸 위계 2 · 옅은 비활성 (DS-ADR-082): 묶은 폼 안 비활성 칸의 바탕을 읽기 전용(bg-readonly)보다 옅게 둔다.
+ * 기본(1)은 비활성 바탕 bg-disabled가 읽기 전용보다 짙어, 값을 보여 주는 읽기 전용 칸보다 막힌 칸이 먼저 보인다. 테두리 · 글자 · 커서는 기본 그대로
+ * 다크는 bg-muted가 읽기 전용과 같은 단계라 카드 바탕(bg-base)으로: 입력칸(bg-input)보다 밝고 읽기 전용보다 어둡다
+ *   <form class="form-disabled--subtle"> … <input class="input" disabled> … </form> */
+.form-disabled--subtle :is(.input, .select, .textarea):disabled,
+.form-disabled--subtle .ui-select__trigger[aria-disabled="true"],
+.form-disabled--subtle .ui-datepicker:has(.ui-datepicker__input:disabled) { background-color: var(--color-bg-muted); }
+.form-disabled--subtle :is(.input, .textarea, .ui-datepicker__input):disabled::placeholder { color: var(--color-text-disabled); }   /* 안내 글자도 흐리게: 바탕이 옅어 편집 칸의 빈 칸과 헷갈리지 않게 */
+body.dark-mode .form-disabled--subtle :is(.input, .select, .textarea):disabled,
+body.dark-mode .form-disabled--subtle .ui-select__trigger[aria-disabled="true"],
+body.dark-mode .form-disabled--subtle .ui-datepicker:has(.ui-datepicker__input:disabled) { background-color: var(--color-bg-base); }
 
 /* ============================================================
  * 버튼
