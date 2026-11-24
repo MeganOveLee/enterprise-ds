@@ -7,6 +7,32 @@ import * as S from './Selection.stories.js';
 <Unstyled>
 <div className="ds-page">
 <PageHead eyebrow="Form" title="Selection Controls" lead="옵션을 선택하거나 설정을 켜고 끄는 체크박스 · 라디오 버튼 · 토글 스위치입니다." />
+<Section title="고르는 기준" en="Which to use" desc="옵션에 설명이 필요한지, 몇 개인지에 따라 고릅니다.">
+<Card title="A · 라디오 묶음, B · 카드형 선택, C · 나란한 칸" code={false}>
+<table className="ds-table ds-props ds-props--wrap">
+<thead><tr><th>항목</th><th>A · 라디오 묶음</th><th>B · 카드형 선택</th><th>C · 나란한 칸</th></tr></thead>
+<tbody>
+<tr><td><b>언제 쓰나</b></td><td>옵션 이름만으로 뜻이 통하는 업무 폼입니다.</td><td>옵션마다 설명이 필요하거나 누름 영역이 커야 할 때입니다.</td><td>이름이 짧은 옵션 둘에서 넷을 버튼처럼 나란히 둘 때입니다.</td></tr>
+<tr><td><b>브랜드</b></td><td colSpan={3}>Default · OOTB = A, Mobility = B입니다.</td></tr>
+</tbody>
+</table>
+</Card>
+</Section>
+<Section title="A · 라디오 묶음" en="Radio group">
+<Card of={S.시안_라디오_묶음} title="기본" tag="추천" why="업무 폼의 다른 칸과 높이가 맞습니다." desc="한 줄에 옵션을 모아 폼 한 행 높이 안에 둡니다." />
+</Section>
+<Section title="B · 카드형 선택" en="Cards">
+<Card of={S.시안_카드형_선택} title="기본" desc="행 전체가 누르는 칸이고, 고른 칸은 표식 · 테두리 · 바탕 셋으로 구분합니다." />
+</Section>
+<Section title="C · 나란한 칸" en="Segmented">
+<Card of={S.시안_나란한_칸} title="기본" desc="모바일 컴포넌트의 나란한 칸(.segmented)을 씁니다." basis="Ant Design Radio 버튼 모양" />
+</Section>
+<Section title="컨트롤 종류" en="Controls">
+<Card of={S.Checkbox} title="체크박스" en="Checkbox" desc="여러 옵션을 함께 선택합니다(.checkbox-group)." />
+<Card of={S.부분_선택} title="부분 선택" en="Indeterminate" desc="하위 항목 중 일부만 선택하면 「전체 선택」을 부분 선택으로 표시합니다." />
+<Card of={S.Radio} title="라디오 버튼" en="Radio" desc="옵션 중 하나만 선택합니다(.radio-group). 기본값 하나를 미리 선택해 둡니다." />
+<Card of={S.Switch} title="토글 스위치" en="Switch" desc="누르는 즉시 적용되는 설정입니다." />
+</Section>
 <Section title="구성" en="Spec">
 <table className="ds-table ds-props">
 <thead><tr><th>구분</th><th>클래스 · 속성</th><th>설명</th></tr></thead>
@@ -24,17 +50,6 @@ import * as S from './Selection.stories.js';
 </tbody>
 </table>
 <p className="ds-sec__desc ds-after">모서리 토큰(<code>--radius-checkbox</code>)은 <a className="ds-link" href="./?path=/docs/foundation-spacing-·-radius-·-size--docs" target="_top">Foundation › Spacing · Radius · Size</a>에 있습니다.</p>
-</Section>
-<Section title="시안" en="Options">
-<Card of={S.시안_라디오_묶음} title="A · 라디오 묶음" tag="추천" desc="업무 폼에서 옵션 이름만으로 뜻이 통할 때 사용합니다." basis="한 줄에 옵션을 모아 폼 한 행 높이 안에 들어갑니다. 업무 폼의 다른 칸과 높이가 맞습니다." />
-<Card of={S.시안_카드형_선택} title="B · 카드형 선택" desc="기본보다 옵션마다 설명이 필요하거나 누름 영역을 크게 두어야 할 때 사용합니다." basis="행 전체가 누르는 칸이고 설명 줄을 함께 둡니다. 고른 칸은 표식 · 테두리 · 바탕 셋으로 구분해 색만으로 알리지 않습니다. 모바일 앱의 인원 · 이동 수단 고르기와 같은 층입니다." />
-<Card of={S.시안_나란한_칸} title="C · 나란한 칸" desc="기본보다 옵션이 둘에서 넷이고 이름이 짧아 버튼처럼 나란히 둘 때 사용합니다." basis="Ant Design Radio의 버튼 모양과 같은 방식입니다. 모바일 컴포넌트의 나란한 칸(.segmented)을 씁니다." />
-</Section>
-<Section title="예시" en="Examples">
-<Card of={S.Checkbox} title="체크박스" en="Checkbox" desc="여러 옵션을 함께 선택합니다(.checkbox-group)." />
-<Card of={S.부분_선택} title="부분 선택" en="Indeterminate" desc="하위 항목 중 일부만 선택하면 「전체 선택」을 부분 선택으로 표시합니다." />
-<Card of={S.Radio} title="라디오 버튼" en="Radio" desc="옵션 중 하나만 선택합니다(.radio-group). 기본값 하나를 미리 선택해 둡니다." />
-<Card of={S.Switch} title="토글 스위치" en="Switch" desc="누르는 즉시 적용되는 설정입니다." />
 </Section>
 <Section title="Do · Don't">
 <Card of={S.사용_지침} code={false} />
