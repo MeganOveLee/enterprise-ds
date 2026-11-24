@@ -54,11 +54,11 @@ export const 모두_보기 = {
   parameters: { docs: { source: { code: searchForm({ all: true }) } } },
   render: () => stage(searchForm({ all: true, n: true })),
 };
-// 시안 A 본보기: 검색 조건 안 칸마다 상태를 다르게 두고, 칸 위 오른쪽에 상태 이름표(data-state, _flow.css .anno).
+// 시안 A 본보기: 검색 조건 안 칸마다 상태를 다르게 둠(이름표 없이 모양으로 구별).
 // 값 없음 · 마우스 올림 · 입력 중 · 값 있음 · 값 있음 + 마우스 올림. 정지 화면은 _pseudo.js 의 .ps-* 클래스. 「코드 보기」는 상태 없는 마크업
 const CHEV = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>';
 const trig = (label, value, cls) => '<div class="ui-select"><div class="ui-select__trigger' + (cls ? ' ' + cls : '') + '" role="combobox" tabindex="0" aria-haspopup="listbox" aria-expanded="false" aria-label="' + label + '"><span class="ui-select__value">' + value + '</span><span class="ui-select__chevron">' + CHEV + '</span></div></div>';
-const demoField = (label, control, state, span) => '<div class="ff-field' + (span ? ' span-' + span : '') + '"><label class="search-label">' + label + '</label><div class="td" data-state="' + state + '">' + control + '</div></div>';
+const demoField = (label, control, state, span) => '<div class="ff-field' + (span ? ' span-' + span : '') + '"><label class="search-label">' + label + '</label><div class="td">' + control + '</div></div>';   // state = 이 칸에 둔 상태(코드 읽는 사람용)
 const demoA = () => {
   const id = 'sf-detail-' + (++uid);
   return '<section class="product" style="padding:0"><div class="seach_arm" style="margin-top:0"><div class="leftbt">' + lnbSvg('sliders', 18) + '<h4>검색 조건</h4></div><div class="rightbt">' +
@@ -74,7 +74,7 @@ const demoA = () => {
 };
 export const 접고_펴기 = {
   parameters: { docs: { source: { code: searchForm({}) } } },
-  render: () => { enablePseudo(); const el = stage(demoA()); el.classList.add('anno--state'); return el; },
+  render: () => { enablePseudo(); return stage(demoA()); },
 };
 // 펼치고 값을 넣은 모습: 상세 검색을 펼치고 첫 줄 · 상세 조건에 값을 넣어 검색하기 직전. 값이 있는 칸에는 지우기(×)
 export const 펼치고_값_넣기 = {
@@ -131,17 +131,15 @@ const rankBar = () => '<section class="product" style="padding:0"><div class="se
   rankTable(' grid-table--subtle') + '</section></section>';
 const stageBar = (html, minH = 0) => { const el = stage(html); if (minH) el.style.minHeight = minH + 'px';
   setTimeout(() => { el.querySelectorAll('select.checkSelect').forEach((sel) => window.buildMultiSelect && window.buildMultiSelect(sel)); if (window.enhanceFilterPanels) window.enhanceFilterPanels(el); }, 0); return el; };
-// 시안 B 본보기: 검색 칸 · 조건 단추 · [필터]마다 상태를 다르게 두고 위에 상태 이름표(data-state). 조건 단추 · 지우기 감싸개는 스크립트가 그린 뒤 이름표 · 상태 클래스를 옮겨 붙임
+// 시안 B 본보기: 검색 칸 · 조건 단추 · [필터]마다 상태를 다르게 둠(이름표 없이 모양으로 구별). 조건 단추는 스크립트가 그린 뒤 상태 클래스를 옮겨 붙임
 const demoSel = (name, items, picked, state, ps, search) => fsel(name, items, picked, search).replace('<select ', '<select data-demo-state="' + state + '"' + (ps ? ' data-demo-ps="' + ps + '"' : '') + ' ');
 const demoB = () => rankBar().replace(/<input class="input search-bar__query"[^>]*>/, '<input class="input search-bar__query ps-focus" data-demo-state="입력 중" type="search" aria-label="문서 검색" placeholder="문서 번호 또는 문서 명" value="캘리" data-ds-clear>')
   .replace(fsel('작업현황', ['작업 중', '검토 중', '승인', '반려', '폐기'], ['검토 중']) + fsel('등록자', ['김도윤', '이서연', '박지호', '최민준', '정하은'], ['김도윤'], true),
     demoSel('작업현황', ['작업 중', '검토 중', '승인', '반려', '폐기'], [], '값 없음') + demoSel('문서 분류', ['설계 문서', '시험 문서', '회의록'], [], '마우스 올림', 'hover') +
-    demoSel('등록자', ['김도윤', '이서연', '박지호', '최민준', '정하은'], ['김도윤'], '값 있음', '', true) + demoSel('프로젝트', ['PJT-2601 전동 캘리퍼', 'PJT-2604 경량 하우징'], ['PJT-2601 전동 캘리퍼'], '값 있음 + 마우스 올림', 'hover', true))
-  .replace('<div class="filter-pop-wrap">', '<div class="filter-pop-wrap" data-state="값 있음">');
-export const 시안_한_줄_바 = { parameters: optSrc(rankBar()), render: () => { enablePseudo(); const el = stageBar(demoB(), 460); el.classList.add('anno--state');
+    demoSel('등록자', ['김도윤', '이서연', '박지호', '최민준', '정하은'], ['김도윤'], '값 있음', '', true) + demoSel('프로젝트', ['PJT-2601 전동 캘리퍼', 'PJT-2604 경량 하우징'], ['PJT-2601 전동 캘리퍼'], '값 있음 + 마우스 올림', 'hover', true));
+export const 시안_한_줄_바 = { parameters: optSrc(rankBar()), render: () => { enablePseudo(); const el = stageBar(demoB(), 460);
   setTimeout(() => {
-    el.querySelectorAll('select[data-demo-state]').forEach((sel) => { const w = sel.parentElement && sel.parentElement.closest('.checkSelect'); if (!w) return; w.dataset.state = sel.dataset.demoState; if (sel.dataset.demoPs) w.querySelector('.selected-text').classList.add('ps-' + sel.dataset.demoPs); });
-    const q = el.querySelector('input[data-demo-state]'); if (q) (q.closest('.field-clear-wrap') || q).dataset.state = q.dataset.demoState;
+    el.querySelectorAll('select[data-demo-state]').forEach((sel) => { const w = sel.parentElement && sel.parentElement.closest('.checkSelect'); if (!w) return; if (sel.dataset.demoPs) w.querySelector('.selected-text').classList.add('ps-' + sel.dataset.demoPs); });
   }, 60);
   return el; } };   // 460 = [필터]를 연 패널이 카드 안에 들어가는 높이   // 460 = [필터]를 연 패널이 카드 안에 들어가는 높이
 // 필터 더 보기: [필터 더 보기] 체크 목록에서 조건 이름을 고르면 그 조건 단추가 바에 나타남(js/filter-panel.js). 처음 = 작업현황 · 등록자 + 문서 분류(골라 둠)
