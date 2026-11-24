@@ -43,6 +43,10 @@
     },
     "$description": "입력칸: 카드보다 확실히 파이게"
   },
+  "color-bg-input-hover": {
+    "$value": "{neutral-800}",
+    "$description": "다크 = 입력칸(900)에서 한 단계 들림(= bg-base). bg-muted(750)는 읽기 전용과 같은 값이라 쓰지 않음 (DS-ADR-079)"
+  },
   "color-bg-readonly": {
     "$value": "{neutral-750}",
     "$description": "읽기전용: 카드보다 밝게 떠서 '건드릴 수 없는 칸'"
