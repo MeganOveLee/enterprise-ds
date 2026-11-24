@@ -66,10 +66,12 @@ export default {
 };
 
 let n = 0;
+// 열린 모습 = k번째 항목이 지금 가리키는 항목(.is-current, DS-ADR-084)
+const markCurrent = (h, k) => { let c = -1; return h.replace(/class="ui-menu__item"/g, (m) => (++c === k ? 'class="ui-menu__item is-current"' : m)); };
 export const 예시 = {
   parameters: { docs: { source: { code: CODE.join('\n') } } },
   render: () => matrix(['눌러 보기', '열린 모습'], [
-    ['미리보기', ['<div style="min-height:230px;text-align:left">' + menu('dm-live-' + (n++)) + '</div>', '<div style="min-height:230px;text-align:left">' + menu('dm-open-' + (n++), true) + '</div>']],
+    ['미리보기', ['<div style="min-height:230px;text-align:left">' + menu('dm-live-' + (n++)) + '</div>', '<div style="min-height:230px;text-align:left">' + markCurrent(menu('dm-open-' + (n++), true), 1) + '</div>']],
     ['쓰임', [note('누르거나 ↓ · Enter로 열면 첫 항목에 포커스가 갑니다<br>↑↓ · Home · End로 옮기고, Esc는 닫고 버튼으로 돌아갑니다'), note('항목을 누르면 바로 동작하고 목록이 닫힙니다<br>지우기처럼 되돌릴 수 없는 동작은 빨강 글자 · 맨 아래, 구분선으로 떼어 둡니다')]],
   ], { full: true }),
 };
@@ -77,7 +79,7 @@ export const 예시 = {
 export const 시안_찾기와_묶음 = {
   parameters: { docs: { source: { code: SEARCH_CODE.join('\n') } } },
   render: () => matrix(['눌러 보기', '열린 모습'], [
-    ['미리보기', ['<div class="sb-menu-stage">' + searchMenu('dm-sl-' + (n++)) + '</div>', '<div class="sb-menu-stage">' + searchMenu('dm-so-' + (n++), true) + '</div>']],
+    ['미리보기', ['<div class="sb-menu-stage">' + searchMenu('dm-sl-' + (n++)) + '</div>', '<div class="sb-menu-stage">' + markCurrent(searchMenu('dm-so-' + (n++), true), 0) + '</div>']],
     ['쓰임', [note('열면 찾기 칸에 포커스가 갑니다<br>글자를 넣으면 맞는 항목만 남고, ↓로 첫 항목에 갑니다'), note('묶음 제목과 구분선으로 동작을 나눕니다<br>단축키가 있는 동작만 오른쪽에 단축키를 적습니다')]],
   ], { full: true }),
 };

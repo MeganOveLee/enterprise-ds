@@ -7,6 +7,7 @@
  * </div>
  * 키보드: 버튼에서 ↓ · Enter · Space = 열고 첫 항목, ↑ = 열고 끝 항목 / 목록에서 ↑↓ · Home · End = 옮김, Esc = 닫고 버튼으로, Tab = 닫음
  * 항목을 누르면 닫히고 포커스는 버튼으로 돌아감. 항목의 동작은 화면 스크립트가 click 으로 받음
+ * 지금 가리키는 항목(DS-ADR-084): 마우스를 올리거나 키보드로 옮긴 항목 하나에 .is-current. 마우스가 목록 밖으로 나가도 남고, ↑↓는 이 항목에서 이어 감. 닫으면 지움
  * 시안 B · 찾기와 묶음(DS-ADR-076): 목록에 .ui-menu__search 칸이 있으면 열 때 찾기 칸에 포커스, 글자를 넣으면 맞지 않는 항목 · 묶음 제목 · 구분선을 숨김.
  *   찾기 칸에서 ↓ = 첫 항목, ↑ = 끝 항목, Esc = 닫음. 찾기 칸에서는 Home · End 가 글자 커서를 옮김 */
 (function () {
@@ -30,8 +31,13 @@
         var it = items(p.list);
         if (it.length) (where === 'last' ? it[it.length - 1] : it[0]).focus();
     }
+    function setCurrent(list, it) {
+        [].forEach.call(list.querySelectorAll('.ui-menu__item.is-current'), function (x) { if (x !== it) x.classList.remove('is-current'); });
+        if (it) it.classList.add('is-current');
+    }
     function close(p, focusBtn) {
         if (p.list.hidden) return;
+        setCurrent(p.list, null);
         p.list.hidden = true;
         p.btn.setAttribute('aria-expanded', 'false');
         var q = p.list.querySelector('.ui-menu__search input');
@@ -43,6 +49,7 @@
         [].forEach.call(list.querySelectorAll('.ui-menu__item'), function (i) {
             var hit = !t || i.textContent.toLowerCase().indexOf(t) !== -1;
             i.hidden = !hit; if (hit) any = true;
+            if (!hit) i.classList.remove('is-current');
         });
         [].forEach.call(list.querySelectorAll('.ui-menu__group-label, .ui-menu__divider'), function (el) { el.hidden = !!t; });
         var empty = list.querySelector('.ui-menu__empty');
@@ -51,6 +58,18 @@
     document.addEventListener('input', function (e) {
         if (!e.target.closest || !e.target.closest('.ui-menu__search')) return;
         var p = parts(e.target); if (p) filter(p.list, e.target.value);
+    });
+    document.addEventListener('mouseover', function (e) {
+        var it = e.target.closest && e.target.closest('.ui-menu__item');
+        if (!it || it.getAttribute('aria-disabled') === 'true') return;
+        var p = parts(it); if (!p || p.list.hidden) return;
+        setCurrent(p.list, it);
+        var a = document.activeElement;   // 포커스가 다른 항목에 있으면 따라옴(찾기 칸에 있으면 그대로) → 가리키는 항목이 늘 하나
+        if (a && a !== it && a.classList.contains('ui-menu__item') && p.list.contains(a)) it.focus({ preventScroll: true });
+    });
+    document.addEventListener('focusin', function (e) {
+        var it = e.target.closest && e.target.closest('.ui-menu__item');
+        var p = it && parts(it); if (p) setCurrent(p.list, it);
     });
     function closeAll(except) {
         [].forEach.call(document.querySelectorAll('.ui-menu'), function (r) {
@@ -73,7 +92,8 @@
             return;
         }
         if (!p.list.contains(e.target)) return;
-        var it = items(p.list), i = it.indexOf(document.activeElement);
+        var it = items(p.list), cur = p.list.querySelector('.ui-menu__item.is-current');
+        var i = it.indexOf(cur || document.activeElement);
         if (e.target.closest('.ui-menu__search')) {
             if (e.key === 'ArrowDown' && it.length) { e.preventDefault(); it[0].focus(); }
             else if (e.key === 'ArrowUp' && it.length) { e.preventDefault(); it[it.length - 1].focus(); }
