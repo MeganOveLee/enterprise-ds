@@ -469,6 +469,14 @@ export default {
   title: 'Screens/PLM 화면',
   tags: ['!dev', '!autodocs', 'device-web'],   // 쓰는 기기 = PLM 웹 (DS-ADR-055), 메뉴에는 문서 한 장만, 문서는 Screens.mdx
   parameters: { layout: 'fullscreen' },
+  // OOTB 화면 = LNB 시안 3 어두운 틀(레일 · 서브 패널에 .lnb--dark, DS-ADR-087). Default · Mobility = 시안 1
+  decorators: [(story, ctx) => {
+    const out = story();
+    if (ctx.globals.brand !== 'ootb') return out;
+    if (typeof out === 'string') return out.replace(/class="main-(menu|sub)"/g, 'class="main-$1 lnb--dark"');
+    out.querySelectorAll?.('.main-menu, .main-sub').forEach((el) => el.classList.add('lnb--dark'));
+    return out;
+  }],
 };
 
 // ── 화면 지도 (반영 7) ── 화면마다 영역 상자 + 영역 이름 + 쓰는 블록 · 컴포넌트. 「언제」 한 줄로 어떤 화면을 고르는지

@@ -1,8 +1,8 @@
 {
-  "$description": "/* ============================================================================\n * DARK MODE: body.dark-mode 토글 시 Layer 4 Semantic Aliases override\n *\n * 디자인 정책: 라이트 모드의 위계 의미를 유지:\n *   subtle (페이지 바닥, 가장 가라앉음) → base (카드, 약간 들림) → muted (호버, 더 들림)\n *\n *   - 페이지 바닥(subtle):   neutral-950\n *   - 카드(base):            neutral-800\n *   - 호버/elevation(muted): neutral-750\n *   - 섹션 헤더·그리드 헤더: neutral-850\n *   - 브랜드:                brand-400  (다크 배경에 살아남도록 한 단계 옅게): 보더·아이콘. 글자는 300(AA 4.5, DS-ADR-014). 흰 글자를 얹는 채색 면(bg-brand)은 500 (DS-ADR-004)\n *   Vendor Bridge(Layer 5)는 body 에 선언돼 있어 여기서 다시 쓸 필요 없음.\n * ============================================================================ */",
+  "$description": "/* ============================================================================\n * DARK MODE: body.dark-mode 토글 시 Layer 4 Semantic Aliases override\n *\n * 디자인 정책: 라이트 모드의 위계 의미를 유지:\n *   subtle (페이지 바닥, 가장 가라앉음) → base (카드, 약간 들림) → muted (호버, 더 들림)\n *\n *   - 페이지 바닥(subtle):   neutral-950\n *   - 카드(base):            neutral-800\n *   - 호버/elevation(muted): neutral-750\n *   - 섹션 헤더·그리드 헤더: neutral-850\n *   - 브랜드:                brand-400  (다크 배경에 살아남도록 한 단계 옅게): 보더·아이콘. 글자는 300(AA 4.5, DS-ADR-014). 흰 글자를 얹는 채색 면(bg-brand)은 500 (DS-ADR-004)\n *   Vendor Bridge(Layer 5)는 body 에 선언돼 있어 여기서 다시 쓸 필요 없음.\n *\n *   .lnb--dark: LNB 시안 3 어두운 틀. 레일 · 서브 패널 안에도 같은 다크 값을 건다 (DS-ADR-087)\n * ============================================================================ */",
   "$extensions": {
     "eds": {
-      "selector": "body.dark-mode"
+      "selector": "body.dark-mode,\n.lnb--dark"
     }
   },
   "color-bg-base": {

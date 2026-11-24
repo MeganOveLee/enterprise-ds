@@ -277,6 +277,11 @@
     box-shadow: inset 3px 0 0 var(--color-border-brand);
 }
 .main-menu > nav > ul > li:has(a.active, a[aria-current="page"]) > span { color: inherit; }
+/* LNB 시안 (DS-ADR-087): 고른 메뉴를 보이는 방식 셋. 변형 클래스가 없으면 시안 1 떨어진 칸(위 규칙)
+ *   .lnb--joined (.main-menu) = 시안 2 이어진 칸: 고른 칸을 서브 패널 바탕으로 칠해 패널과 잇는다. 레일 선을 안쪽 그림자로 옮겨 고른 칸이 선을 덮는다
+ *   .lnb--dark (.main-menu · .main-sub) = 시안 3 어두운 틀: 다크 토큰 묶음을 두 영역에 건다(tokens.css). 규칙은 다크 모드와 같아 따로 쓰지 않는다 */
+.main-menu.lnb--joined { border-right: 0; box-shadow: inset -1px 0 0 var(--color-border-lnb); }
+.main-menu.lnb--joined > nav > ul > li:has(a.active, a[aria-current="page"]) { background: var(--color-bg-base); color: var(--color-text-brand); }
 .main-menu .menu_icon_box { display: flex; width: 24px; height: 24px; margin: 0 auto; }
 .main-menu .menu_icon { width: 100%; height: 100%; }
 .main-menu .menu_icon::before {
@@ -2273,7 +2278,8 @@ body.dark-mode .resumable:not(.center) .fileList .file-item { background: var(--
     background-size: 16px 16px;
     cursor: pointer;
 }
-body.dark-mode .select {   /* = --color-icon-muted 다크 값(neutral-300). 구: #E5E7EB */
+body.dark-mode .select,
+.lnb--dark .select {   /* = --color-icon-muted 다크 값(neutral-300). 구: #E5E7EB. .lnb--dark = LNB 시안 3 어두운 틀 안 (DS-ADR-087) */
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23D2D4D8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
 }
 .select::-ms-expand { display: none; }

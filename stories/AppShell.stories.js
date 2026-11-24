@@ -69,8 +69,8 @@ const tree = () => '<ul class="tree" role="tree" aria-label="문서 폴더">' + 
   '<li class="tree__item" role="treeitem"' + (open !== undefined ? ' aria-expanded="' + open + '"' : '') + (on ? ' aria-selected="true"' : '') + ' style="--tree-level:' + lv + '">' +
   '<span class="tree__caret">' + (open !== undefined ? svg(open ? I.down : I.next, 12) : '') + '</span>' +
   folderIcon(!!open) + t + '</li>').join('') + '</ul>';
-const panel = (tabX = '') =>
-  '<aside class="main-sub" aria-label="문서 관리 메뉴" style="height:360px">' +
+const panel = (tabX = '', cls = '', h = 360) =>
+  '<aside class="main-sub' + cls + '" aria-label="문서 관리 메뉴" style="height:' + h + 'px">' +
   '<div class="main-sub-header"><h3>문서 관리</h3><button type="button" class="sub-close" aria-label="메뉴 닫기">' + svg(I.close, 16) + '</button></div>' +
   '<div class="main-sub-tabs" role="tablist"><button type="button" class="sub-tab" role="tab" aria-selected="false">메뉴</button><button type="button" class="sub-tab is-active' + tabX + '" role="tab" aria-selected="true">폴더</button></div>' +
   '<div class="main-sub-content"><div class="tree-section" style="margin-top:0;border-top:0"><div class="tree-controls">' +
@@ -88,11 +88,19 @@ const railIcon = (d) => "url('data:image/svg+xml," + encodeURIComponent('<svg xm
 const railItem = (ic, t, { current = false, liX = '', aX = '', spanStyle = '' } = {}) =>
   '<li class="' + liX.trim() + '"><div class="menu_icon_box"><div class="menu_icon" style="--lnb-icon:' + lnbMask(ic) + '"><a href="#" class="' + aX.trim() + '" aria-label="' + t + '"' + (current ? ' aria-current="page"' : '') + '></a></div></div><span aria-hidden="true"' + (spanStyle ? ' style="' + spanStyle + '"' : '') + '>' + t + '</span></li>';
 // 메뉴 이름이 길면 띄어쓰기에서 두 줄(「벤치마킹 관리」)
-const rail = () =>
-  '<aside class="main-menu" style="height:520px"><a class="lnb-logo" href="#">' + lnbLogo('홈') + '</a><nav aria-label="주 메뉴"><ul>' +
+const rail = (cls = '', h = 520) =>
+  '<aside class="main-menu' + cls + '" style="height:' + h + 'px"><a class="lnb-logo" href="#">' + lnbLogo('홈') + '</a><nav aria-label="주 메뉴"><ul>' +
   railItem('work', '업무 관리') + railItem('doc', '문서 관리', { current: true }) + railItem('drawing', '도면 관리') + railItem('part', '부품 관리') + railItem('bench', '벤치마킹 관리') +
   '</ul><ul>' + railItem('user', '관리자') + '</ul></nav></aside>';
 export const 아이콘_메뉴 = { parameters: { docs: { source: { code: rail() } } }, render: () => '<div style="display:flex">' + rail() + '</div>' };
+
+// ── LNB 시안 (DS-ADR-087): 고른 메뉴를 보이는 방식 셋. 레일 + 서브 패널을 붙여 둠 ──
+// 1 떨어진 칸 = 변형 없음 · 2 이어진 칸 = .main-menu.lnb--joined · 3 어두운 틀 = .main-menu · .main-sub 둘 다 .lnb--dark
+const lnbPair = (railCls, subCls) => rail(railCls, 440) + panel('', subCls, 440);
+const lnbStory = (railCls, subCls) => ({ parameters: { docs: { source: { code: lnbPair(railCls, subCls) } } }, render: () => '<div style="display:flex">' + lnbPair(railCls, subCls) + '</div>' });
+export const 시안_떨어진_칸 = lnbStory('', '');
+export const 시안_이어진_칸 = lnbStory(' lnb--joined', '');
+export const 시안_어두운_틀 = lnbStory(' lnb--dark', ' lnb--dark');
 
 const subMenu = () =>
   '<div class="ui-submenu"><ul>' +
