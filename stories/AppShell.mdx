@@ -45,7 +45,7 @@ import * as S from './AppShell.stories.js';
 </Section>
 <Section title="LNB 시안" en="Variants" desc="고른 메뉴를 레일과 서브 패널에 보이는 방식입니다. 근거는 DS-ADR-087에 있습니다.">
 <Card of={S.시안_어두운_틀} title="3 · 어두운 틀" tag="추천" why="GNB · 레일 · 서브 패널이 한 어두운 틀로 이어져, 메뉴 영역과 작업 영역이 한눈에 나뉩니다." desc="레일과 서브 패널에 .lnb--dark를 붙입니다. 두 영역 안은 다크 모드와 같은 값을 써서 트리 · 입력 칸도 다크 모드 모양입니다. OOTB 화면이 이 시안을 씁니다." />
-<Card of={S.시안_이어진_칸} title="2 · 이어진 칸" desc="레일에 .lnb--joined를 붙입니다. 고른 메뉴 칸이 서브 패널과 같은 바탕이라 레일에서 패널로 이어집니다." />
+<Card of={S.시안_이어진_칸} title="2 · 이어진 칸" brands={['ootb']} desc="레일에 .lnb--joined를 붙입니다. 고른 메뉴 칸이 서브 패널과 같은 바탕이라 어두운 레일에서 책갈피처럼 패널로 이어집니다. 레일이 어두운 OOTB에서만 씁니다." />
 <Card of={S.시안_떨어진_칸} title="1 · 떨어진 칸" desc="변형 클래스 없이 씁니다. 고른 메뉴는 레일 안 옅은 브랜드 칸이고, 레일과 서브 패널은 선으로 나뉩니다. Default · Mobility 화면이 이 시안을 씁니다." />
 </Section>
 <Section title="Do · Don't">

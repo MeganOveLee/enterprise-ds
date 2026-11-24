@@ -27,8 +27,21 @@ export const Section = ({ title, desc, children }) =>
 // why = 「추천」 카드에서 추천하는 이유: Do 판정과 같은 초록 원 체크 + 굵은 「추천하는 이유」, 옅은 초록 바탕 칸(.ds-card__why)
 const WHY_ICON = h('svg', { viewBox: '0 0 24 24', 'aria-hidden': true }, h('circle', { cx: 12, cy: 12, r: 11, fill: 'currentColor' }),
   h('path', { d: 'M7.5 12.5l3 3 6-6.5', fill: 'none', stroke: 'var(--color-icon-inverse)', strokeWidth: 2.25, strokeLinecap: 'round', strokeLinejoin: 'round' }));
-export const Card = ({ of, title, desc, tag, why, basis, code = true, children }) =>
-  h('section', { className: 'ds-card' },
+// brands = 이 카드를 보일 브랜드(예: ['ootb']). 다른 브랜드를 고르면 카드를 그리지 않는다: 그 브랜드에서 뜻이 없는 시안
+const useBrand = () => {
+  const [b, setB] = React.useState(() => readGlobals().brand);
+  React.useEffect(() => {   // 브랜드 = <html class="theme-*">: 스토리가 그려질 때 붙으므로 클래스 바뀜을 지켜본다
+    const mo = new MutationObserver(() => setB(readGlobals().brand));
+    mo.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    setB(readGlobals().brand);
+    return () => mo.disconnect();
+  }, []);
+  return b;
+};
+export const Card = ({ of, title, desc, tag, why, basis, brands, code = true, children }) => {
+  const brand = useBrand();
+  if (brands && !brands.includes(brand)) return null;
+  return h('section', { className: 'ds-card' },
     title ? h('header', { className: 'ds-card__head' },
       h('h3', { className: 'ds-card__title' }, title, tag ? h('span', { className: 'ds-card__tag' }, tag) : null),
       desc ? h('p', { className: 'ds-card__desc' }, desc) : null,
@@ -37,6 +50,7 @@ export const Card = ({ of, title, desc, tag, why, basis, code = true, children }
     of ? h('div', { className: 'ds-card__body' }, h(Story, { of })) : null,
     children ? h('div', { className: 'ds-card__extra' }, children) : null,
     of && code ? h('details', { className: 'ds-card__code' }, h('summary', null, '코드 보기'), h(Source, { of })) : null);
+};
 
 // 문서 안 도구 막대: 화면 맨 위 Storybook 도구 막대와 같은 모양 · 같은 아이콘 · 같은 글자 · 같은 열림 목록.
 // 값 = 실제 막대에서 잰 것(버튼 28 · 안쪽 0 7 · 모서리 4 · 바탕 rgba(0,109,235,.07) · 글자 12 굵게 rgb(0,85,184) · 아이콘 14,

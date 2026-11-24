@@ -318,7 +318,7 @@
   /* GNB · 레일 (TD-214): 앱 위 띠와 왼쪽 레일. 다크는 dark.json에서 다시 계산 */
   --color-bg-gnb: transparent;                /* GNB 바탕. 놓인 면(내용 영역)이 그대로 보임. OOTB는 반전 바탕 */
   --color-bg-rail: var(--color-bg-base);      /* LNB 레일 바탕. OOTB는 GNB와 같은 반전 바탕 */
-  --color-bg-rail-logo: var(--color-bg-muted); /* 레일 맨 위 로고 칸 바탕. OOTB는 레일과 같은 바탕(로고를 색 칸에 넣지 않음) */
+  --color-bg-rail-logo: var(--color-bg-rail); /* 레일 맨 위 로고 칸 바탕. 모든 브랜드가 레일과 같은 바탕(로고를 색 칸에 넣지 않음, TD-214) */
   --color-text-gnb: var(--color-text-base);   /* GNB · 레일 위 글자 */
   --color-text-gnb-muted: var(--color-text-muted); /* GNB 위 보조 글자(경로 · 버전 · 이전 · 다음) */
   --color-icon-gnb: var(--color-icon-base);   /* GNB · 레일 위 아이콘 · CI 마크 */
@@ -690,7 +690,7 @@ body.dark-mode,
   /* GNB · 레일 (TD-214): 라이트와 같은 참조를 다시 적어 body에서 다크 값으로 계산. OOTB 다크도 이 값 */
   --color-bg-gnb: transparent;
   --color-bg-rail: var(--color-bg-base);
-  --color-bg-rail-logo: var(--color-bg-muted);
+  --color-bg-rail-logo: var(--color-bg-rail);
   --color-text-gnb: var(--color-text-base);
   --color-text-gnb-muted: var(--color-text-muted);
   --color-icon-gnb: var(--color-icon-base);

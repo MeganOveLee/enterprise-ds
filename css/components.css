@@ -251,10 +251,10 @@
     width: 100%; height: 56px; flex-shrink: 0;
     padding: var(--spacing-4) 0;
     border-bottom: 1px solid var(--color-border-base);
-    background: var(--color-bg-rail-logo);   /* Default · Mobility = bg-muted · OOTB = 레일 바탕 그대로(로고를 색 칸에 넣지 않음) */
+    background: var(--color-bg-rail-logo);   /* 모든 브랜드 = 레일 바탕 그대로(로고를 색 칸에 넣지 않음, TD-214. 구: Default · Mobility bg-muted) */
     color: inherit;
 }
-.main-menu .lnb-logo:hover { background: var(--color-bg-lnb-hover); }   /* 바탕이 이미 bg-muted 라 올림은 메뉴 항목 올림과 같은 옅은 브랜드 (구: 투명 → bg-muted) */
+.main-menu .lnb-logo:hover { background: var(--color-bg-lnb-hover); }   /* 올림은 메뉴 항목 올림과 같은 옅은 브랜드 */
 .main-menu .lnb-logo img, .main-menu .lnb-logo svg { display: block; width: 34px; height: auto; }
 .main-menu > nav { display: flex; flex-direction: column; min-height: 0; width: 100%; }
 .main-menu > nav > ul { display: flex; flex-direction: column; width: 100%; }
@@ -278,7 +278,8 @@
 }
 .main-menu > nav > ul > li:has(a.active, a[aria-current="page"]) > span { color: inherit; }
 /* LNB 시안 (DS-ADR-087): 고른 메뉴를 보이는 방식 셋. 변형 클래스가 없으면 시안 1 떨어진 칸(위 규칙)
- *   .lnb--joined (.main-menu) = 시안 2 이어진 칸: 고른 칸을 서브 패널 바탕으로 칠해 패널과 잇는다. 레일 선을 안쪽 그림자로 옮겨 고른 칸이 선을 덮는다
+ *   .lnb--joined (.main-menu) = 시안 2 이어진 칸: 고른 칸을 서브 패널 바탕으로 칠해 패널과 잇는다. 레일 선을 안쪽 그림자로 옮겨 고른 칸이 선을 덮는다.
+ *     레일과 패널 바탕이 달라야 책갈피가 보여 레일이 어두운 OOTB에서만 쓴다(Default · Mobility 레일은 패널과 같은 흰색)
  *   .lnb--dark (.main-menu · .main-sub) = 시안 3 어두운 틀: 다크 토큰 묶음을 두 영역에 건다(tokens.css). 규칙은 다크 모드와 같아 따로 쓰지 않는다 */
 .main-menu.lnb--joined { border-right: 0; box-shadow: inset -1px 0 0 var(--color-border-lnb); }
 .main-menu.lnb--joined > nav > ul > li:has(a.active, a[aria-current="page"]) { background: var(--color-bg-base); color: var(--color-text-brand); }

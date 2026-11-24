@@ -993,8 +993,8 @@
     "$description": "LNB 레일 바탕. OOTB는 GNB와 같은 반전 바탕"
   },
   "color-bg-rail-logo": {
-    "$value": "{color-bg-muted}",
-    "$description": "레일 맨 위 로고 칸 바탕. OOTB는 레일과 같은 바탕(로고를 색 칸에 넣지 않음)"
+    "$value": "{color-bg-rail}",
+    "$description": "레일 맨 위 로고 칸 바탕. 모든 브랜드가 레일과 같은 바탕(로고를 색 칸에 넣지 않음, TD-214)"
   },
   "color-text-gnb": {
     "$value": "{color-text-base}",

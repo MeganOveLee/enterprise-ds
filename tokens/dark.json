@@ -43,7 +43,7 @@
     "$value": "{color-bg-base}"
   },
   "color-bg-rail-logo": {
-    "$value": "{color-bg-muted}"
+    "$value": "{color-bg-rail}"
   },
   "color-text-gnb": {
     "$value": "{color-text-base}"
