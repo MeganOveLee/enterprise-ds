@@ -7,6 +7,28 @@ import * as S from './MultiSelect.stories.js';
 <Unstyled>
 <div className="ds-page">
 <PageHead eyebrow="Form" title="Multi Select" lead="옵션 목록에서 여러 값을 선택하는 다중 선택 드롭다운입니다. 하나만 선택할 때는 Input의 셀렉트를 씁니다." />
+<Section title="고르는 기준" en="Which to use" desc="고른 값을 어디에 보일지에 따라 고릅니다.">
+<Card title="A · 첫 값 외 N, B · 칸 아래 칩, C · 조건 단추" code={false}>
+<table className="ds-table ds-props ds-props--wrap">
+<thead><tr><th>항목</th><th>A · 첫 값 외 N</th><th>B · 칸 아래 칩</th><th>C · 조건 단추</th></tr></thead>
+<tbody>
+<tr><td><b>언제 쓰나</b></td><td>검색 조건처럼 칸 높이를 한 줄로 지켜야 할 때입니다.</td><td>결재선 · 권한처럼 고른 값을 보며 하나씩 뺄 때입니다.</td><td>검색 조건을 한 줄 바에 늘어놓을 때입니다.</td></tr>
+<tr><td><b>브랜드 기본</b></td><td>Default</td><td>OOTB</td><td>세 브랜드의 검색 조건 한 줄 바</td></tr>
+</tbody>
+</table>
+</Card>
+</Section>
+<Section title="A · 첫 값 외 N" en="Summary">
+<Card of={S.기본} title="기본" tag="추천" why="여러 값을 골라도 칸 높이가 바뀌지 않아 검색 조건 줄이 흔들리지 않습니다." desc="둘 이상 고르면 「첫 값 외 N」, 고르지 않으면 「전체」로 보입니다." basis="DS-ADR-022" />
+<Card of={S.펼친_모습} title="펼친 모습" en="Open" desc="찾기 칸과 옵션 목록입니다. 고른 항목은 체크와 옅은 브랜드 바탕입니다." />
+<Card of={S.검색_없이} title="찾기 칸 없는 목록" en="Without search" desc="옵션이 목록 높이 안에 들면 찾기 칸 없이 씁니다. 옵션이 4개까지면 체크박스 묶음을 씁니다." />
+</Section>
+<Section title="B · 칸 아래 칩" en="Chips below">
+<Card of={S.시안_칸_아래_칩} title="기본" desc="고른 값을 칸 아래 칩으로 두고 하나씩 뺍니다." basis="Carbon Multiselect · Ant Design Select" />
+</Section>
+<Section title="C · 조건 단추" en="Filter button">
+<Card of={S.시안_조건_단추} title="기본" desc="라벨과 값이 한 단추이고, 값을 고른 단추는 옅은 브랜드 바탕입니다." basis="Jira 목록 필터 단추" />
+</Section>
 <Section title="구성" en="Spec">
 <table className="ds-table ds-props">
 <thead><tr><th>구분</th><th>클래스 · 속성</th><th>설명</th></tr></thead>
@@ -37,16 +59,6 @@ import * as S from './MultiSelect.stories.js';
 </tbody>
 </table>
 <p className="ds-sec__desc ds-after">옵션 사이 이동(<code>↑</code> <code>↓</code>)은 <a className="ds-link" href="./?path=/docs/form-input--docs" target="_top">Input</a>의 셀렉트와 같습니다. 여러 개를 선택하는 목록이라 <code>Space</code>로 선택해도 목록이 닫히지 않습니다. 셀렉트는 <code>Enter</code>로 선택하면 목록이 닫힙니다.</p>
-</Section>
-<Section title="시안" en="Options">
-<Card of={S.기본} title="A · 첫 값 외 N" tag="추천" desc="검색 조건처럼 칸 높이를 한 줄로 지켜야 할 때 사용합니다." basis="여러 값을 골라도 칸 높이가 바뀌지 않아 검색 조건 줄이 흔들리지 않습니다. 고른 값 전체는 화면 읽기 이름과 title로 알립니다(DS-ADR-022)." />
-<Card of={S.시안_칸_아래_칩} title="B · 칸 아래 칩" desc="기본보다 고른 값을 한눈에 보고 하나씩 빼야 할 때 사용합니다. 결재선 · 권한처럼 고른 값이 결과인 폼에 씁니다." basis="Carbon Multiselect · Ant Design Select의 태그 방식입니다. 칩은 칸 밖(아래)에 둡니다: 누르는 칸(role=button) 안에 빼기 버튼을 넣으면 버튼 안에 버튼이 생겨 화면 읽기 · 키보드가 칩에 닿지 못합니다. 칩을 빼면 포커스가 다음 칩, 마지막이면 칸으로 갑니다." />
-<Card of={S.시안_조건_단추} title="C · 조건 단추" desc="기본보다 검색 조건을 한 줄 바에 늘어놓아 조건 영역의 높이를 줄일 때 사용합니다. 라벨과 값이 한 단추이고, 값을 고른 단추는 옅은 브랜드 바탕입니다." basis="Jira 목록의 필터 단추 방식입니다. 걸린 조건과 안 걸린 조건을 바탕색으로 나누고, 누르면 체크 목록이 단추 아래에 떠서 열립니다. 쓰는 곳은 Blocks › Search Form 시안 B 조건 단추 한 줄 바입니다." />
-</Section>
-<Section title="예시" en="Examples">
-<Card of={S.기본} title="선택 값 요약" en="Summary" desc="트리거를 누르면 목록이 열립니다. 두 개 이상 선택하면 「첫 값 외 N」으로 요약하고, 선택하지 않으면 「전체」로 표시합니다." />
-<Card of={S.펼친_모습} title="펼친 모습" en="Open" desc="검색 필드와 옵션 목록입니다. 선택한 항목은 체크박스 선택 + 옅은 브랜드 바탕입니다." />
-<Card of={S.검색_없이} title="검색 필드 없는 목록" en="Without search" desc="옵션이 목록 높이 안에 들어오면 검색 필드 없이 씁니다. 옵션이 4개까지면 다중 선택 대신 체크박스 그룹을 씁니다." />
 </Section>
 <Section title="Do · Don't">
 <Card of={S.사용_지침} code={false} />
