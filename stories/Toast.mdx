@@ -7,6 +7,29 @@ import * as S from './Toast.stories.js';
 <Unstyled>
 <div className="ds-page">
 <PageHead eyebrow="Feedback" title="Toast" lead="사용자 동작의 결과를 화면 오른쪽 아래에 잠시 표시하고 사라지는 알림입니다." />
+<Section title="고르는 기준" en="Which to use" desc="화면에서 비어 있는 자리에 따라 고릅니다.">
+<Card title="A · 오른쪽 아래, B · 아래 가운데, C · 위 가운데" code={false}>
+<table className="ds-table ds-props ds-props--wrap">
+<thead><tr><th>항목</th><th>A · 오른쪽 아래</th><th>B · 아래 가운데</th><th>C · 위 가운데</th></tr></thead>
+<tbody>
+<tr><td><b>언제 쓰나</b></td><td>업무 화면입니다.</td><td>모바일 화면입니다.</td><td>화면 아래에 고정 버튼 줄이 있을 때입니다.</td></tr>
+<tr><td><b>브랜드 기본</b></td><td>Default · OOTB</td><td>Mobility</td><td>필요한 화면에서 고름</td></tr>
+</tbody>
+</table>
+</Card>
+</Section>
+<Section title="A · 오른쪽 아래" en="Bottom end" desc="회색 영역은 화면입니다. 제품에서는 브라우저 창 오른쪽 아래에 뜹니다.">
+<Card of={S.저장_완료} title="기본" tag="추천" why="작업 중인 표 · 폼을 가리지 않는 자리입니다." desc="저장 · 등록 결과를 짧은 문구로 알립니다." />
+<Card of={S.동작이_있는_알림} title="동작 버튼" en="With action" desc="결과를 열거나 실패한 작업을 다시 시도합니다." />
+<Card of={S.제목_줄} title="제목 줄" en="With title" desc="결과를 한마디로 묶는 제목을 문구 위에 둡니다." />
+<Card of={S.쌓임} title="쌓임" en="Stack" desc="먼저 뜬 것이 위, 새 토스트가 아래에 놓입니다." />
+</Section>
+<Section title="B · 아래 가운데" en="Bottom center">
+<Card of={S.시안_아래_가운데} title="기본" desc="엄지가 닿는 아래 가운데라 되돌리기 버튼을 누르기 쉽습니다." basis="Material 3 Snackbar" />
+</Section>
+<Section title="C · 위 가운데" en="Top center">
+<Card of={S.시안_위_가운데} title="기본" desc="아래 고정 버튼을 가리지 않게 위로 올리고, 새 알림이 맨 위에 옵니다." />
+</Section>
 <Section title="구성" en="Spec">
 <table className="ds-table ds-props">
 <thead><tr><th>구분</th><th>클래스 · 속성</th><th>설명</th></tr></thead>
@@ -24,17 +47,6 @@ import * as S from './Toast.stories.js';
 </tbody>
 </table>
 <p className="ds-sec__desc ds-after">Figma UI Kit의 Toast와 짝입니다. 확인이 필요한 결과는 <a className="ds-link" href="./?path=/docs/overlay-modal--docs" target="_top">Modal</a>, 화면에 남겨 둘 결과는 <a className="ds-link" href="./?path=/docs/feedback-alert--docs" target="_top">Alert</a>를 씁니다.</p>
-</Section>
-<Section title="시안" en="Options">
-<Card of={S.저장_완료} title="A · 오른쪽 아래" tag="추천" desc="업무 화면에서 저장 · 등록 결과를 알릴 때 사용합니다." basis="넓은 화면에서 작업 중인 표 · 폼을 가리지 않는 자리입니다." />
-<Card of={S.시안_아래_가운데} title="B · 아래 가운데" desc="기본보다 모바일 화면에서 사용합니다." basis="Material 3 Snackbar 자리입니다. 화면 폭이 좁아 가운데에 두고, 엄지가 닿는 아래라 되돌리기 버튼을 누르기 쉽습니다." />
-<Card of={S.시안_위_가운데} title="C · 위 가운데" desc="기본보다 화면 아래에 고정 버튼 줄이 있어 아래 자리를 쓸 수 없을 때 사용합니다." basis="아래 고정 버튼을 가리지 않게 위로 올립니다. 쌓이면 새 알림이 맨 위에 옵니다." />
-</Section>
-<Section title="예시" en="Examples" desc="회색 영역 = 화면. 제품에서는 브라우저 창 오른쪽 아래에 뜹니다.">
-<Card of={S.저장_완료} title="저장 완료" en="Saved" desc="흔한 쓰임입니다. 문구는 짧게 씁니다." />
-<Card of={S.동작이_있는_알림} title="동작 버튼" en="With action" desc="결과를 열거나, 실패한 작업을 다시 시도합니다." />
-<Card of={S.제목_줄} title="제목 줄" en="With title" desc="결과를 한마디로 묶는 제목(.toast__title)을 문구 위에 둡니다." />
-<Card of={S.쌓임} title="쌓임" en="Stack" desc="여러 개가 뜨면 먼저 뜬 것이 위, 새 토스트가 아래에 놓입니다." />
 </Section>
 <Section title="Do · Don't">
 <Card of={S.사용_지침} code={false} />
