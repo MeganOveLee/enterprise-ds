@@ -7,6 +7,37 @@ import * as S from './Input.stories.js';
 <Unstyled>
 <div className="ds-page">
 <PageHead eyebrow="Form" title="Input" lead="텍스트 필드 · 셀렉트 · 텍스트 영역으로 구성된 기본 입력 컴포넌트입니다." />
+<Section title="고르는 기준" en="Which to use" desc="폼의 칸 수와 세로 자리에 따라 고릅니다.">
+<Card title="A · 윤곽 칸, B · 채운 칸, C · 올라가는 라벨" code={false}>
+<table className="ds-table ds-props ds-props--wrap">
+<thead><tr><th>항목</th><th>A · 윤곽 칸</th><th>B · 채운 칸</th><th>C · 올라가는 라벨</th></tr></thead>
+<tbody>
+<tr><td><b>언제 쓰나</b></td><td>업무 화면의 검색 조건 · 등록 폼입니다.</td><td>칸이 많아 상자 테두리가 겹쳐 보이는 폼입니다.</td><td>세로 자리가 좁아 라벨 줄을 둘 수 없을 때입니다.</td></tr>
+<tr><td><b>브랜드</b></td><td colSpan={3}>세 브랜드 공통 A입니다. C는 라벨이 작아져 큰 글씨 브랜드(Mobility)에서 쓰지 않습니다.</td></tr>
+</tbody>
+</table>
+</Card>
+</Section>
+<Section title="A · 윤곽 칸" en="Outlined">
+<Card of={S.시안_윤곽_칸} title="기본" tag="추천" why="값을 넣은 뒤에도 무슨 칸인지 읽힙니다." desc="칸 테두리가 바탕과 3:1이고, 라벨이 칸 위에 남습니다." basis="DS-ADR-013" />
+</Section>
+<Section title="B · 채운 칸" en="Filled">
+<Card of={S.시안_채운_칸} title="기본" desc="옅은 바탕과 아래 선으로 칸을 보입니다. 빈 칸 · 값 있는 칸 · 입력 중인 칸이 바탕과 선으로 구분됩니다." basis="Material 3 Filled text field" />
+</Section>
+<Section title="C · 올라가는 라벨" en="Floating label">
+<Card of={S.시안_올라가는_라벨} title="기본" desc="라벨이 칸 안에 있다가 입력을 시작하면 위로 올라가 작아집니다." basis="Material 3 Text fields" />
+</Section>
+<Section title="쓰임" en="Usage">
+<Card of={S.Kind} title="종류" en="Kind" desc="한 줄 입력 · 옵션 목록에서 하나 선택 · 여러 줄 입력의 세 가지입니다. 고르는 기준은 Form › 고르는 법에 있습니다." />
+<Card of={S.Label} title="라벨" en="Label" desc="라벨을 위, 필드를 아래에 둔 한 쌍입니다. 검색 조건 · 등록 폼이 같은 쌍을 씁니다. 라벨은 작은 굵은 글자이고 색은 라벨색(--color-text-label)이라 브랜드가 바꿉니다. 이전 버전 화면은 브랜드색 라벨입니다." />
+<Card of={S.라벨_고르는_칸} title="고르는 칸만 라벨색" en="Focus label" desc={<>기본보다 칸이 많아 라벨이 값보다 먼저 보이는 검색 조건에서 사용합니다. 칸을 묶은 격자에 <code>.form-grid--focus-label</code>을 붙이면 라벨은 평소 보조 글자색이고, 칸을 누르면 그 칸의 라벨만 라벨색 · 굵은 글자가 됩니다.</>} basis="지금 고르는 조건의 이름만 색으로 보이는 방식은 Lusha의 필터에서 가져왔습니다." />
+<Card of={S.지우기} title="값 지우기" en="Clear" desc="기본보다 조회 조건 칸에 값이 있을 때 사용합니다. 칸 오른쪽 ×로 값을 한 번에 비우고 포커스는 칸으로 돌아갑니다. 편집 폼 · 읽기 전용 칸(오른쪽)에는 붙지 않습니다. 이전 버전에는 없던 동작입니다(DS-ADR-042)." />
+<Card of={S.칸_뒤_버튼} title="칸 뒤 아이콘 버튼" en="Field action" desc="기본보다 칸에 넣을 값을 다른 창에서 찾아 고를 때 사용합니다. 칸 안 오른쪽 아이콘 버튼 하나가 칸과 한 상자로 보입니다. 지우기(×)가 함께 붙으면 ×가 버튼 왼쪽에 섭니다(DS-ADR-056)." />
+<Card of={S.Locked} title="비활성 · 읽기 전용" en="Disabled · Readonly" desc="둘 다 편집할 수 없지만, 읽기 전용 값은 제출되고 비활성 값은 제출되지 않습니다." />
+<Card of={S.내용_보기_상자} title="내용 보기 상자" en="View box" desc="기본보다 변경 사유 · 의견처럼 읽기만 하는 긴 본문을 상세 화면에 보일 때 사용합니다. 읽기 전용 여러 줄 칸 오른쪽 위의 아이콘 버튼으로 본문을 크게 엽니다. 크게 여는 동작은 화면이 맡습니다(DS-ADR-072)." />
+<Card of={S.선택_목록} title="셀렉트 목록" en="Select list" desc="셀렉트를 누르면 열리는 옵션 목록입니다. js/select.js를 불러오면 브라우저마다 다른 기본 목록 대신 같은 모양의 목록을 씁니다." />
+<Card of={S.묶음_제목} title="목록 묶음 제목" en="Option group" desc="기본보다 옵션을 종류별로 나눠 보일 때 사용합니다. <optgroup label>을 쓰면 js/select.js가 묶음 제목 줄을 그립니다. 제목 줄은 누르거나 고를 수 없고, 화살표 키는 옵션만 옮겨 다닙니다(DS-ADR-056)." />
+</Section>
 <Section title="구성" en="Spec">
 <table className="ds-table ds-props">
 <thead><tr><th>구분</th><th>클래스 · 속성</th><th>설명</th></tr></thead>
@@ -26,22 +57,6 @@ import * as S from './Input.stories.js';
 </tbody>
 </table>
 <p className="ds-sec__desc ds-after">필드의 모양은 세 클래스에서만 정하고, 화면별 규칙(검색 조건 · 등록 폼)은 너비 · 높이 · 여백만 바꿉니다. 높이 · 모서리 토큰은 <a className="ds-link" href="./?path=/docs/foundation-spacing-·-radius-·-size--docs" target="_top">Foundation › Spacing · Radius · Size</a>, 테두리 색은 <a className="ds-link" href="./?path=/docs/foundation-color--docs" target="_top">Foundation › Color</a>에 있습니다.</p>
-</Section>
-<Section title="시안" en="Options">
-<Card of={S.시안_윤곽_칸} title="A · 윤곽 칸" tag="추천" desc="업무 화면의 검색 조건 · 등록 폼에 사용합니다." basis="칸 테두리가 바탕과 3:1이라 칸 위치가 보이고(DS-ADR-013), 라벨이 칸 위에 남아 값을 넣은 뒤에도 무슨 칸인지 읽힙니다." />
-<Card of={S.시안_채운_칸} title="B · 채운 칸" desc="기본보다 칸이 많아 상자 테두리가 겹쳐 보이는 폼에서 사용합니다." basis="옅은 바탕 + 아래 선으로 칸을 보이는 Material 3 Filled text field 방식입니다. 칸 테두리가 아래 선 하나라 선이 줄어듭니다. 비어 있는 칸은 옅은 회색, 값을 넣었거나 고른 칸은 흰 바탕, 입력 중인 칸은 흰 바탕에 포커스 선과 번짐이라 세 상태가 구분됩니다. 오류 · 비활성 · 읽기 전용은 아래 선 색으로 보입니다." />
-<Card of={S.시안_올라가는_라벨} title="C · 올라가는 라벨" desc="기본보다 세로 자리가 좁아 라벨 줄을 둘 수 없을 때 사용합니다." basis="라벨이 칸 안에 있다가 입력을 시작하면 위로 올라가 작아집니다(Material 3 Text fields). 작아진 라벨은 읽기 어려워 큰 글씨 브랜드에는 쓰지 않고, 칸 높이는 큰 칸입니다." />
-</Section>
-<Section title="예시" en="Examples">
-<Card of={S.Kind} title="종류" en="Kind" desc="한 줄 입력 · 옵션 목록에서 하나 선택 · 여러 줄 입력의 세 가지입니다. 고르는 기준은 Form › 고르는 법에 있습니다." />
-<Card of={S.Label} title="라벨" en="Label" desc="라벨을 위, 필드를 아래에 둔 한 쌍입니다. 검색 조건 · 등록 폼이 같은 쌍을 씁니다. 라벨은 작은 굵은 글자이고 색은 라벨색(--color-text-label)이라 브랜드가 바꿉니다. 이전 버전 화면은 브랜드색 라벨입니다." />
-<Card of={S.라벨_고르는_칸} title="고르는 칸만 라벨색" en="Focus label" desc={<>기본보다 칸이 많아 라벨이 값보다 먼저 보이는 검색 조건에서 사용합니다. 칸을 묶은 격자에 <code>.form-grid--focus-label</code>을 붙이면 라벨은 평소 보조 글자색이고, 칸을 누르면 그 칸의 라벨만 라벨색 · 굵은 글자가 됩니다.</>} basis="지금 고르는 조건의 이름만 색으로 보이는 방식은 Lusha의 필터에서 가져왔습니다." />
-<Card of={S.지우기} title="값 지우기" en="Clear" desc="기본보다 조회 조건 칸에 값이 있을 때 사용합니다. 칸 오른쪽 ×로 값을 한 번에 비우고 포커스는 칸으로 돌아갑니다. 편집 폼 · 읽기 전용 칸(오른쪽)에는 붙지 않습니다. 이전 버전에는 없던 동작입니다(DS-ADR-042)." />
-<Card of={S.칸_뒤_버튼} title="칸 뒤 아이콘 버튼" en="Field action" desc="기본보다 칸에 넣을 값을 다른 창에서 찾아 고를 때 사용합니다. 칸 안 오른쪽 아이콘 버튼 하나가 칸과 한 상자로 보입니다. 지우기(×)가 함께 붙으면 ×가 버튼 왼쪽에 섭니다(DS-ADR-056)." />
-<Card of={S.Locked} title="비활성 · 읽기 전용" en="Disabled · Readonly" desc="둘 다 편집할 수 없지만, 읽기 전용 값은 제출되고 비활성 값은 제출되지 않습니다." />
-<Card of={S.내용_보기_상자} title="내용 보기 상자" en="View box" desc="기본보다 변경 사유 · 의견처럼 읽기만 하는 긴 본문을 상세 화면에 보일 때 사용합니다. 읽기 전용 여러 줄 칸 오른쪽 위의 아이콘 버튼으로 본문을 크게 엽니다. 크게 여는 동작은 화면이 맡습니다(DS-ADR-072)." />
-<Card of={S.선택_목록} title="셀렉트 목록" en="Select list" desc="셀렉트를 누르면 열리는 옵션 목록입니다. js/select.js를 불러오면 브라우저마다 다른 기본 목록 대신 같은 모양의 목록을 씁니다." />
-<Card of={S.묶음_제목} title="목록 묶음 제목" en="Option group" desc="기본보다 옵션을 종류별로 나눠 보일 때 사용합니다. <optgroup label>을 쓰면 js/select.js가 묶음 제목 줄을 그립니다. 제목 줄은 누르거나 고를 수 없고, 화살표 키는 옵션만 옮겨 다닙니다(DS-ADR-056)." />
 </Section>
 <Section title="Do · Don't">
 <Card of={S.사용_지침} code={false} />
