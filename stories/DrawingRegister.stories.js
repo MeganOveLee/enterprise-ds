@@ -1,7 +1,7 @@
 // Screens/Drawing Register: 문서 화면은 DrawingRegister.mdx. 도면 검색에서 여는 도면 등록 창 (Figma 🧱 Blocks 「Drawing Register」와 같은 구성)
 // 섹션 = 접는 섹션 상자(Accordion), 첨부 = 업로더(.resumable), 경로 = .ui-field-addon(읽기 전용 필드 + [선택])
 // 필드는 보여 주기용으로 5개만(경로 · 도면 명 영문/한글 · CAD 구분 · 제품군 + 설명)
-import { flow, shot, MARK, wireSections, toggleIcon } from './_flow.js';
+import { overlay, shot, MARK, wireSections, toggleIcon } from './_flow.js';
 import { fileIcon } from './_fileicon.js';
 import { doDont } from './_dodont.js';
 import { emptyArt } from './_illustrations.js';
@@ -107,10 +107,11 @@ export default {
 
 export const 도면_등록_창 = {
   parameters: { docs: { source: { code: pop() } } },
-  render: () => wireSections(flow({
-    base: { html: list(), w: 960, h: 210, where: '도면 검색 › 검색 결과' },
-    open: { html: pop(), w: 950, h: 1396, where: '도면 등록 새 창 950 × 650(스크롤 없이 전체를 펼친 모습)' },
-    trigger: '[등록]', how: '새 창이 열리고, 메뉴 패널에서 고른 폴더가 경로에 들어갑니다',
+  // 검색 결과 위에 도면 등록 창(950 × 650)을 겹쳐 그림. [등록]을 누르면 열리고 ✕ 를 누르면 닫힘
+  render: () => wireSections(overlay({
+    base: list(),
+    open: { html: pop(), w: 950, h: 650 },
+    w: 1040, h: 730,
   })),
 };
 export const 필수_칸_비었을_때 = {
