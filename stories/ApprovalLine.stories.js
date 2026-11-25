@@ -161,10 +161,12 @@ export const 사용_지침 = {
 const optSrc = (code) => ({ controls: { disable: true }, docs: { source: { language: 'html', code } } });
 const OPT_CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg>';
 
+const OPT_X = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>';
+
 // ── 시안: A 결재선 표(추천, 위 「결재선 지정」) · B 가로 단계 흐름 · C 세로 타임라인 ──
 const STEPS = [['done', '기안', '김도윤', '완료 · 10-12 09:10', ''], ['done', '합의', '박지훈', '완료 · 10-12 14:32', '토크 기준 표를 2장으로 옮겨 주세요.'], ['current', '승인', '정우진', '결재 중', ''], ['', '승인', '이서연', '대기', ''], ['', '수신', '최하은', '대기', '']];
 const step = ([s, role, name, state, note], vertical) => '<li class="approval-flow__step' + (s ? ' is-' + s : '') + '"' + (s === 'current' ? ' aria-current="step"' : '') + '>' +
-  '<span class="approval-flow__mark" aria-hidden="true">' + (s === 'done' ? OPT_CHECK : '') + '</span>' +
+  '<span class="approval-flow__mark" aria-hidden="true">' + (s === 'done' ? OPT_CHECK : s === 'rejected' ? OPT_X : '') + '</span>' +
   '<span class="approval-flow__role">' + role + '</span><span class="approval-flow__name">' + name + '</span><span class="approval-flow__state">' + state + '</span>' +
   (vertical && note ? '<p class="approval-flow__note">' + note + '</p>' : '') + '</li>';
 const FLOW = '<ol class="approval-flow" aria-label="결재 진행">' + STEPS.map((s) => step(s, false)).join('') + '</ol>';
@@ -186,3 +188,17 @@ const replayable = (markup, cls) => {
 };
 export const 시안_가로_단계 = { parameters: optSrc(FLOW), render: () => replayable(FLOW, 'sb-field--wide') };
 export const 시안_세로_타임라인 = { parameters: optSrc(TIMELINE), render: () => replayable(TIMELINE, 'sb-field') };
+
+// 반려 단계(.is-rejected): 표식 · 상태 글자가 위험색. 그 뒤 단계는 남은 단계 모양 그대로
+const REJECTED = [STEPS[0], ['done', '합의', '박지훈', '완료 · 10-12 14:32', ''], ['rejected', '승인', '정우진', '반려 · 10-13 10:05', '시험 조건이 빠져 있습니다. 보완한 뒤 다시 올려 주세요.'], STEPS[3], STEPS[4]];
+const FLOW_REJECTED = '<ol class="approval-flow" aria-label="결재 진행">' + REJECTED.map((s) => step(s, false)).join('') + '</ol>';
+const TIMELINE_REJECTED = '<ol class="approval-flow approval-flow--vertical" aria-label="결재 진행">' + REJECTED.map((s) => step(s, true)).join('') + '</ol>';
+export const 시안_가로_단계_반려 = { parameters: optSrc(FLOW_REJECTED), render: () => replayable(FLOW_REJECTED, 'sb-field--wide') };
+export const 시안_세로_타임라인_반려 = { parameters: optSrc(TIMELINE_REJECTED), render: () => replayable(TIMELINE_REJECTED, 'sb-field') };
+
+// 단계 이름 한 줄(.approval-flow--label, DS-ADR-066): 등록 창처럼 역할 · 상태 없이 단계 이름만 둘 때
+const LABEL_STEPS = [['done', '속성 설정'], ['current', '첨부 파일'], ['', '결재선 지정'], ['', '확인']];
+const FLOW_LABEL = '<ol class="approval-flow approval-flow--label" aria-label="등록 단계">' + LABEL_STEPS.map(([s, name]) =>
+  '<li class="approval-flow__step' + (s ? ' is-' + s : '') + '"' + (s === 'current' ? ' aria-current="step"' : '') + '><span class="approval-flow__mark" aria-hidden="true">' + (s === 'done' ? OPT_CHECK : '') + '</span>' +
+  '<span class="approval-flow__name">' + name + '</span></li>').join('') + '</ol>';
+export const 단계_이름_한_줄 = { parameters: optSrc(FLOW_LABEL), render: () => replayable(FLOW_LABEL, 'sb-field--wide') };

@@ -5927,9 +5927,9 @@ body.dark-mode .status-chip--bold:is(.status-chip--success, .status-chip--warnin
 @keyframes ds-flow-hold { from { border-color: var(--color-border-input); background-color: var(--color-bg-base); box-shadow: none; } }
 @keyframes ds-flow-ring { from { --approval-ring: 0deg; } }
 @keyframes ds-flow-dot { from { box-shadow: inset 0 0 0 10px var(--color-bg-base), inset 0 0 0 10px var(--color-bg-brand); } }
-@media (prefers-reduced-motion: reduce) {
-    .approval-flow .approval-flow__step::before, .approval-flow .approval-flow__step::after, .approval-flow .approval-flow__mark, .approval-flow .approval-flow__mark::after { animation: none; }
-    .approval-flow .approval-flow__mark svg { animation: none; stroke-dashoffset: 0; }
+@media (prefers-reduced-motion: reduce) {   /* 동작 줄이기: 움직이지 않고 결과만. 위 움직임 규칙이 선택자가 더 길어 !important 로 끔(구: 선택자가 짧아 꺼지지 않았음) */
+    .approval-flow .approval-flow__step::before, .approval-flow .approval-flow__step::after, .approval-flow .approval-flow__mark, .approval-flow .approval-flow__mark::after { animation: none !important; }
+    .approval-flow .approval-flow__mark svg { animation: none !important; stroke-dashoffset: 0 !important; }
 }
 /* C 세로 타임라인: 표식 왼쪽, 이름 · 상태 · 의견 오른쪽 */
 .approval-flow--vertical { flex-direction: column; }

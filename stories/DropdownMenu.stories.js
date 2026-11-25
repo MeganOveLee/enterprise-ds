@@ -83,3 +83,10 @@ export const 시안_찾기와_묶음 = {
     ['쓰임', [note('열면 찾기 칸에 포커스가 갑니다<br>글자를 넣으면 맞는 항목만 남고, ↓로 첫 항목에 갑니다'), note('묶음 제목과 구분선으로 동작을 나눕니다<br>단축키가 있는 동작만 오른쪽에 단축키를 적습니다')]],
   ], { full: true }),
 };
+
+// 끝에 붙는 메뉴(.ui-menu__list--end): 화면 오른쪽 끝의 버튼이면 목록을 버튼 오른쪽 끝에 맞춰 화면 밖으로 나가지 않게 함
+const endMenu = (id) => menu(id, true).replace('class="ui-menu__list"', 'class="ui-menu__list ui-menu__list--end"');
+export const 끝에_붙는_메뉴 = {
+  parameters: { docs: { source: { code: CODE.join('\n').replace('class="ui-menu__list"', 'class="ui-menu__list ui-menu__list--end"') } } },
+  render: () => '<div style="min-height:230px;text-align:right">' + endMenu('dm-end-' + (n++)) + '</div>',
+};

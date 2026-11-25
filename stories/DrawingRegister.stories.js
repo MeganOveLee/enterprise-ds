@@ -138,3 +138,14 @@ export const 사용_지침 = {
       dont: [mini(two(ddField('도면 명(영문)', ''), ddField('제품군', '', false))), '일부 필드에만 표시하면 저장해 보기 전에는 무엇이 필수인지 알 수 없습니다.'] },
   ]),
 };
+
+// 작은 파일 줄(.file-item--sm, DS-ADR-064): 폼 안 파일 칸처럼 파일이 하나일 때. 높이가 입력 칸과 같음
+const fileRow = ([n, ext, size], sm) => '<li class="file-item' + (sm ? ' file-item--sm' : '') + '">' + fileIcon(ext) + '<a href="#" class="file-name">' + n + '</a><span class="file-size">' + size + '</span>' +
+  '<button type="button" class="remove-btn" aria-label="' + n + ' 빼기">' + svg(I.close, 14) + '</button></li>';
+const SM_FILE = ['브래킷 조립도 A.2.dwg', 'dwg', '2.4 MB'];
+const SM_SRC = '<div class="resumable"><ul class="fileList">' + fileRow(SM_FILE, true) + '</ul></div>';
+export const 작은_파일_줄 = {
+  parameters: { controls: { disable: true }, docs: { source: { language: 'html', code: SM_SRC } } },
+  render: () => '<div class="sb-field--wide"><div class="form-grid-2"><div class="ff-field"><label class="search-label" for="sm-file-name">도면 이름</label><div class="td"><input class="input" id="sm-file-name" value="브래킷 조립도"></div></div>' +
+    '<div class="ff-field"><span class="search-label">도면 파일</span><div class="td">' + SM_SRC + '</div></div></div></div>',
+};
