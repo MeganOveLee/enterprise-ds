@@ -169,5 +169,20 @@ const step = ([s, role, name, state, note], vertical) => '<li class="approval-fl
   (vertical && note ? '<p class="approval-flow__note">' + note + '</p>' : '') + '</li>';
 const FLOW = '<ol class="approval-flow" aria-label="결재 진행">' + STEPS.map((s) => step(s, false)).join('') + '</ol>';
 const TIMELINE = '<ol class="approval-flow approval-flow--vertical" aria-label="결재 진행">' + STEPS.map((s) => step(s, true)).join('') + '</ol>';
-export const 시안_가로_단계 = { parameters: optSrc(FLOW), render: () => '<div class="sb-field--wide">' + FLOW + '</div>' };
-export const 시안_세로_타임라인 = { parameters: optSrc(TIMELINE), render: () => '<div class="sb-field">' + TIMELINE + '</div>' };
+// 단계가 넘어가는 움직임(DS-ADR-067)은 그려질 때 한 번이라, 카드가 화면에 들어올 때 한 번 다시 그리고 [다시 보기]로 또 볼 수 있게 함
+const REPLAY_ICO = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.3-5.6"/><path d="M4 4v4h4"/></svg>';
+const replayable = (markup, cls) => {
+  const d = document.createElement('div');
+  d.className = 'sb-flow-replay';
+  d.innerHTML = '<div class="' + cls + '" data-flow>' + markup + '</div>' +
+    '<div class="sb-row"><button type="button" class="btn btn--secondary btn--outlined btn--sm">' + REPLAY_ICO + '다시 보기</button></div>';
+  const play = () => { d.querySelector('[data-flow]').innerHTML = markup; };
+  d.querySelector('.btn').addEventListener('click', play);
+  if (window.IntersectionObserver) {
+    const io = new IntersectionObserver((es) => { if (es.some((x) => x.isIntersecting)) { io.disconnect(); play(); } }, { threshold: 0.6 });
+    io.observe(d);
+  }
+  return d;
+};
+export const 시안_가로_단계 = { parameters: optSrc(FLOW), render: () => replayable(FLOW, 'sb-field--wide') };
+export const 시안_세로_타임라인 = { parameters: optSrc(TIMELINE), render: () => replayable(TIMELINE, 'sb-field') };

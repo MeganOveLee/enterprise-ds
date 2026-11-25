@@ -5893,10 +5893,11 @@ body.dark-mode .status-chip--bold:is(.status-chip--success, .status-chip--warnin
 .approval-flow--label .approval-flow__step:not(.is-done):not(.is-current):not(.is-rejected) > .approval-flow__name { color: var(--color-text-muted); }
 /* 단계가 넘어가는 움직임(한 번, DS-ADR-067): 방금 끝난 단계의 체크가 그려지고 → 다음 단계로 가는 선이 왼쪽부터 채워지고 → 선이 닿으면 그 단계의 고리가 닿은 쪽부터 한 바퀴 그려지고 → 안쪽 점이 나타남
  * 대상 = 지금 단계(.is-current) · 반려 단계(.is-rejected)와 그 바로 앞 끝난 단계. 그보다 앞 단계는 움직이지 않음. 고리가 그려지기 전에는 남은 단계와 같은 고리
+ * 가로 · 세로(.approval-flow--vertical) 같은 순서. 세로는 선이 위에서 아래로 채워지고 고리가 위에서 시작함(선 규칙은 아래 「C 세로 타임라인」)
  * 시간 = 모션 토큰의 배수(--flow-*), 곡선 = --ease-standard. 고리만 같은 빠르기(linear)로 돌아 그려지는 것이 보임 */
 @property --approval-ring { syntax: "<angle>"; inherits: false; initial-value: 360deg; }
-.approval-flow { --flow-wait: var(--duration-base); --flow-check: var(--duration-slow); --flow-line: calc(var(--duration-slow) * 2); --flow-ring: calc(var(--duration-slow) * 1.5); }
-.approval-flow:not(.approval-flow--vertical) .is-done:has(+ :is(.is-current, .is-rejected)) > .approval-flow__mark svg { stroke-dasharray: 21; stroke-dashoffset: 21; animation: ds-draw var(--flow-check) var(--ease-standard) var(--flow-wait) forwards; }
+.approval-flow { --flow-wait: var(--duration-base); --flow-check: var(--duration-slow); --flow-line: calc(var(--duration-slow) * 2); --flow-ring: calc(var(--duration-slow) * 1.5); --flow-ring-from: -90deg; }   /* 고리가 시작하는 쪽 = 선이 닿는 쪽: 가로는 왼쪽, 세로(.approval-flow--vertical)는 위 */
+.approval-flow .is-done:has(+ :is(.is-current, .is-rejected)) > .approval-flow__mark svg { stroke-dasharray: 21; stroke-dashoffset: 21; animation: ds-draw var(--flow-check) var(--ease-standard) var(--flow-wait) forwards; }
 .approval-flow:not(.approval-flow--vertical) .is-done + :is(.is-current, .is-rejected)::before { animation: ds-flow-track calc(var(--flow-wait) + var(--flow-check) + var(--flow-line)) step-end; }
 .approval-flow:not(.approval-flow--vertical) .is-done + :is(.is-current, .is-rejected)::after {   /* 채워지는 선 */
     content: "";
@@ -5908,19 +5909,19 @@ body.dark-mode .status-chip--bold:is(.status-chip--success, .status-chip--warnin
     transform-origin: left;
     animation: ds-flow-fill var(--flow-line) var(--ease-standard) calc(var(--flow-wait) + var(--flow-check)) backwards;
 }
-.approval-flow:not(.approval-flow--vertical) .is-done + :is(.is-current, .is-rejected) > .approval-flow__mark { position: relative; animation: ds-flow-hold calc(var(--flow-wait) + var(--flow-check) + var(--flow-line) + var(--flow-ring)) step-end, ds-flow-dot var(--duration-slow) var(--ease-standard) calc(var(--flow-wait) + var(--flow-check) + var(--flow-line) + var(--flow-ring)); }
-.approval-flow:not(.approval-flow--vertical) .is-done + :is(.is-current, .is-rejected).is-rejected > .approval-flow__mark { animation: ds-flow-hold calc(var(--flow-wait) + var(--flow-check) + var(--flow-line) + var(--flow-ring)) step-end, ds-pop var(--duration-slow) var(--ease-standard) calc(var(--flow-wait) + var(--flow-check) + var(--flow-line) + var(--flow-ring)); }
-.approval-flow:not(.approval-flow--vertical) .is-done + :is(.is-current, .is-rejected) > .approval-flow__mark::after {   /* 그려지는 고리: 선이 닿는 왼쪽에서 시작 */
+.approval-flow .is-done + :is(.is-current, .is-rejected) > .approval-flow__mark { position: relative; animation: ds-flow-hold calc(var(--flow-wait) + var(--flow-check) + var(--flow-line) + var(--flow-ring)) step-end, ds-flow-dot var(--duration-slow) var(--ease-standard) calc(var(--flow-wait) + var(--flow-check) + var(--flow-line) + var(--flow-ring)); }
+.approval-flow .is-done + :is(.is-current, .is-rejected).is-rejected > .approval-flow__mark { animation: ds-flow-hold calc(var(--flow-wait) + var(--flow-check) + var(--flow-line) + var(--flow-ring)) step-end, ds-pop var(--duration-slow) var(--ease-standard) calc(var(--flow-wait) + var(--flow-check) + var(--flow-line) + var(--flow-ring)); }
+.approval-flow .is-done + :is(.is-current, .is-rejected) > .approval-flow__mark::after {   /* 그려지는 고리: 선이 닿는 왼쪽에서 시작 */
     content: "";
     position: absolute;
     inset: -2px;
     border: 2px solid var(--color-border-brand);
     border-radius: inherit;
-    -webkit-mask: conic-gradient(from -90deg, black var(--approval-ring), transparent 0);
-            mask: conic-gradient(from -90deg, black var(--approval-ring), transparent 0);
+    -webkit-mask: conic-gradient(from var(--flow-ring-from), black var(--approval-ring), transparent 0);
+            mask: conic-gradient(from var(--flow-ring-from), black var(--approval-ring), transparent 0);
     animation: ds-flow-ring var(--flow-ring) linear calc(var(--flow-wait) + var(--flow-check) + var(--flow-line)) backwards;
 }
-.approval-flow:not(.approval-flow--vertical) .is-done + :is(.is-current, .is-rejected).is-rejected > .approval-flow__mark::after { border-color: var(--color-bg-interactive-danger); }
+.approval-flow .is-done + :is(.is-current, .is-rejected).is-rejected > .approval-flow__mark::after { border-color: var(--color-bg-interactive-danger); }
 @keyframes ds-flow-track { from { border-top-color: var(--color-border-subtle); } }
 @keyframes ds-flow-fill { from { transform: scaleX(0); } }
 @keyframes ds-flow-hold { from { border-color: var(--color-border-input); background-color: var(--color-bg-base); box-shadow: none; } }
@@ -5944,6 +5945,20 @@ body.dark-mode .status-chip--bold:is(.status-chip--success, .status-chip--warnin
     border-left: 2px solid var(--color-border-subtle);
 }
 .approval-flow--vertical .is-done:not(:last-child)::after { border-left-color: var(--color-border-brand); }
+/* 세로 타임라인의 단계가 넘어가는 움직임(DS-ADR-067): 방금 끝난 단계 아래 선이 위에서 아래로 채워짐. 채워지기 전에는 남은 단계와 같은 선(::before)이 보임 */
+.approval-flow--vertical { --flow-ring-from: 0deg; }
+.approval-flow--vertical .approval-flow__step.is-done:has(+ :is(.is-current, .is-rejected))::before {
+    content: "";
+    position: absolute;
+    top: 1.75em;
+    right: auto;
+    bottom: 0.25em;
+    left: calc(0.75em - 1px);
+    border-top: 0;
+    border-left: 2px solid var(--color-border-subtle);
+}
+.approval-flow--vertical .is-done:has(+ :is(.is-current, .is-rejected))::after { transform-origin: top; animation: ds-flow-fill-y var(--flow-line) var(--ease-standard) calc(var(--flow-wait) + var(--flow-check)) backwards; }
+@keyframes ds-flow-fill-y { from { transform: scaleY(0); } }
 .approval-flow__note { grid-column: 2; margin: var(--spacing-4) 0 0; padding: var(--spacing-8) var(--spacing-12); border-radius: var(--radius-card); background: var(--color-bg-subtle); font-size: var(--body-sm); color: var(--color-text-base); }
 
 /* BOM Compare B: 한 표 비교: 두 BOM 을 한 줄에 겹쳐 바뀐 칸만 「기준 → 비교」로. 좁은 화면 · 바뀐 곳만 볼 때
