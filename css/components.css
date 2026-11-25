@@ -6079,7 +6079,8 @@ body.dark-mode .status-chip--bold:is(.status-chip--success, .status-chip--warnin
     border-bottom-color: transparent;
     background: var(--color-bg-base);
     color: var(--color-text-base);   /* 고른 탭은 글자색으로도 갈림 */
-    box-shadow: inset 0 var(--border-width-lg) 0 var(--color-border-brand);   /* 위 굵은 브랜드 선 */
+    border-top-color: var(--color-border-brand);   /* 위 선 자체를 브랜드색으로: 브랜드 선 위에 회색 둘레 선이 남지 않게. 구: 회색 위 선 + 안쪽 굵은 선 */
+    box-shadow: inset 0 calc(var(--border-width-lg) - var(--border-width-sm)) 0 var(--color-border-brand);   /* 위 선과 합쳐 굵기 = --border-width-lg */
 }
 .tab.tab--box li:focus-visible { outline: none; box-shadow: inset 0 0 0 1px var(--color-border-focus), inset 0 0 0 4px var(--color-focus-ring); }
 
@@ -6191,7 +6192,9 @@ body.dark-mode .status-chip--bold:is(.status-chip--success, .status-chip--warnin
  * 올림 바탕 = --color-bg-grid-header-hover. 화살표 방향은 머리 칸 aria-sort 가 정하고, 정렬하지 않은 열에서는 자리만 남김
  * 화살표 · 열 메뉴는 머리 글자색을 따라가 어두운 머리 · 밝은 머리 모두에서 같은 규칙 */
 .grid-table th.is-sortable { cursor: pointer; }
-.grid-table th:is(.is-sortable, :has(.grid-col-menu)):hover { background: var(--color-bg-grid-header-hover); }
+.grid-table th:is(.is-sortable, :has(.grid-col-menu)):hover { background-color: var(--color-bg-grid-header-hover); }
+/* 옅은 머리(.grid-table--subtle)는 머리 바탕이 --color-bg-subtle 이라 위 토큰(짙은 머리용)을 쓰면 글자가 묻힘: 머리 바탕에 글자색을 조금 섞어 한 단계 진하게, 글자는 기본 글자색으로 */
+.grid-table--subtle th:is(.is-sortable, :has(.grid-col-menu)):hover { background-color: color-mix(in srgb, var(--color-text-base) 8%, var(--color-bg-subtle)); color: var(--color-text-base); }
 .grid-table th.is-sortable:focus-visible { outline: 2px solid transparent; outline-offset: -2px; box-shadow: inset 0 0 0 var(--border-width-md) currentColor; }
 .grid-sort { display: inline-flex; flex: none; width: 16px; height: 16px; margin-left: var(--spacing-4); vertical-align: middle; }
 .grid-sort svg { width: 100%; height: 100%; }

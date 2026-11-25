@@ -166,6 +166,30 @@ export const 시안_넓게 = { parameters: optSrc(optTable('grid-table--relaxed'
 // ── 머리와 정렬: 1 짙은 머리 · 가운데 정렬(이전 버전 그리드와 같은 모양) · 2 옅은 머리 · 글 왼쪽 정렬(추천). 두 번째 행 선택 ──
 const headTable = (cls) => '<div class="table_list"><div class="list">' + table(ROWS.map((r, i) => row(r, i, { sel: i === 1 })).join('')).replace('class="grid-table"', 'class="grid-table' + (cls ? ' ' + cls : '') + '"') + '</div></div>';
 export const 머리_짙게 = { parameters: optSrc(headTable('')), render: () => '<div class="sb-field--table">' + headTable('') + '</div>' };
+
+// 머리 칸: 정렬되는 머리(.is-sortable + aria-sort) · 정렬 화살표(.grid-sort) · 열 메뉴 단추(.grid-col-menu). 마우스를 올리면 머리 바탕이 한 단계 진해짐
+const ARROW_DOWN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14"/><path d="m6 13 6 6 6-6"/></svg>';
+const CHEVRON_DOWN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>';
+const sortTh = (t, sort) => '<th class="is-sortable" tabindex="0"' + (sort ? ' aria-sort="' + sort + '"' : '') + '>' + t + '<span class="grid-sort" aria-hidden="true">' + ARROW_DOWN + '</span></th>';
+const menuTh = (t) => '<th>' + t + '<button type="button" class="grid-col-menu" aria-label="' + t + ' 열 메뉴" aria-haspopup="menu">' + CHEVRON_DOWN + '</button></th>';
+const SORT_COLS = '<colgroup><col style="width:150px"><col><col style="width:150px"><col style="width:110px"></colgroup>';
+const sortRows = (dir) => ROWS.slice(0, 4).sort((a, b) => (a[5] < b[5] ? -1 : 1) * (dir === 'ascending' ? 1 : -1))
+  .map((r) => '<tr><td><a href="#" class="grid-custom-rows-link">' + r[0] + '</a></td><td class="is-left">' + r[1] + '</td><td>' + r[5] + '</td><td>' + chip(r[3]) + '</td></tr>').join('');
+const sortTable = (dir) => '<div class="table_list"><div class="list"><table class="grid-table grid-table--subtle">' + SORT_COLS +
+  '<thead><tr>' + menuTh('문서 번호') + menuTh('문서 명') + sortTh('최종 수정 날짜', dir) + sortTh('작업현황', '') + '</tr></thead><tbody>' + sortRows(dir) + '</tbody></table></div></div>';
+export const 머리_정렬과_열_메뉴 = {
+  parameters: optSrc(sortTable('descending')),
+  render: () => {
+    const el = document.createElement('div'); el.className = 'sb-field--table';
+    let dir = 'descending';
+    const draw = () => { el.innerHTML = sortTable(dir); };
+    const flip = (th) => { if (th && th.textContent.indexOf('최종 수정 날짜') === 0) { dir = dir === 'descending' ? 'ascending' : 'descending'; draw(); el.querySelector('th[aria-sort]').focus(); } };
+    el.addEventListener('click', (e) => flip(e.target.closest('th.is-sortable')));
+    el.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { const th = e.target.closest('th.is-sortable'); if (th) { e.preventDefault(); flip(th); } } });
+    draw();
+    return el;
+  },
+};
 // 2 = 표 패널(.table-panel) 안에 옅은 머리 표 + 줄 상태 선(.status-row--*). 줄을 고르면 패널 머리가 선택 상태(.is-selected)로 바뀜
 const srow = (r, i, sel) => row(r, i, { sel }).replace(/<tr( class="([^"]*)")?/, (m, c, cls) => '<tr class="' + [cls, 'status-row--' + STATUS[r[3]][0]].filter(Boolean).join(' ') + '"');
 const subtle = (picked) => { const n = picked.length; return '<section class="table-panel">' +
