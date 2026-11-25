@@ -29,7 +29,7 @@ const wire = (root) => {
     const btn = cs.querySelector('.selected-text');
     const list = cs.querySelector('.options');
     const name = list.getAttribute('aria-label');
-    const set = (open) => { list.classList.toggle('show', open); btn.setAttribute('aria-expanded', String(open)); };
+    const set = (open) => { list.classList.toggle('show', open); btn.setAttribute('aria-expanded', String(open)); if (!open) cs.querySelectorAll('.option.is-active').forEach((x) => x.classList.remove('is-active')); };
     const sync = () => {
       const picked = [...cs.querySelectorAll('.option input:checked')].map((i) => i.nextElementSibling.textContent);
       btn.innerHTML = shown(picked);
@@ -40,6 +40,10 @@ const wire = (root) => {
     btn.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); set(!list.classList.contains('show')); } });
     cs.addEventListener('keydown', (e) => { if (e.key === 'Escape') { set(false); btn.focus(); } });
     cs.addEventListener('change', sync);
+    // 가리키는 항목: 마우스를 올리거나 키보드로 옮긴 옵션 하나에 .is-active (js/multiselect.js 와 같은 동작)
+    const point = (e) => { const o = e.target.closest && e.target.closest('.option'); if (!o || o.querySelector('input:disabled')) return; cs.querySelectorAll('.option.is-active').forEach((x) => x !== o && x.classList.remove('is-active')); o.classList.add('is-active'); };
+    cs.addEventListener('mouseover', point);
+    cs.addEventListener('focusin', point);
     const q = cs.querySelector('.search-text');
     if (q) q.addEventListener('input', () => cs.querySelectorAll('.option').forEach((o) => { o.style.display = o.textContent.includes(q.value.trim()) ? '' : 'none'; }));
     document.addEventListener('click', (e) => { if (!cs.contains(e.target)) set(false); });
@@ -111,6 +115,7 @@ export const 전체_상태 = {
     docs: { source: { language: 'html', code: [
       '<!-- 펼침 = .options 에 .show (위젯 스크립트가 붙임). 트리거는 펼친 동안 포커스 테두리 + 링 -->',
       '<!-- 고른 항목 = 체크박스 checked → 옅은 브랜드 바탕 + 반굵게. 두 개 이상이면 트리거 = 「첫 값 외 N」 -->',
+      '<!-- 가리키는 항목 = .option.is-active (스크립트가 마우스를 올리거나 키보드로 옮긴 옵션 하나에 붙임) → 바탕 + 왼쪽 브랜드 선 -->',
       option('작업 중', true), option('검토 중', false),
     ].join('\n') } },
   },
@@ -122,8 +127,10 @@ export const 전체_상태 = {
     return matrix(['트리거', '옵션 행'], [
       ['Default', [cell(box({ picked: [] })), opt('작업 중', false)]],
       ['Hovered', [cell(box({ picked: [], extraBox: ' ps-hover' })), opt('작업 중', false, ' ps-hover')]],
+      ['가리키는 항목', ['없음', opt('작업 중', false, ' is-active')]],
       ['Pressed', ['없음', opt('작업 중', false, ' ps-active')]],
       ['고른 값 하나 · 고른 항목', [cell(box({ picked: ['작업 중'] })), opt('작업 중', true)]],
+      ['고른 항목을 가리킬 때', ['없음', opt('작업 중', true, ' is-active')]],
       ['고른 값 여럿', [cell(box({ picked: ['작업 중', '검토 중', '승인'] })), '없음']],
       ['긴 값 여럿', [cell(box({ name: '분류', items: ['설계 변경 요청서', '부품 승인 원', '검사 성적서'], picked: ['설계 변경 요청서', '부품 승인 원'] })), '없음']],
       ['Focused', [cell(box({ picked: ['작업 중'], extraBox: ' ps-focus-visible' })), '<div class="checkSelect" style="width:200px;text-align:left"><div class="options show" style="position:static;box-shadow:none"><div><label class="option"><input type="checkbox" class="ps-focus-visible"><span>작업 중</span></label></div></div></div>']],

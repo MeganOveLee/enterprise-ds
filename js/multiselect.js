@@ -15,6 +15,7 @@
  *   - 표시 상자 = role="button" + aria-haspopup · aria-expanded · aria-controls, 목록 = role="group"(체크박스 묶음, 이름 = 칸 이름)
  *   - 표시 글자 = 하나면 그 값, 두 개 이상이면 「첫 값 외 N」(DS-ADR-022). 화면 읽기 이름 = 「칸 이름: 보이는 글자 (나머지 값)」, 고른 값 전체는 title
  *   - 키보드: 표시 상자 Enter · Space · ↓ = 열고 첫 칸(검색 또는 첫 옵션)으로 / 목록 ↑ ↓ = 옵션 사이 이동, Space = 고르기 · 풀기, Tab = 다음 옵션
+ *   - 지금 가리키는 항목(DS-ADR-084): 마우스를 올리거나 키보드로 옮긴 옵션 하나에 .is-active
  *     Esc = 닫고 표시 상자로, 목록 밖으로 포커스가 나가거나 바깥을 누르면 닫힘
  * ===================================================================== */
 (function () {
@@ -153,6 +154,7 @@
             if (!isOpen()) return;
             list.classList.remove('show');
             box.setAttribute('aria-expanded', 'false');
+            setActive(null);
             if (search && search.value) { search.value = ''; filter(); }
             if (refocus) box.focus();
             if (picked().join('\u0000') !== before) sel.dispatchEvent(new Event('change', { bubbles: true }));
@@ -165,7 +167,13 @@
 
         box.addEventListener('click', function () { if (isOpen()) close(false); else open(false); });
         box.addEventListener('keydown', function (e) {
-            if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowDown') { e.preventDefault(); if (isOpen() && e.key !== 'ArrowDown') close(false); else open(true); }
+            if (e.key === 'ArrowDown' && isOpen()) {   // 마우스로 열어 둔 목록: 가리키던 옵션 다음(없으면 첫 칸)으로 들어감
+                e.preventDefault();
+                var all = boxes(), cur = holder.querySelector('.option.is-active input[type="checkbox"]');
+                var f = cur && all.indexOf(cur) >= 0 ? (all[all.indexOf(cur) + 1] || all[0]) : (search || all[0]);
+                if (f) f.focus();
+            }
+            else if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowDown') { e.preventDefault(); if (isOpen() && e.key !== 'ArrowDown') close(false); else open(true); }
             else if (e.key === 'Escape') { close(false); }
         });
         holder.addEventListener('change', function (e) {
@@ -181,12 +189,25 @@
             e.preventDefault();
             var all = boxes();
             if (!all.length) return;
-            var i = all.indexOf(document.activeElement);
+            var cur = holder.querySelector('.option.is-active input[type="checkbox"]');
+            var i = all.indexOf(cur && document.activeElement !== search ? cur : document.activeElement);
             if (e.key === 'ArrowDown') (all[i + 1] || all[0]).focus();
             else if (i <= 0 && search) search.focus();
             else (all[i - 1] || all[all.length - 1]).focus();
         });
-        if (search) search.addEventListener('input', filter);
+        // 지금 가리키는 항목(DS-ADR-084): 마우스를 올리거나 키보드로 옮긴 옵션 하나에 .is-active. 마우스가 목록 밖으로 나가도 남고, ↑↓는 이 옵션에서 이어 감. 닫으면 지움
+        function setActive(o) {
+            [].forEach.call(holder.querySelectorAll('.option.is-active'), function (x) { if (x !== o) x.classList.remove('is-active'); });
+            if (o) o.classList.add('is-active');
+        }
+        function optionOf(t) {
+            var o = t && t.closest ? t.closest('.option') : null;
+            var c = o ? o.querySelector('input[type="checkbox"]') : null;
+            return c && !c.disabled ? o : null;
+        }
+        holder.addEventListener('mouseover', function (e) { var o = optionOf(e.target); if (o) setActive(o); });
+        holder.addEventListener('focusin', function (e) { var o = optionOf(e.target); if (o) setActive(o); });
+        if (search) search.addEventListener('input', function () { filter(); setActive(null); });
         wrap.addEventListener('focusout', function (e) { if (isOpen() && e.relatedTarget && !wrap.contains(e.relatedTarget)) close(false); });
         document.addEventListener('mousedown', function (e) { if (isOpen() && !wrap.contains(e.target)) close(false); }, true);
 
