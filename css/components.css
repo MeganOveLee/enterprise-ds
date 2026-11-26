@@ -2532,6 +2532,11 @@ body.dark-mode .form-disabled--subtle .ui-datepicker:has(.ui-datepicker__input:d
             mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>") center/contain no-repeat;
 }
 .btn--expand[aria-expanded="true"]::after { transform: translateY(-50%) rotate(180deg); }
+/* 접힌 상세 검색의 걸린 개수 (.search-detail__count, DS-ADR-088): 상세 행에 값이 든 조건 수. 모양은 [필터] 개수(.filter-trigger__count)와 같음(아래 규칙 공유).
+ *   <button class="btn … btn--expand" aria-expanded="false" aria-controls="ID">…<span class="search-detail__count" aria-hidden="true">2</span></button>
+ * 접혀 있을 때만 보이고, 펼치면 칸이 다 보여 숨김. 글자 바로 뒤에 붙음(화살표 쪽으로 밀리지 않게) */
+.btn--expand .search-detail__count { margin-right: auto; }
+.btn--expand[aria-expanded="true"] .search-detail__count { display: none; }
 /* 상세 검색 펼침: 이전 버전 상세 검색(숨는 조건 줄 + [상세 검색 펼치기] 버튼)을 DS 이름으로. 기본 줄 구성은 DS 결정(대표 조건 1줄: 이전 버전 한 줄 밀도와 같음)
  *   <button class="btn btn--secondary btn--outlined btn--expand" aria-expanded="false" aria-controls="ID">
  *     <span class="t-open">상세 검색 펼치기</span><span class="t-close">상세 검색 접기</span></button>
@@ -2902,6 +2907,29 @@ body.dark-mode .form-disabled--subtle .ui-datepicker:has(.ui-datepicker__input:d
 .section-toggle[aria-expanded="false"]::before,
 .section-toggle[aria-expanded="false"]:hover::before { background: var(--color-icon-muted); border-color: var(--color-icon-muted); }
 .section-toggle[aria-expanded="false"]:focus-visible::before { border-color: var(--color-border-focus); }
+/* 화살표 접기 (.section-toggle--chevron): 표 패널 머리(.table-panel__head)에서 표를 접고 펴는 토글. 보이는 네모 없이 아이콘 버튼 모양
+ *   <header class="table-panel__head"><button type="button" class="section-toggle section-toggle--chevron" aria-expanded="true" aria-label="공지사항 접기"><svg …chevron-down/></button><h3 class="table-panel__title">공지사항</h3> …</header>
+ * 값 = Figma Table panel/Head 「Section toggle 화살표」: 누름 영역 --size-btn · 아이콘 16 chevron-down · --color-icon-base, 제목과 사이 0.
+ * 올림 · 누름 = 투명 보조 아이콘 버튼과 같은 바탕, 포커스 = 버튼과 같은 글로우. 접힘 = 화살표를 오른쪽으로 돌림 (DS-ADR-088) */
+.section-toggle--chevron {
+    width: var(--size-btn);
+    height: var(--size-btn);
+    margin: 0;
+    border-radius: var(--radius-btn);
+    color: var(--color-icon-base);
+}
+.section-toggle--chevron::before { content: none; }
+.section-toggle--chevron:hover { background: var(--color-bg-muted); }
+.section-toggle--chevron:active { background: var(--color-bg-interactive-secondary-pressed); }
+.section-toggle--chevron:focus-visible { outline: 2px solid transparent; outline-offset: 0; box-shadow: 0 0 0 3px var(--color-focus-ring); }
+.section-toggle.section-toggle--chevron svg { stroke-width: 2; transition: transform var(--duration-base) ease; }
+.section-toggle--chevron[aria-expanded="false"] { color: var(--color-icon-base); }
+.section-toggle--chevron[aria-expanded="false"] svg { transform: rotate(-90deg); }
+@media (prefers-reduced-motion: reduce) { .section-toggle.section-toggle--chevron svg { transition: none; } }
+/* 표 패널 머리 안: 토글 바로 뒤에 제목(머리 간격 12를 토글 쪽에서 뺌). 접으면 머리만 남고 아래 선 없음 */
+.table-panel__head > .section-toggle--chevron { margin-right: calc(var(--spacing-12) * -1); }
+.table-panel:has(> .table-panel__head > .section-toggle--chevron[aria-expanded="false"]) > :not(.table-panel__head) { display: none; }
+.table-panel:has(> .table-panel__head > .section-toggle--chevron[aria-expanded="false"]) > .table-panel__head { border-bottom-color: transparent; }
 
 /* 접는 섹션 = 머리 + 내용이 한 상자: 상세 화면 · 등록 창(.pop) 공통 (DS-ADR-068). 머리 바탕은 panel-header, 아래 선으로 내용과 나누고, 내용은 흰 바탕.
  * 근거 = 3.1 최종 코드(결재 상세 카드: 회색 머리 + 아래 선 + 흰 내용, 등록 · 검색 창: 머리 아래 선) · 이전 버전 캡처 09(회색 머리 아래 흰 표).
@@ -5476,7 +5504,7 @@ body.dark-mode .empty-illo__badge  { fill: var(--color-bg-muted); }
 .filter-trigger:not(.is-applied) { border-color: var(--color-border-input); color: var(--color-text-base); }   /* 값 없음 = 조건 단추(.checkSelect--filter)와 같은 테두리 · 글자 */
 .filter-trigger:not(.is-applied):hover { border-color: var(--color-border-input-hover); background-color: var(--color-bg-interactive-secondary-hover); }   /* 단추 = 테두리 + 바탕 한 단계 (DS-ADR-079) */
 .filter-trigger.is-applied { background-color: var(--color-bg-brand-subtle); border-color: var(--color-border-brand); color: var(--color-text-brand); }
-:is(.filter-trigger__count, .filter-pop__count) {
+:is(.filter-trigger__count, .filter-pop__count, .search-detail__count) {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -5492,7 +5520,7 @@ body.dark-mode .empty-illo__badge  { fill: var(--color-bg-muted); }
     font-weight: var(--font-weight-semibold);
     line-height: 1;
 }
-:is(.filter-trigger__count, .filter-pop__count)[hidden] { display: none; }
+:is(.filter-trigger__count, .filter-pop__count, .search-detail__count)[hidden] { display: none; }
 .filter-pop {
     position: absolute;
     top: calc(100% + var(--spacing-4));
@@ -6211,3 +6239,14 @@ body.dark-mode .status-chip--bold:is(.status-chip--success, .status-chip--warnin
 .grid-col-menu:active,
 .grid-col-menu[aria-expanded="true"] { background: color-mix(in srgb, currentColor 28%, transparent); }
 .grid-col-menu:focus-visible { outline: var(--border-width-md) solid currentColor; outline-offset: -2px; }
+
+/* ── 강조 열 (.is-highlight): 꼭 봐야 하는 열 하나를 머리 · 칸 모두 노랑으로 (DS-ADR-088) ──
+ *   <th class="is-highlight">최종 수정 날짜</th> … <td class="is-highlight">2026-11-11</td>  (머리와 그 열의 칸마다)
+ * 값 = Figma OOTB 시안 업데이트 표 「최종 수정 날짜」: 머리 --color-bg-warning · 글자 --color-text-base, 칸 --color-bg-warning-subtle.
+ * 칸은 얼룩 줄 · 마우스 올린 줄에서도 노랑 그대로(시안과 같음), 고른 줄만 선택 바탕이 이김.
+ * 다크 = 노랑이 밝아져 머리 글자는 진한 글자(노랑 채운 상태 칩과 같은 규칙). 올림 = 옅은 머리 올림과 같이 글자색을 조금 섞음 */
+.grid-table th.is-highlight { background-color: var(--color-bg-warning); color: var(--color-text-base); }
+.grid-table th.is-highlight:is(.is-sortable, :has(.grid-col-menu)):hover { background-color: color-mix(in srgb, currentColor 8%, var(--color-bg-warning)); }
+body.dark-mode .grid-table th.is-highlight { color: var(--color-text-inverse); }
+.grid-table tbody tr td.is-highlight { background: var(--color-bg-warning-subtle); }
+.grid-table tbody :is(tr.is-selected, tr[aria-selected="true"]) td.is-highlight { background: var(--color-bg-grid-row-selected); }

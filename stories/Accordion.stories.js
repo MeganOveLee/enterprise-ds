@@ -73,15 +73,44 @@ export const 이어지는_형 = {
   render: () => wire('<div style="max-width:720px">' + POP() + '</div>'),
 };
 
+// 화살표 접기: 표 패널 머리(.table-panel__head)의 토글(.section-toggle--chevron). 접으면 패널 머리만 남음(CSS), 펼침 = 아래 화살표 · 접힘 = 오른쪽 화살표
+const CHEV = '<path d="m6 9 6 6 6-6"/>';
+const chevToggle = (title, open, extra = '') => '<button type="button" class="section-toggle section-toggle--chevron' + (extra ? ' ' + extra : '') + '" aria-expanded="' + open + '" aria-label="' + title + (open ? ' 접기' : ' 펼치기') + '">' + svg(CHEV) + '</button>';
+const NOTICE = [['2026-11-10', '설계 변경 검토 회의 일정 안내', '이서연'], ['2026-11-07', '도면 등록 양식 개정 안내', '김도윤']];
+const noticeTable = '<table class="grid-table"><colgroup><col style="width:120px"><col><col style="width:100px"></colgroup><thead><tr><th>게시일</th><th>제목</th><th>작성자</th></tr></thead><tbody>' +
+  NOTICE.map((r) => '<tr><td>' + r[0] + '</td><td class="is-left">' + r[1] + '</td><td>' + r[2] + '</td></tr>').join('') + '</tbody></table>';
+const panel = (title, open, n, body) => '<section class="table-panel"><header class="table-panel__head">' + chevToggle(title, open) + '<h3 class="table-panel__title">' + title + '</h3>' +
+  '<div class="table-panel__actions"><span class="section-meta"><b>' + n + '</b>건</span></div></header>' + body + '</section>';
+const PANELS = () => '<div style="display:grid;gap:12px">' + panel('공지사항', true, 2, noticeTable) + panel('체크 아웃된 작업', false, 1, '<!-- 표 -->') + '</div>';
+const wireChevron = (html) => {
+  const root = document.createElement('div');
+  root.innerHTML = html;
+  root.querySelectorAll('.section-toggle--chevron').forEach((b) => {
+    b.addEventListener('click', () => {
+      const open = b.getAttribute('aria-expanded') !== 'true';
+      const title = b.getAttribute('aria-label').replace(/ (접기|펼치기)$/, '');
+      b.setAttribute('aria-expanded', String(open));
+      b.setAttribute('aria-label', title + (open ? ' 접기' : ' 펼치기'));
+    });
+  });
+  return root;
+};
+export const 화살표_접기 = {
+  parameters: html(panel('공지사항', true, 2, '<!-- 표(.grid-table) · 도구 줄 · 바닥 줄 -->') + '\n' + panel('체크 아웃된 작업', false, 1, '<!-- 표 -->')),
+  render: () => wireChevron('<div style="max-width:720px">' + PANELS() + '</div>'),
+};
+
 // ── 전체 상태: 토글 하나의 모습. Hovered · Focused 는 상호작용 상태를 고정해 표시(_pseudo.js) ──
 const PS = ['', 'ps-hover', 'ps-focus-visible'];
 export const 전체_상태 = {
-  parameters: html(toggle('기본 정보', true) + '\n' + toggle('기본 정보', false)),
+  parameters: html(toggle('기본 정보', true) + '\n' + toggle('기본 정보', false) + '\n' + chevToggle('공지사항', true) + '\n' + chevToggle('공지사항', false)),
   render: () => {
     enablePseudo();
     return matrix(['Default', 'Hovered', 'Focused'], [
       ['펼침 ' + '<code>aria-expanded="true"</code>', PS.map((p) => toggle('기본 정보', true, { extra: p }))],
       ['접힘 ' + '<code>aria-expanded="false"</code>', PS.map((p) => toggle('기본 정보', false, { extra: p }))],
+      ['화살표 펼침 ' + '<code>.section-toggle--chevron</code>', PS.map((p) => chevToggle('공지사항', true, p))],
+      ['화살표 접힘', PS.map((p) => chevToggle('공지사항', false, p))],
     ]);
   },
 };

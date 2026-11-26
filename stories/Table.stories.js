@@ -190,6 +190,14 @@ export const 머리_정렬과_열_메뉴 = {
     return el;
   },
 };
+// 강조 열: 꼭 봐야 하는 열 하나(최종 수정 날짜)의 머리 · 칸에 .is-highlight. 얼룩 줄 · 마우스 올린 줄에서도 칸은 노랑 그대로
+const hlTh = (t) => '<th class="is-highlight is-sortable" tabindex="0" aria-sort="descending">' + t + '<span class="grid-sort" aria-hidden="true">' + ARROW_DOWN + '</span><button type="button" class="grid-col-menu" aria-label="' + t + ' 열 메뉴" aria-haspopup="menu">' + CHEVRON_DOWN + '</button></th>';
+const HL_COLS = '<colgroup><col style="width:150px"><col><col style="width:84px"><col style="width:170px"><col style="width:110px"></colgroup>';
+const hlTable = () => '<div class="table_list"><div class="list"><table class="grid-table">' + HL_COLS +
+  '<thead><tr>' + menuTh('문서 번호') + menuTh('문서 명') + menuTh('버전') + hlTh('최종 수정 날짜') + menuTh('작업현황') + '</tr></thead><tbody>' +
+  ROWS.map((r) => '<tr><td><a href="#" class="grid-custom-rows-link">' + r[0] + '</a></td><td class="is-left">' + r[1] + '</td><td>' + r[2] + '</td><td class="is-highlight">' + r[5] + '</td><td>' + chip(r[3]) + '</td></tr>').join('') +
+  '</tbody></table></div></div>';
+export const 강조_열 = { parameters: optSrc(hlTable()), render: () => '<div class="sb-field--table">' + hlTable() + '</div>' };
 // 2 = 표 패널(.table-panel) 안에 옅은 머리 표 + 줄 상태 선(.status-row--*). 줄을 고르면 패널 머리가 선택 상태(.is-selected)로 바뀜
 const srow = (r, i, sel) => row(r, i, { sel }).replace(/<tr( class="([^"]*)")?/, (m, c, cls) => '<tr class="' + [cls, 'status-row--' + STATUS[r[3]][0]].filter(Boolean).join(' ') + '"');
 const subtle = (picked) => { const n = picked.length; return '<section class="table-panel">' +

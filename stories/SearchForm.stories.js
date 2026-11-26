@@ -2,7 +2,7 @@
 // 문서 = 방식별 섹션: A 칸 여러 줄(기본 · 접고 펴기) · B 조건 단추 한 줄 바(기본 · 필터 더 보기) · 고급 검색(조건 그룹). 한 행에 조건 최대 6칸. 동작은 ./_search.js (Screens 문서 검색과 같음)
 // A · B 기본 본보기 = 칸 · 단추마다 상태를 다르게 둔 그림 + 번호 표시(data-no). 번호별 이름 · 클래스 표(해부표)는 SearchForm.mdx 기본 카드 아래 (Figma 🧱 Blocks 「Search Form」과 같은 구성)
 import './_flow.css';
-import { wireSearchDetail, EXPAND_LABEL } from './_search.js';
+import { wireSearchDetail, EXPAND_LABEL, EXPAND_COUNT } from './_search.js';
 import { lnbSvg } from './_lnbicons.js';
 
 const ico = (d) => '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + d + '</svg>';
@@ -28,7 +28,7 @@ let uid = 0;
 const docFirst = (n = false, v = false) => field('문서 분류', input('문서 분류', '/제품 문서/설계 문서', true)) + field('문서 번호', input('문서 번호', v ? 'DOC-2610' : '', false, '문서 번호 입력'), 0, n ? 4 : 0) + field('문서 명', input('문서 명', v ? '캘리퍼' : '', false, '문서 명 입력')) +
   field('작업현황', select('작업현황', ['전체', '작업 중', '검토 중', '승인', '반려'], v ? '검토 중' : '')) + field('등록일', v ? range('등록일', '2026-09-01', '2026-09-30') : range('등록일'), 2, n ? 5 : 0);
 const docDetail = (id, v = false) => field('버전', '<div class="radio-group" role="radiogroup" aria-label="버전">' +
-    '<label class="radio"><input type="radio" name="' + id + '-v"' + (v ? '' : ' checked') + '><span class="radio__mark"></span>최신 버전</label>' +
+    '<label class="radio"><input type="radio" name="' + id + '-v" data-filter-default' + (v ? '' : ' checked') + '><span class="radio__mark"></span>최신 버전</label>' +
     '<label class="radio"><input type="radio" name="' + id + '-v"' + (v ? ' checked' : '') + '><span class="radio__mark"></span>모든 버전</label></div>', 2) +
   field('등록자', select('등록자', ['전체', '김도윤', '이서연'], v ? '김도윤' : '')) + field('수정자', select('수정자', ['전체', '김도윤', '이서연'])) +
   field('수정일', v ? range('수정일', '2026-10-01', '') : range('수정일'), 2);
@@ -36,7 +36,7 @@ const docDetail = (id, v = false) => field('버전', '<div class="radio-group" r
 // all = 모두 보기(조건 전체를 한 격자에, 펼치기 버튼 없음) · 접고 펴기 = 첫 행 + 상세 조건(.search-detail). n = 번호 표시
 const searchForm = ({ all = false, open = false, n = false, v = false }) => {
   const id = 'sf-detail-' + (++uid);
-  const btn = all ? '' : '<button type="button" class="btn btn--secondary btn--outlined btn--expand" aria-expanded="' + open + '" aria-controls="' + id + '">' + EXPAND_LABEL + '</button>';
+  const btn = all ? '' : '<button type="button" class="btn btn--secondary btn--outlined btn--expand" aria-expanded="' + open + '" aria-controls="' + id + '">' + EXPAND_LABEL + EXPAND_COUNT + '</button>';
   return '<section class="product" style="padding:0">' +
     '<div class="seach_arm" style="margin-top:0"' + (n ? ' data-no="1" data-mid' : '') + '><div class="leftbt">' + lnbSvg('sliders', 18) + '<h4>검색 조건</h4></div>' +
     '<div class="rightbt">' +
@@ -57,7 +57,7 @@ const demoField = (label, control, state, span, no) => '<div class="ff-field' + 
 const demoA = () => {
   const id = 'sf-detail-' + (++uid);
   return '<section class="product" style="padding:0"><div class="seach_arm" style="margin-top:0" data-no="1" data-mid><div class="leftbt">' + lnbSvg('sliders', 18) + '<h4>검색 조건</h4></div><div class="rightbt">' +
-    '<button type="button" class="btn btn--primary btn--filled">' + ico(SEARCH) + '검색</button><button type="button" class="btn btn--secondary btn--outlined btn--expand" aria-expanded="false" aria-controls="' + id + '">' + EXPAND_LABEL + '</button>' +
+    '<button type="button" class="btn btn--primary btn--filled">' + ico(SEARCH) + '검색</button><button type="button" class="btn btn--secondary btn--outlined btn--expand" aria-expanded="false" aria-controls="' + id + '">' + EXPAND_LABEL + EXPAND_COUNT + '</button>' +
     '<button type="button" class="btn btn--secondary btn--transparent">' + ico(RESET) + '검색 조건 초기화</button></div></div>' +
     '<div class="pro_table" data-no="2"><div class="form-grid-2 form-grid--6" data-no="3">' +
     demoField('작업현황', trig('작업현황', '전체', ''), '값 없음') +
@@ -66,6 +66,11 @@ const demoA = () => {
     demoField('등록자', trig('등록자', '김도윤', ''), '값 있음', 0, 4) +
     demoField('등록일', range('등록일', '2026-09-01', '2026-09-30'), '값 있음', 2, 5) +
     '</div><div class="search-detail" id="' + id + '" hidden><div class="form-grid-2 form-grid--6"><div class="search-divider">상세 검색</div>' + docDetail(id) + '</div></div></div></section>';
+};
+// 접힌 상세 검색에 걸린 조건: 상세 행(버전 · 등록자 · 수정일)에 값을 넣고 접은 모습. [상세 검색 펼치기] 글자 뒤에 걸린 개수(.search-detail__count)
+export const 접힌_상세에_걸린_조건 = {
+  parameters: { docs: { source: { code: searchForm({ v: true }) } } },
+  render: () => stage(searchForm({ v: true })),
 };
 // 가로 라벨: 라벨 왼쪽 · 칸 오른쪽 짝을 한 행에 세 쌍(.form-grid--label-side, DS-ADR-083). 조건 전체를 한 격자에 두어 열마다 라벨 폭이 맞음
 const sideForm = () => searchForm({ all: true }).replace('form-grid-2 form-grid--6"', 'form-grid-2 form-grid--6 form-grid--label-side"');
