@@ -116,6 +116,7 @@
   .ds-card__code > summary::before { content: ''; width: 5px; height: 5px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: rotate(-45deg); transition: transform .15s; }
   .ds-card__code[open] > summary::before { transform: rotate(45deg); }
   .ds-card__code .docblock-source { margin: 0 !important; border: 0 !important; border-top: 1px solid #e1e4e8 !important; border-radius: 0 !important; box-shadow: none !important; }
+  .ds-card__code--css .docblock-source { max-height: 480px; overflow: auto; }   /* 고른 규칙이 길어도 카드가 한없이 늘지 않게 */
   /* 개요 · 참고 표 */
   .ds-table { width: 100%; border-collapse: separate; border-spacing: 0; border: 1px solid #e1e4e8; border-radius: 6px; overflow: hidden; font-size: 13px; background: #fff; color: #1f2328; }   /* 문서 표는 다크 미리보기 안에서도 밝은 문서 색 */
   .ds-table th { padding: 10px 16px; text-align: left; font-weight: 600; color: #424a53; background: #f6f8fa; border-bottom: 1px solid #e1e4e8; white-space: nowrap; }

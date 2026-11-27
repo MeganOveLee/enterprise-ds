@@ -1,9 +1,11 @@
 // 문서(MDX) 블록: 페이지 머리 · 섹션 · 예시 카드. 모양은 .storybook/preview-head.html 의 .ds-* 규칙
-// 카드 = 머리(제목 · 설명) + 미리보기(스토리) + 코드 보기(접힘). 제목이 없으면 머리를 그리지 않는다
+// 카드 = 머리(제목 · 설명) + 미리보기(스토리) + 코드 보기 · 이 예시가 쓰는 CSS(둘 다 접힘). 제목이 없으면 머리를 그리지 않는다
 import React from 'react';
 import { Story, Source } from '@storybook/addon-docs/blocks';
 import { addons } from 'storybook/preview-api';
 import resolved from '../tokens/build/resolved.json';
+import componentsCss from '../css/components.css?raw';
+import mobilityBlocksCss from '../css/blocks/mobility.css?raw';
 
 const h = React.createElement;
 
@@ -38,10 +40,55 @@ const useBrand = () => {
   }, []);
   return b;
 };
+// 「이 예시가 쓰는 CSS」: 미리보기에 그려진 클래스가 쓰는 규칙만 components.css · blocks/mobility.css 에서 골라 보인다.
+// 선택자 하나에 든 클래스가 모두 미리보기에 있을 때만 고른다(.tab.is-active 는 .tab 이 있을 때만). 열 때 한 번 계산
+const CSS_SHEETS = (() => {
+  const out = [];
+  [['css/components.css', componentsCss], ['css/blocks/mobility.css', mobilityBlocksCss]].forEach(([file, text]) => {
+    try { const sh = new CSSStyleSheet(); sh.replaceSync(text); out.push([file, sh]); } catch (e) { /* 읽지 못하면 그 파일은 건너뜀 */ }
+  });
+  return out;
+})();
+const usesOnly = (selector, used) => selector.split(',').some((one) => {
+  const cls = one.match(/\.[A-Za-z_][\w-]*/g);
+  return cls && cls.every((c) => used.has(c.slice(1)));
+});
+const prettyRule = (text, pad) => text
+  .replace(/\s*\{\s*/, ' {\n' + pad + '  ')
+  .replace(/;\s*(?=[^}])/g, ';\n' + pad + '  ')
+  .replace(/;?\s*\}\s*$/, ';\n' + pad + '}');
+const pickRules = (rules, used, pad) => {
+  const out = [];
+  Array.from(rules).forEach((r) => {
+    if (r.selectorText) { if (r.style.length && usesOnly(r.selectorText, used)) out.push(pad + prettyRule(r.cssText, pad)); return; }
+    if (r.cssRules && r.conditionText !== undefined) {   // @media · @container · @supports: 안에서 고른 것이 있으면 감싸서
+      const inner = pickRules(r.cssRules, used, pad + '  ');
+      if (inner.length) out.push(pad + r.cssText.slice(0, r.cssText.indexOf('{')).trim() + ' {\n' + inner.join('\n') + '\n' + pad + '}');
+    }
+  });
+  return out;
+};
+const UsedCss = ({ cardRef }) => {
+  const [code, setCode] = React.useState('');
+  const onToggle = (e) => {
+    if (!e.currentTarget.open || code) return;
+    const root = cardRef.current && cardRef.current.querySelector('.ds-card__body');
+    const used = new Set();
+    if (root) root.querySelectorAll('[class]').forEach((el) => el.classList.forEach((c) => used.add(c)));
+    const parts = CSS_SHEETS.map(([file, sh]) => {
+      const rules = pickRules(sh.cssRules, used, '');
+      return rules.length ? '/* ' + file + ' */\n' + rules.join('\n\n') : '';
+    }).filter(Boolean);
+    setCode(parts.length ? parts.join('\n\n') : '/* 이 예시는 컴포넌트 CSS 규칙을 쓰지 않습니다 */');
+  };
+  return h('details', { className: 'ds-card__code ds-card__code--css', onToggle }, h('summary', null, '이 예시가 쓰는 CSS'),
+    code ? h(Source, { code, language: 'css', dark: false }) : null);
+};
 export const Card = ({ of, title, desc, tag, why, basis, brands, code = true, children }) => {
   const brand = useBrand();
+  const ref = React.useRef(null);
   if (brands && !brands.includes(brand)) return null;
-  return h('section', { className: 'ds-card' },
+  return h('section', { className: 'ds-card', ref },
     title ? h('header', { className: 'ds-card__head' },
       h('h3', { className: 'ds-card__title' }, title, tag ? h('span', { className: 'ds-card__tag' }, tag) : null),
       desc ? h('p', { className: 'ds-card__desc' }, desc) : null,
@@ -49,7 +96,8 @@ export const Card = ({ of, title, desc, tag, why, basis, brands, code = true, ch
       basis ? h('p', { className: 'ds-card__basis' }, h('b', null, '근거'), ' ', basis) : null) : null,
     of ? h('div', { className: 'ds-card__body' }, h(Story, { of })) : null,
     children ? h('div', { className: 'ds-card__extra' }, children) : null,
-    of && code ? h('details', { className: 'ds-card__code' }, h('summary', null, '코드 보기'), h(Source, { of })) : null);
+    of && code ? h('details', { className: 'ds-card__code' }, h('summary', null, '코드 보기'), h(Source, { of })) : null,
+    of && code ? h(UsedCss, { cardRef: ref }) : null);
 };
 
 // 문서 안 도구 막대: 화면 맨 위 Storybook 도구 막대와 같은 모양 · 같은 아이콘 · 같은 글자 · 같은 열림 목록.
