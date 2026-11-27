@@ -27,22 +27,10 @@ const withTheme = (Story, ctx) => {
 
 export default {
   globalTypes: {
-    // 기기를 먼저 고른다: 왼쪽 메뉴는 고른 기기에서 쓰는 컴포넌트만 남는다(.storybook/manager.js, DS-ADR-055)
-    device: {
-      description: '기기',
-      toolbar: { title: '기기', icon: 'browser', dynamicTitle: true,
-        items: [{ value: 'web', title: 'PLM 웹', icon: 'browser' }, { value: 'mobile', title: '모바일 앱', icon: 'mobile' }] },
-    },
-    brand: {
-      description: '브랜드',
-      toolbar: { title: '브랜드', icon: 'paintbrush', dynamicTitle: true,
-        items: [{ value: 'default', title: 'Default · PLM 웹', icon: 'browser' }, { value: 'mobility', title: 'Mobility · 모바일 앱', icon: 'mobile' }, { value: 'ootb', title: 'OOTB · Windchill 화면 리디자인', icon: 'browser' }] },   // 아이콘 = 쓰는 기기(웹 창 · 휴대폰)
-    },
-    mode: {
-      description: '화면 모드 (라이트 / 다크)',
-      toolbar: { title: '화면 모드', icon: 'mirror', dynamicTitle: true,
-        items: [{ value: 'light', title: '라이트' }, { value: 'dark', title: '다크' }] },
-    },
+    // 도구 막대는 .storybook/manager.js 가 그린다: 기기가 맨 앞, 브랜드 목록은 고른 기기의 브랜드만(DS-ADR-055)
+    device: { description: '기기' },   // web = PLM 웹, mobile = 모바일 앱
+    brand: { description: '브랜드' },   // PLM 웹 = default · ootb, 모바일 앱 = mobility
+    mode: { description: '화면 모드 (라이트 / 다크)' },
   },
   initialGlobals: { device: 'web', brand: 'default', mode: 'light' },
   decorators: [withTheme],

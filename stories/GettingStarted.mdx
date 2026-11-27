@@ -42,13 +42,14 @@ export const AFTER = [
 <Unstyled>
 <div className="ds-page">
 <PageHead eyebrow="Design System v1.0" title="시작하기" lead="스토리북 사용 방법과, 개발 화면에 디자인 시스템을 적용하는 방법을 안내합니다." />
-<Section title="스토리북 사용 방법" en="Using this Storybook" desc="상단 도구 막대에서 Figma를 열고 브랜드와 화면 모드를 전환합니다. 바뀐 결과는 아래 미리보기에서 확인합니다. 선택한 값은 모든 문서의 미리보기에 동일하게 적용됩니다.">
+<Section title="스토리북 사용 방법" en="Using this Storybook" desc="상단 도구 막대에서 Figma를 열고 기기 · 브랜드 · 화면 모드를 전환합니다. 바뀐 결과는 아래 미리보기에서 확인합니다. 선택한 값은 모든 문서의 미리보기에 동일하게 적용됩니다.">
 <Toolbar figmaIcon={figmaIcon} />
 <Card of={P.Sample} />
 <table className="ds-table ds-after">
 <thead><tr><th>도구 막대</th><th>변경 내용</th><th>적용 코드</th></tr></thead>
 <tbody>
-<tr><td><b>브랜드</b><span className="ds-muted">Default · Mobility · OOTB</span></td><td>브랜드별 색상과 형태를 일괄 전환합니다. 모서리 반경, 버튼 · 입력 필드 높이, 빈 상태 일러스트 · 폴더 · 파일 형식 아이콘의 모양(솔리드 · 라인)도 브랜드 파일에서 정합니다. Mobility · OOTB은 전환 방식을 보여 주기 위한 가상 브랜드입니다.</td><td><code>css/brands/mobility.css</code><br /><code>{'<html class="theme-mobility">'}</code><span className="ds-muted">브랜드 파일과 클래스를 함께 적용합니다. 클래스가 없으면 기본 브랜드(Default)</span></td></tr>
+<tr><td><b>기기</b><span className="ds-muted">PLM 웹 · 모바일 앱</span></td><td>기기를 먼저 고릅니다. 왼쪽 메뉴에는 고른 기기에서 쓰는 컴포넌트만 남고, 브랜드 목록도 그 기기의 브랜드로 바뀝니다.</td><td><span className="ds-muted">스토리북에서만 쓰는 값입니다. 화면 코드에는 브랜드 클래스만 넣습니다</span></td></tr>
+<tr><td><b>브랜드</b><span className="ds-muted">PLM 웹 = Default · OOTB<br />모바일 앱 = Mobility</span></td><td>브랜드별 색상과 형태를 일괄 전환합니다. 모서리 반경, 버튼 · 입력 필드 높이, 빈 상태 일러스트 · 폴더 · 파일 형식 아이콘의 모양(솔리드 · 라인)도 브랜드 파일에서 정합니다. Mobility · OOTB은 전환 방식을 보여 주기 위한 가상 브랜드입니다.</td><td><code>css/brands/mobility.css</code><br /><code>{'<html class="theme-mobility">'}</code><span className="ds-muted">브랜드 파일과 클래스를 함께 적용합니다. 클래스가 없으면 기본 브랜드(Default)</span></td></tr>
 <tr><td><b>화면 모드</b><span className="ds-muted">라이트 · 다크</span></td><td>라이트 · 다크 모드를 전환합니다. 화면 코드 변경 없이 클래스 하나로 적용합니다.</td><td><code>{'<body class="dark-mode">'}</code><span className="ds-muted">클래스가 없으면 라이트</span></td></tr>
 </tbody>
 </table>
@@ -56,7 +57,7 @@ export const AFTER = [
 <dl className="ds-dl">
 <div><dt>코드 보기</dt><dd>예시 카드 하단의 「코드 보기」에서 해당 마크업을 복사할 수 있습니다.</dd></div>
 <div><dt>Playground</dt><dd>컴포넌트 문서 하단 표에서 텍스트 · 중요도 · 스타일 · 상태를 변경하면 미리보기와 코드가 함께 갱신됩니다.</dd></div>
-<div><dt>링크 공유</dt><dd>선택한 브랜드와 화면 모드는 URL에 저장되어, 링크를 공유하면 같은 설정으로 열립니다.</dd></div>
+<div><dt>링크 공유</dt><dd>선택한 기기 · 브랜드 · 화면 모드는 URL에 저장되어, 링크를 공유하면 같은 설정으로 열립니다. 주소에 브랜드만 있으면 기기는 그 브랜드에 맞춰 열립니다.</dd></div>
 </dl>
 </Section>
 <Section title="개발자" en="Developers" desc="파일을 내려받아 서버 렌더링 화면(JSP · HTML)에 세 단계로 적용합니다.">

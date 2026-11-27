@@ -64,7 +64,7 @@ const DEVICE = {
   mobile: 'M3 1.504a1.5 1.5 0 011.5-1.5h5a1.5 1.5 0 011.5 1.5v11a1.5 1.5 0 01-1.5 1.5h-5a1.5 1.5 0 01-1.5-1.5v-11zm1 10.5v-10h6v10H4z',
 };
 const ico = (d) => h('svg', { width: 14, height: 14, viewBox: '0 0 14 14', fill: 'none', 'aria-hidden': true }, h('path', { fillRule: 'evenodd', clipRule: 'evenodd', d, fill: 'currentColor' }));
-const ICON = {   // Storybook 아이콘 paintbrush · mirror(.storybook/preview.js 도구 막대 icon 과 같음)
+const ICON = {   // Storybook 아이콘 paintbrush · mirror(.storybook/manager.js 도구 막대 아이콘과 같음)
   brand: 'M11.854.146a.5.5 0 00-.708 0L2.983 8.31a2.24 2.24 0 00-1.074.6C.677 10.14.24 11.902.085 12.997 0 13.6 0 14 0 14s.4 0 1.002-.085c1.095-.155 2.857-.592 4.089-1.824a2.24 2.24 0 00.6-1.074l8.163-8.163a.5.5 0 000-.708l-2-2zM5.6 9.692l.942-.942L5.25 7.457l-.942.943A2.242 2.242 0 015.6 9.692zm1.649-1.65L12.793 2.5 11.5 1.207 5.957 6.75 7.25 8.043zM4.384 9.617a1.25 1.25 0 010 1.768c-.767.766-1.832 1.185-2.78 1.403-.17.04-.335.072-.49.098.027-.154.06-.318.099-.49.219-.947.637-2.012 1.403-2.779a1.25 1.25 0 011.768 0z',
   mode: 'M1 1.504a.5.5 0 01.5-.5h11a.5.5 0 01.5.5v11a.5.5 0 01-.5.5h-11a.5.5 0 01-.5-.5v-11zm1 10.5h10v-10l-10 10z',
 };
@@ -76,13 +76,17 @@ const DECO = {
   full: ['M1.5 1h2a.5.5 0 010 1h-.793l3.147 3.146a.5.5 0 11-.708.708L2 2.707V3.5a.5.5 0 01-1 0v-2a.5.5 0 01.5-.5zM10 1.5a.5.5 0 01.5-.5h2a.5.5 0 01.5.5v2a.5.5 0 01-1 0v-.793L8.854 5.854a.5.5 0 11-.708-.708L11.293 2H10.5a.5.5 0 01-.5-.5zM12.5 10a.5.5 0 01.5.5v2a.5.5 0 01-.5.5h-2a.5.5 0 010-1h.793L8.146 8.854a.5.5 0 11.708-.708L12 11.293V10.5a.5.5 0 01.5-.5zM2 11.293V10.5a.5.5 0 00-1 0v2a.5.5 0 00.5.5h2a.5.5 0 000-1h-.793l3.147-3.146a.5.5 0 10-.708-.708L2 11.293z'],
 };
 const deco = (k) => h('span', { key: k, className: 'ds-tb__ico' }, h('svg', { width: 14, height: 14, viewBox: '0 0 14 14', fill: 'none' }, DECO[k].map((d, i) => h('path', { key: i, fillRule: 'evenodd', clipRule: 'evenodd', d, fill: 'currentColor' }))));
-const TOOLS = [   // 글자 = .storybook/preview.js globalTypes 와 같게
-  { key: 'brand', label: '브랜드', items: [['default', 'Default · PLM 웹', 'web'], ['mobility', 'Mobility · 모바일 앱', 'mobile'], ['ootb', 'OOTB · Windchill 화면 리디자인', 'web']] },   // 세 번째 = 쓰는 기기 아이콘
-  { key: 'mode', label: '화면 모드 (라이트 / 다크)', items: [['light', '라이트'], ['dark', '다크']] },
+const TOOLS = [   // 글자 = .storybook/manager.js 도구 막대와 같게(DS-ADR-055: 기기가 맨 앞, 브랜드 목록은 기기를 따름)
+  { key: 'device', label: '기기', items: [['web', 'PLM 웹', 'web'], ['mobile', '모바일 앱', 'mobile']] },   // 세 번째 = 쓰는 기기 아이콘
+  { key: 'brand', label: '브랜드', byDevice: { web: [['default', 'Default'], ['ootb', 'OOTB · Windchill 화면 리디자인']], mobile: [['mobility', 'Mobility']] } },
+  { key: 'mode', label: '화면 모드', items: [['light', '라이트'], ['dark', '다크']] },
 ];
+const BRAND_DEVICE = { default: 'web', ootb: 'web', mobility: 'mobile' };
+const DEVICE_BRAND = { web: 'default', mobile: 'mobility' };
 const readGlobals = () => {
   const c = document.documentElement.classList;
-  return { brand: c.contains('theme-mobility') ? 'mobility' : c.contains('theme-ootb') ? 'ootb' : 'default', mode: document.body.classList.contains('dark-mode') ? 'dark' : 'light' };
+  const brand = c.contains('theme-mobility') ? 'mobility' : c.contains('theme-ootb') ? 'ootb' : 'default';
+  return { brand, device: BRAND_DEVICE[brand], mode: document.body.classList.contains('dark-mode') ? 'dark' : 'light' };   // 기기는 브랜드를 따라 늘 맞춰져 있다
 };
 let selSeq = 0;
 // 처음 온 사람에게 「여기를 눌러 보세요」(:35 ④ 제안): 한 번 누르면 다시 안 보임(다시 그려져도 · 새로 열어도)
@@ -128,20 +132,29 @@ export const Toolbar = ({ figmaIcon }) => {
   const [g, setG] = React.useState(readGlobals);
   React.useEffect(() => {
     const ch = addons.getChannel();
-    const on = ({ globals }) => setG({ brand: globals.brand, mode: globals.mode });
+    const on = ({ globals }) => setG({ brand: globals.brand, device: BRAND_DEVICE[globals.brand] || 'web', mode: globals.mode });
     ch.on('globalsUpdated', on);
     return () => ch.off('globalsUpdated', on);
   }, []);
   const [hint, setHint] = React.useState(!hintSeen);
   const done = (e) => { if (!hint || !e.target.closest('.ds-tbsel')) return; hintSeen = true; try { localStorage.setItem('eds-tb-hint', '1'); } catch (err) { /* 저장 안 돼도 이번 화면에서는 사라짐 */ } setHint(false); };
-  const set = (key, value) => { addons.getChannel().emit('updateGlobals', { globals: { [key]: value } }); setG((o) => ({ ...o, [key]: value })); };
+  const set = (key, value) => {
+    const next = key === 'device' ? { device: value, brand: DEVICE_BRAND[value] } : { [key]: value };   // 기기를 바꾸면 그 기기의 대표 브랜드로
+    addons.getChannel().emit('updateGlobals', { globals: next }); setG((o) => ({ ...o, ...next }));
+  };
+  const tool = (t) => {
+    if (!t.byDevice) return h(ToolSelect, { key: t.key, tool: t, value: g[t.key], onPick: set });
+    const items = t.byDevice[g.device] || t.byDevice.web;
+    if (items.length > 1) return h(ToolSelect, { key: t.key + g.device, tool: { ...t, items }, value: g[t.key], onPick: set });
+    return h('span', { key: t.key, className: 'ds-tbsel__fixed', title: '모바일 앱 브랜드는 ' + items[0][1] + ' 하나입니다' }, ico(ICON[t.key]), items[0][1]);   // 하나뿐이면 고를 것 없이 이름표
+  };
   const bar = h('div', { className: 'ds-tb' + (hint ? ' ds-tb--hint' : ''), onPointerDownCapture: done,
       onKeyDownCapture: (e) => { if (['Enter', ' ', 'ArrowDown', 'ArrowUp'].includes(e.key)) done(e); } },
     h('span', { className: 'ds-tb__deco', 'aria-hidden': true }, ['grid', 'bg', 'outline'].map(deco)),
     h('a', { className: 'ds-tb__figma', href: FIGMA_URL, target: '_blank', rel: 'noreferrer' },
       figmaIcon ? h('img', { src: figmaIcon, alt: '', width: 18, height: 18 }) : null, 'Figma에서 보기 ↗'),
     h('span', { className: 'ds-tb__sep', 'aria-hidden': true }),
-    h('span', { className: 'ds-tb__sels' }, TOOLS.map((t) => h(ToolSelect, { key: t.key, tool: t, value: g[t.key], onPick: set }))),
+    h('span', { className: 'ds-tb__sels' }, TOOLS.map(tool)),
     hint ? h('span', { className: 'ds-tb__hint', 'aria-hidden': true }, '눌러서 직접 선택합니다') : null,
     h('span', { className: 'ds-tb__deco ds-tb__end', 'aria-hidden': true }, deco('full')));
   return h('div', { className: 'ds-tbrow' }, bar);
