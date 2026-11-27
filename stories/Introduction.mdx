@@ -97,6 +97,18 @@ import githubIcon from '../assets/links/github.svg';
 </div>
 </div>
 </Section>
+<Section title="브랜드가 바꿀 수 있는 범위" en="Brand scope" desc="모든 브랜드가 같은 토큰과 컴포넌트를 씁니다. 브랜드마다 다른 것은 아래 표의 자리 가운데 하나에 넣습니다.">
+<table className="ds-table">
+<thead><tr><th>자리</th><th>바꾸는 것</th><th>넣는 방법</th></tr></thead>
+<tbody>
+<tr><td><b>브랜드 파일</b><span className="ds-muted">토큰</span></td><td>브랜드 색 · 모서리 · 컨트롤 높이 · 빈 상태 그림 모양(솔리드 · 라인) · 글자 크기 단계 · 본문 글꼴 · 회색 램프 · 표 머리 색과 높이 · 그림자 · 고른 면 색 · 강조 굵기</td><td><code>{'tokens/brands/{브랜드}.json'}</code> 한 파일에 열린 토큰만 덮습니다. 열린 목록과 조건은 <code>_template.json</code>에 있습니다. <a className="ds-link" href="https://app.notion.com/p/3eda8196682d811990e9c26b8ea34854" target="_blank" rel="noreferrer">DS-ADR-003 ↗</a> · <a className="ds-link" href="https://app.notion.com/p/3f8a8196682d8140b3e6fa865faa6fb8" target="_blank" rel="noreferrer">DS-ADR-020 ↗</a> · <a className="ds-link" href="https://app.notion.com/p/3ffa8196682d8198a2c3e1420a613043" target="_blank" rel="noreferrer">DS-ADR-037 ↗</a> · <a className="ds-link" href="https://app.notion.com/p/40ea8196682d8196b9e3f45516d4434b" target="_blank" rel="noreferrer">DS-ADR-046 ↗</a> · <a className="ds-link" href="https://app.notion.com/p/40fa8196682d819f9559eb70753554c8" target="_blank" rel="noreferrer">DS-ADR-047 ↗</a></td></tr>
+<tr><td><b>컴포넌트 변형</b><span className="ds-muted">클래스</span></td><td>토큰으로 바뀌지 않는 배치 · 구성 차이. 칩 · 떠 있는 버튼처럼 브랜드마다 다른 시안을 쓰는 컴포넌트</td><td>공통 CSS에 브랜드 분기를 두지 않고 변형 클래스(<code>블록--변형</code>)를 만들어 브랜드가 고릅니다. 컴포넌트 문서마다 「브랜드가 바꾸는 것」 줄에 고른 시안을 적습니다. <a className="ds-link" href="https://app.notion.com/p/410a8196682d813ea181d91627f9e55e" target="_blank" rel="noreferrer">DS-ADR-049 ↗</a></td></tr>
+<tr><td><b>기기 전용 블록</b><span className="ds-muted">Blocks</span></td><td>한 기기에서만 쓰는 조합(출발 · 도착 입력, 이동 수단 타일, 지도 위 버튼)</td><td>공통 파일과 떼어 <code>css/blocks/mobility.css</code>에 두고, 그 기기 화면만 링크합니다. <a className="ds-link" href="https://app.notion.com/p/410a8196682d813ea181d91627f9e55e" target="_blank" rel="noreferrer">DS-ADR-049 ↗</a></td></tr>
+<tr><td><b>다루지 않는 것</b></td><td>간격 단계 · 행간 · 테두리 두께, 보통 · 중간 굵기, UI 아이콘 세트, 원형 · 알약 모서리. 기존 제품(Windchill)에 얹을 때는 제품이 그린 그림 조각(체크박스 · 정렬 화살표)과 화면 구성(탭 · 버튼 위치)</td><td>바꾸면 모든 화면의 배치가 함께 흔들리는 값이라 브랜드에 열지 않습니다. 제품의 화면 구성은 디자인 시스템이 아니라 제품의 공식 커스터마이징 설정에서 바꿉니다. <a className="ds-link" href="https://app.notion.com/p/40fa8196682d819f9559eb70753554c8" target="_blank" rel="noreferrer">DS-ADR-047 ↗</a></td></tr>
+</tbody>
+</table>
+<p className="ds-note">목록에 없는 값을 브랜드가 바꿔야 하면 브랜드 파일에 줄을 더하지 않고, 결정 기록(DS-ADR)으로 먼저 정한 뒤 <code>_template.json</code> 목록에 올립니다.</p>
+</Section>
 <Section title="적용 환경" en="Scope">
 <dl className="ds-dl">
 <div><dt>사용자</dt><dd>문서 · 도면 · 결재를 하루 종일 다루는 PLM 업무 사용자입니다. 오래 보는 화면이라 유행보다 가독성과 정보 밀도를 우선합니다.</dd></div>
