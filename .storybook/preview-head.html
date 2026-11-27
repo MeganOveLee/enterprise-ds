@@ -261,17 +261,30 @@
   @media (max-width: 1000px) { .ds-keys { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
   @media (max-width: 720px) { .ds-keys { grid-template-columns: minmax(0, 1fr); } .ds-brief__row { grid-template-columns: minmax(0, 1fr); gap: 6px; } }
   /* 소개 · 시작하기: 절 내용을 한 상자로 묶고, 꼭 봐야 하는 것은 꼬리표 · 강조로 구분 */
-  /* 소개 「두 번째 개편에서 한 일」 띠: 상자 · 바탕 없이 얇은 세로선으로만 칸을 나눈다. 왼쪽 = 규모(큰 글자), 오른쪽 = 직무 키워드별 한 일(TD-198, 레퍼런스 Linear Customers) */
-  .ds-stats { display: grid; grid-template-columns: minmax(0, 1.3fr) repeat(3, minmax(0, 1fr)); margin: 40px 0 8px; }
-  .ds-stats__lead { padding-right: 32px; }
-  .ds-stats__lead h2 { margin: 0; font-size: 15px; line-height: 1.4; font-weight: 700; color: #424a53; }
-  .ds-stats__num { margin: 8px 0 0; font-size: 36px; line-height: 1.15; font-weight: 700; letter-spacing: -0.02em; color: #111418; white-space: nowrap; }
-  .ds-stats__label { margin: 12px 0 0; font-size: 13px; line-height: 1.55; color: #59636e; }
-  .ds-stats__item { padding: 0 24px; border-left: 1px solid #d8dee4; }
-  .ds-stats__key { margin: 0; font-size: 20px; line-height: 1.3; font-weight: 700; color: #111418; }
-  .ds-stats__text { margin: 10px 0 0; font-size: 13px; line-height: 1.6; color: #424a53; }
-  @media (max-width: 960px) { .ds-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: 24px; } .ds-stats__lead { grid-column: 1 / -1; padding-right: 0; } .ds-stats__item:nth-child(2) { border-left: 0; padding-left: 0; } }
-  @media (max-width: 600px) { .ds-stats { grid-template-columns: 1fr; row-gap: 0; } .ds-stats__item { padding: 16px 0; border-left: 0; border-top: 1px solid #d8dee4; } .ds-stats__item:nth-child(2) { padding-left: 0; } .ds-stats__lead { padding-bottom: 16px; } .ds-stats__num { font-size: 32px; } }
+  /* 소개 그림 「같은 PLM 화면 개편, 디자인 시스템으로 8주」: 두 줄 제목(둘째 줄 강조색) → 기간 막대 둘(지금만 강조색) → 한 일 세 칸. 상자 없이 가는 선으로만 나눈다(TD-198)
+   * 막대 길이 = 기간 비율. 6개월 ≈ 26주 기준으로 8주 = 31% */
+  .ds-fig { margin: 48px 0 8px; padding-top: 20px; border-top: 1px solid #1f2328; }
+  .ds-fig__eyebrow { margin: 0; font-size: 12px; font-weight: 700; letter-spacing: .12em; color: #0064e0; }
+  .ds-fig__title { margin: 10px 0 0; font-size: 30px; line-height: 1.3; font-weight: 700; letter-spacing: -0.02em; color: #111418; }
+  .ds-fig__title em { font-style: normal; color: #0064e0; }
+  .ds-fig__lead { margin: 10px 0 0; font-size: 14px; color: #59636e; }
+  .ds-fig__bars { margin: 24px 0 0; padding: 0; list-style: none; border-top: 1px solid #d8dee4; }
+  .ds-fig__row { display: grid; grid-template-columns: minmax(0, 260px) minmax(0, 1fr); gap: 24px; align-items: center; padding: 16px 0; border-bottom: 1px solid #eaeef2; }
+  .ds-fig__name { margin: 0; font-size: 15px; font-weight: 700; color: #424a53; }
+  .ds-fig__row.is-now .ds-fig__name { color: #111418; }
+  .ds-fig__name span { display: block; margin-top: 2px; font-size: 13px; font-weight: 400; color: #6e7781; }
+  .ds-fig__track { display: flex; align-items: center; gap: 12px; }
+  .ds-fig__bar { display: block; height: 28px; background: #d0d7de; }
+  .ds-fig__bar--before { width: 100%; max-width: calc(100% - 72px); }
+  .ds-fig__bar--now { width: calc((100% - 72px) * .31); background: #0064e0; }
+  .ds-fig__val { flex: none; font-size: 20px; font-weight: 700; color: #6e7781; }
+  .ds-fig__row.is-now .ds-fig__val { color: #0064e0; }
+  .ds-fig__did { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; margin: 20px 0 0; }
+  .ds-fig__did > div { padding: 0 20px; border-left: 1px solid #d8dee4; }
+  .ds-fig__did > div:first-child { padding-left: 0; border-left: 0; }
+  .ds-fig__did dt { font-size: 15px; font-weight: 700; color: #111418; }
+  .ds-fig__did dd { margin: 4px 0 0; font-size: 13px; color: #59636e; }
+  @media (max-width: 720px) { .ds-fig__title { font-size: 24px; } .ds-fig__row { grid-template-columns: 1fr; gap: 8px; } .ds-fig__did { grid-template-columns: 1fr; } .ds-fig__did > div { padding: 12px 0; border-left: 0; border-top: 1px solid #eaeef2; } .ds-fig__did > div:first-child { padding-top: 0; border-top: 0; } }
   .ds-box { padding: 20px 24px; border: 1px solid #e1e4e8; border-radius: 10px; background: #f6f8fa; }
   .ds-page .ds-brief.ds-box { margin: 24px 0 0; padding: 20px 24px; border-bottom: 1px solid #e1e4e8; }
   .ds-box .ds-tl-wrap { margin: 0 0 16px; }
