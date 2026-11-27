@@ -17,6 +17,12 @@ import githubIcon from '../assets/links/github.svg';
 </ul>
 </PageHead>
 <BrandCard of={S.문서_검색} title="문서 검색 화면" brands={[['default', 'Default'], ['ootb', 'OOTB']]} />
+<section className="ds-stats" aria-labelledby="ds-stats-title">
+<div className="ds-stats__lead"><h2 id="ds-stats-title">두 번째 개편에서 달라진 것</h2><p>같은 PLM 화면 디자인 프로젝트를 두 번 했습니다. 첫 개편(2025)과 두 번째 개편(2026)을 견줬습니다.</p></div>
+<div className="ds-stats__item"><p className="ds-stats__num">7주</p><p className="ds-stats__label">기간<span>첫 개편은 6개월</span></p></div>
+<div className="ds-stats__item"><p className="ds-stats__num">전 화면</p><p className="ds-stats__label">다크 모드 적용<span>첫 개편은 일부 화면</span></p></div>
+<div className="ds-stats__item"><p className="ds-stats__num">직접 커밋</p><p className="ds-stats__label">디자이너가 화면에 적용, 개발 로직 수정 없음<span>첫 개편은 시안을 넘겨 개발자가 적용</span></p></div>
+</section>
 <dl className="ds-brief ds-box" aria-label="목표 · 결과 · 내 기여">
 <div className="ds-brief__row"><dt>목표</dt><dd><p className="ds-brief__goal">서버 로직은 바꾸지 않고 화면 층(마크업의 클래스 · CSS)만 바꿉니다. 컴포넌트는 한 벌이고, 브랜드마다 토큰 값만 바꿔 디자인을 입힙니다. 같은 컴포넌트로 모바일 앱 화면까지 만듭니다.</p></dd></div>
 <div className="ds-brief__row">
@@ -52,14 +58,6 @@ import githubIcon from '../assets/links/github.svg';
 <Section title="운영 방식" en="How we work" desc="단계별로 디자이너와 AI의 역할을 나눴습니다. 반복 작업과 검사는 AI에게 맡기고, 판단과 최종 확인은 디자이너가 합니다.">
 <div className="ds-box">
 <div className="ds-tl-wrap"><div className="ds-tl" aria-label="운영 방식 7단계"><div className="ds-tl__start">시작</div><div className="ds-tl__head"><div className="ds-tl__no-circle">1</div><div className="ds-tl__num">01</div><div className="ds-tl__title">사용자 분석</div></div><div className="ds-tl__head"><div className="ds-tl__no-circle">2</div><div className="ds-tl__num">02</div><div className="ds-tl__title">기준 수립</div></div><div className="ds-tl__head"><div className="ds-tl__no-circle">3</div><div className="ds-tl__num">03</div><div className="ds-tl__title">파운데이션</div></div><div className="ds-tl__head"><div className="ds-tl__no-circle">4</div><div className="ds-tl__num">04</div><div className="ds-tl__title">UI Kit · 화면 목업</div></div><div className="ds-tl__head"><div className="ds-tl__no-circle">5</div><div className="ds-tl__num">05</div><div className="ds-tl__title">퍼블리싱</div></div><div className="ds-tl__head"><div className="ds-tl__no-circle">6</div><div className="ds-tl__num">06</div><div className="ds-tl__title">접근성 · 검증</div></div><div className="ds-tl__head"><div className="ds-tl__no-circle">7</div><div className="ds-tl__num">07</div><div className="ds-tl__title">문서화 · 기록</div></div><div className="ds-tl__lg">디자이너<span>방향 · 기획 · 적용 · 확인</span></div><div className="ds-tl__card ds-tl__card--human">레퍼런스 조사, 사용자 인터뷰, 요청 기록 정리</div><div className="ds-tl__card ds-tl__card--human">디자인 원칙 확정</div><div className="ds-tl__card ds-tl__card--human">토큰 구조 · 명명 규칙 결정</div><div className="ds-tl__card ds-tl__card--human">Figma 컴포넌트 제작, 상태 정의, 화면 흐름 설계</div><div className="ds-tl__card ds-tl__card--human">코드 적용, 화면 검수</div><div className="ds-tl__card ds-tl__card--human">위반 판단, 예외 결정</div><div className="ds-tl__card ds-tl__card--human">TD 검토 · 승인<small>TD: 의사결정이 필요한 작업 항목</small></div><div className="ds-tl__lg">AI<span>조사 · 초안 · 검증 · 관리</span></div><div className="ds-tl__card ds-tl__card--ai">레퍼런스별 비교표 작성</div><div className="ds-tl__card ds-tl__card--ai">원칙 초안 작성</div><div className="ds-tl__card ds-tl__card--ai">대비 계산, Figma 변수 · CSS 대조</div><div className="ds-tl__card ds-tl__card--ai">파운데이션 · 컴포넌트 연결 관리</div><div className="ds-tl__card ds-tl__card--ai">Figma 목업 기반 코드 초안, 커스텀 JS 작성</div><div className="ds-tl__card ds-tl__card--ai">접근성 자동 검사, 계산값 비교</div><div className="ds-tl__card ds-tl__card--ai">TD · ADR 작성, 점검 보고<small>ADR: 설계 결정 기록</small></div></div></div>
-<table className="ds-table ds-after ds-compare">
-<caption className="sr-only">이 방식으로 달라진 것: PLM 화면 디자인 프로젝트 두 번 비교</caption>
-<thead><tr><th scope="col">PLM 화면 디자인 프로젝트</th><th scope="col">적용 방식</th><th scope="col" className="ds-compare__key">기간</th><th scope="col">다크 모드 적용</th></tr></thead>
-<tbody>
-<tr><th scope="row">첫 개편 (2025)</th><td>디자이너 시안 → 개발자 적용</td><td className="ds-compare__key">6개월</td><td>일부 화면</td></tr>
-<tr className="is-now"><th scope="row">두 번째 개편 (2026)</th><td><b>디자이너가 적용 · 커밋</b> (개발 로직 수정 없음)</td><td className="ds-compare__key"><b>7주</b></td><td><b>전 화면</b></td></tr>
-</tbody>
-</table>
 </div>
 </Section>
 <Section title="구성" en="Categories" desc="기본 요소(Foundation)의 토큰 → 컴포넌트 → 블록(Blocks) → 화면(Screens) 순서로 쌓입니다. 각 층은 아래층의 요소만 사용합니다.">
